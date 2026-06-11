@@ -127,6 +127,10 @@ The CLI reads `hyperframes.json`/`meta.json` from the current directory and reso
 
 ### Adding a new video project
 
+**Fastest path (EcomIQ):** `npm run new -- <slug> [meta|square|story|wide]` — scaffolds a fully-wired project with the right dimensions, the EcomIQ brand kit (tokens + logos + local fonts from `assets/ecomiq/`), a lint-clean starter composition, and a `DESIGN.md`. To bring in footage: `npm run prep -- <clip> --project <slug> --mute`. See the README's "Studio tooling" table.
+
+Manual path (any brand):
+
 1. `mkdir video-projects/<new-project-slug>` (kebab-case, e.g. `q3-launch-promo`)
 2. `cd video-projects/<new-project-slug>`
 3. Either `npx hyperframes init` to scaffold, or copy the structure from a sibling project (`cp -r ../may-shorts-19/{hyperframes.json,meta.json} .` then edit `meta.json` for the new id/name/dimensions, and create empty `index.html`, `compositions/`, `assets/`, `renders/`)

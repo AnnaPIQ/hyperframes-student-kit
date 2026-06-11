@@ -38,6 +38,29 @@ npx hyperframes preview    # http://localhost:3002
 
 Studio hot-reloads on file save. Scrub the timeline, inspect scenes, change colors, watch it re-render live.
 
+## Studio tooling (npm scripts)
+
+Four helpers make spinning up and feeding projects fast. All are idempotent and print next steps.
+
+| Command | What it does |
+|---|---|
+| `npm run setup` | Bootstrap a fresh / cloud container — installs FFmpeg, Chrome, poppler, node deps, then runs `hyperframes doctor`. Run once per session on the web. → `docs/REMOTE-ENV-SETUP.md` |
+| `npm run new -- <slug> [format]` | Scaffold a fully-wired project: correct dimensions, EcomIQ brand kit (tokens + logos + **local fonts**), a lint-clean starter composition, and a `DESIGN.md`. Formats: `meta` (4:5, default) · `square` (1:1) · `story` (9:16) · `wide` (16:9). |
+| `npm run prep -- <input> [--project <slug>] [--mute] [--crf n]` | Re-encode raw footage/b-roll to render-ready H.264 (yuv420p, 30fps CFR, faststart). `--mute` strips audio for b-roll; `--project` drops it straight into a project's `assets/`. |
+| `npm run preflight` | Validate a project (existing). |
+
+**Shared brand kit:** `assets/ecomiq/` is the single source of truth — palette tokens, all logo lockups, local `.woff2` fonts, and `BRAND.md`. `npm run new` copies from here, so update the brand in one place.
+
+**Asset intake:** drop raw clips/photos/audio in `assets/incoming/` (gitignored), then `npm run prep` them into a project. See `assets/incoming/README.md`.
+
+Example — new 9:16 ad from a fresh container:
+```bash
+npm run setup
+npm run new -- launch-teaser story
+npm run prep -- assets/incoming/broll.mov --project launch-teaser --mute
+cd video-projects/launch-teaser && npx hyperframes lint
+```
+
 ## Repo layout
 
 ```
