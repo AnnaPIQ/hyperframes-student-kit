@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "setup": "bash scripts/setup-studio.sh",
     "preflight": "node scripts/preflight.mjs",
     "preflight:all": "for d in video-projects/*/; do node scripts/preflight.mjs \"$d\" || true; done"
   },

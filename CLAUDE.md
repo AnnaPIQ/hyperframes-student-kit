@@ -37,8 +37,21 @@ If `MOTION_PHILOSOPHY.md` is missing from the workspace root, stop and ask Nate 
 | `gsap`                   | `/gsap`                    | GSAP animation — timelines, easing, stagger, ScrollTrigger, plugins, performance          |
 | `hyperframes-registry`   | `/hyperframes-registry`    | Installing catalog blocks/components via `npx hyperframes add <name>`                     |
 | `website-to-hyperframes` | `/website-to-hyperframes`  | Turning a URL into a composition (7-step capture-to-video pipeline)                       |
+| `ecomiq-ad`              | `/ecomiq-ad`               | Building on-brand **EcomIQ** Meta/Facebook/Instagram video ads (navy + flame palette, Rethink Sans / Hedvig serif) — rides on `/hyperframes`. Template: `video-projects/my-meta-ad/` |
 
 Not present? `npx skills add heygen-com/hyperframes --yes` then reopen this directory.
+
+## First-time setup (fresh / cloud container)
+
+Running in **Claude Code on the web**? The container starts without the video
+toolchain (FFmpeg, Chrome, poppler) or `node_modules`. Bootstrap once per session:
+
+```bash
+npm run setup        # = bash scripts/setup-studio.sh (idempotent)
+```
+
+Full details + environment quirks (preview localhost not reachable on the web,
+render-time-vs-duration, Google-Fonts warnings) → `docs/REMOTE-ENV-SETUP.md`.
 
 ## Commands
 
