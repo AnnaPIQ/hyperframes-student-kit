@@ -1,0 +1,26 @@
+/* ---------------------------------------------------------------------------
+   my-meta-ad — brand tokens
+   PLACEHOLDER VALUES. Replace these with your real brand before shipping.
+   Every composition in this project imports these custom properties, so
+   changing a value here re-skins the whole video.
+   --------------------------------------------------------------------------- */
+:root {
+  /* Surfaces */
+  --brand-bg: #0a0a0f;          /* canvas / deepest background */
+  --brand-surface: #14141d;     /* cards, panels */
+  --brand-surface-2: #1f1f2e;   /* raised elements */
+  --brand-border: #2a2a38;      /* hairlines, dividers */
+
+  /* Accents */
+  --brand-accent: #5b8cff;      /* primary brand color (CTAs, highlights) */
+  --brand-accent-glow: #2d5cff; /* glow / shadow tint behind the accent */
+  --brand-warn: #ff9f43;        /* secondary / "hot" accent for emphasis */
+
+  /* Text */
+  --brand-text: #ffffff;
+  --brand-text-dim: #9aa0b4;
+
+  /* Type */
+  --font-display: "Montserrat", system-ui, sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, Menlo, monospace;
+}
