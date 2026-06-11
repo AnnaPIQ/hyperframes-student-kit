@@ -40,6 +40,8 @@ Studio hot-reloads on file save. Scrub the timeline, inspect scenes, change colo
 
 ## Studio tooling (npm scripts)
 
+> **New here? Read `docs/START-A-PROJECT.md`** — the full step-by-step for starting a project with these tools and skills.
+
 Four helpers make spinning up and feeding projects fast. All are idempotent and print next steps.
 
 | Command | What it does |
