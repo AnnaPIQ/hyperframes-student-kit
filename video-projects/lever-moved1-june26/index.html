@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>lever-moved1-june26</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time (latin subset) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-bg); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
+      #bg { position: absolute; inset: 0;
+        background: radial-gradient(90% 55% at 50% 20%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
+      #logo { position: absolute; top: 7%; left: 10%; width: 33%; height: auto; }
+      #stage { position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 24px; padding: 10%; text-align: center; }
+      #eyebrow { font-weight: 600; font-size: 26px; letter-spacing: .34em; text-transform: uppercase; color: var(--brand-blue-tint); }
+      #headline { font-weight: 800; font-size: 96px; line-height: .98; letter-spacing: -.03em; }
+      #headline .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+      #subhead { font-weight: 500; font-size: 34px; line-height: 1.3; color: var(--brand-text-dim); max-width: 70%; }
+      #cta { margin-top: 12px; font-weight: 700; font-size: 34px; color: var(--brand-white);
+        background: var(--brand-flame); padding: 26px 52px; border-radius: 999px;
+        box-shadow: 0 20px 64px -16px rgba(255,76,50,.6); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="lever-moved1-june26" data-start="0" data-duration="6" data-width="1080" data-height="1350">
+      <div id="bg" class="clip" data-start="0" data-duration="6" data-track-index="0"></div>
+      <img id="logo" class="clip" data-start="0" data-duration="6" data-track-index="1" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      <div id="stage" class="clip" data-start="0" data-duration="6" data-track-index="2">
+        <div id="eyebrow">E-Commerce Intelligence</div>
+        <div id="headline"><span class="em">Rethink</span> your strategy.</div>
+        <div id="subhead">Replace this copy. Build your scene. Ship the ad.</div>
+        <div id="cta">Get started &rarr;</div>
+      </div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#logo", { opacity: 0, y: -20, duration: .6, ease: "power3.out" }, .2)
+        .from("#eyebrow", { opacity: 0, y: 16, duration: .5, ease: "power2.out" }, .5)
+        .from("#headline", { opacity: 0, y: 32, duration: .7, ease: "power3.out" }, .7)
+        .from("#subhead", { opacity: 0, y: 20, duration: .6, ease: "power2.out" }, 1.1)
+        .from("#cta", { opacity: 0, scale: .85, duration: .55, ease: "back.out(1.7)" }, 1.5);
+      tl.to({}, { duration: 6 }, 0); // pad to data-duration
+      window.__timelines["lever-moved1-june26"] = tl;
+    </script>
+  </body>
+</html>
