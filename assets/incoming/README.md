@@ -4,6 +4,20 @@ Dump raw footage, b-roll, photos, and audio here as it arrives. Nothing here is
 final — it's the staging area before assets are prepped and moved into a
 project's `assets/` folder.
 
+## Source: Google Drive — "eComm IQ"
+
+Primary asset source is the Google Drive folder **`eComm IQ`**, with subfolders:
+- **`Content`** — b-roll, product/lifestyle video, raw clips
+- **`Marketing`** — marketing imagery, creative
+
+**Requires the Google Drive connector to be live in the session.** Connectors
+load at session start, so if it was added mid-session, start a *new* session
+first. Once a `mcp__*drive*` tool is available, the flow is:
+1. List `eComm IQ/Content` (and `Marketing`), pick the clips/images needed.
+2. Download into `assets/incoming/`.
+3. `npm run prep -- assets/incoming/<file> --project <slug> --mute` (video) or
+   copy images into `video-projects/<slug>/assets/`.
+
 ## Workflow for incoming video (b-roll / content / clips)
 
 Raw recordings (`.mov`, HEVC, variable frame rate, huge bitrate) often stutter
