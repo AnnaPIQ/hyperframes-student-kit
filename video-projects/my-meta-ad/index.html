@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1350" />
-    <title>my-meta-ad</title>
+    <title>EcomIQ — Meta ad</title>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600&display=block"
+      href="https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Hedvig+Letters+Serif:opsz@12..24&display=block"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/brand-tokens.css" />
@@ -17,82 +17,132 @@
         height: 1350px;
         overflow: hidden;
         background: var(--brand-bg);
-        font-family: var(--font-display);
+        font-family: var(--font-sans);
         color: var(--brand-text);
       }
-      /* Subtle radial vignette so the title pops off the canvas. */
+      /* Navy canvas with a soft brand-gradient bloom in the lower third and a
+         faint sky-blue vignette up top so the logo + headline separate cleanly. */
       #bg {
         position: absolute;
         inset: 0;
         background:
-          radial-gradient(120% 80% at 50% 35%, var(--brand-surface) 0%, var(--brand-bg) 60%);
+          radial-gradient(90% 55% at 50% 18%, rgba(156, 212, 255, 0.10) 0%, rgba(6, 40, 76, 0) 55%),
+          var(--brand-navy);
       }
-      /* Meta-ad safe area: keep hero content inside ~10% margins so nothing
-         important sits under the platform UI chrome. */
+      #bloom {
+        position: absolute;
+        left: -10%;
+        bottom: -22%;
+        width: 120%;
+        height: 60%;
+        background: var(--brand-gradient-2);
+        filter: blur(90px);
+        opacity: 0.38;
+      }
+      /* Thin accent rule that wipes in under the eyebrow. */
+      #rule {
+        position: absolute;
+        top: 430px;
+        left: 108px;
+        width: 120px;
+        height: 6px;
+        background: var(--brand-flame);
+        border-radius: 3px;
+        transform-origin: left center;
+      }
+      #logo {
+        position: absolute;
+        top: 120px;
+        left: 108px;
+        width: 360px;
+        height: auto;
+      }
+      /* Meta-ad safe area — hero content inside ~10% side margins. */
       #stage {
         position: absolute;
-        inset: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 28px;
-        padding: 135px 108px; /* ~10% of 1350 / 1080 */
-        text-align: center;
+        left: 108px;
+        right: 108px;
+        top: 470px;
       }
       #eyebrow {
-        font-family: var(--font-mono);
-        font-size: 28px;
-        letter-spacing: 0.32em;
+        font-family: var(--font-sans);
+        font-size: 26px;
+        font-weight: 600;
+        letter-spacing: 0.34em;
         text-transform: uppercase;
-        color: var(--brand-accent);
+        color: var(--brand-blue-tint);
+        margin-bottom: 26px;
       }
       #headline {
-        font-size: 104px;
+        font-size: 118px;
         font-weight: 800;
-        line-height: 1.02;
-        letter-spacing: -0.02em;
-        max-width: 880px;
+        line-height: 0.98;
+        letter-spacing: -0.03em;
+        color: var(--brand-white);
       }
-      #headline .hot { color: var(--brand-warn); }
+      /* The signature EcomIQ treatment: italic serif emphasis word. */
+      #headline .rethink {
+        font-family: var(--font-serif);
+        font-weight: 400;
+        font-style: italic;
+        letter-spacing: -0.01em;
+        color: var(--brand-blue-tint);
+      }
       #subhead {
+        margin-top: 34px;
         font-size: 38px;
         font-weight: 500;
-        line-height: 1.3;
+        line-height: 1.32;
         color: var(--brand-text-dim);
-        max-width: 760px;
+        max-width: 720px;
       }
       #cta {
-        margin-top: 16px;
-        font-size: 34px;
+        position: absolute;
+        left: 108px;
+        bottom: 150px;
+        display: inline-flex;
+        align-items: center;
+        gap: 18px;
+        font-size: 38px;
         font-weight: 700;
-        color: var(--brand-bg);
-        background: var(--brand-accent);
-        padding: 24px 52px;
+        color: var(--brand-white);
+        background: var(--brand-flame);
+        padding: 30px 58px;
         border-radius: 999px;
-        box-shadow: 0 18px 60px -12px var(--brand-accent-glow);
+        box-shadow: 0 22px 70px -16px rgba(255, 76, 50, 0.65);
       }
+      #cta .arrow { font-size: 40px; line-height: 1; transform: translateY(-1px); }
     </style>
   </head>
   <body>
     <!-- Render Contract: root needs id, data-composition-id, data-start=0,
          data-width, data-height. Timed visible children need class="clip" plus
-         data-start / data-duration / data-track-index. -->
+         data-start / data-duration / data-track-index (different track indices
+         so same-track clips never overlap). -->
     <div
       id="root"
       data-composition-id="my-meta-ad"
       data-start="0"
-      data-duration="6"
+      data-duration="7"
       data-width="1080"
       data-height="1350"
     >
-      <div id="bg" class="clip" data-start="0" data-duration="6" data-track-index="0"></div>
+      <div id="bg" class="clip" data-start="0" data-duration="7" data-track-index="0"></div>
+      <div id="bloom" class="clip" data-start="0" data-duration="7" data-track-index="1"></div>
 
-      <div id="stage" class="clip" data-start="0" data-duration="6" data-track-index="1">
-        <div id="eyebrow">YOUR BRAND</div>
-        <div id="headline">Say it in <span class="hot">one line</span>.</div>
-        <div id="subhead">Swap this copy, drop in your logo, and ship your first Meta ad.</div>
-        <div id="cta">Learn more</div>
+      <img id="logo" class="clip" data-start="0" data-duration="7" data-track-index="2"
+           src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+
+      <div id="rule" class="clip" data-start="0" data-duration="7" data-track-index="3"></div>
+
+      <div id="stage" class="clip" data-start="0" data-duration="7" data-track-index="4">
+        <div id="eyebrow">E-Commerce Intelligence</div>
+        <div id="headline"><span class="rethink">Rethink</span><br />your strategy.</div>
+        <div id="subhead">Clear up the confusion. Turn store data into decisions you can trust.</div>
+      </div>
+
+      <div id="cta" class="clip" data-start="0" data-duration="7" data-track-index="5">
+        Get started <span class="arrow">&rarr;</span>
       </div>
     </div>
 
@@ -102,15 +152,19 @@
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
-      tl.from("#eyebrow", { opacity: 0, y: 20, duration: 0.5, ease: "power2.out" }, 0.2)
-        .from("#headline", { opacity: 0, y: 40, duration: 0.7, ease: "power3.out" }, 0.45)
-        .from("#subhead", { opacity: 0, y: 24, duration: 0.6, ease: "power2.out" }, 0.95)
-        .from("#cta", { opacity: 0, scale: 0.85, duration: 0.5, ease: "back.out(1.7)" }, 1.35)
-        // Gentle CTA pulse to draw the eye while the outro holds.
-        .to("#cta", { scale: 1.04, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 2 }, 2.2);
+      tl.from("#logo", { opacity: 0, y: -24, duration: 0.6, ease: "power3.out" }, 0.2)
+        .from("#rule", { scaleX: 0, duration: 0.5, ease: "power3.out" }, 0.5)
+        .from("#eyebrow", { opacity: 0, y: 18, duration: 0.5, ease: "power2.out" }, 0.6)
+        .from("#headline .rethink", { opacity: 0, x: -30, duration: 0.7, ease: "power3.out" }, 0.8)
+        .from("#headline", { opacity: 0, y: 36, duration: 0.7, ease: "power3.out" }, 1.0)
+        .from("#subhead", { opacity: 0, y: 22, duration: 0.6, ease: "power2.out" }, 1.4)
+        .from("#cta", { opacity: 0, scale: 0.85, duration: 0.55, ease: "back.out(1.7)" }, 1.85)
+        .from("#bloom", { opacity: 0, duration: 1.2, ease: "sine.out" }, 0)
+        // CTA breathes to hold attention through the outro.
+        .to("#cta", { scale: 1.04, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 3 }, 2.6);
 
       // Pad the timeline so its duration matches the root data-duration (Law #7/#11).
-      tl.to({}, { duration: 6 }, 0);
+      tl.to({}, { duration: 7 }, 0);
       window.__timelines["my-meta-ad"] = tl;
     </script>
   </body>

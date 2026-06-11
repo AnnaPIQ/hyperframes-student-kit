@@ -1,26 +1,33 @@
 /* ---------------------------------------------------------------------------
-   my-meta-ad — brand tokens
-   PLACEHOLDER VALUES. Replace these with your real brand before shipping.
-   Every composition in this project imports these custom properties, so
-   changing a value here re-skins the whole video.
+   EcomIQ — brand tokens   (from EcomIQ Brand Guidelines)
+   Every composition imports these custom properties, so changing a value
+   here re-skins the whole video.
    --------------------------------------------------------------------------- */
 :root {
-  /* Surfaces */
-  --brand-bg: #0a0a0f;          /* canvas / deepest background */
-  --brand-surface: #14141d;     /* cards, panels */
-  --brand-surface-2: #1f1f2e;   /* raised elements */
-  --brand-border: #2a2a38;      /* hairlines, dividers */
+  /* Primary palette */
+  --brand-navy: #06284C;        /* primary — backgrounds, primary text */
+  --brand-blue-tint: #9CD4FF;   /* light blue — secondary accent, highlights */
+  --brand-sky: #DEEEFE;         /* pale blue tint — subtle surfaces / dividers */
+  --brand-flame: #FF4C32;       /* flame orange — hot accent, CTAs, emphasis */
+  --brand-white: #FFFFFF;
+  --brand-black: #000000;
 
-  /* Accents */
-  --brand-accent: #5b8cff;      /* primary brand color (CTAs, highlights) */
-  --brand-accent-glow: #2d5cff; /* glow / shadow tint behind the accent */
-  --brand-warn: #ff9f43;        /* secondary / "hot" accent for emphasis */
+  /* Semantic aliases (used by the compositions) */
+  --brand-bg: var(--brand-navy);
+  --brand-surface: #0a325f;       /* navy raised one step */
+  --brand-surface-2: #103d6f;
+  --brand-border: #1d4a7a;
+  --brand-accent: var(--brand-blue-tint);
+  --brand-accent-glow: #2d7fd6;   /* glow tint behind blue accents */
+  --brand-hot: var(--brand-flame);
+  --brand-text: var(--brand-white);
+  --brand-text-dim: #9fb6d4;      /* muted blue-grey on navy */
 
-  /* Text */
-  --brand-text: #ffffff;
-  --brand-text-dim: #9aa0b4;
+  /* Gradients (from the guide) */
+  --brand-gradient-1: linear-gradient(120deg, #FF4C32 0%, #FFA63D 55%, #FFD15C 100%); /* warm */
+  --brand-gradient-2: linear-gradient(120deg, #9CD4FF 0%, #5aa0e0 45%, #FF8A4C 100%); /* blue→flame */
 
-  /* Type */
-  --font-display: "Montserrat", system-ui, sans-serif;
-  --font-mono: "Roboto Mono", ui-monospace, Menlo, monospace;
+  /* Type — both are Google Fonts */
+  --font-sans: "Rethink Sans", system-ui, sans-serif;   /* primary */
+  --font-serif: "Hedvig Letters Serif", Georgia, serif; /* emphasis / headlines */
 }
