@@ -3,11 +3,28 @@
     <div class="lv-panel">
       <div class="lv-stage">
         <svg class="lv-lever" viewBox="0 0 560 320" id="lv-lever">
+          <defs>
+            <linearGradient id="lvArm" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#eaf5ff" /><stop offset=".5" stop-color="#9cd4ff" /><stop offset="1" stop-color="#4f86bf" />
+            </linearGradient>
+            <radialGradient id="lvKnob" cx="38%" cy="32%" r="78%">
+              <stop offset="0" stop-color="#ffd0c4" /><stop offset=".42" stop-color="#ff6a4d" /><stop offset="1" stop-color="#cc2f17" />
+            </radialGradient>
+            <linearGradient id="lvFul" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#bfe0ff" /><stop offset="1" stop-color="#3f6f9e" />
+            </linearGradient>
+            <filter id="lvShadow" x="-30%" y="-30%" width="160%" height="170%">
+              <feDropShadow dx="0" dy="9" stdDeviation="11" flood-color="#000" flood-opacity="0.55" />
+            </filter>
+          </defs>
+          <ellipse cx="280" cy="307" rx="150" ry="13" fill="rgba(0,0,0,.38)" />
           <line x1="120" y1="300" x2="440" y2="300" stroke="rgba(159,182,212,.3)" stroke-width="4" />
-          <polygon class="lv-fulcrum" points="280,250 240,300 320,300" />
-          <g id="lv-arm">
-            <rect class="lv-arm-bar" x="120" y="238" width="320" height="24" rx="12" />
-            <circle class="lv-knob" cx="440" cy="250" r="28" />
+          <polygon points="280,248 236,304 324,304" fill="url(#lvFul)" />
+          <g id="lv-arm" filter="url(#lvShadow)">
+            <rect x="120" y="236" width="320" height="26" rx="13" fill="url(#lvArm)" />
+            <rect x="128" y="240" width="304" height="6" rx="3" fill="rgba(255,255,255,.5)" />
+            <circle cx="440" cy="249" r="30" fill="url(#lvKnob)" />
+            <ellipse cx="431" cy="240" rx="11" ry="7" fill="rgba(255,255,255,.55)" />
           </g>
         </svg>
         <div class="lv-gauge-wrap">
@@ -31,10 +48,7 @@
         gap: 14px; padding: 0 60px 210px; font-family: "Rethink Sans", sans-serif;
       }
       [data-composition-id="lever"] .lv-stage { display: flex; align-items: center; gap: 40px; margin-bottom: 18px; }
-      [data-composition-id="lever"] .lv-lever { width: 360px; height: 206px; opacity: 0; }
-      [data-composition-id="lever"] .lv-fulcrum { fill: var(--brand-blue-tint); }
-      [data-composition-id="lever"] .lv-arm-bar { fill: #cfe6ff; }
-      [data-composition-id="lever"] .lv-knob { fill: var(--brand-flame); }
+      [data-composition-id="lever"] .lv-lever { width: 360px; height: 206px; opacity: 0; overflow: visible; }
       [data-composition-id="lever"] .lv-gauge-wrap { display: flex; flex-direction: column; align-items: center; opacity: 0; }
       [data-composition-id="lever"] .lv-gauge { width: 220px; height: 138px; }
       [data-composition-id="lever"] .lv-gauge-label { font-weight: 700; font-size: 24px; letter-spacing: .2em; color: var(--brand-text-dim); margin-top: 4px; }

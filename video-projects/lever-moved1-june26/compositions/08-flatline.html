@@ -1,6 +1,8 @@
 <template id="flatline-template">
   <div data-composition-id="flatline" data-start="0" data-width="1080" data-height="1350" data-duration="4.0">
     <div class="fl-root">
+      <div class="fl-tex"></div>
+      <div class="fl-streak"></div>
       <div class="fl-head">AD SPEND <span class="up">▲</span> &nbsp;·&nbsp; RESULTS <span class="flat">—</span></div>
       <svg class="fl-chart" viewBox="0 0 900 420" preserveAspectRatio="none">
         <line class="fl-base" x1="40" y1="380" x2="860" y2="380" />
@@ -13,9 +15,18 @@
     </div>
     <style>
       [data-composition-id="flatline"] { position: absolute; inset: 0; }
-      [data-composition-id="flatline"] .fl-root { position: absolute; inset: 0; background: var(--brand-navy);
+      [data-composition-id="flatline"] .fl-root { position: absolute; inset: 0; overflow: hidden;
+        background: radial-gradient(120% 90% at 50% 30%, rgba(156,212,255,.07), transparent 60%), var(--brand-navy);
         display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px;
         padding: 80px 70px 200px; font-family: "Rethink Sans", sans-serif; }
+      [data-composition-id="flatline"] .fl-tex { position: absolute; inset: -2%; pointer-events: none; opacity: .5;
+        background: repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1.5px, transparent 1.5px 94px),
+                    repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1.5px, transparent 1.5px 94px);
+        -webkit-mask-image: radial-gradient(120% 92% at 50% 40%, #000 32%, transparent 80%);
+                mask-image: radial-gradient(120% 92% at 50% 40%, #000 32%, transparent 80%); }
+      [data-composition-id="flatline"] .fl-streak { position: absolute; top: 0; bottom: 0; left: 0; width: 46%;
+        background: linear-gradient(90deg, transparent, rgba(199,230,255,.5), transparent);
+        filter: blur(24px); transform: skewX(-12deg); opacity: 0; pointer-events: none; }
       [data-composition-id="flatline"] .fl-head { font-weight: 800; font-size: 40px; letter-spacing: .04em; color: var(--brand-text-dim); opacity: 0; }
       [data-composition-id="flatline"] .fl-head .up { color: var(--brand-blue-tint); }
       [data-composition-id="flatline"] .fl-head .flat { color: var(--brand-text-dim); }
@@ -29,7 +40,10 @@
       [data-composition-id="flatline"] .fl-tag.up { fill: var(--brand-blue-tint); }
       [data-composition-id="flatline"] .fl-tag.flat { fill: var(--brand-text-dim); }
       [data-composition-id="flatline"] .fl-stab { font-family: "Hedvig Letters Serif", Georgia, serif; font-style: italic; font-weight: 400;
-        font-size: 80px; line-height: 1.02; text-align: center; color: #fff; opacity: 0; text-shadow: 0 4px 20px rgba(0,0,0,.4); }
+        font-size: 80px; line-height: 1.02; text-align: center; opacity: 0;
+        background: linear-gradient(100deg, #bcdcff 0%, #ffffff 42%, #ffffff 50%, #e4f2ff 58%, #bcdcff 100%);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+        background-size: 250% 100%; background-position: 100% 0; text-shadow: 0 4px 20px rgba(0,0,0,.4); }
     </style>
     <link rel="stylesheet" href="../assets/fonts.css" />
     <link rel="stylesheet" href="../assets/brand-tokens.css" />
@@ -38,12 +52,15 @@
       (function () {
         const s = '[data-composition-id="flatline"] ';
         const tl = gsap.timeline({ paused: true });
-        tl.from(s + ".fl-root", { opacity: 0, duration: 0.3, ease: "power2.out" }, 0);
-        tl.to(s + ".fl-head", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.2);
-        tl.to(s + ".fl-spend", { strokeDashoffset: 0, duration: 1.2, ease: "power1.out" }, 0.3);   // UP
-        tl.to(s + ".fl-results", { strokeDashoffset: 0, duration: 1.2, ease: "none" }, 0.5);        // FLAT
+        tl.fromTo(s + ".fl-root", { yPercent: 9, filter: "blur(22px)", opacity: 0 }, { yPercent: 0, filter: "blur(0px)", opacity: 1, duration: 0.45, ease: "power2.out" }, 0);
+        tl.fromTo(s + ".fl-streak", { xPercent: -70, opacity: 0 }, { xPercent: 280, opacity: 1, duration: 0.5, ease: "power3.in" }, 0);
+        tl.to(s + ".fl-streak", { opacity: 0, duration: 0.2 }, 0.42);
+        tl.to(s + ".fl-head", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.3);
+        tl.to(s + ".fl-spend", { strokeDashoffset: 0, duration: 1.2, ease: "power1.out" }, 0.4);   // UP
+        tl.to(s + ".fl-results", { strokeDashoffset: 0, duration: 1.2, ease: "none" }, 0.6);        // FLAT
         tl.fromTo(s + "#fl-stab", { opacity: 0, y: 22, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.5)" }, 1.8);
-        tl.to(s + ".fl-root", { opacity: 0, duration: 0.3, ease: "power2.in" }, 3.65);
+        tl.fromTo(s + "#fl-stab", { backgroundPosition: "100% 0" }, { backgroundPosition: "0% 0", duration: 0.8, ease: "power2.out" }, 1.95);
+        tl.to(s + ".fl-root", { yPercent: -9, filter: "blur(22px)", opacity: 0, duration: 0.3, ease: "power2.in" }, 3.65);
         tl.set({}, {}, 4.0);
         window.__timelines = window.__timelines || {};
         window.__timelines["flatline"] = tl;

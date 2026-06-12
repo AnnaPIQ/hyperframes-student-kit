@@ -1,5 +1,7 @@
 <template id="weaknesses-template">
   <div data-composition-id="weaknesses" data-start="0" data-width="1080" data-height="1350" data-duration="14.0">
+    <div class="wk-tex"></div>
+    <div class="wk-streak"></div>
     <!-- 0–5s: the flip -->
     <div class="wk-flip" id="wk-flip">
       <div class="wk-eq" id="wk-eq">MORE SPEND <span class="eqs">=</span> MORE GROWTH</div>
@@ -51,8 +53,17 @@
     </div>
 
     <style>
-      [data-composition-id="weaknesses"] { position: absolute; inset: 0; background: var(--brand-navy);
+      [data-composition-id="weaknesses"] { position: absolute; inset: 0; overflow: hidden;
+        background: radial-gradient(120% 90% at 50% 30%, rgba(156,212,255,.07), transparent 60%), var(--brand-navy);
         font-family: "Rethink Sans", sans-serif; }
+      [data-composition-id="weaknesses"] .wk-tex { position: absolute; inset: -2%; pointer-events: none; opacity: .5; z-index: 0;
+        background: repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1.5px, transparent 1.5px 94px),
+                    repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1.5px, transparent 1.5px 94px);
+        -webkit-mask-image: radial-gradient(120% 92% at 50% 42%, #000 32%, transparent 80%);
+                mask-image: radial-gradient(120% 92% at 50% 42%, #000 32%, transparent 80%); }
+      [data-composition-id="weaknesses"] .wk-streak { position: absolute; top: 0; bottom: 0; left: 0; width: 46%; z-index: 5;
+        background: linear-gradient(90deg, transparent, rgba(199,230,255,.5), transparent);
+        filter: blur(24px); transform: skewX(-12deg); opacity: 0; pointer-events: none; }
       /* flip */
       [data-composition-id="weaknesses"] .wk-flip { position: absolute; inset: 0; display: flex; flex-direction: column;
         align-items: center; justify-content: center; gap: 8px; padding: 0 70px; }
@@ -63,7 +74,10 @@
         background: var(--brand-flame); transform: translateY(-50%) scaleX(0); transform-origin: left center; border-radius: 6px; }
       [data-composition-id="weaknesses"] .wk-expose { position: absolute; left: 0; right: 0; top: 50%;
         transform: translateY(-50%) scale(.8); text-align: center; font-weight: 800; font-size: 116px; letter-spacing: -.02em;
-        color: var(--brand-flame); text-shadow: 0 0 44px rgba(255,76,50,.45); opacity: 0; }
+        background: linear-gradient(100deg, #ff4c32 0%, #ff7a52 38%, #ffe0d2 50%, #ff7a52 62%, #ff4c32 100%);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+        background-size: 250% 100%; background-position: 100% 0;
+        text-shadow: 0 0 44px rgba(255,76,50,.4); opacity: 0; }
       /* cards */
       [data-composition-id="weaknesses"] .wk-card { position: absolute; inset: 0; display: flex; flex-direction: column;
         align-items: center; justify-content: center; gap: 30px; padding: 80px 60px 200px; opacity: 0; }
@@ -80,9 +94,14 @@
         stroke-dasharray: 1; stroke-dashoffset: 1; }
       [data-composition-id="weaknesses"] .wk-delta { margin-top: 22px; font-weight: 800; font-size: 40px; color: var(--brand-flame); opacity: 0; }
       [data-composition-id="weaknesses"] .wk-lens { position: absolute; left: -10px; top: 50%; width: 210px; height: 210px;
-        margin-top: -105px; border-radius: 50%; border: 7px solid var(--brand-blue-tint);
-        background: radial-gradient(circle at 50% 40%, rgba(156,212,255,.05), rgba(156,212,255,.18));
-        box-shadow: 0 0 0 4px rgba(6,40,76,.55), 0 20px 50px rgba(0,0,0,.5); opacity: 0; }
+        margin-top: -105px; border-radius: 50%; border: 6px solid rgba(199,230,255,.85);
+        background: radial-gradient(circle at 38% 30%, rgba(255,255,255,.24), rgba(156,212,255,.05) 46%, rgba(156,212,255,.16) 100%);
+        backdrop-filter: brightness(1.18) saturate(1.25) contrast(1.04);
+        -webkit-backdrop-filter: brightness(1.18) saturate(1.25) contrast(1.04);
+        box-shadow: inset 0 3px 8px rgba(255,255,255,.4), inset 0 -10px 24px rgba(6,40,76,.55),
+                    0 0 0 4px rgba(6,40,76,.5), 0 22px 54px rgba(0,0,0,.55); opacity: 0; }
+      [data-composition-id="weaknesses"] .wk-lens::before { content: ""; position: absolute; top: 12px; left: 26px;
+        width: 96px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.45); filter: blur(6px); }
       [data-composition-id="weaknesses"] .wk-handle { position: absolute; right: -34px; bottom: -22px; width: 60px; height: 18px;
         border-radius: 9px; background: var(--brand-blue-tint); transform: rotate(45deg); }
     </style>
@@ -93,13 +112,19 @@
       (function () {
         const s = '[data-composition-id="weaknesses"] ';
         const tl = gsap.timeline({ paused: true });
+        const streak = (t) => {
+          tl.fromTo(s + ".wk-streak", { xPercent: -70, opacity: 0 }, { xPercent: 280, opacity: 1, duration: 0.5, ease: "power3.in" }, t);
+          tl.to(s + ".wk-streak", { opacity: 0, duration: 0.2 }, t + 0.42);
+        };
 
         // ---- Flip (0–4.8) ----
+        streak(0);
         tl.to(s + "#wk-eq", { opacity: 1, duration: 0.4, ease: "power3.out" }, 0.15);
         tl.to(s + "#wk-strike", { scaleX: 1, duration: 0.35, ease: "power3.out" }, 2.0);
         tl.to(s + "#wk-eq", { opacity: 0.18, duration: 0.3 }, 2.35);
         tl.to(s + "#wk-strike", { opacity: 0, duration: 0.3 }, 2.45);
         tl.to(s + "#wk-expose", { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(1.7)" }, 2.5);
+        tl.fromTo(s + "#wk-expose", { backgroundPosition: "100% 0" }, { backgroundPosition: "0% 0", duration: 0.7, ease: "power2.out" }, 2.55);
         tl.to(s + "#wk-flip", { opacity: 0, duration: 0.3, ease: "power2.in" }, 4.6);
 
         // ---- Magnifier reveal helper ----
@@ -113,9 +138,9 @@
           tl.to(s + id + " .wk-lens", { opacity: 0, duration: 0.3, ease: "power2.in" }, t + 1.6);
           tl.to(s + id, { opacity: 0, duration: 0.3, ease: "power2.in" }, t + 2.6);
         }
-        reveal("#wk1", 5.0);
-        reveal("#wk2", 8.0);
-        reveal("#wk3", 11.0);
+        reveal("#wk1", 5.0); streak(5.0);
+        reveal("#wk2", 8.0); streak(8.0);
+        reveal("#wk3", 11.0); streak(11.0);
 
         tl.set({}, {}, 14.0);
         window.__timelines = window.__timelines || {};

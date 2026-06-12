@@ -1,6 +1,8 @@
 <template id="proof-template">
   <div data-composition-id="proof" data-start="0" data-width="1080" data-height="1350" data-duration="3.0">
     <div class="pf-root">
+      <div class="pf-tex"></div>
+      <div class="pf-streak"></div>
       <div class="pf-card">
         <div class="pf-bar">
           <span class="pf-dot"></span><span class="pf-dot"></span><span class="pf-dot"></span>
@@ -26,10 +28,19 @@
     <style>
       [data-composition-id="proof"] { position: absolute; inset: 0; }
       [data-composition-id="proof"] .pf-root {
-        position: absolute; inset: 0; background: var(--brand-navy);
+        position: absolute; inset: 0; overflow: hidden;
+        background: radial-gradient(120% 90% at 50% 28%, rgba(156,212,255,.07), transparent 60%), var(--brand-navy);
         display: flex; align-items: center; justify-content: center; padding: 70px 56px 200px;
         font-family: "Rethink Sans", sans-serif;
       }
+      [data-composition-id="proof"] .pf-tex { position: absolute; inset: -2%; pointer-events: none; opacity: .5;
+        background: repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1.5px, transparent 1.5px 94px),
+                    repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1.5px, transparent 1.5px 94px);
+        -webkit-mask-image: radial-gradient(120% 92% at 50% 40%, #000 32%, transparent 80%);
+                mask-image: radial-gradient(120% 92% at 50% 40%, #000 32%, transparent 80%); }
+      [data-composition-id="proof"] .pf-streak { position: absolute; top: 0; bottom: 0; left: 0; width: 46%;
+        background: linear-gradient(90deg, transparent, rgba(199,230,255,.5), transparent);
+        filter: blur(24px); transform: skewX(-12deg); opacity: 0; pointer-events: none; }
       [data-composition-id="proof"] .pf-card {
         width: 100%; background: var(--brand-surface); border: 1px solid var(--brand-border);
         border-radius: 28px; overflow: hidden; box-shadow: 0 30px 80px -24px rgba(0,0,0,.6);
@@ -64,13 +75,19 @@
       (function () {
         const s = '[data-composition-id="proof"] ';
         const tl = gsap.timeline({ paused: true });
-        tl.from(s + ".pf-card", { opacity: 0, y: 40, duration: 0.4, ease: "power3.out" }, 0);
-        tl.to(s + ".pf-chip.up", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.25);
-        tl.to(s + ".pf-chip.down", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.4);
+        // Blur-whip in + light streak masks the cut.
+        tl.fromTo(s + ".pf-root", { yPercent: 9, filter: "blur(22px)", opacity: 0 }, { yPercent: 0, filter: "blur(0px)", opacity: 1, duration: 0.45, ease: "power2.out" }, 0);
+        tl.fromTo(s + ".pf-streak", { xPercent: -70, opacity: 0 }, { xPercent: 280, opacity: 1, duration: 0.5, ease: "power3.in" }, 0);
+        tl.to(s + ".pf-streak", { opacity: 0, duration: 0.2 }, 0.42);
+        tl.from(s + ".pf-card", { opacity: 0, y: 40, duration: 0.4, ease: "power3.out" }, 0.1);
+        tl.to(s + ".pf-chip.up", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.3);
+        tl.to(s + ".pf-chip.down", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.45);
         // Diverge: spend UP, profit DOWN.
-        tl.to(s + ".pf-spend", { strokeDashoffset: 0, duration: 1.1, ease: "power1.out" }, 0.4);
-        tl.to(s + ".pf-profit", { strokeDashoffset: 0, duration: 1.1, ease: "power1.out" }, 0.55);
-        tl.to(s + ".pf-root", { opacity: 0, duration: 0.3, ease: "power2.in" }, 2.7);
+        tl.to(s + ".pf-spend", { strokeDashoffset: 0, duration: 1.1, ease: "power1.out" }, 0.45);
+        tl.to(s + ".pf-profit", { strokeDashoffset: 0, duration: 1.1, ease: "power1.out" }, 0.6);
+        tl.to(s + ".pf-tex", { opacity: 0.3, duration: 1.2, yoyo: true, repeat: 1, ease: "sine.inOut" }, 0.4);
+        // Blur-whip out.
+        tl.to(s + ".pf-root", { yPercent: -9, filter: "blur(22px)", opacity: 0, duration: 0.3, ease: "power2.in" }, 2.7);
         tl.set({}, {}, 3.0);
         window.__timelines = window.__timelines || {};
         window.__timelines["proof"] = tl;
