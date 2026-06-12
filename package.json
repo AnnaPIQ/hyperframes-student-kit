@@ -8,6 +8,7 @@
     "setup": "bash scripts/setup-studio.sh",
     "new": "bash scripts/new-project.sh",
     "prep": "bash scripts/prep-video.sh",
+    "gen": "node scripts/gen-broll.mjs",
     "preflight": "node scripts/preflight.mjs",
     "preflight:all": "for d in video-projects/*/; do node scripts/preflight.mjs \"$d\" || true; done"
   },
@@ -17,5 +18,8 @@
   "type": "commonjs",
   "devDependencies": {
     "playwright": "^1.59.1"
+  },
+  "dependencies": {
+    "@runwayml/sdk": "^4.0.0"
   }
 }

@@ -5,11 +5,20 @@ Used by `/make-a-video` Gate 3. The goal: extract the user's visual identity (or
 ## The decision tree
 
 ```
+Is there a saved brand kit in the workspace (e.g. assets/ecomiq/)?
+├── Yes → OFFER it as a ready option ("Use the EcomIQ brand?"). If yes → apply it (see below).
+│         For a pure branded ad, hand off to /ecomiq-ad instead.
+└── No / user declines the kit ↓
+
 Does the user have a style guide, brand doc, or explicit palette?
 ├── Yes → Extract values → Use exactly what they supplied
 ├── Partial (some answers, not all) → Fill gaps with MOTION_PHILOSOPHY defaults, flag the gaps in BRIEF.md
 └── No → Offer MOTION_PHILOSOPHY defaults AND ask for reference videos as a fallback
 ```
+
+Offering a present brand kit is not "imposing" — it's surfacing what's already in the
+workspace so the user can opt in. Never force it; if they want a different look, follow
+the rest of the tree.
 
 ## MOTION_PHILOSOPHY defaults (the fallback, only when user declines to supply a style)
 
@@ -41,6 +50,41 @@ Variations allowed: Space Grotesk or Geist for a tech feel, Instrument Serif for
 - Crosshair `+` markers at grid intersections (optional but recommended)
 
 ---
+
+## When a saved brand kit exists (e.g. EcomIQ)
+
+This workspace ships a canonical EcomIQ brand kit at **`assets/ecomiq/`**. At the
+start of Gate 3, check for it. If it's there, offer it as a one-click choice before
+asking the open-ended style questions.
+
+**What the kit contains:**
+- `brand-tokens.css` — `--brand-*` color tokens (navy `#06284C`, blue-tint `#9CD4FF`, flame `#FF4C32`, etc.)
+- `fonts/RethinkSans.woff2` + `fonts/HedvigLettersSerif.woff2` — local fonts (no network at render time)
+- logo lockups: `ecomiq-logo-white.svg` (on navy), `ecomiq-logo-navy.svg` (on light), icons
+- `BRAND.md` — full spec
+
+**If the user opts in, apply it (this is what `npm run new` does):**
+1. Copy into the project: `cp assets/ecomiq/brand-tokens.css <proj>/assets/`,
+   `cp assets/ecomiq/ecomiq-logo-*.svg <proj>/assets/`,
+   `cp assets/ecomiq/fonts/RethinkSans.woff2 assets/ecomiq/fonts/HedvigLettersSerif.woff2 <proj>/assets/fonts/`.
+2. Declare the fonts **inline** in the composition `<style>` and name them **literally**
+   in CSS rules (not via `var()`) so lint stays clean — the linter doesn't resolve
+   CSS variables for `font-family`:
+   ```css
+   @font-face { font-family:'Rethink Sans'; font-weight:400 800; font-display:block;
+     src:url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+   @font-face { font-family:'Hedvig Letters Serif'; font-weight:400; font-display:block;
+     src:url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+   /* use: font-family:'Rethink Sans', sans-serif;  emphasis: font-family:'Hedvig Letters Serif', serif; font-style:italic; */
+   ```
+3. Record the choice in `style-profile.md` ("Source: EcomIQ brand kit").
+4. Signature move to preserve: one serif-italic emphasis word over bold sans; flame
+   orange is the ONLY hot accent; logo never recolored/stretched.
+
+**When to hand off instead:** if the deliverable is a *pure branded ad* (short, text-driven,
+Meta/IG feed or story), `/ecomiq-ad` is faster and already encodes this. Use `make-a-video`
++ the EcomIQ kit for *branded videos with footage / longer structure* (explainers, lessons,
+talking-head pieces) where you still want the gates + storyboard.
 
 ## When the user supplies hex codes
 

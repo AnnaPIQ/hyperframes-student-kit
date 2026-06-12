@@ -59,9 +59,15 @@ Full question bank: `Read: references/interview-questions.md`
 
 **Before asking the user anything, inventory existing assets.** Check `<workspace-root>/assets/` and any project `assets/` folder. Don't ask for what's already there.
 
+**Check for a saved brand kit first.** If `assets/ecomiq/` exists, the workspace has a
+ready EcomIQ brand (tokens + local fonts + logos). Offer it as the leading option:
+*"Use the EcomIQ brand, or a different look?"* If yes, apply it per
+`references/style-intake.md` → "When a saved brand kit exists" (and for a pure branded
+ad, hand off to `/ecomiq-ad`). This is offering, not imposing — never force it.
+
 Then ask progressively — they don't need answers to all of these:
 
-1. Style guide or brand doc? (paste/path · no)
+1. Style guide or brand doc? (the saved EcomIQ kit · paste/path · no)
 2. Color palette? (hex codes · none — use MOTION_PHILOSOPHY defaults)
 3. Fonts? (Google Fonts name(s) · file paths · none — use Inter + JetBrains Mono defaults)
 4. Logo file? (path · none — use text wordmark instead)
@@ -111,6 +117,12 @@ Otherwise continue:
 3. Edit `meta.json` with the user's slug, dimensions, fps.
 4. Copy supplied assets into `<project-folder>/assets/`. **Re-encode raw video before referencing it** — raw `.mov`/HEVC/variable-frame-rate clips stutter or fail mid-render. Normalize to H.264: `ffmpeg -i raw.mov -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p -vsync cfr -r <fps> -movflags +faststart assets/clip.mp4`. (In this workspace, `npm run prep -- <clip> --project <slug>` wraps exactly this; add `--mute` for b-roll, keep audio for a talking-head.)
 5. Create `<project-folder>/assets/style-profile.md` from Gate 3 — single source of truth for palette/fonts/logo.
+6. **If the user chose a saved brand kit (EcomIQ):** copy it into the project now —
+   `brand-tokens.css`, the logo lockups, and the local fonts (`RethinkSans.woff2` +
+   `HedvigLettersSerif.woff2`) into `assets/fonts/`. Declare those fonts inline and
+   reference them by literal name so lint stays clean. Full steps:
+   `Read: references/style-intake.md` → "When a saved brand kit exists". (Shortcut: a
+   fresh project from `npm run new` already has the kit wired — build on top of it.)
 
 ### Storyboard
 
@@ -266,7 +278,7 @@ Full preflight + pre-delivery checklist: `Read: references/build-checklist.md`
 - **DO NOT skip the `tl.to({}, { duration: SLOT_DURATION }, 0)` anchor tween** at the end of every sub-composition timeline. MOTION_PHILOSOPHY Law 11.
 - **DO NOT use `Math.random()` / `Date.now()`** inside render logic. Seeded hashes only.
 - **DO NOT add `class="clip"` to `<video>` tags.** It breaks them.
-- **DO NOT impose a brand on the user.** Ask first; fall back to MOTION_PHILOSOPHY defaults only when they explicitly decline.
+- **DO NOT impose a brand on the user.** You MAY *offer* a brand kit that exists in the workspace (e.g. `assets/ecomiq/`) as an option — surfacing what's already there isn't imposing. But ask first; never force it. Fall back to MOTION_PHILOSOPHY defaults only when they decline both the kit and supplying their own.
 
 ---
 
