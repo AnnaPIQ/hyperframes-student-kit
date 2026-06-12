@@ -47,7 +47,8 @@ Full question bank: `Read: references/interview-questions.md`
 
 1. Script source? (paste · outline → I'll draft · I'll record · TTS from text · no narration)
 2. If TTS: voice preference. Offer choices from `npx hyperframes tts --help`. Also capture pace.
-3. If face-cam: recording path · full-screen or corner placement · need transcription? (`npx hyperframes transcribe <file> --model small.en --json`)
+3. If face-cam: recording path · full-screen or corner placement · need transcription? (`npx hyperframes transcribe <file> --model small.en --json` — on-device, no Whisper install or API key required).
+   - **Tell the user to trim FIRST.** Cut retakes, flubs, and dead space *before* handing over the clip. You cannot reliably tell a mistake from a keeper or where a sentence really starts, and re-cutting via FFmpeg ("cut 4–7s, then 15–22s") is slower than the user trimming in their own editor (Descript, etc.). Ask for the clean cut.
 4. Captions? (off · hype · corporate · karaoke-word-by-word · minimal)
 
 **Gate:** script captured (or drafted), audio plan captured, caption plan captured.
@@ -58,9 +59,15 @@ Full question bank: `Read: references/interview-questions.md`
 
 **Before asking the user anything, inventory existing assets.** Check `<workspace-root>/assets/` and any project `assets/` folder. Don't ask for what's already there.
 
+**Check for a saved brand kit first.** If `assets/ecomiq/` exists, the workspace has a
+ready EcomIQ brand (tokens + local fonts + logos). Offer it as the leading option:
+*"Use the EcomIQ brand, or a different look?"* If yes, apply it per
+`references/style-intake.md` → "When a saved brand kit exists" (and for a pure branded
+ad, hand off to `/ecomiq-ad`). This is offering, not imposing — never force it.
+
 Then ask progressively — they don't need answers to all of these:
 
-1. Style guide or brand doc? (paste/path · no)
+1. Style guide or brand doc? (the saved EcomIQ kit · paste/path · no)
 2. Color palette? (hex codes · none — use MOTION_PHILOSOPHY defaults)
 3. Fonts? (Google Fonts name(s) · file paths · none — use Inter + JetBrains Mono defaults)
 4. Logo file? (path · none — use text wordmark instead)
@@ -108,8 +115,14 @@ Otherwise continue:
 1. `mkdir <project-folder>`
 2. If a sibling project with similar format exists, offer to copy its `hyperframes.json` + `meta.json` as a template. Otherwise from inside the folder: `npx hyperframes init`
 3. Edit `meta.json` with the user's slug, dimensions, fps.
-4. Copy supplied assets into `<project-folder>/assets/`.
+4. Copy supplied assets into `<project-folder>/assets/`. **Re-encode raw video before referencing it** — raw `.mov`/HEVC/variable-frame-rate clips stutter or fail mid-render. Normalize to H.264: `ffmpeg -i raw.mov -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p -vsync cfr -r <fps> -movflags +faststart assets/clip.mp4`. (In this workspace, `npm run prep -- <clip> --project <slug>` wraps exactly this; add `--mute` for b-roll, keep audio for a talking-head.)
 5. Create `<project-folder>/assets/style-profile.md` from Gate 3 — single source of truth for palette/fonts/logo.
+6. **If the user chose a saved brand kit (EcomIQ):** copy it into the project now —
+   `brand-tokens.css`, the logo lockups, and the local fonts (`RethinkSans.woff2` +
+   `HedvigLettersSerif.woff2`) into `assets/fonts/`. Declare those fonts inline and
+   reference them by literal name so lint stays clean. Full steps:
+   `Read: references/style-intake.md` → "When a saved brand kit exists". (Shortcut: a
+   fresh project from `npm run new` already has the kit wired — build on top of it.)
 
 ### Storyboard
 
@@ -135,7 +148,7 @@ Top of file: a timing table with scene · start · duration · composition file.
 
 **Map user intents → catalog blocks:** `Read: references/catalog-intent-map.md`
 
-**Gate:** show storyboard + timing table. Iterate until the user approves.
+**Gate:** show storyboard + timing table. Iterate until the user approves. **Get this right before Gate 6.** Building compositions writes a lot of HTML — the most token-expensive phase. Redirecting the storyboard now is cheap; regenerating comps the user approved and then dislikes is expensive. Push the user to actually read the plan, not rubber-stamp it.
 
 ---
 
@@ -188,6 +201,16 @@ No `Math.random()`, no `Date.now()`, no render-time `fetch()`. Use seeded PRNGs 
 
 Hot reload is on — edits show up live.
 
+### When the Studio preview can't be used — fall back, don't stall
+
+The live Studio is not always available, and you must not get stuck waiting on it:
+
+- **Cloud / web container:** `localhost:3002` is **not reachable from the user's browser**. The live-Studio gate is impossible here.
+- **`0s / 0s` bug:** the timeline loads but reports zero duration — nothing to scrub.
+- **Master comp stalls** under software WebGL with multiple shader blocks.
+
+In any of these cases, **the rendered MP4 (Gate 8) becomes Preview Gate 1.** Say so plainly: *"The live preview isn't reachable here — I'll render a draft and you review the MP4 instead."* Then go straight to the draft render + frame verification. First try per-composition URLs (`?comp=<id>`) to dodge a stalled master; if those also fail, render. Never skip *both* gates — but a draft-MP4 review fully satisfies the review requirement when the Studio is unavailable.
+
 ---
 
 ## Gate 8 · Draft render → visual verification → MP4 preview → final
@@ -229,20 +252,33 @@ npx hyperframes render --quality standard --output renders/<slug>-final.mp4
 
 Report the output path. Done.
 
+### Iterating on feedback
+
+Treat feedback like a human video editor would: it arrives **per timestamp**. Expect
+"at ~5s the title is blurred — put the blur behind the text" / "the % at ~12s is
+clipped on the right." Apply each note to the specific scene/beat, re-render, and
+re-verify the affected frames. Don't refactor untouched scenes.
+
+**On long sessions:** building a multi-scene video burns context fast. When the
+session gets heavy and the user wants a fresh round of edits, offer a clean handoff
+*before* continuing: *"Want a summary of everything built + where each file lives, so
+you can start a fresh session and we iterate from a clean slate?"* Cheaper and sharper
+than piling edits onto a bloated context.
+
 Full preflight + pre-delivery checklist: `Read: references/build-checklist.md`
 
 ---
 
 ## Non-negotiables (load-bearing — do not soften)
 
-- **DO NOT skip PREVIEW GATE 1 (Studio) or PREVIEW GATE 2 (rendered MP4).** Two gates per build, always.
+- **DO NOT skip the review gates.** Two reviews per build. If the live Studio is unreachable (cloud) or broken (`0s/0s`, stalled master), the draft-MP4 review absorbs Gate 1 — but never ship without the user reviewing the motion at least once on a rendered MP4.
 - **DO NOT claim a render is done** until frames have been extracted AND Read via the Read tool.
 - **DO NOT build anywhere but inside a dedicated project folder.** Never put `index.html` at the workspace root.
 - **DO NOT ask the user for assets** before inventorying their workspace.
 - **DO NOT skip the `tl.to({}, { duration: SLOT_DURATION }, 0)` anchor tween** at the end of every sub-composition timeline. MOTION_PHILOSOPHY Law 11.
 - **DO NOT use `Math.random()` / `Date.now()`** inside render logic. Seeded hashes only.
 - **DO NOT add `class="clip"` to `<video>` tags.** It breaks them.
-- **DO NOT impose a brand on the user.** Ask first; fall back to MOTION_PHILOSOPHY defaults only when they explicitly decline.
+- **DO NOT impose a brand on the user.** You MAY *offer* a brand kit that exists in the workspace (e.g. `assets/ecomiq/`) as an option — surfacing what's already there isn't imposing. But ask first; never force it. Fall back to MOTION_PHILOSOPHY defaults only when they decline both the kit and supplying their own.
 
 ---
 

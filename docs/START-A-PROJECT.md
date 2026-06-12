@@ -78,6 +78,9 @@ the proven recipe, then writes/edits the composition:
 | GSAP timing/easing help | `/gsap` |
 | Install a catalog block (chart, social card, shader transition) | `/hyperframes-registry` |
 
+> Building a video **around a clip of you talking** (demo/lesson)? See
+> `docs/EDITING-WITH-FOOTAGE.md` for the full footage + feedback-loop workflow.
+
 Example prompt after creating the project:
 > "Using /ecomiq-ad, make a 7s summer-sale ad: headline *Summer* sale, subhead
 > '20% off sitewide', CTA 'Shop now', with the prepped b-roll behind a navy scrim."

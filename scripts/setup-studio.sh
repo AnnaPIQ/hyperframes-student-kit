@@ -17,12 +17,24 @@ say() { printf '\n\033[1;36m▶ %s\033[0m\n' "$1"; }
 say "1/4 npm install (workspace tooling: playwright)"
 npm install
 
-say "2/4 system packages (ffmpeg + poppler-utils for PDF brand kits)"
-if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v pdftoppm >/dev/null 2>&1; then
+say "2/4 system packages (ffmpeg · poppler · imagemagick · yt-dlp)"
+# ffmpeg = encode/decode · poppler(pdftoppm) = PDF brand kits · imagemagick(convert)
+# = image resize/crop/convert · yt-dlp = pull reference clips from URLs.
+need_apt=0
+for b in ffmpeg pdftoppm convert; do command -v "$b" >/dev/null 2>&1 || need_apt=1; done
+if [ "$need_apt" -eq 1 ]; then
   sudo apt-get update -y >/dev/null 2>&1 || true
-  sudo apt-get install -y ffmpeg poppler-utils
+  sudo apt-get install -y ffmpeg poppler-utils imagemagick
 else
-  echo "ffmpeg + poppler already present — skipping"
+  echo "ffmpeg + poppler + imagemagick already present — skipping apt"
+fi
+# yt-dlp: standalone binary (apt's is often stale); idempotent.
+if ! command -v yt-dlp >/dev/null 2>&1; then
+  echo "installing yt-dlp…"
+  sudo curl -fsSL https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp \
+    -o /usr/local/bin/yt-dlp && sudo chmod a+rx /usr/local/bin/yt-dlp
+else
+  echo "yt-dlp already present — skipping"
 fi
 
 say "3/4 Chrome headless shell (Hyperframes render/preview engine)"
