@@ -6,18 +6,19 @@
         <div class="dv-title">EVERY MONTH</div>
         <div class="dv-chip down" id="dv-chip-down">ROAS <i>▼</i></div>
       </div>
-      <svg class="dv-chart" viewBox="0 0 900 420" preserveAspectRatio="none">
-        <line class="dv-base" x1="40" y1="380" x2="860" y2="380" />
-        <g class="dv-bars">
-          <rect class="dv-bar" x="70"  y="300" width="84" height="80"  rx="6" />
-          <rect class="dv-bar" x="200" y="260" width="84" height="120" rx="6" />
-          <rect class="dv-bar" x="330" y="215" width="84" height="165" rx="6" />
-          <rect class="dv-bar" x="460" y="165" width="84" height="215" rx="6" />
-          <rect class="dv-bar" x="590" y="115" width="84" height="265" rx="6" />
-          <rect class="dv-bar" x="720" y="70"  width="84" height="310" rx="6" />
-        </g>
-        <path class="dv-roas" pathLength="1" d="M112,120 C290,160 470,212 650,262 C720,282 770,300 800,312" />
-      </svg>
+      <div class="dv-plot">
+        <div class="dv-bars">
+          <div class="dv-bar" style="height:96px"></div>
+          <div class="dv-bar" style="height:140px"></div>
+          <div class="dv-bar" style="height:190px"></div>
+          <div class="dv-bar" style="height:242px"></div>
+          <div class="dv-bar" style="height:292px"></div>
+          <div class="dv-bar" style="height:340px"></div>
+        </div>
+        <svg class="dv-roas-svg" viewBox="0 0 780 420" preserveAspectRatio="none">
+          <path class="dv-roas" pathLength="1" d="M48,96 C230,150 410,210 590,268 C660,290 720,308 740,316" />
+        </svg>
+      </div>
       <div class="dv-axis"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
     </div>
     <style>
@@ -34,12 +35,16 @@
       [data-composition-id="diverge"] .dv-chip i { font-style: normal; }
       [data-composition-id="diverge"] .dv-chip.up { color: var(--brand-blue-tint); border: 2px solid rgba(156,212,255,.5); }
       [data-composition-id="diverge"] .dv-chip.down { color: var(--brand-flame); border: 2px solid rgba(255,76,50,.5); }
-      [data-composition-id="diverge"] .dv-chart { width: 780px; height: 400px; }
-      [data-composition-id="diverge"] .dv-base { stroke: rgba(159,182,212,.2); stroke-width: 2; }
-      [data-composition-id="diverge"] .dv-bar { fill: url(#x); fill: rgba(156,212,255,.32); stroke: var(--brand-blue-tint); stroke-width: 2;
-        transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); }
+      [data-composition-id="diverge"] .dv-plot { position: relative; width: 780px; height: 400px; }
+      [data-composition-id="diverge"] .dv-bars { position: absolute; inset: 0; display: flex; align-items: flex-end;
+        justify-content: space-between; padding: 0 6px; }
+      [data-composition-id="diverge"] .dv-bar { width: 96px; border-radius: 10px 10px 0 0;
+        background: linear-gradient(180deg, var(--brand-blue-tint) 0%, rgba(91,160,224,.55) 100%);
+        border: 1px solid rgba(156,212,255,.7); box-shadow: 0 0 18px rgba(156,212,255,.25);
+        transform-origin: 50% 100%; transform: scaleY(0); }
+      [data-composition-id="diverge"] .dv-roas-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
       [data-composition-id="diverge"] .dv-roas { fill: none; stroke: var(--brand-flame); stroke-width: 10; stroke-linecap: round;
-        stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 0 14px rgba(255,76,50,.55)); }
+        stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 0 14px rgba(255,76,50,.6)); }
       [data-composition-id="diverge"] .dv-axis { display: flex; justify-content: space-between; width: 760px;
         font-weight: 600; font-size: 25px; color: var(--brand-text-dim); }
     </style>
@@ -51,7 +56,7 @@
         const s = '[data-composition-id="diverge"] ';
         const tl = gsap.timeline({ paused: true });
         tl.from(s + ".dv-root", { opacity: 0, duration: 0.3, ease: "power2.out" }, 0);
-        tl.to(s + ".dv-chip-up, " + s + "#dv-chip-up", { opacity: 1, duration: 0.3 }, 0.2);
+        tl.to(s + "#dv-chip-up", { opacity: 1, duration: 0.3 }, 0.2);
         // Spend bars climb UP.
         tl.to(s + ".dv-bar", { scaleY: 1, duration: 0.5, ease: "power3.out", stagger: 0.12 }, 0.3);
         // ROAS drifts DOWN.

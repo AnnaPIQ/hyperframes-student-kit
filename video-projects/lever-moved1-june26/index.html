@@ -14,7 +14,10 @@
         background: var(--brand-navy);
         font-family: "Rethink Sans", system-ui, sans-serif; color: #fff;
       }
-      .layer { position: absolute; top: 0; left: 0; width: 1080px; height: 1350px; }
+      .layer { position: absolute; top: 0; left: 0; width: 1080px; height: 1350px; z-index: 10; }
+      #ov-frame { z-index: 30; }
+      #ov-captions { z-index: 40; }
+      #ov-endcard { z-index: 50; }
 
       /* Face video — cover-cropped from 16:9 into 4:5, centered on Sean. */
       #face-wrapper { position: absolute; inset: 0; overflow: hidden; z-index: 0;
