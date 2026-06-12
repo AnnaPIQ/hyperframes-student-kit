@@ -8,7 +8,6 @@
       <div class="ec-line2" id="ec-line2">Find what's actually holding your brand back.</div>
       <div class="ec-btn" id="ec-btn">
         <span class="ec-btn-label">Learn More</span><span class="ec-arrow" id="ec-arrow">→</span>
-        <span class="ec-underline" id="ec-underline"></span>
       </div>
       <div class="ec-glint" id="ec-glint"></div>
     </div>
@@ -39,11 +38,9 @@
       [data-composition-id="endcard"] .ec-line2 { font-family: "Hedvig Letters Serif", Georgia, serif; font-style: italic; font-weight: 400;
         font-size: 76px; line-height: 1.08; color: #fff; max-width: 880px; opacity: 0; text-shadow: 0 4px 22px rgba(0,0,0,.4); }
       [data-composition-id="endcard"] .ec-btn { position: relative; display: inline-flex; align-items: center; gap: 18px;
-        margin-top: 14px; padding: 28px 56px; border-radius: 999px; background: var(--brand-flame);
+        margin-top: 14px; padding: 28px 56px; border-radius: 999px; background: #FF4C32;
         font-weight: 800; font-size: 42px; color: #fff; box-shadow: 0 22px 60px -16px rgba(255,76,50,.65); opacity: 0; }
       [data-composition-id="endcard"] .ec-arrow { font-size: 42px; }
-      [data-composition-id="endcard"] .ec-underline { position: absolute; left: 56px; right: 56px; bottom: 18px; height: 4px;
-        background: rgba(255,255,255,.85); border-radius: 2px; transform: scaleX(0); transform-origin: left center; }
     </style>
     <link rel="stylesheet" href="../assets/fonts.css" />
     <link rel="stylesheet" href="../assets/brand-tokens.css" />
@@ -60,7 +57,6 @@
         tl.fromTo(s + "#ec-line1", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0.55);
         tl.fromTo(s + "#ec-line2", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.85);
         tl.fromTo(s + "#ec-btn", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 1.25);
-        tl.to(s + "#ec-underline", { scaleX: 1, duration: 0.4, ease: "power3.out" }, 1.7);
         // Arrow nudge — finite repeat across the hold.
         tl.to(s + "#ec-arrow", { x: 12, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 4 }, 2.0);
         tl.set({}, {}, 5.0);
