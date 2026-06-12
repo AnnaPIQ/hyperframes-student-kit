@@ -12,43 +12,257 @@
         font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
       @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
         font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1080px; height: 1350px; overflow: hidden;
-        background: var(--brand-bg); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
-      #bg { position: absolute; inset: 0;
-        background: radial-gradient(90% 55% at 50% 20%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
-      #logo { position: absolute; top: 7%; left: 10%; width: 33%; height: auto; }
-      #stage { position: absolute; inset: 0; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; gap: 24px; padding: 10%; text-align: center; }
-      #eyebrow { font-weight: 600; font-size: 26px; letter-spacing: .34em; text-transform: uppercase; color: var(--brand-blue-tint); }
-      #headline { font-weight: 800; font-size: 96px; line-height: .98; letter-spacing: -.03em; }
-      #headline .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
-      #subhead { font-weight: 500; font-size: 34px; line-height: 1.3; color: var(--brand-text-dim); max-width: 70%; }
-      #cta { margin-top: 12px; font-weight: 700; font-size: 34px; color: var(--brand-white);
-        background: var(--brand-flame); padding: 26px 52px; border-radius: 999px;
-        box-shadow: 0 20px 64px -16px rgba(255,76,50,.6); }
+        background: #02101f; font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+
+      /* ---- Footage (full-bleed, center-cropped 16:9 → 4:5) ---- */
+      #face-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 0; transform-origin: 50% 40%; }
+      #face { position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; object-position: 50% 42%; }
+
+      /* ---- Texture / legibility layers ---- */
+      #scrim-top { position: absolute; left: 0; right: 0; top: 0; height: 360px; z-index: 5;
+        background: linear-gradient(180deg, rgba(2,16,31,.72) 0%, rgba(2,16,31,0) 100%); }
+      #scrim-bot { position: absolute; left: 0; right: 0; bottom: 0; height: 560px; z-index: 5;
+        background: linear-gradient(0deg, rgba(2,16,31,.86) 0%, rgba(2,16,31,.40) 48%, rgba(2,16,31,0) 100%); }
+      #vignette { position: absolute; inset: 0; z-index: 6; pointer-events: none;
+        background: radial-gradient(120% 90% at 50% 42%, rgba(0,0,0,0) 52%, rgba(0,0,0,.46) 100%); }
+      #grain { position: absolute; inset: 0; z-index: 7; pointer-events: none; opacity: .055; mix-blend-mode: overlay;
+        background-image:
+          radial-gradient(rgba(255,255,255,.9) .5px, transparent .6px),
+          radial-gradient(rgba(255,255,255,.7) .5px, transparent .6px);
+        background-size: 3px 3px, 5px 5px; background-position: 0 0, 1px 2px; }
+
+      /* ---- Logo ---- */
+      #logo { position: absolute; top: 56px; left: 64px; width: 268px; height: auto; z-index: 20; opacity: 0; }
+
+      /* ---- Captions (bottom zone) ---- */
+      .cap { position: absolute; left: 96px; right: 96px; bottom: 188px; z-index: 35;
+        text-align: center; font-weight: 600; font-size: 46px; line-height: 1.26;
+        letter-spacing: -.01em; color: var(--brand-white);
+        text-shadow: 0 2px 22px rgba(0,0,0,.55); opacity: 0; }
+      .c-blue { color: var(--brand-blue-tint); }
+      .c-it { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+
+      /* ---- Hero lines (center) ---- */
+      .hero { position: absolute; inset: 0; z-index: 30; padding: 0 84px;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        text-align: center; opacity: 0; }
+      .hero .l { font-weight: 800; font-size: 108px; line-height: .98; letter-spacing: -.035em; }
+      .hero .em-blue { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
+        font-weight: 400; color: var(--brand-blue-tint); }
+      .hero .em-flame { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
+        font-weight: 400; color: var(--brand-flame); }
+
+      /* ---- Weakness list (center) ---- */
+      #list { position: absolute; inset: 0; z-index: 28; padding: 0 132px;
+        display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 34px; }
+      .li { opacity: 0; display: flex; align-items: center; gap: 28px;
+        font-weight: 600; font-size: 66px; letter-spacing: -.02em; color: var(--brand-white);
+        text-shadow: 0 2px 20px rgba(0,0,0,.5); }
+      .li .tick { flex: none; width: 46px; height: 5px; border-radius: 4px; background: var(--brand-blue-tint); }
+
+      /* ---- The lever (signature graphic) ---- */
+      #lever { position: absolute; left: 50%; top: 63%; margin-left: -260px;
+        width: 520px; z-index: 25; opacity: 0; }
+      #lever .track { position: relative; height: 10px; border-radius: 999px;
+        background: var(--brand-surface); border: 1px solid var(--brand-border); }
+      #lever .knob { position: absolute; top: 50%; left: 0; width: 56px; height: 56px; margin-top: -28px;
+        border-radius: 16px; background: linear-gradient(150deg, #cfeaff, var(--brand-blue-tint));
+        box-shadow: 0 0 0 1px rgba(255,255,255,.25), 0 8px 22px rgba(45,127,214,.55); }
+      #lever .ends { display: flex; justify-content: space-between; margin-top: 26px;
+        font-weight: 600; font-size: 22px; letter-spacing: .14em; text-transform: uppercase; }
+      #lever .e-old { color: var(--brand-text-dim); }
+      #lever .e-now { color: var(--brand-text-dim); }
+
+      /* ---- CTA card (full navy) ---- */
+      #cta { position: absolute; inset: 0; z-index: 50; opacity: 0;
+        background: radial-gradient(95% 60% at 50% 30%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 58%), var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 44px; padding: 12% 9%; text-align: center; }
+      #cta .clogo { width: 300px; height: 84px; opacity: 0;
+        background: url(assets/ecomiq-logo-white.svg) center / contain no-repeat; }
+      #cta .chead { opacity: 0; font-weight: 800; font-size: 78px; line-height: 1.04; letter-spacing: -.035em; }
+      #cta .chead .em { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
+        font-weight: 400; color: var(--brand-blue-tint); }
+      #cta .cbtn { opacity: 0; font-weight: 700; font-size: 42px; letter-spacing: -.01em; color: var(--brand-white);
+        background: var(--brand-flame); padding: 30px 60px; border-radius: 999px;
+        box-shadow: 0 24px 70px -18px rgba(255,76,50,.7); }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="lever-moved-jun26" data-start="0" data-duration="6" data-width="1080" data-height="1350">
-      <div id="bg" class="clip" data-start="0" data-duration="6" data-track-index="0"></div>
-      <img id="logo" class="clip" data-start="0" data-duration="6" data-track-index="1" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-      <div id="stage" class="clip" data-start="0" data-duration="6" data-track-index="2">
-        <div id="eyebrow">E-Commerce Intelligence</div>
-        <div id="headline"><span class="em">Rethink</span> your strategy.</div>
-        <div id="subhead">Replace this copy. Build your scene. Ship the ad.</div>
-        <div id="cta">Get started &rarr;</div>
+    <div id="root" data-composition-id="lever-moved-jun26" data-start="0" data-duration="60.3" data-width="1080" data-height="1350">
+
+      <!-- Footage + its audio -->
+      <div id="face-wrap">
+        <video id="face" data-start="0" data-duration="60.3" data-track-index="0"
+               src="assets/lever-face.mp4" muted playsinline></video>
+      </div>
+      <audio id="vo" data-start="0" data-duration="60.3" data-track-index="1"
+             src="assets/lever-face.mp4" data-volume="1"></audio>
+
+      <!-- Texture / legibility -->
+      <div id="scrim-top"></div>
+      <div id="scrim-bot"></div>
+      <div id="vignette"></div>
+      <div id="grain"></div>
+
+      <!-- Logo -->
+      <img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+
+      <!-- Hero line A (hook) -->
+      <div id="heroA" class="hero">
+        <div class="l">Spending more.</div>
+        <div class="l">Making <span class="em-blue">less</span>.</div>
+      </div>
+
+      <!-- Weakness list -->
+      <div id="list">
+        <div class="li" id="li1"><span class="tick"></span>Weak conversion.</div>
+        <div class="li" id="li2"><span class="tick"></span>Poor retention.</div>
+        <div class="li" id="li3"><span class="tick"></span>Margins that can't scale.</div>
+      </div>
+
+      <!-- The lever -->
+      <div id="lever">
+        <div class="track"><div class="knob" id="knob"></div></div>
+        <div class="ends"><span class="e-old">Old playbook</span><span class="e-now">Today</span></div>
+      </div>
+
+      <!-- Hero line B (the moment) -->
+      <div id="heroB" class="hero">
+        <div class="l">The lever</div>
+        <div class="l"><span class="em-flame">moved</span>.</div>
+      </div>
+
+      <!-- Caption layer (filled by script) -->
+      <div id="caps"></div>
+
+      <!-- CTA card -->
+      <div id="cta">
+        <div class="clogo" role="img" aria-label="EcomIQ"></div>
+        <div class="chead">What's actually<br/><span class="em">holding</span> your growth back?</div>
+        <div class="cbtn">Click the link below &rarr;</div>
       </div>
     </div>
+
     <script>
       window.__timelines = window.__timelines || {};
+      const DUR = 60.3;
       const tl = gsap.timeline({ paused: true });
-      tl.from("#logo", { opacity: 0, y: -20, duration: .6, ease: "power3.out" }, .2)
-        .from("#eyebrow", { opacity: 0, y: 16, duration: .5, ease: "power2.out" }, .5)
-        .from("#headline", { opacity: 0, y: 32, duration: .7, ease: "power3.out" }, .7)
-        .from("#subhead", { opacity: 0, y: 20, duration: .6, ease: "power2.out" }, 1.1)
-        .from("#cta", { opacity: 0, scale: .85, duration: .55, ease: "back.out(1.7)" }, 1.5);
-      tl.to({}, { duration: 6 }, 0); // pad to data-duration
+
+      /* ---------- 1. Footage: slow, continuous push-in (camera never sleeps) ---------- */
+      tl.fromTo("#face-wrap", { scale: 1.0 }, { scale: 1.065, duration: 55, ease: "none" }, 0);
+
+      /* ---------- 2. Persistent UI: logo ---------- */
+      tl.fromTo("#logo", { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.3);
+
+      /* ---------- 3. Captions (bottom zone) ---------- */
+      // Each: [start, end, html].  One visible at a time. Hero/list beats intentionally
+      // leave the bottom empty so only one text zone is ever active.
+      const CAPS = [
+        [4.8, 6.0,  "this is probably why."],
+        [6.1, 8.0,  "Most founders think the answer's simple."],
+        [8.2, 10.7, "Need more revenue? Spend more on ads."],
+        [10.8, 12.9, "And for a long time, that's what worked."],
+        [13.0, 15.1, "The problem is, the game's completely <span class='c-it'>changed</span>."],
+        [15.3, 18.0, "Brands increase spend, month after month,"],
+        [18.1, 21.4, "while <span class='c-blue'>ROAS</span> drifts down and profits get squeezed."],
+        [21.5, 23.9, "Not because they're bad marketers —"],
+        [24.0, 26.2, "they're still pulling the lever"],
+        [26.3, 29.2, "that used to work <span class='c-blue'>18 months ago</span>."],
+        [29.4, 31.9, "More spend used to mean more growth."],
+        [32.0, 35.4, "But today, it exposes what's already broken:"],
+        [43.3, 46.2, "The platforms got harder, the signal got worse."],
+        [49.5, 51.2, "Most founders just haven't realized it yet."],
+        [51.3, 52.8, "If your ad spend keeps climbing,"],
+        [52.9, 54.2, "but the results aren't following…"],
+        [54.3, 55.9, "Let's find what's actually holding your growth back."],
+      ];
+      const capLayer = document.getElementById("caps");
+      const capEls = CAPS.map(function (c, i) {
+        const el = document.createElement("div");
+        el.className = "cap";
+        el.id = "cap-" + i;
+        el.innerHTML = c[2];
+        capLayer.appendChild(el);
+        return el;
+      });
+      CAPS.forEach(function (c, i) {
+        const el = capEls[i];
+        const s = c[0], e = c[1];
+        tl.fromTo(el, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.34, ease: "power3.out", overwrite: "auto" }, s);
+        tl.to(el, { opacity: 0, y: -12, duration: 0.24, ease: "power2.in", overwrite: "auto" }, e - 0.24);
+        tl.set(el, { opacity: 0 }, e); // deterministic kill
+      });
+
+      /* ---------- 4. Hero A — the hook (replaces bottom caption 0–4.5) ---------- */
+      tl.fromTo("#heroA", { opacity: 0 }, { opacity: 1, duration: 0.01 }, 0.8);
+      tl.from("#heroA .l:nth-child(1)", { y: 40, opacity: 0, duration: 0.6, ease: "power3.out" }, 0.85);
+      tl.from("#heroA .l:nth-child(2)", { y: 44, opacity: 0, duration: 0.6, ease: "power3.out" }, 1.35);
+      tl.to("#heroA", { opacity: 0, y: -26, duration: 0.45, ease: "power2.in" }, 4.2);
+      tl.set("#heroA", { opacity: 0 }, 4.7);
+
+      /* ---------- 5. Lever — appearance 1 (quiet intro, old position) ---------- */
+      tl.fromTo("#lever", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 23.7);
+      // faint breathing glow while it waits
+      tl.to("#knob", { boxShadow: "0 0 0 1px rgba(255,255,255,.3), 0 10px 30px rgba(45,127,214,.85)",
+        duration: 1.6, ease: "sine.inOut", yoyo: true, repeat: 2 }, 24.6);
+      tl.to("#lever", { opacity: 0, y: -16, duration: 0.4, ease: "power2.in" }, 29.4);
+      tl.set("#lever", { opacity: 0 }, 29.9);
+
+      /* ---------- 6. Weakness list (center, builds as spoken) ---------- */
+      tl.from("#li1", { opacity: 0, x: -28, duration: 0.5, ease: "power3.out" }, 37.2);
+      tl.set("#li1", { opacity: 1 }, 37.2);
+      tl.from("#li2", { opacity: 0, x: -28, duration: 0.5, ease: "power3.out" }, 39.0);
+      tl.set("#li2", { opacity: 1 }, 39.0);
+      tl.from("#li3", { opacity: 0, x: -28, duration: 0.5, ease: "power3.out" }, 40.7);
+      tl.set("#li3", { opacity: 1 }, 40.7);
+      tl.to("#list .li", { opacity: 0, y: -18, duration: 0.4, ease: "power2.in", stagger: 0.05 }, 42.9);
+      tl.set("#list .li", { opacity: 0 }, 43.5);
+
+      /* ---------- 7. Lever — appearance 2 + the MOVE (the one flame moment) ---------- */
+      tl.set("#knob", { x: 0, filter: "blur(0px)" }, 44.6);
+      tl.fromTo("#lever", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 44.7);
+      // Hero B lands centered as he says "the lever moved"
+      tl.fromTo("#heroB", { opacity: 0 }, { opacity: 1, duration: 0.01 }, 46.1);
+      tl.from("#heroB .l:nth-child(1)", { y: 36, opacity: 0, duration: 0.5, ease: "power3.out" }, 46.15);
+      tl.from("#heroB .l:nth-child(2)", { y: 40, opacity: 0, scale: 0.92, duration: 0.55, ease: "back.out(1.5)" }, 46.5);
+      // The knob slides old → new, with motion blur + a single flame pulse on landing
+      tl.to("#knob", { x: 464, duration: 0.66, ease: "power3.inOut" }, 46.55);
+      tl.fromTo("#knob", { filter: "blur(0px)" }, { filter: "blur(7px)", duration: 0.18, yoyo: true, repeat: 1, ease: "power1.inOut" }, 46.6);
+      tl.to("#knob", { background: "linear-gradient(150deg, #ffb3a6, #FF4C32)",
+        boxShadow: "0 0 0 1px rgba(255,160,140,.5), 0 12px 40px rgba(255,76,50,.85)",
+        duration: 0.22, ease: "power2.out" }, 47.15);
+      // exits
+      tl.to("#heroB", { opacity: 0, y: -22, duration: 0.45, ease: "power2.in" }, 49.0);
+      tl.set("#heroB", { opacity: 0 }, 49.5);
+      tl.to("#lever", { opacity: 0, y: -14, duration: 0.4, ease: "power2.in" }, 49.2);
+      tl.set("#lever", { opacity: 0 }, 49.7);
+
+      /* ---------- 8. CTA card (full navy, held) ---------- */
+      tl.fromTo("#cta", { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "power2.out" }, 55.5);
+      tl.from("#cta .clogo", { opacity: 0, y: -16, duration: 0.6, ease: "power3.out" }, 56.0);
+      tl.set("#cta .clogo", { opacity: 1 }, 56.0);
+      tl.from("#cta .chead", { opacity: 0, y: 24, duration: 0.6, ease: "power3.out" }, 56.3);
+      tl.set("#cta .chead", { opacity: 1 }, 56.3);
+      tl.from("#cta .cbtn", { opacity: 0, scale: 0.86, duration: 0.55, ease: "back.out(1.7)" }, 56.8);
+      tl.set("#cta .cbtn", { opacity: 1 }, 56.8);
+      tl.to("#cta .cbtn", { y: 9, duration: 1.2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 57.6);
+
+      /* ---------- 9. Duration anchor (Law 11) ---------- */
+      tl.to({}, { duration: DUR }, 0);
+
+      /* ---------- Caption self-lint ---------- */
+      CAPS.forEach(function (c, i) {
+        tl.seek(c[1] + 0.05);
+        if (window.getComputedStyle(capEls[i]).opacity !== "0")
+          console.warn("[caption-lint] cap " + i + " still visible at " + (c[1] + 0.05).toFixed(2) + "s");
+      });
+      tl.seek(0);
+
       window.__timelines["lever-moved-jun26"] = tl;
     </script>
   </body>

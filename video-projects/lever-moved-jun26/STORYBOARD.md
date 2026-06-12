@@ -1,105 +1,104 @@
-# lever-moved-jun26 — Storyboard
+# lever-moved-jun26 — Storyboard (v2 — restrained / premium)
 
-Full-bleed face video (60.3s) with motion-graphic overlays + word-synced captions.
-One continuous shot → animation lives in the overlays and the **lever motif**.
+Direction: **high-end and professional. Flame used sparingly — only where it must
+land. Few graphics.** The footage + beautiful typography do the work; one signature
+graphic (the lever) earns its single moment.
 
-## Timing table (6 beats over the single continuous take)
+## What changed from v1
+- **Cut** the diverging chart, the equation builder, the "USED TO WORK" stamp, and
+  the three flame chips. Too busy.
+- **Captions become the craft** — premium kinetic typography on a soft scrim (no
+  boxy pills), restrained motion. This is the main "graphic."
+- **Flame appears only twice in the whole ad:** the word "***moved***" (hero) and
+  the **CTA button**. Withholding it is what makes those two hits land.
+- **One signature graphic:** a minimal lever/slider. Introduced quietly (~24s),
+  pays off as the hero moment (~46s) when it slides. Nothing else competes with it.
 
-| Beat | Time | Duration | One idea | Hero overlay |
-|------|------|----------|----------|--------------|
-| 1 · HOOK            | 0.0–8.0   | 8.0s  | "Spending more, making less" | Kinetic "MORE SPEND ↑ / LESS PROFIT ↓" |
-| 2 · USED TO WORK    | 8.0–15.0  | 7.0s  | The old playbook worked… then stopped | `SPEND ↑ → GROWTH ↑` + "USED TO WORK" stamp |
-| 3 · DIVERGE + LEVER | 15.0–29.0 | 14.0s | ROAS drifts down; the old lever | Diverging spend/ROAS chart → **lever (old position)** |
-| 4 · 3 WEAKNESSES    | 29.0–43.0 | 14.0s | More spend exposes what's broken | 3 flame chips: conversion · retention · margins |
-| 5 · THE LEVER MOVED | 43.0–54.0 | 11.0s | The game changed — the lever moved | **Lever slides to new position** + "the *lever moved*" |
-| 6 · CTA OUTRO       | 54.0–60.3 | 6.3s  | Find what's holding you back | Logo lockup + flame "Click the link below →" |
+## Type & color system (the premium baseline)
+- **Captions:** Rethink Sans 600, white, ~46px, −2% tracking, on a soft bottom
+  navy→transparent gradient scrim. Clean fade+rise per phrase (no bounce).
+- **Emphasis words** inside captions: **Hedvig Letters Serif *italic***, blue-tint
+  `#9CD4FF` (the calm accent). Used for ~one word per key line.
+- **Hero text moments:** Rethink Sans 800, large, centered, scales up subtly.
+- **Flame `#FF4C32`:** reserved. Two uses only — "*moved*" and the CTA pill.
+- Texture: faint grain + vignette + a subtle navy bloom. No grid, no clutter.
+- Logo: EcomIQ white lockup, small, top-left, present throughout, low-key.
 
-**Three-act shape:** Act 1 hook (0–15, ~25%) · Act 2 body (15–43, ~46%) · Act 3 payoff+CTA (43–60, ~29%).
-**Callback:** lever introduced beat 3 (~24s), pays off beat 5 (~46s).
+---
+
+## Timing table
+
+| Beat | Time | Idea | On screen beyond captions |
+|------|------|------|----------------------------|
+| 1 · HOOK        | 0.0–8.0   | Spending more, making less | One hero line: "Spending more. **Making less.**" (no flame — blue-tint emphasis) |
+| 2 · OLD PLAYBOOK| 8.0–15.0  | It used to work; the game changed | Captions only; emphasis on "*changed*" |
+| 3 · THE DRIFT   | 15.0–29.0 | ROAS drifts down; the old lever | Captions; **lever appears quietly** (old position) on "pulling the lever" |
+| 4 · WHAT BREAKS | 29.0–43.0 | More spend exposes weakness | A restrained 3-line list builds (no chips/badges) |
+| 5 · LEVER MOVED | 43.0–54.0 | The lever moved | **Lever slides** + hero "The lever ***moved***." (flame on *moved*) |
+| 6 · CTA         | 54.0–60.3 | Find what's holding you back | Clean outro: logo + one line + **flame CTA pill** |
+
+**Acts:** hook 0–15 (~25%) · body 15–43 (~46%) · payoff+CTA 43–60 (~29%).
+**Single motif + callback:** the lever (quiet intro ~24s → hero payoff ~46s).
+**Flame budget:** 2 hits total ("*moved*", CTA).
 
 ---
 
 ## Beat 1 — HOOK (0.0–8.0)
-**Concept:** Name the exact pain in the first second.
-- **Overlay:** Two stacked kinetic lines, lower third, over the face:
-  `MORE SPEND` with a small up-chevron, then `LESS PROFIT ↓` in **flame**.
-  Words slide+blur in (carrier 360px → tail decay), flame line punches 0.2s ahead of "less profit."
-- **Logo:** EcomIQ white lockup fades in top-left (top scrim), stays for the whole ad.
 - **Captions:** "If you're spending more on Meta than ever" → "and making less profit than ever," → "this is probably why." → "Most Shopify founders think the answer's simple."
-- **Motion:** subtle 1.04× slow push-in on the face wrapper across the beat (camera never sleeps).
-- **Exit:** overlay lines rise + blur out (vertical whip) into beat 2.
-- **Eases:** `expo.out` (word in), `power2.in` (exit), `sine.inOut` (push-in).
+- **Hero line (≈1.5–4.5s):** centered, large — **"Spending more. Making less."**
+  "Making less" emphasized in **blue-tint** (NOT flame — restraint). Scales up
+  ~6% and settles; fades before the captions continue.
+- **Motion:** slow 1.04× push-in on the face for the whole beat. Caption phrases
+  fade+rise (0.4s, `power2.out`).
+- **No flame this beat.**
 
-## Beat 2 — USED TO WORK (8.0–15.0)
-**Concept:** The simple answer ("spend more") genuinely used to work.
-- **Overlay:** Equation builds: `SPEND ↑` → arrow → `GROWTH ↑` (white/blue-tint),
-  then a **flame "USED TO WORK"** stamp rotates in (`back.out`). On "the game's
-  completely changed," the stamp desaturates/strikes and the equation fades.
-- **Captions:** "Need more revenue? Spend more on ads." → "And for a long time, that's what worked." → "The problem is the game's completely changed."
-- **Exit:** equation collapses; whip into the chart.
-- **Eases:** `power3.out`, `back.out(1.6)` (stamp), `power2.in` (collapse).
+## Beat 2 — OLD PLAYBOOK (8.0–15.0)
+- **Captions:** "Need more revenue? Spend more on ads." → "And for a long time, that's what worked." → "The problem is the game's completely *changed*." (*changed* = Hedvig italic, blue-tint.)
+- **Graphics:** none. Let the founder talk; captions carry it. (Breathing room = premium.)
 
-## Beat 3 — DIVERGE + LEVER INTRO (15.0–29.0)
-**Concept:** Spend keeps rising while ROAS drifts down — and founders keep pulling the *old* lever.
-- **Overlay A (15–22):** compact line chart, upper-right card: **spend line climbs**
-  (blue-tint), **ROAS line drifts down** (flame). `ROAS ↓` + `PROFIT ↓` flame chips
-  pop on "drifts down… squeezed." Lines draw via `stroke-dashoffset`.
-- **Overlay B (22–29):** chart slides out; the **LEVER** appears — a slider/lever
-  graphic pinned **left ("old position")**, with an "18 MONTHS AGO" tag on
-  "used to work 18 months ago." Lever handle glows (it's the thing they keep pulling).
-- **Captions:** "Brands increase spend month after month," → "while ROAS drifts down and profits get squeezed." → "Not because they're bad marketers —" → "they're still pulling the lever" → "that used to work 18 months ago."
-- **Exit:** lever holds on screen (it returns in beat 5).
-- **Eases:** `power2.inOut` (chart draw), `power3.out` (lever in), `sine.inOut` (handle glow breath).
+## Beat 3 — THE DRIFT + LEVER INTRO (15.0–29.0)
+- **Captions:** "Brands increase spend, month after month." → "while ROAS *drifts down* and profits get squeezed." → "Not because they're bad marketers —" → "they're still pulling the lever" → "that used to work 18 months ago."
+- **Lever (enters ~24s, on "pulling the lever"):** a minimal horizontal track with a
+  single handle, pinned **left**. Thin lines, blue-tint, soft glow. Small label
+  "18 MONTHS AGO" (muted, not flame). It just *sits* there — quiet, waiting.
+- **Motion:** lever fades/draws in (`power2.out`), handle has a faint breathing glow.
 
-## Beat 4 — THREE WEAKNESSES (29.0–43.0)
-**Concept:** Today, more spend *exposes* what's already broken. (Rule of threes.)
-- **Overlay:** `MORE SPEND = MORE GROWTH` shows, then a **flame strike + "NOT ANYMORE"**.
-  Then three chips stagger in as each is named, lower stack:
-  **1 · Weak conversion** · **2 · Poor retention** · **3 · Margins can't scale** —
-  flame number badges, each lands on its caption word.
-- **Captions:** "More spend used to mean more growth." → "Today, more spend exposes the weaknesses" → "already sitting inside your business:" → "Weak conversion rates." → "Poor retention." → "Margins that can't support scale."
-- **Motion:** chips have a tiny `back.out` settle; the three stay stacked, dim slightly as the next lands.
-- **Exit:** chips clear; lever re-enters for the payoff.
-- **Eases:** `power2.in` (strike), `back.out(1.5)` (chip settle).
+## Beat 4 — WHAT BREAKS (29.0–43.0)
+- **Captions:** "More spend used to mean more growth." → "But today it just exposes what's already broken:" → "Weak conversion." → "Poor retention." → "Margins that can't support scale."
+- **Restrained list (37–43s):** three short lines stack in, left-aligned, as each is
+  spoken — plain white text, a thin blue-tint tick before each. **No flame, no chips,
+  no badges.** Each line fades the previous slightly. Clean, editorial.
+- **Lever:** stays subtly present (lower corner), still in old position.
 
-## Beat 5 — THE LEVER MOVED (43.0–54.0)  ← hero / callback
-**Concept:** The platforms changed and the lever physically moved — most haven't noticed.
-- **Overlay:** the lever from beat 3 returns; on "and the **lever moved**," the handle
-  **slides from the old (left) position to a new (right) position** with a motion-blur
-  trail, and the headline lands: **"The lever** ***moved.***" — "moved" in **Hedvig
-  italic, flame**, scaled big, held ~1.5s (the one still moment / hero shot).
-- **Captions:** "The platforms got harder. The signal got worse." → "And the lever moved." → "Most founders just haven't realized it yet." → "If your ad spend keeps climbing" → "but the results aren't following…"
-- **Motion:** brief slow-mo feel — face push-in pauses, overlay carries the energy.
-- **Exit:** headline + lever fade as the navy CTA scrim rises.
-- **Eases:** `power4.in`→`power2.out` (lever slide w/ blur), hold on `none`.
+## Beat 5 — THE LEVER MOVED (43.0–54.0)  ← hero / the one big moment
+- **Captions:** "The platforms got harder. The signal got worse." → "And the lever moved." → "Most founders just haven't realized it yet." → "If your ad spend keeps climbing," → "but the results aren't following…"
+- **Hero (on "and the lever moved", ≈46.5s):** the lever handle **glides from left to
+  right** with a soft motion-blur trail and a single **flame pulse** as it lands.
+  Simultaneously the hero line resolves centered: **"The lever *moved*."** — "moved"
+  in **Hedvig italic, flame**, scaled large, **held ~2s** (the stillness after speed).
+  *This is the first flame in the entire ad — that's why it hits.*
+- **Motion:** everything else calms — push-in pauses; the move + the word are the beat.
 
-## Beat 6 — CTA OUTRO (54.0–60.3)  ← hold 4–6s
-**Concept:** Soft, confident CTA. Diagnose your growth.
-- **Overlay:** navy bottom card rises (face dims slightly behind a stronger scrim or
-  the face stays top, card owns bottom 45%). EcomIQ white logo lockup, headline
-  **"What's actually holding your growth back?"** (Hedvig italic on "*holding*"),
-  flame pill button **"Click the link below →"** with a subtle down-nudge loop.
-- **Captions:** "Let's find what's actually holding your growth back." (CTA card carries the rest.)
-- **Motion:** button settle `back.out`, then a gentle 2s breathing loop; hold the card to 60.3s.
-- **Eases:** `power3.out` (card rise), `back.out(1.7)` (button), `sine.inOut` (breath).
+## Beat 6 — CTA OUTRO (54.0–60.3)  ← full navy card, hold ~6s
+- **Captions:** "Let's find what's actually holding your growth back." (then the card owns it.)
+- **Transition:** soft, premium hand-off — face push-in eases, a navy wash rises and
+  the footage dissolves into a **full navy CTA card** (~55.5s).
+- **Card (centered, lots of negative space — the calm after the kinetic act):**
+  EcomIQ white logo (top third) → headline **"What's actually holding your growth
+  back?"** (Hedvig italic on "*holding*", blue-tint) → **flame pill "Click the link
+  below →"** with a gentle 2s breathing nudge. Subtle navy bloom + grain. Hold to 60.3s.
+- **Flame:** second and final hit — the CTA pill only. Nothing else competes.
 
 ---
 
-## Build architecture (Gate 6)
-- **Single root composition** in `index.html` (one continuous face video → not chopped
-  into sub-comps). `data-duration="60.33"`.
-- **Track 0:** `<video src="assets/lever-face.mp4" muted data-has-audio="true">` in a
-  wrapper div (animate the wrapper, never the video — Render Contract #9), full-bleed,
-  center-cropped to 4:5 via `object-fit: cover` + scale.
-- **Tracks 1–3:** top scrim + logo, bottom scrim, grain/vignette (full duration).
-- **Tracks 5–15:** motion-graphic overlay groups per beat, shown via `data-start`/
-  `data-duration`, entrances/exits driven by the one master GSAP timeline.
-- **Tracks ≥20:** captions as body-level siblings (MOTION_PHILOSOPHY §3.13).
-- One paused master timeline on `window.__timelines["lever-moved-jun26"]`, padded to
-  60.33s with `tl.to({}, { duration: 60.33 }, 0)` (Law 11).
+## Inspiration clip — how it informs the build
+Used as **tonal inspiration, not a literal cut.** Takeaways applied throughout:
+calm cinematic blue lighting, a human/contemplative restraint, generous stillness,
+no graphic clutter. The whole ad leans into that premium quietness; the navy CTA
+card is the deliberate calm landing.
 
-## Verification plan
-Draft render → pull frames at 2, 6, 11, 18, 25, 31, 38, 47, 52, 58s → Read each →
-confirm: face not cropped weird, captions readable + on the right words, flame used
-only for hot/negatives, lever slides cleanly, CTA holds. Nudge caption timing to the
-real audio, re-render, then standard quality.
+## Build architecture (unchanged from v1)
+Single root composition; full-bleed face `<video>` on track 0 (wrapper-animated,
+`data-has-audio="true"`); scrims/logo/grain on low tracks; the lever + hero text on
+mid tracks driven by one master GSAP timeline; captions as body-level siblings
+(track ≥20); timeline padded to 60.33s (Law 11).
