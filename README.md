@@ -42,13 +42,14 @@ Studio hot-reloads on file save. Scrub the timeline, inspect scenes, change colo
 
 > **New here? Read `docs/START-A-PROJECT.md`** — the full step-by-step for starting a project with these tools and skills.
 
-Four helpers make spinning up and feeding projects fast. All are idempotent and print next steps.
+These helpers make spinning up and feeding projects fast. All are idempotent and print next steps.
 
 | Command | What it does |
 |---|---|
 | `npm run setup` | Bootstrap a fresh / cloud container — installs FFmpeg, Chrome, poppler, node deps, then runs `hyperframes doctor`. Run once per session on the web. → `docs/REMOTE-ENV-SETUP.md` |
 | `npm run new -- <slug> [format]` | Scaffold a fully-wired project: correct dimensions, EcomIQ brand kit (tokens + logos + **local fonts**), a lint-clean starter composition, and a `DESIGN.md`. Formats: `meta` (4:5, default) · `square` (1:1) · `story` (9:16) · `wide` (16:9). |
 | `npm run prep -- <input> [--project <slug>] [--mute] [--crf n]` | Re-encode raw footage/b-roll to render-ready H.264 (yuv420p, 30fps CFR, faststart). `--mute` strips audio for b-roll; `--project` drops it straight into a project's `assets/`. |
+| `npm run gen -- --image <path> --prompt "<motion>" [--project <slug>]` | Generate AI b-roll with Runway Gen-4 (image-to-video). Needs `RUNWAYML_API_SECRET`. → `docs/AI-VIDEO-GEN.md` |
 | `npm run preflight` | Validate a project (existing). |
 
 **Shared brand kit:** `assets/ecomiq/` is the single source of truth — palette tokens, all logo lockups, local `.woff2` fonts, and `BRAND.md`. `npm run new` copies from here, so update the brand in one place.
