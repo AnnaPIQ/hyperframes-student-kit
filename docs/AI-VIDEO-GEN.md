@@ -3,9 +3,10 @@
 Generate animated b-roll from a still image + a motion prompt, then drop it into a
 composition. Wired via `npm run gen` (`scripts/gen-broll.mjs`, the `@runwayml/sdk`).
 
-> **Gen-4 is image-to-video, not text-to-video.** It animates a *starting image*.
-> Give it a product photo (or any still) + how it should move. Perfect for turning a
-> product shot from the Marketing folder into a moving shot.
+> **Gen-4 video is image-to-video** — it animates a *starting image*. You can either
+> bring your own still (`--image`) or have it **generate the still first** from a text
+> prompt (`--text`, via `gen4_image`), which closes the loop: prompt → still → motion →
+> b-roll. Use `--image-only` to stop at the still (e.g. an ad background).
 
 ## One-time setup: the API key
 
@@ -21,10 +22,16 @@ npm run gen -- --image <path|url> --prompt "<motion>" [options]
 
 Examples:
 ```bash
-# product still in the incoming folder → b-roll in a project
+# generate the still AND animate it (closes the loop)
+npm run gen -- --text "minimalist desk with a glowing analytics dashboard, navy tones" \
+  --prompt "slow push-in, soft studio light" --project summer-sale
+
+# bring your own product still → b-roll
 npm run gen -- --image assets/incoming/product.jpg \
-  --prompt "slow push-in, soft studio light, subtle rotation" \
-  --project summer-sale
+  --prompt "subtle rotation, shallow depth of field" --project summer-sale
+
+# just a still (e.g. an ad background), no animation
+npm run gen -- --text "abstract flame-orange gradient, soft grain" --image-only --project summer-sale
 
 # vertical clip for a story/reel
 npm run gen -- --image assets/incoming/hero.png --prompt "drifting parallax" --ratio 720:1280
@@ -32,14 +39,19 @@ npm run gen -- --image assets/incoming/hero.png --prompt "drifting parallax" --r
 
 | Option | Default | Notes |
 |---|---|---|
-| `--image <path\|url>` | — (required) | starting still; local file or https URL |
-| `--prompt "<text>"` | — (required) | describe the **motion**, not just the scene |
-| `--ratio <w:h>` | `1280:720` | also `720:1280` (vertical) · `960:960` (square) · `832:1104` (3:4 portrait) |
+| `--text "<scene>"` | — | generate the starting still from a prompt (`gen4_image`) |
+| `--image <path\|url>` | — | OR bring your own still (local file or https URL). One of `--text`/`--image` required |
+| `--prompt "<text>"` | — | the **motion** (required unless `--image-only`) |
+| `--image-only` | off | generate just the still (PNG), skip animation (needs `--text`) |
+| `--ratio <w:h>` | `1280:720` | video ratio: also `720:1280` (vertical) · `960:960` (square) · `832:1104` (3:4) |
+| `--image-ratio <w:h>` | derived | still ratio (defaults to match `--ratio` orientation: `1920:1080`/`1080:1920`/`1080:1080`) |
 | `--duration <5\|10>` | `5` | clip length in seconds |
+| `--image-model <id>` | `gen4_image` | also `gen4_image_turbo` |
 | `--project <slug>` | — | save into `video-projects/<slug>/assets/` (else `assets/incoming/`) |
 | `--out <file>` | — | explicit output path |
 
-The script submits the task, polls until it's done, and downloads the MP4.
+The script submits each task, polls until done, and downloads the result. When `--text`
+is used with motion, the generated still is also saved alongside the video for reuse.
 
 ## Then: prep and use it
 
