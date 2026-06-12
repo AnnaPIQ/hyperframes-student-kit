@@ -21,7 +21,7 @@ say "2/4 system packages (ffmpeg · poppler · imagemagick · yt-dlp)"
 # ffmpeg = encode/decode · poppler(pdftoppm) = PDF brand kits · imagemagick(convert)
 # = image resize/crop/convert · yt-dlp = pull reference clips from URLs.
 need_apt=0
-for b in ffmpeg pdftoppm convert; do command -v "$b" >/dev/null 2>&1 || need_apt=1; done
+for b in ffmpeg ffprobe pdftoppm convert; do command -v "$b" >/dev/null 2>&1 || need_apt=1; done
 if [ "$need_apt" -eq 1 ]; then
   sudo apt-get update -y >/dev/null 2>&1 || true
   sudo apt-get install -y ffmpeg poppler-utils imagemagick
