@@ -1,0 +1,68 @@
+<template id="playbook-template">
+  <div data-composition-id="playbook" data-start="0" data-width="1080" data-height="1350" data-duration="7.0">
+    <div class="pb-root">
+      <div class="pb-eyebrow">THE OLD PLAYBOOK</div>
+      <div class="pb-sub" id="pb-sub">More spend → more growth</div>
+      <svg class="pb-chart" viewBox="0 0 900 420" preserveAspectRatio="none">
+        <line class="pb-base" x1="40" y1="380" x2="860" y2="380" />
+        <path class="pb-up" pathLength="1" d="M40,360 C220,322 410,250 560,180 C650,140 705,120 720,114" />
+        <path class="pb-down" pathLength="1" d="M720,114 C758,170 800,265 860,360" />
+        <circle class="pb-knee" cx="720" cy="114" r="10" />
+      </svg>
+      <div class="pb-tag" id="pb-tag">IT WORKED</div>
+      <div class="pb-stab" id="pb-stab">SOMETHING CHANGED.</div>
+    </div>
+    <style>
+      [data-composition-id="playbook"] { position: absolute; inset: 0; }
+      [data-composition-id="playbook"] .pb-root {
+        position: absolute; inset: 0; background: var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 18px; padding: 90px 60px 200px; font-family: "Rethink Sans", sans-serif;
+      }
+      [data-composition-id="playbook"] .pb-eyebrow { font-weight: 800; font-size: 40px; letter-spacing: .28em; color: var(--brand-blue-tint); opacity: 0; }
+      [data-composition-id="playbook"] .pb-sub { font-weight: 600; font-size: 38px; color: var(--brand-text-dim); opacity: 0; }
+      [data-composition-id="playbook"] .pb-chart { width: 760px; height: 380px; margin-top: 6px; }
+      [data-composition-id="playbook"] .pb-base { stroke: rgba(159,182,212,.18); stroke-width: 2; }
+      [data-composition-id="playbook"] .pb-up { fill: none; stroke: var(--brand-blue-tint); stroke-width: 9; stroke-linecap: round;
+        stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 0 12px rgba(156,212,255,.5)); }
+      [data-composition-id="playbook"] .pb-down { fill: none; stroke: var(--brand-flame); stroke-width: 9; stroke-linecap: round;
+        stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 0 12px rgba(255,76,50,.5)); }
+      [data-composition-id="playbook"] .pb-knee { fill: #fff; opacity: 0; }
+      [data-composition-id="playbook"] .pb-tag {
+        font-weight: 800; font-size: 34px; letter-spacing: .12em; color: var(--brand-blue-tint);
+        border: 2px solid rgba(156,212,255,.5); border-radius: 999px; padding: 10px 26px; opacity: 0;
+      }
+      [data-composition-id="playbook"] .pb-stab {
+        position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%) scale(.8);
+        text-align: center; font-weight: 800; font-size: 112px; letter-spacing: -.02em; color: var(--brand-flame);
+        text-shadow: 0 0 40px rgba(255,76,50,.45); opacity: 0;
+      }
+    </style>
+    <link rel="stylesheet" href="../assets/fonts.css" />
+    <link rel="stylesheet" href="../assets/brand-tokens.css" />
+    <script src="../assets/gsap.min.js"></script>
+    <script>
+      (function () {
+        const s = '[data-composition-id="playbook"] ';
+        const tl = gsap.timeline({ paused: true });
+        tl.from(s + ".pb-root", { opacity: 0, duration: 0.3, ease: "power2.out" }, 0);
+        tl.to(s + ".pb-eyebrow", { opacity: 1, duration: 0.35, ease: "power2.out" }, 0.15);
+        tl.to(s + ".pb-sub", { opacity: 1, duration: 0.35, ease: "power2.out" }, 0.35);
+        // The line that WORKED — rises up-and-to-the-right (legit, per VO).
+        tl.to(s + ".pb-up", { strokeDashoffset: 0, duration: 2.2, ease: "power1.inOut" }, 0.4);
+        tl.to(s + ".pb-knee", { opacity: 1, duration: 0.2 }, 2.5);
+        tl.to(s + ".pb-tag", { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(1.6)" }, 2.7);
+        // ~master 13s ("completely changed"): glitch, then it BREAKS down.
+        tl.to(s + ".pb-chart", { x: -16, duration: 0.04, ease: "power1.in", yoyo: true, repeat: 5 }, 4.7);
+        tl.to(s + ".pb-tag", { opacity: 0, duration: 0.15 }, 4.7);
+        tl.to(s + ".pb-sub", { opacity: 0, duration: 0.15 }, 4.7);
+        tl.to(s + ".pb-down", { strokeDashoffset: 0, duration: 0.6, ease: "power2.in" }, 4.9);
+        tl.to(s + ".pb-stab", { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)" }, 5.0);
+        tl.to(s + ".pb-root", { opacity: 0, duration: 0.3, ease: "power2.in" }, 6.7);
+        tl.set({}, {}, 7.0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["playbook"] = tl;
+      })();
+    </script>
+  </div>
+</template>

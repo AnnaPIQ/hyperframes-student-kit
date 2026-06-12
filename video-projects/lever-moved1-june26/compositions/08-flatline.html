@@ -1,0 +1,53 @@
+<template id="flatline-template">
+  <div data-composition-id="flatline" data-start="0" data-width="1080" data-height="1350" data-duration="4.0">
+    <div class="fl-root">
+      <div class="fl-head">AD SPEND <span class="up">▲</span> &nbsp;·&nbsp; RESULTS <span class="flat">—</span></div>
+      <svg class="fl-chart" viewBox="0 0 900 420" preserveAspectRatio="none">
+        <line class="fl-base" x1="40" y1="380" x2="860" y2="380" />
+        <path class="fl-spend" pathLength="1" d="M40,360 C220,322 420,240 640,160 C740,124 820,104 860,92" />
+        <path class="fl-results" pathLength="1" d="M40,300 L860,300" />
+        <text class="fl-tag up" x="868" y="92">SPEND</text>
+        <text class="fl-tag flat" x="868" y="306">RESULTS</text>
+      </svg>
+      <div class="fl-stab" id="fl-stab">The flat line is information.</div>
+    </div>
+    <style>
+      [data-composition-id="flatline"] { position: absolute; inset: 0; }
+      [data-composition-id="flatline"] .fl-root { position: absolute; inset: 0; background: var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px;
+        padding: 80px 70px 200px; font-family: "Rethink Sans", sans-serif; }
+      [data-composition-id="flatline"] .fl-head { font-weight: 800; font-size: 40px; letter-spacing: .04em; color: var(--brand-text-dim); opacity: 0; }
+      [data-composition-id="flatline"] .fl-head .up { color: var(--brand-blue-tint); }
+      [data-composition-id="flatline"] .fl-head .flat { color: var(--brand-text-dim); }
+      [data-composition-id="flatline"] .fl-chart { width: 760px; height: 360px; overflow: visible; }
+      [data-composition-id="flatline"] .fl-base { stroke: rgba(159,182,212,.18); stroke-width: 2; }
+      [data-composition-id="flatline"] .fl-spend { fill: none; stroke: var(--brand-blue-tint); stroke-width: 9; stroke-linecap: round;
+        stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 0 12px rgba(156,212,255,.45)); }
+      [data-composition-id="flatline"] .fl-results { fill: none; stroke: var(--brand-text-dim); stroke-width: 9; stroke-linecap: round;
+        stroke-dasharray: 1; stroke-dashoffset: 1; }
+      [data-composition-id="flatline"] .fl-tag { font-family: "Rethink Sans", sans-serif; font-weight: 800; font-size: 26px; }
+      [data-composition-id="flatline"] .fl-tag.up { fill: var(--brand-blue-tint); }
+      [data-composition-id="flatline"] .fl-tag.flat { fill: var(--brand-text-dim); }
+      [data-composition-id="flatline"] .fl-stab { font-family: "Hedvig Letters Serif", Georgia, serif; font-style: italic; font-weight: 400;
+        font-size: 80px; line-height: 1.02; text-align: center; color: #fff; opacity: 0; text-shadow: 0 4px 20px rgba(0,0,0,.4); }
+    </style>
+    <link rel="stylesheet" href="../assets/fonts.css" />
+    <link rel="stylesheet" href="../assets/brand-tokens.css" />
+    <script src="../assets/gsap.min.js"></script>
+    <script>
+      (function () {
+        const s = '[data-composition-id="flatline"] ';
+        const tl = gsap.timeline({ paused: true });
+        tl.from(s + ".fl-root", { opacity: 0, duration: 0.3, ease: "power2.out" }, 0);
+        tl.to(s + ".fl-head", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.2);
+        tl.to(s + ".fl-spend", { strokeDashoffset: 0, duration: 1.2, ease: "power1.out" }, 0.3);   // UP
+        tl.to(s + ".fl-results", { strokeDashoffset: 0, duration: 1.2, ease: "none" }, 0.5);        // FLAT
+        tl.fromTo(s + "#fl-stab", { opacity: 0, y: 22, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.5)" }, 1.8);
+        tl.to(s + ".fl-root", { opacity: 0, duration: 0.3, ease: "power2.in" }, 3.65);
+        tl.set({}, {}, 4.0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["flatline"] = tl;
+      })();
+    </script>
+  </div>
+</template>

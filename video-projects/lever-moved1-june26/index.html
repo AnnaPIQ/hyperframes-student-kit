@@ -3,53 +3,157 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1350" />
-    <title>lever-moved1-june26</title>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <title>The Lever Moved — EcomIQ Meta Ad (4:5)</title>
+    <script src="assets/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/fonts.css" />
     <link rel="stylesheet" href="assets/brand-tokens.css" />
     <style>
-      /* LOCAL fonts — no network dependency at render time (latin subset) */
-      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
-        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
-      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
-        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { width: 1080px; height: 1350px; overflow: hidden;
-        background: var(--brand-bg); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
-      #bg { position: absolute; inset: 0;
-        background: radial-gradient(90% 55% at 50% 20%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
-      #logo { position: absolute; top: 7%; left: 10%; width: 33%; height: auto; }
-      #stage { position: absolute; inset: 0; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; gap: 24px; padding: 10%; text-align: center; }
-      #eyebrow { font-weight: 600; font-size: 26px; letter-spacing: .34em; text-transform: uppercase; color: var(--brand-blue-tint); }
-      #headline { font-weight: 800; font-size: 96px; line-height: .98; letter-spacing: -.03em; }
-      #headline .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
-      #subhead { font-weight: 500; font-size: 34px; line-height: 1.3; color: var(--brand-text-dim); max-width: 70%; }
-      #cta { margin-top: 12px; font-weight: 700; font-size: 34px; color: var(--brand-white);
-        background: var(--brand-flame); padding: 26px 52px; border-radius: 999px;
-        box-shadow: 0 20px 64px -16px rgba(255,76,50,.6); }
+      html, body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: "Rethink Sans", system-ui, sans-serif; color: #fff;
+      }
+      .layer { position: absolute; top: 0; left: 0; width: 1080px; height: 1350px; }
+
+      /* Face video — cover-cropped from 16:9 into 4:5, centered on Sean. */
+      #face-wrapper { position: absolute; inset: 0; overflow: hidden; z-index: 0;
+        transform-origin: 50% 35%; }
+      #face-video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 33%;
+        transform-origin: center center; filter: contrast(1.06) saturate(1.06) brightness(0.98); }
+
+      /* End-card background footage (dimmed/blurred), revealed at the end. */
+      #ec-wrapper { position: absolute; inset: 0; overflow: hidden; z-index: 1; opacity: 0; }
+      #ec-video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
+        filter: brightness(0.42) blur(3px) saturate(1.05); }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="lever-moved1-june26" data-start="0" data-duration="6" data-width="1080" data-height="1350">
-      <div id="bg" class="clip" data-start="0" data-duration="6" data-track-index="0"></div>
-      <img id="logo" class="clip" data-start="0" data-duration="6" data-track-index="1" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-      <div id="stage" class="clip" data-start="0" data-duration="6" data-track-index="2">
-        <div id="eyebrow">E-Commerce Intelligence</div>
-        <div id="headline"><span class="em">Rethink</span> your strategy.</div>
-        <div id="subhead">Replace this copy. Build your scene. Ship the ad.</div>
-        <div id="cta">Get started &rarr;</div>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="65.0"
+      data-width="1080"
+      data-height="1350"
+    >
+      <!-- Spine: Sean talking head (continuous 0–60.23s) -->
+      <div id="face-wrapper">
+        <video
+          id="face-video"
+          data-start="0"
+          data-duration="60.23"
+          data-track-index="0"
+          src="assets/lever-talk.mp4"
+          muted
+          playsinline
+        ></video>
       </div>
+
+      <!-- VO (separate audio track for the mixer) -->
+      <audio
+        id="face-audio"
+        data-start="0"
+        data-duration="60.23"
+        data-track-index="4"
+        data-volume="1"
+        src="assets/lever-talk.mp4"
+      ></audio>
+
+      <!-- End-card background footage (muted) -->
+      <div id="ec-wrapper">
+        <video
+          id="ec-video"
+          data-start="60.0"
+          data-duration="4.9"
+          data-track-index="6"
+          src="assets/lever-endcard.mp4"
+          muted
+          playsinline
+        ></video>
+      </div>
+
+      <!-- ===== MG overlay layers (track 1, sequential) ===== -->
+      <div class="layer" id="ov-coldopen"
+        data-composition-id="coldopen" data-composition-src="compositions/01-coldopen.html"
+        data-start="0" data-duration="1.6" data-track-index="1"
+        data-width="1080" data-height="1350"></div>
+
+      <div class="layer" id="ov-proof"
+        data-composition-id="proof" data-composition-src="compositions/02-proof.html"
+        data-start="3.0" data-duration="3.0" data-track-index="1"
+        data-width="1080" data-height="1350"></div>
+
+      <div class="layer" id="ov-playbook"
+        data-composition-id="playbook" data-composition-src="compositions/03-playbook.html"
+        data-start="8.0" data-duration="7.0" data-track-index="1"
+        data-width="1080" data-height="1350"></div>
+
+      <div class="layer" id="ov-diverge"
+        data-composition-id="diverge" data-composition-src="compositions/04-diverge.html"
+        data-start="15.0" data-duration="7.0" data-track-index="1"
+        data-width="1080" data-height="1350"></div>
+
+      <div class="layer" id="ov-lever"
+        data-composition-id="lever" data-composition-src="compositions/05-lever.html"
+        data-start="22.0" data-duration="7.0" data-track-index="1"
+        data-width="1080" data-height="1350"></div>
+
+      <div class="layer" id="ov-weaknesses"
+        data-composition-id="weaknesses" data-composition-src="compositions/06-weaknesses.html"
+        data-start="29.0" data-duration="14.0" data-track-index="1"
+        data-width="1080" data-height="1350"></div>
+
+      <div class="layer" id="ov-moved"
+        data-composition-id="levermoved" data-composition-src="compositions/07-lever-moved.html"
+        data-start="43.0" data-duration="2.5" data-track-index="1"
+        data-width="1080" data-height="1350"></div>
+
+      <div class="layer" id="ov-flat"
+        data-composition-id="flatline" data-composition-src="compositions/08-flatline.html"
+        data-start="50.0" data-duration="4.0" data-track-index="1"
+        data-width="1080" data-height="1350"></div>
+
+      <!-- Captions (track 2, full duration, above overlays) -->
+      <div class="layer" id="ov-captions"
+        data-composition-id="captions" data-composition-src="compositions/captions.html"
+        data-start="0" data-duration="60.0" data-track-index="2"
+        data-width="1080" data-height="1350"></div>
+
+      <!-- Persistent frame: vignette + grain + logo (track 3, above captions) -->
+      <div class="layer" id="ov-frame"
+        data-composition-id="frame" data-composition-src="compositions/frame.html"
+        data-start="0" data-duration="60.0" data-track-index="3"
+        data-width="1080" data-height="1350"></div>
+
+      <!-- End card (track 5, top) -->
+      <div class="layer" id="ov-endcard"
+        data-composition-id="endcard" data-composition-src="compositions/endcard.html"
+        data-start="60.0" data-duration="5.0" data-track-index="5"
+        data-width="1080" data-height="1350"></div>
     </div>
+
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
-      tl.from("#logo", { opacity: 0, y: -20, duration: .6, ease: "power3.out" }, .2)
-        .from("#eyebrow", { opacity: 0, y: 16, duration: .5, ease: "power2.out" }, .5)
-        .from("#headline", { opacity: 0, y: 32, duration: .7, ease: "power3.out" }, .7)
-        .from("#subhead", { opacity: 0, y: 20, duration: .6, ease: "power2.out" }, 1.1)
-        .from("#cta", { opacity: 0, scale: .85, duration: .55, ease: "back.out(1.7)" }, 1.5);
-      tl.to({}, { duration: 6 }, 0); // pad to data-duration
-      window.__timelines["lever-moved1-june26"] = tl;
+
+      // Ken Burns — slow continuous zoom on the face so it never reads as a still.
+      tl.to("#face-video", { scale: 1.05, duration: 60, ease: "none" }, 0);
+
+      // Punch-ins on the wrapper (cheap cutaway, breaks the single static shot).
+      tl.set("#face-wrapper", { scale: 1.0 }, 0);
+      tl.to("#face-wrapper", { scale: 1.07, duration: 0.5, ease: "power2.out" }, 1.5); // cut to Sean
+      tl.to("#face-wrapper", { scale: 1.0,  duration: 1.0, ease: "power2.inOut" }, 6.0);
+      tl.to("#face-wrapper", { scale: 1.12, duration: 0.6, ease: "power2.out" }, 45.7); // "haven't realized it yet"
+      tl.to("#face-wrapper", { scale: 1.0,  duration: 0.8, ease: "power2.inOut" }, 49.6);
+      tl.to("#face-wrapper", { scale: 1.06, duration: 0.6, ease: "power2.out" }, 54.0); // the offer lands
+
+      // Crossfade footage → end-card background at ~60s.
+      tl.to("#face-wrapper", { opacity: 0, duration: 0.6, ease: "power2.inOut" }, 59.6);
+      tl.to("#ec-wrapper",   { opacity: 1, duration: 0.6, ease: "power2.inOut" }, 59.6);
+
+      tl.set({}, {}, 65.0); // duration anchor (Law 11)
+      window.__timelines["main"] = tl;
     </script>
   </body>
 </html>

@@ -1,0 +1,55 @@
+<template id="captions-template">
+  <div data-composition-id="captions" data-start="0" data-width="1080" data-height="1350" data-duration="60.0">
+    <div class="cp-stage">
+      <div class="cap" data-s="0.4"  data-d="2.6">More <span class="kw">spend</span> on Meta than ever…</div>
+      <div class="cap" data-s="3.1"  data-d="2.9">…and <span class="kw">less profit</span> than ever.</div>
+      <div class="cap" data-s="6.2"  data-d="1.9">Most founders think the fix is simple.</div>
+      <div class="cap" data-s="8.3"  data-d="2.5">Spend more, make more.</div>
+      <div class="cap" data-s="11.0" data-d="1.8">For years, that worked.</div>
+      <div class="cap" data-s="13.0" data-d="1.9">Then the game <span class="kw">changed</span>.</div>
+      <div class="cap" data-s="15.1" data-d="3.6">Spend climbs every month…</div>
+      <div class="cap" data-s="18.9" data-d="3.7">…but <span class="kw">ROAS</span> drifts down.</div>
+      <div class="cap" data-s="22.9" data-d="2.0">Not bad marketers.</div>
+      <div class="cap" data-s="25.1" data-d="3.7">Pulling a <span class="kw">lever</span> that worked 18 months ago.</div>
+      <div class="cap" data-s="29.1" data-d="2.6">More spend used to mean growth.</div>
+      <div class="cap" data-s="31.9" data-d="2.0">Now it exposes the weakness inside.</div>
+      <div class="cap" data-s="34.2" data-d="2.9">Weak <span class="kw">conversion</span> rates.</div>
+      <div class="cap" data-s="37.3" data-d="2.8">Poor <span class="kw">retention</span>.</div>
+      <div class="cap" data-s="40.3" data-d="2.5"><span class="kw">Margins</span> that can't scale.</div>
+      <div class="cap" data-s="43.2" data-d="3.2">Platforms got harder. Signal got worse.</div>
+      <div class="cap" data-s="46.7" data-d="3.2">Most haven't realized it yet.</div>
+      <div class="cap" data-s="50.1" data-d="3.7">Spend keeps climbing — results don't.</div>
+      <div class="cap" data-s="54.1" data-d="4.0">Find what's holding your growth back.</div>
+      <div class="cap" data-s="58.3" data-d="1.7">Click the link below.</div>
+    </div>
+    <style>
+      [data-composition-id="captions"] { position: absolute; inset: 0; }
+      [data-composition-id="captions"] .cp-stage { position: absolute; inset: 0; font-family: "Rethink Sans", sans-serif; }
+      [data-composition-id="captions"] .cap {
+        position: absolute; left: 50%; bottom: 118px; transform: translateX(-50%);
+        width: max-content; max-width: 880px; text-align: center;
+        background: rgba(6,24,46,.66); backdrop-filter: blur(8px);
+        border: 1px solid rgba(156,212,255,.22); border-radius: 18px; padding: 16px 30px;
+        font-weight: 800; font-size: 48px; line-height: 1.16; letter-spacing: -.01em; color: #fff;
+        text-shadow: 0 2px 12px rgba(0,0,0,.45); opacity: 0;
+      }
+      [data-composition-id="captions"] .cap .kw { color: var(--brand-blue-tint); }
+    </style>
+    <link rel="stylesheet" href="../assets/fonts.css" />
+    <link rel="stylesheet" href="../assets/brand-tokens.css" />
+    <script src="../assets/gsap.min.js"></script>
+    <script>
+      (function () {
+        const tl = gsap.timeline({ paused: true });
+        document.querySelectorAll('[data-composition-id="captions"] .cap').forEach((el) => {
+          const s = parseFloat(el.dataset.s), d = parseFloat(el.dataset.d);
+          tl.fromTo(el, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.32, ease: "power3.out" }, s);
+          tl.to(el, { opacity: 0, y: -12, duration: 0.26, ease: "power2.in" }, s + d - 0.26);
+        });
+        tl.set({}, {}, 60.0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["captions"] = tl;
+      })();
+    </script>
+  </div>
+</template>
