@@ -1,5 +1,5 @@
 <template id="hook-template">
-  <div data-composition-id="hook" data-start="0" data-width="1080" data-height="1350" data-duration="3.0">
+  <div data-composition-id="hook" data-start="0" data-width="1080" data-height="1350" data-duration="3.6">
     <div class="hk-root">
       <div class="hk-tex"></div>
       <div class="hk-streak"></div>
@@ -89,19 +89,19 @@
         tl.to(s + ".hk-stat.down", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.5);
 
         // Opposing counters: spend climbs, profit falls.
-        tl.to(spend, { v: 248, duration: 1.2, ease: "power2.out", onUpdate: () => { if (spendEl) spendEl.textContent = "$" + Math.round(spend.v) + "K"; } }, 0.3);
-        tl.to(profit, { v: 31, duration: 1.2, ease: "power2.out", onUpdate: () => { if (profitEl) profitEl.textContent = "$" + Math.round(profit.v) + "K"; } }, 0.5);
-        tl.to(s + ".hk-line.up", { strokeDashoffset: 0, duration: 1.0, ease: "power1.out" }, 0.35);
-        tl.to(s + ".hk-line.down", { strokeDashoffset: 0, duration: 1.0, ease: "power1.out" }, 0.55);
+        tl.to(spend, { v: 248, duration: 2.2, ease: "power1.out", onUpdate: () => { if (spendEl) spendEl.textContent = "$" + Math.round(spend.v) + "K"; } }, 0.3);
+        tl.to(profit, { v: 31, duration: 2.2, ease: "power1.out", onUpdate: () => { if (profitEl) profitEl.textContent = "$" + Math.round(profit.v) + "K"; } }, 0.5);
+        tl.to(s + ".hk-line.up", { strokeDashoffset: 0, duration: 1.9, ease: "power1.out" }, 0.35);
+        tl.to(s + ".hk-line.down", { strokeDashoffset: 0, duration: 1.9, ease: "power1.out" }, 0.55);
 
         // Tiny emphasis pop as the numbers land.
-        tl.to(s + ".hk-stat.up .hk-num", { scale: 1.05, transformOrigin: "left center", duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" }, 1.5);
-        tl.to(s + ".hk-stat.down .hk-num", { scale: 1.05, transformOrigin: "left center", duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" }, 1.6);
+        tl.to(s + ".hk-stat.up .hk-num", { scale: 1.05, transformOrigin: "left center", duration: 0.2, yoyo: true, repeat: 1, ease: "power2.out" }, 2.6);
+        tl.to(s + ".hk-stat.down .hk-num", { scale: 1.05, transformOrigin: "left center", duration: 0.2, yoyo: true, repeat: 1, ease: "power2.out" }, 2.7);
 
         // Whip out to Sean.
-        tl.fromTo(s + ".hk-streak", { xPercent: -70, opacity: 0 }, { xPercent: 280, opacity: 1, duration: 0.4, ease: "power3.in" }, 2.55);
-        tl.to(s + ".hk-root", { yPercent: -9, filter: "blur(22px)", opacity: 0, duration: 0.32, ease: "power2.in" }, 2.66);
-        tl.set({}, {}, 3.0);
+        tl.fromTo(s + ".hk-streak", { xPercent: -70, opacity: 0 }, { xPercent: 280, opacity: 1, duration: 0.4, ease: "power3.in" }, 3.15);
+        tl.to(s + ".hk-root", { yPercent: -9, filter: "blur(22px)", opacity: 0, duration: 0.32, ease: "power2.in" }, 3.25);
+        tl.set({}, {}, 3.6);
         window.__timelines = window.__timelines || {};
         window.__timelines["hook"] = tl;
       })();
