@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>EcomIQ — Don't pour fuel on a leak</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time (latin subset) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+
+      /* ---- talking head (continuous, full-bleed 4:5 center crop) ---- */
+      #face { position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; object-position: center center; z-index: 1; }
+
+      /* bottom scrim so captions stay legible over the face */
+      #scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 46%; z-index: 2;
+        background: linear-gradient(to top, rgba(3,18,38,0.92) 0%, rgba(3,18,38,0.72) 34%, rgba(3,18,38,0) 100%); }
+      /* faint top scrim under the logo bug */
+      #topscrim { position: absolute; left: 0; right: 0; top: 0; height: 22%; z-index: 2;
+        background: linear-gradient(to bottom, rgba(3,18,38,0.66) 0%, rgba(3,18,38,0) 100%); }
+
+      #logobug { position: absolute; top: 64px; left: 72px; width: 232px; height: auto; z-index: 3; }
+
+      /* ---- lower-band captions (face scenes) ---- */
+      .cap { position: absolute; left: 96px; right: 96px; bottom: 150px; z-index: 4;
+        text-align: center; font-weight: 600; font-size: 52px; line-height: 1.16;
+        letter-spacing: -0.015em; color: var(--brand-white);
+        text-shadow: 0 4px 28px rgba(0,0,0,0.55); }
+      .cap .ser { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; }
+      .cap .blue { color: var(--brand-blue-tint); }
+      .cap .flame { color: var(--brand-flame); }
+
+      /* opening thesis title (the ad's name) */
+      #thesis { bottom: 230px; font-weight: 800; font-size: 92px; line-height: 1.02; letter-spacing: -0.03em; }
+      #thesis .leak { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-flame); }
+
+      /* escalating "more …" spend pills */
+      #spend { position: absolute; left: 96px; right: 96px; bottom: 188px; z-index: 4;
+        display: flex; flex-direction: column; align-items: center; gap: 22px; }
+      #spend .lead { font-weight: 600; font-size: 40px; color: var(--brand-text-dim); margin-bottom: 4px;
+        text-shadow: 0 4px 28px rgba(0,0,0,0.55); }
+      #spend .pillrow { display: flex; gap: 18px; justify-content: center; }
+      #spend .pill { font-weight: 700; font-size: 44px; letter-spacing: -0.01em;
+        padding: 16px 34px; border-radius: 999px; background: var(--brand-surface);
+        border: 2px solid var(--brand-border); color: var(--brand-white); white-space: nowrap; }
+      #spend .pill.hot { background: var(--brand-flame); border-color: var(--brand-flame);
+        box-shadow: 0 18px 52px -16px rgba(255,76,50,0.7); }
+
+      /* three-leaks chips (face scene 3) */
+      #leaks3 { position: absolute; left: 96px; right: 96px; bottom: 150px; z-index: 4;
+        display: flex; flex-direction: column; gap: 18px; align-items: center; }
+      #leaks3 .chip { display: flex; align-items: center; gap: 20px; width: 770px;
+        padding: 22px 30px; border-radius: 20px; background: rgba(10,50,95,0.92);
+        border: 1px solid var(--brand-border); }
+      #leaks3 .x { flex: none; width: 46px; height: 46px; border-radius: 50%;
+        background: var(--brand-flame); color: #fff; font-weight: 800; font-size: 26px;
+        display: flex; align-items: center; justify-content: center; }
+      #leaks3 .t { font-weight: 600; font-size: 42px; letter-spacing: -0.01em; color: var(--brand-white); }
+
+      /* ===== full-frame graphic panels (cut OVER the face) ===== */
+      .panel { position: absolute; inset: 0; z-index: 20; overflow: hidden;
+        background:
+          radial-gradient(96% 50% at 50% 16%, rgba(156,212,255,0.12) 0%, rgba(6,40,76,0) 56%),
+          var(--brand-navy); }
+      .panel .bloom { position: absolute; left: -12%; bottom: -24%; width: 124%; height: 62%;
+        background: var(--brand-gradient-2); filter: blur(96px); opacity: 0.30; }
+      .panel .plogo { position: absolute; top: 64px; left: 72px; width: 232px; height: auto; }
+      .panel .eyebrow { position: absolute; top: 152px; left: 96px; right: 96px;
+        font-weight: 700; font-size: 28px; letter-spacing: 0.32em; text-transform: uppercase;
+        color: var(--brand-blue-tint); }
+
+      /* --- LEAK panel --- */
+      #leak .funnel { position: absolute; top: 300px; left: 50%; transform: translateX(-50%);
+        width: 520px; height: 470px; }
+      #leak .token { position: absolute; width: 64px; height: 64px; border-radius: 50%;
+        background: var(--brand-surface-2); border: 2px solid var(--brand-blue-tint);
+        color: var(--brand-blue-tint); font-weight: 800; font-size: 36px;
+        display: flex; align-items: center; justify-content: center; }
+      #leak .drip { position: absolute; width: 26px; height: 34px;
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        background: var(--brand-flame); box-shadow: 0 0 22px rgba(255,76,50,0.7); }
+      #leak .head { position: absolute; left: 96px; right: 96px; bottom: 258px; text-align: center;
+        font-weight: 800; font-size: 92px; line-height: 1.0; letter-spacing: -0.03em; color: var(--brand-white); }
+      #leak .head .ads { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400;
+        color: var(--brand-flame); display: inline-block; }
+      #leak .sub { position: absolute; left: 96px; right: 96px; bottom: 176px; text-align: center;
+        font-weight: 500; font-size: 44px; line-height: 1.28; color: var(--brand-text-dim); }
+
+      /* --- PROOF panel (+59%) --- */
+      #proof .client { position: absolute; top: 236px; left: 96px; right: 96px; text-align: center;
+        font-weight: 600; font-size: 40px; color: var(--brand-text-dim); }
+      #proof .ringwrap { position: absolute; top: 326px; left: 50%; transform: translateX(-50%);
+        width: 560px; height: 560px; display: flex; align-items: center; justify-content: center; }
+      #proof svg { position: absolute; inset: 0; width: 560px; height: 560px; transform: rotate(-90deg); }
+      #proof .num { font-weight: 800; font-size: 188px; letter-spacing: -0.04em; color: var(--brand-white);
+        font-variant-numeric: tabular-nums; line-height: 1; }
+      #proof .numlabel { position: absolute; top: 928px; left: 96px; right: 96px; text-align: center;
+        font-weight: 700; font-size: 56px; letter-spacing: -0.02em; color: var(--brand-white); }
+      #proof .numlabel .ser { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+      #proof .kicker { position: absolute; bottom: 180px; left: 50%; transform: translateX(-50%);
+        font-weight: 700; font-size: 44px; color: var(--brand-white); background: var(--brand-flame);
+        padding: 22px 48px; border-radius: 999px; box-shadow: 0 18px 56px -16px rgba(255,76,50,0.7); white-space: nowrap; }
+
+      /* --- CTA end card --- */
+      #cta .clogo { position: absolute; top: 172px; left: 50%; transform: translateX(-50%); width: 360px; height: auto; }
+      #cta .head { position: absolute; top: 466px; left: 110px; right: 110px; text-align: center;
+        font-weight: 800; font-size: 104px; line-height: 0.98; letter-spacing: -0.03em; color: var(--brand-white); }
+      #cta .head .leak { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-flame); }
+      #cta .sub { position: absolute; top: 808px; left: 130px; right: 130px; text-align: center;
+        font-weight: 500; font-size: 46px; line-height: 1.3; color: var(--brand-text-dim); }
+      #cta .btn { position: absolute; bottom: 240px; left: 50%; transform: translateX(-50%);
+        display: inline-flex; align-items: center; gap: 18px; font-weight: 700; font-size: 50px;
+        color: var(--brand-white); background: var(--brand-flame); padding: 34px 66px; border-radius: 999px;
+        box-shadow: 0 22px 70px -16px rgba(255,76,50,0.7); white-space: nowrap; }
+      #cta .btn .arrow { font-size: 52px; line-height: 1; transform: translateY(-2px); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="fuel-on-a-leak-june26" data-start="0"
+         data-duration="62.7" data-width="1080" data-height="1350">
+
+      <!-- continuous talking head; its audio rides on a sibling <audio> -->
+      <video id="face" src="assets/ad5.mp4" data-start="0" data-duration="62.7"
+             data-track-index="0" muted playsinline></video>
+      <audio id="vo" src="assets/ad5.mp4" data-start="0" data-duration="62.7"
+             data-track-index="1" data-volume="1"></audio>
+
+      <div id="topscrim" class="clip" data-start="0" data-duration="62.7" data-track-index="2"></div>
+      <div id="scrim" class="clip" data-start="0" data-duration="62.7" data-track-index="3"></div>
+      <img id="logobug" class="clip" data-start="0" data-duration="62.7" data-track-index="4"
+           src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+
+      <!-- ===== Scene 1 — HOOK (0–12.4) ===== -->
+      <div id="thesis" class="cap clip" data-start="0.4" data-duration="4.8" data-track-index="5">
+        Don't pour fuel<br />on a <span class="leak">leak.</span>
+      </div>
+      <div id="setup" class="cap clip" data-start="5.5" data-duration="4.0" data-track-index="6">
+        Adding more budget won't fix what's <span class="blue">already broken.</span>
+      </div>
+      <div id="spend" class="clip" data-start="9.6" data-duration="2.8" data-track-index="7">
+        <div class="lead">So founders reach for the same fix:</div>
+        <div class="pillrow">
+          <div class="pill" id="p1">more budget</div>
+          <div class="pill" id="p2">more traffic</div>
+          <div class="pill hot" id="p3">more spend</div>
+        </div>
+      </div>
+
+      <!-- ===== Scene 2 — THE LEAK (12.4–21.6) full frame ===== -->
+      <div id="leak" class="panel clip" data-start="12.42" data-duration="9.2" data-track-index="8">
+        <div class="bloom"></div>
+        <img class="plogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div class="eyebrow">The problem</div>
+        <svg class="funnel" viewBox="0 0 520 470" fill="none">
+          <path d="M40 60 H480 L300 300 V430 H220 V300 Z"
+                fill="#0a325f" stroke="#9CD4FF" stroke-width="6" stroke-linejoin="round"/>
+          <path d="M300 300 L360 360" stroke="#FF4C32" stroke-width="8" stroke-linecap="round"/>
+          <path d="M300 322 L356 392" stroke="#FF4C32" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+        <div class="token" id="tk1" style="left:470px; top:360px;">$</div>
+        <div class="token" id="tk2" style="left:540px; top:360px;">$</div>
+        <div class="token" id="tk3" style="left:610px; top:360px;">$</div>
+        <div class="drip" id="dr1" style="left:612px; top:612px;"></div>
+        <div class="drip" id="dr2" style="left:632px; top:628px;"></div>
+        <div class="drip" id="dr3" style="left:600px; top:636px;"></div>
+        <div class="head">The leak isn't in the <span class="ads">ads.</span></div>
+        <div class="sub">It's what happens after the click.</div>
+      </div>
+
+      <!-- ===== Scene 3 — THREE LEAKS (21.5–28.3) over face ===== -->
+      <div id="leaks3" class="clip" data-start="21.54" data-duration="6.76" data-track-index="9">
+        <div class="chip" id="ch1"><div class="x">✕</div><div class="t">Your offer isn't converting</div></div>
+        <div class="chip" id="ch2"><div class="x">✕</div><div class="t">Your landing page underperforms</div></div>
+        <div class="chip" id="ch3"><div class="x">✕</div><div class="t">Buyers come once — never return</div></div>
+      </div>
+
+      <!-- ===== Scene 4 — BROKEN SYSTEM (28.3–35.6) over face ===== -->
+      <div id="broken" class="cap clip" data-start="28.3" data-duration="7.3" data-track-index="10">
+        More budget just sends more people into the same <span class="flame">broken system.</span>
+      </div>
+
+      <!-- ===== Scene 5 — PROOF +59% (35.6–44.6) full frame ===== -->
+      <div id="proof" class="panel clip" data-start="35.6" data-duration="9.0" data-track-index="11">
+        <div class="bloom"></div>
+        <img class="plogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div class="eyebrow">Proof — Drift Sleep</div>
+        <div class="client">Same ad budget. Different outcome.</div>
+        <div class="ringwrap">
+          <svg viewBox="0 0 560 560">
+            <circle cx="280" cy="280" r="250" stroke="#103d6f" stroke-width="26" fill="none"/>
+            <circle id="proofring" cx="280" cy="280" r="250" stroke="#FF4C32" stroke-width="26"
+                    fill="none" stroke-linecap="round"/>
+          </svg>
+          <div class="num" id="proofnum">+0%</div>
+        </div>
+        <div class="numlabel"><span class="ser">returning</span> customers</div>
+        <div class="kicker">$0 extra ad spend</div>
+      </div>
+
+      <!-- ===== Scene 6 — THE TURN (44.6–54.9) over face ===== -->
+      <div id="turn1" class="cap clip" data-start="44.6" data-duration="2.5" data-track-index="12">
+        Growth isn't always about <span class="blue">spending more.</span>
+      </div>
+      <div id="turn2" class="cap clip" data-start="47.2" data-duration="2.3" data-track-index="12">
+        It comes from fixing <span class="ser blue">what's already there.</span>
+      </div>
+      <div id="turn3" class="cap clip" data-start="49.6" data-duration="5.2" data-track-index="12">
+        First, find what's actually <span class="flame">slowing your growth.</span>
+      </div>
+
+      <!-- ===== Scene 7 — CTA END CARD (54.9–end) full frame ===== -->
+      <div id="cta" class="panel clip" data-start="54.9" data-duration="7.8" data-track-index="13">
+        <div class="bloom"></div>
+        <img class="clogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div class="head">Find the <span class="leak">leak</span><br />before you scale.</div>
+        <div class="sub">We help Shopify brands uncover the bottlenecks holding growth back.</div>
+        <div class="btn">Click the link below <span class="arrow">&rarr;</span></div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      /* ---------- Scene 1 — HOOK ---------- */
+      tl.from("#thesis", { opacity: 0, y: 34, duration: 0.7, ease: "power3.out" }, 0.5);
+      tl.to("#thesis", { opacity: 0, y: -22, duration: 0.4, ease: "power2.in" }, 4.75);
+      tl.set("#thesis", { opacity: 0 }, 5.2);
+
+      tl.from("#setup", { opacity: 0, y: 26, duration: 0.6, ease: "power2.out" }, 5.6);
+      tl.to("#setup", { opacity: 0, y: -18, duration: 0.35, ease: "power2.in" }, 9.1);
+      tl.set("#setup", { opacity: 0 }, 9.5);
+
+      tl.from("#spend .lead", { opacity: 0, y: 18, duration: 0.4, ease: "power2.out" }, 9.65);
+      tl.from("#p1", { opacity: 0, scale: 0.6, duration: 0.4, ease: "back.out(1.8)" }, 9.8);
+      tl.from("#p2", { opacity: 0, scale: 0.6, duration: 0.4, ease: "back.out(1.8)" }, 10.45);
+      tl.from("#p3", { opacity: 0, scale: 0.6, duration: 0.45, ease: "back.out(2)" }, 11.1);
+      tl.to("#p3", { scale: 1.08, duration: 0.3, ease: "sine.inOut", yoyo: true, repeat: 1 }, 11.6);
+
+      /* ---------- Scene 2 — THE LEAK (panel in) ---------- */
+      tl.from("#leak", { opacity: 0, scale: 1.06, filter: "blur(16px)", duration: 0.45, ease: "power2.out" }, 12.42);
+      tl.from("#leak .eyebrow", { opacity: 0, y: 16, duration: 0.45, ease: "power2.out" }, 12.7);
+      tl.from("#leak .funnel", { opacity: 0, y: 30, scale: 0.92, duration: 0.6, ease: "power3.out" }, 12.85);
+      // money tokens fall into the funnel mouth (deterministic loop)
+      tl.fromTo("#tk1", { y: -210, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power1.in", repeat: 5, repeatDelay: 0.5 }, 13.0);
+      tl.fromTo("#tk2", { y: -210, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power1.in", repeat: 5, repeatDelay: 0.5 }, 13.25);
+      tl.fromTo("#tk3", { y: -210, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power1.in", repeat: 5, repeatDelay: 0.5 }, 13.5);
+      // headline + sub
+      tl.from("#leak .head", { opacity: 0, y: 28, duration: 0.6, ease: "power3.out" }, 13.4);
+      tl.from("#leak .sub", { opacity: 0, y: 20, duration: 0.5, ease: "power2.out" }, 13.8);
+      // the leak springs — flame emphasis pops on "after the click"
+      tl.fromTo("#dr1", { y: 0, opacity: 0, scale: 0.6 }, { y: 150, opacity: 0, scale: 1, duration: 0.9, ease: "power1.in", repeat: 3, repeatDelay: 0.25 }, 16.8);
+      tl.fromTo("#dr2", { y: 0, opacity: 0, scale: 0.6 }, { y: 150, opacity: 0, scale: 1, duration: 0.9, ease: "power1.in", repeat: 3, repeatDelay: 0.25 }, 17.0);
+      tl.fromTo("#dr3", { y: 0, opacity: 0, scale: 0.6 }, { y: 150, opacity: 0, scale: 1, duration: 0.9, ease: "power1.in", repeat: 3, repeatDelay: 0.25 }, 17.2);
+      tl.fromTo("#leak .head .ads", { scale: 1 }, { scale: 1.12, duration: 0.3, ease: "back.out(2)", yoyo: true, repeat: 1, transformOrigin: "center" }, 16.8);
+      // panel out (transition back to face)
+      tl.to("#leak", { opacity: 0, scale: 1.04, filter: "blur(14px)", duration: 0.45, ease: "power2.in" }, 21.1);
+      tl.set("#leak", { opacity: 0 }, 21.54);
+
+      /* ---------- Scene 3 — THREE LEAKS ---------- */
+      tl.from("#ch1", { opacity: 0, x: -40, duration: 0.5, ease: "power3.out" }, 21.8);
+      tl.from("#ch2", { opacity: 0, x: -40, duration: 0.5, ease: "power3.out" }, 24.0);
+      tl.from("#ch3", { opacity: 0, x: -40, duration: 0.5, ease: "power3.out" }, 26.1);
+      tl.to("#leaks3", { opacity: 0, y: -16, duration: 0.4, ease: "power2.in" }, 27.85);
+      tl.set("#leaks3", { opacity: 0 }, 28.30);
+
+      /* ---------- Scene 4 — BROKEN SYSTEM ---------- */
+      tl.from("#broken", { opacity: 0, y: 26, duration: 0.6, ease: "power2.out" }, 28.5);
+      tl.from("#broken .flame", { opacity: 0, duration: 0.5, ease: "power1.out" }, 30.4);
+      tl.to("#broken", { opacity: 0, y: -18, duration: 0.4, ease: "power2.in" }, 35.15);
+      tl.set("#broken", { opacity: 0 }, 35.6);
+
+      /* ---------- Scene 5 — PROOF +59% (panel in) ---------- */
+      const C = 2 * Math.PI * 250;
+      tl.set("#proofring", { strokeDasharray: C, strokeDashoffset: C }, 35.6);
+      tl.from("#proof", { opacity: 0, scale: 1.06, filter: "blur(16px)", duration: 0.45, ease: "power2.out" }, 35.6);
+      tl.from("#proof .eyebrow", { opacity: 0, y: 16, duration: 0.45, ease: "power2.out" }, 35.9);
+      tl.from("#proof .client", { opacity: 0, y: 16, duration: 0.45, ease: "power2.out" }, 36.1);
+      tl.to("#proofring", { strokeDashoffset: C * (1 - 0.59), duration: 1.5, ease: "power2.out" }, 36.4);
+      const counter = { v: 0 };
+      tl.to(counter, { v: 59, duration: 1.5, ease: "power2.out",
+        onUpdate: () => { const el = document.getElementById("proofnum"); if (el) el.textContent = "+" + Math.round(counter.v) + "%"; } }, 36.4);
+      tl.from("#proof .num", { opacity: 0, scale: 0.7, duration: 0.5, ease: "back.out(1.7)" }, 36.4);
+      tl.from("#proof .numlabel", { opacity: 0, y: 20, duration: 0.5, ease: "power2.out" }, 38.0);
+      tl.from("#proof .kicker", { opacity: 0, scale: 0.8, duration: 0.5, ease: "back.out(1.8)" }, 39.2);
+      tl.to("#proof .kicker", { scale: 1.05, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1 }, 40.0);
+      // panel out (transition back to face)
+      tl.to("#proof", { opacity: 0, scale: 1.04, filter: "blur(14px)", duration: 0.45, ease: "power2.in" }, 44.1);
+      tl.set("#proof", { opacity: 0 }, 44.60);
+
+      /* ---------- Scene 6 — THE TURN ---------- */
+      tl.from("#turn1", { opacity: 0, y: 24, duration: 0.5, ease: "power2.out" }, 44.7);
+      tl.to("#turn1", { opacity: 0, y: -16, duration: 0.3, ease: "power2.in" }, 46.8);
+      tl.set("#turn1", { opacity: 0 }, 47.20);
+      tl.from("#turn2", { opacity: 0, y: 24, duration: 0.5, ease: "power2.out" }, 47.3);
+      tl.to("#turn2", { opacity: 0, y: -16, duration: 0.3, ease: "power2.in" }, 49.2);
+      tl.set("#turn2", { opacity: 0 }, 49.60);
+      tl.from("#turn3", { opacity: 0, y: 24, duration: 0.55, ease: "power3.out" }, 49.8);
+      tl.from("#turn3 .flame", { opacity: 0, duration: 0.5 }, 50.6);
+      tl.to("#turn3", { opacity: 0, y: -16, duration: 0.35, ease: "power2.in" }, 54.4);
+      tl.set("#turn3", { opacity: 0 }, 54.80);
+
+      /* ---------- Scene 7 — CTA END CARD (final, holds) ---------- */
+      tl.from("#cta", { opacity: 0, scale: 1.05, filter: "blur(14px)", duration: 0.5, ease: "power2.out" }, 54.9);
+      tl.from("#cta .clogo", { opacity: 0, y: -22, duration: 0.55, ease: "power3.out" }, 55.3);
+      tl.from("#cta .head .leak", { opacity: 0, x: -28, duration: 0.6, ease: "power3.out" }, 55.6);
+      tl.from("#cta .head", { opacity: 0, y: 30, duration: 0.65, ease: "power3.out" }, 55.8);
+      tl.from("#cta .sub", { opacity: 0, y: 22, duration: 0.55, ease: "power2.out" }, 56.2);
+      tl.from("#cta .btn", { opacity: 0, scale: 0.84, duration: 0.55, ease: "back.out(1.7)" }, 56.7);
+      tl.to("#cta .btn", { scale: 1.05, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 3 }, 57.6);
+
+      window.__timelines["fuel-on-a-leak-june26"] = tl;
+    </script>
+  </body>
+</html>
