@@ -36,3 +36,6 @@ assets/incoming/*
 **/renders/frames/
 **/renders/frames-*/
 
+
+# Scratch download area for source clips (large, not version-controlled)
+.incoming/
