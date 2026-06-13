@@ -50,7 +50,11 @@
         data-start="5.5" data-duration="6.6" data-track-index="1"
         data-width="1080" data-height="1920"></div>
 
-      <!-- (lever-moved graphic removed per direction) -->
+      <!-- Beat 3 — "Results aren't following." flat-line, covers the 17s join (17.0–21.0) -->
+      <div class="layer" id="ov-flat"
+        data-composition-id="flatline" data-composition-src="compositions/flatline.html"
+        data-start="17.0" data-duration="4.0" data-track-index="1"
+        data-width="1080" data-height="1920"></div>
 
       <!-- Persistent frame: vignette + grain + logo -->
       <div class="layer" id="ov-frame"
@@ -61,7 +65,7 @@
       <!-- Beat 4 — end card (20.5–24.0) -->
       <div class="layer" id="ov-endcard"
         data-composition-id="endcard" data-composition-src="compositions/endcard.html"
-        data-start="20.5" data-duration="3.5" data-track-index="5"
+        data-start="21.0" data-duration="3.0" data-track-index="5"
         data-width="1080" data-height="1920"></div>
     </div>
 
@@ -82,8 +86,8 @@
         tl.to("#face-wrapper", { filter: "blur(10px)", scale: 1.05, duration: 0.12, ease: "power2.in" }, t - 0.06);
         tl.to("#face-wrapper", { filter: "blur(0px)", scale: 1.0, duration: 0.2, ease: "power2.out" }, t + 0.06);
       };
-      // A|B (5.55) and B|C (11.82) splices are hidden under the diverge graphic.
-      seam(17.17);  // C|D — only seam not under a graphic
+      // All three splices (5.55, 11.82, 17.17) are now hidden under graphics
+      // (diverge covers the first two; the flat-line graphic covers the third).
 
       tl.set({}, {}, 24.0); // duration anchor
       window.__timelines["lever-moved-short"] = tl;
