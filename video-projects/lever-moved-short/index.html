@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>The Lever Moved — EcomIQ (9:16 short)</title>
+    <script src="assets/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/fonts.css" />
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy); font-family: "Rethink Sans", system-ui, sans-serif; color: #fff; }
+      .layer { position: absolute; top: 0; left: 0; width: 1080px; height: 1920px; z-index: 10; }
+      #ov-frame { z-index: 30; }
+      #ov-endcard { z-index: 50; }
+      /* Face (re-cut footage), cover-cropped 16:9 → 9:16 */
+      #face-wrapper { position: absolute; inset: 0; overflow: hidden; z-index: 0; transform-origin: 50% 34%; }
+      #face-video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
+        transform-origin: center center; filter: contrast(1.14) saturate(1.12) brightness(0.95); }
+      #face-grade { position: absolute; inset: 0; pointer-events: none; z-index: 2;
+        background:
+          radial-gradient(120% 95% at 50% 36%, transparent 44%, rgba(2,12,28,.62) 100%),
+          linear-gradient(180deg, rgba(20,70,130,.10) 0%, rgba(2,10,24,.30) 100%); }
+      #face-grade::after { content: ""; position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(11,58,104,.16), rgba(255,120,60,.05)); mix-blend-mode: soft-light; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="lever-moved-short" data-start="0" data-duration="24.0"
+      data-width="1080" data-height="1920">
+
+      <div id="face-wrapper">
+        <video id="face-video" data-start="0" data-duration="23.2" data-track-index="0"
+          src="assets/lever-talk-short.mp4" muted playsinline></video>
+        <div id="face-grade"></div>
+      </div>
+      <audio id="face-audio" data-start="0" data-duration="23.2" data-track-index="4"
+        data-volume="1" src="assets/lever-talk-short.mp4"></audio>
+
+      <!-- Beat 1 — hook counters (0–2.7) -->
+      <div class="layer" id="ov-hook"
+        data-composition-id="hook" data-composition-src="compositions/hook.html"
+        data-start="0" data-duration="2.7" data-track-index="1"
+        data-width="1080" data-height="1920"></div>
+
+      <!-- Beat 2 — spend↑/ROAS↓ diverge (5.5–10.5) -->
+      <div class="layer" id="ov-diverge"
+        data-composition-id="diverge" data-composition-src="compositions/diverge.html"
+        data-start="5.5" data-duration="5.0" data-track-index="1"
+        data-width="1080" data-height="1920"></div>
+
+      <!-- Beat 3 — "The lever moved." stab (14.7–17.2) -->
+      <div class="layer" id="ov-moved"
+        data-composition-id="levermoved" data-composition-src="compositions/lever-moved.html"
+        data-start="14.7" data-duration="2.5" data-track-index="1"
+        data-width="1080" data-height="1920"></div>
+
+      <!-- Persistent frame: vignette + grain + logo -->
+      <div class="layer" id="ov-frame"
+        data-composition-id="frame" data-composition-src="compositions/frame.html"
+        data-start="0" data-duration="24.0" data-track-index="3"
+        data-width="1080" data-height="1920"></div>
+
+      <!-- Beat 4 — end card (20.5–24.0) -->
+      <div class="layer" id="ov-endcard"
+        data-composition-id="endcard" data-composition-src="compositions/endcard.html"
+        data-start="20.5" data-duration="3.5" data-track-index="5"
+        data-width="1080" data-height="1920"></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Slow continuous zoom so the face never reads as a still.
+      tl.to("#face-video", { scale: 1.05, duration: 23.2, ease: "none" }, 0);
+
+      // Cut-to-Sean punch after the hook.
+      tl.set("#face-wrapper", { scale: 1.0 }, 0);
+      tl.to("#face-wrapper", { scale: 1.06, duration: 0.4, ease: "power2.out" }, 2.6);
+      tl.to("#face-wrapper", { scale: 1.0, duration: 0.8, ease: "power2.inOut" }, 5.0);
+
+      // Seam masks — quick blur/scale dip hides each talking-head jump-cut.
+      const seam = (t) => {
+        tl.to("#face-wrapper", { filter: "blur(10px)", scale: 1.05, duration: 0.12, ease: "power2.in" }, t - 0.06);
+        tl.to("#face-wrapper", { filter: "blur(0px)", scale: 1.0, duration: 0.2, ease: "power2.out" }, t + 0.06);
+      };
+      seam(5.55);   // A|B (also under the diverge entry)
+      seam(11.82);  // B|C
+      seam(17.17);  // C|D
+
+      tl.set({}, {}, 24.0); // duration anchor
+      window.__timelines["lever-moved-short"] = tl;
+    </script>
+  </body>
+</html>

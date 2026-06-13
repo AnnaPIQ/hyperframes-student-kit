@@ -1,0 +1,73 @@
+<template id="levermoved-template">
+  <div data-composition-id="levermoved" data-start="0" data-width="1080" data-height="1920" data-duration="2.5">
+    <div class="lm-root">
+      <div class="lm-scrim"></div>
+      <div class="lm-burst"></div>
+      <svg class="lm-lever" id="lm-lever" viewBox="0 0 560 320">
+        <defs>
+          <linearGradient id="lmArm" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#eaf5ff" /><stop offset=".5" stop-color="#9cd4ff" /><stop offset="1" stop-color="#4f86bf" />
+          </linearGradient>
+          <radialGradient id="lmKnob" cx="38%" cy="32%" r="78%">
+            <stop offset="0" stop-color="#ffd0c4" /><stop offset=".42" stop-color="#ff6a4d" /><stop offset="1" stop-color="#cc2f17" />
+          </radialGradient>
+          <linearGradient id="lmFul" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#bfe0ff" /><stop offset="1" stop-color="#3f6f9e" />
+          </linearGradient>
+          <filter id="lmShadow" x="-30%" y="-30%" width="160%" height="170%">
+            <feDropShadow dx="0" dy="9" stdDeviation="11" flood-color="#000" flood-opacity="0.55" />
+          </filter>
+        </defs>
+        <ellipse cx="280" cy="307" rx="150" ry="13" fill="rgba(0,0,0,.38)" />
+        <line x1="120" y1="300" x2="440" y2="300" stroke="rgba(255,255,255,.28)" stroke-width="4" />
+        <polygon points="280,248 236,304 324,304" fill="url(#lmFul)" />
+        <g filter="url(#lmShadow)">
+          <rect x="120" y="236" width="320" height="26" rx="13" fill="url(#lmArm)" />
+          <rect x="128" y="240" width="304" height="6" rx="3" fill="rgba(255,255,255,.5)" />
+          <circle cx="440" cy="249" r="30" fill="url(#lmKnob)" />
+          <ellipse cx="431" cy="240" rx="11" ry="7" fill="rgba(255,255,255,.55)" />
+        </g>
+      </svg>
+      <div class="lm-stab" id="lm-stab">The lever moved.</div>
+    </div>
+    <style>
+      [data-composition-id="levermoved"] { position: absolute; inset: 0; }
+      [data-composition-id="levermoved"] .lm-root { position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 30px; font-family: "Rethink Sans", sans-serif; }
+      [data-composition-id="levermoved"] .lm-scrim { position: absolute; inset: 0;
+        background: radial-gradient(60% 45% at 50% 52%, rgba(6,16,30,.72) 0%, rgba(6,16,30,0) 70%); }
+      [data-composition-id="levermoved"] .lm-burst { position: absolute; top: 40%; left: 50%; width: 520px; height: 520px;
+        margin: -260px 0 0 -260px; border-radius: 50%; opacity: 0;
+        background: radial-gradient(circle, rgba(255,76,50,.55) 0%, rgba(255,76,50,0) 62%); }
+      [data-composition-id="levermoved"] .lm-lever { position: relative; width: 360px; height: 206px; overflow: visible; }
+      [data-composition-id="levermoved"] .lm-stab { position: relative; font-family: "Hedvig Letters Serif", Georgia, serif;
+        font-style: italic; font-weight: 400; font-size: 124px; line-height: 1;
+        background: linear-gradient(100deg, #ff4c32 0%, #ff7a52 38%, #ffe0d2 50%, #ff7a52 62%, #ff4c32 100%);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+        background-size: 250% 100%; background-position: 100% 0;
+        text-shadow: 0 0 50px rgba(255,76,50,.45), 0 4px 18px rgba(0,0,0,.5); }
+    </style>
+    <link rel="stylesheet" href="../assets/fonts.css" />
+    <link rel="stylesheet" href="../assets/brand-tokens.css" />
+    <script src="../assets/gsap.min.js"></script>
+    <script>
+      (function () {
+        const s = '[data-composition-id="levermoved"] ';
+        const tl = gsap.timeline({ paused: true });
+        tl.to(s + ".lm-scrim", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0);
+        // Lever appears in the old position, then physically MOVES to a new one.
+        tl.fromTo(s + "#lm-lever", { opacity: 0, x: -150 }, { opacity: 1, x: -150, duration: 0.25, ease: "power2.out" }, 0.05);
+        tl.to(s + "#lm-lever", { x: 150, scaleX: 1.06, duration: 0.45, ease: "back.out(1.5)" }, 0.4);
+        tl.to(s + "#lm-lever", { scaleX: 1.0, duration: 0.2, ease: "power2.out" }, 0.85);
+        tl.fromTo(s + ".lm-burst", { opacity: 0, scale: 0.3 }, { opacity: 0.95, scale: 1.35, duration: 0.3, ease: "power2.out" }, 0.5);
+        tl.to(s + ".lm-burst", { opacity: 0, duration: 0.5, ease: "power2.in" }, 0.8);
+        tl.fromTo(s + "#lm-stab", { opacity: 0, scale: 0.72, y: 22 }, { opacity: 1, scale: 1, y: 0, duration: 0.42, ease: "back.out(1.7)" }, 0.6);
+        tl.fromTo(s + "#lm-stab", { backgroundPosition: "100% 0" }, { backgroundPosition: "0% 0", duration: 0.8, ease: "power2.out" }, 0.8);
+        tl.to(s + ".lm-root", { opacity: 0, duration: 0.3, ease: "power2.in" }, 2.2);
+        tl.set({}, {}, 2.5);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["levermoved"] = tl;
+      })();
+    </script>
+  </div>
+</template>
