@@ -1,0 +1,114 @@
+<template id="bottleneck-template">
+  <div id="bottleneck" data-composition-id="bottleneck" data-start="0" data-duration="6.5" data-width="1080" data-height="1350">
+    <div class="scene">
+      <div class="eyebrow">Find the bottleneck</div>
+      <div class="flow">
+        <svg viewBox="0 0 920 700" width="920" height="700">
+          <!-- pinch walls -->
+          <path class="wall wtop" d="M340,0 L460,250 L500,250 L620,0 Z"/>
+          <path class="wall wbot" d="M340,700 L460,450 L500,450 L620,700 Z"/>
+          <!-- flame burst at the release point -->
+          <circle class="burst" cx="480" cy="350" r="26"/>
+          <!-- revenue line that kicks up after release -->
+          <path class="rev" d="M40,640 L480,640 C580,640 620,610 680,540 C740,470 800,360 880,240"
+                fill="none" stroke="#9CD4FF" stroke-width="7" stroke-linecap="round"
+                style="filter: drop-shadow(0 0 14px rgba(156,212,255,.55));"/>
+          <!-- particles -->
+          <g class="dots" fill="#DEEEFE"></g>
+        </svg>
+      </div>
+    </div>
+
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      #bottleneck {
+        position: absolute; inset: 0; overflow: hidden;
+        background:
+          radial-gradient(90% 50% at 50% 14%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          #06284C;
+        color: #fff; font-family: 'Rethink Sans', system-ui, sans-serif;
+      }
+      #bottleneck::after { content: ""; position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 45%, rgba(2,14,28,.55) 100%);
+        pointer-events: none; }
+      #bottleneck .scene { position: absolute; inset: 0; }
+      #bottleneck .eyebrow { position: absolute; top: 222px; left: 0; right: 0;
+        text-align: center; font-size: 24px; font-weight: 600; letter-spacing: .34em;
+        text-transform: uppercase; color: #9CD4FF; }
+      #bottleneck .flow { position: absolute; top: 330px; left: 80px; }
+      #bottleneck .wall { fill: rgba(222,238,254,.10);
+        stroke: rgba(156,212,255,.4); stroke-width: 2; }
+      #bottleneck .burst { fill: none; stroke: #FF4C32; stroke-width: 4; opacity: 0; }
+    </style>
+
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const root = "#bottleneck";
+        const tl = gsap.timeline({ paused: true });
+
+        // Seeded particle lanes — fixed table, no randomness.
+        const lanes = [
+          { y: 300, d: 0.00, r: 9 }, { y: 345, d: 0.18, r: 7 }, { y: 390, d: 0.36, r: 10 },
+          { y: 330, d: 0.54, r: 6 }, { y: 375, d: 0.72, r: 8 }, { y: 405, d: 0.90, r: 7 },
+          { y: 315, d: 1.08, r: 8 }, { y: 360, d: 1.26, r: 9 }, { y: 395, d: 1.44, r: 6 },
+          { y: 340, d: 1.62, r: 7 }, { y: 380, d: 1.80, r: 9 }, { y: 320, d: 1.98, r: 6 },
+        ];
+        const g = document.querySelector(root + " .dots");
+        const NS = "http://www.w3.org/2000/svg";
+        const dots = lanes.map((l) => {
+          const c = document.createElementNS(NS, "circle");
+          c.setAttribute("cx", -30); c.setAttribute("cy", l.y); c.setAttribute("r", l.r);
+          c.setAttribute("opacity", "0.9");
+          g.appendChild(c);
+          return c;
+        });
+
+        const line = document.querySelector(root + " .rev");
+        const L = line.getTotalLength();
+        gsap.set(line, { strokeDasharray: L, strokeDashoffset: L });
+
+        tl.from(root + " .eyebrow", { autoAlpha: 0, y: -14, duration: 0.4, ease: "power2.out" }, 0.08)
+          .from(root + " .wall", { autoAlpha: 0, duration: 0.5, ease: "power2.out" }, 0.15);
+
+        // Phase 1 (0–3.2): particles flow in and pile up before the pinch.
+        // Queue positions stack leftward from the pinch mouth at x≈430.
+        dots.forEach((c, i) => {
+          const queueX = 420 - (i % 6) * 52 - Math.floor(i / 6) * 24;
+          tl.to(c, { attr: { cx: queueX }, duration: 1.0, ease: "power2.out" }, 0.3 + lanes[i].d)
+            // queued jitter — pressure builds
+            .to(c, { attr: { cy: lanes[i].y + (i % 2 ? 9 : -9) }, duration: 0.4,
+              ease: "sine.inOut", yoyo: true, repeat: 1 }, 1.4 + lanes[i].d * 0.5);
+        });
+
+        // Phase 2 (3.2): the pinch OPENS — flame on the release.
+        tl.to(root + " .wtop", { y: -120, duration: 0.55, ease: "power3.inOut" }, 3.2)
+          .to(root + " .wbot", { y: 120, duration: 0.55, ease: "power3.inOut" }, 3.2)
+          .to(root + " .burst", { opacity: 0.95, scale: 5.2, duration: 0.7, ease: "power2.out",
+            transformOrigin: "50% 50%" }, 3.35)
+          .to(root + " .burst", { opacity: 0, duration: 0.35 }, 4.05);
+
+        // Particles accelerate through the open gap.
+        dots.forEach((c, i) => {
+          tl.to(c, { attr: { cx: 960 }, duration: 0.6, ease: "power2.in" }, 3.45 + (i % 6) * 0.07)
+            .to(c, { attr: { cy: 350 + (i % 5 - 2) * 26 }, duration: 0.45, ease: "power1.inOut" }, 3.45 + (i % 6) * 0.07);
+        });
+
+        // Momentum: the revenue line draws and climbs out of the release.
+        tl.to(line, { strokeDashoffset: 0, duration: 1.7, ease: "power2.inOut" }, 4.0)
+          .to(line, { stroke: "#FFFFFF", duration: 0.6, ease: "sine.out" }, 5.4);
+
+        // Slow push.
+        tl.fromTo(root + " .scene", { scale: 1 }, { scale: 1.035, duration: 6.5, ease: "none", transformOrigin: "50% 48%" }, 0);
+
+        tl.set({}, {}, 6.5);
+        window.__timelines["bottleneck"] = tl;
+      })();
+    </script>
+  </div>
+</template>

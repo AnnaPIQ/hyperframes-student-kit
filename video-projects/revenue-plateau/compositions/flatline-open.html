@@ -1,0 +1,88 @@
+<template id="flatline-open-template">
+  <div id="flatline-open" data-composition-id="flatline-open" data-start="0" data-duration="5.5" data-width="1080" data-height="1350">
+    <div class="scene">
+      <div class="eyebrow">Your revenue &middot; last 12 months</div>
+      <div class="hookline">Revenue <span class="em">flat</span> for months?</div>
+      <div class="panel">
+        <svg viewBox="0 0 840 560" width="840" height="560">
+          <g class="gridlines" stroke="rgba(156,212,255,.10)" stroke-width="1">
+            <line x1="40" y1="80"  x2="800" y2="80"/>
+            <line x1="40" y1="190" x2="800" y2="190"/>
+            <line x1="40" y1="300" x2="800" y2="300"/>
+            <line x1="40" y1="410" x2="800" y2="410"/>
+            <line x1="40" y1="520" x2="800" y2="520"/>
+          </g>
+          <g class="ylabels" fill="rgba(156,212,255,.45)" font-size="22" font-family="'Rethink Sans',sans-serif">
+            <text x="6" y="88">$120k</text>
+            <text x="6" y="308">$80k</text>
+            <text x="6" y="528">$40k</text>
+          </g>
+          <path class="flo-line" d="M40,516 C100,506 140,478 190,452 C240,426 268,430 310,386 C336,358 352,330 372,320 L800,320"
+                fill="none" stroke="#9CD4FF" stroke-width="7" stroke-linecap="round"
+                style="filter: drop-shadow(0 0 14px rgba(156,212,255,.55));"/>
+        </svg>
+        <div class="alert">0% growth</div>
+      </div>
+    </div>
+
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      #flatline-open {
+        position: absolute; inset: 0; overflow: hidden;
+        background:
+          radial-gradient(90% 50% at 50% 14%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          #06284C;
+        color: #fff; font-family: 'Rethink Sans', system-ui, sans-serif;
+      }
+      #flatline-open::after { content: ""; position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 45%, rgba(2,14,28,.55) 100%);
+        pointer-events: none; }
+      #flatline-open .scene { position: absolute; inset: 0; }
+      #flatline-open .eyebrow { position: absolute; top: 196px; left: 0; right: 0;
+        text-align: center; font-size: 24px; font-weight: 600; letter-spacing: .34em;
+        text-transform: uppercase; color: #9CD4FF; }
+      #flatline-open .hookline { position: absolute; top: 252px; left: 64px; right: 64px;
+        text-align: center; font-size: 92px; font-weight: 800; line-height: 1.02; letter-spacing: -.02em; }
+      #flatline-open .hookline .em { font-family: 'Hedvig Letters Serif', serif;
+        font-style: italic; font-weight: 400; letter-spacing: -.01em; color: #9CD4FF; }
+      #flatline-open .panel { position: absolute; top: 470px; left: 120px;
+        width: 840px; height: 560px; }
+      #flatline-open .alert { position: absolute; top: 232px; right: 6px;
+        font-size: 26px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+        color: #FF4C32; border: 2px solid rgba(255,76,50,.65); border-radius: 999px;
+        padding: 10px 24px; background: rgba(6,40,76,.7); }
+    </style>
+
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const root = "#flatline-open";
+        const tl = gsap.timeline({ paused: true });
+
+        const line = document.querySelector(root + " .flo-line");
+        const L = line.getTotalLength();
+        gsap.set(line, { strokeDasharray: L, strokeDashoffset: L });
+
+        tl.from(root + " .eyebrow", { autoAlpha: 0, y: -14, duration: 0.45, ease: "power2.out" }, 0.1)
+          .from(root + " .hookline", { autoAlpha: 0, y: 22, duration: 0.6, ease: "power3.out" }, 0.22)
+          .from(root + " .panel", { autoAlpha: 0, y: 30, duration: 0.55, ease: "power2.out" }, 0.35)
+          // The climb (fast, hopeful) ...
+          .to(line, { strokeDashoffset: L * 0.52, duration: 1.25, ease: "power2.out" }, 0.5)
+          // ... then the flat line crawls on and on (months passing).
+          .to(line, { strokeDashoffset: L * 0.01, duration: 3.45, ease: "none" }, 1.75)
+          .from(root + " .alert", { autoAlpha: 0, scale: 0.7, duration: 0.45, ease: "back.out(1.8)" }, 3.1)
+          .to(root + " .alert", { opacity: 0.55, duration: 0.45, ease: "sine.inOut", yoyo: true, repeat: 3 }, 3.6)
+          // Camera never sleeps — slow push.
+          .fromTo(root + " .scene", { scale: 1 }, { scale: 1.03, duration: 5.5, ease: "none", transformOrigin: "50% 45%" }, 0);
+
+        tl.set({}, {}, 5.5);
+        window.__timelines["flatline-open"] = tl;
+      })();
+    </script>
+  </div>
+</template>

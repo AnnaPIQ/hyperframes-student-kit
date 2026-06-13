@@ -1,0 +1,101 @@
+<template id="symptom-trap-template">
+  <div id="symptom-trap" data-composition-id="symptom-trap" data-start="0" data-duration="6.5" data-width="1080" data-height="1350">
+    <div class="scene">
+      <div class="eyebrow">The symptom trap</div>
+      <div class="panel">
+        <svg viewBox="0 0 840 560" width="840" height="560">
+          <g stroke="rgba(156,212,255,.10)" stroke-width="1">
+            <line x1="40" y1="80"  x2="800" y2="80"/>
+            <line x1="40" y1="190" x2="800" y2="190"/>
+            <line x1="40" y1="300" x2="800" y2="300"/>
+            <line x1="40" y1="410" x2="800" y2="410"/>
+            <line x1="40" y1="520" x2="800" y2="520"/>
+          </g>
+          <line class="baseline" x1="40" y1="330" x2="800" y2="330"
+                stroke="rgba(156,212,255,.28)" stroke-width="2" stroke-dasharray="8 10"/>
+          <path class="st-line"
+                d="M40,330 C170,330 300,330 430,330 C555,330 680,330 800,330"
+                fill="none" stroke="#9CD4FF" stroke-width="7" stroke-linecap="round"
+                style="filter: drop-shadow(0 0 14px rgba(156,212,255,.55));"/>
+        </svg>
+        <div class="readout"><span class="cur">$83,400</span><span class="tag">/ mo</span></div>
+      </div>
+    </div>
+
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      #symptom-trap {
+        position: absolute; inset: 0; overflow: hidden;
+        background:
+          radial-gradient(90% 50% at 50% 14%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          #06284C;
+        color: #fff; font-family: 'Rethink Sans', system-ui, sans-serif;
+      }
+      #symptom-trap::after { content: ""; position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 45%, rgba(2,14,28,.55) 100%);
+        pointer-events: none; }
+      #symptom-trap .scene { position: absolute; inset: 0; }
+      #symptom-trap .eyebrow { position: absolute; top: 222px; left: 0; right: 0;
+        text-align: center; font-size: 24px; font-weight: 600; letter-spacing: .34em;
+        text-transform: uppercase; color: #9CD4FF; }
+      #symptom-trap .panel { position: absolute; top: 360px; left: 120px;
+        width: 840px; height: 560px; }
+      #symptom-trap .readout { position: absolute; top: -34px; right: 8px; }
+      #symptom-trap .cur { font-size: 64px; font-weight: 800; letter-spacing: -.02em; }
+      #symptom-trap .tag { font-size: 30px; font-weight: 600; color: #9CD4FF; margin-left: 10px; }
+    </style>
+
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const root = "#symptom-trap";
+        const tl = gsap.timeline({ paused: true });
+
+        // All paths share one command structure (2 cubic segments) so `d` morphs cleanly.
+        const FLAT  = "M40,330 C170,330 300,330 430,330 C555,330 680,330 800,330";
+        const HUMP1 = "M40,330 C170,330 300,318 430,272 C555,228 680,206 800,196";
+        const HUMP2 = "M40,330 C170,330 300,324 430,300 C555,278 680,268 800,262";
+
+        const line = root + " .st-line";
+        const cur = document.querySelector(root + " .cur");
+        const fmt = (n) => "$" + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        const o = { v: 83400 };
+        const tick = () => { cur.textContent = fmt(o.v); };
+
+        tl.from(root + " .eyebrow", { autoAlpha: 0, y: -14, duration: 0.4, ease: "power2.out" }, 0.08)
+          .from(root + " .panel", { autoAlpha: 0, y: 26, duration: 0.45, ease: "power2.out" }, 0.15);
+
+        // Attempt #1: work harder → line climbs...
+        tl.to(line, { attr: { d: HUMP1 }, duration: 1.1, ease: "power2.inOut" }, 0.7)
+          .to(o, { v: 96100, duration: 1.1, ease: "power2.inOut", onUpdate: tick }, 0.7)
+          // ...and snaps straight back to flat. Flame flash on the snap.
+          .to(line, { attr: { d: FLAT }, duration: 0.42, ease: "power3.in" }, 2.15)
+          .to(o, { v: 83400, duration: 0.42, ease: "power3.in", onUpdate: tick }, 2.15)
+          .to(line, { stroke: "#FF4C32", duration: 0.16, ease: "power2.in" }, 2.32)
+          .to(line, { stroke: "#9CD4FF", duration: 0.5, ease: "sine.out" }, 2.62);
+
+        // Attempt #2: spend more → smaller climb, same snap.
+        tl.to(line, { attr: { d: HUMP2 }, duration: 0.95, ease: "power2.inOut" }, 3.3)
+          .to(o, { v: 89300, duration: 0.95, ease: "power2.inOut", onUpdate: tick }, 3.3)
+          .to(line, { attr: { d: FLAT }, duration: 0.38, ease: "power3.in" }, 4.45)
+          .to(o, { v: 83400, duration: 0.38, ease: "power3.in", onUpdate: tick }, 4.45)
+          .to(line, { stroke: "#FF4C32", duration: 0.16, ease: "power2.in" }, 4.6)
+          .to(line, { stroke: "#9CD4FF", duration: 0.5, ease: "sine.out" }, 4.9);
+
+        // Dead flat hold — right back at the same number.
+        tl.to(root + " .readout", { opacity: 0.55, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1 }, 5.4);
+
+        // Slow push.
+        tl.fromTo(root + " .scene", { scale: 1 }, { scale: 1.03, duration: 6.5, ease: "none", transformOrigin: "50% 46%" }, 0);
+
+        tl.set({}, {}, 6.5);
+        window.__timelines["symptom-trap"] = tl;
+      })();
+    </script>
+  </div>
+</template>

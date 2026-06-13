@@ -1,0 +1,146 @@
+<template id="more-montage-template">
+  <div id="more-montage" data-composition-id="more-montage" data-start="0" data-duration="4.9" data-width="1080" data-height="1350">
+    <div class="scene">
+      <!-- Beat 1: ad spend ticking up -->
+      <div class="card c1">
+        <div class="lbl">Ad spend / mo</div>
+        <div class="num n1">$12,400</div>
+        <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <!-- Beat 2: product tiles multiplying -->
+      <div class="card c2">
+        <div class="lbl">Catalog</div>
+        <div class="tiles">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="num n2">12 SKUs</div>
+      </div>
+      <!-- Beat 3: launch calendar filling -->
+      <div class="card c3">
+        <div class="lbl">Launch calendar</div>
+        <div class="cal">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="num n3">Q3: full</div>
+      </div>
+      <!-- Beat 4: notifications stacking -->
+      <div class="card c4">
+        <div class="lbl">Marketing <span class="badge">99+</span></div>
+        <div class="notif"><b></b>Campaign #214 is live</div>
+        <div class="notif"><b></b>New email flow scheduled</div>
+        <div class="notif"><b></b>Promo code LAUNCH30 created</div>
+        <div class="notif"><b></b>Retargeting budget increased</div>
+      </div>
+    </div>
+
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      #more-montage {
+        position: absolute; inset: 0; overflow: hidden;
+        background:
+          radial-gradient(90% 50% at 50% 14%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          #06284C;
+        color: #fff; font-family: 'Rethink Sans', system-ui, sans-serif;
+      }
+      #more-montage::after { content: ""; position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 45%, rgba(2,14,28,.55) 100%);
+        pointer-events: none; }
+      #more-montage .scene { position: absolute; inset: 0; }
+      #more-montage .card { position: absolute; width: 680px;
+        background: rgba(222,238,254,.07); border: 1px solid rgba(156,212,255,.26);
+        border-radius: 26px; padding: 38px 44px;
+        box-shadow: 0 30px 80px -20px rgba(0,0,0,.6); }
+      #more-montage .lbl { font-size: 26px; font-weight: 600;
+        letter-spacing: .26em; text-transform: uppercase; color: #9CD4FF; margin-bottom: 18px; }
+      #more-montage .num { font-size: 92px; font-weight: 800;
+        letter-spacing: -.02em; line-height: 1; }
+      #more-montage .c1 { top: 260px; left: 130px; transform: rotate(-2deg); }
+      #more-montage .c2 { top: 470px; left: 250px; transform: rotate(1.6deg); }
+      #more-montage .c3 { top: 680px; left: 110px; transform: rotate(-1.2deg); }
+      #more-montage .c4 { top: 560px; left: 230px; transform: rotate(2.1deg); }
+      #more-montage .bars { display: flex; gap: 14px; align-items: flex-end;
+        height: 90px; margin-top: 22px; }
+      #more-montage .bars i { flex: 1; background: #9CD4FF; border-radius: 6px;
+        transform-origin: bottom center; opacity: .85; }
+      #more-montage .bars i:nth-child(1) { height: 22%; }
+      #more-montage .bars i:nth-child(2) { height: 34%; }
+      #more-montage .bars i:nth-child(3) { height: 47%; }
+      #more-montage .bars i:nth-child(4) { height: 61%; }
+      #more-montage .bars i:nth-child(5) { height: 78%; }
+      #more-montage .bars i:nth-child(6) { height: 100%; background: #FF4C32; }
+      #more-montage .tiles { display: grid; grid-template-columns: repeat(6, 1fr);
+        gap: 14px; margin-bottom: 20px; }
+      #more-montage .tiles i { height: 74px; border-radius: 12px;
+        background: rgba(222,238,254,.16); border: 1px solid rgba(156,212,255,.3); }
+      #more-montage .c2 .num { font-size: 56px; }
+      #more-montage .cal { display: grid; grid-template-columns: repeat(7, 1fr);
+        gap: 10px; margin-bottom: 20px; }
+      #more-montage .cal i { height: 38px; border-radius: 8px;
+        background: rgba(222,238,254,.10); border: 1px solid rgba(156,212,255,.2); position: relative; }
+      #more-montage .cal i::after { content: ""; position: absolute; inset: 9px;
+        border-radius: 5px; background: #FF4C32; opacity: 0; }
+      #more-montage .cal i.on::after { opacity: .9; }
+      #more-montage .c3 .num { font-size: 56px; }
+      #more-montage .badge { display: inline-block; margin-left: 14px;
+        font-size: 24px; font-weight: 800; letter-spacing: 0; color: #fff; background: #FF4C32;
+        border-radius: 999px; padding: 4px 16px; vertical-align: middle; }
+      #more-montage .notif { display: flex; align-items: center; gap: 16px;
+        font-size: 30px; font-weight: 600; color: #DEEEFE;
+        background: rgba(6,40,76,.75); border: 1px solid rgba(156,212,255,.22);
+        border-radius: 16px; padding: 18px 22px; margin-top: 14px; }
+      #more-montage .notif b { width: 14px; height: 14px; border-radius: 50%;
+        background: #FF4C32; flex: none; }
+    </style>
+
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const root = "#more-montage";
+        const tl = gsap.timeline({ paused: true });
+
+        const fmt = (n) => "$" + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        const n1 = document.querySelector(root + " .n1");
+        const n2 = document.querySelector(root + " .n2");
+        const spend = { v: 12400 }, skus = { v: 12 };
+
+        // Beat 1 (0–1.2): ad spend ticking up
+        tl.from(root + " .c1", { autoAlpha: 0, scale: 1.18, y: 26, duration: 0.34, ease: "power3.out" }, 0.05)
+          .to(spend, { v: 48900, duration: 1.0, ease: "power1.in",
+            onUpdate: () => { n1.textContent = fmt(spend.v); } }, 0.15)
+          .from(root + " .bars i", { scaleY: 0, duration: 0.4, stagger: 0.09, ease: "power2.out" }, 0.25);
+
+        // Beat 2 (1.2–2.4): product tiles multiplying
+        tl.from(root + " .c2", { autoAlpha: 0, scale: 1.18, y: 26, duration: 0.34, ease: "power3.out" }, 1.2)
+          .from(root + " .tiles i", { autoAlpha: 0, scale: 0.4, duration: 0.26, stagger: 0.045, ease: "back.out(2)" }, 1.3)
+          .to(skus, { v: 47, duration: 0.85, ease: "power1.in",
+            onUpdate: () => { n2.textContent = Math.round(skus.v) + " SKUs"; } }, 1.35);
+
+        // Beat 3 (2.4–3.6): launch calendar filling (fixed pattern, no randomness)
+        tl.from(root + " .c3", { autoAlpha: 0, scale: 1.18, y: 26, duration: 0.34, ease: "power3.out" }, 2.4);
+        const cells = document.querySelectorAll(root + " .cal i");
+        [2, 5, 9, 12, 14, 17, 19, 22, 24, 25, 26, 27].forEach((idx, k) => {
+          tl.set(cells[idx], { className: "on" }, 2.55 + k * 0.07);
+        });
+
+        // Beat 4 (3.6–4.9): notifications stacking
+        tl.from(root + " .c4", { autoAlpha: 0, scale: 1.18, y: 26, duration: 0.34, ease: "power3.out" }, 3.6)
+          .from(root + " .notif", { autoAlpha: 0, x: 60, duration: 0.3, stagger: 0.14, ease: "power3.out" }, 3.72)
+          .from(root + " .badge", { scale: 0, duration: 0.35, ease: "back.out(2.5)" }, 4.35);
+
+        // Pressure: the whole pile keeps pushing in.
+        tl.fromTo(root + " .scene", { scale: 1 }, { scale: 1.07, duration: 4.9, ease: "power1.in", transformOrigin: "50% 52%" }, 0);
+
+        tl.set({}, {}, 4.9);
+        window.__timelines["more-montage"] = tl;
+      })();
+    </script>
+  </div>
+</template>

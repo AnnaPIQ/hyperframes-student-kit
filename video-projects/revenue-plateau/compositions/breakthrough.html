@@ -1,0 +1,86 @@
+<template id="breakthrough-template">
+  <div id="breakthrough" data-composition-id="breakthrough" data-start="0" data-duration="3" data-width="1080" data-height="1350">
+    <div class="scene">
+      <div class="eyebrow">Your revenue &middot; after the fix</div>
+      <div class="panel">
+        <svg viewBox="0 0 840 560" width="840" height="560">
+          <g stroke="rgba(156,212,255,.10)" stroke-width="1">
+            <line x1="40" y1="80"  x2="800" y2="80"/>
+            <line x1="40" y1="190" x2="800" y2="190"/>
+            <line x1="40" y1="300" x2="800" y2="300"/>
+            <line x1="40" y1="410" x2="800" y2="410"/>
+            <line x1="40" y1="520" x2="800" y2="520"/>
+          </g>
+          <!-- the same line from the open: climb, then flat -->
+          <path class="base" d="M40,516 C100,506 140,478 190,452 C240,426 268,430 310,386 C336,358 352,330 372,320 L620,320"
+                fill="none" stroke="#9CD4FF" stroke-width="7" stroke-linecap="round"
+                style="filter: drop-shadow(0 0 14px rgba(156,212,255,.55));"/>
+          <!-- the breakthrough tail -->
+          <path class="tail" d="M620,320 C660,320 678,302 706,258 C734,212 766,150 800,92"
+                fill="none" stroke="#FF4C32" stroke-width="8" stroke-linecap="round"
+                style="filter: drop-shadow(0 0 18px rgba(255,76,50,.65));"/>
+          <circle class="spark" cx="620" cy="320" r="14"/>
+        </svg>
+        <div class="chip">Breakthrough</div>
+      </div>
+    </div>
+
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      #breakthrough {
+        position: absolute; inset: 0; overflow: hidden;
+        background:
+          radial-gradient(90% 50% at 50% 14%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          #06284C;
+        color: #fff; font-family: 'Rethink Sans', system-ui, sans-serif;
+      }
+      #breakthrough::after { content: ""; position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 45%, rgba(2,14,28,.55) 100%);
+        pointer-events: none; }
+      #breakthrough .scene { position: absolute; inset: 0; }
+      #breakthrough .eyebrow { position: absolute; top: 222px; left: 0; right: 0;
+        text-align: center; font-size: 24px; font-weight: 600; letter-spacing: .34em;
+        text-transform: uppercase; color: #9CD4FF; }
+      #breakthrough .panel { position: absolute; top: 360px; left: 120px;
+        width: 840px; height: 560px; }
+      #breakthrough .spark { fill: #FF4C32; opacity: 0;
+        filter: drop-shadow(0 0 16px rgba(255,76,50,.9)); }
+      #breakthrough .chip { position: absolute; top: 14px; right: 6px;
+        font-size: 26px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+        color: #FF4C32; border: 2px solid rgba(255,76,50,.65); border-radius: 999px;
+        padding: 10px 24px; background: rgba(6,40,76,.8); }
+    </style>
+
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const root = "#breakthrough";
+        const tl = gsap.timeline({ paused: true });
+
+        const tail = document.querySelector(root + " .tail");
+        const TL_ = tail.getTotalLength();
+        gsap.set(tail, { strokeDasharray: TL_, strokeDashoffset: TL_ });
+
+        tl.from(root + " .eyebrow", { autoAlpha: 0, y: -14, duration: 0.35, ease: "power2.out" }, 0.05)
+          .from(root + " .panel", { autoAlpha: 0, duration: 0.3, ease: "power1.out" }, 0)
+          // The flat line finally BREAKS upward.
+          .to(root + " .spark", { opacity: 1, scale: 2.4, duration: 0.4, ease: "power2.out",
+            transformOrigin: "50% 50%" }, 0.55)
+          .to(root + " .spark", { opacity: 0, duration: 0.35 }, 0.95)
+          .to(tail, { strokeDashoffset: 0, duration: 0.9, ease: "power3.out" }, 0.65)
+          .from(root + " .chip", { autoAlpha: 0, scale: 0.7, duration: 0.4, ease: "back.out(1.8)" }, 1.35)
+          .to(root + " .chip", { opacity: 0.6, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1 }, 1.9)
+          // Hold the rising feeling into the CTA card.
+          .fromTo(root + " .scene", { scale: 1 }, { scale: 1.04, duration: 3, ease: "none", transformOrigin: "62% 40%" }, 0);
+
+        tl.set({}, {}, 3);
+        window.__timelines["breakthrough"] = tl;
+      })();
+    </script>
+  </div>
+</template>
