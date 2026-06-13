@@ -60,16 +60,16 @@
       .cap b { font-weight: 800; color: var(--brand-flame); }
       .cap i { font-style: normal; font-weight: 700; color: var(--brand-blue-tint); }
 
-      /* ---- End card (86.5–93s): desk footage shows through the keyed margins;
-             content sits on an opaque navy glass panel (no green fringe on text). ---- */
-      #endcard { position: absolute; inset: 0; }
-      #endcard .inner { position: absolute; left: 70px; right: 70px; top: 250px; bottom: 250px;
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        gap: 28px; padding: 0 64px; text-align: center;
-        background: #06284C; border-radius: 40px;
-        border: 1px solid rgba(156, 212, 255, .30);
-        box-shadow: 0 40px 120px -30px rgba(0,0,0,.7); }
-      #endcard .logo { width: 400px; height: auto; margin-bottom: 12px; }
+      /* ---- End card (86.5–93s): FULL-SCREEN navy card (opaque — covers the key). ---- */
+      #endcard { position: absolute; inset: 0;
+        background:
+          radial-gradient(90% 55% at 50% 24%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 58%),
+          #06284C; }
+      #endcard .bloom { position: absolute; left: -10%; bottom: -22%; width: 120%; height: 55%;
+        background: var(--brand-gradient-2); filter: blur(90px); opacity: .34; }
+      #endcard .inner { position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 30px; padding: 0 90px; text-align: center; }
+      #endcard .logo { width: 430px; height: auto; margin-bottom: 16px; }
       #endcard .headline { font-size: 96px; font-weight: 800; line-height: 1.02;
         letter-spacing: -.02em; color: var(--brand-white); }
       #endcard .headline .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic;
@@ -152,6 +152,7 @@
       <!-- End card: navy scrim is semi-transparent so the desk footage
            composited underneath shows through. -->
       <div id="endcard" class="clip" data-start="86.5" data-duration="6.5" data-track-index="8">
+        <div class="bloom"></div>
         <div class="inner">
           <img class="logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
           <div class="headline">Fix what&rsquo;s <span class="em">already</span> there.</div>
@@ -189,6 +190,7 @@
         .from("#endcard .headline", { opacity: 0, y: 30, duration: 0.65, ease: "power3.out" }, 86.85)
         .from("#endcard .sub", { opacity: 0, y: 22, duration: 0.55, ease: "power2.out" }, 87.15)
         .from("#endcard .cta", { opacity: 0, scale: 0.85, duration: 0.55, ease: "back.out(1.7)" }, 87.5)
+        .from("#endcard .bloom", { opacity: 0, duration: 1.1, ease: "sine.out" }, 86.5)
         // CTA breathes to hold attention through the outro (finite repeats).
         .to("#endcard .cta", { scale: 1.04, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 6 }, 88.1);
 
