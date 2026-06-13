@@ -115,15 +115,9 @@
       <div id="sc-tiles" class="scmount" data-composition-id="metric-tiles"
            data-composition-src="compositions/metric-tiles.html"
            data-start="26.5" data-duration="10.5" data-track-index="5" data-width="1080" data-height="1350"></div>
-      <div id="sc-trap" class="scmount" data-composition-id="symptom-trap"
-           data-composition-src="compositions/symptom-trap.html"
-           data-start="43" data-duration="6.5" data-track-index="4" data-width="1080" data-height="1350"></div>
       <div id="sc-bottleneck" class="scmount" data-composition-id="bottleneck"
            data-composition-src="compositions/bottleneck.html"
            data-start="77" data-duration="6.5" data-track-index="4" data-width="1080" data-height="1350"></div>
-      <div id="sc-breakthrough" class="scmount" data-composition-id="breakthrough"
-           data-composition-src="compositions/breakthrough.html"
-           data-start="83.5" data-duration="3" data-track-index="5" data-width="1080" data-height="1350"></div>
 
       <!-- Brand mark -->
       <div id="logoBar" class="clip" data-start="0" data-duration="86.5" data-track-index="3">
@@ -201,9 +195,6 @@
         .from("#sc-system", { opacity: 0, duration: 0.3, ease: "power2.out" }, 18.5)
         .to("#sc-tiles", { opacity: 0, duration: 0.3, ease: "power2.in" }, 36.7)
         .set("#sc-tiles", { opacity: 0 }, 37)
-        .from("#sc-trap", { opacity: 0, duration: 0.3, ease: "power2.out" }, 43)
-        .to("#sc-trap", { opacity: 0, duration: 0.3, ease: "power2.in" }, 49.2)
-        .set("#sc-trap", { opacity: 0 }, 49.5)
         .from("#sc-bottleneck", { opacity: 0, duration: 0.3, ease: "power2.out" }, 77);
 
       // ---- Caption entrances (clip visibility handles exits) ----
