@@ -1,16 +1,23 @@
-// Generates index.html with caption timings baked in from captions-data.json.
+// Generates index.html for the Plateau ad.
+// Face stays the hero; motion-graphics overlays (flat-line->growth motif,
+// 59% stat, framed Driftsleep b-roll insert) ride on top. No captions.
+// The four spoken segments are cross-dissolved INSIDE ad-cut.mp4, so the
+// composition no longer masks jump cuts.
 import fs from "node:fs";
 
-const data = JSON.parse(fs.readFileSync("./assets/captions-data.json", "utf8"));
-const LINES = data.lines;
-const SEGS = data.segs;
-const STAT = data.statCut;          // cut-timeline t when "59%" is spoken
-const CUTS = SEGS.slice(1).map((s) => s.cutIn); // internal jump-cut points
-const VIDEO_DUR = 23.85;            // play the assembled cut (file is 23.866s)
-const OUTRO_IN = 23.2;              // outro card fades in just before video ends
-const COMP = 27.4;                  // total composition duration
-
 const ID = "shopify-revenue-plateau";
+
+const VIDEO_DUR = 22.95;   // assembled cut (file is 22.97s)
+// --- beat markers in the assembled-cut timeline ---
+const MOTIF_IN   = 6.0;    // "The flat line isn't failure..."
+const MOTIF_KICK = 7.9;    // "...it's information." -> line kicks up
+const MOTIF_OUT  = 9.5;
+const BROLL_IN   = 10.6;   // "...brands like Driftsleep..."
+const BROLL_OUT  = 16.7;
+const STAT_T     = 13.37;  // "59%" is spoken
+const STAT_OUT   = 16.9;
+const OUTRO_IN   = 22.4;   // outro card fades in as the CTA line lands
+const COMP       = 27.2;   // total composition duration (outro holds ~4.8s)
 
 const html = `<!doctype html>
 <html lang="en">
@@ -29,54 +36,54 @@ const html = `<!doctype html>
       html, body { width: 1080px; height: 1350px; overflow: hidden;
         background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: #fff; }
 
-      /* ---- video (full-bleed cover crop, 16:9 -> 4:5) ---- */
-      #video-wrap { position: absolute; inset: 0; transform-origin: 50% 42%; z-index: 0; }
+      /* ---- talking head (full-bleed cover crop, 16:9 -> 4:5) ---- */
+      #video-wrap { position: absolute; inset: 0; transform-origin: 50% 40%; z-index: 0; }
       #video-wrap video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%;
         filter: contrast(1.06) saturate(1.08) brightness(0.98); display: block; }
 
-      /* ---- Driftsleep product b-roll cut-in (covers the face over the proof line) ---- */
-      #broll-wrap { position: absolute; inset: 0; z-index: 2; transform-origin: 50% 45%; overflow: hidden; }
-      #broll-wrap video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%;
-        filter: contrast(1.05) saturate(1.06); display: block; }
-
-      /* ---- brand scrims so logo + captions stay legible over face AND b-roll ---- */
-      #scrims { position: absolute; inset: 0; pointer-events: none; z-index: 3;
+      /* ---- brand scrims so logo + overlays stay legible over the face ---- */
+      #scrims { position: absolute; inset: 0; pointer-events: none; z-index: 1;
         background:
-          linear-gradient(180deg, rgba(6,40,76,0.85) 0%, rgba(6,40,76,0.0) 22%),
-          linear-gradient(0deg, rgba(6,40,76,0.96) 0%, rgba(6,40,76,0.55) 24%, rgba(6,40,76,0.0) 42%); }
-      #vignette { position: absolute; inset: 0; pointer-events: none; z-index: 3;
-        background: radial-gradient(125% 90% at 50% 42%, rgba(6,40,76,0) 55%, rgba(6,40,76,0.55) 100%); }
+          linear-gradient(180deg, rgba(6,40,76,0.82) 0%, rgba(6,40,76,0.0) 20%),
+          linear-gradient(0deg, rgba(6,40,76,0.80) 0%, rgba(6,40,76,0.18) 18%, rgba(6,40,76,0.0) 36%); }
+      #vignette { position: absolute; inset: 0; pointer-events: none; z-index: 1;
+        background: radial-gradient(125% 92% at 50% 40%, rgba(6,40,76,0) 56%, rgba(6,40,76,0.5) 100%); }
 
       /* ---- logo chip top-left ---- */
-      #logo { position: absolute; top: 56px; left: 60px; width: 300px; height: auto; z-index: 4;
+      #logo { position: absolute; top: 56px; left: 60px; width: 300px; height: auto; z-index: 6;
         filter: drop-shadow(0 6px 18px rgba(0,0,0,0.45)); }
 
-      /* ---- "59% returning customers" proof badge ---- */
-      #stat { position: absolute; top: 196px; right: 60px; z-index: 4; text-align: right;
+      /* ---- flat-line -> growth motif (the "flat line is information" beat) ---- */
+      #motif { position: absolute; left: 96px; right: 96px; top: 1000px; height: 250px; z-index: 4;
+        opacity: 0; pointer-events: none; }
+      #motif svg { width: 100%; height: 100%; overflow: visible; }
+      #motif #mlabel { position: absolute; right: 6px; top: 6px; font-weight: 800; font-size: 40px;
+        letter-spacing: -.01em; color: var(--brand-flame); opacity: 0;
+        text-shadow: 0 6px 22px rgba(255,76,50,.45); }
+      #flat { stroke: var(--brand-blue-tint); }
+      #grow { stroke: var(--brand-flame); filter: drop-shadow(0 6px 16px rgba(255,76,50,.5)); }
+
+      /* ---- 59% proof badge ---- */
+      #stat { position: absolute; top: 188px; right: 60px; z-index: 6; text-align: right;
         opacity: 0; transform-origin: 100% 0; }
-      #stat .big { font-weight: 800; font-size: 132px; line-height: .9; letter-spacing: -.04em;
+      #stat .big { font-weight: 800; font-size: 138px; line-height: .9; letter-spacing: -.04em;
         color: var(--brand-flame); text-shadow: 0 10px 36px rgba(255,76,50,.45); }
       #stat .lab { display: inline-block; margin-top: 8px; font-weight: 700; font-size: 30px;
         letter-spacing: .02em; color: #fff; background: rgba(6,40,76,.72); padding: 10px 20px;
         border-radius: 12px; border: 1px solid rgba(156,212,255,.35); }
 
-      /* ---- flat-line -> growth motif (the "flat line is information" beat) ---- */
-      #motif { position: absolute; left: 110px; right: 110px; top: 690px; height: 220px; z-index: 3;
-        opacity: 0; pointer-events: none; }
-      #motif svg { width: 100%; height: 100%; overflow: visible; }
-
-      /* ---- captions ---- */
-      #captions { position: absolute; left: 0; right: 0; bottom: 232px; z-index: 5;
-        padding: 0 70px; pointer-events: none; }
-      .cap-line { position: absolute; bottom: 0; left: 70px; right: 70px; text-align: center;
-        font-family: 'Rethink Sans', sans-serif; font-weight: 800; font-size: 60px; line-height: 1.1;
-        letter-spacing: -.02em; word-spacing: .1em; color: #fff; opacity: 0; visibility: hidden;
-        text-shadow: -3px -3px 0 #06284C, 3px -3px 0 #06284C, -3px 3px 0 #06284C, 3px 3px 0 #06284C,
-          -4px 0 0 #06284C, 4px 0 0 #06284C, 0 -4px 0 #06284C, 0 4px 0 #06284C, 0 8px 18px rgba(0,0,0,.5); }
-      .cap-w { display: inline-block; transform-origin: center; will-change: transform, color; }
-
-      /* ---- cut-transition dip ---- */
-      #dip { position: absolute; inset: 0; background: var(--brand-navy); opacity: 0; z-index: 6; pointer-events: none; }
+      /* ---- Driftsleep b-roll, framed insert OVER the face (face stays visible above) ---- */
+      #broll-card { position: absolute; left: 50%; top: 690px; width: 430px; height: 516px;
+        z-index: 5; border-radius: 30px; overflow: hidden;
+        border: 3px solid var(--brand-flame); opacity: 0;
+        box-shadow: 0 36px 90px -24px rgba(0,0,0,.7), 0 0 0 8px rgba(6,40,76,.5); }
+      #broll-card video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 48%;
+        filter: contrast(1.05) saturate(1.06); display: block; }
+      #broll-tag { position: absolute; left: 50%; top: 1232px; z-index: 5;
+        font-weight: 700; font-size: 26px; letter-spacing: .14em; text-transform: uppercase;
+        color: #fff; background: rgba(6,40,76,.78); padding: 12px 26px; border-radius: 999px;
+        border: 1px solid rgba(156,212,255,.4); opacity: 0; white-space: nowrap; }
+      #broll-tag b { color: var(--brand-blue-tint); }
 
       /* ---- outro CTA card ---- */
       #outro { position: absolute; inset: 0; z-index: 8; opacity: 0;
@@ -110,22 +117,38 @@ const html = `<!doctype html>
       <audio id="aud" data-start="0" data-duration="${VIDEO_DUR}" data-track-index="1"
              data-volume="1" src="assets/ad-cut.mp4"></audio>
 
-      <!-- Driftsleep product b-roll, shown over the whole proof segment (9.7-18.0).
-           Talking-head audio keeps playing underneath; the cut dips at 9.7 & 18.0 mask it. -->
-      <div id="broll-wrap">
-        <video id="broll" data-start="9.7" data-duration="8.3" data-track-index="9"
-               src="assets/driftsleep.mp4" muted playsinline></video>
-      </div>
-
       <div id="scrims" class="clip" data-start="0" data-duration="${COMP}" data-track-index="2"></div>
       <div id="vignette" class="clip" data-start="0" data-duration="${COMP}" data-track-index="3"></div>
 
       <img id="logo" class="clip" data-start="0" data-duration="${VIDEO_DUR}" data-track-index="4"
            src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
 
-      <div id="captions" class="clip" data-start="0" data-duration="${VIDEO_DUR}" data-track-index="6"></div>
+      <!-- flat-line -> growth motion graphic -->
+      <div id="motif" class="clip" data-start="${MOTIF_IN - 0.3}" data-duration="${MOTIF_OUT - MOTIF_IN + 0.6}" data-track-index="5">
+        <svg viewBox="0 0 888 250" preserveAspectRatio="none">
+          <line id="flat" x1="20" y1="170" x2="700" y2="170"
+                stroke-width="6" stroke-linecap="round" stroke-dasharray="14 16" />
+          <path id="grow" fill="none" pathLength="1" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"
+                d="M20,170 L430,170 C560,170 590,158 650,120 C712,80 778,52 868,26" />
+          <circle id="gdot" cx="868" cy="26" r="11" fill="#FF4C32" />
+        </svg>
+        <div id="mlabel">information&nbsp;&uarr;</div>
+      </div>
 
-      <div id="dip" class="clip" data-start="0" data-duration="${VIDEO_DUR}" data-track-index="7"></div>
+      <!-- 59% proof badge -->
+      <div id="stat" class="clip" data-start="${STAT_T - 0.6}" data-duration="${STAT_OUT - STAT_T + 1.0}" data-track-index="6">
+        <div class="big">+59%</div>
+        <div class="lab">returning customers</div>
+      </div>
+
+      <!-- Driftsleep b-roll insert (stabilized) -->
+      <div id="broll-card">
+        <video id="broll" data-start="${BROLL_IN}" data-duration="${BROLL_OUT - BROLL_IN}" data-track-index="9"
+               src="assets/driftsleep-stab.mp4" muted playsinline></video>
+      </div>
+      <div id="broll-tag" class="clip" data-start="${BROLL_IN}" data-duration="${BROLL_OUT - BROLL_IN}" data-track-index="7">
+        Client&nbsp;&middot;&nbsp;<b>Driftsleep</b>
+      </div>
 
       <div id="outro" class="clip" data-start="0" data-duration="${COMP}" data-track-index="8">
         <div id="obloom"></div>
@@ -137,26 +160,9 @@ const html = `<!doctype html>
     </div>
 
     <script>
-      const LINES = ${JSON.stringify(LINES)};
-      const STAT = ${STAT};
-      const CUTS = ${JSON.stringify(CUTS)};
       const VIDEO_DUR = ${VIDEO_DUR};
-      const OUTRO_IN = ${OUTRO_IN};
       const COMP = ${COMP};
-
-      // Build caption DOM (one absolutely-positioned line per phrase, swapped over time).
-      const capStage = document.getElementById("captions");
-      LINES.forEach((ln, i) => {
-        const div = document.createElement("div");
-        div.className = "cap-line"; div.id = "cap-" + i;
-        ln.words.forEach((w, j) => {
-          const sp = document.createElement("span");
-          sp.className = "cap-w"; sp.id = "cap-" + i + "-" + j; sp.textContent = w.t;
-          div.appendChild(sp);
-          if (j < ln.words.length - 1) div.appendChild(document.createTextNode(" "));
-        });
-        capStage.appendChild(div);
-      });
+      const OUTRO_IN = ${OUTRO_IN};
 
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
@@ -164,46 +170,33 @@ const html = `<!doctype html>
       // Logo in
       tl.from("#logo", { opacity: 0, y: -18, duration: .5, ease: "power3.out" }, .15);
 
-      // Subtle Ken Burns on the face so it never feels like a freeze
-      tl.to("#video-wrap", { scale: 1.05, duration: VIDEO_DUR, ease: "none" }, 0);
-      // Slow push on the Driftsleep b-roll so the shelf shot has life
-      tl.fromTo("#broll-wrap", { scale: 1.0 }, { scale: 1.07, duration: 8.3, ease: "none" }, 9.7);
+      // Gentle continuous push on the face (cross-dissolves are baked into the cut,
+      // so a single slow Ken Burns reads smooth across the whole piece).
+      tl.fromTo("#video-wrap", { scale: 1.0 }, { scale: 1.045, duration: VIDEO_DUR, ease: "none" }, 0);
 
-      // Cut-transition dips to mask the jump cuts (kept separate from the Ken Burns scale)
-      CUTS.forEach((t) => {
-        tl.fromTo("#dip", { opacity: 0 }, { opacity: .55, duration: .08, ease: "power2.in" }, t - .08)
-          .to("#dip", { opacity: 0, duration: .14, ease: "power2.out" }, t);
-      });
+      // ---- flat-line -> growth motif ----
+      tl.fromTo("#motif", { opacity: 0 }, { opacity: 1, duration: .4, ease: "power2.out" }, ${MOTIF_IN});
+      // hide the growth curve until the kick
+      tl.set("#grow", { strokeDasharray: 1, strokeDashoffset: 1 }, 0);
+      tl.set("#gdot", { scale: 0, transformOrigin: "center" }, 0);
+      // kick up on "information"
+      tl.to("#grow", { strokeDashoffset: 0, duration: .7, ease: "power2.inOut" }, ${MOTIF_KICK});
+      tl.to("#flat", { opacity: .25, duration: .5, ease: "power2.out" }, ${MOTIF_KICK});
+      tl.to("#gdot", { scale: 1, duration: .35, ease: "back.out(2.4)" }, ${MOTIF_KICK} + .55);
+      tl.fromTo("#mlabel", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: .4, ease: "power3.out" }, ${MOTIF_KICK} + .5);
+      tl.to("#motif", { opacity: 0, duration: .45, ease: "power2.in" }, ${MOTIF_OUT});
 
-      // Captions: clean hard hand-off (only ONE line visible at a time — no
-      // crossfade overlap), karaoke-pop each word to flame as it's spoken.
-      const ACTIVE = "#FF4C32", REST = "#ffffff", DIM = "rgba(255,255,255,.55)";
-      LINES.forEach((ln, i) => {
-        const sel = "#cap-" + i;
-        const start = ln.words[0].s, end = ln.words[ln.words.length - 1].e;
-        const next = (i < LINES.length - 1) ? LINES[i + 1].words[0].s : Infinity;
-        const inAt = Math.max(start - .04, 0);
-        // hide this line before the next one appears (clean cut), else just after it ends
-        const hardOut = Math.min(end + .14, next - .07);
-        const outAt = Math.max(hardOut - .09, inAt + .12);
-        const hideAt = outAt + .09;
-        ln.words.forEach((w, j) => tl.set("#cap-" + i + "-" + j, { color: DIM, scale: 1 }, inAt));
-        tl.set(sel, { visibility: "visible" }, inAt);
-        tl.fromTo(sel, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .1, ease: "power2.out" }, inAt);
-        ln.words.forEach((w, j) => {
-          const ws = "#cap-" + i + "-" + j;
-          tl.to(ws, { color: ACTIVE, scale: 1.12, duration: .07, ease: "back.out(3)" }, Math.max(w.s, inAt));
-          tl.to(ws, { color: REST, scale: 1, duration: .12, ease: "power2.out" }, w.e);
-        });
-        tl.to(sel, { opacity: 0, duration: .09, ease: "power2.in" }, outAt);
-        tl.set(sel, { visibility: "hidden", opacity: 0 }, hideAt);
-      });
+      // ---- 59% proof badge ----
+      tl.fromTo("#stat", { opacity: 0, scale: .8, y: -10 }, { opacity: 1, scale: 1, y: 0, duration: .45, ease: "back.out(2)" }, ${STAT_T} - .25)
+        .to("#stat", { opacity: 0, scale: .94, duration: .3, ease: "power2.in" }, ${STAT_OUT});
 
-      // 59% proof badge pop
-      tl.fromTo("#stat", { opacity: 0, scale: .8, y: -10 }, { opacity: 1, scale: 1, y: 0, duration: .4, ease: "back.out(2)" }, STAT - .25)
-        .to("#stat", { opacity: 0, scale: .94, duration: .3, ease: "power2.in" }, 17.7);
+      // ---- Driftsleep b-roll insert (slides up, holds, slides out) ----
+      tl.fromTo("#broll-card", { opacity: 0, y: 46, scale: .94, xPercent: -50 }, { opacity: 1, y: 0, scale: 1, xPercent: -50, duration: .5, ease: "power3.out" }, ${BROLL_IN});
+      tl.fromTo("#broll-tag", { opacity: 0, y: 14, xPercent: -50 }, { opacity: 1, y: 0, xPercent: -50, duration: .4, ease: "power2.out" }, ${BROLL_IN} + .15);
+      tl.to("#broll-card", { opacity: 0, y: 36, duration: .45, ease: "power2.in" }, ${BROLL_OUT} - .35);
+      tl.to("#broll-tag", { opacity: 0, duration: .35, ease: "power2.in" }, ${BROLL_OUT} - .35);
 
-      // Outro card: fade in over the last beat, hold, CTA breathes.
+      // ---- Outro CTA card ----
       tl.to("#outro", { opacity: 1, duration: .5, ease: "power2.out" }, OUTRO_IN);
       tl.fromTo("#ologo", { opacity: 0, y: -16, xPercent: -50 }, { opacity: 1, y: 0, xPercent: -50, duration: .5, ease: "power3.out" }, OUTRO_IN + .25);
       tl.from("#oeyebrow", { opacity: 0, y: 14, duration: .45, ease: "power2.out" }, OUTRO_IN + .45);
@@ -220,5 +213,5 @@ const html = `<!doctype html>
 </html>
 `;
 
-fs.writeFileSync("./index.html", html);
-console.log("wrote index.html", html.length, "bytes; lines:", LINES.length, "cuts:", CUTS);
+fs.writeFileSync(new URL("./index.html", import.meta.url), html);
+console.log("wrote index.html", html.length, "bytes");
