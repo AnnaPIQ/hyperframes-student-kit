@@ -1,0 +1,72 @@
+<template id="system-friction-short-template">
+  <div id="system-friction-short" data-composition-id="system-friction-short" data-start="0" data-duration="3" data-width="1080" data-height="1350">
+    <div class="scene">
+      <div class="eyebrow">Your business &middot; as a system</div>
+      <svg viewBox="0 0 920 860" width="920" height="860" class="diagram">
+        <g fill="none" stroke-linecap="round">
+          <path class="edge e1" d="M460,150 L250,330"/>
+          <path class="edge e2" d="M250,402 L250,560"/>
+          <path class="edge e3" d="M320,596 L600,596"/>
+          <path class="edge e4" d="M670,560 L670,402"/>
+          <path class="edge e5 fault-edge" d="M670,330 L460,150"/>
+          <circle class="fault-ring r1" cx="565" cy="240" r="18"/>
+          <circle class="fault-ring r2" cx="565" cy="240" r="18"/>
+        </g>
+        <g class="nodes" font-family="'Rethink Sans',sans-serif" text-anchor="middle">
+          <g class="node nd1"><rect x="350" y="78" width="220" height="72" rx="20"/><text x="460" y="124">TRAFFIC</text></g>
+          <g class="node nd2"><rect x="140" y="330" width="220" height="72" rx="20"/><text x="250" y="376">STORE</text></g>
+          <g class="node nd3"><rect x="140" y="560" width="220" height="72" rx="20"/><text x="250" y="606">CHECKOUT</text></g>
+          <g class="node nd4"><rect x="560" y="560" width="220" height="72" rx="20"/><text x="670" y="606">CUSTOMERS</text></g>
+          <g class="node nd5"><rect x="560" y="330" width="220" height="72" rx="20"/><text x="670" y="376">REPEAT</text></g>
+        </g>
+      </svg>
+      <div class="chip">Friction detected</div>
+    </div>
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      #system-friction-short {
+        position: absolute; inset: 0; overflow: hidden;
+        background:
+          radial-gradient(90% 50% at 50% 14%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          #06284C;
+        color: #fff; font-family: 'Rethink Sans', system-ui, sans-serif; }
+      #system-friction-short::after { content: ""; position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 45%, rgba(2,14,28,.55) 100%); pointer-events: none; }
+      #system-friction-short .scene { position: absolute; inset: 0; }
+      #system-friction-short .eyebrow { position: absolute; top: 208px; left: 0; right: 0;
+        text-align: center; font-size: 24px; font-weight: 600; letter-spacing: .34em; text-transform: uppercase; color: #9CD4FF; }
+      #system-friction-short .diagram { position: absolute; top: 300px; left: 80px; }
+      #system-friction-short .edge { stroke: rgba(156,212,255,.55); stroke-width: 3.5; stroke-dasharray: 14 18; }
+      #system-friction-short .node rect { fill: rgba(6,40,76,.85); stroke: rgba(156,212,255,.5); stroke-width: 2; }
+      #system-friction-short .node text { fill: #DEEEFE; font-size: 30px; font-weight: 700; letter-spacing: .12em; }
+      #system-friction-short .fault-ring { stroke: #FF4C32; stroke-width: 3; fill: none; opacity: 0; }
+      #system-friction-short .chip { position: absolute; top: 430px; right: 96px;
+        font-size: 26px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #FF4C32;
+        border: 2px solid rgba(255,76,50,.65); border-radius: 999px; padding: 10px 24px; background: rgba(6,40,76,.8); }
+    </style>
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const root = "#system-friction-short";
+        const tl = gsap.timeline({ paused: true });
+        tl.from(root + " .eyebrow", { autoAlpha: 0, y: -14, duration: 0.3, ease: "power2.out" }, 0.05)
+          .from(root + " .node", { autoAlpha: 0, scale: 0.7, duration: 0.3, stagger: 0.08, ease: "back.out(1.8)", transformOrigin: "50% 50%" }, 0.15)
+          .from(root + " .edge", { autoAlpha: 0, duration: 0.3, stagger: 0.05, ease: "power2.out" }, 0.45);
+        // energy flow (finite, sized to 3s)
+        tl.to(root + " .edge", { strokeDashoffset: -160, duration: 2.4, ease: "none" }, 0.6);
+        // fault seizes at ~1.5s
+        tl.to(root + " .fault-edge", { stroke: "#FF4C32", strokeWidth: 5, duration: 0.3, ease: "power2.in" }, 1.4)
+          .to(root + " .nd5 rect", { attr: { stroke: "#FF4C32" }, duration: 0.3 }, 1.4)
+          .to(root + " .r1", { opacity: 0.9, scale: 2.6, duration: 0.7, ease: "power1.out", transformOrigin: "50% 50%", repeat: 1, repeatDelay: 0.15 }, 1.5)
+          .to(root + " .r1", { opacity: 0, duration: 0.3 }, 2.7)
+          .from(root + " .chip", { autoAlpha: 0, scale: 0.7, duration: 0.35, ease: "back.out(1.8)" }, 1.65);
+        tl.fromTo(root + " .scene", { scale: 1 }, { scale: 1.03, duration: 3, ease: "none", transformOrigin: "50% 48%" }, 0);
+        tl.set({}, {}, 3);
+        window.__timelines["system-friction-short"] = tl;
+      })();
+    </script>
+  </div>
+</template>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>revenue-plateau — 25s short</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: #00ff00; font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+      #keybg { position: absolute; inset: 0; background: #00ff00; }
+      #logoBar { position: absolute; top: 54px; left: 64px; width: 230px; }
+      #logoBar img { width: 100%; height: auto; display: block; filter: drop-shadow(0 4px 14px rgba(6,40,76,.55)); }
+      .scmount { position: absolute; inset: 0; }
+      /* Hook title — opaque pill (no green ghost), over the founder hook beat */
+      #hook { position: absolute; left: 64px; right: 64px; bottom: 150px; display: flex; justify-content: center; }
+      #hook span { display: inline-block; text-align: center; font-size: 72px; font-weight: 800;
+        line-height: 1.04; letter-spacing: -.02em; color: var(--brand-white);
+        background: #06284C; padding: 22px 40px; border-radius: 24px; border: 1px solid rgba(156,212,255,.22); }
+      #hook .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+      /* Proof stat (opaque), over the Dryft b-roll */
+      #stat { position: absolute; top: 96px; left: 64px; right: 64px; text-align: center; padding: 36px 30px 40px;
+        background: #06284C; border-radius: 28px; border: 1px solid rgba(156,212,255,.4); }
+      #stat .big { font-size: 150px; font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--brand-flame); }
+      #stat .label { margin-top: 8px; font-size: 44px; font-weight: 700; color: var(--brand-white); }
+      #stat .sub { margin-top: 10px; font-size: 30px; font-weight: 500; color: var(--brand-blue-tint); }
+      /* Full-screen end card */
+      #endcard { position: absolute; inset: 0;
+        background: radial-gradient(90% 55% at 50% 24%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 58%), #06284C; }
+      #endcard .bloom { position: absolute; left: -10%; bottom: -22%; width: 120%; height: 55%;
+        background: var(--brand-gradient-2); filter: blur(90px); opacity: .34; }
+      #endcard .inner { position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 30px; padding: 0 90px; text-align: center; }
+      #endcard .logo { width: 430px; height: auto; margin-bottom: 16px; }
+      #endcard .headline { font-size: 96px; font-weight: 800; line-height: 1.02; letter-spacing: -.02em; color: var(--brand-white); }
+      #endcard .headline .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; letter-spacing: -.01em; color: var(--brand-blue-tint); }
+      #endcard .sub { font-size: 36px; font-weight: 500; line-height: 1.35; color: var(--brand-sky); max-width: 760px; }
+      #endcard .cta { margin-top: 18px; display: inline-flex; align-items: center; gap: 16px; font-size: 40px; font-weight: 700;
+        color: var(--brand-white); background: var(--brand-flame); padding: 28px 60px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,.65); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="revenue-graphics-short" data-start="0" data-duration="25.1" data-width="1080" data-height="1350">
+      <div id="keybg" class="clip" data-start="0" data-duration="25.1" data-track-index="0"></div>
+
+      <!-- Beat 3: friction (4.7–7.7) -->
+      <div id="sc-system" class="scmount" data-composition-id="system-friction-short"
+           data-composition-src="compositions/system-friction-short.html"
+           data-start="4.7" data-duration="3.0" data-track-index="4" data-width="1080" data-height="1350"></div>
+      <!-- Beat 4: symptoms (7.7–11.2) -->
+      <div id="sc-tiles" class="scmount" data-composition-id="metric-tiles-short"
+           data-composition-src="compositions/metric-tiles-short.html"
+           data-start="7.7" data-duration="3.5" data-track-index="5" data-width="1080" data-height="1350"></div>
+
+      <!-- Brand mark (hidden during the end card) -->
+      <div id="logoBar" class="clip" data-start="0" data-duration="21.8" data-track-index="3">
+        <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <!-- Hook title over beat 1 -->
+      <div id="hook" class="clip" data-start="0.2" data-duration="2.5" data-track-index="6">
+        <span>Revenue <span class="em">flat</span> for months?</span>
+      </div>
+
+      <!-- Proof stat over the Dryft b-roll (beat 5) -->
+      <div id="stat" class="clip" data-start="14.6" data-duration="4.1" data-track-index="7">
+        <div class="big">+59%</div>
+        <div class="label">returning customers</div>
+        <div class="sub">without another dollar on ads</div>
+      </div>
+
+      <!-- End card (21.8–25.1) -->
+      <div id="endcard" class="clip" data-start="21.8" data-duration="3.3" data-track-index="8">
+        <div class="bloom"></div>
+        <div class="inner">
+          <img class="logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+          <div class="headline">Fix what&rsquo;s <span class="em">already</span> there.</div>
+          <div class="sub">We find the bottleneck. You get the breakthrough.</div>
+          <div class="cta">Learn how &rarr;</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Brand mark — transform-only (over the green key)
+      tl.from("#logoBar", { y: -16, duration: 0.45, ease: "power2.out" }, 0.15);
+      // Hook title — slide only (opaque pill, over founder)
+      tl.from("#hook span", { y: 18, duration: 0.35, ease: "power3.out" }, 0.25);
+      // Proof stat — scale/slide only (opaque, over Dryft)
+      tl.from("#stat", { scale: 0.85, y: 24, duration: 0.45, ease: "back.out(1.7)" }, 14.65);
+      // End card — content fades over the opaque navy panel
+      tl.from("#endcard .logo", { opacity: 0, y: -22, duration: 0.5, ease: "power3.out" }, 21.9)
+        .from("#endcard .headline", { opacity: 0, y: 28, duration: 0.55, ease: "power3.out" }, 22.1)
+        .from("#endcard .sub", { opacity: 0, y: 20, duration: 0.5, ease: "power2.out" }, 22.4)
+        .from("#endcard .cta", { opacity: 0, scale: 0.85, duration: 0.5, ease: "back.out(1.7)" }, 22.7)
+        .from("#endcard .bloom", { opacity: 0, duration: 1.0, ease: "sine.out" }, 21.8)
+        .to("#endcard .cta", { scale: 1.04, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 2 }, 23.3);
+
+      tl.to({}, { duration: 25.1 }, 0);
+      window.__timelines["revenue-graphics-short"] = tl;
+    </script>
+  </body>
+</html>

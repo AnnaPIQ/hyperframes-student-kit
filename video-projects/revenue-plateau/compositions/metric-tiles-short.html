@@ -1,0 +1,76 @@
+<template id="metric-tiles-short-template">
+  <div id="metric-tiles-short" data-composition-id="metric-tiles-short" data-start="0" data-duration="3.5" data-width="1080" data-height="1350">
+    <div class="scene">
+      <div class="eyebrow">Where growth leaks</div>
+      <div class="grid">
+        <div class="tile t1"><div class="lbl">Traffic</div><div class="val v1">48.2k</div>
+          <svg viewBox="0 0 340 90" width="340" height="90"><path class="spark s1" d="M6,30 C50,28 90,34 130,38 C180,44 220,42 260,56 C290,66 316,74 334,82" fill="none" stroke-width="5" stroke-linecap="round"/></svg>
+          <div class="delta d1">&#9660; 19%</div></div>
+        <div class="tile t2"><div class="lbl">Conversion</div><div class="val v2">3.4%</div>
+          <svg viewBox="0 0 340 90" width="340" height="90"><path class="spark s2" d="M6,26 C56,30 96,28 136,36 C186,46 226,50 266,60 C296,68 318,76 334,80" fill="none" stroke-width="5" stroke-linecap="round"/></svg>
+          <div class="delta d2">&#9660; 38%</div></div>
+        <div class="tile t3"><div class="lbl">Retention</div><div class="val v3">31%</div>
+          <svg viewBox="0 0 340 90" width="340" height="90"><path class="spark s3" d="M6,24 C56,26 96,32 136,34 C186,38 226,48 266,58 C296,66 318,78 334,84" fill="none" stroke-width="5" stroke-linecap="round"/></svg>
+          <div class="delta d3">&#9660; 39%</div></div>
+        <div class="tile t4"><div class="lbl">Avg order value</div><div class="val v4">$68</div>
+          <svg viewBox="0 0 340 90" width="340" height="90"><path class="spark s4" d="M6,28 C56,26 96,30 136,34 C186,40 226,44 266,54 C296,62 318,72 334,78" fill="none" stroke-width="5" stroke-linecap="round"/></svg>
+          <div class="delta d4">&#9660; 24%</div></div>
+      </div>
+    </div>
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      #metric-tiles-short {
+        position: absolute; inset: 0; overflow: hidden;
+        background:
+          radial-gradient(90% 50% at 50% 14%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1px, transparent 1px 96px),
+          #06284C;
+        color: #fff; font-family: 'Rethink Sans', system-ui, sans-serif; }
+      #metric-tiles-short::after { content: ""; position: absolute; inset: 0;
+        background: radial-gradient(ellipse at center, transparent 45%, rgba(2,14,28,.55) 100%); pointer-events: none; }
+      #metric-tiles-short .scene { position: absolute; inset: 0; }
+      #metric-tiles-short .eyebrow { position: absolute; top: 214px; left: 0; right: 0;
+        text-align: center; font-size: 24px; font-weight: 600; letter-spacing: .34em; text-transform: uppercase; color: #9CD4FF; }
+      #metric-tiles-short .grid { position: absolute; top: 308px; left: 80px; width: 920px;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+      #metric-tiles-short .tile { position: relative; background: rgba(222,238,254,.07);
+        border: 1px solid rgba(156,212,255,.26); border-radius: 26px; padding: 30px 34px 24px;
+        box-shadow: 0 30px 80px -20px rgba(0,0,0,.55); }
+      #metric-tiles-short .lbl { font-size: 23px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #9CD4FF; }
+      #metric-tiles-short .val { margin-top: 8px; font-size: 78px; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
+      #metric-tiles-short .spark { stroke: #9CD4FF; filter: drop-shadow(0 0 8px rgba(156,212,255,.45)); }
+      #metric-tiles-short .delta { position: absolute; top: 30px; right: 30px; font-size: 27px; font-weight: 800;
+        color: #FF4C32; background: rgba(255,76,50,.14); border: 1px solid rgba(255,76,50,.5); border-radius: 999px; padding: 8px 18px; }
+    </style>
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const root = "#metric-tiles-short";
+        const tl = gsap.timeline({ paused: true });
+        tl.from(root + " .eyebrow", { autoAlpha: 0, y: -14, duration: 0.3, ease: "power2.out" }, 0.02);
+        const beats = [
+          { t: 0.15, tile: ".t1", spark: ".s1", val: ".v1", delta: ".d1", from: 48.2, to: 39.1, fmt: (v) => v.toFixed(1) + "k" },
+          { t: 0.85, tile: ".t2", spark: ".s2", val: ".v2", delta: ".d2", from: 3.4, to: 2.1, fmt: (v) => v.toFixed(1) + "%" },
+          { t: 1.55, tile: ".t3", spark: ".s3", val: ".v3", delta: ".d3", from: 31, to: 19, fmt: (v) => Math.round(v) + "%" },
+          { t: 2.25, tile: ".t4", spark: ".s4", val: ".v4", delta: ".d4", from: 68, to: 52, fmt: (v) => "$" + Math.round(v) },
+        ];
+        beats.forEach((b) => {
+          const path = document.querySelector(root + " " + b.spark);
+          const L = path.getTotalLength();
+          gsap.set(path, { strokeDasharray: L, strokeDashoffset: L });
+          const el = document.querySelector(root + " " + b.val);
+          const o = { v: b.from };
+          tl.from(root + " " + b.tile, { autoAlpha: 0, scale: 0.92, y: 20, duration: 0.32, ease: "power3.out" }, b.t)
+            .to(path, { strokeDashoffset: 0, duration: 0.55, ease: "power1.inOut" }, b.t + 0.12)
+            .to(o, { v: b.to, duration: 0.55, ease: "power1.inOut", onUpdate: () => { el.textContent = b.fmt(o.v); } }, b.t + 0.12)
+            .from(root + " " + b.delta, { autoAlpha: 0, scale: 0.6, duration: 0.3, ease: "back.out(2)" }, b.t + 0.45);
+        });
+        tl.fromTo(root + " .scene", { scale: 1 }, { scale: 1.03, duration: 3.5, ease: "none", transformOrigin: "50% 46%" }, 0);
+        tl.set({}, {}, 3.5);
+        window.__timelines["metric-tiles-short"] = tl;
+      })();
+    </script>
+  </div>
+</template>
