@@ -36,3 +36,6 @@ assets/incoming/*
 **/renders/frames/
 **/renders/frames-*/
 
+
+# Render work scratch dirs (also created at project root when --output is a root path)
+**/work-*/
