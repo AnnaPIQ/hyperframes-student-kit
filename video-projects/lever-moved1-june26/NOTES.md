@@ -6,11 +6,13 @@ When the cut is locked, the final export must be max quality/resolution — not 
 Plan for the final bake:
 - `npx hyperframes render --quality high --output renders/lever-moved1-june26-final.mp4`
   (`high` = CRF 15, visually lossless at 1080p-class).
-- **Resolution:** composition is authored at **1080×1350** (Meta 4:5 native max). For an
-  extra-crisp master, render a **2× supersample at 2160×2700** (sharpens the vector
-  graphics + type especially). Note source-footage limits: Sean's footage is 1920×1080,
-  the b-roll clips are 1280×720 → both upscale at 2×, so the *footage* won't gain real
-  detail, but the *graphics/text/hook counters* will be noticeably sharper.
+- **Resolution:** composition is authored at **1080×1350** (Meta 4:5 native max, and
+  the highest-quality master for this format). NOTE: `--resolution` only accepts fixed
+  presets (16:9 / 9:16 / 1:1 + 4K variants) — there is **no 4:5 preset**, and it rejects
+  custom WxH ("Invalid resolution"), so a 2× supersample (2160×2700) is NOT available via
+  the flag. A true 2× master would require re-authoring every comp's data-width/height +
+  px layout ×2 (large effort) — and the footage (Sean 1920×1080) wouldn't gain real detail
+  anyway. So: ship `--quality high` at 1080×1350.
 - Consider `--fps 30` (match), high bitrate (`--video-bitrate 12M`) or even a **ProRes
   master** (`--format mov`) for an archival/edit-friendly version, then derive the
   delivery MP4 from that.
