@@ -95,12 +95,7 @@
         ></video>
       </div>
 
-      <!-- B-roll cutaway (founder + dashboard, 0:29–0:37) -->
-      <div id="broll-founder-wrap" class="brollw">
-        <video id="broll-founder" class="brollv" data-start="29.0" data-duration="6.0" data-track-index="7"
-          src="assets/broll-founder.mp4" muted playsinline></video>
-        <div class="broll-grade"></div>
-      </div>
+      <!-- Founder b-roll removed per direction (man-at-computer AI clip) -->
 
       <!-- Sound: voiceover only (ambient pad + SFX removed per direction) -->
 
@@ -163,13 +158,6 @@
       tl.to("#face-wrapper", { scale: 1.0,  duration: 0.8, ease: "power2.inOut" }, 49.6);
       tl.to("#face-wrapper", { scale: 1.06, duration: 0.6, ease: "power2.out" }, 54.0); // the offer lands
 
-      // B-roll cutaways blur-whip in/out across the diagnosis stretch (0:22–0:43).
-      const broll = (sel, tin, tout) => {
-        tl.fromTo(sel, { opacity: 0, yPercent: 8, filter: "blur(18px)" },
-          { opacity: 1, yPercent: 0, filter: "blur(0px)", duration: 0.45, ease: "power2.out" }, tin);
-        tl.to(sel, { opacity: 0, yPercent: -8, filter: "blur(18px)", duration: 0.35, ease: "power2.in" }, tout);
-      };
-      broll("#broll-founder-wrap", 29.0, 34.6);
 
       // Crossfade footage → end-card background at ~60s.
       tl.to("#face-wrapper", { opacity: 0, duration: 0.6, ease: "power2.inOut" }, 59.6);
