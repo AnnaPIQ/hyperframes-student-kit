@@ -46,37 +46,32 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="revenue-graphics-short" data-start="0" data-duration="25.1" data-width="1080" data-height="1350">
-      <div id="keybg" class="clip" data-start="0" data-duration="25.1" data-track-index="0"></div>
+    <div id="root" data-composition-id="revenue-graphics-short" data-start="0" data-duration="28.77" data-width="1080" data-height="1350">
+      <div id="keybg" class="clip" data-start="0" data-duration="28.77" data-track-index="0"></div>
 
-      <!-- Beat 3: friction (4.7–7.7) -->
+      <!-- Friction (5.35–8.28) -->
       <div id="sc-system" class="scmount" data-composition-id="system-friction-short"
            data-composition-src="compositions/system-friction-short.html"
-           data-start="4.7" data-duration="3.0" data-track-index="4" data-width="1080" data-height="1350"></div>
-      <!-- Beat 4: symptoms (7.7–11.2) -->
+           data-start="5.35" data-duration="2.93" data-track-index="4" data-width="1080" data-height="1350"></div>
+      <!-- Symptoms (8.28–11.72) -->
       <div id="sc-tiles" class="scmount" data-composition-id="metric-tiles-short"
            data-composition-src="compositions/metric-tiles-short.html"
-           data-start="7.7" data-duration="3.5" data-track-index="5" data-width="1080" data-height="1350"></div>
+           data-start="8.28" data-duration="3.44" data-track-index="5" data-width="1080" data-height="1350"></div>
 
       <!-- Brand mark (hidden during the end card) -->
-      <div id="logoBar" class="clip" data-start="0" data-duration="21.8" data-track-index="3">
+      <div id="logoBar" class="clip" data-start="0" data-duration="25.77" data-track-index="3">
         <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
 
-      <!-- Hook title over beat 1 -->
-      <div id="hook" class="clip" data-start="0.2" data-duration="2.5" data-track-index="6">
-        <span>Revenue <span class="em">flat</span> for months?</span>
-      </div>
-
-      <!-- Proof stat over the Dryft b-roll (beat 5) -->
-      <div id="stat" class="clip" data-start="14.6" data-duration="4.1" data-track-index="7">
+      <!-- Proof stat over the Dryft b-roll (proof beat, 11.72–19.65) -->
+      <div id="stat" class="clip" data-start="14.5" data-duration="5.15" data-track-index="7">
         <div class="big">+59%</div>
         <div class="label">returning customers</div>
         <div class="sub">without another dollar on ads</div>
       </div>
 
-      <!-- End card (21.8–25.1) -->
-      <div id="endcard" class="clip" data-start="21.8" data-duration="3.3" data-track-index="8">
+      <!-- End card (25.77–28.77) -->
+      <div id="endcard" class="clip" data-start="25.77" data-duration="3.0" data-track-index="8">
         <div class="bloom"></div>
         <div class="inner">
           <img class="logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
@@ -93,19 +88,17 @@
 
       // Brand mark — transform-only (over the green key)
       tl.from("#logoBar", { y: -16, duration: 0.45, ease: "power2.out" }, 0.15);
-      // Hook title — slide only (opaque pill, over founder)
-      tl.from("#hook span", { y: 18, duration: 0.35, ease: "power3.out" }, 0.25);
       // Proof stat — scale/slide only (opaque, over Dryft)
-      tl.from("#stat", { scale: 0.85, y: 24, duration: 0.45, ease: "back.out(1.7)" }, 14.65);
+      tl.from("#stat", { scale: 0.85, y: 24, duration: 0.45, ease: "back.out(1.7)" }, 14.55);
       // End card — content fades over the opaque navy panel
-      tl.from("#endcard .logo", { opacity: 0, y: -22, duration: 0.5, ease: "power3.out" }, 21.9)
-        .from("#endcard .headline", { opacity: 0, y: 28, duration: 0.55, ease: "power3.out" }, 22.1)
-        .from("#endcard .sub", { opacity: 0, y: 20, duration: 0.5, ease: "power2.out" }, 22.4)
-        .from("#endcard .cta", { opacity: 0, scale: 0.85, duration: 0.5, ease: "back.out(1.7)" }, 22.7)
-        .from("#endcard .bloom", { opacity: 0, duration: 1.0, ease: "sine.out" }, 21.8)
-        .to("#endcard .cta", { scale: 1.04, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 2 }, 23.3);
+      tl.from("#endcard .logo", { opacity: 0, y: -22, duration: 0.5, ease: "power3.out" }, 25.87)
+        .from("#endcard .headline", { opacity: 0, y: 28, duration: 0.55, ease: "power3.out" }, 26.07)
+        .from("#endcard .sub", { opacity: 0, y: 20, duration: 0.5, ease: "power2.out" }, 26.37)
+        .from("#endcard .cta", { opacity: 0, scale: 0.85, duration: 0.5, ease: "back.out(1.7)" }, 26.67)
+        .from("#endcard .bloom", { opacity: 0, duration: 1.0, ease: "sine.out" }, 25.77)
+        .to("#endcard .cta", { scale: 1.04, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 1 }, 27.3);
 
-      tl.to({}, { duration: 25.1 }, 0);
+      tl.to({}, { duration: 28.77 }, 0);
       window.__timelines["revenue-graphics-short"] = tl;
     </script>
   </body>

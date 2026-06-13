@@ -4,17 +4,11 @@
       <div class="eyebrow">Where growth leaks</div>
       <div class="grid">
         <div class="tile t1"><div class="lbl">Traffic</div><div class="val v1">48.2k</div>
-          <svg viewBox="0 0 340 90" width="340" height="90"><path class="spark s1" d="M6,30 C50,28 90,34 130,38 C180,44 220,42 260,56 C290,66 316,74 334,82" fill="none" stroke-width="5" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 600 120" width="600" height="120" preserveAspectRatio="none"><path class="spark s1" d="M10,40 C90,36 160,48 240,54 C330,62 400,60 470,82 C520,96 560,104 590,112" fill="none" stroke-width="6" stroke-linecap="round"/></svg>
           <div class="delta d1">&#9660; 19%</div></div>
         <div class="tile t2"><div class="lbl">Conversion</div><div class="val v2">3.4%</div>
-          <svg viewBox="0 0 340 90" width="340" height="90"><path class="spark s2" d="M6,26 C56,30 96,28 136,36 C186,46 226,50 266,60 C296,68 318,76 334,80" fill="none" stroke-width="5" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 600 120" width="600" height="120" preserveAspectRatio="none"><path class="spark s2" d="M10,34 C100,40 170,38 250,50 C340,66 410,72 480,88 C530,100 564,108 590,114" fill="none" stroke-width="6" stroke-linecap="round"/></svg>
           <div class="delta d2">&#9660; 38%</div></div>
-        <div class="tile t3"><div class="lbl">Retention</div><div class="val v3">31%</div>
-          <svg viewBox="0 0 340 90" width="340" height="90"><path class="spark s3" d="M6,24 C56,26 96,32 136,34 C186,38 226,48 266,58 C296,66 318,78 334,84" fill="none" stroke-width="5" stroke-linecap="round"/></svg>
-          <div class="delta d3">&#9660; 39%</div></div>
-        <div class="tile t4"><div class="lbl">Avg order value</div><div class="val v4">$68</div>
-          <svg viewBox="0 0 340 90" width="340" height="90"><path class="spark s4" d="M6,28 C56,26 96,30 136,34 C186,40 226,44 266,54 C296,62 318,72 334,78" fill="none" stroke-width="5" stroke-linecap="round"/></svg>
-          <div class="delta d4">&#9660; 24%</div></div>
       </div>
     </div>
     <style>
@@ -31,18 +25,19 @@
       #metric-tiles-short::after { content: ""; position: absolute; inset: 0;
         background: radial-gradient(ellipse at center, transparent 45%, rgba(2,14,28,.55) 100%); pointer-events: none; }
       #metric-tiles-short .scene { position: absolute; inset: 0; }
-      #metric-tiles-short .eyebrow { position: absolute; top: 214px; left: 0; right: 0;
-        text-align: center; font-size: 24px; font-weight: 600; letter-spacing: .34em; text-transform: uppercase; color: #9CD4FF; }
-      #metric-tiles-short .grid { position: absolute; top: 308px; left: 80px; width: 920px;
-        display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+      #metric-tiles-short .eyebrow { position: absolute; top: 240px; left: 0; right: 0;
+        text-align: center; font-size: 26px; font-weight: 600; letter-spacing: .34em; text-transform: uppercase; color: #9CD4FF; }
+      #metric-tiles-short .grid { position: absolute; top: 360px; left: 110px; width: 860px;
+        display: grid; grid-template-columns: 1fr; gap: 40px; }
       #metric-tiles-short .tile { position: relative; background: rgba(222,238,254,.07);
-        border: 1px solid rgba(156,212,255,.26); border-radius: 26px; padding: 30px 34px 24px;
+        border: 1px solid rgba(156,212,255,.26); border-radius: 32px; padding: 48px 56px 44px;
         box-shadow: 0 30px 80px -20px rgba(0,0,0,.55); }
-      #metric-tiles-short .lbl { font-size: 23px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #9CD4FF; }
-      #metric-tiles-short .val { margin-top: 8px; font-size: 78px; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
+      #metric-tiles-short .lbl { font-size: 30px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #9CD4FF; }
+      #metric-tiles-short .val { margin-top: 10px; font-size: 132px; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
       #metric-tiles-short .spark { stroke: #9CD4FF; filter: drop-shadow(0 0 8px rgba(156,212,255,.45)); }
-      #metric-tiles-short .delta { position: absolute; top: 30px; right: 30px; font-size: 27px; font-weight: 800;
-        color: #FF4C32; background: rgba(255,76,50,.14); border: 1px solid rgba(255,76,50,.5); border-radius: 999px; padding: 8px 18px; }
+      #metric-tiles-short .tile svg { width: 100%; height: 90px; margin-top: 12px; }
+      #metric-tiles-short .delta { position: absolute; top: 48px; right: 48px; font-size: 36px; font-weight: 800;
+        color: #FF4C32; background: rgba(255,76,50,.14); border: 1px solid rgba(255,76,50,.5); border-radius: 999px; padding: 12px 26px; }
     </style>
     <script>
       (function () {
@@ -51,10 +46,8 @@
         const tl = gsap.timeline({ paused: true });
         tl.from(root + " .eyebrow", { autoAlpha: 0, y: -14, duration: 0.3, ease: "power2.out" }, 0.02);
         const beats = [
-          { t: 0.15, tile: ".t1", spark: ".s1", val: ".v1", delta: ".d1", from: 48.2, to: 39.1, fmt: (v) => v.toFixed(1) + "k" },
-          { t: 0.85, tile: ".t2", spark: ".s2", val: ".v2", delta: ".d2", from: 3.4, to: 2.1, fmt: (v) => v.toFixed(1) + "%" },
-          { t: 1.55, tile: ".t3", spark: ".s3", val: ".v3", delta: ".d3", from: 31, to: 19, fmt: (v) => Math.round(v) + "%" },
-          { t: 2.25, tile: ".t4", spark: ".s4", val: ".v4", delta: ".d4", from: 68, to: 52, fmt: (v) => "$" + Math.round(v) },
+          { t: 0.2, tile: ".t1", spark: ".s1", val: ".v1", delta: ".d1", from: 48.2, to: 39.1, fmt: (v) => v.toFixed(1) + "k" },
+          { t: 1.45, tile: ".t2", spark: ".s2", val: ".v2", delta: ".d2", from: 3.4, to: 2.1, fmt: (v) => v.toFixed(1) + "%" },
         ];
         beats.forEach((b) => {
           const path = document.querySelector(root + " " + b.spark);
@@ -62,10 +55,10 @@
           gsap.set(path, { strokeDasharray: L, strokeDashoffset: L });
           const el = document.querySelector(root + " " + b.val);
           const o = { v: b.from };
-          tl.from(root + " " + b.tile, { autoAlpha: 0, scale: 0.92, y: 20, duration: 0.32, ease: "power3.out" }, b.t)
-            .to(path, { strokeDashoffset: 0, duration: 0.55, ease: "power1.inOut" }, b.t + 0.12)
-            .to(o, { v: b.to, duration: 0.55, ease: "power1.inOut", onUpdate: () => { el.textContent = b.fmt(o.v); } }, b.t + 0.12)
-            .from(root + " " + b.delta, { autoAlpha: 0, scale: 0.6, duration: 0.3, ease: "back.out(2)" }, b.t + 0.45);
+          tl.from(root + " " + b.tile, { autoAlpha: 0, scale: 0.92, y: 24, duration: 0.4, ease: "power3.out" }, b.t)
+            .to(path, { strokeDashoffset: 0, duration: 0.7, ease: "power1.inOut" }, b.t + 0.15)
+            .to(o, { v: b.to, duration: 0.7, ease: "power1.inOut", onUpdate: () => { el.textContent = b.fmt(o.v); } }, b.t + 0.15)
+            .from(root + " " + b.delta, { autoAlpha: 0, scale: 0.6, duration: 0.32, ease: "back.out(2)" }, b.t + 0.55);
         });
         tl.fromTo(root + " .scene", { scale: 1 }, { scale: 1.03, duration: 3.5, ease: "none", transformOrigin: "50% 46%" }, 0);
         tl.set({}, {}, 3.5);
