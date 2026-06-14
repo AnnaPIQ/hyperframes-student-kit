@@ -181,9 +181,9 @@ const html = `<!doctype html>
     <div id="root" data-composition-id="${ID}" data-start="0" data-duration="${COMP}" data-width="1080" data-height="1350">
 
       <div id="video-wrap">
-        <video id="vid" data-start="0" data-duration="${FACE_DUR}" data-track-index="0" src="assets/ad.mp4" muted playsinline></video>
+        <video id="vid" data-start="0" data-duration="${FACE_DUR}" data-track-index="0" src="assets/ad-sync.mp4" muted playsinline></video>
       </div>
-      <audio id="aud" data-start="0" data-duration="${FACE_DUR}" data-track-index="1" data-volume="1" src="assets/ad.mp4"></audio>
+      <audio id="aud" data-start="0" data-duration="${FACE_DUR}" data-track-index="1" data-volume="1" src="assets/ad-sync.mp4"></audio>
 
       <div id="scrims" class="clip" data-start="0" data-duration="${COMP}" data-track-index="2"></div>
       <div id="vignette" class="clip" data-start="0" data-duration="${COMP}" data-track-index="3"></div>
