@@ -102,9 +102,9 @@ const html = `<!doctype html>
       #cardD #d-cause .txt .em { color: var(--brand-flame); }
 
       /* card E — hero line */
-      #cardE .l1 { font-weight: 800; font-size: 96px; line-height: 1; letter-spacing: -.03em; color: #b9c8dc; opacity: 0; }
-      #cardE .l2 { font-weight: 800; font-size: 184px; line-height: .9; letter-spacing: -.05em;
-        color: var(--brand-flame); opacity: 0; margin-top: 18px; text-shadow: 0 18px 60px rgba(255,76,50,.45); }
+      #cardE .l1 { font-weight: 800; font-size: 100px; line-height: 1; letter-spacing: -.03em; color: #b9c8dc; opacity: 0; }
+      #cardE .l2 { font-weight: 800; font-size: 120px; line-height: .92; letter-spacing: -.04em; white-space: nowrap;
+        color: var(--brand-flame); opacity: 0; margin-top: 20px; text-shadow: 0 18px 60px rgba(255,76,50,.45); }
 
       /* card G — philosophy */
       #cardG .l1 { font-weight: 800; font-size: 84px; line-height: 1.02; letter-spacing: -.03em; color: #b9c8dc; opacity: 0; }
@@ -221,8 +221,8 @@ const html = `<!doctype html>
 
       <!-- CARD E : hero line -->
       <div id="cardE" class="card clip" data-start="${E_IN - 0.4}" data-duration="${E_OUT - E_IN + 1}" data-track-index="10">
-        <div class="l1">It's not failure.</div>
-        <div class="l2">It's INFORMATION.</div>
+        <div class="l1">Not failure.</div>
+        <div class="l2">INFORMATION.</div>
       </div>
 
       <!-- CARD F : Driftsleep proof (full-screen b-roll) — static wrapper, GSAP-driven -->
@@ -317,6 +317,9 @@ const html = `<!doctype html>
       cardOut("#cardE", ${E_OUT});
 
       // ---------- CARD F : Driftsleep proof ----------
+      // hide the EcomIQ chip during the full-screen client takeover (avoids tag collision)
+      tl.to("#logo-wrap", { opacity: 0, duration: .25, ease: "power2.in" }, ${PROOF_IN} - .15);
+      tl.to("#logo-wrap", { opacity: 1, duration: .3, ease: "power2.out" }, ${PROOF_OUT} + .05);
       whip(${PROOF_IN} - .12);
       tl.fromTo("#proof", { opacity: 0, scale: 1.1, filter: "blur(20px)" },
         { opacity: 1, scale: 1, filter: "blur(0px)", duration: .5, ease: "power2.out" }, ${PROOF_IN});
