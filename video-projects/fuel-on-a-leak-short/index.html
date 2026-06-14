@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>EcomIQ — Don't pour fuel on a leak (9:16 short)</title>
+    <script src="assets/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+
+      #face { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; z-index: 1; }
+      #topscrim { position: absolute; left: 0; right: 0; top: 0; height: 18%; z-index: 2;
+        background: linear-gradient(to bottom, rgba(3,18,38,0.66) 0%, rgba(3,18,38,0) 100%); }
+      #vignette { position: absolute; inset: 0; z-index: 59; pointer-events: none;
+        background: radial-gradient(96% 80% at 50% 44%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.30) 80%, rgba(0,0,0,0.52) 100%); }
+      #grain { position: absolute; inset: 0; z-index: 60; pointer-events: none; opacity: 0.11; mix-blend-mode: soft-light; background-size: 280px 280px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+      #logobug { position: absolute; top: 92px; left: 80px; width: 300px; height: auto; z-index: 3; }
+
+      /* ===== full-frame panels ===== */
+      .panel { position: absolute; inset: 0; z-index: 20; overflow: hidden;
+        background: radial-gradient(90% 42% at 50% 18%, rgba(156,212,255,0.12) 0%, rgba(6,40,76,0) 56%), var(--brand-navy); }
+      .panel .bloom { position: absolute; left: -12%; bottom: -18%; width: 124%; height: 48%; background: var(--brand-gradient-2); filter: blur(100px); opacity: 0.30; }
+      .panel .plogo { position: absolute; top: 92px; left: 80px; width: 300px; height: auto; }
+      .panel .eyebrow { position: absolute; top: 232px; left: 110px; right: 110px;
+        font-weight: 700; font-size: 32px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--brand-blue-tint); }
+
+      /* --- HOOK (diverge chart) --- */
+      #hook .chart { position: absolute; top: 470px; left: 50%; transform: translateX(-50%); width: 880px; height: 532px; }
+      #hook .head { position: absolute; top: 1140px; left: 110px; right: 110px; text-align: center;
+        font-weight: 800; font-size: 86px; line-height: 1.06; letter-spacing: -0.03em; }
+      #hook .head .ser { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+      #hook .kicker { position: absolute; top: 1520px; left: 110px; right: 110px; text-align: center; font-weight: 600; font-size: 50px; color: var(--brand-flame); }
+
+      /* --- LEAKY BUCKET --- */
+      #leak .bucketwrap { position: absolute; top: 540px; left: 50%; transform: translateX(-50%); width: 520px; height: 470px; overflow: visible; }
+      #leak .bucket { position: absolute; inset: 0; width: 520px; height: 470px; }
+      #leak .token { position: absolute; width: 66px; height: 66px; border-radius: 50%;
+        background: var(--brand-surface-2); border: 2px solid var(--brand-blue-tint); color: var(--brand-blue-tint);
+        font-weight: 800; font-size: 36px; display: flex; align-items: center; justify-content: center; }
+      #leak .coinout { position: absolute; width: 50px; height: 50px; border-radius: 50%;
+        background: #2a1410; border: 2px solid var(--brand-flame); color: var(--brand-flame);
+        font-weight: 800; font-size: 27px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 18px rgba(255,76,50,0.6); }
+      #leak .head { position: absolute; top: 1180px; left: 96px; right: 96px; text-align: center;
+        font-weight: 800; font-size: 92px; line-height: 1.0; letter-spacing: -0.03em; }
+      #leak .head .ads { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-flame); display: inline-block; }
+      #leak .sub { position: absolute; top: 1420px; left: 96px; right: 96px; text-align: center; font-weight: 500; font-size: 46px; line-height: 1.28; color: var(--brand-text-dim); }
+
+      /* --- PROOF +59% --- */
+      #proof .client { position: absolute; top: 360px; left: 96px; right: 96px; text-align: center; font-weight: 600; font-size: 44px; color: var(--brand-text-dim); }
+      #proof .ringwrap { position: absolute; top: 560px; left: 50%; transform: translateX(-50%); width: 620px; height: 620px; display: flex; align-items: center; justify-content: center; }
+      #proof svg { position: absolute; inset: 0; width: 620px; height: 620px; transform: rotate(-90deg); }
+      #proof .num { font-weight: 800; font-size: 208px; letter-spacing: -0.04em; color: var(--brand-white); font-variant-numeric: tabular-nums; line-height: 1; }
+      #proof .numlabel { position: absolute; top: 1330px; left: 96px; right: 96px; text-align: center; font-weight: 700; font-size: 62px; letter-spacing: -0.02em; }
+      #proof .numlabel .ser { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+      #proof .kicker { position: absolute; top: 1500px; left: 50%; transform: translateX(-50%); font-weight: 700; font-size: 48px; color: var(--brand-white);
+        background: var(--brand-flame); padding: 24px 54px; border-radius: 999px; box-shadow: 0 18px 56px -16px rgba(255,76,50,0.7); white-space: nowrap; }
+
+      /* --- CTA end card --- */
+      #cta .clogo { position: absolute; top: 360px; left: 50%; transform: translateX(-50%); width: 420px; height: auto; }
+      #cta .head { position: absolute; top: 760px; left: 110px; right: 110px; text-align: center; font-weight: 800; font-size: 104px; line-height: 0.98; letter-spacing: -0.03em; }
+      #cta .head .leak { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-flame); }
+      #cta .sub { position: absolute; top: 1160px; left: 130px; right: 130px; text-align: center; font-weight: 500; font-size: 50px; line-height: 1.3; color: var(--brand-text-dim); }
+      #cta .btn { position: absolute; bottom: 360px; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 18px;
+        font-weight: 700; font-size: 54px; color: var(--brand-white); background: var(--brand-flame); padding: 36px 70px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,0.7); white-space: nowrap; }
+      #cta .btn .arrow { font-size: 56px; line-height: 1; transform: translateY(-2px); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="fuel-on-a-leak-short" data-start="0" data-duration="24.0" data-width="1080" data-height="1920">
+
+      <video id="face" src="assets/ad5-short.mp4" data-start="0" data-duration="23.86" data-track-index="0" muted playsinline></video>
+      <audio id="vo" src="assets/ad5-short.mp4" data-start="0" data-duration="23.86" data-track-index="1" data-volume="1"></audio>
+
+      <div id="topscrim" class="clip" data-start="0" data-duration="24.0" data-track-index="2"></div>
+      <img id="logobug" class="clip" data-start="0" data-duration="24.0" data-track-index="3" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+
+      <!-- cinematic finishing layers over the whole frame -->
+      <div id="vignette" class="clip" data-start="0" data-duration="24.0" data-track-index="8"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="24.0" data-track-index="9"></div>
+
+      <!-- ===== HOOK chart (2.0–5.7) ===== -->
+      <div id="hook" class="panel clip" data-start="2.0" data-duration="3.7" data-track-index="4">
+        <div class="bloom"></div>
+        <img class="plogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div class="eyebrow">The growth wall</div>
+        <svg class="chart" viewBox="0 0 760 460" fill="none">
+          <path d="M70 40 V360 H720" stroke="#1d4a7a" stroke-width="3" stroke-linecap="round"/>
+          <path id="hkspend" d="M70 360 L700 70" stroke="#9CD4FF" stroke-width="10" stroke-linecap="round"/>
+          <circle id="hkspenddot" cx="700" cy="70" r="14" fill="#9CD4FF"/>
+          <path id="hkrev" d="M70 360 L700 320" stroke="#FF4C32" stroke-width="10" stroke-linecap="round"/>
+          <circle id="hkrevdot" cx="700" cy="320" r="14" fill="#FF4C32"/>
+          <text id="hklspend" x="350" y="150" fill="#9CD4FF" font-family="'Rethink Sans'" font-weight="700" font-size="34" text-anchor="middle">Ad spend &#8593;</text>
+          <text id="hklrev" x="300" y="298" fill="#FF4C32" font-family="'Rethink Sans'" font-weight="700" font-size="34" text-anchor="middle">Revenue &#8212;</text>
+        </svg>
+        <div class="head">If more budget isn't growing <span class="ser">revenue</span>&hellip;</div>
+        <div class="kicker">&hellip;this is probably why.</div>
+      </div>
+
+      <!-- ===== LEAKY BUCKET (5.3–10.7) ===== -->
+      <div id="leak" class="panel clip" data-start="5.3" data-duration="5.4" data-track-index="5">
+        <div class="bloom"></div>
+        <img class="plogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div class="eyebrow">The problem</div>
+        <div class="bucketwrap">
+          <svg class="bucket" viewBox="0 0 520 470" fill="none">
+            <defs><clipPath id="bucketClip"><path d="M118 96 L165 404 L355 404 L402 96 Z"/></clipPath></defs>
+            <rect id="bkfill" x="100" y="404" width="320" height="0" fill="#9CD4FF" opacity="0.26" clip-path="url(#bucketClip)"/>
+            <ellipse id="bkfilltop" cx="262" cy="404" rx="96" ry="14" fill="#9CD4FF" opacity="0.4" clip-path="url(#bucketClip)"/>
+            <path d="M110 92 L162 408 L358 408 L410 92" stroke="#9CD4FF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <ellipse cx="260" cy="92" rx="150" ry="30" stroke="#9CD4FF" stroke-width="6" fill="#06284C"/>
+            <circle cx="178" cy="330" r="9" fill="#06284C" stroke="#FF4C32" stroke-width="4"/>
+            <circle cx="342" cy="356" r="9" fill="#06284C" stroke="#FF4C32" stroke-width="4"/>
+          </svg>
+          <div class="token" id="tk1" style="left:206px; top:44px;">$</div>
+          <div class="token" id="tk2" style="left:276px; top:44px;">$</div>
+          <div class="token" id="tk3" style="left:346px; top:44px;">$</div>
+          <div class="coinout" id="co1" style="left:156px; top:312px;">$</div>
+          <div class="coinout" id="co2" style="left:166px; top:326px;">$</div>
+          <div class="coinout" id="co3" style="left:330px; top:338px;">$</div>
+          <div class="coinout" id="co4" style="left:340px; top:352px;">$</div>
+        </div>
+        <div class="head">The leak isn't in the <span class="ads">ads.</span></div>
+        <div class="sub">It's what happens after the click.</div>
+      </div>
+
+      <!-- ===== PROOF +59% (10.15–18.5) ===== -->
+      <div id="proof" class="panel clip" data-start="10.15" data-duration="8.35" data-track-index="6">
+        <div class="bloom"></div>
+        <img class="plogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div class="eyebrow">Proof — Dryft Sleep</div>
+        <div class="client">Same ad budget. Different outcome.</div>
+        <div class="ringwrap">
+          <svg viewBox="0 0 620 620">
+            <circle cx="310" cy="310" r="278" stroke="#103d6f" stroke-width="28" fill="none"/>
+            <circle id="proofring" cx="310" cy="310" r="278" stroke="#FF4C32" stroke-width="28" fill="none" stroke-linecap="round"/>
+          </svg>
+          <div class="num" id="proofnum">+0%</div>
+        </div>
+        <div class="numlabel"><span class="ser">returning</span> customers</div>
+        <div class="kicker">$0 extra ad spend</div>
+      </div>
+
+      <!-- ===== CTA end card (18.1–end) ===== -->
+      <div id="cta" class="panel clip" data-start="18.1" data-duration="5.9" data-track-index="7">
+        <div class="bloom"></div>
+        <img class="clogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div class="head">Find the <span class="leak">leak</span><br />before you scale.</div>
+        <div class="sub">We help Shopify brands uncover the bottlenecks holding growth back.</div>
+        <div class="btn">Click the link below <span class="arrow">&rarr;</span></div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      /* ---------- HOOK (diverge chart) ---------- */
+      const Ls = 693.5, Lr = 631.1;
+      tl.set("#hkspend", { strokeDasharray: Ls, strokeDashoffset: Ls }, 2.0);
+      tl.set("#hkrev", { strokeDasharray: Lr, strokeDashoffset: Lr }, 2.0);
+      tl.from("#hook", { opacity: 0, scale: 1.05, filter: "blur(14px)", duration: 0.4, ease: "power2.out" }, 2.0);
+      tl.from("#hook .eyebrow", { opacity: 0, y: 16, duration: 0.4, ease: "power2.out" }, 2.15);
+      tl.to("#hkrev", { strokeDashoffset: 0, duration: 0.8, ease: "power2.out" }, 2.3);
+      tl.to("#hkspend", { strokeDashoffset: 0, duration: 0.9, ease: "power2.out" }, 2.45);
+      tl.from("#hkrevdot", { opacity: 0, scale: 0, duration: 0.3, ease: "back.out(2)", transformOrigin: "center" }, 3.0);
+      tl.from("#hkspenddot", { opacity: 0, scale: 0, duration: 0.3, ease: "back.out(2)", transformOrigin: "center" }, 3.25);
+      tl.from("#hklrev", { opacity: 0, duration: 0.4 }, 3.0);
+      tl.from("#hklspend", { opacity: 0, duration: 0.4 }, 3.25);
+      tl.from("#hook .head .ser", { opacity: 0, x: -22, duration: 0.55, ease: "power3.out" }, 3.35);
+      tl.from("#hook .head", { opacity: 0, y: 26, duration: 0.6, ease: "power3.out" }, 3.5);
+      tl.from("#hook .kicker", { opacity: 0, y: 16, duration: 0.5, ease: "power2.out" }, 4.5);
+      tl.to("#hook", { opacity: 0, scale: 1.03, filter: "blur(12px)", duration: 0.4, ease: "power2.in" }, 5.3);
+      tl.set("#hook", { opacity: 0 }, 5.7);
+
+      /* ---------- LEAKY BUCKET ---------- */
+      tl.from("#leak", { opacity: 0, scale: 1.05, filter: "blur(14px)", duration: 0.4, ease: "power2.out" }, 5.3);
+      tl.from("#leak .eyebrow", { opacity: 0, y: 16, duration: 0.4, ease: "power2.out" }, 5.5);
+      tl.from("#leak .bucketwrap", { opacity: 0, y: 28, scale: 0.93, duration: 0.55, ease: "power3.out" }, 5.6);
+      tl.fromTo("#tk1", { y: -230, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power1.in", repeat: 3, repeatDelay: 0.45 }, 5.8);
+      tl.fromTo("#tk2", { y: -230, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power1.in", repeat: 3, repeatDelay: 0.45 }, 6.0);
+      tl.fromTo("#tk3", { y: -230, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power1.in", repeat: 3, repeatDelay: 0.45 }, 6.2);
+      tl.fromTo("#bkfill", { attr: { y: 404, height: 0 } }, { attr: { y: 332, height: 72 }, duration: 1.3, ease: "power1.out" }, 6.1);
+      tl.fromTo("#bkfilltop", { attr: { cy: 404 }, opacity: 0 }, { attr: { cy: 332 }, opacity: 0.4, duration: 1.3, ease: "power1.out" }, 6.1);
+      tl.from("#leak .head", { opacity: 0, y: 26, duration: 0.55, ease: "power3.out" }, 6.3);
+      tl.from("#leak .sub", { opacity: 0, y: 18, duration: 0.5, ease: "power2.out" }, 6.7);
+      tl.fromTo("#co1", { x: 0, y: 0, opacity: 1, scale: 0.6 }, { x: -46, y: 150, opacity: 0, scale: 1, duration: 0.95, ease: "power1.in", repeat: 3, repeatDelay: 0.12 }, 7.0);
+      tl.fromTo("#co2", { x: 0, y: 0, opacity: 1, scale: 0.6 }, { x: -28, y: 172, opacity: 0, scale: 1, duration: 0.95, ease: "power1.in", repeat: 3, repeatDelay: 0.12 }, 7.25);
+      tl.fromTo("#co3", { x: 0, y: 0, opacity: 1, scale: 0.6 }, { x: 46, y: 150, opacity: 0, scale: 1, duration: 0.95, ease: "power1.in", repeat: 3, repeatDelay: 0.12 }, 7.1);
+      tl.fromTo("#co4", { x: 0, y: 0, opacity: 1, scale: 0.6 }, { x: 28, y: 172, opacity: 0, scale: 1, duration: 0.95, ease: "power1.in", repeat: 3, repeatDelay: 0.12 }, 7.35);
+      tl.fromTo("#leak .head .ads", { scale: 1 }, { scale: 1.12, duration: 0.3, ease: "back.out(2)", yoyo: true, repeat: 1, transformOrigin: "center" }, 8.4);
+      tl.to("#leak", { opacity: 0, scale: 1.03, filter: "blur(12px)", duration: 0.4, ease: "power2.in" }, 10.15);
+      tl.set("#leak", { opacity: 0 }, 10.7);
+
+      /* ---------- PROOF +59% ---------- */
+      const C = 2 * Math.PI * 278;
+      tl.set("#proofring", { strokeDasharray: C, strokeDashoffset: C }, 10.15);
+      tl.from("#proof", { opacity: 0, scale: 1.05, filter: "blur(14px)", duration: 0.4, ease: "power2.out" }, 10.15);
+      tl.from("#proof .eyebrow", { opacity: 0, y: 16, duration: 0.4, ease: "power2.out" }, 10.35);
+      tl.from("#proof .client", { opacity: 0, y: 16, duration: 0.4, ease: "power2.out" }, 10.5);
+      tl.to("#proofring", { strokeDashoffset: C * (1 - 0.59), duration: 1.5, ease: "power2.out" }, 10.9);
+      const counter = { v: 0 };
+      tl.to(counter, { v: 59, duration: 1.5, ease: "power2.out",
+        onUpdate: () => { const el = document.getElementById("proofnum"); if (el) el.textContent = "+" + Math.round(counter.v) + "%"; } }, 10.9);
+      tl.from("#proof .num", { opacity: 0, scale: 0.7, duration: 0.5, ease: "back.out(1.7)" }, 10.9);
+      tl.from("#proof .numlabel", { opacity: 0, y: 20, duration: 0.5, ease: "power2.out" }, 12.6);
+      tl.from("#proof .kicker", { opacity: 0, scale: 0.8, duration: 0.5, ease: "back.out(1.8)" }, 13.4);
+      tl.to("#proof .kicker", { scale: 1.05, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1 }, 14.2);
+      tl.to("#proof", { opacity: 0, scale: 1.03, filter: "blur(12px)", duration: 0.4, ease: "power2.in" }, 18.1);
+      tl.set("#proof", { opacity: 0 }, 18.5);
+
+      /* ---------- CTA (final, holds) ---------- */
+      tl.from("#cta", { opacity: 0, scale: 1.04, filter: "blur(12px)", duration: 0.45, ease: "power2.out" }, 18.1);
+      tl.from("#cta .clogo", { opacity: 0, y: -22, duration: 0.55, ease: "power3.out" }, 18.4);
+      tl.from("#cta .head .leak", { opacity: 0, x: -26, duration: 0.6, ease: "power3.out" }, 18.7);
+      tl.from("#cta .head", { opacity: 0, y: 28, duration: 0.6, ease: "power3.out" }, 18.9);
+      tl.from("#cta .sub", { opacity: 0, y: 20, duration: 0.55, ease: "power2.out" }, 19.3);
+      tl.from("#cta .btn", { opacity: 0, scale: 0.84, duration: 0.55, ease: "back.out(1.7)" }, 19.8);
+      tl.to("#cta .btn", { scale: 1.05, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 3 }, 20.6);
+
+      window.__timelines["fuel-on-a-leak-short"] = tl;
+    </script>
+  </body>
+</html>
