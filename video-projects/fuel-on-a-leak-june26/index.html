@@ -21,9 +21,9 @@
       #face { position: absolute; inset: 0; width: 100%; height: 100%;
         object-fit: cover; object-position: center center; z-index: 1; }
 
-      /* bottom scrim so captions stay legible over the face */
-      #scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 46%; z-index: 2;
-        background: linear-gradient(to top, rgba(3,18,38,0.92) 0%, rgba(3,18,38,0.72) 34%, rgba(3,18,38,0) 100%); }
+      /* bottom scrim — gated by GSAP to the callout windows only (else clean face) */
+      #scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 42%; z-index: 2; opacity: 0;
+        background: linear-gradient(to top, rgba(3,18,38,0.86) 0%, rgba(3,18,38,0.6) 36%, rgba(3,18,38,0) 100%); }
       /* faint top scrim under the logo bug */
       #topscrim { position: absolute; left: 0; right: 0; top: 0; height: 22%; z-index: 2;
         background: linear-gradient(to bottom, rgba(3,18,38,0.66) 0%, rgba(3,18,38,0) 100%); }
@@ -78,9 +78,11 @@
         font-weight: 700; font-size: 28px; letter-spacing: 0.32em; text-transform: uppercase;
         color: var(--brand-blue-tint); }
 
-      /* --- LEAK panel --- */
-      #leak .funnel { position: absolute; top: 300px; left: 50%; transform: translateX(-50%);
+      /* --- LEAK panel (leaky bucket) --- */
+      #leak .bucket { position: absolute; top: 300px; left: 50%; transform: translateX(-50%);
         width: 520px; height: 470px; }
+      #leak .leakstream { position: absolute; width: 8px; height: 54px; transform-origin: top center;
+        border-radius: 4px; background: linear-gradient(to bottom, #FF4C32, rgba(255,76,50,0)); }
       #leak .token { position: absolute; width: 64px; height: 64px; border-radius: 50%;
         background: var(--brand-surface-2); border: 2px solid var(--brand-blue-tint);
         color: var(--brand-blue-tint); font-weight: 800; font-size: 36px;
@@ -139,13 +141,7 @@
       <img id="logobug" class="clip" data-start="0" data-duration="62.7" data-track-index="4"
            src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
 
-      <!-- ===== Scene 1 — HOOK (0–12.4) ===== -->
-      <div id="thesis" class="cap clip" data-start="0.4" data-duration="4.8" data-track-index="5">
-        Don't pour fuel<br />on a <span class="leak">leak.</span>
-      </div>
-      <div id="setup" class="cap clip" data-start="5.5" data-duration="4.0" data-track-index="6">
-        Adding more budget won't fix what's <span class="blue">already broken.</span>
-      </div>
+      <!-- ===== Scene 1 — HOOK (0–12.4) — clean face, then spend pills ===== -->
       <div id="spend" class="clip" data-start="9.6" data-duration="2.8" data-track-index="7">
         <div class="lead">So founders reach for the same fix:</div>
         <div class="pillrow">
@@ -160,18 +156,32 @@
         <div class="bloom"></div>
         <img class="plogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div class="eyebrow">The problem</div>
-        <svg class="funnel" viewBox="0 0 520 470" fill="none">
-          <path d="M40 60 H480 L300 300 V430 H220 V300 Z"
-                fill="#0a325f" stroke="#9CD4FF" stroke-width="6" stroke-linejoin="round"/>
-          <path d="M300 300 L360 360" stroke="#FF4C32" stroke-width="8" stroke-linecap="round"/>
-          <path d="M300 322 L356 392" stroke="#FF4C32" stroke-width="6" stroke-linecap="round"/>
+        <!-- Leaky bucket: budget pours in the top, low fill, flame leaks out the sides -->
+        <svg class="bucket" viewBox="0 0 520 470" fill="none">
+          <defs>
+            <clipPath id="bucketClip"><path d="M118 96 L165 404 L355 404 L402 96 Z"/></clipPath>
+          </defs>
+          <!-- low water level inside (clipped to bucket interior) -->
+          <rect id="bkfill" x="100" y="404" width="320" height="0" fill="#9CD4FF" opacity="0.26" clip-path="url(#bucketClip)"/>
+          <ellipse id="bkfilltop" cx="262" cy="404" rx="96" ry="14" fill="#9CD4FF" opacity="0.4" clip-path="url(#bucketClip)"/>
+          <!-- bucket walls + bottom -->
+          <path d="M110 92 L162 408 L358 408 L410 92" stroke="#9CD4FF" stroke-width="6"
+                stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- rim -->
+          <ellipse cx="260" cy="92" rx="150" ry="30" stroke="#9CD4FF" stroke-width="6" fill="#06284C"/>
+          <!-- two holes punched in the lower walls -->
+          <circle cx="178" cy="330" r="9" fill="#06284C" stroke="#FF4C32" stroke-width="4"/>
+          <circle cx="342" cy="356" r="9" fill="#06284C" stroke="#FF4C32" stroke-width="4"/>
         </svg>
-        <div class="token" id="tk1" style="left:470px; top:360px;">$</div>
-        <div class="token" id="tk2" style="left:540px; top:360px;">$</div>
-        <div class="token" id="tk3" style="left:610px; top:360px;">$</div>
-        <div class="drip" id="dr1" style="left:612px; top:612px;"></div>
-        <div class="drip" id="dr2" style="left:632px; top:628px;"></div>
-        <div class="drip" id="dr3" style="left:600px; top:636px;"></div>
+        <div class="token" id="tk1" style="left:486px; top:344px;">$</div>
+        <div class="token" id="tk2" style="left:556px; top:344px;">$</div>
+        <div class="token" id="tk3" style="left:626px; top:344px;">$</div>
+        <!-- flame leak spurts from the two holes -->
+        <div class="leakstream" id="ls1" style="left:430px; top:628px; transform:rotate(28deg);"></div>
+        <div class="leakstream" id="ls2" style="left:628px; top:654px; transform:rotate(-26deg);"></div>
+        <div class="drip" id="dr1" style="left:436px; top:672px;"></div>
+        <div class="drip" id="dr2" style="left:452px; top:702px;"></div>
+        <div class="drip" id="dr3" style="left:632px; top:700px;"></div>
         <div class="head">The leak isn't in the <span class="ads">ads.</span></div>
         <div class="sub">It's what happens after the click.</div>
       </div>
@@ -183,16 +193,11 @@
         <div class="chip" id="ch3"><div class="x">✕</div><div class="t">Buyers come once — never return</div></div>
       </div>
 
-      <!-- ===== Scene 4 — BROKEN SYSTEM (28.3–35.6) over face ===== -->
-      <div id="broken" class="cap clip" data-start="28.3" data-duration="7.3" data-track-index="10">
-        More budget just sends more people into the same <span class="flame">broken system.</span>
-      </div>
-
       <!-- ===== Scene 5 — PROOF +59% (35.6–44.6) full frame ===== -->
       <div id="proof" class="panel clip" data-start="35.6" data-duration="9.0" data-track-index="11">
         <div class="bloom"></div>
         <img class="plogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-        <div class="eyebrow">Proof — Drift Sleep</div>
+        <div class="eyebrow">Proof — Dryft Sleep</div>
         <div class="client">Same ad budget. Different outcome.</div>
         <div class="ringwrap">
           <svg viewBox="0 0 560 560">
@@ -206,16 +211,7 @@
         <div class="kicker">$0 extra ad spend</div>
       </div>
 
-      <!-- ===== Scene 6 — THE TURN (44.6–54.9) over face ===== -->
-      <div id="turn1" class="cap clip" data-start="44.6" data-duration="2.5" data-track-index="12">
-        Growth isn't always about <span class="blue">spending more.</span>
-      </div>
-      <div id="turn2" class="cap clip" data-start="47.2" data-duration="2.3" data-track-index="12">
-        It comes from fixing <span class="ser blue">what's already there.</span>
-      </div>
-      <div id="turn3" class="cap clip" data-start="49.6" data-duration="5.2" data-track-index="12">
-        First, find what's actually <span class="flame">slowing your growth.</span>
-      </div>
+      <!-- ===== Scene 6 — THE TURN (44.6–54.9) — clean face, VO only ===== -->
 
       <!-- ===== Scene 7 — CTA END CARD (54.9–end) full frame ===== -->
       <div id="cta" class="panel clip" data-start="54.9" data-duration="7.8" data-track-index="13">
@@ -231,53 +227,53 @@
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
-      /* ---------- Scene 1 — HOOK ---------- */
-      tl.from("#thesis", { opacity: 0, y: 34, duration: 0.7, ease: "power3.out" }, 0.5);
-      tl.to("#thesis", { opacity: 0, y: -22, duration: 0.4, ease: "power2.in" }, 4.75);
-      tl.set("#thesis", { opacity: 0 }, 5.2);
-
-      tl.from("#setup", { opacity: 0, y: 26, duration: 0.6, ease: "power2.out" }, 5.6);
-      tl.to("#setup", { opacity: 0, y: -18, duration: 0.35, ease: "power2.in" }, 9.1);
-      tl.set("#setup", { opacity: 0 }, 9.5);
-
+      /* ---------- Scene 1 — HOOK (clean face → spend pills) ---------- */
+      // scrim only darkens the lower band while the pills are up
+      tl.to("#scrim", { opacity: 1, duration: 0.4, ease: "power2.out" }, 9.35);
       tl.from("#spend .lead", { opacity: 0, y: 18, duration: 0.4, ease: "power2.out" }, 9.65);
       tl.from("#p1", { opacity: 0, scale: 0.6, duration: 0.4, ease: "back.out(1.8)" }, 9.8);
       tl.from("#p2", { opacity: 0, scale: 0.6, duration: 0.4, ease: "back.out(1.8)" }, 10.45);
       tl.from("#p3", { opacity: 0, scale: 0.6, duration: 0.45, ease: "back.out(2)" }, 11.1);
       tl.to("#p3", { scale: 1.08, duration: 0.3, ease: "sine.inOut", yoyo: true, repeat: 1 }, 11.6);
+      tl.to("#scrim", { opacity: 0, duration: 0.4, ease: "power2.in" }, 12.15);
 
-      /* ---------- Scene 2 — THE LEAK (panel in) ---------- */
+      /* ---------- Scene 2 — THE LEAK (leaky bucket) ---------- */
       tl.from("#leak", { opacity: 0, scale: 1.06, filter: "blur(16px)", duration: 0.45, ease: "power2.out" }, 12.42);
       tl.from("#leak .eyebrow", { opacity: 0, y: 16, duration: 0.45, ease: "power2.out" }, 12.7);
-      tl.from("#leak .funnel", { opacity: 0, y: 30, scale: 0.92, duration: 0.6, ease: "power3.out" }, 12.85);
-      // money tokens fall into the funnel mouth (deterministic loop)
-      tl.fromTo("#tk1", { y: -210, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power1.in", repeat: 5, repeatDelay: 0.5 }, 13.0);
-      tl.fromTo("#tk2", { y: -210, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power1.in", repeat: 5, repeatDelay: 0.5 }, 13.25);
-      tl.fromTo("#tk3", { y: -210, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power1.in", repeat: 5, repeatDelay: 0.5 }, 13.5);
+      tl.from("#leak .bucket", { opacity: 0, y: 30, scale: 0.92, duration: 0.6, ease: "power3.out" }, 12.85);
+      // budget pours in — coins drop into the rim (deterministic loop)
+      tl.fromTo("#tk1", { y: -230, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power1.in", repeat: 5, repeatDelay: 0.5 }, 13.0);
+      tl.fromTo("#tk2", { y: -230, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power1.in", repeat: 5, repeatDelay: 0.5 }, 13.25);
+      tl.fromTo("#tk3", { y: -230, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power1.in", repeat: 5, repeatDelay: 0.5 }, 13.5);
+      // level rises a little, then stays low — it leaks
+      tl.fromTo("#bkfill", { attr: { y: 404, height: 0 } }, { attr: { y: 330, height: 74 }, duration: 1.4, ease: "power1.out" }, 13.4);
+      tl.fromTo("#bkfilltop", { attr: { cy: 404 }, opacity: 0 }, { attr: { cy: 330 }, opacity: 0.4, duration: 1.4, ease: "power1.out" }, 13.4);
       // headline + sub
       tl.from("#leak .head", { opacity: 0, y: 28, duration: 0.6, ease: "power3.out" }, 13.4);
       tl.from("#leak .sub", { opacity: 0, y: 20, duration: 0.5, ease: "power2.out" }, 13.8);
-      // the leak springs — flame emphasis pops on "after the click"
-      tl.fromTo("#dr1", { y: 0, opacity: 0, scale: 0.6 }, { y: 150, opacity: 0, scale: 1, duration: 0.9, ease: "power1.in", repeat: 3, repeatDelay: 0.25 }, 16.8);
-      tl.fromTo("#dr2", { y: 0, opacity: 0, scale: 0.6 }, { y: 150, opacity: 0, scale: 1, duration: 0.9, ease: "power1.in", repeat: 3, repeatDelay: 0.25 }, 17.0);
-      tl.fromTo("#dr3", { y: 0, opacity: 0, scale: 0.6 }, { y: 150, opacity: 0, scale: 1, duration: 0.9, ease: "power1.in", repeat: 3, repeatDelay: 0.25 }, 17.2);
+      // the bucket leaks — flame spurts + drops, emphasis pops on "after the click"
+      tl.fromTo("#ls1", { opacity: 0 }, { opacity: 0.95, duration: 0.3, ease: "power2.out" }, 16.7);
+      tl.fromTo("#ls2", { opacity: 0 }, { opacity: 0.95, duration: 0.3, ease: "power2.out" }, 16.85);
+      tl.to("#ls1", { opacity: 0.5, duration: 0.45, ease: "sine.inOut", yoyo: true, repeat: 7 }, 17.05);
+      tl.to("#ls2", { opacity: 0.5, duration: 0.45, ease: "sine.inOut", yoyo: true, repeat: 7 }, 17.2);
+      tl.fromTo("#dr1", { y: 0, opacity: 0, scale: 0.6 }, { y: 120, opacity: 0, scale: 1, duration: 0.85, ease: "power1.in", repeat: 4, repeatDelay: 0.2 }, 16.9);
+      tl.fromTo("#dr2", { y: 0, opacity: 0, scale: 0.6 }, { y: 120, opacity: 0, scale: 1, duration: 0.85, ease: "power1.in", repeat: 4, repeatDelay: 0.2 }, 17.15);
+      tl.fromTo("#dr3", { y: 0, opacity: 0, scale: 0.6 }, { y: 120, opacity: 0, scale: 1, duration: 0.85, ease: "power1.in", repeat: 4, repeatDelay: 0.2 }, 17.0);
       tl.fromTo("#leak .head .ads", { scale: 1 }, { scale: 1.12, duration: 0.3, ease: "back.out(2)", yoyo: true, repeat: 1, transformOrigin: "center" }, 16.8);
       // panel out (transition back to face)
       tl.to("#leak", { opacity: 0, scale: 1.04, filter: "blur(14px)", duration: 0.45, ease: "power2.in" }, 21.1);
       tl.set("#leak", { opacity: 0 }, 21.54);
 
-      /* ---------- Scene 3 — THREE LEAKS ---------- */
+      /* ---------- Scene 3 — THREE LEAKS (over face) ---------- */
+      tl.to("#scrim", { opacity: 1, duration: 0.4, ease: "power2.out" }, 21.4);
       tl.from("#ch1", { opacity: 0, x: -40, duration: 0.5, ease: "power3.out" }, 21.8);
       tl.from("#ch2", { opacity: 0, x: -40, duration: 0.5, ease: "power3.out" }, 24.0);
       tl.from("#ch3", { opacity: 0, x: -40, duration: 0.5, ease: "power3.out" }, 26.1);
       tl.to("#leaks3", { opacity: 0, y: -16, duration: 0.4, ease: "power2.in" }, 27.85);
       tl.set("#leaks3", { opacity: 0 }, 28.30);
+      tl.to("#scrim", { opacity: 0, duration: 0.4, ease: "power2.in" }, 28.0);
 
-      /* ---------- Scene 4 — BROKEN SYSTEM ---------- */
-      tl.from("#broken", { opacity: 0, y: 26, duration: 0.6, ease: "power2.out" }, 28.5);
-      tl.from("#broken .flame", { opacity: 0, duration: 0.5, ease: "power1.out" }, 30.4);
-      tl.to("#broken", { opacity: 0, y: -18, duration: 0.4, ease: "power2.in" }, 35.15);
-      tl.set("#broken", { opacity: 0 }, 35.6);
+      /* ---------- Scene 4 — BROKEN SYSTEM: clean face, VO only ---------- */
 
       /* ---------- Scene 5 — PROOF +59% (panel in) ---------- */
       const C = 2 * Math.PI * 250;
@@ -297,17 +293,7 @@
       tl.to("#proof", { opacity: 0, scale: 1.04, filter: "blur(14px)", duration: 0.45, ease: "power2.in" }, 44.1);
       tl.set("#proof", { opacity: 0 }, 44.60);
 
-      /* ---------- Scene 6 — THE TURN ---------- */
-      tl.from("#turn1", { opacity: 0, y: 24, duration: 0.5, ease: "power2.out" }, 44.7);
-      tl.to("#turn1", { opacity: 0, y: -16, duration: 0.3, ease: "power2.in" }, 46.8);
-      tl.set("#turn1", { opacity: 0 }, 47.20);
-      tl.from("#turn2", { opacity: 0, y: 24, duration: 0.5, ease: "power2.out" }, 47.3);
-      tl.to("#turn2", { opacity: 0, y: -16, duration: 0.3, ease: "power2.in" }, 49.2);
-      tl.set("#turn2", { opacity: 0 }, 49.60);
-      tl.from("#turn3", { opacity: 0, y: 24, duration: 0.55, ease: "power3.out" }, 49.8);
-      tl.from("#turn3 .flame", { opacity: 0, duration: 0.5 }, 50.6);
-      tl.to("#turn3", { opacity: 0, y: -16, duration: 0.35, ease: "power2.in" }, 54.4);
-      tl.set("#turn3", { opacity: 0 }, 54.80);
+      /* ---------- Scene 6 — THE TURN: clean face, VO only ---------- */
 
       /* ---------- Scene 7 — CTA END CARD (final, holds) ---------- */
       tl.from("#cta", { opacity: 0, scale: 1.05, filter: "blur(14px)", duration: 0.5, ease: "power2.out" }, 54.9);
