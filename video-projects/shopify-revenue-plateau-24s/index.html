@@ -59,9 +59,6 @@
       #h-months { font-weight: 800; font-size: 90px; letter-spacing: -.02em; color: #fff; opacity: 0; margin-top: 8px; }
       #h-tell { font-weight: 700; font-size: 50px; color: var(--brand-blue-tint); opacity: 0; margin-top: 40px; }
 
-      #cardE .l1 { font-weight: 800; font-size: 100px; line-height: 1; letter-spacing: -.03em; color: #b9c8dc; opacity: 0; }
-      #cardE .l2 { font-weight: 800; font-size: 124px; line-height: .92; letter-spacing: -.04em; white-space: nowrap; opacity: 0; margin-top: 22px; }
-
       #f-stat { font-weight: 800; font-size: 320px; line-height: .82; letter-spacing: -.05em; opacity: 0; }
       #f-stat span { font-size: 180px; }
       #f-lab { font-weight: 800; font-size: 68px; letter-spacing: -.02em; color: #fff; opacity: 0; margin-top: 6px; }
@@ -107,15 +104,15 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="shopify-revenue-plateau-24s" data-start="0" data-duration="23" data-width="1080" data-height="1350">
+    <div id="root" data-composition-id="shopify-revenue-plateau-24s" data-start="0" data-duration="19" data-width="1080" data-height="1350">
 
       <div id="video-wrap">
         <video id="vid" data-start="0" data-duration="18" data-track-index="0" src="assets/short-sync.mp4" muted playsinline></video>
       </div>
       <audio id="aud" data-start="0" data-duration="18" data-track-index="1" data-volume="1" src="assets/short-sync.mp4"></audio>
 
-      <div id="scrims" class="clip" data-start="0" data-duration="23" data-track-index="2"></div>
-      <div id="vignette" class="clip" data-start="0" data-duration="23" data-track-index="3"></div>
+      <div id="scrims" class="clip" data-start="0" data-duration="19" data-track-index="2"></div>
+      <div id="vignette" class="clip" data-start="0" data-duration="19" data-track-index="3"></div>
       <div id="logo-wrap"><img id="logo" class="clip" data-start="0" data-duration="18" data-track-index="5"
            src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
 
@@ -126,13 +123,6 @@
         <div id="h-flat" class="fg">FLAT</div>
         <div id="h-months">for months.</div>
         <div id="h-tell">It's telling you something.</div>
-      </div>
-
-      <!-- REFRAME card -->
-      <div id="cardE" class="card clip" data-start="4.949999999999999" data-duration="4.6" data-track-index="11">
-        <div class="cbloom"></div><div class="cgrid"></div>
-        <div class="l1">Not failure.</div>
-        <div class="l2 fg">INFORMATION.</div>
       </div>
 
       <!-- PROOF b-roll -->
@@ -152,7 +142,7 @@
       </div>
 
       <!-- CTA card -->
-      <div id="cta" class="clip" data-start="15.799999999999999" data-duration="7.600000000000001" data-track-index="15">
+      <div id="cta" class="clip" data-start="15.799999999999999" data-duration="3.6000000000000014" data-track-index="15">
         <div id="obloom"></div>
         <img id="ologo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div id="oeyebrow">Stuck for months?</div>
@@ -161,17 +151,17 @@
         <div id="octa">Learn how it works <span class="arrow">&rarr;</span></div>
       </div>
 
-      <div id="grain" class="clip" data-start="0" data-duration="23" data-track-index="30"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="19" data-track-index="30"></div>
     </div>
 
     <script>
-      const FACE_DUR = 18, COMP = 23;
+      const FACE_DUR = 18, COMP = 19;
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
       tl.fromTo("#video-wrap", { scale: 1.0 }, { scale: 1.05, duration: FACE_DUR, ease: "none" }, 0);
       tl.from("#logo-wrap", { opacity: 0, y: -18, duration: .5, ease: "power3.out" }, .2);
-      tl.to(".cbloom", { xPercent: 8, yPercent: -6, scale: 1.12, duration: 7, ease: "sine.inOut", repeat: 5, yoyo: true }, 0);
+      tl.to(".cbloom", { xPercent: 8, yPercent: -6, scale: 1.12, duration: 7, ease: "sine.inOut", repeat: 4, yoyo: true }, 0);
 
       function cardIn(sel, t) {
         tl.fromTo(sel, { opacity: 0, scale: 1.05, yPercent: 1.5, filter: "blur(16px)" },
@@ -187,12 +177,6 @@
       tl.fromTo("#h-months", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 2.85);
       tl.fromTo("#h-tell", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .45, ease: "power3.out" }, 4.4);
       cardOut("#cardHook", 5.25);
-
-      // REFRAME
-      cardIn("#cardE", 5.35);
-      tl.fromTo("#cardE .l1", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 5.35 + .1);
-      tl.fromTo("#cardE .l2", { opacity: 0, scale: .82 }, { opacity: 1, scale: 1, duration: .5, ease: "back.out(2)" }, 7.9);
-      cardOut("#cardE", 8.95);
 
       // PROOF b-roll
       tl.to("#logo-wrap", { opacity: 0, duration: .25, ease: "power2.in" }, 8.95 - .15);

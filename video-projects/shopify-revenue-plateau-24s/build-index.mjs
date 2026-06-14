@@ -5,7 +5,7 @@ import fs from "node:fs";
 
 const ID = "shopify-revenue-plateau-24s";
 const FACE_DUR = 18.0;                       // stitched VO length
-const COMP     = process.env.TEST ? 6 : 23.0;
+const COMP     = process.env.TEST ? 6 : 19.0;
 const CAP_PAD  = 250;
 
 // HOOK
@@ -79,9 +79,6 @@ const html = `<!doctype html>
       #h-months { font-weight: 800; font-size: 90px; letter-spacing: -.02em; color: #fff; opacity: 0; margin-top: 8px; }
       #h-tell { font-weight: 700; font-size: 50px; color: var(--brand-blue-tint); opacity: 0; margin-top: 40px; }
 
-      #cardE .l1 { font-weight: 800; font-size: 100px; line-height: 1; letter-spacing: -.03em; color: #b9c8dc; opacity: 0; }
-      #cardE .l2 { font-weight: 800; font-size: 124px; line-height: .92; letter-spacing: -.04em; white-space: nowrap; opacity: 0; margin-top: 22px; }
-
       #f-stat { font-weight: 800; font-size: 320px; line-height: .82; letter-spacing: -.05em; opacity: 0; }
       #f-stat span { font-size: 180px; }
       #f-lab { font-weight: 800; font-size: 68px; letter-spacing: -.02em; color: #fff; opacity: 0; margin-top: 6px; }
@@ -148,13 +145,6 @@ const html = `<!doctype html>
         <div id="h-tell">It's telling you something.</div>
       </div>
 
-      <!-- REFRAME card -->
-      <div id="cardE" class="card clip" data-start="${E_IN - 0.4}" data-duration="${E_OUT - E_IN + 1}" data-track-index="11">
-        <div class="cbloom"></div><div class="cgrid"></div>
-        <div class="l1">Not failure.</div>
-        <div class="l2 fg">INFORMATION.</div>
-      </div>
-
       <!-- PROOF b-roll -->
       <div id="proof">
         <video id="proof-vid" data-start="${BROLL_IN}" data-duration="${BROLL_OUT - BROLL_IN + 0.2}" data-track-index="12"
@@ -207,12 +197,6 @@ const html = `<!doctype html>
       tl.fromTo("#h-months", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, ${HK_MONTHS});
       tl.fromTo("#h-tell", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .45, ease: "power3.out" }, ${HK_TELL});
       cardOut("#cardHook", ${HK_OUT});
-
-      // REFRAME
-      cardIn("#cardE", ${E_IN});
-      tl.fromTo("#cardE .l1", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, ${E_IN} + .1);
-      tl.fromTo("#cardE .l2", { opacity: 0, scale: .82 }, { opacity: 1, scale: 1, duration: .5, ease: "back.out(2)" }, ${E_INFO});
-      cardOut("#cardE", ${E_OUT});
 
       // PROOF b-roll
       tl.to("#logo-wrap", { opacity: 0, duration: .25, ease: "power2.in" }, ${BROLL_IN} - .15);
