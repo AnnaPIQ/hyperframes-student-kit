@@ -58,7 +58,7 @@
         box-shadow: 0 0 14px rgba(255,76,50,.6); }
       .flame { color: var(--brand-flame); }
       /* flame gradient for hero words (with glow via drop-shadow since text is clipped) */
-      .fg { background: linear-gradient(180deg, #ff7a45 0%, #ff4c32 56%, #ff6a2e 100%);
+      .fg { background: linear-gradient(180deg, #ff5e48 0%, #ff4c32 55%, #ef3a22 100%);
         -webkit-background-clip: text; background-clip: text; color: transparent;
         filter: drop-shadow(0 14px 44px rgba(255,76,50,.42)); }
 
@@ -194,14 +194,14 @@
       </div>
 
       <!-- CARD D : symptom vs cause -->
-      <div id="cardD" class="card clip" data-start="36.9" data-duration="6.700000000000003" data-track-index="10">
+      <div id="cardD" class="card clip" data-start="39.5" data-duration="4.399999999999999" data-track-index="10">
         <div class="cbloom"></div><div class="cgrid"></div>
         <div class="crow" id="d-sym"><span class="mk">&#10007;</span><span class="txt">The symptom</span></div>
         <div class="crow" id="d-cause"><span class="mk">&#10003;</span><span class="txt">The cause</span></div>
       </div>
 
       <!-- CARD E : hero line -->
-      <div id="cardE" class="card clip" data-start="49.2" data-duration="5" data-track-index="11">
+      <div id="cardE" class="card clip" data-start="51.5" data-duration="2.8000000000000043" data-track-index="11">
         <div class="cbloom"></div><div class="cgrid"></div>
         <div class="l1">Not failure.</div>
         <div class="l2 fg">INFORMATION.</div>
@@ -212,13 +212,12 @@
         <video id="proof-vid" data-start="57.5" data-duration="3.400000000000003" data-track-index="12"
                src="assets/driftsleep-stab.mp4" muted playsinline></video>
         <div class="pscrim"></div>
-        <div id="p-tag">Client&nbsp;&middot;&nbsp;<b>Driftsleep</b></div>
+        <div id="p-tag">Client&nbsp;&middot;&nbsp;<b>Dryft&nbsp;Sleep</b></div>
       </div>
 
       <!-- CARD F2 : +59% stat -->
       <div id="cardStat" class="card clip" data-start="60.2" data-duration="5.999999999999993" data-track-index="13">
         <div class="cbloom"></div><div class="cgrid"></div>
-        <div class="eyebrow">Driftsleep, with EcomIQ</div>
         <div id="f-stat" class="fg">+59<span>%</span></div>
         <div id="f-lab">returning customers</div>
         <div id="f-sub">without spending another dollar on ads</div>
@@ -290,16 +289,16 @@
       cardOut("#cardC", 37);
 
       // ---------- CARD D ----------
-      cardIn("#cardD", 37.3);
-      tl.fromTo("#d-sym", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .4, ease: "power3.out" }, 38.1);
-      tl.fromTo("#d-cause", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .4, ease: "power3.out" }, 41.2);
-      cardOut("#cardD", 43);
+      cardIn("#cardD", 39.9);
+      tl.fromTo("#d-sym", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .4, ease: "power3.out" }, 40.4);
+      tl.fromTo("#d-cause", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .4, ease: "power3.out" }, 42.3);
+      cardOut("#cardD", 43.3);
 
       // ---------- CARD E ----------
-      cardIn("#cardE", 49.6);
-      tl.fromTo("#cardE .l1", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 49.6 + .1);
-      tl.fromTo("#cardE .l2", { opacity: 0, scale: .82 }, { opacity: 1, scale: 1, duration: .5, ease: "back.out(2)" }, 52.27);
-      cardOut("#cardE", 53.6);
+      cardIn("#cardE", 51.9);
+      tl.fromTo("#cardE .l1", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 51.9 + .1);
+      tl.fromTo("#cardE .l2", { opacity: 0, scale: .82 }, { opacity: 1, scale: 1, duration: .5, ease: "back.out(2)" }, 52.35);
+      cardOut("#cardE", 53.7);
 
       // ---------- F1 : Driftsleep b-roll ----------
       tl.to("#logo-wrap", { opacity: 0, duration: .25, ease: "power2.in" }, 57.5 - .15);

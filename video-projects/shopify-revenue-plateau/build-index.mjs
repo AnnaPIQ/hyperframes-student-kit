@@ -20,9 +20,9 @@ const B_IN = 18.6, B_OUT = 20.8;
 // C: friction checklist
 const C_IN = 23.6, F1 = 26.89, F2 = 28.74, F3 = 30.69, F4 = 34.47, C_OUT = 37.0;
 // D: symptom vs cause
-const D_IN = 37.3, D_SYM = 38.1, D_CAUSE = 41.2, D_OUT = 43.0;
+const D_IN = 39.9, D_SYM = 40.4, D_CAUSE = 42.3, D_OUT = 43.3;
 // E: hero — not failure / information
-const E_IN = 49.6, E_INFO = 52.27, E_OUT = 53.6;
+const E_IN = 51.9, E_INFO = 52.35, E_OUT = 53.7;
 // F1: Driftsleep b-roll, F2: +59% stat card
 const BROLL_IN = 57.5, BROLL_OUT = 60.7;
 const STAT_IN = 60.6, COUNT_START = 60.95, COUNT_END = 61.95, STAT_OUT = 65.6;
@@ -91,7 +91,7 @@ const html = `<!doctype html>
         box-shadow: 0 0 14px rgba(255,76,50,.6); }
       .flame { color: var(--brand-flame); }
       /* flame gradient for hero words (with glow via drop-shadow since text is clipped) */
-      .fg { background: linear-gradient(180deg, #ff7a45 0%, #ff4c32 56%, #ff6a2e 100%);
+      .fg { background: linear-gradient(180deg, #ff5e48 0%, #ff4c32 55%, #ef3a22 100%);
         -webkit-background-clip: text; background-clip: text; color: transparent;
         filter: drop-shadow(0 14px 44px rgba(255,76,50,.42)); }
 
@@ -245,13 +245,12 @@ const html = `<!doctype html>
         <video id="proof-vid" data-start="${BROLL_IN}" data-duration="${BROLL_OUT - BROLL_IN + 0.2}" data-track-index="12"
                src="assets/driftsleep-stab.mp4" muted playsinline></video>
         <div class="pscrim"></div>
-        <div id="p-tag">Client&nbsp;&middot;&nbsp;<b>Driftsleep</b></div>
+        <div id="p-tag">Client&nbsp;&middot;&nbsp;<b>Dryft&nbsp;Sleep</b></div>
       </div>
 
       <!-- CARD F2 : +59% stat -->
       <div id="cardStat" class="card clip" data-start="${STAT_IN - 0.4}" data-duration="${STAT_OUT - STAT_IN + 1}" data-track-index="13">
         <div class="cbloom"></div><div class="cgrid"></div>
-        <div class="eyebrow">Driftsleep, with EcomIQ</div>
         <div id="f-stat" class="fg">+59<span>%</span></div>
         <div id="f-lab">returning customers</div>
         <div id="f-sub">without spending another dollar on ads</div>
