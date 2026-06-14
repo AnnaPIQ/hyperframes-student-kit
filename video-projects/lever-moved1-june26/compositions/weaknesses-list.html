@@ -1,0 +1,60 @@
+<template id="weaklist-template">
+  <div data-composition-id="weaklist" data-start="0" data-width="1080" data-height="1350" data-duration="8.0">
+    <div class="wl-root">
+      <div class="wl-tex"></div>
+      <div class="wl-streak"></div>
+      <div class="wl-head" id="wl-head">MORE SPEND EXPOSES</div>
+      <div class="wl-list">
+        <div class="wl-item" id="wl1"><span class="wl-num">01</span><span class="wl-txt">Weak <b>conversion</b> rates</span></div>
+        <div class="wl-item" id="wl2"><span class="wl-num">02</span><span class="wl-txt">Poor <b>retention</b></span></div>
+        <div class="wl-item" id="wl3"><span class="wl-num">03</span><span class="wl-txt"><b>Margins</b> that can't support scale</span></div>
+      </div>
+    </div>
+    <style>
+      [data-composition-id="weaklist"] { position: absolute; inset: 0; }
+      [data-composition-id="weaklist"] .wl-root { position: absolute; inset: 0; overflow: hidden;
+        background: radial-gradient(120% 80% at 50% 26%, rgba(255,76,50,.07), transparent 60%), var(--brand-navy);
+        display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+        gap: 40px; padding: 110px 90px 200px; font-family: "Rethink Sans", sans-serif; }
+      [data-composition-id="weaklist"] .wl-tex { position: absolute; inset: -2%; pointer-events: none; opacity: .5;
+        background: repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1.5px, transparent 1.5px 94px),
+                    repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1.5px, transparent 1.5px 94px);
+        -webkit-mask-image: radial-gradient(120% 92% at 50% 42%, #000 32%, transparent 80%);
+                mask-image: radial-gradient(120% 92% at 50% 42%, #000 32%, transparent 80%); }
+      [data-composition-id="weaklist"] .wl-streak { position: absolute; top: 0; bottom: 0; left: 0; width: 46%;
+        background: linear-gradient(90deg, transparent, rgba(255,160,130,.45), transparent);
+        filter: blur(24px); transform: skewX(-12deg); opacity: 0; pointer-events: none; }
+      [data-composition-id="weaklist"] .wl-head { font-weight: 800; font-size: 40px; letter-spacing: .22em;
+        color: var(--brand-flame); opacity: 0; }
+      [data-composition-id="weaklist"] .wl-list { display: flex; flex-direction: column; gap: 34px; width: 100%; }
+      [data-composition-id="weaklist"] .wl-item { display: flex; align-items: center; gap: 30px; opacity: 0; }
+      [data-composition-id="weaklist"] .wl-num { flex: 0 0 auto; width: 86px; height: 86px; border-radius: 18px;
+        display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 40px;
+        color: var(--brand-flame); background: rgba(255,76,50,.12); border: 2px solid rgba(255,76,50,.45); }
+      [data-composition-id="weaklist"] .wl-txt { font-weight: 800; font-size: 68px; line-height: 1.04; letter-spacing: -.01em; color: #fff; }
+      [data-composition-id="weaklist"] .wl-txt b { color: var(--brand-flame); font-weight: 800; }
+    </style>
+    <link rel="stylesheet" href="../assets/fonts.css" />
+    <link rel="stylesheet" href="../assets/brand-tokens.css" />
+    <script src="../assets/gsap.min.js"></script>
+    <script>
+      (function () {
+        const s = '[data-composition-id="weaklist"] ';
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(s + ".wl-root", { yPercent: 9, filter: "blur(22px)", opacity: 0 }, { yPercent: 0, filter: "blur(0px)", opacity: 1, duration: 0.45, ease: "power2.out" }, 0);
+        tl.fromTo(s + ".wl-streak", { xPercent: -70, opacity: 0 }, { xPercent: 280, opacity: 1, duration: 0.5, ease: "power3.in" }, 0);
+        tl.to(s + ".wl-streak", { opacity: 0, duration: 0.2 }, 0.42);
+        tl.to(s + "#wl-head", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.2);
+        // Items reveal on the VO beats (local: conversion 0.5, retention 3.3, margins 5.7).
+        const item = (id, t) => tl.fromTo(s + id, { opacity: 0, x: -44 }, { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }, t);
+        item("#wl1", 0.5);
+        item("#wl2", 3.3);
+        item("#wl3", 5.7);
+        tl.to(s + ".wl-root", { yPercent: -9, filter: "blur(22px)", opacity: 0, duration: 0.32, ease: "power2.in" }, 7.6);
+        tl.set({}, {}, 8.0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["weaklist"] = tl;
+      })();
+    </script>
+  </div>
+</template>

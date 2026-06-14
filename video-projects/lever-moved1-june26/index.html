@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>The Lever Moved — EcomIQ Meta Ad (4:5)</title>
+    <script src="assets/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/fonts.css" />
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: "Rethink Sans", system-ui, sans-serif; color: #fff;
+      }
+      .layer { position: absolute; top: 0; left: 0; width: 1080px; height: 1350px; z-index: 10; }
+      #ov-frame { z-index: 30; }
+      #ov-captions { z-index: 40; }
+      #ov-endcard { z-index: 50; }
+
+      /* Face video — cover-cropped from 16:9 into 4:5, centered on Sean. */
+      #face-wrapper { position: absolute; inset: 0; overflow: hidden; z-index: 0;
+        transform-origin: 50% 35%; }
+      #face-video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 33%;
+        transform-origin: center center; filter: contrast(1.14) saturate(1.12) brightness(0.95); }
+      /* Cinematic grade — teal-navy shadow wash + breathing vignette, blended onto the footage */
+      #face-grade { position: absolute; inset: 0; pointer-events: none; z-index: 2;
+        background:
+          radial-gradient(125% 95% at 50% 38%, transparent 42%, rgba(2,12,28,.62) 100%),
+          linear-gradient(180deg, rgba(20,70,130,.10) 0%, rgba(2,10,24,.30) 100%); }
+      #face-grade::after { content: ""; position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(11,58,104,.16), rgba(255,120,60,.05));
+        mix-blend-mode: soft-light; }
+
+      /* End-card background footage (dimmed/blurred), revealed at the end. */
+      #ec-wrapper { position: absolute; inset: 0; overflow: hidden; z-index: 1; opacity: 0; }
+      #ec-video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
+        filter: brightness(0.42) blur(3px) saturate(1.05); }
+      /* B-roll cutaways (founder / coins) */
+      .brollw { position: absolute; inset: 0; overflow: hidden; z-index: 5; opacity: 0; transform-origin: 50% 45%; }
+      .brollv { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1) saturate(1.08) brightness(0.97); }
+      .broll-grade { position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(125% 95% at 50% 42%, transparent 44%, rgba(2,12,28,.6) 100%),
+                    linear-gradient(180deg, rgba(20,70,130,.10), rgba(2,10,24,.28)); }
+      .broll-grade.burn { background: radial-gradient(120% 95% at 50% 45%, transparent 50%, rgba(0,0,0,.5) 100%); }
+      /* Founder b-roll as a framed insert card (less zoomed — shows the whole shot) */
+      #broll-founder-wrap { inset: auto; top: 360px; left: 40px; width: 1000px; height: 630px;
+        border-radius: 28px; border: 1px solid var(--brand-border); box-shadow: 0 36px 90px -30px rgba(0,0,0,.7); }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="65.0"
+      data-width="1080"
+      data-height="1350"
+    >
+      <!-- Spine: Sean talking head (continuous 0–60.23s) -->
+      <div id="face-wrapper">
+        <video
+          id="face-video"
+          data-start="0"
+          data-duration="60.23"
+          data-track-index="0"
+          src="assets/lever-talk.mp4"
+          muted
+          playsinline
+        ></video>
+        <div id="face-grade"></div>
+      </div>
+
+      <!-- VO (separate audio track for the mixer) -->
+      <audio
+        id="face-audio"
+        data-start="0"
+        data-duration="60.23"
+        data-track-index="4"
+        data-volume="1"
+        src="assets/lever-talk.mp4"
+      ></audio>
+
+      <!-- End-card background footage (muted) -->
+      <div id="ec-wrapper">
+        <video
+          id="ec-video"
+          data-start="60.0"
+          data-duration="4.9"
+          data-track-index="6"
+          src="assets/lever-endcard.mp4"
+          muted
+          playsinline
+        ></video>
+      </div>
+
+      <!-- Founder b-roll removed per direction (man-at-computer AI clip) -->
+
+      <!-- Sound: voiceover only (ambient pad + SFX removed per direction) -->
+
+      <!-- ===== MG overlay layers (track 1, sequential) ===== -->
+      <div class="layer" id="ov-hook"
+        data-composition-id="hook" data-composition-src="compositions/01-hook.html"
+        data-start="0" data-duration="3.6" data-track-index="1"
+        data-width="1080" data-height="1350"></div>
+
+      <div class="layer" id="ov-oldfix"
+        data-composition-id="oldfix" data-composition-src="compositions/oldfix.html"
+        data-start="8.0" data-duration="6.0" data-track-index="1"
+        data-width="1080" data-height="1350"></div>
+
+      <div class="layer" id="ov-diverge"
+        data-composition-id="diverge" data-composition-src="compositions/04-diverge.html"
+        data-start="15.0" data-duration="7.0" data-track-index="1"
+        data-width="1080" data-height="1350"></div>
+
+      <!-- Removed per direction: lever (22s), exposes-weakness + conversion/retention/margin (29–43s),
+           and "the lever moved" (43s) graphics. 22–50s is now Sean on camera (b-roll candidate). -->
+
+      <div class="layer" id="ov-weaklist"
+        data-composition-id="weaklist" data-composition-src="compositions/weaknesses-list.html"
+        data-start="35.0" data-duration="8.0" data-track-index="1"
+        data-width="1080" data-height="1350"></div>
+
+      <div class="layer" id="ov-flat"
+        data-composition-id="flatline" data-composition-src="compositions/08-flatline.html"
+        data-start="50.0" data-duration="4.0" data-track-index="1"
+        data-width="1080" data-height="1350"></div>
+
+      <!-- Captions removed per direction (captions.html kept on disk if needed later) -->
+
+      <!-- Persistent frame: vignette + grain + logo (track 3, above captions) -->
+      <div class="layer" id="ov-frame"
+        data-composition-id="frame" data-composition-src="compositions/frame.html"
+        data-start="0" data-duration="60.0" data-track-index="3"
+        data-width="1080" data-height="1350"></div>
+
+      <!-- End card (track 5, top) -->
+      <div class="layer" id="ov-endcard"
+        data-composition-id="endcard" data-composition-src="compositions/endcard.html"
+        data-start="60.0" data-duration="5.0" data-track-index="5"
+        data-width="1080" data-height="1350"></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Ken Burns — slow continuous zoom on the face so it never reads as a still.
+      tl.to("#face-video", { scale: 1.05, duration: 60, ease: "none" }, 0);
+
+      // Punch-ins on the wrapper (cheap cutaway, breaks the single static shot).
+      tl.set("#face-wrapper", { scale: 1.0 }, 0);
+      tl.to("#face-wrapper", { scale: 1.07, duration: 0.5, ease: "power2.out" }, 3.4); // cut to Sean (after hook)
+      tl.to("#face-wrapper", { scale: 1.0,  duration: 1.0, ease: "power2.inOut" }, 6.0);
+      tl.to("#face-wrapper", { scale: 1.12, duration: 0.6, ease: "power2.out" }, 45.7); // "haven't realized it yet"
+      tl.to("#face-wrapper", { scale: 1.0,  duration: 0.8, ease: "power2.inOut" }, 49.6);
+      tl.to("#face-wrapper", { scale: 1.06, duration: 0.6, ease: "power2.out" }, 54.0); // the offer lands
+
+
+      // Crossfade footage → end-card background at ~60s.
+      tl.to("#face-wrapper", { opacity: 0, duration: 0.6, ease: "power2.inOut" }, 59.6);
+      tl.to("#ec-wrapper",   { opacity: 1, duration: 0.6, ease: "power2.inOut" }, 59.6);
+
+      tl.set({}, {}, 65.0); // duration anchor (Law 11)
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

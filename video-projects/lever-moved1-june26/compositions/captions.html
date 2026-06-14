@@ -1,0 +1,61 @@
+<template id="captions-template">
+  <div data-composition-id="captions" data-start="0" data-width="1080" data-height="1350" data-duration="60.0">
+    <div class="cp-stage">
+      <!-- Verbatim wording, timed to real speech segments from silence detection -->
+      <div class="cap" data-s="0.40"  data-d="1.80">If you're spending more on Meta than ever</div>
+      <div class="cap" data-s="2.20"  data-d="1.80">and making <span class="kw">less profit</span> than ever —</div>
+      <div class="cap" data-s="4.00"  data-d="2.10">this is probably why.</div>
+      <div class="cap" data-s="6.10"  data-d="2.50">Most Shopify founders think the answer's simple.</div>
+      <div class="cap" data-s="8.60"  data-d="1.90">Need more revenue, <span class="kw">spend</span> more on ads —</div>
+      <div class="cap" data-s="10.50" data-d="2.80">and for a long time, that's what worked.</div>
+      <div class="cap" data-s="13.30" data-d="2.30">The problem is, the game's completely <span class="kw">changed</span>.</div>
+      <div class="cap" data-s="15.60" data-d="3.10">Today, brands increase <span class="kw">spend</span> month after month,</div>
+      <div class="cap" data-s="18.70" data-d="3.58">while <span class="kw">ROAS</span> drifts down and profits get squeezed.</div>
+      <div class="cap" data-s="22.28" data-d="2.12">Not because they're bad marketers —</div>
+      <div class="cap" data-s="24.40" data-d="2.90">they're still pulling the <span class="kw">lever</span></div>
+      <div class="cap" data-s="27.30" data-d="2.30">that used to work — 18 months ago.</div>
+      <div class="cap" data-s="29.60" data-d="2.50">More spend often meant more <span class="kw">growth</span>,</div>
+      <div class="cap" data-s="32.10" data-d="1.60">but today, more spend can actually expose</div>
+      <div class="cap" data-s="33.70" data-d="1.85">the weaknesses already inside your business —</div>
+      <div class="cap" data-s="35.55" data-d="2.75">weak <span class="kw">conversion</span> rates,</div>
+      <div class="cap" data-s="38.30" data-d="2.45">poor <span class="kw">retention</span>,</div>
+      <div class="cap" data-s="40.75" data-d="2.55"><span class="kw">margins</span> that can't support scale.</div>
+      <div class="cap" data-s="43.30" data-d="2.70">The platforms got harder, the signal got worse,</div>
+      <div class="cap" data-s="46.00" data-d="2.95">and the <span class="kw">lever</span> moved.</div>
+      <div class="cap" data-s="48.95" data-d="2.60">Most founders just haven't realized it yet.</div>
+      <div class="cap" data-s="51.55" data-d="2.05">If your ad <span class="kw">spend</span> keeps climbing</div>
+      <div class="cap" data-s="53.60" data-d="1.90">but the results aren't following —</div>
+      <div class="cap" data-s="55.50" data-d="2.80">let's find out what's holding your <span class="kw">growth</span> back.</div>
+      <div class="cap" data-s="58.30" data-d="1.70">Click the link below.</div>
+    </div>
+    <style>
+      [data-composition-id="captions"] { position: absolute; inset: 0; }
+      [data-composition-id="captions"] .cp-stage { position: absolute; inset: 0; font-family: "Rethink Sans", sans-serif; }
+      [data-composition-id="captions"] .cap {
+        position: absolute; left: 50%; bottom: 118px; transform: translateX(-50%);
+        width: max-content; max-width: 900px; text-align: center;
+        background: rgba(6,24,46,.66); backdrop-filter: blur(8px);
+        border: 1px solid rgba(156,212,255,.22); border-radius: 18px; padding: 16px 30px;
+        font-weight: 800; font-size: 46px; line-height: 1.16; letter-spacing: -.01em; color: #fff;
+        text-shadow: 0 2px 12px rgba(0,0,0,.45); opacity: 0;
+      }
+      [data-composition-id="captions"] .cap .kw { color: var(--brand-blue-tint); }
+    </style>
+    <link rel="stylesheet" href="../assets/fonts.css" />
+    <link rel="stylesheet" href="../assets/brand-tokens.css" />
+    <script src="../assets/gsap.min.js"></script>
+    <script>
+      (function () {
+        const tl = gsap.timeline({ paused: true });
+        document.querySelectorAll('[data-composition-id="captions"] .cap').forEach((el) => {
+          const s = parseFloat(el.dataset.s), d = parseFloat(el.dataset.d);
+          tl.fromTo(el, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.28, ease: "power3.out" }, s);
+          tl.to(el, { opacity: 0, y: -12, duration: 0.22, ease: "power2.in" }, s + d - 0.22);
+        });
+        tl.set({}, {}, 60.0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["captions"] = tl;
+      })();
+    </script>
+  </div>
+</template>

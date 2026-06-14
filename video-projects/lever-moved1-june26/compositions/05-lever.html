@@ -1,0 +1,85 @@
+<template id="lever-template">
+  <div data-composition-id="lever" data-start="0" data-width="1080" data-height="1350" data-duration="7.0">
+    <div class="lv-panel">
+      <div class="lv-stage">
+        <svg class="lv-lever" viewBox="0 0 560 320" id="lv-lever">
+          <defs>
+            <linearGradient id="lvArm" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#eaf5ff" /><stop offset=".5" stop-color="#9cd4ff" /><stop offset="1" stop-color="#4f86bf" />
+            </linearGradient>
+            <radialGradient id="lvKnob" cx="38%" cy="32%" r="78%">
+              <stop offset="0" stop-color="#ffd0c4" /><stop offset=".42" stop-color="#ff6a4d" /><stop offset="1" stop-color="#cc2f17" />
+            </radialGradient>
+            <linearGradient id="lvFul" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#bfe0ff" /><stop offset="1" stop-color="#3f6f9e" />
+            </linearGradient>
+            <filter id="lvShadow" x="-30%" y="-30%" width="160%" height="170%">
+              <feDropShadow dx="0" dy="9" stdDeviation="11" flood-color="#000" flood-opacity="0.55" />
+            </filter>
+          </defs>
+          <ellipse cx="280" cy="307" rx="150" ry="13" fill="rgba(0,0,0,.38)" />
+          <line x1="120" y1="300" x2="440" y2="300" stroke="rgba(159,182,212,.3)" stroke-width="4" />
+          <polygon points="280,248 236,304 324,304" fill="url(#lvFul)" />
+          <g id="lv-arm" filter="url(#lvShadow)">
+            <rect x="120" y="236" width="320" height="26" rx="13" fill="url(#lvArm)" />
+            <rect x="128" y="240" width="304" height="6" rx="3" fill="rgba(255,255,255,.5)" />
+            <circle cx="440" cy="249" r="30" fill="url(#lvKnob)" />
+            <ellipse cx="431" cy="240" rx="11" ry="7" fill="rgba(255,255,255,.55)" />
+          </g>
+        </svg>
+        <div class="lv-gauge-wrap">
+          <svg class="lv-gauge" viewBox="0 0 320 200">
+            <path d="M40,180 A120,120 0 0 1 280,180" fill="none" stroke="rgba(159,182,212,.3)" stroke-width="12" stroke-linecap="round" />
+            <path d="M40,180 A120,120 0 0 1 110,74" fill="none" stroke="var(--brand-flame)" stroke-width="12" stroke-linecap="round" opacity=".7" />
+            <g id="lv-needle"><line x1="160" y1="180" x2="64" y2="150" stroke="#fff" stroke-width="8" stroke-linecap="round" /><circle cx="160" cy="180" r="12" fill="#fff" /></g>
+          </svg>
+          <div class="lv-gauge-label">RESPONSE</div>
+        </div>
+      </div>
+      <div class="lv-cap1" id="lv-cap1">Still pulling the lever</div>
+      <div class="lv-cap2" id="lv-cap2">that worked <span class="hot">18 months ago</span></div>
+    </div>
+    <style>
+      [data-composition-id="lever"] { position: absolute; inset: 0; }
+      [data-composition-id="lever"] .lv-panel {
+        position: absolute; left: 0; right: 0; bottom: 0; height: 770px;
+        background: linear-gradient(180deg, rgba(6,40,76,0) 0%, rgba(6,40,76,.86) 22%, var(--brand-navy) 46%);
+        display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+        gap: 14px; padding: 0 60px 210px; font-family: "Rethink Sans", sans-serif;
+      }
+      [data-composition-id="lever"] .lv-stage { display: flex; align-items: center; gap: 40px; margin-bottom: 18px; }
+      [data-composition-id="lever"] .lv-lever { width: 360px; height: 206px; opacity: 0; overflow: visible; }
+      [data-composition-id="lever"] .lv-gauge-wrap { display: flex; flex-direction: column; align-items: center; opacity: 0; }
+      [data-composition-id="lever"] .lv-gauge { width: 220px; height: 138px; }
+      [data-composition-id="lever"] .lv-gauge-label { font-weight: 700; font-size: 24px; letter-spacing: .2em; color: var(--brand-text-dim); margin-top: 4px; }
+      [data-composition-id="lever"] .lv-cap1 { font-weight: 800; font-size: 58px; letter-spacing: -.01em; color: #fff; opacity: 0; }
+      [data-composition-id="lever"] .lv-cap2 { font-weight: 600; font-size: 44px; color: var(--brand-text-dim); opacity: 0; }
+      [data-composition-id="lever"] .lv-cap2 .hot { color: var(--brand-flame); font-weight: 800; }
+    </style>
+    <link rel="stylesheet" href="../assets/fonts.css" />
+    <link rel="stylesheet" href="../assets/brand-tokens.css" />
+    <script src="../assets/gsap.min.js"></script>
+    <script>
+      (function () {
+        const s = '[data-composition-id="lever"] ';
+        const tl = gsap.timeline({ paused: true });
+        tl.from(s + ".lv-panel", { yPercent: 100, duration: 0.55, ease: "power3.out" }, 0);
+        tl.to(s + ".lv-lever", { opacity: 1, duration: 0.4, ease: "power2.out" }, 0.4);
+        tl.to(s + ".lv-gauge-wrap", { opacity: 1, duration: 0.4, ease: "power2.out" }, 0.6);
+        tl.to(s + ".lv-cap1", { opacity: 1, duration: 0.4, ease: "power2.out" }, 0.9);
+        tl.to(s + ".lv-cap2", { opacity: 1, duration: 0.4, ease: "power2.out" }, 1.2);
+        // Pull the lever — twice — but the response gauge barely twitches.
+        const pull = (t) => {
+          tl.to(s + "#lv-arm", { rotation: -24, svgOrigin: "280 250", duration: 0.45, ease: "power2.inOut" }, t);
+          tl.to(s + "#lv-arm", { rotation: 0, svgOrigin: "280 250", duration: 0.5, ease: "power2.inOut" }, t + 0.55);
+          tl.to(s + "#lv-needle", { rotation: -4, svgOrigin: "160 180", duration: 0.3, ease: "power1.inOut", yoyo: true, repeat: 1 }, t + 0.1);
+        };
+        pull(1.6); pull(3.4); pull(5.0);
+        tl.to(s + ".lv-panel", { opacity: 0, duration: 0.3, ease: "power2.in" }, 6.7);
+        tl.set({}, {}, 7.0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["lever"] = tl;
+      })();
+    </script>
+  </div>
+</template>

@@ -1,0 +1,151 @@
+<template id="weaknesses-template">
+  <div data-composition-id="weaknesses" data-start="0" data-width="1080" data-height="1350" data-duration="14.0">
+    <div class="wk-tex"></div>
+    <div class="wk-streak"></div>
+    <!-- 0–5s: the flip -->
+    <div class="wk-flip" id="wk-flip">
+      <div class="wk-eq" id="wk-eq">MORE SPEND <span class="eqs">=</span> MORE GROWTH</div>
+      <div class="wk-strike" id="wk-strike"></div>
+      <div class="wk-expose" id="wk-expose">EXPOSES&nbsp;WEAKNESS</div>
+    </div>
+
+    <!-- 5–14s: three magnifier reveals -->
+    <div class="wk-card" id="wk1">
+      <div class="wk-clabel">CONVERSION</div>
+      <div class="wk-screen">
+        <div class="wk-metric-name">Store conversion rate</div>
+        <div class="wk-row"></div><div class="wk-row short"></div>
+        <div class="wk-focus">
+          <div class="wk-num">1.4%</div>
+          <svg class="wk-mini" viewBox="0 0 240 90"><path class="wk-mini-path" pathLength="1" d="M8,20 C70,34 140,58 232,76" /></svg>
+          <div class="wk-lens"><span class="wk-handle"></span></div>
+        </div>
+        <div class="wk-delta">▼ down from 2.9%</div>
+      </div>
+    </div>
+
+    <div class="wk-card" id="wk2">
+      <div class="wk-clabel">RETENTION</div>
+      <div class="wk-screen">
+        <div class="wk-metric-name">Returning customers</div>
+        <div class="wk-row"></div><div class="wk-row short"></div>
+        <div class="wk-focus">
+          <div class="wk-num">11%</div>
+          <svg class="wk-mini" viewBox="0 0 240 90"><path class="wk-mini-path" pathLength="1" d="M8,24 C70,38 140,60 232,78" /></svg>
+          <div class="wk-lens"><span class="wk-handle"></span></div>
+        </div>
+        <div class="wk-delta">▼ weak repeat rate</div>
+      </div>
+    </div>
+
+    <div class="wk-card" id="wk3">
+      <div class="wk-clabel">MARGIN</div>
+      <div class="wk-screen">
+        <div class="wk-metric-name">Net profit margin</div>
+        <div class="wk-row"></div><div class="wk-row short"></div>
+        <div class="wk-focus">
+          <div class="wk-num">6%</div>
+          <svg class="wk-mini" viewBox="0 0 240 90"><path class="wk-mini-path" pathLength="1" d="M8,18 C70,36 140,60 232,80" /></svg>
+          <div class="wk-lens"><span class="wk-handle"></span></div>
+        </div>
+        <div class="wk-delta">▼ can't support scale</div>
+      </div>
+    </div>
+
+    <style>
+      [data-composition-id="weaknesses"] { position: absolute; inset: 0; overflow: hidden;
+        background: radial-gradient(120% 90% at 50% 30%, rgba(156,212,255,.07), transparent 60%), var(--brand-navy);
+        font-family: "Rethink Sans", sans-serif; }
+      [data-composition-id="weaknesses"] .wk-tex { position: absolute; inset: -2%; pointer-events: none; opacity: .5; z-index: 0;
+        background: repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1.5px, transparent 1.5px 94px),
+                    repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1.5px, transparent 1.5px 94px);
+        -webkit-mask-image: radial-gradient(120% 92% at 50% 42%, #000 32%, transparent 80%);
+                mask-image: radial-gradient(120% 92% at 50% 42%, #000 32%, transparent 80%); }
+      [data-composition-id="weaknesses"] .wk-streak { position: absolute; top: 0; bottom: 0; left: 0; width: 46%; z-index: 5;
+        background: linear-gradient(90deg, transparent, rgba(199,230,255,.5), transparent);
+        filter: blur(24px); transform: skewX(-12deg); opacity: 0; pointer-events: none; }
+      /* flip */
+      [data-composition-id="weaknesses"] .wk-flip { position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 8px; padding: 0 70px; }
+      [data-composition-id="weaknesses"] .wk-eq { position: relative; font-weight: 800; font-size: 72px; letter-spacing: -.01em;
+        color: #fff; text-align: center; opacity: 0; }
+      [data-composition-id="weaknesses"] .wk-eq .eqs { color: var(--brand-blue-tint); margin: 0 10px; }
+      [data-composition-id="weaknesses"] .wk-strike { position: absolute; top: 50%; left: 110px; right: 110px; height: 12px;
+        background: var(--brand-flame); transform: translateY(-50%) scaleX(0); transform-origin: left center; border-radius: 6px; }
+      [data-composition-id="weaknesses"] .wk-expose { position: absolute; left: 0; right: 0; top: 50%;
+        transform: translateY(-50%) scale(.8); text-align: center; font-weight: 800; font-size: 116px; letter-spacing: -.02em;
+        background: linear-gradient(100deg, #ff4c32 0%, #ff7a52 38%, #ffe0d2 50%, #ff7a52 62%, #ff4c32 100%);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+        background-size: 250% 100%; background-position: 100% 0;
+        text-shadow: 0 0 44px rgba(255,76,50,.4); opacity: 0; }
+      /* cards */
+      [data-composition-id="weaknesses"] .wk-card { position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 30px; padding: 80px 60px 200px; opacity: 0; }
+      [data-composition-id="weaknesses"] .wk-clabel { font-weight: 800; font-size: 42px; letter-spacing: .3em; color: var(--brand-blue-tint); }
+      [data-composition-id="weaknesses"] .wk-screen { position: relative; width: 100%; background: var(--brand-surface);
+        border: 1px solid var(--brand-border); border-radius: 28px; padding: 44px 48px 40px; box-shadow: 0 30px 80px -24px rgba(0,0,0,.6); }
+      [data-composition-id="weaknesses"] .wk-metric-name { font-weight: 700; font-size: 34px; color: var(--brand-text-dim); letter-spacing: .02em; }
+      [data-composition-id="weaknesses"] .wk-row { height: 18px; border-radius: 9px; background: #0e3a68; margin-top: 18px; }
+      [data-composition-id="weaknesses"] .wk-row.short { width: 62%; }
+      [data-composition-id="weaknesses"] .wk-focus { position: relative; display: flex; align-items: center; gap: 30px; margin-top: 28px; }
+      [data-composition-id="weaknesses"] .wk-num { font-weight: 800; font-size: 150px; line-height: .9; color: #fff; transform-origin: left center; }
+      [data-composition-id="weaknesses"] .wk-mini { width: 240px; height: 90px; }
+      [data-composition-id="weaknesses"] .wk-mini-path { fill: none; stroke: var(--brand-flame); stroke-width: 8; stroke-linecap: round;
+        stroke-dasharray: 1; stroke-dashoffset: 1; }
+      [data-composition-id="weaknesses"] .wk-delta { margin-top: 22px; font-weight: 800; font-size: 40px; color: var(--brand-flame); opacity: 0; }
+      [data-composition-id="weaknesses"] .wk-lens { position: absolute; left: -10px; top: 50%; width: 210px; height: 210px;
+        margin-top: -105px; border-radius: 50%; border: 6px solid rgba(199,230,255,.85);
+        background: radial-gradient(circle at 38% 30%, rgba(255,255,255,.24), rgba(156,212,255,.05) 46%, rgba(156,212,255,.16) 100%);
+        backdrop-filter: brightness(1.18) saturate(1.25) contrast(1.04);
+        -webkit-backdrop-filter: brightness(1.18) saturate(1.25) contrast(1.04);
+        box-shadow: inset 0 3px 8px rgba(255,255,255,.4), inset 0 -10px 24px rgba(6,40,76,.55),
+                    0 0 0 4px rgba(6,40,76,.5), 0 22px 54px rgba(0,0,0,.55); opacity: 0; }
+      [data-composition-id="weaknesses"] .wk-lens::before { content: ""; position: absolute; top: 12px; left: 26px;
+        width: 96px; height: 52px; border-radius: 50%; background: rgba(255,255,255,.45); filter: blur(6px); }
+      [data-composition-id="weaknesses"] .wk-handle { position: absolute; right: -34px; bottom: -22px; width: 60px; height: 18px;
+        border-radius: 9px; background: var(--brand-blue-tint); transform: rotate(45deg); }
+    </style>
+    <link rel="stylesheet" href="../assets/fonts.css" />
+    <link rel="stylesheet" href="../assets/brand-tokens.css" />
+    <script src="../assets/gsap.min.js"></script>
+    <script>
+      (function () {
+        const s = '[data-composition-id="weaknesses"] ';
+        const tl = gsap.timeline({ paused: true });
+        const streak = (t) => {
+          tl.fromTo(s + ".wk-streak", { xPercent: -70, opacity: 0 }, { xPercent: 280, opacity: 1, duration: 0.5, ease: "power3.in" }, t);
+          tl.to(s + ".wk-streak", { opacity: 0, duration: 0.2 }, t + 0.42);
+        };
+
+        // ---- Flip (0–4.8) ----
+        streak(0);
+        tl.to(s + "#wk-eq", { opacity: 1, duration: 0.4, ease: "power3.out" }, 0.15);
+        tl.to(s + "#wk-strike", { scaleX: 1, duration: 0.35, ease: "power3.out" }, 2.0);
+        tl.to(s + "#wk-eq", { opacity: 0.18, duration: 0.3 }, 2.35);
+        tl.to(s + "#wk-strike", { opacity: 0, duration: 0.3 }, 2.45);
+        tl.to(s + "#wk-expose", { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(1.7)" }, 2.5);
+        tl.fromTo(s + "#wk-expose", { backgroundPosition: "100% 0" }, { backgroundPosition: "0% 0", duration: 0.7, ease: "power2.out" }, 2.55);
+        tl.to(s + "#wk-flip", { opacity: 0, duration: 0.3, ease: "power2.in" }, 4.6);
+
+        // ---- Magnifier reveal helper ----
+        function reveal(id, t) {
+          tl.to(s + id, { opacity: 1, duration: 0.4, ease: "power2.out" }, t);
+          tl.from(s + id + " .wk-screen", { opacity: 0, y: 26, duration: 0.35, ease: "power2.out" }, t + 0.05);
+          tl.fromTo(s + id + " .wk-lens", { opacity: 0, x: -300 }, { opacity: 1, x: 0, duration: 0.7, ease: "power2.inOut" }, t + 0.2);
+          tl.to(s + id + " .wk-num", { color: "#FF4C32", scale: 1.22, duration: 0.32, ease: "back.out(1.6)" }, t + 0.9);
+          tl.to(s + id + " .wk-mini-path", { strokeDashoffset: 0, duration: 0.6, ease: "power1.in" }, t + 0.9);
+          tl.fromTo(s + id + " .wk-delta", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, t + 1.05);
+          tl.to(s + id + " .wk-lens", { opacity: 0, duration: 0.3, ease: "power2.in" }, t + 1.6);
+          tl.to(s + id, { opacity: 0, duration: 0.3, ease: "power2.in" }, t + 2.6);
+        }
+        reveal("#wk1", 5.0); streak(5.0);
+        reveal("#wk2", 8.0); streak(8.0);
+        reveal("#wk3", 11.0); streak(11.0);
+
+        tl.set({}, {}, 14.0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["weaknesses"] = tl;
+      })();
+    </script>
+  </div>
+</template>

@@ -1,0 +1,111 @@
+<template id="hook-template">
+  <div data-composition-id="hook" data-start="0" data-width="1080" data-height="1920" data-duration="2.7">
+    <div class="hk-root">
+      <div class="hk-tex"></div>
+      <div class="hk-streak"></div>
+      <div class="hk-eyebrow">META ADS · LAST 90 DAYS</div>
+
+      <div class="hk-stat up">
+        <div class="hk-info">
+          <div class="hk-label">AD SPEND</div>
+          <div class="hk-num" id="hk-spend">$0K</div>
+        </div>
+        <div class="hk-viz">
+          <div class="hk-arrow">▲</div>
+          <svg class="hk-spark" viewBox="0 0 120 70" preserveAspectRatio="none">
+            <path class="hk-line up" pathLength="1" d="M4,62 C28,54 52,40 72,28 C90,18 104,12 116,6" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="hk-divider"></div>
+
+      <div class="hk-stat down">
+        <div class="hk-info">
+          <div class="hk-label">NET PROFIT</div>
+          <div class="hk-num" id="hk-profit">$99K</div>
+        </div>
+        <div class="hk-viz">
+          <div class="hk-arrow">▼</div>
+          <svg class="hk-spark" viewBox="0 0 120 70" preserveAspectRatio="none">
+            <path class="hk-line down" pathLength="1" d="M4,8 C28,16 52,30 72,42 C90,52 104,58 116,64" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      [data-composition-id="hook"] { position: absolute; inset: 0; }
+      [data-composition-id="hook"] .hk-root { position: absolute; inset: 0; overflow: hidden;
+        background: radial-gradient(120% 80% at 50% 26%, rgba(156,212,255,.08), transparent 60%), var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 30px; padding: 90px 70px 210px; font-family: "Rethink Sans", sans-serif; }
+      [data-composition-id="hook"] .hk-tex { position: absolute; inset: -2%; pointer-events: none; opacity: .5;
+        background: repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1.5px, transparent 1.5px 94px),
+                    repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1.5px, transparent 1.5px 94px);
+        -webkit-mask-image: radial-gradient(120% 92% at 50% 42%, #000 32%, transparent 80%);
+                mask-image: radial-gradient(120% 92% at 50% 42%, #000 32%, transparent 80%); }
+      [data-composition-id="hook"] .hk-streak { position: absolute; top: 0; bottom: 0; left: 0; width: 46%;
+        background: linear-gradient(90deg, transparent, rgba(199,230,255,.5), transparent);
+        filter: blur(24px); transform: skewX(-12deg); opacity: 0; pointer-events: none; }
+      [data-composition-id="hook"] .hk-eyebrow { font-weight: 700; font-size: 30px; letter-spacing: .34em;
+        color: var(--brand-text-dim); opacity: 0; margin-bottom: 8px; }
+      [data-composition-id="hook"] .hk-stat { width: 100%; display: flex; align-items: center; justify-content: space-between;
+        gap: 30px; opacity: 0; }
+      [data-composition-id="hook"] .hk-label { font-weight: 700; font-size: 34px; letter-spacing: .14em; color: var(--brand-text-dim); }
+      [data-composition-id="hook"] .hk-num { font-weight: 800; font-size: 168px; line-height: .92; letter-spacing: -.03em;
+        font-variant-numeric: tabular-nums; }
+      [data-composition-id="hook"] .hk-stat.up .hk-num { color: var(--brand-blue-tint); text-shadow: 0 0 40px rgba(156,212,255,.35); }
+      [data-composition-id="hook"] .hk-stat.down .hk-num { color: var(--brand-flame); text-shadow: 0 0 40px rgba(255,76,50,.35); }
+      [data-composition-id="hook"] .hk-viz { display: flex; align-items: center; gap: 22px; }
+      [data-composition-id="hook"] .hk-arrow { font-size: 96px; line-height: 1; }
+      [data-composition-id="hook"] .hk-stat.up .hk-arrow { color: var(--brand-blue-tint); }
+      [data-composition-id="hook"] .hk-stat.down .hk-arrow { color: var(--brand-flame); }
+      [data-composition-id="hook"] .hk-spark { width: 150px; height: 88px; overflow: visible; }
+      [data-composition-id="hook"] .hk-line { fill: none; stroke-width: 8; stroke-linecap: round;
+        stroke-dasharray: 1; stroke-dashoffset: 1; }
+      [data-composition-id="hook"] .hk-line.up { stroke: var(--brand-blue-tint); filter: drop-shadow(0 0 10px rgba(156,212,255,.5)); }
+      [data-composition-id="hook"] .hk-line.down { stroke: var(--brand-flame); filter: drop-shadow(0 0 10px rgba(255,76,50,.5)); }
+      [data-composition-id="hook"] .hk-divider { width: 100%; height: 1px; background: rgba(159,182,212,.25); opacity: 0; }
+    </style>
+
+    <link rel="stylesheet" href="../assets/fonts.css" />
+    <link rel="stylesheet" href="../assets/brand-tokens.css" />
+    <script src="../assets/gsap.min.js"></script>
+    <script>
+      (function () {
+        const s = '[data-composition-id="hook"] ';
+        const tl = gsap.timeline({ paused: true });
+        const spendEl = document.querySelector(s + "#hk-spend");
+        const profitEl = document.querySelector(s + "#hk-profit");
+        const spend = { v: 0 }, profit = { v: 99 };
+
+        tl.fromTo(s + ".hk-root", { opacity: 0, filter: "blur(16px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.35, ease: "power2.out" }, 0);
+        tl.fromTo(s + ".hk-streak", { xPercent: -70, opacity: 0 }, { xPercent: 280, opacity: 1, duration: 0.5, ease: "power3.in" }, 0);
+        tl.to(s + ".hk-streak", { opacity: 0, duration: 0.2 }, 0.42);
+        tl.to(s + ".hk-eyebrow", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.1);
+        tl.to(s + ".hk-stat.up", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.25);
+        tl.to(s + ".hk-divider", { opacity: 1, duration: 0.3 }, 0.4);
+        tl.to(s + ".hk-stat.down", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.5);
+
+        // Opposing counters: spend climbs, profit falls.
+        // Opposing counters (snappier for the short): spend climbs, profit falls.
+        tl.to(spend, { v: 248, duration: 1.5, ease: "power1.out", onUpdate: () => { if (spendEl) spendEl.textContent = "$" + Math.round(spend.v) + "K"; } }, 0.3);
+        tl.to(profit, { v: 31, duration: 1.5, ease: "power1.out", onUpdate: () => { if (profitEl) profitEl.textContent = "$" + Math.round(profit.v) + "K"; } }, 0.4);
+        tl.to(s + ".hk-line.up", { strokeDashoffset: 0, duration: 1.3, ease: "power1.out" }, 0.35);
+        tl.to(s + ".hk-line.down", { strokeDashoffset: 0, duration: 1.3, ease: "power1.out" }, 0.45);
+
+        // Tiny emphasis pop as the numbers land.
+        tl.to(s + ".hk-stat.up .hk-num", { scale: 1.05, transformOrigin: "left center", duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" }, 1.85);
+        tl.to(s + ".hk-stat.down .hk-num", { scale: 1.05, transformOrigin: "left center", duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" }, 1.95);
+
+        // Whip out to Sean.
+        tl.fromTo(s + ".hk-streak", { xPercent: -70, opacity: 0 }, { xPercent: 280, opacity: 1, duration: 0.4, ease: "power3.in" }, 2.25);
+        tl.to(s + ".hk-root", { yPercent: -9, filter: "blur(22px)", opacity: 0, duration: 0.3, ease: "power2.in" }, 2.35);
+        tl.set({}, {}, 2.7);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["hook"] = tl;
+      })();
+    </script>
+  </div>
+</template>

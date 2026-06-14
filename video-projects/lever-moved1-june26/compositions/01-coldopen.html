@@ -1,0 +1,66 @@
+<template id="coldopen-template">
+  <div data-composition-id="coldopen" data-start="0" data-width="1080" data-height="1350" data-duration="1.6">
+    <div class="co-root">
+      <div class="co-eyebrow">SHOPIFY GROWTH</div>
+      <svg class="co-chart" viewBox="0 0 900 380" preserveAspectRatio="xMidYMid meet">
+        <line class="co-base" x1="40" y1="340" x2="860" y2="340" />
+        <path class="co-ghost" d="M470,96 L860,96" />
+        <path class="co-line" pathLength="1" d="M40,308 C170,262 320,150 470,98 L860,98" />
+        <circle class="co-dot" cx="860" cy="98" r="11" />
+      </svg>
+      <div class="co-stab">REVENUE<br />PLATEAUED?</div>
+    </div>
+    <style>
+      [data-composition-id="coldopen"] { position: absolute; inset: 0; }
+      [data-composition-id="coldopen"] .co-root {
+        position: absolute; inset: 0;
+        background: radial-gradient(120% 80% at 50% 16%, rgba(156,212,255,.12) 0%, transparent 58%), var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 26px; font-family: "Rethink Sans", sans-serif;
+      }
+      [data-composition-id="coldopen"] .co-eyebrow {
+        font-weight: 700; font-size: 30px; letter-spacing: .42em; color: var(--brand-blue-tint);
+        opacity: 0;
+      }
+      [data-composition-id="coldopen"] .co-chart { width: 760px; height: 320px; overflow: visible; }
+      [data-composition-id="coldopen"] .co-base { stroke: rgba(156,212,255,.22); stroke-width: 2; }
+      [data-composition-id="coldopen"] .co-ghost {
+        stroke: rgba(159,182,212,.55); stroke-width: 4; stroke-dasharray: 4 14; stroke-linecap: round; opacity: 0;
+      }
+      [data-composition-id="coldopen"] .co-line {
+        fill: none; stroke: var(--brand-blue-tint); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round;
+        stroke-dasharray: 1; stroke-dashoffset: 1;
+        filter: drop-shadow(0 0 14px rgba(156,212,255,.5));
+      }
+      [data-composition-id="coldopen"] .co-dot { fill: #fff; opacity: 0; filter: drop-shadow(0 0 12px rgba(156,212,255,.9)); }
+      [data-composition-id="coldopen"] .co-stab {
+        font-weight: 800; font-size: 128px; line-height: .92; letter-spacing: -.02em; text-align: center;
+        background: linear-gradient(100deg, #bcdcff 0%, #ffffff 42%, #ffffff 50%, #e4f2ff 58%, #bcdcff 100%);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+        background-size: 250% 100%; background-position: 100% 0; opacity: 0; transform: translateY(22px);
+      }
+    </style>
+    <link rel="stylesheet" href="../assets/fonts.css" />
+    <link rel="stylesheet" href="../assets/brand-tokens.css" />
+    <script src="../assets/gsap.min.js"></script>
+    <script>
+      (function () {
+        const s = '[data-composition-id="coldopen"] ';
+        const tl = gsap.timeline({ paused: true });
+        tl.to(s + ".co-eyebrow", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.05);
+        // Revenue: rises, then FLATTENS to a plateau (matches "plateaued").
+        tl.to(s + ".co-line", { strokeDashoffset: 0, duration: 0.85, ease: "power2.out" }, 0.1);
+        tl.to(s + ".co-dot", { opacity: 1, duration: 0.2, ease: "back.out(2)" }, 0.85);
+        tl.to(s + ".co-ghost", { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.9);
+        tl.to(s + ".co-dot", { scale: 1.35, transformOrigin: "center", duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1 }, 1.0);
+        tl.to(s + ".co-stab", { opacity: 1, y: 0, duration: 0.45, ease: "back.out(1.6)" }, 0.55);
+        tl.fromTo(s + ".co-stab", { backgroundPosition: "100% 0" }, { backgroundPosition: "0% 0", duration: 0.8, ease: "power2.out" }, 0.7);
+        // Exit — blast away to reveal Sean.
+        tl.to(s + ".co-root", { opacity: 0, scale: 1.06, transformOrigin: "50% 40%", duration: 0.32, ease: "power2.in" }, 1.3);
+        tl.set({}, {}, 1.6);
+        window.__timelines = window.__timelines || {};
+        window.__timelines["coldopen"] = tl;
+      })();
+    </script>
+  </div>
+</template>
