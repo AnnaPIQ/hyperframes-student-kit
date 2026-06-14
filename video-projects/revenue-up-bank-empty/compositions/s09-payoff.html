@@ -1,0 +1,80 @@
+<template id="s09-payoff-template">
+  <script src="../assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s09-payoff" data-start="0" data-duration="7.42" data-width="1080" data-height="1350">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(../assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(../assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s09-payoff"] { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(64% 48% at 50% 40%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 64%), #06284C;
+      font-family: 'Rethink Sans', system-ui, sans-serif; }
+    [data-composition-id="s09-payoff"] .line { position: absolute; left: 90px; right: 90px; text-align: center;
+      font-weight: 800; font-size: 76px; letter-spacing: -.025em; color: #FFFFFF; }
+    [data-composition-id="s09-payoff"] #lineSold { top: 392px; color: #6f8db3; }
+    [data-composition-id="s09-payoff"] #lineSold .strike { position: relative; display: inline-block; }
+    [data-composition-id="s09-payoff"] #lineSold .strk { position: absolute; left: -8px; right: -8px; top: 52%;
+      height: 6px; background: #FF4C32; border-radius: 3px; transform: scaleX(0); transform-origin: left center;
+      box-shadow: 0 0 18px rgba(255,76,50,.6); }
+    [data-composition-id="s09-payoff"] #lineKeep { top: 520px; }
+    [data-composition-id="s09-payoff"] #lineKeep em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: #FF4C32; }
+    /* bank card */
+    [data-composition-id="s09-payoff"] .bank { position: absolute; left: 240px; top: 712px; width: 600px; height: 320px;
+      background: linear-gradient(150deg, #0d3768, #0a325f); border: 1px solid #1d4a7a; border-radius: 30px;
+      box-shadow: 0 30px 70px -20px rgba(0,0,0,.6); padding: 40px 44px; }
+    [data-composition-id="s09-payoff"] .bank .hd { font-weight: 600; font-size: 26px; letter-spacing: .04em; color: #9fb6d4; }
+    [data-composition-id="s09-payoff"] .bank .bal { margin-top: 14px; font-weight: 800; font-size: 96px; letter-spacing: -.03em;
+      color: #FFFFFF; font-variant-numeric: tabular-nums; }
+    [data-composition-id="s09-payoff"] .bank .sub { position: absolute; bottom: 36px; left: 44px; font-weight: 700; font-size: 26px; color: #9CD4FF; }
+    [data-composition-id="s09-payoff"] .coin { position: absolute; left: 506px; top: 660px; width: 78px; height: 78px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #FFD15C, #FF8A4C 60%, #FF4C32); box-shadow: 0 0 30px rgba(255,140,60,.7);
+      display: grid; place-items: center; font-weight: 800; font-size: 38px; color: #5a2410; }
+    [data-composition-id="s09-payoff"] .cap { position: absolute; top: 1086px; left: 0; right: 0; text-align: center;
+      font-weight: 600; font-size: 34px; color: #cfe0f4; }
+  </style>
+
+  <div class="line clip" id="lineSold" data-start="0.1" data-duration="3.9" data-track-index="1">Revenue is what you <span class="strike">sold<i class="strk"></i></span>.</div>
+  <div class="line clip" id="lineKeep" data-start="1.4" data-duration="6.0" data-track-index="2">Profit is what you <em>keep</em>.</div>
+
+  <div class="bank clip" data-start="3.9" data-duration="3.52" data-track-index="3">
+    <div class="hd">YOUR BANK ACCOUNT</div>
+    <div class="bal" id="bal">$0</div>
+    <div class="sub">Only profit lands here.</div>
+  </div>
+  <div class="coin clip" data-start="4.0" data-duration="1.6" data-track-index="4">$</div>
+  <div class="cap clip" data-start="5.2" data-duration="2.2" data-track-index="5">Only one ends up in your account.</div>
+
+  <script>
+    (function(){
+      const SLOT = 7.42, S = '[data-composition-id="s09-payoff"] ';
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo(S+'#lineSold', { opacity:0, y:20 }, { opacity:1, y:0, duration:.55, ease:'power3.out' }, 0.1);
+      tl.fromTo(S+'#lineKeep', { opacity:0, y:24 }, { opacity:1, y:0, duration:.6, ease:'power3.out' }, 1.4);
+
+      // strike the word "sold"
+      tl.to(S+'#lineSold .strk', { scaleX:1, duration:.5, ease:'power2.inOut' }, 1.9);
+
+      // lines lift up to make room for the bank card
+      tl.to([S+'#lineSold', S+'#lineKeep'], { y:'-=120', duration:.6, ease:'power2.inOut' }, 3.6);
+
+      // bank card in
+      tl.fromTo(S+'.bank', { opacity:0, y:40, scale:.95 }, { opacity:1, y:0, scale:1, duration:.55, ease:'back.out(1.4)' }, 3.9);
+
+      // coin drops into the card
+      tl.fromTo(S+'.coin', { opacity:0, y:-40, scale:.6 }, { opacity:1, y:0, scale:1, duration:.4, ease:'power2.in' }, 4.0);
+      tl.to(S+'.coin', { y:170, duration:.5, ease:'power2.in' }, 4.4);
+      tl.to(S+'.coin', { opacity:0, scale:.4, duration:.25, ease:'power1.out' }, 4.85);
+
+      // balance ticks up as the coin lands
+      const o = { v: 0 }, bal = document.querySelector(S+'#bal');
+      tl.to(o, { v: 86, duration:1.2, ease:'power2.out', onUpdate(){ bal.textContent = '$'+Math.round(o.v)+'K'; } }, 4.9);
+
+      tl.fromTo(S+'.cap', { opacity:0, y:14 }, { opacity:1, y:0, duration:.5, ease:'power2.out' }, 5.2);
+
+      tl.to({}, { duration: SLOT }, 0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s09-payoff'] = tl;
+    })();
+  </script>
+  </div>
+</template>
+</content>

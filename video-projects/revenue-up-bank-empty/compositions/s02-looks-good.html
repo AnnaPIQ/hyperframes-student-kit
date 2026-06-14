@@ -1,0 +1,85 @@
+<template id="s02-looks-good-template">
+  <script src="../assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s02-looks-good" data-start="0" data-duration="10.10" data-width="1080" data-height="1350">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(../assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(../assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s02-looks-good"] { position: absolute; inset: 0; overflow: hidden;
+      background:
+        radial-gradient(70% 40% at 50% 16%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%),
+        #06284C;
+      font-family: 'Rethink Sans', system-ui, sans-serif; }
+    [data-composition-id="s02-looks-good"] .grid { position: absolute; inset: 0; opacity: .14;
+      background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
+      background-size: 90px 90px; -webkit-mask-image: radial-gradient(75% 60% at 50% 45%, #000 40%, transparent 85%); }
+    [data-composition-id="s02-looks-good"] .kicker { position: absolute; top: 236px; left: 0; right: 0;
+      text-align: center; font-weight: 700; font-size: 46px; letter-spacing: -.01em; color: #FFFFFF; }
+    [data-composition-id="s02-looks-good"] .kicker em { font-family: 'Hedvig Letters Serif', serif;
+      font-style: italic; font-weight: 400; color: #9CD4FF; }
+    [data-composition-id="s02-looks-good"] .tile { position: absolute; left: 110px; width: 860px; height: 246px;
+      background: linear-gradient(180deg, #0d3768 0%, #0a325f 100%); border: 1px solid #1d4a7a;
+      border-radius: 26px; box-shadow: 0 24px 60px -22px rgba(0,0,0,.6);
+      display: flex; align-items: center; padding: 0 48px; gap: 34px; }
+    [data-composition-id="s02-looks-good"] .t1 { top: 336px; }
+    [data-composition-id="s02-looks-good"] .t2 { top: 612px; }
+    [data-composition-id="s02-looks-good"] .t3 { top: 888px; }
+    [data-composition-id="s02-looks-good"] .label { font-weight: 600; font-size: 30px; letter-spacing: .02em;
+      color: #9fb6d4; text-transform: uppercase; width: 250px; }
+    [data-composition-id="s02-looks-good"] .label b { display: block; font-size: 19px; letter-spacing: .26em; color: #6f8db3; margin-top: 6px; font-weight: 600; }
+    [data-composition-id="s02-looks-good"] .val { flex: 1; text-align: right; font-weight: 800; font-size: 92px;
+      letter-spacing: -.03em; color: #FFFFFF; font-variant-numeric: tabular-nums; }
+    [data-composition-id="s02-looks-good"] .chip { display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(156,212,255,.14); border: 1px solid rgba(156,212,255,.4); color: #9CD4FF;
+      font-weight: 700; font-size: 30px; padding: 12px 20px; border-radius: 999px; }
+    [data-composition-id="s02-looks-good"] .chip svg { width: 22px; height: 22px; }
+  </style>
+
+  <div class="grid clip" data-start="0" data-duration="10.10" data-track-index="0"></div>
+  <div class="kicker clip" data-start="0.1" data-duration="10" data-track-index="1">From the outside, everything <em>looks</em> like it's working.</div>
+
+  <div class="tile t1 clip" data-start="0.5" data-duration="9.6" data-track-index="2">
+    <div class="label">Revenue<b>THIS MONTH</b></div>
+    <div class="val" id="lg-rev">$0</div>
+    <div class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l7-7 7 7M12 5v14"/></svg>34%</div>
+  </div>
+  <div class="tile t2 clip" data-start="0.85" data-duration="9.25" data-track-index="3">
+    <div class="label">Orders<b>FULFILLED</b></div>
+    <div class="val" id="lg-ord">0</div>
+    <div class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l7-7 7 7M12 5v14"/></svg>28%</div>
+  </div>
+  <div class="tile t3 clip" data-start="1.2" data-duration="8.9" data-track-index="4">
+    <div class="label">Growth<b>MONTH / MONTH</b></div>
+    <div class="val" id="lg-grw">0%</div>
+    <div class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l7-7 7 7M12 5v14"/></svg>UP</div>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 10.10, S = '[data-composition-id="s02-looks-good"] ';
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo(S+'.kicker', { opacity:0, y:18 }, { opacity:1, y:0, duration:.6, ease:'power3.out' }, 0.1);
+
+      const tiles = ['.t1','.t2','.t3'];
+      tiles.forEach((t,i)=> tl.fromTo(S+t, { opacity:0, y:46, scale:.96 },
+        { opacity:1, y:0, scale:1, duration:.6, ease:'back.out(1.5)' }, 0.5 + i*0.18));
+
+      const count = (sel, to, fmt, at) => {
+        const o = { v: 0 }, el = document.querySelector(S+sel);
+        tl.to(o, { v: to, duration: 1.5, ease: 'power2.out',
+          onUpdate(){ el.textContent = fmt(o.v); } }, at);
+      };
+      count('#lg-rev', 248, v => '$'+Math.round(v)+'K', 0.7);
+      count('#lg-ord', 5120, v => Math.round(v).toLocaleString('en-US'), 1.0);
+      count('#lg-grw', 41, v => '+'+Math.round(v)+'%', 1.35);
+
+      // gentle settle, then a faint dim near the end (the doubt creeping in)
+      tl.to(S+'.tile', { filter:'saturate(.7) brightness(.9)', duration:1.0, ease:'sine.inOut' }, 8.6);
+
+      tl.to({}, { duration: SLOT }, 0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s02-looks-good'] = tl;
+    })();
+  </script>
+  </div>
+</template>
+</content>

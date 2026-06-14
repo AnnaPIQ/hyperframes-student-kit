@@ -79,4 +79,33 @@ efficient over time instead of relearning the same lessons.
 
 ---
 
+- **Sub-compositions are isolated documents — each needs its OWN local GSAP + fonts +
+  root dimensions.** Loading a scene via `data-composition-src` lints/renders it as a
+  standalone composition, so the linter throws `root_missing_dimensions`,
+  `timeline_registry_missing_init`, and `font_family_without_font_face` if the sub-comp
+  only has its scoped `<div>`. **Fix:** wrap each sub-comp in `<template id="<id>-template">`
+  containing (a) `<script src="../assets/vendor/gsap.min.js"></script>` (note `../` — paths
+  resolve relative to `compositions/`), (b) `@font-face` declarations pointing at
+  `../assets/fonts/*.woff2`, (c) a root `<div data-composition-id ... data-width data-height>`,
+  and (d) `window.__timelines = window.__timelines || {};` before the assignment. Pattern
+  confirmed in `linear-promo-30s/compositions/`. *(revenue-up-bank-empty)*
+- **Composition hosts in index.html are `<div>`s, not `<template>`s.** A bare
+  `<template data-composition-src>` triggers `host_missing_composition_id` and cascades
+  into spurious root errors on index.html. **Fix:** host with
+  `<div data-composition-id="<id>" data-composition-src="..." data-start data-duration
+  data-track-index data-width data-height></div>`. The `data-composition-id` must match
+  the sub-comp's root id. *(revenue-up-bank-empty)*
+- **`<video>`/`<audio>` with `data-start` but no `id` → FROZEN video / SILENT audio in
+  renders** (lint error `media_missing_id`). The renderer discovers media by `id`. **Fix:**
+  give every timed `<video>`/`<audio>` a stable `id`. (They still must NOT get
+  `class="clip"`.) *(revenue-up-bank-empty)*
+- **GSAP can't target CSS pseudo-elements (`::after`, `::before`).** A strikethrough/underline
+  animated via `tl.to('.x::after', {scaleX:1})` silently no-ops. **Fix:** use a real child
+  element (e.g. `<i class="strk">`) positioned absolutely and animate that. *(revenue-up-bank-empty)*
+- **Talking-head 16:9 → 4:5 framed window:** pre-cut each on-camera beat into its own
+  muted H.264 clip (`-an -r 30 -vsync cfr -pix_fmt yuv420p -vf scale=1080:-2`), reference
+  each from index.html (paths stay simple), keep ONE continuous `<audio>` VO across the
+  whole timeline, and cut to full-frame GFX sub-comps on a different track. Disjoint time
+  ranges = clean hard cuts; the VO never breaks. *(revenue-up-bank-empty)*
+
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

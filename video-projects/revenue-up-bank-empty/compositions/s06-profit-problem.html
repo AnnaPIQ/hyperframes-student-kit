@@ -1,0 +1,106 @@
+<template id="s06-profit-problem-template">
+  <script src="../assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s06-profit-problem" data-start="0" data-duration="14.76" data-width="1080" data-height="1350">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(../assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(../assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s06-profit-problem"] { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(80% 50% at 50% 100%, rgba(255,76,50,.10) 0%, rgba(6,40,76,0) 60%), #06284C;
+      font-family: 'Rethink Sans', system-ui, sans-serif; }
+    [data-composition-id="s06-profit-problem"] .title { position: absolute; top: 244px; left: 64px; right: 64px;
+      text-align: left; font-weight: 700; font-size: 48px; letter-spacing: -.01em; color: #FFFFFF; }
+    [data-composition-id="s06-profit-problem"] .title em { font-family: 'Hedvig Letters Serif', serif;
+      font-style: italic; font-weight: 400; color: #FF4C32; }
+    /* cost rows */
+    [data-composition-id="s06-profit-problem"] .row { position: absolute; left: 110px; width: 860px; height: 96px;
+      display: flex; align-items: center; gap: 22px; }
+    [data-composition-id="s06-profit-problem"] .row .name { width: 250px; font-weight: 700; font-size: 32px; color: #cfe0f4; }
+    [data-composition-id="s06-profit-problem"] .row .track { flex: 1; height: 26px; background: #0d3768; border: 1px solid #1d4a7a; border-radius: 13px; overflow: hidden; }
+    [data-composition-id="s06-profit-problem"] .row .fill { height: 100%; width: 100%; transform-origin: left center;
+      background: linear-gradient(90deg, #FF4C32, #FFA63D); border-radius: 13px; }
+    [data-composition-id="s06-profit-problem"] .row .pct { width: 96px; text-align: right; font-weight: 800; font-size: 34px;
+      color: #FF8A4C; font-variant-numeric: tabular-nums; }
+    /* phase B bars */
+    [data-composition-id="s06-profit-problem"] .chart { position: absolute; left: 0; right: 0; top: 360px; height: 760px; }
+    [data-composition-id="s06-profit-problem"] .baseline { position: absolute; left: 150px; right: 150px; bottom: 150px; height: 2px; background: #1d4a7a; }
+    [data-composition-id="s06-profit-problem"] .bar { position: absolute; bottom: 152px; width: 230px; transform-origin: bottom center; border-radius: 16px 16px 0 0; }
+    [data-composition-id="s06-profit-problem"] #barRev { left: 270px; height: 540px; background: linear-gradient(180deg, #9CD4FF, #2d7fd6); box-shadow: 0 0 50px rgba(156,212,255,.35); }
+    [data-composition-id="s06-profit-problem"] #barPro { left: 580px; height: 72px; background: linear-gradient(180deg, rgba(255,76,50,.35), rgba(255,76,50,.15)); border: 2px solid #FF4C32; }
+    [data-composition-id="s06-profit-problem"] .blab { position: absolute; bottom: 92px; width: 230px; text-align: center; font-weight: 700; font-size: 32px; color: #FFFFFF; }
+    [data-composition-id="s06-profit-problem"] .blab small { display: block; font-weight: 600; font-size: 22px; color: #9fb6d4; letter-spacing: .04em; margin-top: 6px; }
+    [data-composition-id="s06-profit-problem"] #labRev { left: 270px; }
+    [data-composition-id="s06-profit-problem"] #labPro { left: 580px; }
+    [data-composition-id="s06-profit-problem"] #recTag { position: absolute; left: 250px; top: 196px; background: rgba(156,212,255,.16);
+      border: 1px solid rgba(156,212,255,.45); color: #9CD4FF; font-weight: 700; font-size: 26px; padding: 8px 16px; border-radius: 999px; }
+    [data-composition-id="s06-profit-problem"] #stillTag { position: absolute; left: 560px; bottom: 250px; background: rgba(255,76,50,.16);
+      border: 1px solid rgba(255,76,50,.5); color: #FF8A4C; font-weight: 700; font-size: 26px; padding: 8px 16px; border-radius: 999px; }
+  </style>
+
+  <!-- Phase A — costs creep up -->
+  <div class="title clip" id="titleA" data-start="0.1" data-duration="9.0" data-track-index="1">Costs have a habit of growing <em>with</em> you.</div>
+
+  <div class="row clip" data-start="0.6" data-duration="8.6" data-track-index="2" style="top:362px">
+    <div class="name">Ad spend</div><div class="track"><div class="fill" data-w="0.82"></div></div><div class="pct">+0%</div></div>
+  <div class="row clip" data-start="2.0" data-duration="7.2" data-track-index="3" style="top:478px">
+    <div class="name">Shipping</div><div class="track"><div class="fill" data-w="0.66"></div></div><div class="pct">+0%</div></div>
+  <div class="row clip" data-start="3.6" data-duration="5.6" data-track-index="4" style="top:594px">
+    <div class="name">Returns</div><div class="track"><div class="fill" data-w="0.58"></div></div><div class="pct">+0%</div></div>
+  <div class="row clip" data-start="5.2" data-duration="4.0" data-track-index="5" style="top:710px">
+    <div class="name">Cost of goods</div><div class="track"><div class="fill" data-w="0.73"></div></div><div class="pct">+0%</div></div>
+  <div class="row clip" data-start="6.9" data-duration="2.3" data-track-index="6" style="top:826px">
+    <div class="name">Discounts</div><div class="track"><div class="fill" data-w="0.5"></div></div><div class="pct">+0%</div></div>
+
+  <!-- Phase B — records vs standstill -->
+  <div class="chart clip" data-start="9.4" data-duration="5.36" data-track-index="7">
+    <div class="baseline"></div>
+    <div class="bar" id="barRev"></div>
+    <div class="bar" id="barPro"></div>
+    <div class="blab" id="labRev">Revenue<small>RECORD HIGH</small></div>
+    <div class="blab" id="labPro">Profit<small>STANDS STILL</small></div>
+    <div id="recTag">setting records</div>
+    <div id="stillTag">flat</div>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 14.76, S = '[data-composition-id="s06-profit-problem"] ';
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo(S+'#titleA', { opacity:0, y:16 }, { opacity:1, y:0, duration:.55, ease:'power3.out' }, 0.1);
+
+      const rows = gsap.utils.toArray(S+'.row');
+      const starts = [0.6, 2.0, 3.6, 5.2, 6.9];
+      rows.forEach((row, i) => {
+        const fill = row.querySelector('.fill');
+        const pct  = row.querySelector('.pct');
+        const w = parseFloat(fill.dataset.w);
+        gsap.set(fill, { scaleX: 0.04 });
+        tl.fromTo(row, { opacity:0, x:-30 }, { opacity:1, x:0, duration:.45, ease:'power2.out' }, starts[i]);
+        tl.to(fill, { scaleX: w, duration:1.1, ease:'power3.out' }, starts[i]+0.1);
+        const o = { v: 0 };
+        tl.to(o, { v: Math.round(w*60+8), duration:1.1, ease:'power3.out',
+          onUpdate(){ pct.textContent = '+'+Math.round(o.v)+'%'; } }, starts[i]+0.1);
+      });
+
+      // hand off to phase B
+      tl.to([S+'#titleA', S+'.row'], { opacity:0, y:-26, duration:.45, ease:'power2.in' }, 8.9);
+
+      // bars rise
+      gsap.set([S+'#barRev', S+'#barPro'], { scaleY: 0 });
+      tl.fromTo(S+'.chart', { opacity:0 }, { opacity:1, duration:.4, ease:'sine.out' }, 9.4);
+      tl.to(S+'#barRev', { scaleY: 1, duration:1.2, ease:'power3.out' }, 9.7);
+      tl.to(S+'#barPro', { scaleY: 1, duration:1.2, ease:'power3.out' }, 9.9);
+      tl.fromTo([S+'#labRev', S+'#labPro'], { opacity:0, y:14 }, { opacity:1, y:0, duration:.5, stagger:.12, ease:'power2.out' }, 10.4);
+      tl.fromTo(S+'#recTag', { opacity:0, y:10 }, { opacity:1, y:0, duration:.5, ease:'back.out(1.6)' }, 11.0);
+      tl.fromTo(S+'#stillTag', { opacity:0, scale:.8 }, { opacity:1, scale:1, duration:.5, ease:'back.out(1.6)' }, 11.4);
+      // revenue keeps nudging up; profit just sits there
+      tl.to(S+'#barRev', { scaleY: 1.06, duration:1.6, ease:'sine.inOut', yoyo:true, repeat:1 }, 11.6);
+
+      tl.to({}, { duration: SLOT }, 0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s06-profit-problem'] = tl;
+    })();
+  </script>
+  </div>
+</template>
+</content>
