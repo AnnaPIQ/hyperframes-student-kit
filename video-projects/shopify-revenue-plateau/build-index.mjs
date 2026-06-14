@@ -84,6 +84,8 @@ const html = `<!doctype html>
 
       .eyebrow { position: relative; font-weight: 700; font-size: 32px; letter-spacing: .26em;
         text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 50px; padding-bottom: 24px; }
+      .eyebrow .shopbag { height: 1.05em; width: auto; vertical-align: -0.16em; margin: 0 .14em;
+        filter: drop-shadow(0 3px 8px rgba(0,0,0,.4)); }
       .eyebrow::after { content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
         width: 56px; height: 4px; border-radius: 3px; background: var(--brand-flame);
         box-shadow: 0 0 14px rgba(255,76,50,.6); }
@@ -191,7 +193,7 @@ const html = `<!doctype html>
       <!-- HOOK card -->
       <div id="cardHook" class="card clip" data-start="2.0" data-duration="4.0" data-track-index="6">
         <div class="cbloom"></div><div class="cgrid"></div>
-        <div class="eyebrow">Your Shopify revenue</div>
+        <div class="eyebrow">Your <img class="shopbag" src="assets/shopify-bag.svg" alt="Shopify" /> revenue</div>
         <div id="h-flat" class="fg">FLAT</div>
         <div id="h-months">for months.</div>
         <div id="h-tell">It's telling you something.</div>
