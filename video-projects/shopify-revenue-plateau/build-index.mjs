@@ -8,7 +8,7 @@ import fs from "node:fs";
 
 const ID = "shopify-revenue-plateau";
 const FACE_DUR = 86.7;
-const COMP     = process.env.TEST ? 7 : 90.5;
+const COMP     = process.env.TEST ? 7 : 87.5;
 const CAP_PAD  = 250;
 
 // hook card
