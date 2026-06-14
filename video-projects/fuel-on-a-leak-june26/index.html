@@ -28,6 +28,13 @@
       #topscrim { position: absolute; left: 0; right: 0; top: 0; height: 22%; z-index: 2;
         background: linear-gradient(to bottom, rgba(3,18,38,0.66) 0%, rgba(3,18,38,0) 100%); }
 
+      /* cinematic finishing layers — sit above everything */
+      #vignette { position: absolute; inset: 0; z-index: 59; pointer-events: none;
+        background: radial-gradient(118% 88% at 50% 42%, rgba(0,0,0,0) 52%, rgba(0,0,0,0.30) 82%, rgba(0,0,0,0.5) 100%); }
+      #grain { position: absolute; inset: 0; z-index: 60; pointer-events: none; opacity: 0.11; mix-blend-mode: soft-light;
+        background-size: 280px 280px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
       #logobug { position: absolute; top: 64px; left: 72px; width: 232px; height: auto; z-index: 3; }
 
       /* ---- lower-band captions (face scenes) ---- */
@@ -81,21 +88,41 @@
       /* --- LEAK panel (leaky bucket) --- */
       #leak .bucket { position: absolute; top: 300px; left: 50%; transform: translateX(-50%);
         width: 520px; height: 470px; }
-      #leak .leakstream { position: absolute; width: 8px; height: 54px; transform-origin: top center;
-        border-radius: 4px; background: linear-gradient(to bottom, #FF4C32, rgba(255,76,50,0)); }
       #leak .token { position: absolute; width: 64px; height: 64px; border-radius: 50%;
         background: var(--brand-surface-2); border: 2px solid var(--brand-blue-tint);
         color: var(--brand-blue-tint); font-weight: 800; font-size: 36px;
         display: flex; align-items: center; justify-content: center; }
-      #leak .drip { position: absolute; width: 26px; height: 34px;
-        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-        background: var(--brand-flame); box-shadow: 0 0 22px rgba(255,76,50,0.7); }
+      /* money escaping the holes — lost revenue */
+      #leak .coinout { position: absolute; width: 48px; height: 48px; border-radius: 50%;
+        background: #2a1410; border: 2px solid var(--brand-flame); color: var(--brand-flame);
+        font-weight: 800; font-size: 26px; display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 0 18px rgba(255,76,50,0.6); }
       #leak .head { position: absolute; left: 96px; right: 96px; bottom: 258px; text-align: center;
         font-weight: 800; font-size: 92px; line-height: 1.0; letter-spacing: -0.03em; color: var(--brand-white); }
       #leak .head .ads { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400;
         color: var(--brand-flame); display: inline-block; }
       #leak .sub { position: absolute; left: 96px; right: 96px; bottom: 176px; text-align: center;
         font-weight: 500; font-size: 44px; line-height: 1.28; color: var(--brand-text-dim); }
+
+      /* --- HOOK panel (diverge: ad spend up, revenue flat) --- */
+      #hook .chart { position: absolute; top: 258px; left: 50%; transform: translateX(-50%); width: 760px; height: 420px; }
+      #hook .lbl { position: absolute; font-weight: 700; font-size: 32px; letter-spacing: -0.01em; white-space: nowrap; }
+      #hook .lbl.spend { color: var(--brand-blue-tint); }
+      #hook .lbl.rev { color: var(--brand-flame); }
+      #hook .head { position: absolute; top: 740px; left: 100px; right: 100px; text-align: center;
+        font-weight: 800; font-size: 74px; line-height: 1.06; letter-spacing: -0.03em; color: var(--brand-white); }
+      #hook .head .ser { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+      #hook .kicker { position: absolute; top: 1074px; left: 96px; right: 96px; text-align: center;
+        font-weight: 600; font-size: 44px; color: var(--brand-flame); }
+
+      /* --- LIST panel (three leaks, full frame) --- */
+      #leaks3 .rows { position: absolute; top: 290px; bottom: 190px; left: 108px; right: 108px;
+        display: flex; flex-direction: column; justify-content: center; gap: 46px; }
+      #leaks3 .row { display: flex; align-items: center; gap: 30px; }
+      #leaks3 .ic { flex: none; width: 78px; height: 78px; border-radius: 50%; background: var(--brand-flame);
+        color: #fff; font-weight: 800; font-size: 38px; display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 0 30px rgba(255,76,50,0.45); }
+      #leaks3 .rtext { font-weight: 700; font-size: 54px; line-height: 1.1; letter-spacing: -0.02em; color: var(--brand-white); }
 
       /* --- PROOF panel (+59%) --- */
       #proof .client { position: absolute; top: 236px; left: 96px; right: 96px; text-align: center;
@@ -141,7 +168,29 @@
       <img id="logobug" class="clip" data-start="0" data-duration="62.7" data-track-index="4"
            src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
 
-      <!-- ===== Scene 1 — HOOK (0–12.4) — clean face, then spend pills ===== -->
+      <!-- cinematic finishing layers (vignette + film grain) over the whole frame -->
+      <div id="vignette" class="clip" data-start="0" data-duration="62.7" data-track-index="14"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="62.7" data-track-index="15"></div>
+
+      <!-- ===== Scene 0 — HOOK GRAPHIC (0–5.5) full frame ===== -->
+      <div id="hook" class="panel clip" data-start="0" data-duration="5.5" data-track-index="5">
+        <div class="bloom"></div>
+        <img class="plogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div class="eyebrow">The growth wall</div>
+        <svg class="chart" viewBox="0 0 760 420" fill="none">
+          <path d="M70 40 V360 H720" stroke="#1d4a7a" stroke-width="3" stroke-linecap="round"/>
+          <path id="hkspend" d="M70 360 L700 70" stroke="#9CD4FF" stroke-width="9" stroke-linecap="round"/>
+          <circle id="hkspenddot" cx="700" cy="70" r="13" fill="#9CD4FF"/>
+          <path id="hkrev" d="M70 360 L700 320" stroke="#FF4C32" stroke-width="9" stroke-linecap="round"/>
+          <circle id="hkrevdot" cx="700" cy="320" r="13" fill="#FF4C32"/>
+        </svg>
+        <div class="lbl spend" style="left:560px; top:300px;">Ad spend &uarr;</div>
+        <div class="lbl rev" style="left:560px; top:556px;">Revenue &mdash;</div>
+        <div class="head">If more budget isn't growing <span class="ser">revenue</span>&hellip;</div>
+        <div class="kicker">&hellip;this is probably why.</div>
+      </div>
+
+      <!-- ===== Scene 1 — SETUP (5.5–12.4) — clean face, then spend pills ===== -->
       <div id="spend" class="clip" data-start="9.6" data-duration="2.8" data-track-index="7">
         <div class="lead">So founders reach for the same fix:</div>
         <div class="pillrow">
@@ -176,21 +225,25 @@
         <div class="token" id="tk1" style="left:486px; top:344px;">$</div>
         <div class="token" id="tk2" style="left:556px; top:344px;">$</div>
         <div class="token" id="tk3" style="left:626px; top:344px;">$</div>
-        <!-- flame leak spurts from the two holes -->
-        <div class="leakstream" id="ls1" style="left:430px; top:628px; transform:rotate(28deg);"></div>
-        <div class="leakstream" id="ls2" style="left:628px; top:654px; transform:rotate(-26deg);"></div>
-        <div class="drip" id="dr1" style="left:436px; top:672px;"></div>
-        <div class="drip" id="dr2" style="left:452px; top:702px;"></div>
-        <div class="drip" id="dr3" style="left:632px; top:700px;"></div>
+        <!-- money leaks out the two holes -->
+        <div class="coinout" id="co1" style="left:436px; top:612px;">$</div>
+        <div class="coinout" id="co2" style="left:446px; top:626px;">$</div>
+        <div class="coinout" id="co3" style="left:610px; top:638px;">$</div>
+        <div class="coinout" id="co4" style="left:620px; top:652px;">$</div>
         <div class="head">The leak isn't in the <span class="ads">ads.</span></div>
         <div class="sub">It's what happens after the click.</div>
       </div>
 
-      <!-- ===== Scene 3 — THREE LEAKS (21.5–28.3) over face ===== -->
-      <div id="leaks3" class="clip" data-start="21.54" data-duration="6.76" data-track-index="9">
-        <div class="chip" id="ch1"><div class="x">✕</div><div class="t">Your offer isn't converting</div></div>
-        <div class="chip" id="ch2"><div class="x">✕</div><div class="t">Your landing page underperforms</div></div>
-        <div class="chip" id="ch3"><div class="x">✕</div><div class="t">Buyers come once — never return</div></div>
+      <!-- ===== Scene 3 — THE LEAKS (21.5–28.3) full frame ===== -->
+      <div id="leaks3" class="panel clip" data-start="21.54" data-duration="6.76" data-track-index="9">
+        <div class="bloom"></div>
+        <img class="plogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div class="eyebrow">After the click</div>
+        <div class="rows">
+          <div class="row" id="ch1"><div class="ic">✕</div><div class="rtext">Your offer isn't converting.</div></div>
+          <div class="row" id="ch2"><div class="ic">✕</div><div class="rtext">Your landing page isn't doing its job.</div></div>
+          <div class="row" id="ch3"><div class="ic">✕</div><div class="rtext">Your customers buy once and never come back.</div></div>
+        </div>
       </div>
 
       <!-- ===== Scene 5 — PROOF +59% (35.6–44.6) full frame ===== -->
@@ -227,7 +280,25 @@
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
-      /* ---------- Scene 1 — HOOK (clean face → spend pills) ---------- */
+      /* ---------- Scene 0 — HOOK GRAPHIC (diverge chart) ---------- */
+      const Ls = 693.5, Lr = 631.1;   // line lengths for the draw-on
+      tl.set("#hkspend", { strokeDasharray: Ls, strokeDashoffset: Ls }, 0);
+      tl.set("#hkrev", { strokeDasharray: Lr, strokeDashoffset: Lr }, 0);
+      tl.from("#hook .eyebrow", { opacity: 0, y: 16, duration: 0.45, ease: "power2.out" }, 0.3);
+      tl.to("#hkrev", { strokeDashoffset: 0, duration: 0.9, ease: "power2.out" }, 0.5);
+      tl.to("#hkspend", { strokeDashoffset: 0, duration: 1.0, ease: "power2.out" }, 0.7);
+      tl.from("#hkrevdot", { opacity: 0, scale: 0, duration: 0.3, ease: "back.out(2)", transformOrigin: "center" }, 1.35);
+      tl.from("#hkspenddot", { opacity: 0, scale: 0, duration: 0.3, ease: "back.out(2)", transformOrigin: "center" }, 1.65);
+      tl.from(".lbl.rev", { opacity: 0, x: -14, duration: 0.4, ease: "power2.out" }, 1.4);
+      tl.from(".lbl.spend", { opacity: 0, x: -14, duration: 0.4, ease: "power2.out" }, 1.7);
+      tl.from("#hook .head .ser", { opacity: 0, x: -22, duration: 0.6, ease: "power3.out" }, 2.0);
+      tl.from("#hook .head", { opacity: 0, y: 28, duration: 0.65, ease: "power3.out" }, 2.15);
+      tl.from("#hook .kicker", { opacity: 0, y: 16, duration: 0.5, ease: "power2.out" }, 3.6);
+      // panel out → reveal the founder
+      tl.to("#hook", { opacity: 0, scale: 1.04, filter: "blur(14px)", duration: 0.45, ease: "power2.in" }, 5.0);
+      tl.set("#hook", { opacity: 0 }, 5.5);
+
+      /* ---------- Scene 1 — SETUP (clean face → spend pills) ---------- */
       // scrim only darkens the lower band while the pills are up
       tl.to("#scrim", { opacity: 1, duration: 0.4, ease: "power2.out" }, 9.35);
       tl.from("#spend .lead", { opacity: 0, y: 18, duration: 0.4, ease: "power2.out" }, 9.65);
@@ -251,27 +322,24 @@
       // headline + sub
       tl.from("#leak .head", { opacity: 0, y: 28, duration: 0.6, ease: "power3.out" }, 13.4);
       tl.from("#leak .sub", { opacity: 0, y: 20, duration: 0.5, ease: "power2.out" }, 13.8);
-      // the bucket leaks — flame spurts + drops, emphasis pops on "after the click"
-      tl.fromTo("#ls1", { opacity: 0 }, { opacity: 0.95, duration: 0.3, ease: "power2.out" }, 16.7);
-      tl.fromTo("#ls2", { opacity: 0 }, { opacity: 0.95, duration: 0.3, ease: "power2.out" }, 16.85);
-      tl.to("#ls1", { opacity: 0.5, duration: 0.45, ease: "sine.inOut", yoyo: true, repeat: 7 }, 17.05);
-      tl.to("#ls2", { opacity: 0.5, duration: 0.45, ease: "sine.inOut", yoyo: true, repeat: 7 }, 17.2);
-      tl.fromTo("#dr1", { y: 0, opacity: 0, scale: 0.6 }, { y: 120, opacity: 0, scale: 1, duration: 0.85, ease: "power1.in", repeat: 4, repeatDelay: 0.2 }, 16.9);
-      tl.fromTo("#dr2", { y: 0, opacity: 0, scale: 0.6 }, { y: 120, opacity: 0, scale: 1, duration: 0.85, ease: "power1.in", repeat: 4, repeatDelay: 0.2 }, 17.15);
-      tl.fromTo("#dr3", { y: 0, opacity: 0, scale: 0.6 }, { y: 120, opacity: 0, scale: 1, duration: 0.85, ease: "power1.in", repeat: 4, repeatDelay: 0.2 }, 17.0);
+      // money leaks out of the holes (lost revenue), emphasis pops on "after the click"
+      tl.fromTo("#co1", { x: 0, y: 0, opacity: 1, scale: 0.6 }, { x: -46, y: 150, opacity: 0, scale: 1, duration: 0.95, ease: "power1.in", repeat: 4, repeatDelay: 0.15 }, 14.8);
+      tl.fromTo("#co2", { x: 0, y: 0, opacity: 1, scale: 0.6 }, { x: -28, y: 172, opacity: 0, scale: 1, duration: 0.95, ease: "power1.in", repeat: 4, repeatDelay: 0.15 }, 15.05);
+      tl.fromTo("#co3", { x: 0, y: 0, opacity: 1, scale: 0.6 }, { x: 46, y: 150, opacity: 0, scale: 1, duration: 0.95, ease: "power1.in", repeat: 4, repeatDelay: 0.15 }, 14.9);
+      tl.fromTo("#co4", { x: 0, y: 0, opacity: 1, scale: 0.6 }, { x: 28, y: 172, opacity: 0, scale: 1, duration: 0.95, ease: "power1.in", repeat: 4, repeatDelay: 0.15 }, 15.15);
       tl.fromTo("#leak .head .ads", { scale: 1 }, { scale: 1.12, duration: 0.3, ease: "back.out(2)", yoyo: true, repeat: 1, transformOrigin: "center" }, 16.8);
       // panel out (transition back to face)
       tl.to("#leak", { opacity: 0, scale: 1.04, filter: "blur(14px)", duration: 0.45, ease: "power2.in" }, 21.1);
       tl.set("#leak", { opacity: 0 }, 21.54);
 
-      /* ---------- Scene 3 — THREE LEAKS (over face) ---------- */
-      tl.to("#scrim", { opacity: 1, duration: 0.4, ease: "power2.out" }, 21.4);
-      tl.from("#ch1", { opacity: 0, x: -40, duration: 0.5, ease: "power3.out" }, 21.8);
-      tl.from("#ch2", { opacity: 0, x: -40, duration: 0.5, ease: "power3.out" }, 24.0);
-      tl.from("#ch3", { opacity: 0, x: -40, duration: 0.5, ease: "power3.out" }, 26.1);
-      tl.to("#leaks3", { opacity: 0, y: -16, duration: 0.4, ease: "power2.in" }, 27.85);
+      /* ---------- Scene 3 — THE LEAKS (full frame) ---------- */
+      tl.from("#leaks3", { opacity: 0, scale: 1.06, filter: "blur(16px)", duration: 0.45, ease: "power2.out" }, 21.54);
+      tl.from("#leaks3 .eyebrow", { opacity: 0, y: 16, duration: 0.45, ease: "power2.out" }, 21.8);
+      tl.from("#ch1", { opacity: 0, x: -44, duration: 0.55, ease: "power3.out" }, 22.0);
+      tl.from("#ch2", { opacity: 0, x: -44, duration: 0.55, ease: "power3.out" }, 24.0);
+      tl.from("#ch3", { opacity: 0, x: -44, duration: 0.55, ease: "power3.out" }, 26.0);
+      tl.to("#leaks3", { opacity: 0, scale: 1.04, filter: "blur(14px)", duration: 0.45, ease: "power2.in" }, 27.9);
       tl.set("#leaks3", { opacity: 0 }, 28.30);
-      tl.to("#scrim", { opacity: 0, duration: 0.4, ease: "power2.in" }, 28.0);
 
       /* ---------- Scene 4 — BROKEN SYSTEM: clean face, VO only ---------- */
 
