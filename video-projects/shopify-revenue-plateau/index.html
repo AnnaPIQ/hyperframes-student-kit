@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1350" />
-    <title>EcomIQ — Plateau (full v2)</title>
+    <title>EcomIQ — Plateau (v3)</title>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <link rel="stylesheet" href="assets/brand-tokens.css" />
     <style>
@@ -16,45 +16,62 @@
         background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: #fff; }
       :root { --red: #ff5a4d; --cap: 250px; }
 
-      /* ---- talking head (base layer; full-screen cards cut over it) ---- */
+      /* ---- talking head (base layer) ---- */
       #video-wrap { position: absolute; inset: 0; transform-origin: 50% 38%; z-index: 0; }
       #video-wrap video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 36%;
         filter: contrast(1.06) saturate(1.08) brightness(0.98); display: block; }
 
-      /* ---- top scrim (keeps logo legible) + faint vignette ---- */
+      /* ---- top scrim + faint vignette over the face ---- */
       #scrims { position: absolute; inset: 0; pointer-events: none; z-index: 1;
         background: linear-gradient(180deg, rgba(6,40,76,0.78) 0%, rgba(6,40,76,0.0) 16%); }
       #vignette { position: absolute; inset: 0; pointer-events: none; z-index: 1;
         background: radial-gradient(125% 92% at 50% 38%, rgba(6,40,76,0) 56%, rgba(6,40,76,0.45) 100%); }
 
-      /* ---- logo chip (wrapped so the render engine keeps it top-left) ---- */
+      /* ---- logo chip (wrapped so the engine keeps it top-left) ---- */
       #logo-wrap { position: absolute; top: 56px; left: 60px; width: 290px; z-index: 20; }
-      #logo { width: 100%; height: auto; display: block;
-        filter: drop-shadow(0 6px 18px rgba(0,0,0,0.45)); }
+      #logo { width: 100%; height: auto; display: block; filter: drop-shadow(0 6px 18px rgba(0,0,0,0.45)); }
 
-      /* ---- full-screen card shell (opaque; content sits ABOVE the caption strip) ---- */
+      /* ---- full-screen card shell ---- */
       .card { position: absolute; inset: 0; z-index: 10; opacity: 0; overflow: hidden;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
         text-align: center; padding: 120px 90px var(--cap);
+        background: radial-gradient(120% 80% at 50% 32%, #0b386a 0%, var(--brand-navy) 60%), var(--brand-navy); }
+      /* living background: soft drifting bloom + faint masked grid */
+      .card .cbloom { position: absolute; inset: -12%; z-index: 0; pointer-events: none; filter: blur(26px);
         background:
-          radial-gradient(120% 80% at 50% 34%, #0a325f 0%, var(--brand-navy) 62%),
-          var(--brand-navy); }
-      .card .eyebrow { font-weight: 700; font-size: 32px; letter-spacing: .26em; text-transform: uppercase;
-        color: var(--brand-blue-tint); margin-bottom: 44px; }
-      .big { font-weight: 800; letter-spacing: -.03em; line-height: .98; color: #fff;
-        text-shadow: 0 12px 40px rgba(0,0,0,.45); }
+          radial-gradient(38% 28% at 42% 38%, rgba(255,76,50,.16), rgba(255,76,50,0) 70%),
+          radial-gradient(44% 32% at 66% 64%, rgba(156,212,255,.14), rgba(156,212,255,0) 72%); }
+      .card .cgrid { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: .55;
+        background:
+          repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1px, transparent 1px 90px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.05) 0 1px, transparent 1px 90px);
+        -webkit-mask-image: radial-gradient(78% 62% at 50% 42%, #000 28%, transparent 100%);
+                mask-image: radial-gradient(78% 62% at 50% 42%, #000 28%, transparent 100%); }
+      .card > *:not(.cbloom):not(.cgrid) { position: relative; z-index: 1; }
+
+      .eyebrow { position: relative; font-weight: 700; font-size: 32px; letter-spacing: .26em;
+        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 50px; padding-bottom: 24px; }
+      .eyebrow::after { content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+        width: 56px; height: 4px; border-radius: 3px; background: var(--brand-flame);
+        box-shadow: 0 0 14px rgba(255,76,50,.6); }
       .flame { color: var(--brand-flame); }
-      .dim { color: #b9c8dc; }
+      /* flame gradient for hero words (with glow via drop-shadow since text is clipped) */
+      .fg { background: linear-gradient(180deg, #ff7a45 0%, #ff4c32 56%, #ff6a2e 100%);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+        filter: drop-shadow(0 14px 44px rgba(255,76,50,.42)); }
+
+      /* hook card */
+      #h-flat { font-weight: 800; font-size: 236px; line-height: .86; letter-spacing: -.05em; opacity: 0; }
+      #h-months { font-weight: 800; font-size: 90px; letter-spacing: -.02em; color: #fff; opacity: 0; margin-top: 8px; }
+      #h-tell { font-weight: 700; font-size: 50px; color: var(--brand-blue-tint); opacity: 0; margin-top: 40px; }
 
       /* card A — overload */
-      #cardA .line { font-weight: 800; font-size: 104px; line-height: 1.04; letter-spacing: -.03em;
-        color: #fff; opacity: 0; }
+      #cardA .line { font-weight: 800; font-size: 104px; line-height: 1.06; letter-spacing: -.03em; color: #fff; opacity: 0; }
       #cardA .line .m { color: var(--brand-flame); }
 
       /* card B — system problem */
-      #cardB .top { font-weight: 700; font-size: 46px; color: #b9c8dc; opacity: 0; margin-bottom: 18px; }
-      #cardB .hero { font-weight: 800; font-size: 168px; line-height: .92; letter-spacing: -.04em;
-        color: var(--brand-flame); opacity: 0; text-shadow: 0 16px 56px rgba(255,76,50,.4); }
+      #cardB .top { font-weight: 700; font-size: 46px; color: #b9c8dc; opacity: 0; margin-bottom: 20px; }
+      #cardB .hero { font-weight: 800; font-size: 168px; line-height: .9; letter-spacing: -.04em; opacity: 0; }
 
       /* card C — friction checklist */
       #cardC .frow { display: flex; align-items: center; gap: 28px; margin: 18px 0; opacity: 0; }
@@ -68,62 +85,46 @@
       #cardD .crow .txt { font-weight: 800; font-size: 84px; letter-spacing: -.03em; }
       #cardD #d-sym .mk { color: var(--red); } #cardD #d-sym .txt { color: #9fb1c8; }
       #cardD #d-cause .mk { color: var(--brand-flame); } #cardD #d-cause .txt { color: #fff; }
-      #cardD #d-cause .txt .em { color: var(--brand-flame); }
 
-      /* card E — hero line */
+      /* card E — hero */
       #cardE .l1 { font-weight: 800; font-size: 100px; line-height: 1; letter-spacing: -.03em; color: #b9c8dc; opacity: 0; }
-      #cardE .l2 { font-weight: 800; font-size: 120px; line-height: .92; letter-spacing: -.04em; white-space: nowrap;
-        color: var(--brand-flame); opacity: 0; margin-top: 20px; text-shadow: 0 18px 60px rgba(255,76,50,.45); }
+      #cardE .l2 { font-weight: 800; font-size: 124px; line-height: .92; letter-spacing: -.04em; white-space: nowrap; opacity: 0; margin-top: 22px; }
 
       /* card G — philosophy */
       #cardG .l1 { font-weight: 800; font-size: 84px; line-height: 1.02; letter-spacing: -.03em; color: #b9c8dc; opacity: 0; }
-      #cardG .l2 { font-weight: 800; font-size: 120px; line-height: .96; letter-spacing: -.04em;
-        color: var(--brand-flame); opacity: 0; margin-top: 22px; text-shadow: 0 16px 56px rgba(255,76,50,.4); }
+      #cardG .l2 { font-weight: 800; font-size: 120px; line-height: .96; letter-spacing: -.04em; opacity: 0; margin-top: 22px; }
 
-      /* ---- card F : Driftsleep proof (full-screen b-roll) ---- */
+      /* stat card */
+      #f-stat { font-weight: 800; font-size: 320px; line-height: .82; letter-spacing: -.05em; opacity: 0; }
+      #f-stat span { font-size: 180px; }
+      #f-lab { font-weight: 800; font-size: 68px; letter-spacing: -.02em; color: #fff; opacity: 0; margin-top: 6px; }
+      #f-sub { font-weight: 700; font-size: 38px; color: var(--brand-blue-tint); opacity: 0; margin-top: 26px; }
+
+      /* ---- Driftsleep b-roll (full-screen) ---- */
       #proof { position: absolute; inset: 0; z-index: 10; opacity: 0; overflow: hidden; }
-      #proof video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 46%;
-        filter: contrast(1.06) saturate(1.08); display: block; }
+      #proof video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%;
+        filter: contrast(1.05) saturate(1.06); display: block; }
       #proof .pscrim { position: absolute; inset: 0; pointer-events: none;
         background:
-          radial-gradient(110% 70% at 50% 42%, rgba(6,40,76,.2) 0%, rgba(6,40,76,.78) 100%),
-          linear-gradient(0deg, rgba(6,40,76,.9) 0%, rgba(6,40,76,0) 42%); }
+          radial-gradient(120% 80% at 50% 45%, rgba(6,40,76,.12) 0%, rgba(6,40,76,.66) 100%),
+          linear-gradient(0deg, rgba(6,40,76,.85) 0%, rgba(6,40,76,0) 40%); }
       #p-tag { position: absolute; top: 56px; left: 60px; font-weight: 700; font-size: 26px;
         letter-spacing: .14em; text-transform: uppercase; color: #fff;
         background: rgba(6,40,76,.78); padding: 12px 24px; border-radius: 999px;
         border: 1px solid rgba(156,212,255,.4); opacity: 0; }
       #p-tag b { color: var(--brand-blue-tint); }
-      #p-eyebrow { position: absolute; top: 300px; left: 0; right: 0; text-align: center;
-        font-weight: 700; font-size: 32px; letter-spacing: .22em; text-transform: uppercase;
-        color: var(--brand-blue-tint); opacity: 0; }
-      #p-stat { position: absolute; top: 470px; left: 0; right: 0; text-align: center;
-        font-weight: 800; font-size: 320px; line-height: .82; color: var(--brand-flame);
-        letter-spacing: -.05em; text-shadow: 0 18px 70px rgba(255,76,50,.5); opacity: 0; }
-      #p-lab { position: absolute; top: 830px; left: 0; right: 0; text-align: center;
-        font-weight: 800; font-size: 64px; letter-spacing: -.02em; color: #fff; opacity: 0; }
-      #p-sub { position: absolute; top: 930px; left: 0; right: 0; text-align: center;
-        font-weight: 700; font-size: 36px; color: var(--brand-blue-tint); opacity: 0; }
 
-      /* ---- whip-streak transition ---- */
-      #whip { position: absolute; top: 0; bottom: 0; left: 0; width: 70%; z-index: 31; opacity: 0;
-        pointer-events: none; transform: translateX(-130%);
-        background: linear-gradient(90deg, transparent 0%, rgba(156,212,255,.0) 30%, #ffffff 50%,
-          rgba(255,76,50,.7) 66%, transparent 100%); filter: blur(26px); mix-blend-mode: screen; }
-
-      /* ---- subtle grain across everything ---- */
+      /* ---- grain over everything ---- */
       #grain { position: absolute; inset: 0; pointer-events: none; z-index: 30; opacity: .5;
         background-image:
           radial-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
           radial-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
           radial-gradient(rgba(0,0,0,.02) 1px, transparent 1px);
-        background-size: 3px 3px, 5px 5px, 7px 7px;
-        background-position: 0 0, 1px 2px, 2px 1px; }
+        background-size: 3px 3px, 5px 5px, 7px 7px; background-position: 0 0, 1px 2px, 2px 1px; }
 
-      /* ---- card H : CTA (full-screen) ---- */
-      #cta { position: absolute; inset: 0; z-index: 12; opacity: 0;
-        background:
-          radial-gradient(90% 55% at 50% 16%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%),
-          var(--brand-navy);
+      /* ---- CTA card ---- */
+      #cta { position: absolute; inset: 0; z-index: 15; opacity: 0;
+        background: radial-gradient(90% 55% at 50% 16%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy);
         display: flex; flex-direction: column; align-items: center; justify-content: center;
         text-align: center; padding: 0 104px var(--cap); }
       #cta #obloom { position: absolute; left: -10%; bottom: -20%; width: 120%; height: 58%;
@@ -132,8 +133,7 @@
       #cta #oeyebrow { font-weight: 700; font-size: 28px; letter-spacing: .32em; text-transform: uppercase;
         color: var(--brand-blue-tint); margin-bottom: 28px; }
       #cta #ohead { font-weight: 800; font-size: 110px; line-height: .96; letter-spacing: -.03em; color: #fff; }
-      #cta #ohead .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400;
-        color: var(--brand-blue-tint); }
+      #cta #ohead .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
       #cta #oguar { margin-top: 40px; font-weight: 700; font-size: 40px; color: #fff; }
       #cta #oguar .em { color: var(--brand-flame); }
       #cta #octa { margin-top: 50px; display: inline-flex; align-items: center; gap: 18px;
@@ -145,21 +145,28 @@
   <body>
     <div id="root" data-composition-id="shopify-revenue-plateau" data-start="0" data-duration="90.5" data-width="1080" data-height="1350">
 
-      <!-- continuous talking-head (muted; audio is the sibling track) -->
       <div id="video-wrap">
-        <video id="vid" data-start="0" data-duration="86.7" data-track-index="0"
-               src="assets/ad.mp4" muted playsinline></video>
+        <video id="vid" data-start="0" data-duration="86.7" data-track-index="0" src="assets/ad.mp4" muted playsinline></video>
       </div>
-      <audio id="aud" data-start="0" data-duration="86.7" data-track-index="1"
-             data-volume="1" src="assets/ad.mp4"></audio>
+      <audio id="aud" data-start="0" data-duration="86.7" data-track-index="1" data-volume="1" src="assets/ad.mp4"></audio>
 
       <div id="scrims" class="clip" data-start="0" data-duration="90.5" data-track-index="2"></div>
       <div id="vignette" class="clip" data-start="0" data-duration="90.5" data-track-index="3"></div>
       <div id="logo-wrap"><img id="logo" class="clip" data-start="0" data-duration="86.7" data-track-index="5"
            src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
 
+      <!-- HOOK card -->
+      <div id="cardHook" class="card clip" data-start="2.0" data-duration="4.0" data-track-index="6">
+        <div class="cbloom"></div><div class="cgrid"></div>
+        <div class="eyebrow">Your Shopify revenue</div>
+        <div id="h-flat" class="fg">FLAT</div>
+        <div id="h-months">for months.</div>
+        <div id="h-tell">It's telling you something.</div>
+      </div>
+
       <!-- CARD A : overload -->
-      <div id="cardA" class="card clip" data-start="5.3" data-duration="8.600000000000001" data-track-index="6">
+      <div id="cardA" class="card clip" data-start="8.1" data-duration="5.800000000000001" data-track-index="7">
+        <div class="cbloom"></div><div class="cgrid"></div>
         <div class="eyebrow">So you push harder</div>
         <div class="line" id="a1"><span class="m">More</span> ads</div>
         <div class="line" id="a2"><span class="m">More</span> products</div>
@@ -168,13 +175,15 @@
       </div>
 
       <!-- CARD B : system problem -->
-      <div id="cardB" class="card clip" data-start="18.200000000000003" data-duration="3.1999999999999993" data-track-index="7">
+      <div id="cardB" class="card clip" data-start="18.200000000000003" data-duration="3.1999999999999993" data-track-index="8">
+        <div class="cbloom"></div><div class="cgrid"></div>
         <div class="top">It's not an effort problem.</div>
-        <div class="hero">A SYSTEM<br/>PROBLEM</div>
+        <div class="hero fg">A SYSTEM<br/>PROBLEM</div>
       </div>
 
       <!-- CARD C : friction checklist -->
-      <div id="cardC" class="card clip" data-start="23.200000000000003" data-duration="14.399999999999999" data-track-index="8">
+      <div id="cardC" class="card clip" data-start="23.200000000000003" data-duration="14.399999999999999" data-track-index="9">
+        <div class="cbloom"></div><div class="cgrid"></div>
         <div class="eyebrow">Something's creating friction</div>
         <div class="frow" id="c1"><span class="dot"></span><span class="txt">Traffic has stalled</span></div>
         <div class="frow" id="c2"><span class="dot"></span><span class="txt">Conversion slipped</span></div>
@@ -183,40 +192,45 @@
       </div>
 
       <!-- CARD D : symptom vs cause -->
-      <div id="cardD" class="card clip" data-start="36.9" data-duration="6.700000000000003" data-track-index="9">
+      <div id="cardD" class="card clip" data-start="36.9" data-duration="6.700000000000003" data-track-index="10">
+        <div class="cbloom"></div><div class="cgrid"></div>
         <div class="crow" id="d-sym"><span class="mk">&#10007;</span><span class="txt">The symptom</span></div>
-        <div class="crow" id="d-cause"><span class="mk">&#10003;</span><span class="txt">The <span class="em">cause</span></span></div>
+        <div class="crow" id="d-cause"><span class="mk">&#10003;</span><span class="txt">The cause</span></div>
       </div>
 
       <!-- CARD E : hero line -->
-      <div id="cardE" class="card clip" data-start="49.2" data-duration="5" data-track-index="10">
+      <div id="cardE" class="card clip" data-start="49.2" data-duration="5" data-track-index="11">
+        <div class="cbloom"></div><div class="cgrid"></div>
         <div class="l1">Not failure.</div>
-        <div class="l2">INFORMATION.</div>
+        <div class="l2 fg">INFORMATION.</div>
       </div>
 
-      <!-- CARD F : Driftsleep proof (full-screen b-roll) — static wrapper, GSAP-driven -->
+      <!-- CARD F1 : Driftsleep b-roll -->
       <div id="proof">
-        <video id="proof-vid" data-start="57.4" data-duration="8.599999999999996" data-track-index="12"
+        <video id="proof-vid" data-start="57.5" data-duration="3.400000000000003" data-track-index="12"
                src="assets/driftsleep-stab.mp4" muted playsinline></video>
         <div class="pscrim"></div>
         <div id="p-tag">Client&nbsp;&middot;&nbsp;<b>Driftsleep</b></div>
-        <div id="p-eyebrow">Real result</div>
-        <div id="p-stat">+59<span style="font-size:170px;">%</span></div>
-        <div id="p-lab">returning customers</div>
-        <div id="p-sub">without spending another dollar on ads</div>
+      </div>
+
+      <!-- CARD F2 : +59% stat -->
+      <div id="cardStat" class="card clip" data-start="60.2" data-duration="5.999999999999993" data-track-index="13">
+        <div class="cbloom"></div><div class="cgrid"></div>
+        <div class="eyebrow">Driftsleep, with EcomIQ</div>
+        <div id="f-stat" class="fg">+59<span>%</span></div>
+        <div id="f-lab">returning customers</div>
+        <div id="f-sub">without spending another dollar on ads</div>
       </div>
 
       <!-- CARD G : philosophy -->
-      <div id="cardG" class="card clip" data-start="65.39999999999999" data-duration="6.5" data-track-index="13">
+      <div id="cardG" class="card clip" data-start="65.39999999999999" data-duration="6.5" data-track-index="14">
+        <div class="cbloom"></div><div class="cgrid"></div>
         <div class="l1">Growth isn't doing more.</div>
-        <div class="l2">Fix what's already there.</div>
+        <div class="l2 fg">Fix what's already there.</div>
       </div>
 
-      <!-- whip-streak transition -->
-      <div id="whip" class="clip" data-start="0" data-duration="90.5" data-track-index="15"></div>
-
-      <!-- CARD H : CTA (full-screen) -->
-      <div id="cta" class="clip" data-start="76.30000000000001" data-duration="14.599999999999994" data-track-index="14">
+      <!-- CARD H : CTA -->
+      <div id="cta" class="clip" data-start="76.30000000000001" data-duration="14.599999999999994" data-track-index="15">
         <div id="obloom"></div>
         <img id="ologo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div id="oeyebrow">Stuck for months?</div>
@@ -225,7 +239,6 @@
         <div id="octa">Learn how it works <span class="arrow">&rarr;</span></div>
       </div>
 
-      <!-- grain over everything -->
       <div id="grain" class="clip" data-start="0" data-duration="90.5" data-track-index="30"></div>
     </div>
 
@@ -234,87 +247,87 @@
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
-      // gentle continuous push on the face
       tl.fromTo("#video-wrap", { scale: 1.0 }, { scale: 1.05, duration: FACE_DUR, ease: "none" }, 0);
       tl.from("#logo-wrap", { opacity: 0, y: -18, duration: .5, ease: "power3.out" }, .2);
 
-      // whip-streak fired at each cut (face<->card)
-      function whip(t) {
-        tl.set("#whip", { opacity: 1 }, t);
-        tl.fromTo("#whip", { xPercent: -130 }, { xPercent: 230, duration: .4, ease: "power3.in" }, t);
-        tl.set("#whip", { opacity: 0 }, t + .4);
-      }
-      // card in (opaque cut over face) / out (back to face), each with a whip
+      // living background drift on every card (deterministic, evaluated per-frame)
+      tl.to(".cbloom", { xPercent: 8, yPercent: -6, scale: 1.12, duration: 7, ease: "sine.inOut", repeat: 14, yoyo: true }, 0);
+
+      // ---- clean blur/scale cross transitions (no flash) ----
       function cardIn(sel, t) {
-        whip(t - .1);
-        tl.fromTo(sel, { opacity: 0, scale: 1.08, filter: "blur(20px)" },
-          { opacity: 1, scale: 1, filter: "blur(0px)", duration: .42, ease: "power2.out" }, t);
+        tl.fromTo(sel, { opacity: 0, scale: 1.05, yPercent: 1.5, filter: "blur(16px)" },
+          { opacity: 1, scale: 1, yPercent: 0, filter: "blur(0px)", duration: .5, ease: "power2.out" }, t);
       }
       function cardOut(sel, t) {
-        whip(t - .05);
-        tl.to(sel, { opacity: 0, scale: 1.06, filter: "blur(16px)", duration: .38, ease: "power2.in" }, t);
+        tl.to(sel, { opacity: 0, scale: .99, yPercent: -1.5, filter: "blur(12px)", duration: .4, ease: "power2.in" }, t);
       }
 
-      // ---------- CARD A : overload ----------
-      cardIn("#cardA", 5.7);
+      // ---------- HOOK ----------
+      cardIn("#cardHook", 2.3);
+      tl.fromTo("#h-flat", { opacity: 0, scale: .72, yPercent: 16 }, { opacity: 1, scale: 1, yPercent: 0, duration: .55, ease: "back.out(2)" }, 2.3 + .1);
+      tl.fromTo("#h-months", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 2.95);
+      tl.fromTo("#h-tell", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .45, ease: "power3.out" }, 4.55);
+      cardOut("#cardHook", 5.5);
+
+      // ---------- CARD A ----------
+      cardIn("#cardA", 8.5);
       [["#a1", 8.86], ["#a2", 9.62], ["#a3", 10.95], ["#a4", 12.5]].forEach(([s, t]) =>
         tl.fromTo(s, { opacity: 0, y: 36, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .34, ease: "back.out(2)" }, t));
       cardOut("#cardA", 13.3);
 
-      // ---------- CARD B : system problem ----------
+      // ---------- CARD B ----------
       cardIn("#cardB", 18.6);
       tl.fromTo("#cardB .top", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .35, ease: "power2.out" }, 18.6 + .1);
       tl.fromTo("#cardB .hero", { opacity: 0, scale: .82 }, { opacity: 1, scale: 1, duration: .5, ease: "back.out(1.9)" }, 18.6 + .25);
       cardOut("#cardB", 20.8);
 
-      // ---------- CARD C : friction checklist ----------
+      // ---------- CARD C ----------
       cardIn("#cardC", 23.6);
       [["#c1", 26.89], ["#c2", 28.74], ["#c3", 30.69], ["#c4", 34.47]].forEach(([s, t]) =>
         tl.fromTo(s, { opacity: 0, x: -44 }, { opacity: 1, x: 0, duration: .4, ease: "power3.out" }, t));
       cardOut("#cardC", 37);
 
-      // ---------- CARD D : symptom vs cause ----------
+      // ---------- CARD D ----------
       cardIn("#cardD", 37.3);
       tl.fromTo("#d-sym", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .4, ease: "power3.out" }, 38.1);
       tl.fromTo("#d-cause", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .4, ease: "power3.out" }, 41.2);
       cardOut("#cardD", 43);
 
-      // ---------- CARD E : hero line ----------
+      // ---------- CARD E ----------
       cardIn("#cardE", 49.6);
       tl.fromTo("#cardE .l1", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 49.6 + .1);
-      tl.fromTo("#cardE .l2", { opacity: 0, scale: .8 }, { opacity: 1, scale: 1, duration: .5, ease: "back.out(2)" }, 52.27);
+      tl.fromTo("#cardE .l2", { opacity: 0, scale: .82 }, { opacity: 1, scale: 1, duration: .5, ease: "back.out(2)" }, 52.27);
       cardOut("#cardE", 53.6);
 
-      // ---------- CARD F : Driftsleep proof ----------
-      // hide the EcomIQ chip during the full-screen client takeover (avoids tag collision)
-      tl.to("#logo-wrap", { opacity: 0, duration: .25, ease: "power2.in" }, 57.4 - .15);
+      // ---------- F1 : Driftsleep b-roll ----------
+      tl.to("#logo-wrap", { opacity: 0, duration: .25, ease: "power2.in" }, 57.5 - .15);
       tl.to("#logo-wrap", { opacity: 1, duration: .3, ease: "power2.out" }, 65.6 + .05);
-      whip(57.4 - .12);
-      tl.fromTo("#proof", { opacity: 0, scale: 1.1, filter: "blur(20px)" },
-        { opacity: 1, scale: 1, filter: "blur(0px)", duration: .5, ease: "power2.out" }, 57.4);
-      tl.to("#proof video", { scale: 1.06, duration: 8.199999999999996, ease: "none", transformOrigin: "50% 46%" }, 57.4);
-      tl.fromTo("#p-tag", { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 57.4 + .3);
-      tl.fromTo("#p-eyebrow", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 60.8 - .4);
-      const ctr = { v: 0 };
-      tl.set("#p-stat", { opacity: 1 }, 60.8);
-      tl.fromTo("#p-stat", { scale: .7 }, { scale: 1, duration: .5, ease: "back.out(1.8)" }, 60.8);
-      tl.to(ctr, { v: 59, duration: 1.6000000000000014, ease: "power1.out",
-        onUpdate: () => { document.querySelector("#p-stat").firstChild.nodeValue = "+" + Math.round(ctr.v); } }, 60.8);
-      tl.fromTo("#p-lab", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 62.4 - .1);
-      tl.fromTo("#p-sub", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 62.4 + .5);
-      whip(65.6 - .12);
-      tl.to("#proof", { opacity: 0, scale: 1.08, filter: "blur(16px)", duration: .42, ease: "power2.in" }, 65.6);
+      tl.fromTo("#proof", { opacity: 0, scale: 1.08, filter: "blur(18px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)", duration: .5, ease: "power2.out" }, 57.5);
+      tl.fromTo("#proof video", { scale: 1.0 }, { scale: 1.08, duration: 3.400000000000003, ease: "none", transformOrigin: "50% 45%" }, 57.5);
+      tl.fromTo("#p-tag", { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 57.5 + .25);
+      // cross into the stat card
+      tl.to("#proof", { opacity: 0, scale: 1.04, filter: "blur(14px)", duration: .4, ease: "power2.in" }, 60.7);
 
-      // ---------- CARD G : philosophy ----------
+      // ---------- F2 : +59% stat ----------
+      cardIn("#cardStat", 60.6);
+      const ctr = { v: 0 };
+      tl.fromTo("#f-stat", { opacity: 0, scale: .72 }, { opacity: 1, scale: 1, duration: .5, ease: "back.out(1.8)" }, 60.95 - .05);
+      tl.to(ctr, { v: 59, duration: 1, ease: "power1.out",
+        onUpdate: () => { document.querySelector("#f-stat").firstChild.nodeValue = "+" + Math.round(ctr.v); } }, 60.95);
+      tl.fromTo("#f-lab", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 61.95 + .05);
+      tl.fromTo("#f-sub", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .4, ease: "power2.out" }, 61.95 + .5);
+      cardOut("#cardStat", 65.6);
+
+      // ---------- CARD G ----------
       cardIn("#cardG", 65.8);
       tl.fromTo("#cardG .l1", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .42, ease: "power2.out" }, 65.8 + .1);
       tl.fromTo("#cardG .l2", { opacity: 0, y: 24, scale: .92 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: "power3.out" }, 68.5);
       cardOut("#cardG", 71.3);
 
       // ---------- CARD H : CTA ----------
-      whip(76.9 - .1);
       tl.to("#logo-wrap", { opacity: 0, duration: .3 }, 76.9 - .1);
-      tl.fromTo("#cta", { opacity: 0, scale: 1.06, filter: "blur(16px)" },
+      tl.fromTo("#cta", { opacity: 0, scale: 1.05, filter: "blur(14px)" },
         { opacity: 1, scale: 1, filter: "blur(0px)", duration: .5, ease: "power2.out" }, 76.9);
       tl.fromTo("#ologo", { opacity: 0, y: -16, xPercent: -50 }, { opacity: 1, y: 0, xPercent: -50, duration: .5, ease: "power3.out" }, 76.9 + .25);
       tl.from("#oeyebrow", { opacity: 0, y: 14, duration: .45, ease: "power2.out" }, 76.9 + .45);
@@ -324,7 +337,6 @@
       tl.from("#octa", { opacity: 0, scale: .85, duration: .5, ease: "back.out(1.7)" }, 76.9 + 1.3);
       tl.to("#octa", { scale: 1.04, duration: .7, ease: "sine.inOut", yoyo: true, repeat: 4 }, 76.9 + 1.9);
 
-      // Law 11 — fill the slot
       tl.to({}, { duration: COMP }, 0);
       window.__timelines["shopify-revenue-plateau"] = tl;
     </script>
