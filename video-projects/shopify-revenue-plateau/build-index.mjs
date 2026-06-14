@@ -8,7 +8,7 @@ import fs from "node:fs";
 const ID = "shopify-revenue-plateau";
 
 const FACE_DUR = 86.7;     // talking-head + VO length
-const COMP     = 90.5;     // CTA card holds ~4s past the VO
+const COMP     = process.env.TEST ? 4 : 90.5;     // CTA card holds ~4s past the VO
 const CAP_PAD  = 250;      // reserved caption-safe strip at the bottom (px)
 
 // ---- full-screen card windows (composition time == source time) ----
@@ -58,8 +58,9 @@ const html = `<!doctype html>
       #vignette { position: absolute; inset: 0; pointer-events: none; z-index: 1;
         background: radial-gradient(125% 92% at 50% 38%, rgba(6,40,76,0) 56%, rgba(6,40,76,0.45) 100%); }
 
-      /* ---- logo chip ---- */
-      #logo { position: absolute; top: 56px; left: 60px; width: 290px; height: auto; z-index: 20;
+      /* ---- logo chip (wrapped so the render engine keeps it top-left) ---- */
+      #logo-wrap { position: absolute; top: 56px; left: 60px; width: 290px; z-index: 20; }
+      #logo { width: 100%; height: auto; display: block;
         filter: drop-shadow(0 6px 18px rgba(0,0,0,0.45)); }
 
       /* ---- full-screen card shell (opaque; content sits ABOVE the caption strip) ---- */
@@ -185,8 +186,8 @@ const html = `<!doctype html>
 
       <div id="scrims" class="clip" data-start="0" data-duration="${COMP}" data-track-index="2"></div>
       <div id="vignette" class="clip" data-start="0" data-duration="${COMP}" data-track-index="3"></div>
-      <img id="logo" class="clip" data-start="0" data-duration="${FACE_DUR}" data-track-index="5"
-           src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      <div id="logo-wrap"><img id="logo" class="clip" data-start="0" data-duration="${FACE_DUR}" data-track-index="5"
+           src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
 
       <!-- CARD A : overload -->
       <div id="cardA" class="card clip" data-start="${A_IN - 0.4}" data-duration="${A_OUT - A_IN + 1}" data-track-index="6">
@@ -266,7 +267,7 @@ const html = `<!doctype html>
 
       // gentle continuous push on the face
       tl.fromTo("#video-wrap", { scale: 1.0 }, { scale: 1.05, duration: FACE_DUR, ease: "none" }, 0);
-      tl.from("#logo", { opacity: 0, y: -18, duration: .5, ease: "power3.out" }, .2);
+      tl.from("#logo-wrap", { opacity: 0, y: -18, duration: .5, ease: "power3.out" }, .2);
 
       // whip-streak fired at each cut (face<->card)
       function whip(t) {
@@ -340,7 +341,7 @@ const html = `<!doctype html>
 
       // ---------- CARD H : CTA ----------
       whip(${CTA_IN} - .1);
-      tl.to("#logo", { opacity: 0, duration: .3 }, ${CTA_IN} - .1);
+      tl.to("#logo-wrap", { opacity: 0, duration: .3 }, ${CTA_IN} - .1);
       tl.fromTo("#cta", { opacity: 0, scale: 1.06, filter: "blur(16px)" },
         { opacity: 1, scale: 1, filter: "blur(0px)", duration: .5, ease: "power2.out" }, ${CTA_IN});
       tl.fromTo("#ologo", { opacity: 0, y: -16, xPercent: -50 }, { opacity: 1, y: 0, xPercent: -50, duration: .5, ease: "power3.out" }, ${CTA_IN} + .25);
