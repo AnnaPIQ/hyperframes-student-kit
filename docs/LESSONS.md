@@ -50,6 +50,17 @@ efficient over time instead of relearning the same lessons.
   block the Whisper model download. **Fix:** caption from the known script text and
   anchor timing via silence analysis instead of word-level timestamps.
 
+- **Talking-head `<video>` audio: don't add `muted`.** The render contract says "video must
+  be muted," but for a talking-head whose own voice should feed the mix, set
+  `data-has-audio="true"` + `data-volume="1"` and **omit `muted`** — lint errors
+  `video_muted_with_declared_audio` and the audio is silenced if both are present. Using the
+  video's embedded track (vs a sibling `<audio>`) also keeps lip-sync exact (no ~0.16s offset
+  to tune).
+- **Source 16:9 → 16:9 card = zero face crop.** For a 4:5 (1080×1350) ad built around a
+  landscape (1280×720) talking-head, place the footage in a 960×540 rounded card (`object-fit:
+  cover`, identical 16:9 ratio) in the upper third and put kinetic callouts in the lower zone.
+  No tight vertical crop, no cropped foreheads.
+
 ## Editing technique (talking-head cutdowns)
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +

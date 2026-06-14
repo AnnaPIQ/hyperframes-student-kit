@@ -40,3 +40,7 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Large raw source downloads inside projects (keep the prepped/normalized clip instead)
+**/assets/raw-*.mov
+**/assets/raw-*.mp4
