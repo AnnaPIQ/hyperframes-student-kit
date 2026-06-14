@@ -41,6 +41,22 @@ If `MOTION_PHILOSOPHY.md` is missing from the workspace root, stop and ask Nate 
 
 Not present? `npx skills add heygen-com/hyperframes --yes` then reopen this directory.
 
+## LESSONS.md — read before building, append after (continuous learning)
+
+**`docs/LESSONS.md` is the pooled knowledge base of hard-won fixes from every video
+build in this workspace** (render-breakers, A/V sync, layout, delivery, AI-model picks).
+It's the mechanism that keeps the studio getting faster instead of relearning the same
+bugs across sessions.
+
+- **Read it before building** anything — it's quicker than rediscovering a render bug.
+- **Append to it whenever you hit-and-fix something new** (one `Symptom → Fix` bullet).
+  This is required, not optional: a lesson that isn't written down is one the next
+  session repeats.
+- Highest-impact standing rules from it: **vendor GSAP locally** (CDN cert-fails freeze
+  renders — `npm run new` already does this), **no render-time network fetches**, use
+  **`gsap.fromTo`** for elements that start hidden, and **wrap the logo in a non-`clip`
+  positioned div** so it stays put.
+
 ## First-time setup (fresh / cloud container)
 
 Running in **Claude Code on the web**? The container starts without the video

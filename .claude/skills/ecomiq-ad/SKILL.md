@@ -19,6 +19,7 @@ does not replace them.
 ## Brand in one breath
 - **Palette:** Navy `#06284C` (primary canvas) · Blue Tint `#9CD4FF` (accent / italic emphasis) · Sky `#DEEEFE` · **Flame Orange `#FF4C32`** (the one hot accent — CTAs, emphasis) · White `#FFFFFF`.
 - **Type:** **Rethink Sans** (headlines + body, big headlines at −2% tracking) + **Hedvig Letters Serif** *italic* for the one emphasis word. Both are Google Fonts.
+- **Fonts ship as local `.woff2`** in the brand kit (`assets/fonts/`, no CDN). Name them **literally** in CSS (`font-family:'Rethink Sans'`), not via `var()` — the linter doesn't resolve variables and would false-warn.
 - **Signature move:** italic-serif emphasis word ("*Rethink*") over bold sans ("your strategy.").
 - **Voice:** precise, trustworthy, clarifying. Lines: *"Rethink Your Strategy"*, *"Clear Up Confusion, Gain Peace of Mind."*
 - **Logos** (in any project's `assets/`): `ecomiq-logo-white.svg` (use on navy), `ecomiq-logo-navy.svg` (use on light), `ecomiq-icon-white.svg`, `ecomiq-icon-navy.png`.
@@ -37,14 +38,22 @@ Safe area: keep hero content inside ~10% margins (≈108px sides on 1080-wide).
 
 ## The build loop (proven)
 1. **Read** `references/brand.md` + the target project's `DESIGN.md`.
-2. Start from `video-projects/my-meta-ad/index.html` (the template) — copy it for a new variant, or edit in place.
+2. **Start from a fresh `npm run new -- <slug> meta` scaffold** — it ships local GSAP +
+   local fonts and is lint-clean. (The older `my-meta-ad/index.html` is a useful design
+   reference but uses CDN GSAP + Google Fonts — don't copy those bits; they break/flake
+   at render time.)
 3. Keep one idea per ad: eyebrow → headline (with one serif-italic emphasis word) → subhead → flame CTA. Logo top-left/center.
-4. `npx hyperframes lint` — 0 errors. The two Google-Fonts warnings are **survivable** (fonts resolve at render time in this env — verify in frames).
+4. `npx hyperframes lint` — 0 errors. Fonts are local (no font warnings). A single
+   `gsap_studio_edit_blocked` warning is **benign** (Studio drag-edit only; expected for
+   code-authored comps).
 5. `npx hyperframes render --quality draft --output renders/<name>-draft.mp4`
 6. **Visual verification (mandatory):** grab the hero frame + one early/late frame, `Read` each PNG. Confirm: logo crisp, Rethink Sans + italic Hedvig serif both resolved (not a fallback), flame CTA reads, nothing overflows the safe area.
 7. Only then `--quality standard` for the shippable MP4.
 
 ## Environment gotchas (this repo, on the web)
+- **Read `docs/LESSONS.md` first** — the pooled cross-session fix list. Append any new gotcha you hit.
+- **Vendor GSAP locally** (`assets/vendor/gsap.min.js`) — a CDN `<script>` cert-fails in the render env and freezes renders. `npm run new` scaffolds it correctly.
+- **`gsap.fromTo`, not `gsap.from`, for anything that starts at `opacity:0`** — `from` leaves it invisible.
 - Fresh container has no FFmpeg/Chrome/poppler → run `npm run setup` (or `bash scripts/setup-studio.sh`) once per session. See `docs/REMOTE-ENV-SETUP.md`.
 - `hyperframes preview` localhost:3002 is **not reachable** from the user's browser in the cloud container — rely on render + frame-grab. Live Studio works when cloned locally.
 - The CLI's render output line is `<size> · <render-time> · <status>` — the middle number is wall-clock render time, NOT the clip duration. Verify duration with `ffprobe`.

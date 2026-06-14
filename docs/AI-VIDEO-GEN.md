@@ -69,6 +69,22 @@ Runway's fixed ratios don't exactly match 4:5 Meta. Pick the nearest (`832:1104`
 portrait, `960:960` for square, `720:1280` for story) and crop/scale inside the
 composition by wrapping the `<video>` in a `<div>` and animating the wrapper.
 
+## Which model (mid-2026)
+Runway's API is a **multi-model gateway** — one `RUNWAYML_API_SECRET` reaches many
+models via `--model`. Picks for ecommerce ad b-roll:
+
+| Use | `--model` | Why |
+|---|---|---|
+| Default — short social b-roll, animate a still | `kling3.0_pro` | best realism per dollar (~$0.10/sec) |
+| Hero / final cinematic shot (wants audio, 4K) | `veo3.1` | top quality (~$0.15/sec) |
+| Budget / volume | `seedance2` | strong value |
+| Max control / Runway-native | `gen4_turbo` (current tested default) | reliable image-to-video |
+
+> The script's tested default is `gen4_turbo` (image-to-video). `kling*`/`veo*` are
+> available via `--model` — some route through text-to-video vs image-to-video, so the
+> first time you use one, confirm the output (and tell me if a model needs the routing
+> tweaked). Avoid `sora*` — OpenAI's video API is deprecating (Sept 2026).
+
 ## Notes
 - Costs run against your Runway account per generation — generate deliberately.
 - Determinism: AI gen is **not** reproducible across runs. Generate once, commit the

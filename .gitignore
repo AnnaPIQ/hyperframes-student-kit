@@ -36,3 +36,7 @@ assets/incoming/*
 **/renders/frames/
 **/renders/frames-*/
 
+# Render scratch dirs (any path)
+**/render-work-*/
+**/work-*/
+

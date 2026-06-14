@@ -277,6 +277,13 @@ Full preflight + pre-delivery checklist: `Read: references/build-checklist.md`
 - **DO NOT ask the user for assets** before inventorying their workspace.
 - **DO NOT skip the `tl.to({}, { duration: SLOT_DURATION }, 0)` anchor tween** at the end of every sub-composition timeline. MOTION_PHILOSOPHY Law 11.
 - **DO NOT use `Math.random()` / `Date.now()`** inside render logic. Seeded hashes only.
+- **DO NOT load GSAP (or anything) from a CDN at render time.** Vendor GSAP locally
+  (`assets/vendor/gsap.min.js`) — a CDN `<script>` cert-fails in the render env and
+  freezes the render. `npm run new` scaffolds this correctly.
+- **DO use `gsap.fromTo` (not `gsap.from`) for elements that start at `opacity:0`** —
+  `from` leaves them invisible.
+- **DO read `docs/LESSONS.md` before building, and append new gotchas after.** It's the
+  pooled cross-session fix list — the studio's memory.
 - **DO NOT add `class="clip"` to `<video>` tags.** It breaks them.
 - **DO NOT impose a brand on the user.** You MAY *offer* a brand kit that exists in the workspace (e.g. `assets/ecomiq/`) as an option — surfacing what's already there isn't imposing. But ask first; never force it. Fall back to MOTION_PHILOSOPHY defaults only when they decline both the kit and supplying their own.
 

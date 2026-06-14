@@ -70,7 +70,7 @@ BRAND="assets/ecomiq"
 
 # ---- scaffold ---------------------------------------------------------------
 say "Creating $DEST  ($LABEL · ${W}x${H} @ 30fps)"
-mkdir -p "$DEST/compositions/components" "$DEST/assets/fonts" "$DEST/renders"
+mkdir -p "$DEST/compositions/components" "$DEST/assets/fonts" "$DEST/assets/vendor" "$DEST/renders"
 touch "$DEST/renders/.gitkeep"
 ok "folders"
 
@@ -78,7 +78,8 @@ ok "folders"
 cp "$BRAND/brand-tokens.css" "$DEST/assets/"
 cp "$BRAND"/ecomiq-logo-*.svg "$BRAND"/ecomiq-logo-*.png "$BRAND"/ecomiq-icon-* "$DEST/assets/"
 cp "$BRAND"/fonts/RethinkSans.woff2 "$BRAND"/fonts/HedvigLettersSerif.woff2 "$DEST/assets/fonts/"
-ok "brand kit (tokens, logos, local fonts)"
+cp "$BRAND"/vendor/gsap.min.js "$DEST/assets/vendor/"
+ok "brand kit (tokens, logos, local fonts, vendored GSAP)"
 
 # hyperframes.json
 cat > "$DEST/hyperframes.json" <<'JSON'
@@ -110,7 +111,8 @@ cat > "$DEST/index.html" <<HTML
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=$W, height=$H" />
     <title>$SLUG</title>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
     <link rel="stylesheet" href="assets/brand-tokens.css" />
     <style>
       /* LOCAL fonts — no network dependency at render time (latin subset) */
