@@ -11,7 +11,8 @@ TH = talking-head footage cut-in · GFX = full-frame brand motion graphics.
 | 4 | Revenue → Keep | GFX | 25.10 | 36.86 | 11.76 | `s04-revenue-keep.html` |
 | 5 | Costs grow too | TH | 36.86 | 40.42 | 3.56 | `th5.mp4` |
 | 6 | The profit problem | GFX | 40.42 | 55.18 | 14.76 | `s06-profit-problem.html` |
-| 7 | Drift Sleep | TH | 55.18 | 62.98 | 7.80 | `th7.mp4` |
+| 7 | Dryft Sleep (founder) | TH | 55.18 | 59.98 | 4.80 | `th7.mp4` |
+| 7b | Dryft Sleep b-roll | B-ROLL | 59.98 | 62.98 | 3.00 | `broll-dryft.mp4` |
 | 8 | Partner / metrics that matter | GFX | 62.98 | 71.50 | 8.52 | `s08-partner.html` |
 | 9 | Payoff: profit is what you keep | GFX | 71.50 | 78.92 | 7.42 | `s09-payoff.html` |
 | 10 | Direct: we can help | TH | 78.92 | 86.18 | 7.26 | `th10.mp4` |
@@ -31,9 +32,9 @@ TH = talking-head footage cut-in · GFX = full-frame brand motion graphics.
 
 **6 · The profit problem (GFX 40.42–55.18)** — Phase A: five cost rows climb in, staggered, with rising bars in flame — **Ad spend · Shipping · Returns · COGS · Discounts**. Phase B: rows collapse into two bars — **Revenue** tall & climbing (blue) vs **Profit** flat (flame outline). VO: *"…revenue setting records while profit stands still."* Centerpiece data-viz.
 
-**7 · Drift Sleep (TH 55.18–62.98)** — Founder + a small "Drift Sleep · client" chip. VO: *"…brands like Drift Sleep focus on numbers that drive profitability, not just top-line growth."*
+**7 · Dryft Sleep (TH 55.18–62.98)** — Founder + a small "Dryft Sleep · client" chip. VO: *"…brands like Dryft Sleep focus on numbers that drive profitability, not just top-line growth."*
 
-**8 · Partner (GFX 62.98–71.50)** — **EcomIQ × Drift Sleep** lockup; line: *metrics that matter — long after the first purchase.* Quiet, trust-building. Eases: power2.out, sine.
+**8 · Partner (GFX 62.98–71.50)** — **EcomIQ × Dryft Sleep** lockup; line: *metrics that matter — long after the first purchase.* Quiet, trust-building. Eases: power2.out, sine.
 
 **9 · Payoff (GFX 71.50–78.92)** — Thesis: **"Revenue is what you sold."** (struck through) → **"Profit is what you _keep_."** → a single coin drops into a bank-account glyph. VO: *"…only one of them ends up in your bank account."*
 
@@ -43,6 +44,6 @@ TH = talking-head footage cut-in · GFX = full-frame brand motion graphics.
 
 ## Structure (rule of threes)
 - **Hook** (0–18.7s, ~21%): record revenue, but no cash.
-- **Body** (18.7–71.5s, ~58%): why — revenue hides problems, costs creep, profit stalls, Drift Sleep proof.
+- **Body** (18.7–71.5s, ~58%): why — revenue hides problems, costs creep, profit stalls, Dryft Sleep proof.
 - **Payoff + CTA** (71.5–90.5s, ~21%): profit is what you keep → click the link.
 </content>

@@ -27,19 +27,16 @@
       #vignette { position: absolute; inset: 0; pointer-events: none;
         box-shadow: inset 0 0 240px 60px rgba(2,14,30,.7); }
 
-      /* Talking-head: a framed 16:9 window, identical placement for every cut. */
-      .th { position: absolute; left: 48px; top: 398px; width: 984px; height: 554px;
-        object-fit: cover; border-radius: 22px; border: 1px solid #1d4a7a;
-        box-shadow: 0 34px 90px -18px rgba(0,0,0,.62), 0 0 0 6px rgba(156,212,255,.06);
-        background: #0a325f; }
+      /* Talking-head: full-screen, fills the 4:5 frame, identical for every cut. */
+      .th { position: absolute; inset: 0; width: 1080px; height: 1350px; object-fit: cover; background: #06284C; }
+      /* Top scrim keeps the white logo legible over bright footage. */
+      #topscrim { position: absolute; top: 0; left: 0; right: 0; height: 280px; pointer-events: none;
+        background: linear-gradient(180deg, rgba(2,14,30,.62) 0%, rgba(2,14,30,0) 100%); }
 
-      /* Persistent EcomIQ lockup, top-left, above every scene. */
-      #brandmark { position: absolute; top: 60px; left: 64px; z-index: 50;
-        display: flex; flex-direction: column; gap: 12px; }
+      /* Persistent EcomIQ logo, top-left, above every scene. */
+      #brandmark { position: absolute; top: 60px; left: 64px; z-index: 50; }
       #brandmark img { width: 264px; height: auto; display: block;
-        filter: drop-shadow(0 6px 18px rgba(0,0,0,.45)); }
-      #brandmark .eyebrow { font-weight: 600; font-size: 19px; letter-spacing: .30em;
-        text-transform: uppercase; color: #9CD4FF; padding-left: 4px; }
+        filter: drop-shadow(0 6px 18px rgba(0,0,0,.55)); }
       #brandrule { position: absolute; top: 138px; left: 68px; width: 86px; height: 5px;
         background: #FF4C32; border-radius: 3px; transform-origin: left center; z-index: 50; }
     </style>
@@ -54,8 +51,11 @@
       <video id="th-hook"   class="th" muted src="assets/th1.mp4"  data-start="0"     data-duration="8.58" data-track-index="5"></video>
       <video id="th-turn"   class="th" muted src="assets/th3.mp4"  data-start="18.68" data-duration="6.42" data-track-index="5"></video>
       <video id="th-costs"  class="th" muted src="assets/th5.mp4"  data-start="36.86" data-duration="3.56" data-track-index="5"></video>
-      <video id="th-drift"  class="th" muted src="assets/th7.mp4"  data-start="55.18" data-duration="7.80" data-track-index="5"></video>
+      <video id="th-dryft"  class="th" muted src="assets/th7.mp4"  data-start="55.18" data-duration="4.80" data-track-index="5"></video>
       <video id="th-direct" class="th" muted src="assets/th10.mp4" data-start="78.92" data-duration="7.26" data-track-index="5"></video>
+
+      <!-- Dryft Sleep product b-roll (cut to emphasis while VO continues) -->
+      <video id="broll-dryft" class="th" muted src="assets/broll-dryft.mp4" data-start="59.98" data-duration="3.00" data-track-index="5"></video>
 
       <!-- ===== Full-frame brand motion-graphics beats ===== -->
       <div class="gfx" data-composition-id="s02-looks-good"     data-composition-src="compositions/s02-looks-good.html"     data-start="8.58"  data-duration="10.10" data-track-index="6" data-width="1080" data-height="1350"></div>
@@ -67,10 +67,10 @@
 
       <!-- ===== Persistent brand chrome ===== -->
       <div id="vignette" class="clip" data-start="0" data-duration="90.5" data-track-index="40"></div>
+      <div id="topscrim" class="clip" data-start="0" data-duration="90.5" data-track-index="41"></div>
       <div id="brandrule" class="clip" data-start="0" data-duration="90.5" data-track-index="49"></div>
       <div id="brandmark" class="clip" data-start="0" data-duration="90.5" data-track-index="50">
         <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-        <span class="eyebrow">E-Commerce Intelligence</span>
       </div>
 
       <!-- ===== Voiceover (continuous) ===== -->
