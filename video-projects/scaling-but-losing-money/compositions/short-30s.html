@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>scaling-but-losing-money — 30s</title>
+    <script src="../assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="../assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(../assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(../assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
+
+      #vid { position: absolute; inset: 0; width: 1080px; height: 1350px;
+        object-fit: cover; object-position: 50% 42%; display: block; }
+      #scrim { position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(180deg, rgba(6,40,76,.72) 0%, rgba(6,40,76,0) 22%); }
+
+      #logobar { position: absolute; top: 48px; left: 60px; width: 280px; height: 56px; z-index: 50; }
+      #logo { width: 100%; height: auto; display: block;
+        filter: drop-shadow(0 4px 14px rgba(0,0,0,.45)); }
+
+      .scene { position: absolute; inset: 0;
+        background:
+          radial-gradient(72% 42% at 50% 100%, rgba(255,76,50,.16) 0%, rgba(255,76,50,0) 70%),
+          radial-gradient(96% 50% at 50% 12%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%),
+          var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        text-align: center; padding: 9%; }
+      .em { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
+        font-weight: 400; color: var(--brand-blue-tint); }
+
+      /* G0 hook */
+      #g0 .eyebrow { font-weight: 700; font-size: 30px; letter-spacing: .30em;
+        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 30px; }
+      #g0 .head { font-weight: 800; font-size: 110px; letter-spacing: -.03em; line-height: 1.0; }
+
+      /* Gp — problem */
+      #gp .huge { font-weight: 800; font-size: 124px; letter-spacing: -.03em; line-height: .98; }
+
+      /* Gs — split */
+      #gs .cols { display: flex; gap: 34px; width: 100%; }
+      #gs .col { flex: 1; border: 1px solid var(--brand-border); border-radius: 26px;
+        padding: 48px 30px; background: #082c54; }
+      #gs .col .k { font-weight: 800; font-size: 76px; letter-spacing: -.02em; }
+      #gs .col .v { font-weight: 500; font-size: 36px; color: var(--brand-text-dim); margin-top: 14px; }
+      #gs .punch { font-weight: 800; font-size: 84px; letter-spacing: -.02em;
+        margin-top: 54px; color: var(--brand-flame); text-shadow: 0 16px 60px rgba(255,76,50,.4); }
+
+      /* Gc — CTA */
+      #gc .eyebrow { font-weight: 700; font-size: 30px; letter-spacing: .30em;
+        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 34px; }
+      #gc .cta { display: inline-flex; align-items: center; gap: 16px;
+        font-weight: 800; font-size: 52px; letter-spacing: -.01em; color: var(--brand-white);
+        background: var(--brand-flame); padding: 36px 64px; border-radius: 999px;
+        box-shadow: 0 26px 80px -18px rgba(255,76,50,.7); }
+      #gc .ctasub { font-weight: 500; font-size: 38px; line-height: 1.3;
+        color: var(--brand-text-dim); margin-top: 40px; max-width: 80%; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="scaling-but-losing-money-30s" data-start="0" data-duration="22.7" data-width="1080" data-height="1350">
+
+      <video id="vid" playsinline data-has-audio="true" data-volume="1"
+             data-start="0" data-duration="22.7" data-track-index="0"
+             src="../assets/talking-head-short.mp4"></video>
+      <div id="scrim" class="clip" data-start="0" data-duration="22.7" data-track-index="1"></div>
+
+      <!-- G0 opening hook (dissolves into speaker) -->
+      <div id="g0" class="scene clip" data-start="0" data-duration="3.5" data-track-index="9">
+        <div class="eyebrow">For scaling Shopify brands</div>
+        <div class="head">More revenue.<br /><span class="em">Less profit?</span></div>
+      </div>
+
+      <!-- Gp — the problem isn't sales (covers the splice at 7.0s) -->
+      <div id="gp" class="scene clip" data-start="7.0" data-duration="2.7" data-track-index="10">
+        <div class="huge">The problem<br />isn't <span class="em">sales.</span></div>
+      </div>
+
+      <!-- Gs — revenue vs profit split (covers the splice at 9.7s) -->
+      <div id="gs" class="scene clip" data-start="9.7" data-duration="7.44" data-track-index="11">
+        <div class="cols">
+          <div class="col" id="colrev"><div class="k">Revenue</div><div class="v">what you sold</div></div>
+          <div class="col" id="colprof"><div class="k">Profit</div><div class="v">what you keep</div></div>
+        </div>
+        <div class="punch" id="gspunch">Only one pays you.</div>
+      </div>
+
+      <!-- Gc — CTA -->
+      <div id="gc" class="scene clip" data-start="19.8" data-duration="2.9" data-track-index="12">
+        <div class="eyebrow">Ready to fix it?</div>
+        <div class="cta" id="ctapill">Click the link below <span>&rarr;</span></div>
+        <div class="ctasub">We guarantee the breakthrough you're looking for.</div>
+      </div>
+
+      <div id="logobar">
+        <img id="logo" src="../assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#logobar', { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.2);
+
+      // G0 hook → blur-dissolve into speaker
+      tl.fromTo('#g0 .eyebrow', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.25);
+      tl.fromTo('#g0 .head', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.5);
+      tl.to('#g0', { opacity: 0, filter: 'blur(18px)', duration: 0.55, ease: 'power2.inOut' }, 2.55);
+
+      // Gp — problem punch (hard cut in at 7.0)
+      tl.fromTo('#gp .huge', { opacity: 0, scale: 0.9, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 7.05);
+
+      // Gs — split + recolor punch
+      tl.fromTo('#colrev', { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 9.85);
+      tl.fromTo('#colprof', { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 10.15);
+      tl.to('#colprof', { borderColor: 'var(--brand-flame)', backgroundColor: '#241016',
+        boxShadow: '0 20px 70px -22px rgba(255,76,50,.7)', duration: 0.5, ease: 'power2.inOut' }, 14.1);
+      tl.to('#colprof .k', { color: 'var(--brand-flame)', duration: 0.5, ease: 'power2.inOut' }, 14.1);
+      tl.fromTo('#gspunch', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' }, 14.3);
+
+      // Gc — CTA (hard cut in at 19.8)
+      tl.fromTo('#gc .eyebrow', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 19.85);
+      tl.fromTo('#ctapill', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' }, 20.05);
+      tl.fromTo('#gc .ctasub', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 20.5);
+      tl.to('#ctapill', { scale: 1.03, duration: 1.0, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 21.3);
+
+      // Law 11 anchor
+      tl.to({}, { duration: 22.7 }, 0);
+      window.__timelines['scaling-but-losing-money-30s'] = tl;
+    </script>
+  </body>
+</html>
+</content>
