@@ -4,19 +4,17 @@
 import fs from "node:fs";
 
 const ID = "shopify-revenue-plateau-24s";
-const FACE_DUR = 18.0;                       // stitched VO length
+const FACE_DUR = 18.25;                      // stitched VO length
 const COMP     = process.env.TEST ? 6 : 19.0;
 const CAP_PAD  = 250;
 
 // HOOK
-const HK_IN = 2.3, HK_MONTHS = 2.85, HK_TELL = 4.4, HK_OUT = 5.25;
-// REFRAME (not failure / information)
-const E_IN = 5.35, E_INFO = 7.9, E_OUT = 8.95;
+const HK_IN = 2.3, HK_MONTHS = 2.85, HK_TELL = 4.4, HK_OUT = 5.5;
 // PROOF b-roll + +59% stat
-const BROLL_IN = 8.95, BROLL_OUT = 11.25;
-const STAT_IN = 11.15, COUNT_START = 11.35, COUNT_END = 12.05, STAT_OUT = 15.05;
-// CTA
-const CTA_IN = 16.4;
+const BROLL_IN = 9.23, BROLL_OUT = 11.45;
+const STAT_IN = 11.4, COUNT_START = 11.55, COUNT_END = 12.1, STAT_OUT = 15.45;
+// CTA (card-to-card from the stat; VO "let's find out what's holding it back" plays over it)
+const CTA_IN = 15.45;
 
 const html = `<!doctype html>
 <html lang="en">
@@ -198,9 +196,8 @@ const html = `<!doctype html>
       tl.fromTo("#h-tell", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .45, ease: "power3.out" }, ${HK_TELL});
       cardOut("#cardHook", ${HK_OUT});
 
-      // PROOF b-roll
+      // PROOF b-roll  (logo hides here and stays hidden through the stat + CTA cards)
       tl.to("#logo-wrap", { opacity: 0, duration: .25, ease: "power2.in" }, ${BROLL_IN} - .15);
-      tl.to("#logo-wrap", { opacity: 1, duration: .3, ease: "power2.out" }, ${STAT_OUT} + .05);
       tl.fromTo("#proof", { opacity: 0, scale: 1.08, filter: "blur(18px)" },
         { opacity: 1, scale: 1, filter: "blur(0px)", duration: .5, ease: "power2.out" }, ${BROLL_IN});
       tl.fromTo("#proof video", { scale: 1.0 }, { scale: 1.08, duration: ${BROLL_OUT - BROLL_IN + 0.2}, ease: "none", transformOrigin: "50% 50%" }, ${BROLL_IN});
@@ -218,7 +215,6 @@ const html = `<!doctype html>
       cardOut("#cardStat", ${STAT_OUT});
 
       // CTA
-      tl.to("#logo-wrap", { opacity: 0, duration: .3 }, ${CTA_IN} - .1);
       tl.fromTo("#cta", { opacity: 0, scale: 1.05, filter: "blur(14px)" },
         { opacity: 1, scale: 1, filter: "blur(0px)", duration: .5, ease: "power2.out" }, ${CTA_IN});
       tl.fromTo("#ologo", { opacity: 0, y: -16, xPercent: -50 }, { opacity: 1, y: 0, xPercent: -50, duration: .5, ease: "power3.out" }, ${CTA_IN} + .25);
