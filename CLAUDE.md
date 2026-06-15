@@ -230,6 +230,8 @@ The render is the ground truth. "The code looks correct" doesn't clear the bar.
 
 ## Asset Prep
 
+**B-roll source of truth:** all b-roll lives in the shared Google Drive folder **"B-Roll - EIQ"** (`1Td1UbF9wxkJn9iyO9mNExlXv6ztG7Uld`) — subfolders `Sean/` and `Clients/`. Search it with the Google Drive connector; pull heavy `.mov` files into `assets/incoming/` then `npm run prep`. Full tree, IDs, and connector constraints → `docs/EDITING-WITH-FOOTAGE.md`.
+
 Re-encode raw recordings to H.264 MP4 before referencing as `<video src>`:
 
 ```bash

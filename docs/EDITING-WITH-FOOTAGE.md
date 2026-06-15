@@ -26,6 +26,37 @@ npm run prep -- assets/incoming/talk.mov --project golden-ratio   # → assets/t
 ```
 Keep audio here (don't `--mute`) — the voice IS the video.
 
+### Where the b-roll lives — the canonical EIQ library (Google Drive)
+
+All b-roll from now on lives in the shared Drive folder **"B-Roll - EIQ"**:
+<https://drive.google.com/drive/folders/1Td1UbF9wxkJn9iyO9mNExlXv6ztG7Uld>
+
+```
+B-Roll - EIQ/                    1Td1UbF9wxkJn9iyO9mNExlXv6ztG7Uld
+├── Sean/                        1qWcGB1Kc8AFcjmWFMfpglcse4Lo0vY5s   (Sean's own footage)
+│   ├── Klaviyo event 26
+│   ├── March 26 LA
+│   ├── Shoptalk 26
+│   └── Old Podcast
+└── Clients/                     1XIsqQguZ0EJCJzwmGtQ4agL29FRqjUmm   (per-client footage)
+    ├── Dryft
+    └── Sweet E's
+```
+
+Browse/search it with the **Google Drive connector** (`mcp__Google_Drive__search_files`,
+e.g. `parentId = '<folder-id>'`). The connector is great for **finding** clips and for
+pulling **small files** (images, docs).
+
+**Constraint worth knowing** (learned the hard way): the connector returns file bytes as
+inline base64 and exposes **no thumbnails and no video duration/dimensions**. A ~1 MB image
+already overflows the inline limit; raw `.mov` clips (100–180 MB) are impractical to pull
+this way. So to actually get footage *into a project*:
+
+- **Small images / stills** → download via the connector, decode, drop into `assets/`.
+- **Heavy video** → download it to `assets/incoming/` (on a machine with Drive access, or
+  via a direct-download path if the network policy allows), then normalize with
+  `npm run prep` (see §1). Don't try to stream big `.mov` files through the connector.
+
 ## 2. Invoke the skill in PLAN MODE
 
 ```
