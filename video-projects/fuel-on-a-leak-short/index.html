@@ -22,7 +22,8 @@
         background: radial-gradient(96% 80% at 50% 44%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.30) 80%, rgba(0,0,0,0.52) 100%); }
       #grain { position: absolute; inset: 0; z-index: 60; pointer-events: none; opacity: 0.11; mix-blend-mode: soft-light; background-size: 280px 280px;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-      #logobug { position: absolute; top: 92px; left: 80px; width: 300px; height: auto; z-index: 3; }
+      #logobugwrap { position: absolute; inset: 0; z-index: 3; }
+      #logobug { position: absolute; top: 92px; left: 80px; width: 300px; height: auto; }
 
       /* ===== full-frame panels ===== */
       .panel { position: absolute; inset: 0; z-index: 20; overflow: hidden;
@@ -60,7 +61,8 @@
       #proof .num { font-weight: 800; font-size: 208px; letter-spacing: -0.04em; color: var(--brand-white); font-variant-numeric: tabular-nums; line-height: 1; }
       #proof .numlabel { position: absolute; top: 1330px; left: 96px; right: 96px; text-align: center; font-weight: 700; font-size: 62px; letter-spacing: -0.02em; }
       #proof .numlabel .ser { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
-      #proof .kicker { position: absolute; top: 1500px; left: 50%; transform: translateX(-50%); font-weight: 700; font-size: 48px; color: var(--brand-white);
+      #proof .kickerwrap { position: absolute; top: 1500px; left: 0; right: 0; display: flex; justify-content: center; }
+      #proof .kicker { font-weight: 700; font-size: 48px; color: var(--brand-white);
         background: var(--brand-flame); padding: 24px 54px; border-radius: 999px; box-shadow: 0 18px 56px -16px rgba(255,76,50,0.7); white-space: nowrap; }
 
       /* --- CTA end card --- */
@@ -68,7 +70,8 @@
       #cta .head { position: absolute; top: 760px; left: 110px; right: 110px; text-align: center; font-weight: 800; font-size: 104px; line-height: 0.98; letter-spacing: -0.03em; }
       #cta .head .leak { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-flame); }
       #cta .sub { position: absolute; top: 1160px; left: 130px; right: 130px; text-align: center; font-weight: 500; font-size: 50px; line-height: 1.3; color: var(--brand-text-dim); }
-      #cta .btn { position: absolute; bottom: 360px; left: 50%; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 18px;
+      #cta .btnwrap { position: absolute; bottom: 360px; left: 0; right: 0; display: flex; justify-content: center; }
+      #cta .btn { display: inline-flex; align-items: center; gap: 18px;
         font-weight: 700; font-size: 54px; color: var(--brand-white); background: var(--brand-flame); padding: 36px 70px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,0.7); white-space: nowrap; }
       #cta .btn .arrow { font-size: 56px; line-height: 1; transform: translateY(-2px); }
     </style>
@@ -80,7 +83,9 @@
       <audio id="vo" src="assets/ad5-short.mp4" data-start="0" data-duration="23.86" data-track-index="1" data-volume="1"></audio>
 
       <div id="topscrim" class="clip" data-start="0" data-duration="24.0" data-track-index="2"></div>
-      <img id="logobug" class="clip" data-start="0" data-duration="24.0" data-track-index="3" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      <div id="logobugwrap" class="clip" data-start="0" data-duration="24.0" data-track-index="3">
+        <img id="logobug" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
 
       <!-- cinematic finishing layers over the whole frame -->
       <div id="vignette" class="clip" data-start="0" data-duration="24.0" data-track-index="8"></div>
@@ -145,7 +150,7 @@
           <div class="num" id="proofnum">+0%</div>
         </div>
         <div class="numlabel"><span class="ser">returning</span> customers</div>
-        <div class="kicker">$0 extra ad spend</div>
+        <div class="kickerwrap"><div class="kicker">$0 extra ad spend</div></div>
       </div>
 
       <!-- ===== CTA end card (18.1–end) ===== -->
@@ -154,7 +159,7 @@
         <img class="clogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div class="head">Find the <span class="leak">leak</span><br />before you scale.</div>
         <div class="sub">We help Shopify brands uncover the bottlenecks holding growth back.</div>
-        <div class="btn">Click the link below <span class="arrow">&rarr;</span></div>
+        <div class="btnwrap"><div class="btn">Click the link below <span class="arrow">&rarr;</span></div></div>
       </div>
     </div>
 
