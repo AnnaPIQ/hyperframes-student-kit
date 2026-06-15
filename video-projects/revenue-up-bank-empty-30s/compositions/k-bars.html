@@ -39,8 +39,9 @@
 
   <script>
     (function(){
-      const SLOT = 5.48, S = '[data-composition-id="k-bars"] ';
+      const SLOT = 5.76, S = '[data-composition-id="k-bars"] ', R = '[data-composition-id="k-bars"]';
       const tl = gsap.timeline({ paused: true });
+      tl.fromTo(R, { opacity:0 }, { opacity:1, duration:0.25, ease:'sine.out' }, 0);
       tl.fromTo(S+'.title', { opacity:0, y:16 }, { opacity:1, y:0, duration:.5, ease:'power3.out' }, 0.1);
       gsap.set([S+'#barRev', S+'#barPro'], { scaleY: 0 });
       tl.fromTo(S+'.chart', { opacity:0 }, { opacity:1, duration:.4, ease:'sine.out' }, 0.2);
@@ -50,6 +51,7 @@
       tl.fromTo(S+'#recTag', { opacity:0, y:10 }, { opacity:1, y:0, duration:.5, ease:'back.out(1.6)' }, 1.5);
       tl.fromTo(S+'#stillTag', { opacity:0, scale:.8 }, { opacity:1, scale:1, duration:.5, ease:'back.out(1.6)' }, 1.9);
       tl.to(S+'#barRev', { scaleY: 1.06, duration:1.4, ease:'sine.inOut', yoyo:true, repeat:1 }, 2.4);
+      tl.to(R, { opacity:0, duration:0.30, ease:'sine.in' }, SLOT-0.30);
       tl.to({}, { duration: SLOT }, 0);
       window.__timelines = window.__timelines || {};
       window.__timelines['k-bars'] = tl;

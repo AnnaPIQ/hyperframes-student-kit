@@ -56,8 +56,10 @@
 
   <script>
     (function(){
-      const SLOT = 3.6, S = '[data-composition-id="s01-hook"] ';
+      const SLOT = 3.6, S = '[data-composition-id="s01-hook"] ', R = '[data-composition-id="s01-hook"]';
       const tl = gsap.timeline({ paused: true });
+      tl.fromTo(R, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'sine.out' }, 0);
+      tl.to(R, { opacity: 0, duration: 0.30, ease: 'sine.in' }, 3.10); // dissolve to the founder beneath
 
       // draw the rising revenue line
       const rl = document.querySelector(S+'#s01revline');

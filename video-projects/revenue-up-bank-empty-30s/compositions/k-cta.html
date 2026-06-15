@@ -1,6 +1,6 @@
 <template id="k-cta-template">
   <script src="../assets/vendor/gsap.min.js"></script>
-  <div data-composition-id="k-cta" data-start="0" data-duration="2.59" data-width="1080" data-height="1350">
+  <div data-composition-id="k-cta" data-start="0" data-duration="2.75" data-width="1080" data-height="1350">
   <style>
     @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(../assets/fonts/RethinkSans.woff2) format('woff2'); }
     @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(../assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
@@ -18,16 +18,17 @@
     [data-composition-id="k-cta"] .cta svg { width: 38px; height: 38px; }
   </style>
 
-  <div class="head clip" data-start="0.05" data-duration="2.54" data-track-index="1">Let's find your <em>missing</em> profit.</div>
-  <div class="cta clip" data-start="0.35" data-duration="2.24" data-track-index="2">
+  <div class="head clip" data-start="0.05" data-duration="2.70" data-track-index="1">Let's find your <em>missing</em> profit.</div>
+  <div class="cta clip" data-start="0.35" data-duration="2.40" data-track-index="2">
     Click the link below
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
   </div>
 
   <script>
     (function(){
-      const SLOT = 2.59, S = '[data-composition-id="k-cta"] ';
+      const SLOT = 2.75, S = '[data-composition-id="k-cta"] ', R = '[data-composition-id="k-cta"]';
       const tl = gsap.timeline({ paused: true });
+      tl.fromTo(R, { opacity:0 }, { opacity:1, duration:0.25, ease:'sine.out' }, 0);
       tl.fromTo(S+'.head', { opacity:0, y:28 }, { opacity:1, y:0, duration:.5, ease:'power3.out' }, 0.05);
       tl.fromTo(S+'.cta', { opacity:0, scale:.85 }, { opacity:1, scale:1, duration:.5, ease:'back.out(1.7)' }, 0.35);
       tl.to(S+'.cta', { scale:1.05, duration:.5, ease:'sine.inOut', yoyo:true, repeat:1 }, 1.2);
