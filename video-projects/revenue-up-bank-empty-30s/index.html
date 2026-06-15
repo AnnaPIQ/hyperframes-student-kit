@@ -29,31 +29,31 @@
   </head>
   <body>
     <div id="root" data-composition-id="revenue-up-bank-empty-30s" data-start="0"
-         data-duration="29.5" data-width="1080" data-height="1350">
+         data-duration="29.8" data-width="1080" data-height="1350">
 
-      <div id="bg" class="clip" data-start="0" data-duration="29.5" data-track-index="0"></div>
+      <div id="bg" class="clip" data-start="0" data-duration="29.8" data-track-index="0"></div>
 
       <!-- Talking head (framework owns playback — no class="clip"); sits beneath the
            GFX scenes, which dissolve over it so cuts crossfade rather than hard-pop. -->
       <video id="th-hook" class="th" muted src="assets/th1.mp4"    data-start="0"     data-duration="6.75" data-track-index="5"></video>
-      <video id="th-cta"  class="th" muted src="assets/th-cta.mp4" data-start="24.37" data-duration="2.56" data-track-index="5"></video>
+      <video id="th-cta"  class="th" muted src="assets/th-cta.mp4" data-start="24.76" data-duration="2.50" data-track-index="5"></video>
 
       <!-- Full-frame brand motion-graphics beats (each dissolves in/out through navy) -->
       <div class="gfx" data-composition-id="s01-hook" data-composition-src="compositions/s01-hook.html" data-start="0"     data-duration="3.40" data-track-index="6" data-width="1080" data-height="1350"></div>
       <div class="gfx" data-composition-id="k-keep"   data-composition-src="compositions/k-keep.html"   data-start="6.45"  data-duration="3.68" data-track-index="6" data-width="1080" data-height="1350"></div>
       <div class="gfx" data-composition-id="k-bars"   data-composition-src="compositions/k-bars.html"   data-start="10.13" data-duration="5.76" data-track-index="8" data-width="1080" data-height="1350"></div>
-      <div class="gfx" data-composition-id="k-payoff" data-composition-src="compositions/k-payoff.html" data-start="15.89" data-duration="8.51" data-track-index="6" data-width="1080" data-height="1350"></div>
-      <div class="gfx" data-composition-id="k-cta"    data-composition-src="compositions/k-cta.html"    data-start="26.70" data-duration="2.75" data-track-index="8" data-width="1080" data-height="1350"></div>
+      <div class="gfx" data-composition-id="k-payoff" data-composition-src="compositions/k-payoff.html" data-start="15.89" data-duration="8.87" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" data-composition-id="k-cta"    data-composition-src="compositions/k-cta.html"    data-start="27.05" data-duration="2.72" data-track-index="8" data-width="1080" data-height="1350"></div>
 
       <!-- Persistent chrome -->
-      <div id="vignette" class="clip" data-start="0" data-duration="29.5" data-track-index="40"></div>
-      <div id="topscrim" class="clip" data-start="0" data-duration="29.5" data-track-index="41"></div>
-      <div id="brandmark" class="clip" data-start="0" data-duration="29.5" data-track-index="50">
+      <div id="vignette" class="clip" data-start="0" data-duration="29.8" data-track-index="40"></div>
+      <div id="topscrim" class="clip" data-start="0" data-duration="29.8" data-track-index="41"></div>
+      <div id="brandmark" class="clip" data-start="0" data-duration="29.8" data-track-index="50">
         <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
 
       <!-- Spliced voiceover (lines separated by short breaths) -->
-      <audio id="vo" src="assets/vo30.m4a" data-start="0" data-duration="29.38" data-track-index="7"></audio>
+      <audio id="vo" src="assets/vo30.m4a" data-start="0" data-duration="29.77" data-track-index="7"></audio>
     </div>
 
     <script>
@@ -61,7 +61,9 @@
       const tl = gsap.timeline({ paused: true });
       tl.fromTo("#brandmark", { opacity: 0, x: -26 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.15);
       tl.fromTo("#vignette", { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "sine.out" }, 0);
-      tl.to({}, { duration: 29.5 }, 0);
+      // founder CTA dissolves in (payoff has faded to navy by here)
+      tl.fromTo("#th-cta", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "sine.out" }, 24.76);
+      tl.to({}, { duration: 29.8 }, 0);
       window.__timelines["revenue-up-bank-empty-30s"] = tl;
     </script>
   </body>
