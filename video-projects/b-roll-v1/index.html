@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>b-roll-v1 — Scaling but losing money</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy); color: var(--brand-white);
+        font-family: 'Rethink Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+      /* ---------- global texture layers ---------- */
+      #bg { position: absolute; inset: 0;
+        background:
+          radial-gradient(80% 50% at 50% 8%, rgba(45,127,214,.28) 0%, rgba(6,40,76,0) 60%),
+          radial-gradient(70% 45% at 50% 105%, rgba(255,76,50,.10) 0%, rgba(6,40,76,0) 55%),
+          var(--brand-navy); }
+      #grid { position: absolute; inset: -10%;
+        background-image:
+          linear-gradient(0deg, rgba(156,212,255,.05) 0 1px, transparent 1px 90px),
+          linear-gradient(90deg, rgba(156,212,255,.05) 0 1px, transparent 1px 90px);
+        transform: perspective(1100px) rotateX(58deg) translateY(8%); transform-origin: center 60%; }
+      #orb { position: absolute; top: -12%; left: 50%; width: 760px; height: 760px; margin-left: -380px;
+        border-radius: 50%; filter: blur(60px);
+        background: radial-gradient(circle, rgba(45,127,214,.45) 0%, rgba(6,40,76,0) 70%); }
+      .grain { position: absolute; inset: 0; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+        background-image:
+          radial-gradient(rgba(255,255,255,.9) .5px, transparent .6px),
+          radial-gradient(rgba(255,255,255,.7) .5px, transparent .6px);
+        background-size: 3px 3px, 5px 5px; background-position: 0 0, 2px 3px; }
+      .vignette { position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 75% 70% at 50% 45%, transparent 40%, rgba(2,16,33,.72) 100%); }
+
+      /* ---------- shared scene primitives ---------- */
+      .scene { position: absolute; inset: 0; }
+      .pad { position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; text-align: center; padding: 0 108px; }
+      .eyebrow { font-weight: 700; font-size: 25px; letter-spacing: .32em; text-transform: uppercase;
+        color: var(--brand-blue-tint); }
+      .h-xl { font-weight: 800; font-size: 96px; line-height: .98; letter-spacing: -.03em; }
+      .h-lg { font-weight: 800; font-size: 78px; line-height: 1.0; letter-spacing: -.025em; }
+      .h-md { font-weight: 800; font-size: 60px; line-height: 1.04; letter-spacing: -.02em; }
+      .sub { font-weight: 500; font-size: 33px; line-height: 1.3; color: var(--brand-text-dim); }
+      .em  { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400;
+        color: var(--brand-blue-tint); }
+      .em-hot { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400;
+        color: var(--brand-flame); }
+
+      /* full-bleed b-roll video */
+      .broll { position: absolute; inset: 0; width: 1080px; height: 1350px; object-fit: cover; }
+      .scrim { position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(4,22,44,.40) 0%, rgba(4,22,44,.05) 30%,
+          rgba(4,22,44,.20) 62%, rgba(4,22,44,.86) 100%); }
+
+      /* framed talking-head card video (16:9 inside the 4:5 frame) — video is a
+         direct child styled as the card; never nest media inside a timed wrapper */
+      .th-card-vid { position: absolute; left: 50px; top: 300px; width: 980px; height: 551px;
+        object-fit: cover; border-radius: 28px; background: #08203c;
+        border: 1px solid rgba(156,212,255,.22);
+        box-shadow: 0 40px 90px -30px rgba(0,0,0,.7); }
+      .th-tab { position: absolute; left: 50px; top: 248px; display: flex; align-items: center; gap: 12px;
+        font-weight: 700; font-size: 22px; letter-spacing: .06em; color: var(--brand-blue-tint); }
+      .th-tab .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--brand-flame);
+        box-shadow: 0 0 16px var(--brand-flame); }
+      .lower3 { position: absolute; left: 50px; right: 50px; top: 880px; text-align: center; }
+
+      /* logo */
+      .logo-wrap { position: absolute; top: 64px; left: 0; right: 0; display: flex; justify-content: center; }
+      .logo-wrap img { width: 300px; height: auto; }
+
+      /* cost-stack */
+      .stack { width: 100%; max-width: 760px; display: flex; flex-direction: column; gap: 18px; }
+      .row { display: flex; align-items: center; justify-content: space-between;
+        background: linear-gradient(180deg, var(--brand-surface) 0%, var(--brand-surface-2) 100%);
+        border: 1px solid var(--brand-border); border-radius: 16px; padding: 22px 30px; }
+      .row .lbl { font-weight: 700; font-size: 40px; letter-spacing: -.01em; }
+      .row .up { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 32px;
+        color: var(--brand-flame); }
+      .up svg { width: 28px; height: 28px; }
+
+      /* CTA */
+      .btn { display: inline-flex; align-items: center; gap: 14px; font-weight: 800; font-size: 38px;
+        color: #fff; background: var(--brand-flame); padding: 30px 56px; border-radius: 999px;
+        box-shadow: 0 26px 70px -18px rgba(255,76,50,.65); }
+      .whip { position: absolute; top: 0; left: -30%; width: 30%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(156,212,255,.55), rgba(255,255,255,.85), transparent);
+        filter: blur(26px); pointer-events: none; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="b-roll-v1" data-start="0" data-duration="82.6"
+         data-width="1080" data-height="1350">
+
+      <!-- ===== global texture ===== -->
+      <div id="bg"   class="clip" data-start="0" data-duration="82.6" data-track-index="0"></div>
+      <div id="orb"  class="clip" data-start="0" data-duration="82.6" data-track-index="1"></div>
+      <div id="grid" class="clip" data-start="0" data-duration="82.6" data-track-index="2"></div>
+
+      <!-- ============================================================= -->
+      <!-- B1 · HOOK (0.0–7.0)  — face → punch                            -->
+      <!-- ============================================================= -->
+      <div class="th-tab clip" id="b1tab" data-start="0.2" data-duration="4.3" data-track-index="40">
+        <span class="dot"></span> FOR SCALING SHOPIFY BRANDS</div>
+      <video class="th-card-vid" id="b1card" src="assets/proxies/th-hook.mp4" data-start="0.2" data-duration="4.3" data-track-index="6" muted></video>
+      <div class="lower3 clip" id="b1l3" data-start="1.0" data-duration="3.5" data-track-index="41">
+        <div class="sub">More revenue than ever — but keeping <span class="em">less</span>?</div>
+      </div>
+      <div class="scene clip" id="b1punch" data-start="4.6" data-duration="2.4" data-track-index="42">
+        <div class="pad">
+          <div class="h-xl">This is<br><span class="em">probably</span> why.</div>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- B2 · ASSUMPTION (6.8–13.2)                                     -->
+      <!-- ============================================================= -->
+      <div class="scene clip" id="b2" data-start="6.8" data-duration="6.4" data-track-index="43">
+        <div class="pad">
+          <div class="eyebrow" style="margin-bottom:30px">THE ASSUMPTION</div>
+          <div class="h-lg">Revenue goes up,<br>so profit <span class="em">follows.</span></div>
+          <div class="sub" id="b2x" style="margin-top:34px; color:var(--brand-flame); font-weight:700">That's just not how it works.</div>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- B3 · PRESSURE (12.9–18.3) — over b-roll (Sean thinking)        -->
+      <!-- ============================================================= -->
+      <video class="broll" id="v-thinking" src="assets/proxies/sean-thinking.mp4" data-start="12.9" data-duration="5.4" data-track-index="7" muted></video>
+      <div class="scrim clip" id="b3scrim" data-start="12.9" data-duration="5.4" data-track-index="20"></div>
+      <div class="scene clip" id="b3" data-start="13.1" data-duration="5.0" data-track-index="44">
+        <div class="pad" style="justify-content:flex-end; padding-bottom:150px">
+          <div class="h-md">The fastest-growing brands<br>feel the <span class="em-hot">most</span> pressure.</div>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- B4 · COST STACK (17.9–29.9) — HERO list, dryft product intro   -->
+      <!-- ============================================================= -->
+      <video class="broll" id="v-dryft1" src="assets/proxies/dryft-holding.mp4" data-start="17.9" data-duration="1.8" data-track-index="8" muted></video>
+      <div class="scrim clip" id="b4scrim" data-start="17.9" data-duration="1.8" data-track-index="21"></div>
+      <div class="scene clip" id="b4lead" data-start="18.1" data-duration="1.6" data-track-index="45">
+        <div class="pad" style="justify-content:flex-end; padding-bottom:150px">
+          <div class="h-md">More sales in…<br><span class="em">more</span> costs in.</div>
+        </div>
+      </div>
+      <div class="scene clip" id="b4" data-start="19.7" data-duration="10.2" data-track-index="46">
+        <div class="pad" style="justify-content:center">
+          <div class="eyebrow" id="b4title" style="margin-bottom:34px; color:var(--brand-flame)">QUIETLY EATING YOUR MARGIN</div>
+          <div class="stack">
+            <div class="row" id="r1"><span class="lbl">Ad spend</span><span class="up">creeps up <svg viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="#FF4C32" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <div class="row" id="r2"><span class="lbl">Shipping</span><span class="up">rises <svg viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="#FF4C32" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <div class="row" id="r3"><span class="lbl">Returns</span><span class="up">eat margin <svg viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="#FF4C32" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <div class="row" id="r4"><span class="lbl">Cost of goods</span><span class="up">climbs <svg viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="#FF4C32" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <div class="row" id="r5"><span class="lbl">Discounts</span><span class="up">harder to avoid <svg viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="#FF4C32" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- B5 · DIVERGENCE (29.6–37.8) — HERO chart                       -->
+      <!-- ============================================================= -->
+      <div class="scene clip" id="b5" data-start="29.6" data-duration="8.2" data-track-index="47">
+        <div class="pad" style="justify-content:center; gap:48px">
+          <div class="h-md" style="font-size:54px">None of it looks major.<br>Together, it <span class="em-hot">pulls profit out.</span></div>
+          <svg id="chart" viewBox="0 0 760 380" style="width:760px; height:380px">
+            <line x1="40" y1="340" x2="740" y2="340" stroke="#1d4a7a" stroke-width="2"/>
+            <line x1="40" y1="20"  x2="40"  y2="340" stroke="#1d4a7a" stroke-width="2"/>
+            <polygon id="leak" points="40,150 740,90 740,300 40,150" fill="#FF4C32" opacity="0"/>
+            <polyline id="rev" points="40,150 220,128 400,104 560,86 740,64" fill="none"
+              stroke="#9CD4FF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline id="prof" points="40,150 220,176 400,214 560,262 740,308" fill="none"
+              stroke="#FF4C32" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <text id="revlbl" x="748" y="60"  fill="#9CD4FF" font-family="Rethink Sans" font-weight="800" font-size="30" text-anchor="end">Revenue</text>
+            <text id="proflbl" x="748" y="334" fill="#FF4C32" font-family="Rethink Sans" font-weight="800" font-size="30" text-anchor="end">Profit</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- B6 · WHERE'D IT GO (37.4–43.3) — over Sean walking b-roll      -->
+      <!-- ============================================================= -->
+      <video class="broll" id="v-walk" src="assets/proxies/sean-walk.mp4" data-start="37.4" data-duration="4.0" data-track-index="9" muted></video>
+      <div class="scrim clip" id="b6scrim" data-start="37.4" data-duration="4.0" data-track-index="22"></div>
+      <div class="scene clip" id="b6" data-start="37.6" data-duration="5.5" data-track-index="48">
+        <div class="pad" style="justify-content:flex-end; padding-bottom:150px">
+          <div class="eyebrow" style="margin-bottom:24px">RECORD-SALES MONTHS</div>
+          <div class="h-md">…and still wondering<br><span class="em">where it all went.</span></div>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- B7 · NOT SALES → NUMBERS (43.0–50.7)                           -->
+      <!-- ============================================================= -->
+      <video class="th-card-vid" id="b7card" src="assets/proxies/th-isntsales.mp4" data-start="43.2" data-duration="3.0" data-track-index="10" muted></video>
+      <div class="th-tab clip" id="b7tab" data-start="43.3" data-duration="2.9" data-track-index="49">
+        <span class="dot"></span> THE REAL PROBLEM</div>
+      <div class="lower3 clip" id="b7l3" data-start="43.5" data-duration="2.7" data-track-index="50">
+        <div class="h-md" style="font-size:52px">The problem usually isn't <span class="em">sales.</span></div>
+      </div>
+      <video class="broll" id="v-typing" src="assets/proxies/sean-typing.mp4" data-start="46.5" data-duration="4.2" data-track-index="11" muted></video>
+      <div class="scrim clip" id="b7scrim" data-start="46.5" data-duration="4.2" data-track-index="23"></div>
+      <div class="scene clip" id="b7b" data-start="46.7" data-duration="3.9" data-track-index="51">
+        <div class="pad" style="justify-content:flex-end; padding-bottom:150px">
+          <div class="h-md">No one's watching the<br><span class="em-hot">numbers</span> that decide what you keep.</div>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- B8 · THESIS (50.4–58.7) — biggest type                         -->
+      <!-- ============================================================= -->
+      <div class="scene clip" id="b8" data-start="50.4" data-duration="8.3" data-track-index="52">
+        <div class="pad" style="justify-content:center; gap:18px">
+          <div class="h-lg" id="t1">Revenue is what<br>you <span class="em">sold.</span></div>
+          <div class="h-lg" id="t2" style="margin-top:10px">Profit is what<br>you <span class="em">keep.</span></div>
+          <div class="h-md" id="t3" style="margin-top:30px; color:var(--brand-blue-tint)">Only <span class="em-hot">one</span> of them pays you.</div>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- B9 · SOLUTION (58.4–73.8) — product → face cameo → fix         -->
+      <!-- ============================================================= -->
+      <video class="broll" id="v-dryft2" src="assets/proxies/dryft-pickup.mp4" data-start="58.4" data-duration="3.3" data-track-index="12" muted></video>
+      <div class="scrim clip" id="b9scrim" data-start="58.4" data-duration="3.3" data-track-index="24"></div>
+      <div class="scene clip" id="b9a" data-start="58.6" data-duration="3.1" data-track-index="53">
+        <div class="pad" style="justify-content:flex-end; padding-bottom:150px">
+          <div class="h-md">Growing brand,<br>but profit <span class="em-hot">isn't following?</span></div>
+        </div>
+      </div>
+      <video class="th-card-vid" id="b9card" src="assets/proxies/th-help.mp4" data-start="63.8" data-duration="5.0" data-track-index="13" muted></video>
+      <div class="logo-wrap clip" id="b9logo" data-start="63.9" data-duration="9.7" data-track-index="54">
+        <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+      <div class="lower3 clip" id="b9l3" data-start="64.2" data-duration="4.4" data-track-index="55">
+        <div class="sub">We find exactly where your <span class="em" style="font-size:36px">margin is leaking.</span></div>
+      </div>
+      <div class="scene clip" id="b9b" data-start="69.0" data-duration="4.6" data-track-index="56">
+        <div class="pad" style="justify-content:center; padding-top:60px">
+          <div class="h-lg">And what to<br>fix <span class="em-hot">first.</span></div>
+        </div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- B10 · CTA (73.6–82.6) — face → hold                            -->
+      <!-- ============================================================= -->
+      <video class="th-card-vid" id="b10card" src="assets/proxies/th-cta.mp4" data-start="73.7" data-duration="4.0" data-track-index="14" muted></video>
+      <div class="lower3 clip" id="b10l3" data-start="74.0" data-duration="3.6" data-track-index="57">
+        <div class="h-md" style="font-size:50px">Click the link below.</div>
+      </div>
+      <div class="scene clip" id="b10cta" data-start="77.9" data-duration="4.7" data-track-index="58">
+        <div class="pad" style="justify-content:center; gap:40px">
+          <img id="ctalogo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" style="width:360px; height:auto" />
+          <div class="h-lg">Find your<br><span class="em">breakthrough.</span></div>
+          <div class="btn" id="ctabtn">Click the link below →</div>
+          <div class="sub" style="font-weight:700; color:var(--brand-blue-tint)">We guarantee it.</div>
+        </div>
+      </div>
+
+      <!-- ===== seam whips ===== -->
+      <div class="whip clip" id="w1" data-start="6.7"  data-duration="0.5" data-track-index="78"></div>
+      <div class="whip clip" id="w2" data-start="17.8" data-duration="0.5" data-track-index="78"></div>
+      <div class="whip clip" id="w3" data-start="29.5" data-duration="0.5" data-track-index="78"></div>
+      <div class="whip clip" id="w4" data-start="50.3" data-duration="0.5" data-track-index="78"></div>
+      <div class="whip clip" id="w5" data-start="73.5" data-duration="0.5" data-track-index="78"></div>
+
+      <!-- ===== global texture on top ===== -->
+      <div class="grain clip"    id="grain"    data-start="0" data-duration="82.6" data-track-index="30"></div>
+      <div class="vignette clip" id="vignette" data-start="0" data-duration="82.6" data-track-index="31"></div>
+
+      <!-- ===== audio ===== -->
+      <audio id="a-vo"  src="assets/audio/vo.m4a"           data-start="0"    data-duration="82.6" data-track-index="90" data-volume="1.0"></audio>
+      <audio id="a-pad" src="assets/audio/pad-bed.m4a"      data-start="0"    data-duration="82.6" data-track-index="91" data-volume="0.13"></audio>
+      <audio id="a-w1"  src="assets/audio/sfx-whoosh-1.mp3" data-start="6.7"  data-duration="0.5"  data-track-index="92" data-volume="0.18"></audio>
+      <audio id="a-w2"  src="assets/audio/sfx-whoosh-2.mp3" data-start="17.8" data-duration="0.5"  data-track-index="93" data-volume="0.18"></audio>
+      <audio id="a-w3"  src="assets/audio/sfx-whoosh-1.mp3" data-start="29.5" data-duration="0.5"  data-track-index="94" data-volume="0.18"></audio>
+      <audio id="a-w4"  src="assets/audio/sfx-whoosh-2.mp3" data-start="50.3" data-duration="0.5"  data-track-index="95" data-volume="0.18"></audio>
+      <audio id="a-tw"  src="assets/audio/sfx-twinkle.mp3"  data-start="78.0" data-duration="0.6"  data-track-index="96" data-volume="0.22"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      gsap.set(["#orb","#grid"], { transformOrigin: "50% 50%" });
+
+      // ambient life — grid parallax + orb breath (continuous)
+      tl.to("#grid", { backgroundPositionY: "+=90", duration: 82.6, ease: "none" }, 0);
+      tl.to("#orb",  { scale: 1.12, opacity: 0.85, duration: 6, repeat: 5, yoyo: true, ease: "sine.inOut" }, 0);
+
+      const enter = (sel, at, o = {}) => tl.fromTo(sel,
+        { autoAlpha: 0, y: o.y ?? 34, filter: o.blur === false ? "blur(0px)" : "blur(14px)" },
+        { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: o.d ?? 0.6, ease: o.ease ?? "power3.out" }, at);
+      const exitUp = (sel, at, d = 0.34) => tl.to(sel,
+        { autoAlpha: 0, y: -34, filter: "blur(14px)", duration: d, ease: "power2.in" }, at);
+      const card = (sel, at) => tl.fromTo(sel,
+        { autoAlpha: 0, scale: 0.965, y: 24 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.55, ease: "power3.out" }, at);
+      const whip = (sel, at) => tl.fromTo(sel,
+        { xPercent: 0, opacity: 0.9 }, { xPercent: 520, opacity: 0, duration: 0.5, ease: "power2.in" }, at);
+
+      // ---- B1 hook ----
+      card("#b1card", 0.15); enter("#b1tab", 0.3, { y: 14, blur: false });
+      enter("#b1l3", 1.05, { y: 18 });
+      tl.to(["#b1card","#b1tab","#b1l3"], { autoAlpha: 0, y: -30, filter: "blur(12px)", duration: 0.3, ease: "power2.in" }, 4.35);
+      tl.set(["#b1card","#b1tab","#b1l3"], { autoAlpha: 0 }, 4.6);
+      enter("#b1punch", 4.65, { y: 40, d: 0.55 }); exitUp("#b1punch", 6.75);
+
+      // ---- B2 assumption ----
+      enter("#b2 .eyebrow", 6.95, { y: 16, blur: false });
+      enter("#b2 .h-lg", 7.25, { y: 30 });
+      enter("#b2x", 9.9, { y: 18 });
+      exitUp("#b2", 12.95);
+
+      // ---- B3 pressure ----
+      enter("#b3 .h-md", 13.25, { y: 30 });
+      exitUp("#b3", 17.85);
+
+      // ---- B4 cost stack ----
+      enter("#b4lead .h-md", 18.15, { y: 28 }); exitUp("#b4lead", 19.55, 0.3);
+      enter("#b4title", 19.85, { y: 16, blur: false });
+      const rowAt = { r1: 20.5, r2: 21.9, r3: 23.4, r4: 25.0, r5: 26.7 };
+      Object.entries(rowAt).forEach(([id, t]) =>
+        tl.fromTo("#" + id, { autoAlpha: 0, x: -40, filter: "blur(8px)" },
+          { autoAlpha: 1, x: 0, filter: "blur(0px)", duration: 0.5, ease: "back.out(1.3)" }, t));
+      exitUp("#b4", 29.5, 0.3);
+
+      // ---- B5 divergence chart ----
+      enter("#b5 .h-md", 29.7, { y: 28 });
+      ["#rev", "#prof"].forEach((s) => {
+        const el = document.querySelector(s); const len = el.getTotalLength();
+        gsap.set(el, { strokeDasharray: len, strokeDashoffset: len });
+      });
+      tl.to("#rev",  { strokeDashoffset: 0, duration: 1.8, ease: "power2.out" }, 30.4);
+      tl.to("#prof", { strokeDashoffset: 0, duration: 2.4, ease: "power2.in"  }, 31.0);
+      tl.fromTo("#leak", { opacity: 0 }, { opacity: 0.18, duration: 0.8, ease: "power2.out" }, 33.6);
+      tl.fromTo(["#revlbl","#proflbl"], { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5, stagger: 0.2 }, 31.6);
+      exitUp("#b5", 37.5, 0.3);
+
+      // ---- B6 where'd it go ----
+      enter("#b6 .eyebrow", 37.75, { y: 14, blur: false });
+      enter("#b6 .h-md", 38.05, { y: 28 });
+      exitUp("#b6", 42.95, 0.3);
+
+      // ---- B7 not sales → numbers ----
+      card("#b7card", 43.2); enter("#b7tab", 43.35, { y: 14, blur: false });
+      enter("#b7l3", 43.55, { y: 18 });
+      tl.to(["#b7card","#b7tab","#b7l3"], { autoAlpha: 0, y: -28, filter: "blur(12px)", duration: 0.3, ease: "power2.in" }, 46.2);
+      tl.set(["#b7card","#b7tab","#b7l3"], { autoAlpha: 0 }, 46.5);
+      enter("#b7b .h-md", 46.75, { y: 30 });
+      exitUp("#b7b", 50.3, 0.3);
+
+      // ---- B8 thesis ----
+      enter("#t1", 50.55, { y: 36, d: 0.6 });
+      tl.to("#t1", { autoAlpha: 0.28, duration: 0.4 }, 53.0);
+      enter("#t2", 53.1, { y: 36, d: 0.6 });
+      tl.to(["#t1","#t2"], { autoAlpha: 0.22, duration: 0.4 }, 55.8);
+      enter("#t3", 55.9, { y: 30, d: 0.6 });
+      tl.fromTo("#t3 .em-hot", { textShadow: "0 0 0 rgba(255,76,50,0)" },
+        { textShadow: "0 0 26px rgba(255,76,50,.8)", duration: 0.5 }, 56.4);
+      exitUp("#b8", 58.4, 0.32);
+
+      // ---- B9 solution ----
+      enter("#b9a .h-md", 58.7, { y: 28 });
+      exitUp("#b9a", 61.6, 0.3);
+      card("#b9card", 63.8);
+      tl.fromTo("#b9logo", { autoAlpha: 0, y: -16 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out" }, 63.95);
+      enter("#b9l3", 64.25, { y: 18 });
+      tl.to(["#b9card","#b9l3"], { autoAlpha: 0, y: -26, filter: "blur(12px)", duration: 0.35, ease: "power2.in" }, 68.6);
+      enter("#b9b .h-lg", 69.05, { y: 34, d: 0.6 });
+      tl.to(["#b9b","#b9logo"], { autoAlpha: 0, y: -28, filter: "blur(12px)", duration: 0.35, ease: "power2.in" }, 73.45);
+
+      // ---- B10 CTA ----
+      card("#b10card", 73.7); enter("#b10l3", 74.05, { y: 18 });
+      tl.to(["#b10card","#b10l3"], { autoAlpha: 0, y: -26, filter: "blur(12px)", duration: 0.32, ease: "power2.in" }, 77.55);
+      tl.set(["#b10card","#b10l3"], { autoAlpha: 0 }, 77.9);
+      tl.fromTo("#b10cta img", { autoAlpha: 0, y: -18 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" }, 77.95);
+      enter("#b10cta .h-lg", 78.25, { y: 30, d: 0.6 });
+      tl.fromTo("#ctabtn", { autoAlpha: 0, scale: 0.86 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 78.9);
+      tl.fromTo("#b10cta .sub", { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" }, 79.4);
+      tl.to("#ctabtn", { scale: 1.05, duration: 0.7, repeat: 2, yoyo: true, ease: "sine.inOut" }, 80.0);
+
+      // ---- seam whips ----
+      whip("#w1", 6.7); whip("#w2", 17.8); whip("#w3", 29.5); whip("#w4", 50.3); whip("#w5", 73.5);
+
+      tl.to({}, { duration: 82.6 }, 0); // Law 11 anchor — fill the slot
+      window.__timelines["b-roll-v1"] = tl;
+    </script>
+  </body>
+</html>

@@ -45,7 +45,21 @@ efficient over time instead of relearning the same lessons.
   offset that the engine drops. **Fix:** advance the video ~0.16s relative to audio so
   lips match (tune per clip).
 - **Phone / vertical b-roll imports rotated.** **Fix:** rotate 90° CW during prep
-  (`ffmpeg -vf "transpose=1"`).
+  (`ffmpeg -vf "transpose=1"`). Note: `ffprobe` may report the clip as landscape
+  (e.g. 3840×2160) and *not* surface the rotation side-data, yet the decoded frames
+  are still sideways. Don't trust the probe — **grab a thumbnail and eyeball it** before
+  encoding proxies. After `transpose=1`, a 3840×2160 source becomes 2160×3840 (portrait),
+  which crops cleanly to 4:5/9:16.
+- **Don't nest `<video>`/`<audio>` inside a timed wrapper `<div>` (one with its own
+  `data-start`).** Lint flags `video_nested_in_timed_element` and the media FREEZES in
+  the render. **Fix:** make the media a *direct* child of the composition with its own
+  `id` + timing, and style it as the "card" directly (border-radius, object-fit, shadow
+  on the `<video>` itself). Animate entrance via `transform`/`autoAlpha` only (never
+  width/height/top/left). Every `<video>`/`<audio>` with `data-start` also needs a
+  unique `id` or it won't be discovered (`media_missing_id`).
+- **`repeat: -1` (infinite GSAP loops) break the deterministic capture engine.** Lint
+  errors `gsap_infinite_repeat`. **Fix:** finite count from the slot —
+  `repeat: Math.floor(totalDuration / cycleDuration) - 1` (use `Math.floor`).
 - **Offline transcriber can't run (model download egress-blocked).** Some environments
   block the Whisper model download. **Fix:** caption from the known script text and
   anchor timing via silence analysis instead of word-level timestamps.
