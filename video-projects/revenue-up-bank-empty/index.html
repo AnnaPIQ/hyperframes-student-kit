@@ -32,13 +32,20 @@
       /* Top scrim keeps the white logo legible over bright footage. */
       #topscrim { position: absolute; top: 0; left: 0; right: 0; height: 280px; pointer-events: none;
         background: linear-gradient(180deg, rgba(2,14,30,.62) 0%, rgba(2,14,30,0) 100%); }
+      /* Bottom scrim anchors the opening hook line. */
+      #bottomscrim { position: absolute; bottom: 0; left: 0; right: 0; height: 520px; pointer-events: none;
+        background: linear-gradient(0deg, rgba(2,14,30,.82) 0%, rgba(2,14,30,0) 100%); }
 
       /* Persistent EcomIQ logo, top-left, above every scene. */
       #brandmark { position: absolute; top: 60px; left: 64px; z-index: 50; }
       #brandmark img { width: 264px; height: auto; display: block;
         filter: drop-shadow(0 6px 18px rgba(0,0,0,.55)); }
-      #brandrule { position: absolute; top: 138px; left: 68px; width: 86px; height: 5px;
-        background: #FF4C32; border-radius: 3px; transform-origin: left center; z-index: 50; }
+
+      /* Opening hook line (designed hook, not a caption). */
+      #hook { position: absolute; left: 70px; right: 70px; bottom: 150px; z-index: 48;
+        font-weight: 800; font-size: 92px; line-height: 1.02; letter-spacing: -.03em;
+        color: #FFFFFF; text-shadow: 0 6px 30px rgba(0,0,0,.6); }
+      #hook .l2 { display: block; color: #FF4C32; margin-top: 6px; }
     </style>
   </head>
   <body>
@@ -65,10 +72,16 @@
       <div class="gfx" data-composition-id="s09-payoff"         data-composition-src="compositions/s09-payoff.html"         data-start="71.50" data-duration="7.42"  data-track-index="6" data-width="1080" data-height="1350"></div>
       <div class="gfx" data-composition-id="s11-cta"            data-composition-src="compositions/s11-cta.html"            data-start="86.18" data-duration="4.32"  data-track-index="6" data-width="1080" data-height="1350"></div>
 
+      <!-- ===== Opening hook ===== -->
+      <div id="bottomscrim" class="clip" data-start="0.2" data-duration="3.6" data-track-index="44"></div>
+      <div id="hook" class="clip" data-start="0.4" data-duration="3.2" data-track-index="45">
+        <span class="l1">Biggest month ever.</span>
+        <span class="l2">Nothing in the bank.</span>
+      </div>
+
       <!-- ===== Persistent brand chrome ===== -->
       <div id="vignette" class="clip" data-start="0" data-duration="90.5" data-track-index="40"></div>
       <div id="topscrim" class="clip" data-start="0" data-duration="90.5" data-track-index="41"></div>
-      <div id="brandrule" class="clip" data-start="0" data-duration="90.5" data-track-index="49"></div>
       <div id="brandmark" class="clip" data-start="0" data-duration="90.5" data-track-index="50">
         <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
@@ -82,10 +95,13 @@
       const tl = gsap.timeline({ paused: true });
       tl.fromTo("#brandmark", { opacity: 0, x: -26 },
         { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.15);
-      tl.fromTo("#brandrule", { scaleX: 0 },
-        { scaleX: 1, duration: 0.55, ease: "power2.out" }, 0.35);
       tl.fromTo("#vignette", { opacity: 0 },
         { opacity: 1, duration: 1.0, ease: "sine.out" }, 0);
+      // Opening hook
+      tl.fromTo("#bottomscrim", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "sine.out" }, 0.2);
+      tl.fromTo("#hook .l1", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.4);
+      tl.fromTo("#hook .l2", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.7);
+      tl.to(["#hook", "#bottomscrim"], { opacity: 0, duration: 0.4, ease: "power2.in" }, 3.2);
       tl.to({}, { duration: 90.5 }, 0); // pad to data-duration
       window.__timelines["revenue-up-bank-empty"] = tl;
     </script>

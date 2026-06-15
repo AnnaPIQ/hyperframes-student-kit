@@ -72,9 +72,6 @@
       count('#lg-ord', 5120, v => Math.round(v).toLocaleString('en-US'), 1.0);
       count('#lg-grw', 41, v => '+'+Math.round(v)+'%', 1.35);
 
-      // gentle settle, then a faint dim near the end (the doubt creeping in)
-      tl.to(S+'.tile', { filter:'saturate(.7) brightness(.9)', duration:1.0, ease:'sine.inOut' }, 8.6);
-
       tl.to({}, { duration: SLOT }, 0);
       window.__timelines = window.__timelines || {};
       window.__timelines['s02-looks-good'] = tl;
