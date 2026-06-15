@@ -15,140 +15,118 @@
         font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1080px; height: 1350px; overflow: hidden;
-        background: var(--brand-bg);
+        background: var(--brand-navy);
         font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
 
-      #bg { position: absolute; inset: 0;
+      /* ---- full-screen speaker ---- */
+      #vid { position: absolute; inset: 0; width: 1080px; height: 1350px;
+        object-fit: cover; object-position: 50% 42%; display: block; }
+      /* top scrim so the white logo always reads over the footage */
+      #scrim { position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(180deg, rgba(6,40,76,.72) 0%, rgba(6,40,76,0) 22%); }
+
+      /* persistent brand logo, always on top (non-clip wrapper so it never drifts) */
+      #logobar { position: absolute; top: 48px; left: 60px; width: 280px; height: 56px; z-index: 50; }
+      #logo { width: 100%; height: auto; display: block;
+        filter: drop-shadow(0 4px 14px rgba(0,0,0,.45)); }
+
+      /* ---- full-screen emphasis-graphic cutaways ---- */
+      .scene { position: absolute; inset: 0;
         background:
-          radial-gradient(95% 50% at 50% 12%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%),
-          var(--brand-navy); }
-      /* warm flame bloom anchored low — the "margin pain" heat */
-      #bloom { position: absolute; left: -10%; right: -10%; bottom: -8%; height: 46%;
-        background: radial-gradient(60% 100% at 50% 100%, rgba(255,76,50,.20) 0%, rgba(255,76,50,0) 70%);
-        filter: blur(6px); }
-
-      /* ---- founder card (16:9, no crop) ---- */
-      #cardframe { position: absolute; left: 60px; top: 132px; width: 960px; height: 540px;
-        border-radius: 28px; background: #04203f;
-        border: 1px solid var(--brand-border);
-        box-shadow: 0 28px 80px -28px rgba(0,0,0,.7), inset 0 1px 0 rgba(156,212,255,.18); }
-      #vidwrap { position: absolute; left: 60px; top: 132px; width: 960px; height: 540px;
-        border-radius: 28px; overflow: hidden; }
-      #vid { width: 100%; height: 100%; object-fit: cover; display: block; }
-      /* subtle navy vignette over footage edges to seat it on-brand */
-      #cardvig { position: absolute; left: 60px; top: 132px; width: 960px; height: 540px;
-        border-radius: 28px; pointer-events: none;
-        box-shadow: inset 0 0 90px 8px rgba(6,40,76,.55); }
-
-      #logobar { position: absolute; top: 46px; left: 60px; width: 300px; height: 60px; }
-      #logo { width: 100%; height: auto; display: block; }
-
-      /* ---- callout zone (lower) ---- */
-      .callout { position: absolute; left: 60px; right: 60px; top: 746px; }
-      .eyebrow { font-weight: 700; font-size: 25px; letter-spacing: .30em;
-        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 18px; }
-      .head { font-weight: 800; font-size: 82px; line-height: .98; letter-spacing: -.03em; }
-      .head.sm { font-size: 70px; }
+          radial-gradient(72% 42% at 50% 100%, rgba(255,76,50,.16) 0%, rgba(255,76,50,0) 70%),
+          radial-gradient(96% 50% at 50% 12%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%),
+          var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        text-align: center; padding: 9%; }
       .em { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
         font-weight: 400; color: var(--brand-blue-tint); }
       .hot { color: var(--brand-flame); }
-      .sub { font-weight: 500; font-size: 33px; line-height: 1.3; color: var(--brand-text-dim);
-        margin-top: 22px; max-width: 90%; }
 
-      /* B5 cost stack */
-      #b5 .title { font-weight: 700; font-size: 34px; color: var(--brand-blue-tint);
-        letter-spacing: -.01em; margin-bottom: 24px; }
-      .crow { display: flex; align-items: center; gap: 22px; margin: 0 0 20px;
-        font-weight: 700; font-size: 50px; letter-spacing: -.02em; }
-      .crow .arr { color: var(--brand-flame); font-size: 44px; width: 34px; text-align: center; }
+      /* G1 — revenue ≠ profit */
+      #g1 .big { font-weight: 800; font-size: 104px; letter-spacing: -.03em; line-height: 1; }
+      #g1 .up { color: var(--brand-blue-tint); }
+      #g1 .neq { font-weight: 800; font-size: 168px; line-height: 1; color: var(--brand-flame);
+        margin: 18px 0; text-shadow: 0 18px 70px rgba(255,76,50,.5); }
+      #g1 .ssub { font-weight: 500; font-size: 38px; color: var(--brand-text-dim); margin-top: 26px; }
 
-      /* B6 chart */
-      #b6 .chartwrap { position: relative; width: 100%; height: 300px; }
-      #b6 svg { width: 100%; height: 300px; overflow: visible; }
-      #b6 .clab { position: absolute; font-weight: 700; font-size: 30px; letter-spacing: -.01em; }
-      #b6 .clab.rev { top: 4px; right: 8px; color: var(--brand-blue-tint); }
-      #b6 .clab.prof { bottom: 6px; right: 8px; color: var(--brand-flame); }
-      #b6 .ccap { font-weight: 600; font-size: 32px; color: var(--brand-text-dim); margin-top: 8px; }
+      /* G2 — cost stack */
+      #g2 { align-items: flex-start; padding-left: 13%; }
+      #g2 .gtitle { font-weight: 700; font-size: 46px; color: var(--brand-blue-tint);
+        letter-spacing: -.01em; margin-bottom: 46px; }
+      #g2 .grow { display: flex; align-items: center; gap: 30px; margin-bottom: 34px;
+        font-weight: 800; font-size: 74px; letter-spacing: -.02em; }
+      #g2 .garr { color: var(--brand-flame); font-size: 64px; width: 48px; text-align: center; }
 
-      /* B9 split */
-      #b9 .cols { display: flex; gap: 28px; }
-      #b9 .col { flex: 1; border: 1px solid var(--brand-border); border-radius: 22px;
-        padding: 30px 28px; background: #082c54; transition: none; }
-      #b9 .col .k { font-weight: 800; font-size: 56px; letter-spacing: -.02em; }
-      #b9 .col .v { font-weight: 500; font-size: 30px; color: var(--brand-text-dim); margin-top: 10px; }
-      #b9 #colprof { border-color: var(--brand-border); }
-      #b9 #colprof .k { color: var(--brand-white); }
-      #b9 .punch { font-weight: 800; font-size: 60px; letter-spacing: -.02em;
-        margin-top: 30px; color: var(--brand-flame); }
+      /* G3 — divergence chart */
+      #g3 .chartwrap { position: relative; width: 100%; max-width: 880px; }
+      #g3 svg { width: 100%; height: 460px; overflow: visible; display: block; }
+      #g3 .clab { position: absolute; font-weight: 800; font-size: 40px; letter-spacing: -.01em;
+        background: rgba(6,40,76,.92); padding: 4px 14px; border-radius: 10px; }
+      #g3 .clab.rev { top: -14px; right: 0; color: var(--brand-blue-tint); }
+      #g3 .clab.prof { bottom: 2px; right: 0; color: var(--brand-flame); }
+      #g3 .ccap { font-weight: 600; font-size: 42px; color: var(--brand-text); margin-top: 40px; }
 
-      /* B12 CTA */
-      #b12 .cta { display: inline-flex; align-items: center; gap: 14px;
-        font-weight: 700; font-size: 40px; color: var(--brand-white);
-        background: var(--brand-flame); padding: 30px 54px; border-radius: 999px;
-        box-shadow: 0 24px 70px -18px rgba(255,76,50,.65); }
+      /* G4 — the problem isn't sales */
+      #g4 .huge { font-weight: 800; font-size: 124px; letter-spacing: -.03em; line-height: .98; }
+
+      /* G5 — revenue vs profit split */
+      #g5 .cols { display: flex; gap: 34px; width: 100%; }
+      #g5 .col { flex: 1; border: 1px solid var(--brand-border); border-radius: 26px;
+        padding: 48px 30px; background: #082c54; }
+      #g5 .col .k { font-weight: 800; font-size: 76px; letter-spacing: -.02em; }
+      #g5 .col .v { font-weight: 500; font-size: 36px; color: var(--brand-text-dim); margin-top: 14px; }
+      #g5 .punch { font-weight: 800; font-size: 84px; letter-spacing: -.02em;
+        margin-top: 54px; color: var(--brand-flame); text-shadow: 0 16px 60px rgba(255,76,50,.4); }
+
+      /* G6 — CTA */
+      #g6 .eyebrow { font-weight: 700; font-size: 30px; letter-spacing: .30em;
+        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 34px; }
+      #g6 .cta { display: inline-flex; align-items: center; gap: 16px;
+        font-weight: 800; font-size: 52px; letter-spacing: -.01em; color: var(--brand-white);
+        background: var(--brand-flame); padding: 36px 64px; border-radius: 999px;
+        box-shadow: 0 26px 80px -18px rgba(255,76,50,.7); }
+      #g6 .ctasub { font-weight: 500; font-size: 38px; line-height: 1.3;
+        color: var(--brand-text-dim); margin-top: 40px; max-width: 80%; }
     </style>
   </head>
   <body>
     <div id="root" data-composition-id="scaling-but-losing-money" data-start="0" data-duration="72.5" data-width="1080" data-height="1350">
 
-      <div id="bg" class="clip" data-start="0" data-duration="72.5" data-track-index="0"></div>
-      <div id="bloom" class="clip" data-start="0" data-duration="72.5" data-track-index="1"></div>
+      <!-- speaker (audio spine — plays full duration, even under cutaways) -->
+      <video id="vid" playsinline data-has-audio="true" data-volume="1"
+             data-start="0" data-duration="72.5" data-track-index="0"
+             src="assets/talking-head.mp4"></video>
+      <div id="scrim" class="clip" data-start="0" data-duration="72.5" data-track-index="1"></div>
 
-      <!-- founder card -->
-      <div id="cardframe" class="clip" data-start="0" data-duration="72.5" data-track-index="2"></div>
-      <div id="vidwrap">
-        <video id="vid" playsinline data-has-audio="true" data-volume="1"
-               data-start="0" data-duration="72.5" data-track-index="3"
-               src="assets/talking-head.mp4"></video>
-      </div>
-      <div id="cardvig" class="clip" data-start="0" data-duration="72.5" data-track-index="4"></div>
+      <!-- ============ EMPHASIS-GRAPHIC CUTAWAYS (hard cuts) ============ -->
 
-      <!-- logo (wrapped, non-clip so it never drifts) -->
-      <div id="logobar">
-        <img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-      </div>
-
-      <!-- B1 -->
-      <div id="b1" class="callout clip" data-start="0.2" data-duration="7.0" data-track-index="5">
-        <div class="eyebrow">For scaling Shopify brands</div>
-        <div class="head">More revenue.<br /><span class="em">Less profit.</span></div>
+      <!-- G1 -->
+      <div id="g1" class="scene clip" data-start="8.0" data-duration="5.2" data-track-index="10">
+        <div class="big">Revenue <span class="up">&uarr;</span></div>
+        <div class="neq">&ne;</div>
+        <div class="big">Profit <span class="up">&uarr;</span></div>
+        <div class="ssub">That's just not how it works.</div>
       </div>
 
-      <!-- B2 -->
-      <div id="b2" class="callout clip" data-start="7.0" data-duration="6.5" data-track-index="6">
-        <div class="head">Revenue up <span class="hot">&ne;</span><br />profit up.</div>
-        <div class="sub">That's just not how it works.</div>
+      <!-- G2 cost stack -->
+      <div id="g2" class="scene clip" data-start="20.3" data-duration="9.8" data-track-index="11">
+        <div class="gtitle">Where the margin goes</div>
+        <div class="grow"><span class="garr">&uarr;</span>Ad spend</div>
+        <div class="grow"><span class="garr">&uarr;</span>Shipping</div>
+        <div class="grow"><span class="garr">&uarr;</span>Returns</div>
+        <div class="grow"><span class="garr">&uarr;</span>Cost of goods</div>
+        <div class="grow"><span class="garr">&uarr;</span>Discounts</div>
       </div>
 
-      <!-- B3 -->
-      <div id="b3" class="callout clip" data-start="13.4" data-duration="4.4" data-track-index="7">
-        <div class="head sm">The fastest-growing brands feel the <span class="em">most pressure.</span></div>
-      </div>
-
-      <!-- B4 -->
-      <div id="b4" class="callout clip" data-start="17.7" data-duration="2.8" data-track-index="8">
-        <div class="head">More sales in —<br /><span class="hot">more costs</span> in.</div>
-      </div>
-
-      <!-- B5 cost stack -->
-      <div id="b5" class="callout clip" data-start="20.3" data-duration="10.0" data-track-index="9">
-        <div class="title">Where the margin goes:</div>
-        <div class="crow"><span class="arr">&uarr;</span>Ad spend</div>
-        <div class="crow"><span class="arr">&uarr;</span>Shipping</div>
-        <div class="crow"><span class="arr">&uarr;</span>Returns</div>
-        <div class="crow"><span class="arr">&uarr;</span>Cost of goods</div>
-        <div class="crow"><span class="arr">&uarr;</span>Discounts</div>
-      </div>
-
-      <!-- B6 chart -->
-      <div id="b6" class="callout clip" data-start="30.2" data-duration="8.2" data-track-index="10">
+      <!-- G3 chart -->
+      <div id="g3" class="scene clip" data-start="30.2" data-duration="7.9" data-track-index="12">
         <div class="chartwrap">
-          <svg viewBox="0 0 960 300" preserveAspectRatio="none">
-            <line x1="0" y1="299" x2="960" y2="299" stroke="#1d4a7a" stroke-width="2"/>
-            <polyline id="revline" points="0,250 240,200 480,140 720,80 940,28"
-              fill="none" stroke="#9CD4FF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-            <polyline id="profline" points="0,150 240,180 480,215 720,250 940,284"
-              fill="none" stroke="#FF4C32" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg viewBox="0 0 880 460" preserveAspectRatio="none">
+            <line x1="0" y1="458" x2="880" y2="458" stroke="#1d4a7a" stroke-width="3"/>
+            <polyline id="revline" points="0,380 220,300 440,205 660,110 866,30"
+              fill="none" stroke="#9CD4FF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline id="profline" points="0,170 220,235 440,300 660,365 866,430"
+              fill="none" stroke="#FF4C32" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <div class="clab rev">Revenue</div>
           <div class="clab prof">Profit</div>
@@ -156,37 +134,30 @@
         <div class="ccap">Costs quietly drain profit.</div>
       </div>
 
-      <!-- B7 -->
-      <div id="b7" class="callout clip" data-start="38.3" data-duration="5.0" data-track-index="11">
-        <div class="head">Record sales —<br /><span class="em">so where did the money go?</span></div>
+      <!-- G4 -->
+      <div id="g4" class="scene clip" data-start="43.2" data-duration="2.9" data-track-index="13">
+        <div class="huge">The problem<br />isn't <span class="em">sales.</span></div>
       </div>
 
-      <!-- B8 -->
-      <div id="b8" class="callout clip" data-start="43.2" data-duration="8.0" data-track-index="12">
-        <div class="head">The problem<br />isn't <span class="em">sales.</span></div>
-        <div class="sub" id="b8sub">It's that nobody's watching the numbers that decide what you keep.</div>
-      </div>
-
-      <!-- B9 split -->
-      <div id="b9" class="callout clip" data-start="51.0" data-duration="7.6" data-track-index="13">
+      <!-- G5 split -->
+      <div id="g5" class="scene clip" data-start="51.0" data-duration="7.4" data-track-index="14">
         <div class="cols">
           <div class="col" id="colrev"><div class="k">Revenue</div><div class="v">what you sold</div></div>
           <div class="col" id="colprof"><div class="k">Profit</div><div class="v">what you keep</div></div>
         </div>
-        <div class="punch" id="b9punch">Only one pays you.</div>
+        <div class="punch" id="g5punch">Only one pays you.</div>
       </div>
 
-      <!-- B11 solution -->
-      <div id="b11" class="callout clip" data-start="58.5" data-duration="8.5" data-track-index="14">
-        <div class="head sm">Find exactly where your <span class="em">margin is leaking.</span></div>
-        <div class="sub" id="b11sub">And what to fix first.</div>
-      </div>
-
-      <!-- B12 CTA -->
-      <div id="b12" class="callout clip" data-start="66.95" data-duration="5.55" data-track-index="15">
+      <!-- G6 CTA -->
+      <div id="g6" class="scene clip" data-start="67.0" data-duration="5.5" data-track-index="15">
         <div class="eyebrow">Ready to fix it?</div>
-        <div class="cta" id="ctapill">Click the link below <span class="arr">&rarr;</span></div>
-        <div class="sub" id="ctasub">We guarantee the breakthrough you're looking for.</div>
+        <div class="cta" id="ctapill">Click the link below <span>&rarr;</span></div>
+        <div class="ctasub">We guarantee the breakthrough you're looking for.</div>
+      </div>
+
+      <!-- persistent logo, always on top -->
+      <div id="logobar">
+        <img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
 
     </div>
@@ -194,89 +165,50 @@
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
+      const pop = (sel, t, d = 0.4) =>
+        tl.fromTo(sel, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: d, ease: 'power3.out' }, t);
 
-      // helpers — fromTo so opacity:0 starts reveal correctly
-      const rin  = (sel, t, y = 26, d = 0.55) =>
-        tl.fromTo(sel, { opacity: 0, y }, { opacity: 1, y: 0, duration: d, ease: 'power3.out' }, t);
-      const rout = (sel, t, d = 0.35) =>
-        tl.to(sel, { opacity: 0, y: -18, duration: d, ease: 'power2.in' }, t);
+      // logo settle in
+      tl.fromTo('#logobar', { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.2);
 
-      // card + logo enter
-      tl.fromTo(['#cardframe', '#vidwrap', '#cardvig'],
-        { opacity: 0, scale: 0.965, y: 16 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0);
-      tl.fromTo('#logobar', { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.15);
+      // G1 — fast stack on cut
+      tl.fromTo('#g1 .big:nth-of-type(1)', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.4, ease: 'power3.out' }, 8.05);
+      tl.fromTo('#g1 .neq', { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(2)' }, 8.3);
+      tl.fromTo('#g1 .big:nth-of-type(2)', { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.4, ease: 'power3.out' }, 8.55);
+      pop('#g1 .ssub', 9.0, 0.45);
 
-      // B1
-      tl.fromTo('#b1 .eyebrow', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.5);
-      tl.fromTo('#b1 .head', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.8);
-      rout('#b1', 6.8);
-
-      // B2
-      rin('#b2 .head', 7.05, 30, 0.6);
-      rin('#b2 .sub', 7.6);
-      rout('#b2', 13.1);
-
-      // B3
-      rin('#b3 .head', 13.5, 30, 0.6);
-      rout('#b3', 17.5);
-
-      // B4
-      rin('#b4 .head', 17.8, 24, 0.5);
-      rout('#b4', 20.2);
-
-      // B5 cost stack — staggered, synced to the VO list
-      rin('#b5 .title', 20.45, 18, 0.45);
-      const rows = ['#b5 .crow:nth-child(2)','#b5 .crow:nth-child(3)','#b5 .crow:nth-child(4)','#b5 .crow:nth-child(5)','#b5 .crow:nth-child(6)'];
+      // G2 — cost stack, rows synced to the VO list
+      pop('#g2 .gtitle', 20.4, 0.4);
       const rowT = [21.0, 22.8, 24.6, 26.4, 28.2];
-      rows.forEach((s, i) =>
-        tl.fromTo(s, { opacity: 0, x: -34 }, { opacity: 1, x: 0, duration: 0.5, ease: 'power3.out' }, rowT[i]));
-      rout('#b5', 30.0);
+      rowT.forEach((t, i) =>
+        tl.fromTo('#g2 .grow:nth-of-type(' + (i + 2) + ')',
+          { opacity: 0, x: -44 }, { opacity: 1, x: 0, duration: 0.45, ease: 'power3.out' }, t));
 
-      // B6 chart — draw lines via dashoffset
-      tl.set(['#revline', '#profline'], { opacity: 1 });
-      [['#revline', 1100], ['#profline', 1100]].forEach(([s, len]) => {
-        tl.set(s, { strokeDasharray: len, strokeDashoffset: len }, 30.3);
-      });
-      tl.fromTo('#b6 .clab.rev', { opacity: 0 }, { opacity: 1, duration: 0.4 }, 30.4);
-      tl.to('#revline', { strokeDashoffset: 0, duration: 2.4, ease: 'power1.out' }, 30.5);
-      tl.fromTo('#b6 .clab.prof', { opacity: 0 }, { opacity: 1, duration: 0.4 }, 31.4);
-      tl.to('#profline', { strokeDashoffset: 0, duration: 3.0, ease: 'power1.in' }, 31.5);
-      // hold the svg container in (set its opacity for the clip lifecycle)
-      tl.fromTo('#b6 .chartwrap', { opacity: 0 }, { opacity: 1, duration: 0.4 }, 30.3);
-      rin('#b6 .ccap', 35.2, 18, 0.5);
-      rout('#b6', 38.1);
+      // G3 — chart draw
+      tl.set(['#revline', '#profline'], { strokeDasharray: 1200, strokeDashoffset: 1200 }, 30.25);
+      tl.fromTo('#g3 .chartwrap', { opacity: 0 }, { opacity: 1, duration: 0.35 }, 30.3);
+      tl.fromTo('#g3 .clab.rev', { opacity: 0 }, { opacity: 1, duration: 0.4 }, 30.5);
+      tl.to('#revline', { strokeDashoffset: 0, duration: 2.3, ease: 'power1.out' }, 30.6);
+      tl.fromTo('#g3 .clab.prof', { opacity: 0 }, { opacity: 1, duration: 0.4 }, 31.4);
+      tl.to('#profline', { strokeDashoffset: 0, duration: 2.9, ease: 'power1.in' }, 31.5);
+      pop('#g3 .ccap', 35.0, 0.45);
 
-      // B7
-      rin('#b7 .head', 38.4, 30, 0.6);
-      rout('#b7', 43.0);
+      // G4 — punch
+      tl.fromTo('#g4 .huge', { opacity: 0, scale: 0.9, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 43.3);
 
-      // B8
-      rin('#b8 .head', 43.3, 30, 0.6);
-      rin('#b8sub', 45.85, 20, 0.55);
-      rout('#b8', 50.8);
-
-      // B9 split + recolor punch
-      tl.fromTo('#colrev', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 51.1);
-      tl.fromTo('#colprof', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 51.45);
-      // "Only one pays you" — light PROFIT flame, no cut
+      // G5 — split + recolor punch
+      tl.fromTo('#colrev', { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 51.1);
+      tl.fromTo('#colprof', { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 51.4);
       tl.to('#colprof', { borderColor: 'var(--brand-flame)', backgroundColor: '#241016',
-        boxShadow: '0 18px 60px -22px rgba(255,76,50,.7)', duration: 0.5, ease: 'power2.inOut' }, 55.3);
+        boxShadow: '0 20px 70px -22px rgba(255,76,50,.7)', duration: 0.5, ease: 'power2.inOut' }, 55.3);
       tl.to('#colprof .k', { color: 'var(--brand-flame)', duration: 0.5, ease: 'power2.inOut' }, 55.3);
-      tl.fromTo('#b9punch', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' }, 55.5);
-      rout('#b9', 58.3);
+      tl.fromTo('#g5punch', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' }, 55.5);
 
-      // B11
-      rin('#b11 .head', 58.6, 30, 0.6);
-      rin('#b11sub', 62.0, 20, 0.55);
-      rout('#b11', 66.8);
-
-      // B12 CTA
-      tl.fromTo('#b12 .eyebrow', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 67.0);
-      tl.fromTo('#ctapill', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.55, ease: 'back.out(1.7)' }, 67.3);
-      tl.fromTo('#ctasub', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 67.9);
-      // gentle CTA breathing hold
-      tl.to('#ctapill', { scale: 1.03, duration: 1.1, ease: 'sine.inOut', yoyo: true, repeat: 2 }, 68.8);
+      // G6 — CTA
+      tl.fromTo('#g6 .eyebrow', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 67.1);
+      tl.fromTo('#ctapill', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.55, ease: 'back.out(1.7)' }, 67.35);
+      tl.fromTo('#g6 .ctasub', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 67.95);
+      tl.to('#ctapill', { scale: 1.03, duration: 1.1, ease: 'sine.inOut', yoyo: true, repeat: 2 }, 68.9);
 
       // Law 11 — anchor timeline to full slot
       tl.to({}, { duration: 72.5 }, 0);

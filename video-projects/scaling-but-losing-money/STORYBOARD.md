@@ -1,27 +1,27 @@
 # STORYBOARD — scaling-but-losing-money (4:5, 1080×1350, 30fps, ~72.5s)
 
-Single composition. Founder talking-head (`talking-head.mp4`) runs the full duration in a
-rounded EcomIQ card (upper third, 16:9, no crop). On-brand kinetic callouts punch into the
-lower zone synced to each VO beat. Logo top-left throughout. Flame = the only hot accent.
+**Treatment:** full-screen talking head (`talking-head.mp4`, 16:9 → cover-cropped to fill 4:5,
+no face crop) that **hard-cuts to full-screen emphasis motion graphics** at key beats, then cuts
+back to the speaker. The video is the continuous audio spine — VO keeps playing under every
+graphic cutaway. Persistent EcomIQ logo top-left. No caption track. Flame = the only hot accent.
 
-| # | Time (s) | VO beat | On-screen callout (lower zone) | Track |
-|---|----------|---------|--------------------------------|-------|
-| 0 | 0–72.5 | (whole) | Founder card + EcomIQ logo (always on) | 2–4 |
-| B1 | 0.2–7.0 | "more revenue than ever, but not keeping more money — this is probably why" | eyebrow **FOR SCALING SHOPIFY BRANDS** · "More revenue. *Less profit.*" | 5 |
-| B2 | 7.0–13.3 | "founders assume revenue up = profit follows… not how it works" | "Revenue up **≠** profit up" · sub "That's not how it works." | 6 |
-| B3 | 13.4–17.6 | "fastest-growing brands feel the most pressure" | "The fastest-growing brands feel the *most pressure.*" | 7 |
-| B4 | 17.7–20.3 | "more sales come in, then so do the costs" | "More sales in — more costs in." | 8 |
-| B5 | 20.3–30.2 | the cost list | **Where the margin goes:** rows stagger in — Ad spend ↑ · Shipping ↑ · Returns ↑ · Cost of goods ↑ · Discounts ↑ (flame arrows) | 9 |
-| B6 | 30.2–38.3 | "together they quietly pull profit out while revenue keeps climbing" | mini-chart: **Revenue** line climbs (blue) / **Profit** line sinks (flame) · "Costs quietly drain profit." | 10 |
-| B7 | 38.3–43.1 | "record sales months, still wonder where the money went" | "Record sales — *so where did the money go?*" | 11 |
-| B8 | 43.2–51.0 | "problem isn't sales — nobody's watching the numbers that decide what you keep" | "The problem isn't sales." · sub "It's not watching the numbers that decide what you keep." | 12 |
-| B9 | 51.0–58.4 | "revenue is what you sold, profit is what you keep — only one will pay you" | split: **REVENUE** / what you sold ‖ **PROFIT** / what you keep → at 55.4 PROFIT lights flame + "Only one pays you." | 13 |
-| B11 | 58.5–66.9 | "we can help you find exactly where the margin is leaking and what to fix first" | "Find exactly where your *margin is leaking.*" · "And what to fix first." | 14 |
-| B12 | 66.95–72.5 | "click the link below — we guarantee the breakthrough" | flame CTA pill **Click the link below →** · "We guarantee the breakthrough you're looking for." (hold) | 15 |
+| Segment | Time (s) | Mode | What's on screen |
+|---|----------|------|------------------|
+| SPK | 0–8.0 | speaker | Hook: "more revenue, not keeping more money — this is probably why" + "not how it works" |
+| **G1** | 8.0–13.2 | graphic | "Revenue ↑ **≠** Profit ↑" · "That's just not how it works." |
+| SPK | 13.2–20.3 | speaker | "fastest-growing feel the most pressure" + "more sales → more costs" |
+| **G2** | 20.3–30.1 | graphic | **Where the margin goes** — rows stagger to the VO: Ad spend ↑ · Shipping ↑ · Returns ↑ · Cost of goods ↑ · Discounts ↑ |
+| **G3** | 30.2–38.1 | graphic | divergence chart: **Revenue** climbs (blue) / **Profit** sinks (flame) · "Costs quietly drain profit." |
+| SPK | 38.1–43.2 | speaker | "record sales months, still wonder where the money went" |
+| **G4** | 43.2–46.1 | graphic | "The problem isn't *sales.*" (punch) |
+| SPK | 46.1–51.0 | speaker | "nobody's looking at the numbers that decide what you keep" |
+| **G5** | 51.0–58.4 | graphic | split: **REVENUE** / what you sold ‖ **PROFIT** / what you keep → at 55.3 PROFIT lights flame + "Only one pays you." |
+| SPK | 58.4–67.0 | speaker | "growing but profit isn't following — we find where the margin leaks and what to fix first" |
+| **G6** | 67.0–72.5 | graphic | CTA: **Click the link below →** · "We guarantee the breakthrough you're looking for." (hold) |
 
-**Motion language:** type rises + fades per beat (`power3.out` in / `power2.in` out); cost rows
-stagger from x:-30; chart lines draw via stroke-dashoffset; PROFIT recolors to flame (no cut);
-CTA pill pops `back.out(1.7)`. Card + logo ease in at 0.
+**Cuts:** graphic cutaways are hard cuts (clip mount/unmount) with a fast content pop on entry
+(`power3.out` / `back.out`); cutting back to the speaker is a clean hard cut mid-sentence.
+**Chart/cost-stack** rows + lines draw synced to the spoken list/beats.
 
 **Three-act:** Hook/problem (0–20) → margin-pain mechanics (20–51) → reframe + solution + CTA (51–72.5).
 </content>
