@@ -1,0 +1,35 @@
+<template id="k-keep-template">
+  <script src="../assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="k-keep" data-start="0" data-duration="3.29" data-width="1080" data-height="1350">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(../assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(../assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="k-keep"] { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(62% 46% at 50% 44%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 64%), #06284C;
+      font-family: 'Rethink Sans', system-ui, sans-serif; }
+    [data-composition-id="k-keep"] #q { position: absolute; top: 520px; left: 0; right: 0; text-align: center;
+      font-weight: 800; font-size: 108px; letter-spacing: -.025em; line-height: 1.02; color: #FFFFFF; padding: 0 90px; }
+    [data-composition-id="k-keep"] #q em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: #FF4C32; }
+    [data-composition-id="k-keep"] #q small { display: block; font-family: 'Rethink Sans', sans-serif;
+      font-weight: 600; font-size: 40px; color: #9fb6d4; letter-spacing: .01em; margin-bottom: 22px; }
+  </style>
+
+  <div id="q" class="clip" data-start="0.05" data-duration="3.24" data-track-index="1">
+    <small>The question was never how much you sold.</small>
+    How much did you <em>keep</em>?
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 3.29, S = '[data-composition-id="k-keep"] ';
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo(S+'#q small', { opacity:0, y:16 }, { opacity:1, y:0, duration:.45, ease:'power2.out' }, 0.05);
+      tl.fromTo(S+'#q', { opacity:0, y:38, scale:.94 }, { opacity:1, y:0, scale:1, duration:.6, ease:'back.out(1.5)' }, 0.15);
+      tl.fromTo(S+'#q em', { color:'#FFFFFF' }, { color:'#FF4C32', duration:.45, ease:'sine.out' }, 0.9);
+      tl.to({}, { duration: SLOT }, 0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines['k-keep'] = tl;
+    })();
+  </script>
+  </div>
+</template>

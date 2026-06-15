@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>revenue-up-bank-empty-30s</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+      #bg { position: absolute; inset: 0;
+        background:
+          radial-gradient(80% 42% at 50% 12%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 60%),
+          radial-gradient(95% 45% at 50% 100%, rgba(255,76,50,.10) 0%, rgba(6,40,76,0) 62%), #06284C; }
+      #vignette { position: absolute; inset: 0; pointer-events: none;
+        box-shadow: inset 0 0 240px 60px rgba(2,14,30,.7); }
+      .th { position: absolute; inset: 0; width: 1080px; height: 1350px; object-fit: cover; background: #06284C; }
+      #topscrim { position: absolute; top: 0; left: 0; right: 0; height: 280px; pointer-events: none;
+        background: linear-gradient(180deg, rgba(2,14,30,.62) 0%, rgba(2,14,30,0) 100%); }
+      #brandmark { position: absolute; top: 60px; left: 64px; z-index: 50; }
+      #brandmark img { width: 264px; height: auto; display: block; filter: drop-shadow(0 6px 18px rgba(0,0,0,.55)); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="revenue-up-bank-empty-30s" data-start="0"
+         data-duration="28.4" data-width="1080" data-height="1350">
+
+      <div id="bg" class="clip" data-start="0" data-duration="28.4" data-track-index="0"></div>
+
+      <!-- Talking head (framework owns playback — no class="clip") -->
+      <video id="th-hook" class="th" muted src="assets/th1.mp4"    data-start="0"     data-duration="6.42" data-track-index="5"></video>
+      <video id="th-cta"  class="th" muted src="assets/th-cta.mp4" data-start="23.25" data-duration="2.56" data-track-index="5"></video>
+
+      <!-- Full-frame brand motion-graphics beats -->
+      <div class="gfx" data-composition-id="s01-hook" data-composition-src="compositions/s01-hook.html" data-start="0"     data-duration="3.40" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" data-composition-id="k-keep"   data-composition-src="compositions/k-keep.html"   data-start="6.42"  data-duration="3.29" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" data-composition-id="k-bars"   data-composition-src="compositions/k-bars.html"   data-start="9.71"  data-duration="5.48" data-track-index="8" data-width="1080" data-height="1350"></div>
+      <div class="gfx" data-composition-id="k-payoff" data-composition-src="compositions/k-payoff.html" data-start="15.19" data-duration="8.06" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" data-composition-id="k-cta"    data-composition-src="compositions/k-cta.html"    data-start="25.81" data-duration="2.59" data-track-index="8" data-width="1080" data-height="1350"></div>
+
+      <!-- Persistent chrome -->
+      <div id="vignette" class="clip" data-start="0" data-duration="28.4" data-track-index="40"></div>
+      <div id="topscrim" class="clip" data-start="0" data-duration="28.4" data-track-index="41"></div>
+      <div id="brandmark" class="clip" data-start="0" data-duration="28.4" data-track-index="50">
+        <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <!-- Spliced voiceover -->
+      <audio id="vo" src="assets/vo30.m4a" data-start="0" data-duration="28.33" data-track-index="7"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#brandmark", { opacity: 0, x: -26 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.15);
+      tl.fromTo("#vignette", { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "sine.out" }, 0);
+      tl.to({}, { duration: 28.4 }, 0);
+      window.__timelines["revenue-up-bank-empty-30s"] = tl;
+    </script>
+  </body>
+</html>

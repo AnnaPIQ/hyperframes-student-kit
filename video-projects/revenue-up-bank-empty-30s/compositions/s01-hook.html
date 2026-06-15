@@ -1,0 +1,84 @@
+<template id="s01-hook-template">
+  <script src="../assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s01-hook" data-start="0" data-duration="3.6" data-width="1080" data-height="1350">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(../assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(../assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s01-hook"] { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(72% 40% at 50% 22%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 60%),
+        radial-gradient(90% 40% at 50% 100%, rgba(255,76,50,.10) 0%, rgba(6,40,76,0) 62%), #06284C;
+      font-family: 'Rethink Sans', system-ui, sans-serif; }
+    [data-composition-id="s01-hook"] .grid { position: absolute; inset: 0; opacity: .12;
+      background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
+      background-size: 90px 90px; -webkit-mask-image: radial-gradient(70% 55% at 50% 38%, #000 40%, transparent 85%); }
+    [data-composition-id="s01-hook"] .chartwrap { position: absolute; left: 70px; top: 250px; width: 940px; height: 360px; }
+    [data-composition-id="s01-hook"] .chartwrap svg { width: 100%; height: 100%; overflow: visible; }
+    [data-composition-id="s01-hook"] .revarea { fill: url(#s01grad); }
+    [data-composition-id="s01-hook"] .revline { fill: none; stroke: #9CD4FF; stroke-width: 9; stroke-linecap: round;
+      stroke-linejoin: round; filter: drop-shadow(0 0 16px rgba(156,212,255,.55)); }
+    [data-composition-id="s01-hook"] .bankline { fill: none; stroke: #FF4C32; stroke-width: 5; stroke-dasharray: 3 13; stroke-linecap: round; }
+    [data-composition-id="s01-hook"] .peakdot { fill: #FFFFFF; filter: drop-shadow(0 0 14px rgba(156,212,255,.9)); }
+    [data-composition-id="s01-hook"] .pill { position: absolute; display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 26px; padding: 9px 18px; border-radius: 999px; white-space: nowrap; }
+    [data-composition-id="s01-hook"] #revtag { top: 250px; left: 520px; background: rgba(156,212,255,.16);
+      border: 1px solid rgba(156,212,255,.5); color: #9CD4FF; }
+    [data-composition-id="s01-hook"] #banktag { top: 548px; left: 90px; background: rgba(255,76,50,.14);
+      border: 1px solid rgba(255,76,50,.55); color: #FF8A4C; }
+    [data-composition-id="s01-hook"] .head { position: absolute; top: 706px; left: 0; right: 0; text-align: center;
+      font-weight: 800; font-size: 98px; line-height: 1.04; letter-spacing: -.03em; color: #FFFFFF; }
+    [data-composition-id="s01-hook"] .head .l2 { display: block; color: #FF4C32; margin-top: 8px; }
+  </style>
+
+  <div class="grid clip" data-start="0" data-duration="3.6" data-track-index="0"></div>
+
+  <div class="chartwrap clip" data-start="0.1" data-duration="3.5" data-track-index="1">
+    <svg viewBox="0 0 940 360" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="s01grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#9CD4FF" stop-opacity=".42" />
+          <stop offset="1" stop-color="#9CD4FF" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <path class="revarea" d="M0,330 L150,310 L330,250 L500,180 L680,110 L840,40 L940,40 L940,360 L0,360 Z" />
+      <line class="bankline" x1="0" y1="345" x2="940" y2="345" />
+      <path class="revline" id="s01revline" d="M0,330 L150,310 L330,250 L500,180 L680,110 L840,40 L940,40" />
+      <circle class="peakdot" id="s01peak" cx="840" cy="40" r="13" />
+    </svg>
+  </div>
+
+  <div class="pill clip" id="revtag" data-start="0.9" data-duration="2.7" data-track-index="2">&#9650;&nbsp; Record month</div>
+  <div class="pill clip" id="banktag" data-start="1.2" data-duration="2.4" data-track-index="3">Bank balance &middot; $0</div>
+
+  <div class="head clip" data-start="1.0" data-duration="2.6" data-track-index="4">
+    <span class="l1">Biggest month ever.</span>
+    <span class="l2">Nothing in the bank.</span>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 3.6, S = '[data-composition-id="s01-hook"] ';
+      const tl = gsap.timeline({ paused: true });
+
+      // draw the rising revenue line
+      const rl = document.querySelector(S+'#s01revline');
+      const len = rl.getTotalLength();
+      gsap.set(rl, { strokeDasharray: len, strokeDashoffset: len });
+      tl.to(rl, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.out' }, 0.2);
+      tl.fromTo(S+'.revarea', { opacity: 0 }, { opacity: 1, duration: 1.0, ease: 'sine.out' }, 0.5);
+      tl.fromTo(S+'.bankline', { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'sine.out' }, 0.4);
+      tl.fromTo(S+'#s01peak', { scale: 0, transformOrigin: '50% 50%' }, { scale: 1, duration: 0.4, ease: 'back.out(2)' }, 1.2);
+
+      tl.fromTo(S+'#revtag', { opacity: 0, y: -10, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .45, ease: 'back.out(1.8)' }, 0.9);
+      tl.fromTo(S+'#banktag', { opacity: 0, y: 10, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .45, ease: 'back.out(1.8)' }, 1.2);
+
+      tl.fromTo(S+'.head .l1', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .55, ease: 'power3.out' }, 1.0);
+      tl.fromTo(S+'.head .l2', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .55, ease: 'power3.out' }, 1.35);
+
+      tl.to({}, { duration: SLOT }, 0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s01-hook'] = tl;
+    })();
+  </script>
+  </div>
+</template>
+</content>
