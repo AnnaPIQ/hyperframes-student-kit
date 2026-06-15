@@ -77,6 +77,48 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## B-roll / video clips in compositions
+
+- **Symptom → Fix: render dies at ~30% with `[Parallel] Capture failed: Worker N:
+  Runtime.callFunctionOn timed out` + `REQUESTFAILED ... resource=media
+  net::ERR_ABORTED` for the .mp4s.** The clips had sparse keyframes (default GOP →
+  max keyframe interval ~5s). The capture engine seeks `video.currentTime` per frame;
+  with sparse keyframes every seek re-decodes from far back, stalls, and blows the
+  300s protocol timeout. **Re-encode b-roll with dense keyframes:**
+  `ffmpeg -i in.mp4 -an -vf "scale=1080:1920" -c:v libx264 -crf 21 -g 10 -keyint_min 10 -sc_threshold 0 -r 30 -movflags +faststart out.mp4`.
+  The render also prints this exact warning during `video_extract` — don't ignore it.
+- **Symptom → Fix: phone footage renders rotated 90° even though the crop looked right.**
+  Some clips are portrait content stored in a landscape container with NO rotation
+  metadata (ffprobe shows 3840×2160, no side_data). Auto-rotate won't fix it. Manually
+  `transpose=1` (90° CW) then `scale=1080:1920`. Always pull one frame and `Read` it
+  before trusting a crop.
+- **Video inside a sub-composition** needs `id` + `data-start`/`data-duration`/
+  `data-track-index` + `muted` (NO `class="clip"`). Without `id` the renderer can't
+  discover it and freezes the frame (lint catches this).
+
+## Sub-composition structure (lint-clean multi-beat projects)
+
+- Wrap each sub-comp file in `<template id="<id>-template"> … </template>`; the inner
+  root `<div>` carries `data-composition-id` + `data-start` + `data-duration` +
+  **`data-width` + `data-height`** (omitting dimensions is a lint error).
+- **Inner animated elements are plain divs** — do NOT give them `class="clip"` /
+  `data-start` / `data-track-index`. Marking every inner element as a full-beat clip on
+  the same track triggers `overlapping_clips_same_track` errors. Only the root (and
+  `<video>`/`<audio>`) are timed; GSAP drives everything else.
+- Index hosts use `<div class="beat-layer" data-composition-id="<id>"
+  data-composition-src="…" data-start … data-duration … data-track-index … data-width
+  data-height>` — NOT `<template>` (template hosts confuse the linter into reporting the
+  root as missing id/dimensions/registry).
+- Add `window.__timelines = window.__timelines || {};` at the top of every sub-comp IIFE.
+
+## Asset ingestion (Google Drive, cloud container)
+
+- **Symptom → Fix: `yt-dlp` Drive download fails with `CERTIFICATE_VERIFY_FAILED`** (the
+  sandbox proxy uses a self-signed CA Python doesn't trust). `curl` trusts the system CA
+  store, so use it instead. Helper: `scripts/gdrive-dl.sh <FILE_ID> <OUT>` handles the
+  large-file virus-scan confirm token. The MCP Google Drive `download_file_content`
+  returns base64 into context — unusable for video; always curl to disk.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
