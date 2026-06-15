@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>b-roll-v2m-epic — EcomIQ</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: #02101f; color: var(--brand-white);
+        font-family: var(--font-sans);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="b-roll-v2m-epic"
+         data-start="0" data-duration="82" data-width="1080" data-height="1920">
+
+      <!-- Persistent ambient background (navy canvas + grid + raking light + grain + vignette) -->
+      <div class="beat-layer" data-composition-id="ambient-bg" data-composition-src="compositions/ambient-bg.html"
+           data-start="0" data-duration="82" data-track-index="0" data-width="1080" data-height="1920"></div>
+
+      <!-- ===== ACT 1 — the paradox ===== -->
+      <div class="beat-layer" data-composition-id="hook" data-composition-src="compositions/00-hook.html"
+           data-start="0" data-duration="7.05" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div class="beat-layer" data-composition-id="assumption" data-composition-src="compositions/01-assumption.html"
+           data-start="7.05" data-duration="6.35" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div class="beat-layer" data-composition-id="divergence" data-composition-src="compositions/02-divergence.html"
+           data-start="13.4" data-duration="4.35" data-track-index="1" data-width="1080" data-height="1920"></div>
+
+      <!-- ===== ACT 2 — the leak ===== -->
+      <div class="beat-layer" data-composition-id="cost-leak" data-composition-src="compositions/03-cost-leak.html"
+           data-start="17.75" data-duration="12.4" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div class="beat-layer" data-composition-id="drain" data-composition-src="compositions/04-drain.html"
+           data-start="30.15" data-duration="8.15" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div class="beat-layer" data-composition-id="record-sales" data-composition-src="compositions/05-record-sales.html"
+           data-start="38.3" data-duration="7.5" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div class="beat-layer" data-composition-id="rev-vs-profit" data-composition-src="compositions/06-rev-vs-profit.html"
+           data-start="45.8" data-duration="9.6" data-track-index="1" data-width="1080" data-height="1920"></div>
+
+      <!-- ===== ACT 3 — the payoff ===== -->
+      <div class="beat-layer" data-composition-id="only-profit" data-composition-src="compositions/07-only-profit.html"
+           data-start="55.4" data-duration="3.05" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div class="beat-layer" data-composition-id="we-help" data-composition-src="compositions/08-we-help.html"
+           data-start="58.45" data-duration="8.5" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div class="beat-layer" data-composition-id="cta" data-composition-src="compositions/09-cta.html"
+           data-start="66.95" data-duration="15.05" data-track-index="1" data-width="1080" data-height="1920"></div>
+
+      <!-- ===== Voiceover (extracted from ad 4.mov) — drives all timing ===== -->
+      <audio id="vo" src="assets/vo.wav" data-start="0" data-duration="82"
+             data-track-index="40" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      // Root timeline is just an anchor — all motion lives in the sub-compositions,
+      // which HyperFrames auto-links to this parent. Never masterTL.add(child).
+      (function(){
+        const tl = gsap.timeline({ paused: true });
+        tl.to({}, { duration: 82 }, 0);
+        window.__timelines["b-roll-v2m-epic"] = tl;
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<template id="cta-template">
+  <div data-composition-id="cta" data-start="66.95" data-duration="15.05" data-width="1080" data-height="1920">
+    <style>
+      [data-composition-id="cta"] { position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 54px; padding: 0 110px; text-align: center; }
+      [data-composition-id="cta"] .logo-wrap { position: relative; width: 460px; overflow: hidden; }
+      [data-composition-id="cta"] .logo-wrap img { width: 100%; display: block; }
+      [data-composition-id="cta"] .shimmer { position: absolute; top: 0; bottom: 0; width: 40%;
+        background: linear-gradient(105deg, transparent, rgba(255,255,255,.55), transparent);
+        mix-blend-mode: screen; filter: blur(3px); }
+      [data-composition-id="cta"] .head { font-weight: 800; font-size: 88px; line-height: 1.02; letter-spacing: -.03em; color: #fff; }
+      [data-composition-id="cta"] .head em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400;
+        background: linear-gradient(180deg, #ffffff, #9CD4FF); -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; }
+      [data-composition-id="cta"] .cta { font-weight: 800; font-size: 42px; color: #fff;
+        background: var(--brand-flame); padding: 32px 64px; border-radius: 999px;
+        box-shadow: 0 24px 80px -16px rgba(255,76,50,.65); letter-spacing: -.01em; }
+      [data-composition-id="cta"] .guar { font-weight: 600; font-size: 30px; color: var(--brand-text-dim); letter-spacing: .04em; }
+    </style>
+
+    <div class="logo-wrap" id="cta-logo">
+      <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      <div class="shimmer" id="cta-shim"></div>
+    </div>
+    <div class="head" id="cta-head">We guarantee the<br/><em>breakthrough</em> you're looking for.</div>
+    <div class="cta"  id="cta-btn">Click the link below &rarr;</div>
+    <div class="guar" id="cta-guar">Revenue is vanity. Profit is what you keep.</div>
+
+    <script>
+      (function(){
+        window.__timelines = window.__timelines || {};
+        const SLOT = 15.05;
+        const q = (s) => '[data-composition-id="cta"] ' + s;
+        const tl = gsap.timeline({ paused: true });
+        gsap.set(q('#cta-logo'), { opacity: 0, y: -18 });
+        gsap.set(q('#cta-head'), { opacity: 0, y: 24 });
+        gsap.set(q('#cta-btn'), { opacity: 0, scale: 0.85 });
+        gsap.set(q('#cta-guar'), { opacity: 0 });
+        gsap.set(q('#cta-shim'), { xPercent: -180 });
+        tl.to(q('#cta-logo'), { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.4);
+        tl.to(q('#cta-head'), { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.6);
+        tl.to(q('#cta-btn'), { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)' }, 2.8);
+        tl.to(q('#cta-guar'), { opacity: 1, duration: 0.5, ease: 'power2.out' }, 3.6);
+        tl.to(q('#cta-btn'), { scale: 1.04, duration: 1.1, repeat: 5, yoyo: true, ease: 'sine.inOut' }, 3.6);
+        tl.to(q('#cta-shim'), { xPercent: 320, duration: 1.1, ease: 'power2.inOut' }, 1.2);
+        tl.set(q('#cta-shim'), { xPercent: -180 }, 8.5);
+        tl.to(q('#cta-shim'), { xPercent: 320, duration: 1.1, ease: 'power2.inOut' }, 9.5);
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines['cta'] = tl;
+      })();
+    </script>
+  </div>
+</template>

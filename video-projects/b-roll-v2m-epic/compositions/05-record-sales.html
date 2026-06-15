@@ -1,0 +1,53 @@
+<template id="record-sales-template">
+  <div data-composition-id="record-sales" data-start="38.3" data-duration="7.5" data-width="1080" data-height="1920">
+    <style>
+      [data-composition-id="record-sales"] { position: absolute; inset: 0; overflow: hidden; }
+      [data-composition-id="record-sales"] .bw-wrap { position: absolute; inset: 0; }
+      [data-composition-id="record-sales"] .bw-wrap video { width: 100%; height: 100%; object-fit: cover;
+        filter: grayscale(.45) saturate(.45) contrast(1.06) brightness(.55); }
+      [data-composition-id="record-sales"] .bw-grade { position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(2,16,31,.62) 0%, rgba(6,40,76,.5) 50%, rgba(2,16,31,.88) 100%);
+        mix-blend-mode: multiply; }
+      [data-composition-id="record-sales"] .stack { position: absolute; inset: 0; display: flex;
+        flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
+      [data-composition-id="record-sales"] .rec { font-weight: 800; font-size: 120px; letter-spacing: -.03em; line-height: .92; text-align: center;
+        background: linear-gradient(180deg, #ffffff, #9CD4FF); -webkit-background-clip: text; background-clip: text;
+        color: transparent; filter: drop-shadow(0 0 30px rgba(156,212,255,.5)); }
+      [data-composition-id="record-sales"] .where { font-weight: 700; font-size: 56px; color: #fff; text-align: center;
+        text-shadow: 0 0 30px rgba(2,16,31,.9); }
+      [data-composition-id="record-sales"] .where em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; color: var(--brand-blue-tint); }
+      [data-composition-id="record-sales"] .pivot { position: absolute; bottom: 360px; left: 0; right: 0; text-align: center;
+        font-weight: 700; font-size: 40px; color: var(--brand-text-dim); }
+      [data-composition-id="record-sales"] .pivot b { color: #fff; }
+    </style>
+
+    <div class="bw-wrap" id="r-wrap"><video id="rs-vid" src="assets/bw-talking.mp4" data-start="0" data-duration="6.7" data-track-index="0" muted></video></div>
+    <div class="bw-grade"></div>
+
+    <div class="stack">
+      <div class="rec" id="r-rec">RECORD SALES</div>
+      <div class="where" id="r-where">So where did the <em>money go?</em></div>
+    </div>
+    <div class="pivot" id="r-pivot">The problem usually <b>isn't sales.</b></div>
+
+    <script>
+      (function(){
+        window.__timelines = window.__timelines || {};
+        const SLOT = 7.5;
+        const q = (s) => '[data-composition-id="record-sales"] ' + s;
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(q('#r-wrap'), { scale: 1.04 }, { scale: 1.13, duration: SLOT, ease: 'none' }, 0);
+        gsap.set([q('#r-rec'), q('#r-where'), q('#r-pivot')], { opacity: 0 });
+        tl.fromTo(q('#r-rec'), { opacity: 0, y: 30, scale: 0.8 },
+                              { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'back.out(1.4)' }, 1.4);
+        tl.to(q('#r-rec'), { scale: 0.62, y: -120, opacity: 0.5, filter: 'saturate(0.3)', duration: 0.6, ease: 'power2.in' }, 3.2);
+        tl.fromTo(q('#r-where'), { opacity: 0, y: 26, filter: 'blur(12px)' },
+                                { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.55, ease: 'power3.out' }, 3.5);
+        tl.to(q('#r-pivot'), { opacity: 1, duration: 0.45, ease: 'power2.out' }, 6.0);
+        tl.to(q('#r-wrap'), { opacity: 0, duration: 0.5, ease: 'power2.in' }, 6.0);
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines['record-sales'] = tl;
+      })();
+    </script>
+  </div>
+</template>

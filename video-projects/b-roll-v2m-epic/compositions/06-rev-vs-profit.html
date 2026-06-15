@@ -1,0 +1,58 @@
+<template id="rev-vs-profit-template">
+  <div data-composition-id="rev-vs-profit" data-start="45.8" data-duration="9.6" data-width="1080" data-height="1920">
+    <style>
+      [data-composition-id="rev-vs-profit"] { position: absolute; inset: 0; overflow: hidden; }
+      [data-composition-id="rev-vs-profit"] .nums { position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 26px; }
+      [data-composition-id="rev-vs-profit"] .nums .h { font-weight: 700; font-size: 44px; color: #fff; margin-bottom: 16px; text-align:center; }
+      [data-composition-id="rev-vs-profit"] .nums .row { display: flex; gap: 28px; align-items: baseline; font-weight: 700; color: var(--brand-text-dim); }
+      [data-composition-id="rev-vs-profit"] .nums .row .k { font-size: 30px; letter-spacing: .14em; width: 280px; text-align: right; }
+      [data-composition-id="rev-vs-profit"] .nums .row .v { font-size: 38px; color: rgba(156,212,255,.45); width: 180px; }
+      [data-composition-id="rev-vs-profit"] .half { position: absolute; left: 0; right: 0; height: 50%;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 0 100px; }
+      [data-composition-id="rev-vs-profit"] .top { top: 0; }
+      [data-composition-id="rev-vs-profit"] .bot { bottom: 0; }
+      [data-composition-id="rev-vs-profit"] .word { font-weight: 800; font-size: 128px; letter-spacing: -.03em; line-height: .9; }
+      [data-composition-id="rev-vs-profit"] .top .word { color: var(--brand-text-dim); }
+      [data-composition-id="rev-vs-profit"] .bot .word { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400;
+        background: linear-gradient(180deg, #ffffff, #9CD4FF); -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 36px rgba(156,212,255,.55)); }
+      [data-composition-id="rev-vs-profit"] .desc { font-weight: 600; font-size: 40px; color: var(--brand-text-dim); text-align: center; }
+      [data-composition-id="rev-vs-profit"] .bot .desc { color: var(--brand-blue-tint); }
+      [data-composition-id="rev-vs-profit"] .divider { position: absolute; top: 50%; left: 120px; right: 120px; height: 3px;
+        background: linear-gradient(90deg, transparent, rgba(156,212,255,.8), transparent); transform-origin: center; }
+    </style>
+
+    <div class="nums" id="rp-nums">
+      <div class="h">Nobody's watching the numbers</div>
+      <div class="row"><span class="k">AOV</span><span class="v">$48.20</span></div>
+      <div class="row"><span class="k">CAC</span><span class="v">$31.70</span></div>
+      <div class="row"><span class="k">CONTRIBUTION</span><span class="v">$9.40</span></div>
+      <div class="row"><span class="k">NET MARGIN</span><span class="v">4.1%</span></div>
+    </div>
+
+    <div class="divider" id="rp-div"></div>
+    <div class="half top" id="rp-top"><div class="word">REVENUE</div><div class="desc">what you sold</div></div>
+    <div class="half bot" id="rp-bot"><div class="word">Profit</div><div class="desc">what you keep</div></div>
+
+    <script>
+      (function(){
+        window.__timelines = window.__timelines || {};
+        const SLOT = 9.6;
+        const q = (s) => '[data-composition-id="rev-vs-profit"] ' + s;
+        const tl = gsap.timeline({ paused: true });
+        gsap.set(q('#rp-nums'), { opacity: 0 });
+        gsap.set([q('#rp-div'), q('#rp-top'), q('#rp-bot')], { opacity: 0 });
+        gsap.set(q('#rp-div'), { scaleX: 0 });
+        gsap.set(q('#rp-top'), { y: 60 }); gsap.set(q('#rp-bot'), { y: -60 });
+        tl.to(q('#rp-nums'), { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0.3);
+        tl.to(q('#rp-nums'), { opacity: 0, y: -30, filter: 'blur(12px)', duration: 0.5, ease: 'power2.in' }, 4.8);
+        tl.to(q('#rp-top'), { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }, 5.27);
+        tl.to(q('#rp-div'), { opacity: 1, scaleX: 1, duration: 0.6, ease: 'power2.out' }, 5.5);
+        tl.to(q('#rp-bot'), { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out' }, 7.16);
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines['rev-vs-profit'] = tl;
+      })();
+    </script>
+  </div>
+</template>

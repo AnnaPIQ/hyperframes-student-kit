@@ -1,0 +1,58 @@
+<template id="ambient-bg-template">
+  <div data-composition-id="ambient-bg" data-start="0" data-duration="83" data-width="1080" data-height="1920">
+    <style>
+      [data-composition-id="ambient-bg"] { position: absolute; inset: 0; overflow: hidden;
+        background:
+          radial-gradient(120% 80% at 50% -10%, #0a3a6b 0%, #06284C 38%, #031a33 72%, #02101f 100%); }
+      [data-composition-id="ambient-bg"] .grid {
+        position: absolute; left: -25%; right: -25%; bottom: -10%; height: 80%;
+        transform: perspective(900px) rotateX(62deg); transform-origin: bottom center;
+        background:
+          repeating-linear-gradient(0deg,  rgba(156,212,255,.07) 0 1px, transparent 1px 90px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.07) 0 1px, transparent 1px 90px);
+        mask-image: linear-gradient(to top, #000 0%, transparent 75%);
+        -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 75%); }
+      [data-composition-id="ambient-bg"] .rake {
+        position: absolute; inset: -20%;
+        background: linear-gradient(118deg, rgba(156,212,255,.16) 0%, rgba(156,212,255,0) 34%);
+        mix-blend-mode: screen; filter: blur(8px); }
+      [data-composition-id="ambient-bg"] .halation {
+        position: absolute; top: 8%; left: 50%; width: 900px; height: 900px; transform: translateX(-50%);
+        background: radial-gradient(circle, rgba(156,212,255,.10) 0%, rgba(156,212,255,0) 60%);
+        filter: blur(40px); mix-blend-mode: screen; }
+      [data-composition-id="ambient-bg"] .vignette {
+        position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 75% 60% at 50% 42%, transparent 30%, rgba(2,16,31,.55) 78%, #010a14 100%); }
+      [data-composition-id="ambient-bg"] .grain {
+        position: absolute; inset: -50%; pointer-events: none; opacity: .055;
+        background-image:
+          radial-gradient(rgba(255,255,255,.9) .5px, transparent .6px),
+          radial-gradient(rgba(255,255,255,.7) .5px, transparent .6px),
+          radial-gradient(rgba(255,255,255,.6) .5px, transparent .6px);
+        background-size: 3px 3px, 5px 5px, 7px 7px;
+        background-position: 0 0, 1px 2px, 2px 1px; mix-blend-mode: overlay; }
+    </style>
+
+    <div class="grid"     id="ab-grid"></div>
+    <div class="rake"     id="ab-rake"></div>
+    <div class="halation" id="ab-halation"></div>
+    <div class="vignette" id="ab-vignette"></div>
+    <div class="grain"    id="ab-grain"></div>
+
+    <script>
+      (function(){
+        window.__timelines = window.__timelines || {};
+        const SLOT = 83;
+        const q = (s) => '[data-composition-id="ambient-bg"] ' + s;
+        const tl = gsap.timeline({ paused: true });
+        tl.to(q('.grid'), { backgroundPositionY: '90px', duration: SLOT, ease: 'none' }, 0);
+        tl.fromTo(q('.rake'), { xPercent: -6, opacity: .8 },
+                              { xPercent: 6, opacity: 1, duration: SLOT, ease: 'sine.inOut' }, 0);
+        tl.to(q('.halation'), { opacity: 1.4, scale: 1.08, duration: 6, repeat: 12, yoyo: true, ease: 'sine.inOut', transformOrigin: '50% 50%' }, 0);
+        tl.to(q('.grain'), { x: 6, y: -5, duration: 0.5, repeat: 165, yoyo: true, ease: 'none' }, 0);
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines['ambient-bg'] = tl;
+      })();
+    </script>
+  </div>
+</template>

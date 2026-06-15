@@ -1,0 +1,73 @@
+<template id="drain-template">
+  <div data-composition-id="drain" data-start="30.15" data-duration="8.15" data-width="1080" data-height="1920">
+    <style>
+      [data-composition-id="drain"] { position: absolute; inset: 0; overflow: hidden; }
+      [data-composition-id="drain"] .rev { position: absolute; top: 150px; right: 110px; width: 320px; text-align: right; }
+      [data-composition-id="drain"] .rev svg { width: 100%; height: auto; }
+      [data-composition-id="drain"] .rev .rl { fill: none; stroke: #9CD4FF; stroke-width: 6; stroke-linecap: round;
+        filter: drop-shadow(0 0 10px rgba(156,212,255,.6)); }
+      [data-composition-id="drain"] .rev .cap { font: 700 24px 'Rethink Sans', sans-serif; color: #9CD4FF; margin-top: 6px; }
+      [data-composition-id="drain"] .tank { position: absolute; left: 50%; top: 430px; transform: translateX(-50%);
+        width: 230px; height: 520px; border-radius: 26px; border: 2px solid var(--brand-border);
+        background: rgba(156,212,255,.05); overflow: hidden; }
+      [data-composition-id="drain"] .tank .fluid { position: absolute; left: 0; right: 0; bottom: 0; height: 100%;
+        transform-origin: bottom center;
+        background: linear-gradient(180deg, #9CD4FF 0%, #5aa0e0 60%, #2d7fd6 100%);
+        box-shadow: 0 0 50px rgba(156,212,255,.5) inset; }
+      [data-composition-id="drain"] .plabel { position: absolute; left: 50%; top: 360px; transform: translateX(-50%);
+        font-weight: 800; font-size: 40px; letter-spacing: .12em; color: #fff; }
+      [data-composition-id="drain"] .drop { position: absolute; left: 50%; width: 14px; height: 20px;
+        border-radius: 0 50% 50% 50%; background: #9CD4FF; transform: rotate(45deg); filter: blur(.3px);
+        box-shadow: 0 0 12px rgba(156,212,255,.7); }
+      [data-composition-id="drain"] .head { position: absolute; bottom: 360px; left: 0; right: 0; text-align: center;
+        font-weight: 800; font-size: 60px; letter-spacing: -.02em; color: #fff; text-shadow: 0 0 36px rgba(156,212,255,.5); }
+      [data-composition-id="drain"] .head em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+    </style>
+
+    <div class="rev" id="dr-rev">
+      <svg viewBox="0 0 320 150"><path class="rl" id="dr-rl" d="M10,130 C 90,120 180,70 310,15"></path></svg>
+      <div class="cap">Revenue still climbing</div>
+    </div>
+    <div class="plabel" id="dr-plabel">PROFIT</div>
+    <div class="tank"><div class="fluid" id="dr-fluid"></div></div>
+    <div id="dr-drops" style="position:absolute;inset:0;"></div>
+    <div class="head" id="dr-head">Quietly pulled <em>out.</em></div>
+
+    <script>
+      (function(){
+        window.__timelines = window.__timelines || {};
+        const SLOT = 8.15;
+        const q = (s) => '[data-composition-id="drain"] ' + s;
+        const tl = gsap.timeline({ paused: true });
+        const hash = (i) => Math.abs(Math.sin(i * 12.9898) * 43758.5453) % 1;
+
+        gsap.set(q('#dr-rl'), { strokeDasharray: 600, strokeDashoffset: 600 });
+        tl.to(q('#dr-rl'), { strokeDashoffset: 0, duration: 1.4, ease: 'power1.out' }, 0.3);
+
+        gsap.set(q('#dr-fluid'), { scaleY: 1 });
+        tl.to(q('#dr-fluid'), { scaleY: 0.12, duration: 3.4, ease: 'power1.in' }, 3.6);
+        tl.to(q('#dr-plabel'), { opacity: 0.35, duration: 3.4, ease: 'power1.in' }, 3.6);
+
+        const wrap = document.querySelector(q('#dr-drops'));
+        if (wrap) {
+          for (let i = 0; i < 22; i++) {
+            const d = document.createElement('div'); d.className = 'drop';
+            d.style.left = (50 + (hash(i) - 0.5) * 10) + '%';
+            d.style.top = '880px';
+            wrap.appendChild(d);
+            const start = 3.7 + hash(i + 7) * 3.6;
+            tl.fromTo(d, { y: 0, opacity: 0 },
+                         { y: 760 + hash(i + 3) * 200, opacity: 1, duration: 0.9 + hash(i + 1) * 0.5, ease: 'power1.in' }, start);
+            tl.to(d, { opacity: 0, duration: 0.3 }, start + 0.7);
+          }
+        }
+        gsap.set(q('#dr-head'), { opacity: 0, y: 24, filter: 'blur(14px)' });
+        tl.to(q('#dr-head'), { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.5, ease: 'power3.out' }, 4.8);
+        tl.to([q('.tank'), q('#dr-plabel'), q('#dr-rev'), q('#dr-head'), q('#dr-drops')],
+              { opacity: 0, duration: 0.4, ease: 'power2.in' }, 7.75);
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines['drain'] = tl;
+      })();
+    </script>
+  </div>
+</template>

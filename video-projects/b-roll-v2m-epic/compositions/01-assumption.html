@@ -1,0 +1,61 @@
+<template id="assumption-template">
+  <div data-composition-id="assumption" data-start="7.05" data-duration="6.35" data-width="1080" data-height="1920">
+    <style>
+      [data-composition-id="assumption"] { position: absolute; inset: 0; display: flex;
+        flex-direction: column; align-items: center; justify-content: center; }
+      [data-composition-id="assumption"] .wrap { display: flex; flex-direction: column; align-items: center; gap: 40px; }
+      [data-composition-id="assumption"] .eyebrow { font-weight: 700; font-size: 28px;
+        letter-spacing: .34em; text-transform: uppercase; color: var(--brand-text-dim); }
+      [data-composition-id="assumption"] .chart { width: 760px; }
+      [data-composition-id="assumption"] .lab { font-weight: 700; font-size: 40px; color: #fff; }
+      [data-composition-id="assumption"] .lab .q { color: var(--brand-blue-tint); }
+      [data-composition-id="assumption"] svg { width: 100%; height: auto; display: block; }
+      [data-composition-id="assumption"] .axis { stroke: rgba(156,212,255,.25); stroke-width: 2; }
+      [data-composition-id="assumption"] .rev { fill: none; stroke: #9CD4FF; stroke-width: 7;
+        stroke-linecap: round; filter: drop-shadow(0 0 12px rgba(156,212,255,.6)); }
+      [data-composition-id="assumption"] .prof { fill: none; stroke: rgba(222,238,254,.65);
+        stroke-width: 5; stroke-linecap: round; stroke-dasharray: 4 14; }
+      [data-composition-id="assumption"] .tagr { fill: #9CD4FF; font: 700 26px 'Rethink Sans', sans-serif; }
+      [data-composition-id="assumption"] .tagp { fill: rgba(222,238,254,.8); font: 700 24px 'Rethink Sans', sans-serif; }
+    </style>
+
+    <div class="wrap" id="a-wrap">
+      <div class="eyebrow" id="a-eye">Most founders assume</div>
+      <div class="chart">
+        <svg viewBox="0 0 820 560">
+          <line class="axis" x1="70" y1="500" x2="800" y2="500"></line>
+          <line class="axis" x1="70" y1="60" x2="70" y2="500"></line>
+          <path class="rev"  id="a-rev"  d="M80,455 C 300,420 520,280 790,110"></path>
+          <path class="prof" id="a-prof" d="M80,470 C 300,450 520,380 790,290"></path>
+          <text class="tagr" id="a-tagr" x="640" y="92">Revenue</text>
+          <text class="tagp" id="a-tagp" x="650" y="300">Profit?</text>
+        </svg>
+      </div>
+      <div class="lab" id="a-lab">Revenue up <span class="q">&rarr; profit follows?</span></div>
+    </div>
+
+    <script>
+      (function(){
+        window.__timelines = window.__timelines || {};
+        const SLOT = 6.35;
+        const q = (s) => '[data-composition-id="assumption"] ' + s;
+        const tl = gsap.timeline({ paused: true });
+        gsap.set(q('#a-wrap'), { y: 150, filter: 'blur(28px)', opacity: 0 });
+        tl.to(q('#a-wrap'), { y: 0, filter: 'blur(0px)', opacity: 1, duration: 0.85, ease: 'power2.out' }, 0);
+        gsap.set(q('#a-rev'), { strokeDasharray: 1200, strokeDashoffset: 1200 });
+        tl.to(q('#a-rev'), { strokeDashoffset: 0, duration: 1.1, ease: 'power2.out' }, 1.3);
+        gsap.set(q('#a-tagr'), { opacity: 0 });
+        tl.to(q('#a-tagr'), { opacity: 1, duration: 0.4 }, 2.2);
+        gsap.set(q('#a-prof'), { opacity: 0 });
+        gsap.set(q('#a-tagp'), { opacity: 0 });
+        tl.to(q('#a-prof'), { opacity: 1, duration: 0.9, ease: 'power2.out' }, 2.9);
+        tl.to(q('#a-tagp'), { opacity: 1, duration: 0.4 }, 3.4);
+        gsap.set(q('#a-lab'), { opacity: 0, y: 18 });
+        tl.to(q('#a-lab'), { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 3.6);
+        tl.to(q('#a-wrap'), { y: -150, filter: 'blur(30px)', opacity: 0, duration: 0.33, ease: 'power2.in' }, 5.95);
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines['assumption'] = tl;
+      })();
+    </script>
+  </div>
+</template>

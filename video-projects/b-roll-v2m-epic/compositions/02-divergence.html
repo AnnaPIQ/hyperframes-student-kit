@@ -1,0 +1,58 @@
+<template id="divergence-template">
+  <div data-composition-id="divergence" data-start="13.4" data-duration="4.35" data-width="1080" data-height="1920">
+    <style>
+      [data-composition-id="divergence"] { position: absolute; inset: 0; display: flex;
+        flex-direction: column; align-items: center; justify-content: center; }
+      [data-composition-id="divergence"] .wrap { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+      [data-composition-id="divergence"] .chart { width: 760px; }
+      [data-composition-id="divergence"] svg { width: 100%; height: auto; display: block; }
+      [data-composition-id="divergence"] .axis { stroke: rgba(156,212,255,.25); stroke-width: 2; }
+      [data-composition-id="divergence"] .rev { fill: none; stroke: #9CD4FF; stroke-width: 7;
+        stroke-linecap: round; filter: drop-shadow(0 0 12px rgba(156,212,255,.6)); }
+      [data-composition-id="divergence"] .prof { fill: none; stroke: #ffffff; stroke-width: 6; stroke-linecap: round; }
+      [data-composition-id="divergence"] .gap { fill: rgba(156,212,255,.16); }
+      [data-composition-id="divergence"] .tagr { fill: #9CD4FF; font: 700 26px 'Rethink Sans', sans-serif; }
+      [data-composition-id="divergence"] .tagp { fill: #fff; font: 700 24px 'Rethink Sans', sans-serif; }
+      [data-composition-id="divergence"] .press { font-weight: 800; font-size: 120px; letter-spacing: -.03em;
+        color: #fff; text-shadow: 0 0 50px rgba(156,212,255,.65); }
+      [data-composition-id="divergence"] .press em { font-family: 'Hedvig Letters Serif', serif; font-style: italic;
+        font-weight: 400; color: var(--brand-blue-tint); }
+    </style>
+
+    <div class="wrap" id="d-wrap">
+      <div class="chart">
+        <svg viewBox="0 0 820 560">
+          <line class="axis" x1="70" y1="500" x2="800" y2="500"></line>
+          <line class="axis" x1="70" y1="60" x2="70" y2="500"></line>
+          <path class="gap"  id="d-gap"  d="M80,455 C 300,420 520,280 790,110 L790,450 C 520,462 300,468 80,470 Z"></path>
+          <path class="rev"  id="d-rev"  d="M80,455 C 300,420 520,280 790,110"></path>
+          <path class="prof" id="d-prof" d="M80,470 C 300,468 520,462 790,450"></path>
+          <text class="tagr" x="640" y="92">Revenue</text>
+          <text class="tagp" id="d-tagp" x="650" y="438">Profit</text>
+        </svg>
+      </div>
+      <div class="press" id="d-press">The most <em>pressure.</em></div>
+    </div>
+
+    <script>
+      (function(){
+        window.__timelines = window.__timelines || {};
+        const SLOT = 4.35;
+        const q = (s) => '[data-composition-id="divergence"] ' + s;
+        const tl = gsap.timeline({ paused: true });
+        gsap.set(q('#d-wrap'), { y: 150, filter: 'blur(28px)', opacity: 0 });
+        tl.to(q('#d-wrap'), { y: 0, filter: 'blur(0px)', opacity: 1, duration: 0.7, ease: 'power2.out' }, 0);
+        gsap.set(q('#d-rev'), { strokeDasharray: 1200, strokeDashoffset: 1200 });
+        tl.to(q('#d-rev'), { strokeDashoffset: 0, duration: 0.6, ease: 'power2.out' }, 0.2);
+        gsap.set(q('#d-prof'), { strokeDasharray: 1100, strokeDashoffset: 1100 });
+        tl.to(q('#d-prof'), { strokeDashoffset: 0, duration: 0.9, ease: 'power2.out' }, 0.7);
+        gsap.set(q('#d-gap'), { opacity: 0 });
+        tl.to(q('#d-gap'), { opacity: 1, duration: 0.8, ease: 'power2.inOut' }, 1.4);
+        gsap.set(q('#d-press'), { opacity: 0, y: 30, scale: 1.1, filter: 'blur(16px)' });
+        tl.to(q('#d-press'), { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.5, ease: 'power3.out' }, 3.55);
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines['divergence'] = tl;
+      })();
+    </script>
+  </div>
+</template>

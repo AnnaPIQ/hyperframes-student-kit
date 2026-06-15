@@ -1,0 +1,65 @@
+<template id="we-help-template">
+  <div data-composition-id="we-help" data-start="58.45" data-duration="8.5" data-width="1080" data-height="1920">
+    <style>
+      [data-composition-id="we-help"] { position: absolute; inset: 0; overflow: hidden; }
+      [data-composition-id="we-help"] .bw-wrap { position: absolute; inset: 0; }
+      [data-composition-id="we-help"] .bw-wrap video { width: 100%; height: 100%; object-fit: cover;
+        filter: grayscale(.4) saturate(.5) contrast(1.05) brightness(.5); }
+      [data-composition-id="we-help"] .bw-grade { position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(2,16,31,.7) 0%, rgba(6,40,76,.55) 45%, rgba(2,16,31,.9) 100%);
+        mix-blend-mode: multiply; }
+      [data-composition-id="we-help"] .logo { position: absolute; top: 150px; left: 50%; transform: translateX(-50%); width: 360px; }
+      [data-composition-id="we-help"] .chart { position: absolute; top: 470px; left: 50%; transform: translateX(-50%); width: 620px; }
+      [data-composition-id="we-help"] svg { width: 100%; height: auto; display: block; }
+      [data-composition-id="we-help"] .rev { fill: none; stroke: #9CD4FF; stroke-width: 6; stroke-linecap: round;
+        filter: drop-shadow(0 0 10px rgba(156,212,255,.6)); }
+      [data-composition-id="we-help"] .prof { fill: none; stroke: #fff; stroke-width: 5; stroke-linecap: round; }
+      [data-composition-id="we-help"] .gap { fill: rgba(156,212,255,.16); }
+      [data-composition-id="we-help"] .marker { fill: #fff; }
+      [data-composition-id="we-help"] .ring { fill: none; stroke: #9CD4FF; stroke-width: 3; }
+      [data-composition-id="we-help"] .head { position: absolute; bottom: 470px; left: 0; right: 0; padding: 0 90px;
+        text-align: center; font-weight: 800; font-size: 64px; line-height: 1.04; letter-spacing: -.02em; color: #fff;
+        text-shadow: 0 0 30px rgba(2,16,31,.9); }
+      [data-composition-id="we-help"] .head em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+    </style>
+
+    <div class="bw-wrap" id="w-wrap"><video id="wh-vid" src="assets/bw-car.mp4" data-start="0" data-duration="7.8" data-track-index="0" muted></video></div>
+    <div class="bw-grade"></div>
+
+    <img class="logo" id="w-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+
+    <div class="chart">
+      <svg viewBox="0 0 620 360">
+        <path class="gap"  id="w-gap"  d="M20,300 C 180,280 360,180 600,70 L600,300 C 360,310 180,315 20,318 Z"></path>
+        <path class="rev"  d="M20,300 C 180,280 360,180 600,70"></path>
+        <path class="prof" d="M20,318 C 180,315 360,310 600,300"></path>
+        <g id="w-mark" opacity="0">
+          <circle class="ring"   cx="430" cy="225" r="34"></circle>
+          <circle class="marker" cx="430" cy="225" r="9"></circle>
+        </g>
+      </svg>
+    </div>
+
+    <div class="head" id="w-head">We find exactly where your<br/>margin is <em>leaking.</em></div>
+
+    <script>
+      (function(){
+        window.__timelines = window.__timelines || {};
+        const SLOT = 8.5;
+        const q = (s) => '[data-composition-id="we-help"] ' + s;
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(q('#w-wrap'), { scale: 1.04 }, { scale: 1.12, duration: SLOT, ease: 'none' }, 0);
+        gsap.set(q('#w-logo'), { opacity: 0, y: -16 });
+        gsap.set(q('#w-head'), { opacity: 0, y: 22 });
+        gsap.set(q('#w-mark'), { opacity: 0, transformOrigin: '430px 225px' });
+        tl.to(q('#w-logo'), { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.5);
+        tl.to(q('#w-head'), { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.4);
+        tl.fromTo(q('#w-mark'), { opacity: 0, scale: 1.8 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)' }, 5.0);
+        tl.to(q('.ring'), { scale: 1.25, opacity: 0.5, duration: 0.8, repeat: 1, yoyo: true, ease: 'sine.inOut', transformOrigin: '430px 225px' }, 5.5);
+        tl.to(q('#w-wrap'), { opacity: 0, duration: 0.5, ease: 'power2.in' }, 7.6);
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines['we-help'] = tl;
+      })();
+    </script>
+  </div>
+</template>

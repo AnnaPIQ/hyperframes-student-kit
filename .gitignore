@@ -40,3 +40,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Raw downloaded source clips (large; re-fetch via scripts/gdrive-dl.sh)
+**/assets/raw/

@@ -1,0 +1,71 @@
+<template id="cost-leak-template">
+  <div data-composition-id="cost-leak" data-start="17.75" data-duration="12.4" data-width="1080" data-height="1920">
+    <style>
+      [data-composition-id="cost-leak"] { position: absolute; inset: 0; display: flex;
+        flex-direction: column; align-items: center; justify-content: center; padding: 0 90px; }
+      [data-composition-id="cost-leak"] .wrap { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+      [data-composition-id="cost-leak"] .eyebrow { font-weight: 700; font-size: 28px;
+        letter-spacing: .3em; text-transform: uppercase; color: var(--brand-text-dim); margin-bottom: 8px; }
+      [data-composition-id="cost-leak"] .rows { display: flex; flex-direction: column; gap: 22px; width: 760px; }
+      [data-composition-id="cost-leak"] .row { display: flex; align-items: center; justify-content: space-between;
+        padding: 22px 30px; border: 1px solid var(--brand-border); border-radius: 18px;
+        background: linear-gradient(180deg, rgba(16,61,111,.5), rgba(10,50,95,.3)); backdrop-filter: blur(6px); }
+      [data-composition-id="cost-leak"] .row .name { font-weight: 700; font-size: 44px; color: #fff; letter-spacing: -.02em; }
+      [data-composition-id="cost-leak"] .row .arr { font-weight: 800; font-size: 40px; color: var(--brand-blue-tint);
+        filter: drop-shadow(0 0 12px rgba(156,212,255,.6)); }
+      [data-composition-id="cost-leak"] .meter { width: 760px; margin-top: 18px; }
+      [data-composition-id="cost-leak"] .meter .mlabel { display: flex; justify-content: space-between;
+        font-weight: 700; font-size: 26px; color: var(--brand-text-dim); margin-bottom: 10px; letter-spacing: .04em; }
+      [data-composition-id="cost-leak"] .meter .track { height: 26px; border-radius: 999px;
+        background: rgba(156,212,255,.12); overflow: hidden; }
+      [data-composition-id="cost-leak"] .meter .fill { height: 100%; border-radius: 999px; transform-origin: left center;
+        background: linear-gradient(90deg, #5aa0e0, #9CD4FF); filter: drop-shadow(0 0 14px rgba(156,212,255,.5)); }
+    </style>
+
+    <div class="wrap" id="c-wrap">
+      <div class="eyebrow" id="c-eye">And the costs creep up</div>
+      <div class="rows">
+        <div class="row" id="c-r1"><span class="name">Ad spend</span><span class="arr">&uarr;</span></div>
+        <div class="row" id="c-r2"><span class="name">Shipping</span><span class="arr">&uarr;</span></div>
+        <div class="row" id="c-r3"><span class="name">Returns</span><span class="arr">&uarr;</span></div>
+        <div class="row" id="c-r4"><span class="name">Cost of goods</span><span class="arr">&uarr;</span></div>
+        <div class="row" id="c-r5"><span class="name">Discounts</span><span class="arr">&uarr;</span></div>
+      </div>
+      <div class="meter">
+        <div class="mlabel"><span>Profit</span><span id="c-pct">100%</span></div>
+        <div class="track"><div class="fill" id="c-fill"></div></div>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        window.__timelines = window.__timelines || {};
+        const SLOT = 12.4;
+        const q = (s) => '[data-composition-id="cost-leak"] ' + s;
+        const tl = gsap.timeline({ paused: true });
+        gsap.set(q('#c-wrap'), { y: 150, filter: 'blur(28px)', opacity: 0 });
+        tl.to(q('#c-wrap'), { y: 0, filter: 'blur(0px)', opacity: 1, duration: 0.7, ease: 'power2.out' }, 0);
+        gsap.set(q('#c-eye'), { opacity: 0 });
+        tl.to(q('#c-eye'), { opacity: 1, duration: 0.4 }, 0.4);
+
+        const rows = ['#c-r1','#c-r2','#c-r3','#c-r4','#c-r5'];
+        const onsets = [2.69, 4.70, 6.30, 8.54, 9.94];
+        const profit = [0.82, 0.68, 0.55, 0.44, 0.32];
+        rows.forEach(r => gsap.set(q(r), { opacity: 0, x: -40 }));
+        gsap.set(q('#c-fill'), { scaleX: 1 });
+        const pct = document.querySelector(q('#c-pct'));
+        const prox = { v: 100 };
+        onsets.forEach((t, i) => {
+          tl.fromTo(q(rows[i]), { opacity: 0, x: -40, filter: 'blur(8px)' },
+                                { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.4, ease: 'expo.out' }, t);
+          tl.to(q('#c-fill'), { scaleX: profit[i], duration: 0.45, ease: 'power2.inOut' }, t + 0.05);
+          tl.to(prox, { v: Math.round(profit[i] * 100), duration: 0.45, ease: 'power2.inOut',
+            onUpdate: () => { if (pct) pct.textContent = Math.round(prox.v) + '%'; } }, t + 0.05);
+        });
+        tl.to(q('#c-wrap'), { y: 120, filter: 'blur(26px)', opacity: 0, duration: 0.4, ease: 'power2.in' }, 11.9);
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines['cost-leak'] = tl;
+      })();
+    </script>
+  </div>
+</template>
