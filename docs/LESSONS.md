@@ -44,6 +44,15 @@ efficient over time instead of relearning the same lessons.
 - **Talking-head lips out of sync.** Source recordings often have a ~0.2s audio start
   offset that the engine drops. **Fix:** advance the video ~0.16s relative to audio so
   lips match (tune per clip).
+- **Lip-sync drift with `data-has-audio` video: the render flattens the audio stream's
+  `start_time` to 0, playing the voice ~0.2s ahead of the lips.** Diagnose with
+  `ffprobe -show_entries stream=codec_type,start_time` — if the source audio `start_time`
+  is e.g. `0.184` while video is `0`, that offset gets dropped. **Fix:** bake the offset
+  back as leading silence in the clip the composition points at —
+  `ffmpeg -i prepped.mp4 -af "adelay=184" -c:v copy -c:a aac prepped-synced.mp4` (use the
+  measured `start_time` in ms). Verify with `ffmpeg -i out.mp4 -af silencedetect=noise=-30dB:d=0.1 -f null -`:
+  the first `silence_end` (speech onset) should shift later by ~the offset and land on the
+  first lip movement. It's a constant shift on an untouched video track, so no drift.
 - **Phone / vertical b-roll imports rotated.** **Fix:** rotate 90° CW during prep
   (`ffmpeg -vf "transpose=1"`).
 - **Offline transcriber can't run (model download egress-blocked).** Some environments

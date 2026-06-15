@@ -44,3 +44,6 @@ assets/incoming/*
 # Large raw source downloads inside projects (keep the prepped/normalized clip instead)
 **/assets/raw-*.mov
 **/assets/raw-*.mp4
+
+# Unused prep intermediate (composition uses the sync-corrected clip)
+video-projects/scaling-but-losing-money/assets/talking-head.mp4
