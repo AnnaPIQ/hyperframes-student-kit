@@ -55,7 +55,14 @@
       #leak .sub { position: absolute; top: 1420px; left: 96px; right: 96px; text-align: center; font-weight: 500; font-size: 46px; line-height: 1.28; color: var(--brand-text-dim); }
 
       /* --- PROOF +59% --- */
-      #proof .client { position: absolute; top: 360px; left: 96px; right: 96px; text-align: center; font-weight: 600; font-size: 44px; color: var(--brand-text-dim); }
+      /* --- PROOF +59% (over founder b-roll) --- */
+      #proof { background: transparent; }
+      #proofbrollwrap { position: absolute; inset: 0; z-index: 20; overflow: hidden; }
+      #proofbrollwrap .broll { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; }
+      #proof .scrim { position: absolute; inset: 0;
+        background: linear-gradient(to bottom, rgba(4,20,42,0.62) 0%, rgba(4,20,42,0.52) 34%, rgba(4,20,42,0.70) 72%, rgba(4,20,42,0.86) 100%),
+          radial-gradient(64% 42% at 50% 40%, rgba(4,18,38,0.30) 0%, rgba(4,18,38,0.70) 100%); }
+      #proof .client { position: absolute; top: 360px; left: 96px; right: 96px; text-align: center; font-weight: 600; font-size: 44px; color: var(--brand-white); text-shadow: 0 2px 18px rgba(0,0,0,0.55); }
       #proof .ringwrap { position: absolute; top: 560px; left: 50%; transform: translateX(-50%); width: 620px; height: 620px; display: flex; align-items: center; justify-content: center; }
       #proof svg { position: absolute; inset: 0; width: 620px; height: 620px; transform: rotate(-90deg); }
       #proof .num { font-weight: 800; font-size: 208px; letter-spacing: -0.04em; color: var(--brand-white); font-variant-numeric: tabular-nums; line-height: 1; }
@@ -136,9 +143,14 @@
         <div class="sub">It's what happens after the click.</div>
       </div>
 
+      <!-- founder Dryft-Sleep b-roll behind the proof graphics (non-timed wrapper; framework owns the video) -->
+      <div id="proofbrollwrap">
+        <video id="proofbroll" class="broll" src="assets/ad5-proof.mp4" data-start="10.15" data-duration="8.35" data-track-index="10" muted playsinline></video>
+      </div>
+
       <!-- ===== PROOF +59% (10.15–18.5) ===== -->
       <div id="proof" class="panel clip" data-start="10.15" data-duration="8.35" data-track-index="6">
-        <div class="bloom"></div>
+        <div class="scrim"></div>
         <img class="plogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div class="eyebrow">Proof — Dryft Sleep</div>
         <div class="client">Same ad budget. Different outcome.</div>
@@ -204,9 +216,11 @@
       tl.to("#leak", { opacity: 0, scale: 1.03, filter: "blur(12px)", duration: 0.4, ease: "power2.in" }, 10.15);
       tl.set("#leak", { opacity: 0 }, 10.7);
 
-      /* ---------- PROOF +59% ---------- */
+      /* ---------- PROOF +59% (over founder b-roll) ---------- */
       const C = 2 * Math.PI * 278;
+      tl.set("#proofbrollwrap", { opacity: 0 }, 0);
       tl.set("#proofring", { strokeDasharray: C, strokeDashoffset: C }, 10.15);
+      tl.fromTo("#proofbrollwrap", { opacity: 0, scale: 1.05, filter: "blur(14px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.4, ease: "power2.out" }, 10.15);
       tl.from("#proof", { opacity: 0, scale: 1.05, filter: "blur(14px)", duration: 0.4, ease: "power2.out" }, 10.15);
       tl.from("#proof .eyebrow", { opacity: 0, y: 16, duration: 0.4, ease: "power2.out" }, 10.35);
       tl.from("#proof .client", { opacity: 0, y: 16, duration: 0.4, ease: "power2.out" }, 10.5);
@@ -219,7 +233,9 @@
       tl.from("#proof .kicker", { opacity: 0, scale: 0.8, duration: 0.5, ease: "back.out(1.8)" }, 13.4);
       tl.to("#proof .kicker", { scale: 1.05, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1 }, 14.2);
       tl.to("#proof", { opacity: 0, scale: 1.03, filter: "blur(12px)", duration: 0.4, ease: "power2.in" }, 18.1);
+      tl.to("#proofbrollwrap", { opacity: 0, scale: 1.03, filter: "blur(12px)", duration: 0.4, ease: "power2.in" }, 18.1);
       tl.set("#proof", { opacity: 0 }, 18.5);
+      tl.set("#proofbrollwrap", { opacity: 0 }, 18.5);
 
       /* ---------- CTA (final, holds) ---------- */
       tl.from("#cta", { opacity: 0, scale: 1.04, filter: "blur(12px)", duration: 0.45, ease: "power2.out" }, 18.1);
