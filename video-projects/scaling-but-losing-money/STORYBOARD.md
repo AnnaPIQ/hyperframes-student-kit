@@ -7,12 +7,12 @@ graphic cutaway. Persistent EcomIQ logo top-left. No caption track. Flame = the 
 
 | Segment | Time (s) | Mode | What's on screen |
 |---|----------|------|------------------|
-| SPK | 0–8.0 | speaker | Hook: "more revenue, not keeping more money — this is probably why" + "not how it works" |
+| **G0** | 0–4.0 | graphic | Opening hook: "More revenue. *Less profit?*" · "For scaling Shopify brands" |
+| SPK | 4.0–8.0 | speaker | Hook: "more revenue, not keeping more money — this is probably why" |
 | **G1** | 8.0–13.2 | graphic | "Revenue ↑ **≠** Profit ↑" · "That's just not how it works." |
 | SPK | 13.2–20.3 | speaker | "fastest-growing feel the most pressure" + "more sales → more costs" |
 | **G2** | 20.3–30.1 | graphic | **Where the margin goes** — rows stagger to the VO: Ad spend ↑ · Shipping ↑ · Returns ↑ · Cost of goods ↑ · Discounts ↑ |
-| **G3** | 30.2–38.1 | graphic | divergence chart: **Revenue** climbs (blue) / **Profit** sinks (flame) · "Costs quietly drain profit." |
-| SPK | 38.1–43.2 | speaker | "record sales months, still wonder where the money went" |
+| SPK | 30.1–43.2 | speaker | "none feel major alone — together they quietly pull profit out while revenue climbs" + "record sales, still wonder where the money went" |
 | **G4** | 43.2–46.1 | graphic | "The problem isn't *sales.*" (punch) |
 | SPK | 46.1–51.0 | speaker | "nobody's looking at the numbers that decide what you keep" |
 | **G5** | 51.0–58.4 | graphic | split: **REVENUE** / what you sold ‖ **PROFIT** / what you keep → at 55.3 PROFIT lights flame + "Only one pays you." |
