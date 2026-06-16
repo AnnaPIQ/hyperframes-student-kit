@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>b-roll-v1-shorts — sizzle</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy); color: var(--brand-white);
+        font-family: 'Rethink Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+      #bg { position: absolute; inset: 0;
+        background: radial-gradient(80% 40% at 50% 10%, rgba(45,127,214,.30) 0%, rgba(6,40,76,0) 60%),
+          radial-gradient(70% 35% at 50% 100%, rgba(255,76,50,.12) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
+      #grid { position: absolute; inset: -10%;
+        background-image: linear-gradient(0deg, rgba(156,212,255,.05) 0 1px, transparent 1px 90px),
+          linear-gradient(90deg, rgba(156,212,255,.05) 0 1px, transparent 1px 90px);
+        transform: perspective(1200px) rotateX(60deg) translateY(6%); transform-origin: center 60%; }
+      .grain { position: absolute; inset: 0; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+        background-image: radial-gradient(rgba(255,255,255,.9) .5px, transparent .6px),
+          radial-gradient(rgba(255,255,255,.7) .5px, transparent .6px);
+        background-size: 3px 3px, 5px 5px; background-position: 0 0, 2px 3px; }
+      .vignette { position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 80% 65% at 50% 42%, transparent 45%, rgba(2,16,33,.72) 100%); }
+
+      .vid { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      .scrim { position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(4,22,44,.45) 0%, rgba(4,22,44,.05) 26%,
+          rgba(4,22,44,.12) 55%, rgba(4,22,44,.88) 100%); }
+      .pad { position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; text-align: center; padding: 0 90px; }
+      .l3 { position: absolute; left: 80px; right: 80px; bottom: 230px; text-align: center; }
+      .eyebrow { font-weight: 700; font-size: 28px; letter-spacing: .32em; text-transform: uppercase; color: var(--brand-blue-tint); }
+      .h-xl { font-weight: 800; font-size: 120px; line-height: .96; letter-spacing: -.03em; }
+      .h-lg { font-weight: 800; font-size: 92px; line-height: 1.0; letter-spacing: -.025em; }
+      .h-md { font-weight: 800; font-size: 70px; line-height: 1.05; letter-spacing: -.02em; }
+      .sub { font-weight: 600; font-size: 40px; line-height: 1.25; }
+      .em  { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+      .em-hot { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-flame); }
+      .logo-top { position: absolute; top: 90px; left: 0; right: 0; display: flex; justify-content: center; }
+      .logo-top img { width: 320px; height: auto; }
+
+      /* assumption flow */
+      .flow { display: flex; align-items: center; gap: 24px; }
+      .node { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 30px 34px; border-radius: 20px;
+        background: linear-gradient(180deg, var(--brand-surface), var(--brand-surface-2)); border: 1px solid var(--brand-border); min-width: 250px; }
+      .node .nlbl { font-weight: 800; font-size: 50px; }
+      .ar { width: 56px; height: 56px; }
+      .arstack { position: relative; width: 56px; height: 56px; }
+      .arstack .ar { position: absolute; inset: 0; }
+      .conn { position: relative; width: 96px; height: 64px; display: flex; align-items: center; justify-content: center; }
+      .conn .carrow { width: 84px; height: 46px; }
+      .conn .cx { position: absolute; width: 70px; height: 70px; }
+
+      /* cost stack */
+      .stack { width: 100%; max-width: 880px; display: flex; flex-direction: column; gap: 22px; }
+      .row { display: flex; align-items: center; justify-content: space-between;
+        background: linear-gradient(180deg, var(--brand-surface), var(--brand-surface-2));
+        border: 1px solid var(--brand-border); border-radius: 18px; padding: 28px 36px; }
+      .row .lbl { font-weight: 700; font-size: 50px; }
+      .row .up { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 40px; color: var(--brand-flame); }
+      .up svg { width: 34px; height: 34px; }
+
+      .btn { display: inline-flex; align-items: center; gap: 16px; font-weight: 800; font-size: 46px; color: #fff;
+        background: var(--brand-flame); padding: 36px 64px; border-radius: 999px; box-shadow: 0 30px 80px -18px rgba(255,76,50,.65); }
+      .whip { position: absolute; top: 0; left: -30%; width: 30%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(156,212,255,.55), rgba(255,255,255,.85), transparent);
+        filter: blur(28px); pointer-events: none; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="b-roll-v1-shorts" data-start="0" data-duration="77" data-width="1080" data-height="1920">
+      <div id="bg"   class="clip" data-start="0" data-duration="77" data-track-index="0"></div>
+      <div id="grid" class="clip" data-start="0" data-duration="77" data-track-index="1"></div>
+
+      <!-- ===== HOOK (0–6.6) ===== -->
+      <video class="vid" id="v1" src="assets/face/th-hook.mp4" data-start="0.0" data-duration="3.2" data-track-index="5" muted></video>
+      <video class="vid" id="v2" src="assets/broll/dryft-sleep-product.mp4" data-start="3.1" data-duration="2.0" data-track-index="6" muted></video>
+      <div class="scrim clip" id="s2" data-start="3.1" data-duration="2.0" data-track-index="20"></div>
+      <div class="l3 clip" id="t2" data-start="3.2" data-duration="1.8" data-track-index="40"><div class="h-md">More revenue<br>than ever.</div></div>
+      <video class="vid" id="v3" src="assets/broll/shoptalk-walking.mp4" data-start="5.0" data-duration="1.9" data-track-index="7" muted></video>
+      <div class="scrim clip" id="s3" data-start="5.0" data-duration="1.9" data-track-index="21"></div>
+      <div class="l3 clip" id="t3" data-start="5.1" data-duration="1.7" data-track-index="41"><div class="h-md">Keeping <span class="em-hot">less</span> of it?</div></div>
+
+      <!-- ===== ASSUMPTION graphic (6.8–13) ===== -->
+      <div class="scene clip" id="b2" data-start="6.8" data-duration="6.2" data-track-index="42" style="position:absolute;inset:0">
+        <div class="pad" style="gap:54px">
+          <div class="eyebrow">THE ASSUMPTION</div>
+          <div class="flow">
+            <div class="node" id="n1"><span class="nlbl">Revenue</span>
+              <svg class="ar" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M12 5L6 11M12 5L18 11" stroke="#9CD4FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="conn">
+              <svg class="carrow" id="conn-arrow" viewBox="0 0 24 14" fill="none"><path d="M2 7H22M22 7L16 2M22 7L16 12" stroke="#9fb6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg class="cx" id="conn-x" viewBox="0 0 24 24" fill="none"><path d="M5 5L19 19M19 5L5 19" stroke="#FF4C32" stroke-width="3" stroke-linecap="round"/></svg></div>
+            <div class="node" id="n2"><span class="nlbl">Profit</span>
+              <span class="arstack">
+                <svg class="ar" id="n2up" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M12 5L6 11M12 5L18 11" stroke="#9CD4FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="ar" id="n2dn" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M12 19L6 13M12 19L18 13" stroke="#FF4C32" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span></div>
+          </div>
+          <div class="h-lg" id="b2bust">That's <span class="em-hot">not</span><br>how it works.</div>
+        </div>
+      </div>
+
+      <!-- ===== PRESSURE (13–18) ===== -->
+      <video class="vid" id="v4" src="assets/broll/sean-laptop-man.mp4" data-start="13.0" data-duration="2.6" data-track-index="8" muted></video>
+      <div class="scrim clip" id="s4" data-start="13.0" data-duration="2.6" data-track-index="22"></div>
+      <div class="l3 clip" id="t4" data-start="13.1" data-duration="2.4" data-track-index="43"><div class="h-md">The fastest-growing<br>brands…</div></div>
+      <video class="vid" id="v5" src="assets/broll/angle-laptop-think.mp4" data-start="15.6" data-duration="2.4" data-track-index="9" muted></video>
+      <div class="scrim clip" id="s5" data-start="15.6" data-duration="2.4" data-track-index="23"></div>
+      <div class="l3 clip" id="t5" data-start="15.7" data-duration="2.2" data-track-index="44"><div class="h-md">…feel the <span class="em-hot">most</span><br>pressure.</div></div>
+
+      <!-- ===== COST STACK (18–29.6) ===== -->
+      <video class="vid" id="v6" src="assets/broll/dryft-hold.mp4" data-start="18.0" data-duration="1.7" data-track-index="10" muted></video>
+      <div class="scrim clip" id="s6" data-start="18.0" data-duration="1.7" data-track-index="24"></div>
+      <div class="l3 clip" id="t6" data-start="18.1" data-duration="1.5" data-track-index="45"><div class="h-md">More sales in…<br><span class="em">more</span> costs in.</div></div>
+      <div class="scene clip" id="b4" data-start="19.7" data-duration="9.9" data-track-index="46" style="position:absolute;inset:0">
+        <div class="pad" style="justify-content:center">
+          <div class="eyebrow" id="b4title" style="margin-bottom:40px; color:var(--brand-flame)">QUIETLY EATING YOUR MARGIN</div>
+          <div class="stack">
+            <div class="row" id="r1"><span class="lbl">Ad spend</span><span class="up">creeps up <svg viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="#FF4C32" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <div class="row" id="r2"><span class="lbl">Shipping</span><span class="up">rises <svg viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="#FF4C32" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <div class="row" id="r3"><span class="lbl">Returns</span><span class="up">eat margin <svg viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="#FF4C32" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <div class="row" id="r4"><span class="lbl">Cost of goods</span><span class="up">climbs <svg viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="#FF4C32" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <div class="row" id="r5"><span class="lbl">Discounts</span><span class="up">harder to avoid <svg viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M19 5H9M19 5V15" stroke="#FF4C32" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== DIVERGENCE (29.6–37.4) ===== -->
+      <div class="scene clip" id="b5" data-start="29.6" data-duration="7.8" data-track-index="47" style="position:absolute;inset:0">
+        <div class="pad" style="justify-content:center; gap:60px">
+          <div class="h-md">None of it looks major.<br>Together, it<br><span class="em-hot">pulls profit out.</span></div>
+          <svg id="chart" viewBox="0 0 760 380" style="width:840px; height:420px">
+            <line x1="40" y1="340" x2="740" y2="340" stroke="#1d4a7a" stroke-width="2"/>
+            <line x1="40" y1="20" x2="40" y2="340" stroke="#1d4a7a" stroke-width="2"/>
+            <polygon id="leak" points="40,150 740,90 740,300 40,150" fill="#FF4C32" opacity="0"/>
+            <polyline id="rev" points="40,150 220,128 400,104 560,86 740,64" fill="none" stroke="#9CD4FF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline id="prof" points="40,150 220,176 400,214 560,262 740,308" fill="none" stroke="#FF4C32" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <text id="revlbl" x="748" y="60" fill="#9CD4FF" font-family="Rethink Sans" font-weight="800" font-size="32" text-anchor="end">Revenue</text>
+            <text id="proflbl" x="748" y="334" fill="#FF4C32" font-family="Rethink Sans" font-weight="800" font-size="32" text-anchor="end">Profit</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ===== RECORD / WONDERING (37.4–42.8) ===== -->
+      <video class="vid" id="v7" src="assets/broll/walking-industrial.mp4" data-start="37.4" data-duration="2.7" data-track-index="11" muted></video>
+      <div class="scrim clip" id="s7" data-start="37.4" data-duration="2.7" data-track-index="25"></div>
+      <div class="l3 clip" id="t7" data-start="37.5" data-duration="2.5" data-track-index="48"><div class="eyebrow" style="margin-bottom:18px">RECORD-SALES MONTHS</div><div class="h-md">…and still wondering</div></div>
+      <video class="vid" id="v8" src="assets/broll/sean-into-car.mp4" data-start="40.1" data-duration="2.7" data-track-index="12" muted></video>
+      <div class="scrim clip" id="s8" data-start="40.1" data-duration="2.7" data-track-index="26"></div>
+      <div class="l3 clip" id="t8" data-start="40.2" data-duration="2.5" data-track-index="49"><div class="h-md">where it all <span class="em">went.</span></div></div>
+
+      <!-- ===== NOT SALES → NUMBERS (43.2–50.4) ===== -->
+      <video class="vid" id="v9" src="assets/face/th-isntsales.mp4" data-start="43.2" data-duration="2.0" data-track-index="13" muted></video>
+      <video class="vid" id="v10" src="assets/broll/shoptalk-stage-aa.mp4" data-start="45.3" data-duration="2.6" data-track-index="14" muted></video>
+      <div class="scrim clip" id="s10" data-start="45.3" data-duration="2.6" data-track-index="27"></div>
+      <div class="l3 clip" id="t10" data-start="45.4" data-duration="2.4" data-track-index="50"><div class="h-md">No one's watching<br>the <span class="em-hot">numbers</span>…</div></div>
+      <video class="vid" id="v11" src="assets/broll/shoptalk-stage-ab.mp4" data-start="47.9" data-duration="2.5" data-track-index="15" muted></video>
+      <div class="scrim clip" id="s11" data-start="47.9" data-duration="2.5" data-track-index="28"></div>
+      <div class="l3 clip" id="t11" data-start="48.0" data-duration="2.3" data-track-index="51"><div class="h-md">…that decide<br>what you keep.</div></div>
+
+      <!-- ===== THESIS (50.4–58.4) ===== -->
+      <div class="scene clip" id="b8" data-start="50.4" data-duration="8.0" data-track-index="52" style="position:absolute;inset:0">
+        <div class="pad" style="justify-content:center; gap:26px">
+          <div class="h-lg" id="th1">Revenue is<br>what you <span class="em">sold.</span></div>
+          <div class="h-lg" id="th2">Profit is<br>what you <span class="em">keep.</span></div>
+          <div class="h-md" id="th3" style="margin-top:30px; color:var(--brand-blue-tint)">Only <span class="em-hot">one</span><br>pays you.</div>
+        </div>
+      </div>
+
+      <!-- ===== SOLUTION (58.4–66.6) ===== -->
+      <video class="vid" id="v12" src="assets/broll/sweetEs-packinga.mp4" data-start="58.4" data-duration="1.8" data-track-index="16" muted></video>
+      <div class="scrim clip" id="s12" data-start="58.4" data-duration="1.8" data-track-index="29"></div>
+      <div class="l3 clip" id="t12" data-start="58.5" data-duration="1.6" data-track-index="53"><div class="h-md">Growing brand,</div></div>
+      <video class="vid" id="v13" src="assets/broll/sweetEs-packingb.mp4" data-start="60.2" data-duration="1.5" data-track-index="17" muted></video>
+      <div class="scrim clip" id="s13" data-start="60.2" data-duration="1.5" data-track-index="30"></div>
+      <div class="l3 clip" id="t13" data-start="60.3" data-duration="1.3" data-track-index="54"><div class="h-md">profit <span class="em-hot">isn't following?</span></div></div>
+      <video class="vid" id="v14" src="assets/face/th-help.mp4" data-start="61.7" data-duration="4.9" data-track-index="18" muted></video>
+      <div class="logo-top clip" id="b9logo" data-start="61.9" data-duration="4.7" data-track-index="55"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+
+      <!-- ===== CTA card (66.9–77) ===== -->
+      <div class="scene clip" id="cta" data-start="66.9" data-duration="10.1" data-track-index="56" style="position:absolute;inset:0">
+        <div class="pad" style="justify-content:center; gap:50px">
+          <img id="ctalogo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" style="width:400px; height:auto" />
+          <div class="h-lg">Find your<br><span class="em">breakthrough.</span></div>
+          <div class="btn" id="ctabtn">Click the link below →</div>
+          <div class="sub" style="font-weight:700; color:var(--brand-blue-tint)">We guarantee it.</div>
+        </div>
+      </div>
+
+      <!-- seam whips -->
+      <div class="whip clip" id="w1" data-start="6.7"  data-duration="0.45" data-track-index="78"></div>
+      <div class="whip clip" id="w2" data-start="29.5" data-duration="0.45" data-track-index="78"></div>
+      <div class="whip clip" id="w3" data-start="50.3" data-duration="0.45" data-track-index="78"></div>
+      <div class="whip clip" id="w4" data-start="66.7" data-duration="0.45" data-track-index="78"></div>
+
+      <div class="grain clip"    id="grain"    data-start="0" data-duration="77" data-track-index="70"></div>
+      <div class="vignette clip" id="vignette" data-start="0" data-duration="77" data-track-index="71"></div>
+
+      <audio id="a-vo" src="assets/vo.m4a" data-start="0" data-duration="73.2" data-track-index="90" data-volume="1.0"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.to("#grid", { backgroundPositionY: "+=90", duration: 77, ease: "none" }, 0);
+
+      const inText = (sel, at, o = {}) => tl.fromTo(sel,
+        { autoAlpha: 0, y: o.y ?? 40, filter: "blur(10px)" },
+        { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: o.d ?? 0.4, ease: "power3.out" }, at);
+      const outText = (sel, at) => { tl.to(sel, { autoAlpha: 0, duration: 0.25, ease: "power2.in" }, at);
+        tl.set(sel, { autoAlpha: 0 }, at + 0.25); };
+      const faceIn = (sel, at) => tl.fromTo(sel, { autoAlpha: 0, scale: 1.06 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "power2.out" }, at);
+      const faceOut = (sel, at) => { tl.to(sel, { autoAlpha: 0, duration: 0.25, ease: "power2.in" }, at); tl.set(sel, { autoAlpha: 0 }, at + 0.25); };
+      const whip = (sel, at) => tl.fromTo(sel, { xPercent: 0, opacity: 0.9 }, { xPercent: 520, opacity: 0, duration: 0.45, ease: "power2.in" }, at);
+
+      // HOOK
+      faceIn("#v1", 0.0); faceOut("#v1", 3.0);
+      inText("#t2", 3.25); outText("#t2", 4.9);
+      inText("#t3", 5.15); outText("#t3", 6.65);
+
+      // ASSUMPTION graphic
+      inText("#b2 .eyebrow", 6.95, { y: 16 });
+      gsap.set(["#conn-x","#n2dn"], { autoAlpha: 0 });
+      tl.fromTo("#n1", { autoAlpha: 0, y: 24, scale: 0.9 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.4)" }, 7.2);
+      tl.fromTo("#conn-arrow", { autoAlpha: 0, scale: 0.5 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "power2.out" }, 7.6);
+      tl.fromTo("#n2", { autoAlpha: 0, y: 24, scale: 0.9 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.4)" }, 7.95);
+      tl.to("#conn-arrow", { autoAlpha: 0, duration: 0.25 }, 9.85);
+      tl.to("#n2up", { autoAlpha: 0, duration: 0.25 }, 9.9);
+      tl.fromTo("#n2dn", { autoAlpha: 0, y: -10 }, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" }, 9.95);
+      tl.fromTo("#conn-x", { autoAlpha: 0, scale: 1.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 9.95);
+      tl.to("#n2", { borderColor: "#FF4C32", duration: 0.4 }, 9.95);
+      inText("#b2bust", 10.2, { y: 20, d: 0.5 });
+      outText("#b2", 12.7);
+
+      // PRESSURE
+      inText("#t4", 13.15); outText("#t4", 15.5);
+      inText("#t5", 15.75); outText("#t5", 17.9);
+
+      // COST STACK
+      inText("#t6", 18.15); outText("#t6", 19.6);
+      inText("#b4title", 19.95, { y: 16 });
+      const rowAt = { r1: 20.6, r2: 22.0, r3: 23.5, r4: 25.1, r5: 26.8 };
+      Object.entries(rowAt).forEach(([id, t]) =>
+        tl.fromTo("#" + id, { autoAlpha: 0, x: -40, filter: "blur(8px)" }, { autoAlpha: 1, x: 0, filter: "blur(0px)", duration: 0.45, ease: "back.out(1.3)" }, t));
+      outText("#b4", 29.45);
+
+      // DIVERGENCE
+      inText("#b5 .h-md", 29.7, { y: 28, d: 0.5 });
+      ["#rev", "#prof"].forEach((s) => { const el = document.querySelector(s); const len = el.getTotalLength(); gsap.set(el, { strokeDasharray: len, strokeDashoffset: len }); });
+      tl.to("#rev", { strokeDashoffset: 0, duration: 1.8, ease: "power2.out" }, 30.4);
+      tl.to("#prof", { strokeDashoffset: 0, duration: 2.4, ease: "power2.in" }, 31.0);
+      tl.fromTo("#leak", { opacity: 0 }, { opacity: 0.18, duration: 0.8, ease: "power2.out" }, 33.6);
+      tl.fromTo(["#revlbl","#proflbl"], { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5, stagger: 0.2 }, 31.6);
+      outText("#b5", 37.25);
+
+      // RECORD / WONDERING
+      inText("#t7", 37.5); outText("#t7", 40.0);
+      inText("#t8", 40.25); outText("#t8", 42.7);
+
+      // NOT SALES → NUMBERS
+      faceIn("#v9", 43.2); faceOut("#v9", 45.0);
+      inText("#t10", 45.45); outText("#t10", 47.8);
+      inText("#t11", 48.05); outText("#t11", 50.25);
+
+      // THESIS
+      inText("#th1", 50.6, { y: 36, d: 0.5 });
+      tl.to("#th1", { autoAlpha: 0.28, duration: 0.4 }, 53.0);
+      inText("#th2", 53.1, { y: 36, d: 0.5 });
+      tl.to(["#th1","#th2"], { autoAlpha: 0.22, duration: 0.4 }, 55.6);
+      inText("#th3", 55.7, { y: 30, d: 0.5 });
+      tl.fromTo("#th3 .em-hot", { textShadow: "0 0 0 rgba(255,76,50,0)" }, { textShadow: "0 0 26px rgba(255,76,50,.8)", duration: 0.5 }, 56.2);
+      outText("#b8", 58.4);
+
+      // SOLUTION
+      inText("#t12", 58.55); outText("#t12", 60.05);
+      inText("#t13", 60.35); outText("#t13", 61.55);
+      faceIn("#v14", 61.7);
+      tl.fromTo("#b9logo", { autoAlpha: 0, y: -16 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" }, 61.95);
+      faceOut("#v14", 66.3); tl.to("#b9logo", { autoAlpha: 0, duration: 0.25 }, 66.3);
+
+      // CTA
+      tl.fromTo("#ctalogo", { autoAlpha: 0, y: -18 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" }, 67.0);
+      inText("#cta .h-lg", 67.35, { y: 30, d: 0.55 });
+      tl.fromTo("#ctabtn", { autoAlpha: 0, scale: 0.86 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 67.95);
+      tl.fromTo("#cta .sub", { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" }, 68.45);
+      tl.to("#ctabtn", { scale: 1.05, duration: 0.8, repeat: 5, yoyo: true, ease: "sine.inOut" }, 69.2);
+
+      whip("#w1", 6.7); whip("#w2", 29.5); whip("#w3", 50.3); whip("#w4", 66.7);
+
+      tl.to({}, { duration: 77 }, 0); // Law 11 anchor
+      window.__timelines["b-roll-v1-shorts"] = tl;
+    </script>
+  </body>
+</html>
