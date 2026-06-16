@@ -8,7 +8,6 @@
     <script src="assets/vendor/gsap.min.js"></script>
     <link rel="stylesheet" href="assets/brand-tokens.css" />
     <style>
-      /* LOCAL fonts — no network dependency at render time */
       @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
         font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
       @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
@@ -19,7 +18,7 @@
         background: var(--brand-navy); color: var(--brand-white);
         font-family: 'Rethink Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
 
-      /* ---------- global texture layers ---------- */
+      /* ---------- global texture ---------- */
       #bg { position: absolute; inset: 0;
         background:
           radial-gradient(80% 50% at 50% 8%, rgba(45,127,214,.28) 0%, rgba(6,40,76,0) 60%),
@@ -41,7 +40,7 @@
       .vignette { position: absolute; inset: 0; pointer-events: none;
         background: radial-gradient(ellipse 75% 70% at 50% 45%, transparent 40%, rgba(2,16,33,.72) 100%); }
 
-      /* ---------- shared scene primitives ---------- */
+      /* ---------- scene primitives ---------- */
       .scene { position: absolute; inset: 0; }
       .pad { position: absolute; inset: 0; display: flex; flex-direction: column;
         align-items: center; justify-content: center; text-align: center; padding: 0 108px; }
@@ -56,19 +55,28 @@
       .em-hot { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400;
         color: var(--brand-flame); }
 
-      /* full-bleed b-roll video */
       .broll { position: absolute; inset: 0; width: 1080px; height: 1350px; object-fit: cover; }
+      .th-fs { position: absolute; inset: 0; width: 1080px; height: 1350px; object-fit: cover; }
       .scrim { position: absolute; inset: 0;
         background: linear-gradient(180deg, rgba(4,22,44,.40) 0%, rgba(4,22,44,.05) 30%,
           rgba(4,22,44,.20) 62%, rgba(4,22,44,.86) 100%); }
-
-      /* full-screen talking-head video (4:5, cropped from the source) — direct child,
-         never nest media inside a timed wrapper */
-      .th-fs { position: absolute; inset: 0; width: 1080px; height: 1350px; object-fit: cover; }
-
-      /* logo */
       .logo-wrap { position: absolute; top: 64px; left: 0; right: 0; display: flex; justify-content: center; }
       .logo-wrap img { width: 300px; height: auto; }
+
+      /* B2 assumption flow graphic */
+      .flow { display: flex; align-items: center; gap: 26px; }
+      .node { display: flex; flex-direction: column; align-items: center; gap: 12px;
+        padding: 26px 30px; border-radius: 18px; min-width: 240px;
+        background: linear-gradient(180deg, var(--brand-surface) 0%, var(--brand-surface-2) 100%);
+        border: 1px solid var(--brand-border); }
+      .node .nlbl { font-weight: 800; font-size: 44px; letter-spacing: -.01em; }
+      .ar { width: 50px; height: 50px; }
+      .arstack { position: relative; width: 50px; height: 50px; }
+      .arstack .ar { position: absolute; inset: 0; }
+      .conn { position: relative; width: 90px; height: 60px; display: flex; align-items: center; justify-content: center; }
+      .conn .carrow { width: 80px; height: 44px; }
+      .conn .cx { position: absolute; width: 64px; height: 64px; }
+      .bust { font-weight: 800; font-size: 58px; letter-spacing: -.02em; }
 
       /* cost-stack */
       .stack { width: 100%; max-width: 760px; display: flex; flex-direction: column; gap: 18px; }
@@ -76,8 +84,7 @@
         background: linear-gradient(180deg, var(--brand-surface) 0%, var(--brand-surface-2) 100%);
         border: 1px solid var(--brand-border); border-radius: 16px; padding: 22px 30px; }
       .row .lbl { font-weight: 700; font-size: 40px; letter-spacing: -.01em; }
-      .row .up { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 32px;
-        color: var(--brand-flame); }
+      .row .up { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 32px; color: var(--brand-flame); }
       .up svg { width: 28px; height: 28px; }
 
       /* CTA */
@@ -90,57 +97,63 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="b-roll-v1" data-start="0" data-duration="81.4"
+    <div id="root" data-composition-id="b-roll-v1" data-start="0" data-duration="77"
          data-width="1080" data-height="1350">
 
       <!-- ===== global texture ===== -->
-      <div id="bg"   class="clip" data-start="0" data-duration="81.4" data-track-index="0"></div>
-      <div id="orb"  class="clip" data-start="0" data-duration="81.4" data-track-index="1"></div>
-      <div id="grid" class="clip" data-start="0" data-duration="81.4" data-track-index="2"></div>
+      <div id="bg"   class="clip" data-start="0" data-duration="77" data-track-index="0"></div>
+      <div id="orb"  class="clip" data-start="0" data-duration="77" data-track-index="1"></div>
+      <div id="grid" class="clip" data-start="0" data-duration="77" data-track-index="2"></div>
 
-      <!-- ============================================================= -->
-      <!-- B1 · HOOK (0.0–7.0)  — face → punch                            -->
-      <!-- ============================================================= -->
-      <video class="th-fs" id="b1card" src="assets/proxies/th-hook.mp4" data-start="0.2" data-duration="4.3" data-track-index="6" muted></video>
+      <!-- B1 · HOOK (0–6.6) — full-screen Sean → punch -->
+      <video class="th-fs" id="b1card" src="assets/proxies/th-hook.mp4" data-start="0.0" data-duration="4.5" data-track-index="6" muted></video>
       <div class="scene clip" id="b1punch" data-start="4.6" data-duration="2.4" data-track-index="42">
-        <div class="pad">
-          <div class="h-xl">This is<br><span class="em">probably</span> why.</div>
+        <div class="pad"><div class="h-xl">This is<br><span class="em">probably</span> why.</div></div>
+      </div>
+
+      <!-- B2 · ASSUMPTION (6.8–13.0) — flow graphic -->
+      <div class="scene clip" id="b2" data-start="6.8" data-duration="6.3" data-track-index="43">
+        <div class="pad" style="gap:46px">
+          <div class="eyebrow">THE ASSUMPTION</div>
+          <div class="flow">
+            <div class="node" id="n1">
+              <span class="nlbl">Revenue</span>
+              <svg class="ar" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M12 5L6 11M12 5L18 11" stroke="#9CD4FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="conn">
+              <svg class="carrow" id="conn-arrow" viewBox="0 0 24 14" fill="none"><path d="M2 7H22M22 7L16 2M22 7L16 12" stroke="#9fb6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg class="cx" id="conn-x" viewBox="0 0 24 24" fill="none"><path d="M5 5L19 19M19 5L5 19" stroke="#FF4C32" stroke-width="3" stroke-linecap="round"/></svg>
+            </div>
+            <div class="node" id="n2">
+              <span class="nlbl">Profit</span>
+              <span class="arstack">
+                <svg class="ar" id="n2up" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M12 5L6 11M12 5L18 11" stroke="#9CD4FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="ar" id="n2dn" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M12 19L6 13M12 19L18 13" stroke="#FF4C32" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </div>
+          <div class="bust" id="b2bust">That's <span class="em-hot">not</span> how it works.</div>
         </div>
       </div>
 
-      <!-- ============================================================= -->
-      <!-- B2 · ASSUMPTION (6.8–13.2)                                     -->
-      <!-- ============================================================= -->
-      <div class="scene clip" id="b2" data-start="6.8" data-duration="6.4" data-track-index="43">
-        <div class="pad">
-          <div class="eyebrow" style="margin-bottom:30px">THE ASSUMPTION</div>
-          <div class="h-lg">Revenue goes up,<br>so profit <span class="em">follows.</span></div>
-          <div class="sub" id="b2x" style="margin-top:34px; color:var(--brand-flame); font-weight:700">That's just not how it works.</div>
-        </div>
-      </div>
-
-      <!-- ============================================================= -->
-      <!-- B3 · PRESSURE (12.9–18.3) — over b-roll (Sean thinking)        -->
-      <!-- ============================================================= -->
-      <video class="broll" id="v-thinking" src="assets/proxies/sean-thinking.mp4" data-start="12.9" data-duration="5.4" data-track-index="7" muted></video>
-      <div class="scrim clip" id="b3scrim" data-start="12.9" data-duration="5.4" data-track-index="20"></div>
-      <div class="scene clip" id="b3" data-start="13.1" data-duration="5.0" data-track-index="44">
+      <!-- B3 · PRESSURE (13–18) — over thinking b-roll (stabilized) -->
+      <video class="broll" id="v-thinking" src="assets/proxies/sean-thinking.mp4" data-start="13.0" data-duration="5.1" data-track-index="7" muted></video>
+      <div class="scrim clip" id="b3scrim" data-start="13.0" data-duration="5.1" data-track-index="20"></div>
+      <div class="scene clip" id="b3" data-start="13.2" data-duration="4.8" data-track-index="44">
         <div class="pad" style="justify-content:flex-end; padding-bottom:150px">
           <div class="h-md">The fastest-growing brands<br>feel the <span class="em-hot">most</span> pressure.</div>
         </div>
       </div>
 
-      <!-- ============================================================= -->
-      <!-- B4 · COST STACK (17.9–29.9) — HERO list, dryft product intro   -->
-      <!-- ============================================================= -->
-      <video class="broll" id="v-dryft1" src="assets/proxies/dryft-holding.mp4" data-start="17.9" data-duration="1.8" data-track-index="8" muted></video>
-      <div class="scrim clip" id="b4scrim" data-start="17.9" data-duration="1.8" data-track-index="21"></div>
-      <div class="scene clip" id="b4lead" data-start="18.1" data-duration="1.6" data-track-index="45">
+      <!-- B4 · COST STACK (17.9–29.8) — Sweet E's b-roll intro + hero list -->
+      <video class="broll" id="v-sweetEs" src="assets/proxies/sweetEs.mp4" data-start="17.9" data-duration="2.0" data-track-index="8" muted></video>
+      <div class="scrim clip" id="b4scrim" data-start="17.9" data-duration="2.0" data-track-index="21"></div>
+      <div class="scene clip" id="b4lead" data-start="18.1" data-duration="1.7" data-track-index="45">
         <div class="pad" style="justify-content:flex-end; padding-bottom:150px">
           <div class="h-md">More sales in…<br><span class="em">more</span> costs in.</div>
         </div>
       </div>
-      <div class="scene clip" id="b4" data-start="19.7" data-duration="10.2" data-track-index="46">
+      <div class="scene clip" id="b4" data-start="19.9" data-duration="9.9" data-track-index="46">
         <div class="pad" style="justify-content:center">
           <div class="eyebrow" id="b4title" style="margin-bottom:34px; color:var(--brand-flame)">QUIETLY EATING YOUR MARGIN</div>
           <div class="stack">
@@ -153,10 +166,8 @@
         </div>
       </div>
 
-      <!-- ============================================================= -->
-      <!-- B5 · DIVERGENCE (29.6–37.8) — HERO chart                       -->
-      <!-- ============================================================= -->
-      <div class="scene clip" id="b5" data-start="29.6" data-duration="8.2" data-track-index="47">
+      <!-- B5 · DIVERGENCE (29.6–37.4) — hero chart -->
+      <div class="scene clip" id="b5" data-start="29.6" data-duration="7.9" data-track-index="47">
         <div class="pad" style="justify-content:center; gap:48px">
           <div class="h-md" style="font-size:54px">None of it looks major.<br>Together, it <span class="em-hot">pulls profit out.</span></div>
           <svg id="chart" viewBox="0 0 760 380" style="width:760px; height:380px">
@@ -173,34 +184,28 @@
         </div>
       </div>
 
-      <!-- ============================================================= -->
-      <!-- B6 · WHERE'D IT GO (37.4–43.3) — over Sean walking b-roll      -->
-      <!-- ============================================================= -->
-      <video class="broll" id="v-walk" src="assets/proxies/sean-walk.mp4" data-start="37.4" data-duration="4.0" data-track-index="9" muted></video>
-      <div class="scrim clip" id="b6scrim" data-start="37.4" data-duration="4.0" data-track-index="22"></div>
-      <div class="scene clip" id="b6" data-start="37.6" data-duration="5.5" data-track-index="48">
+      <!-- B6 · WHERE'D IT GO (37.4–42.9) — over walk b-roll (extended; no navy card) -->
+      <video class="broll" id="v-walk" src="assets/proxies/sean-walk.mp4" data-start="37.4" data-duration="5.6" data-track-index="9" muted></video>
+      <div class="scrim clip" id="b6scrim" data-start="37.4" data-duration="5.6" data-track-index="22"></div>
+      <div class="scene clip" id="b6" data-start="37.6" data-duration="5.2" data-track-index="48">
         <div class="pad" style="justify-content:flex-end; padding-bottom:150px">
           <div class="eyebrow" style="margin-bottom:24px">RECORD-SALES MONTHS</div>
           <div class="h-md">…and still wondering<br><span class="em">where it all went.</span></div>
         </div>
       </div>
 
-      <!-- ============================================================= -->
-      <!-- B7 · NOT SALES → NUMBERS (43.0–50.7)                           -->
-      <!-- ============================================================= -->
-      <video class="th-fs" id="b7card" src="assets/proxies/th-isntsales.mp4" data-start="43.2" data-duration="3.0" data-track-index="10" muted></video>
-      <video class="broll" id="v-typing" src="assets/proxies/sean-typing.mp4" data-start="46.5" data-duration="4.2" data-track-index="11" muted></video>
-      <div class="scrim clip" id="b7scrim" data-start="46.5" data-duration="4.2" data-track-index="23"></div>
-      <div class="scene clip" id="b7b" data-start="46.7" data-duration="3.9" data-track-index="51">
+      <!-- B7 · NOT SALES (43.2–45.2 full-screen) → NUMBERS (laptop b-roll) -->
+      <video class="th-fs" id="b7card" src="assets/proxies/th-isntsales.mp4" data-start="43.2" data-duration="2.0" data-track-index="10" muted></video>
+      <video class="broll" id="v-laptop" src="assets/proxies/sean-laptop.mp4" data-start="45.3" data-duration="5.1" data-track-index="11" muted></video>
+      <div class="scrim clip" id="b7scrim" data-start="45.3" data-duration="5.1" data-track-index="23"></div>
+      <div class="scene clip" id="b7b" data-start="45.5" data-duration="4.8" data-track-index="51">
         <div class="pad" style="justify-content:flex-end; padding-bottom:150px">
           <div class="h-md">No one's watching the<br><span class="em-hot">numbers</span> that decide what you keep.</div>
         </div>
       </div>
 
-      <!-- ============================================================= -->
-      <!-- B8 · THESIS (50.4–58.7) — biggest type                         -->
-      <!-- ============================================================= -->
-      <div class="scene clip" id="b8" data-start="50.4" data-duration="8.3" data-track-index="52">
+      <!-- B8 · THESIS (50.4–58.4) -->
+      <div class="scene clip" id="b8" data-start="50.4" data-duration="8.0" data-track-index="52">
         <div class="pad" style="justify-content:center; gap:18px">
           <div class="h-lg" id="t1">Revenue is what<br>you <span class="em">sold.</span></div>
           <div class="h-lg" id="t2" style="margin-top:10px">Profit is what<br>you <span class="em">keep.</span></div>
@@ -208,9 +213,7 @@
         </div>
       </div>
 
-      <!-- ============================================================= -->
-      <!-- B9 · SOLUTION (58.4–73.8) — product → face cameo → fix         -->
-      <!-- ============================================================= -->
+      <!-- B9 · SOLUTION (58.4–66.6) — product → full-screen Sean cameo -->
       <video class="broll" id="v-dryft2" src="assets/proxies/dryft-pickup.mp4" data-start="58.4" data-duration="3.3" data-track-index="12" muted></video>
       <div class="scrim clip" id="b9scrim" data-start="58.4" data-duration="3.3" data-track-index="24"></div>
       <div class="scene clip" id="b9a" data-start="58.6" data-duration="3.1" data-track-index="53">
@@ -218,21 +221,13 @@
           <div class="h-md">Growing brand,<br>but profit <span class="em-hot">isn't following?</span></div>
         </div>
       </div>
-      <video class="th-fs" id="b9card" src="assets/proxies/th-help.mp4" data-start="63.8" data-duration="5.0" data-track-index="13" muted></video>
-      <div class="logo-wrap clip" id="b9logo" data-start="63.9" data-duration="9.7" data-track-index="54">
+      <video class="th-fs" id="b9card" src="assets/proxies/th-help.mp4" data-start="61.7" data-duration="4.9" data-track-index="13" muted></video>
+      <div class="logo-wrap clip" id="b9logo" data-start="61.9" data-duration="4.7" data-track-index="54">
         <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
-      <div class="scene clip" id="b9b" data-start="69.0" data-duration="4.6" data-track-index="56">
-        <div class="pad" style="justify-content:center; padding-top:60px">
-          <div class="h-lg">And what to<br>fix <span class="em-hot">first.</span></div>
-        </div>
-      </div>
 
-      <!-- ============================================================= -->
-      <!-- B10 · CTA (73.6–82.6) — face → hold                            -->
-      <!-- ============================================================= -->
-      <video class="th-fs" id="b10card" src="assets/proxies/th-cta.mp4" data-start="73.7" data-duration="4.0" data-track-index="14" muted></video>
-      <div class="scene clip" id="b10cta" data-start="77.9" data-duration="3.5" data-track-index="58">
+      <!-- CTA card (66.9–77) — single CTA, ends on the card -->
+      <div class="scene clip" id="cta" data-start="66.9" data-duration="10.1" data-track-index="58">
         <div class="pad" style="justify-content:center; gap:40px">
           <img id="ctalogo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" style="width:360px; height:auto" />
           <div class="h-lg">Find your<br><span class="em">breakthrough.</span></div>
@@ -241,25 +236,20 @@
         </div>
       </div>
 
-      <!-- ===== seam whips ===== -->
+      <!-- seam whips (visual only) -->
       <div class="whip clip" id="w1" data-start="6.7"  data-duration="0.5" data-track-index="78"></div>
       <div class="whip clip" id="w2" data-start="17.8" data-duration="0.5" data-track-index="78"></div>
       <div class="whip clip" id="w3" data-start="29.5" data-duration="0.5" data-track-index="78"></div>
       <div class="whip clip" id="w4" data-start="50.3" data-duration="0.5" data-track-index="78"></div>
-      <div class="whip clip" id="w5" data-start="73.5" data-duration="0.5" data-track-index="78"></div>
+      <div class="whip clip" id="w5" data-start="66.7" data-duration="0.5" data-track-index="78"></div>
 
-      <!-- ===== global texture on top ===== -->
-      <div class="grain clip"    id="grain"    data-start="0" data-duration="81.4" data-track-index="30"></div>
-      <div class="vignette clip" id="vignette" data-start="0" data-duration="81.4" data-track-index="31"></div>
+      <!-- global texture on top -->
+      <div class="grain clip"    id="grain"    data-start="0" data-duration="77" data-track-index="30"></div>
+      <div class="vignette clip" id="vignette" data-start="0" data-duration="77" data-track-index="31"></div>
 
-      <!-- ===== audio ===== -->
-      <audio id="a-vo"  src="assets/audio/vo.m4a"           data-start="0"    data-duration="81.4" data-track-index="90" data-volume="1.0"></audio>
-      <audio id="a-pad" src="assets/audio/pad-bed.m4a"      data-start="0"    data-duration="81.4" data-track-index="91" data-volume="0.13"></audio>
-      <audio id="a-w1"  src="assets/audio/sfx-whoosh-1.mp3" data-start="6.7"  data-duration="0.5"  data-track-index="92" data-volume="0.18"></audio>
-      <audio id="a-w2"  src="assets/audio/sfx-whoosh-2.mp3" data-start="17.8" data-duration="0.5"  data-track-index="93" data-volume="0.18"></audio>
-      <audio id="a-w3"  src="assets/audio/sfx-whoosh-1.mp3" data-start="29.5" data-duration="0.5"  data-track-index="94" data-volume="0.18"></audio>
-      <audio id="a-w4"  src="assets/audio/sfx-whoosh-2.mp3" data-start="50.3" data-duration="0.5"  data-track-index="95" data-volume="0.18"></audio>
-      <audio id="a-tw"  src="assets/audio/sfx-twinkle.mp3"  data-start="78.0" data-duration="0.6"  data-track-index="96" data-volume="0.22"></audio>
+      <!-- audio: VO stops after the first CTA (73.2); music bed underneath -->
+      <audio id="a-vo"    src="assets/audio/vo.m4a"        data-start="0" data-duration="73.2" data-track-index="90" data-volume="1.0"></audio>
+      <audio id="a-music" src="assets/audio/music-bed.m4a" data-start="0" data-duration="77"   data-track-index="91" data-volume="0.11"></audio>
     </div>
 
     <script>
@@ -267,8 +257,7 @@
       const tl = gsap.timeline({ paused: true });
       gsap.set(["#orb","#grid"], { transformOrigin: "50% 50%" });
 
-      // ambient life — grid parallax + orb breath (continuous)
-      tl.to("#grid", { backgroundPositionY: "+=90", duration: 81.4, ease: "none" }, 0);
+      tl.to("#grid", { backgroundPositionY: "+=90", duration: 77, ease: "none" }, 0);
       tl.to("#orb",  { scale: 1.12, opacity: 0.85, duration: 6, repeat: 5, yoyo: true, ease: "sine.inOut" }, 0);
 
       const enter = (sel, at, o = {}) => tl.fromTo(sel,
@@ -276,37 +265,45 @@
         { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: o.d ?? 0.6, ease: o.ease ?? "power3.out" }, at);
       const exitUp = (sel, at, d = 0.34) => tl.to(sel,
         { autoAlpha: 0, y: -34, filter: "blur(14px)", duration: d, ease: "power2.in" }, at);
-      // full-screen face cut: fade + slow push-in (scale stays >=1 so no edge gaps)
       const faceIn = (sel, at) => tl.fromTo(sel,
-        { autoAlpha: 0, scale: 1.06 }, { autoAlpha: 1, scale: 1.0, duration: 0.55, ease: "power2.out" }, at);
-      const faceHold = (sel, from, dur) => tl.to(sel, { scale: 1.05, duration: dur, ease: "none" }, from); // slow drift
+        { autoAlpha: 0, scale: 1.06 }, { autoAlpha: 1, scale: 1.0, duration: 0.5, ease: "power2.out" }, at);
+      const faceHold = (sel, from, dur) => tl.to(sel, { scale: 1.05, duration: dur, ease: "none" }, from);
       const faceOut = (sel, at) => { tl.to(sel, { autoAlpha: 0, duration: 0.3, ease: "power2.in" }, at);
         tl.set(sel, { autoAlpha: 0 }, at + 0.3); };
       const whip = (sel, at) => tl.fromTo(sel,
         { xPercent: 0, opacity: 0.9 }, { xPercent: 520, opacity: 0, duration: 0.5, ease: "power2.in" }, at);
 
-      // ---- B1 hook (full-screen Sean) ----
-      faceIn("#b1card", 0.2); faceHold("#b1card", 0.75, 3.6); faceOut("#b1card", 4.2);
+      // ---- B1 hook ----
+      faceIn("#b1card", 0.0); faceHold("#b1card", 0.5, 3.7); faceOut("#b1card", 4.2);
       enter("#b1punch", 4.65, { y: 40, d: 0.55 }); exitUp("#b1punch", 6.75);
 
-      // ---- B2 assumption ----
+      // ---- B2 assumption graphic ----
       enter("#b2 .eyebrow", 6.95, { y: 16, blur: false });
-      enter("#b2 .h-lg", 7.25, { y: 30 });
-      enter("#b2x", 9.9, { y: 18 });
-      exitUp("#b2", 12.95);
+      gsap.set(["#conn-x","#n2dn"], { autoAlpha: 0 });
+      tl.fromTo("#n1", { autoAlpha: 0, y: 24, scale: 0.9 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, 7.2);
+      tl.fromTo("#conn-arrow", { autoAlpha: 0, scale: 0.5 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "power2.out" }, 7.7);
+      tl.fromTo("#n2", { autoAlpha: 0, y: 24, scale: 0.9 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, 8.1);
+      // bust: profit flips down, connector crosses out
+      tl.to("#conn-arrow", { autoAlpha: 0, duration: 0.25 }, 9.85);
+      tl.to("#n2up", { autoAlpha: 0, duration: 0.25 }, 9.9);
+      tl.fromTo("#n2dn", { autoAlpha: 0, y: -10 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" }, 9.95);
+      tl.fromTo("#conn-x", { autoAlpha: 0, scale: 1.7 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 9.95);
+      tl.to("#n2", { borderColor: "#FF4C32", duration: 0.4 }, 9.95);
+      enter("#b2bust", 10.2, { y: 18 });
+      exitUp("#b2", 12.7, 0.3);
 
       // ---- B3 pressure ----
-      enter("#b3 .h-md", 13.25, { y: 30 });
-      exitUp("#b3", 17.85);
+      enter("#b3 .h-md", 13.3, { y: 30 });
+      exitUp("#b3", 17.75, 0.3);
 
       // ---- B4 cost stack ----
-      enter("#b4lead .h-md", 18.15, { y: 28 }); exitUp("#b4lead", 19.55, 0.3);
-      enter("#b4title", 19.85, { y: 16, blur: false });
-      const rowAt = { r1: 20.5, r2: 21.9, r3: 23.4, r4: 25.0, r5: 26.7 };
+      enter("#b4lead .h-md", 18.15, { y: 28 }); exitUp("#b4lead", 19.65, 0.3);
+      enter("#b4title", 20.0, { y: 16, blur: false });
+      const rowAt = { r1: 20.6, r2: 22.0, r3: 23.5, r4: 25.1, r5: 26.8 };
       Object.entries(rowAt).forEach(([id, t]) =>
         tl.fromTo("#" + id, { autoAlpha: 0, x: -40, filter: "blur(8px)" },
           { autoAlpha: 1, x: 0, filter: "blur(0px)", duration: 0.5, ease: "back.out(1.3)" }, t));
-      exitUp("#b4", 29.5, 0.3);
+      exitUp("#b4", 29.4, 0.3);
 
       // ---- B5 divergence chart ----
       enter("#b5 .h-md", 29.7, { y: 28 });
@@ -318,17 +315,17 @@
       tl.to("#prof", { strokeDashoffset: 0, duration: 2.4, ease: "power2.in"  }, 31.0);
       tl.fromTo("#leak", { opacity: 0 }, { opacity: 0.18, duration: 0.8, ease: "power2.out" }, 33.6);
       tl.fromTo(["#revlbl","#proflbl"], { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5, stagger: 0.2 }, 31.6);
-      exitUp("#b5", 37.5, 0.3);
+      exitUp("#b5", 37.3, 0.3);
 
       // ---- B6 where'd it go ----
       enter("#b6 .eyebrow", 37.75, { y: 14, blur: false });
       enter("#b6 .h-md", 38.05, { y: 28 });
-      exitUp("#b6", 42.95, 0.3);
+      exitUp("#b6", 42.55, 0.3);
 
-      // ---- B7 not sales (full-screen Sean) → numbers (b-roll) ----
-      faceIn("#b7card", 43.2); faceHold("#b7card", 43.75, 2.2); faceOut("#b7card", 45.9);
-      enter("#b7b .h-md", 46.75, { y: 30 });
-      exitUp("#b7b", 50.3, 0.3);
+      // ---- B7 not sales (face) → numbers (laptop) ----
+      faceIn("#b7card", 43.2); faceHold("#b7card", 43.7, 1.5); faceOut("#b7card", 44.9);
+      enter("#b7b .h-md", 45.55, { y: 30 });
+      exitUp("#b7b", 50.1, 0.3);
 
       // ---- B8 thesis ----
       enter("#t1", 50.55, { y: 36, d: 0.6 });
@@ -342,25 +339,24 @@
 
       // ---- B9 solution ----
       enter("#b9a .h-md", 58.7, { y: 28 });
-      exitUp("#b9a", 61.6, 0.3);
-      faceIn("#b9card", 63.8); faceHold("#b9card", 64.35, 4.2);
-      tl.fromTo("#b9logo", { autoAlpha: 0, y: -16 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out" }, 63.95);
-      faceOut("#b9card", 68.5);
-      enter("#b9b .h-lg", 69.05, { y: 34, d: 0.6 });
-      tl.to(["#b9b","#b9logo"], { autoAlpha: 0, y: -28, filter: "blur(12px)", duration: 0.35, ease: "power2.in" }, 73.45);
+      exitUp("#b9a", 61.4, 0.3);
+      faceIn("#b9card", 61.7); faceHold("#b9card", 62.2, 4.0);
+      tl.fromTo("#b9logo", { autoAlpha: 0, y: -16 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out" }, 61.95);
+      faceOut("#b9card", 66.3);
+      tl.to("#b9logo", { autoAlpha: 0, duration: 0.3, ease: "power2.in" }, 66.3);
 
-      // ---- B10 CTA (full-screen Sean → hold) ----
-      faceIn("#b10card", 73.7); faceHold("#b10card", 74.25, 3.1); faceOut("#b10card", 77.4);
-      tl.fromTo("#b10cta img", { autoAlpha: 0, y: -18 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" }, 77.95);
-      enter("#b10cta .h-lg", 78.25, { y: 30, d: 0.6 });
-      tl.fromTo("#ctabtn", { autoAlpha: 0, scale: 0.86 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 78.9);
-      tl.fromTo("#b10cta .sub", { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" }, 79.4);
-      tl.to("#ctabtn", { scale: 1.05, duration: 0.7, repeat: 1, yoyo: true, ease: "sine.inOut" }, 80.0);
+      // ---- CTA card ----
+      whip("#w5", 66.7);
+      tl.fromTo("#ctalogo", { autoAlpha: 0, y: -18 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" }, 67.0);
+      enter("#cta .h-lg", 67.3, { y: 30, d: 0.6 });
+      tl.fromTo("#ctabtn", { autoAlpha: 0, scale: 0.86 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 67.9);
+      tl.fromTo("#cta .sub", { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" }, 68.4);
+      tl.to("#ctabtn", { scale: 1.05, duration: 0.8, repeat: 5, yoyo: true, ease: "sine.inOut" }, 69.2);
 
       // ---- seam whips ----
-      whip("#w1", 6.7); whip("#w2", 17.8); whip("#w3", 29.5); whip("#w4", 50.3); whip("#w5", 73.5);
+      whip("#w1", 6.7); whip("#w2", 17.8); whip("#w3", 29.5); whip("#w4", 50.3);
 
-      tl.to({}, { duration: 81.4 }, 0); // Law 11 anchor — fill the slot
+      tl.to({}, { duration: 77 }, 0); // Law 11 anchor
       window.__timelines["b-roll-v1"] = tl;
     </script>
   </body>
