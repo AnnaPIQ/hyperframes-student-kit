@@ -4,13 +4,12 @@
       [data-composition-id="hook"] { position: absolute; inset: 0; overflow: hidden; }
       [data-composition-id="hook"] .bw-wrap { position: absolute; inset: 0; }
       [data-composition-id="hook"] .bw-wrap video { width: 100%; height: 100%; object-fit: cover;
-        filter: grayscale(.35) saturate(.5) contrast(1.05) brightness(.62); }
+        filter: saturate(1.12) contrast(1.06) brightness(0.98); }
+      /* readability scrim — keeps footage in full color, text legible top + bottom */
       [data-composition-id="hook"] .bw-grade { position: absolute; inset: 0;
-        background: linear-gradient(180deg, rgba(2,16,31,.55) 0%, rgba(6,40,76,.45) 45%, rgba(2,16,31,.82) 100%);
-        mix-blend-mode: multiply; }
-      [data-composition-id="hook"] .bw-tint { position: absolute; inset: 0;
-        background: radial-gradient(80% 60% at 50% 38%, rgba(156,212,255,.18), rgba(156,212,255,0) 70%);
-        mix-blend-mode: screen; }
+        background: linear-gradient(180deg, rgba(2,16,31,.5) 0%, rgba(2,16,31,0) 30%, rgba(2,16,31,0) 56%, rgba(2,16,31,.82) 100%); }
+      [data-composition-id="hook"] .bw-tint { position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 80% 70% at 50% 45%, transparent 50%, rgba(2,16,31,.42) 100%); }
       [data-composition-id="hook"] .stack { position: absolute; inset: 0; display: flex;
         flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
       [data-composition-id="hook"] .line { font-weight: 800; letter-spacing: -.03em; line-height: .94; text-align: center; }
