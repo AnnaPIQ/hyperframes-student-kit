@@ -87,6 +87,15 @@ efficient over time instead of relearning the same lessons.
   300s protocol timeout. **Re-encode b-roll with dense keyframes:**
   `ffmpeg -i in.mp4 -an -vf "scale=1080:1920" -c:v libx264 -crf 21 -g 10 -keyint_min 10 -sc_threshold 0 -r 30 -movflags +faststart out.mp4`.
   The render also prints this exact warning during `video_extract` — don't ignore it.
+- **Symptom → Fix: live `<video>` render still hangs (`callFunctionOn timed out`,
+  media `ERR_ABORTED`) even WITH dense keyframes, under the default multi-worker
+  parallel capture.** Multiple Chrome workers each loading + seeking the same clips
+  concurrently choke on a 4-core container. **Render with `--low-memory-mode`** (pins to
+  1 worker + screenshot/streaming capture) plus `--protocol-timeout 900000
+  --browser-timeout 180`. Single-worker streaming completed a 77s 3-video comp cleanly
+  where 3–4 workers failed every time. Slower, but it actually finishes. (`--docker`
+  is the other fix if the daemon is runnable — here systemd is absent so
+  `sudo dockerd &` is needed, and image-pull may hit the network policy.)
 - **Symptom → Fix: phone footage renders rotated 90° even though the crop looked right.**
   Some clips are portrait content stored in a landscape container with NO rotation
   metadata (ffprobe shows 3840×2160, no side_data). Auto-rotate won't fix it. Manually
