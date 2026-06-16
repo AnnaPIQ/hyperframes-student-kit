@@ -57,6 +57,21 @@ this way. So to actually get footage *into a project*:
   via a direct-download path if the network policy allows), then normalize with
   `npm run prep` (see §1). Don't try to stream big `.mov` files through the connector.
 
+### Content / copy matrix — "B-Roll Short Cut" (Google Sheet)
+
+The planning sheet that maps each short to its concept, script, and ad copy:
+<https://docs.google.com/spreadsheets/d/1TdA4lCWJTMRTmWDtU7yCzyrqeU6CyNeZygH5Opnvif8/edit>
+(ID `1TdA4lCWJTMRTmWDtU7yCzyrqeU6CyNeZygH5Opnvif8`)
+
+It's *not* footage — it's the per-month content grid. Each column is one ad concept
+(topic + pain point: Ads / Plateau / Scaling), with full Meta ad copy in **V1** and **V2**
+variants (primary text, headline, description, CTA button, hashtags). Read it with the Drive
+connector (`mcp__Google_Drive__read_file_content`) when you need the approved script/copy for
+a beat. It links out to:
+
+- **Scripts doc** (Long/Short): `1ZbTpo7alV77vF8JgqVoHtBgKxPNtH8ADbP_Av18bw7k`
+- **Drafts folder** (Final Long/Short): `1zUu18WxT7LsbVybG9RjV74SUoh68XpT_`
+
 ## 2. Invoke the skill in PLAN MODE
 
 ```
