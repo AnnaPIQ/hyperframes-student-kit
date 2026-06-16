@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>scaling-but-losing-money-v3</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: #000; font-family: 'Rethink Sans', system-ui, sans-serif; color: #fff; }
+
+      /* ---- footage layer ---------------------------------------------------- */
+      #videos { position: absolute; inset: 0; z-index: 1; background: #000; }
+      .vwrap { position: absolute; inset: 0; overflow: hidden; }
+      .vwrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+      /* ---- texture: cinematic scrim + grain (every frame) ------------------- */
+      #scrim { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+        background:
+          linear-gradient(180deg, rgba(2,12,28,.62) 0%, rgba(2,12,28,0) 26%, rgba(2,12,28,0) 60%, rgba(2,12,28,.78) 100%),
+          radial-gradient(120% 80% at 50% 42%, rgba(0,0,0,0) 40%, rgba(2,8,20,.55) 100%); }
+      #grain { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+        background-image:
+          radial-gradient(rgba(255,255,255,.9) .5px, transparent .6px),
+          radial-gradient(rgba(255,255,255,.7) .5px, transparent .6px);
+        background-size: 3px 3px, 5px 5px; background-position: 0 0, 1px 2px; }
+
+      /* ---- persistent brand chrome ----------------------------------------- */
+      #logo { position: absolute; top: 54px; left: 60px; width: 260px; height: auto; z-index: 8;
+        filter: drop-shadow(0 3px 14px rgba(0,0,0,.6)); opacity: 0; }
+
+      /* ---- PROFIT meter (the recurring callback) ---------------------------- */
+      #meter { position: absolute; top: 70px; right: 60px; width: 380px; z-index: 8; opacity: 0; text-align: right; }
+      #meterTop { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+      #meterLabel { font-weight: 800; font-size: 26px; letter-spacing: .22em; color: rgba(255,255,255,.92); }
+      #meterPct { font-weight: 800; font-size: 30px; color: var(--brand-flame); font-variant-numeric: tabular-nums; }
+      #meterTrack { position: relative; height: 18px; border-radius: 10px; overflow: hidden;
+        background: rgba(255,255,255,.12); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
+      #meterFill { position: absolute; inset: 0 auto 0 0; width: 100%; border-radius: 10px;
+        background: var(--brand-flame); box-shadow: 0 0 24px rgba(255,76,50,.7); }
+
+      /* ---- big kinetic stamps ---------------------------------------------- */
+      .stamp { position: absolute; left: 0; right: 0; z-index: 6; text-align: center; padding: 0 64px;
+        opacity: 0; will-change: transform, opacity; }
+      .stamp .kick { font-weight: 700; font-size: 30px; letter-spacing: .26em; text-transform: uppercase;
+        color: var(--brand-blue-tint); margin-bottom: 14px; }
+      .stamp .big { font-weight: 800; font-size: 138px; line-height: .92; letter-spacing: -.03em;
+        text-transform: uppercase; text-shadow: 0 6px 40px rgba(0,0,0,.55); }
+      .em-flame { color: var(--brand-flame); text-shadow: 0 0 38px rgba(255,76,50,.6), 0 6px 40px rgba(0,0,0,.5); }
+      .em-white { color: #fff; }
+      .em-blue  { color: var(--brand-blue-tint); }
+
+      /* hook revenue ticker */
+      #tick { position: absolute; left: 0; right: 0; top: 60%; z-index: 6; text-align: center; opacity: 0; }
+      #tickNum { font-weight: 800; font-size: 110px; letter-spacing: -.02em; color: #fff;
+        font-variant-numeric: tabular-nums; text-shadow: 0 0 34px rgba(156,212,255,.45); }
+      #tickArrow { color: var(--brand-blue-tint); font-size: 64px; vertical-align: middle; }
+
+      /* leak chips — slam in center-upper */
+      .chip { position: absolute; left: 0; right: 0; top: 30%; z-index: 6; text-align: center; opacity: 0; }
+      .chip .lbl { display: inline-block; font-weight: 800; font-size: 120px; line-height: .9;
+        letter-spacing: -.02em; text-transform: uppercase; color: #fff; text-shadow: 0 6px 38px rgba(0,0,0,.55); }
+      .chip .up { color: var(--brand-flame); }
+
+      /* reframe (breather) */
+      .rf { position: absolute; left: 0; right: 0; z-index: 6; text-align: center; padding: 0 80px; opacity: 0; }
+      #rfRev { top: 30%; }
+      #rfRev .word { font-weight: 800; font-size: 132px; letter-spacing: -.02em; text-transform: uppercase;
+        color: rgba(222,238,254,.62); position: relative; display: inline-block; }
+      #rfRev .strike { position: absolute; left: -4%; right: -4%; top: 52%; height: 9px; border-radius: 5px;
+        background: rgba(222,238,254,.7); transform: scaleX(0); transform-origin: left center; }
+      #rfRev .sub, #rfProfit .sub { font-weight: 500; font-size: 40px; letter-spacing: .01em; margin-top: 10px;
+        color: rgba(222,238,254,.78); }
+      #rfProfit { top: 30%; }
+      #rfProfit .word { font-weight: 800; font-size: 150px; letter-spacing: -.03em; text-transform: uppercase;
+        color: var(--brand-flame); text-shadow: 0 0 50px rgba(255,76,50,.55); }
+      #rfProfit .keep { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400;
+        text-transform: none; color: var(--brand-blue-tint); }
+      #rfKick { top: 62%; font-weight: 700; font-size: 46px; letter-spacing: .04em; color: #fff; opacity: 0;
+        z-index: 6; position: absolute; left: 0; right: 0; text-align: center; }
+
+      /* ---- outro brand card ------------------------------------------------- */
+      #brand { position: absolute; inset: 0; z-index: 9; opacity: 0;
+        background:
+          radial-gradient(90% 55% at 50% 16%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%),
+          var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8% 10%; text-align: center; }
+      #brand #bloom { position: absolute; left: -10%; bottom: -22%; width: 120%; height: 60%;
+        background: var(--brand-gradient-1); filter: blur(90px); opacity: .30; }
+      #bLogo { width: 460px; height: auto; margin-bottom: 56px; opacity: 0; position: relative; }
+      #bHead { font-weight: 800; font-size: 78px; line-height: 1.02; letter-spacing: -.02em; opacity: 0; position: relative; }
+      #bHead .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-flame); }
+      #bCta { margin-top: 58px; font-weight: 800; font-size: 44px; color: #fff; background: var(--brand-flame);
+        padding: 30px 64px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,.65); opacity: 0; position: relative; }
+      #bTag { margin-top: 30px; font-weight: 600; font-size: 36px; color: var(--brand-blue-tint); opacity: 0; position: relative; }
+      #bClick { margin-top: 14px; font-weight: 500; font-size: 28px; letter-spacing: .04em; color: rgba(222,238,254,.7);
+        opacity: 0; position: relative; }
+
+      /* ---- whip streaks (cut cover) ---------------------------------------- */
+      .whip { position: absolute; top: -10%; height: 120%; width: 46%; z-index: 10; pointer-events: none; opacity: 0;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,.92), transparent); filter: blur(10px); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="scaling-but-losing-money-v3" data-start="0" data-duration="33" data-width="1080" data-height="1350">
+
+      <!-- ===================== FOOTAGE (track 0, sequential) ===================== -->
+      <div id="videos">
+        <div class="vwrap" id="w1"><video id="vid1" muted playsinline poster="assets/posters/03-shoptalk-walk.jpg" src="assets/broll/03-shoptalk-walk.mp4" data-start="0.00" data-duration="3.10" data-track-index="0"></video></div>
+        <div class="vwrap" id="w2"><video id="vid2" muted playsinline poster="assets/posters/01-klaviyo-walk.jpg" src="assets/broll/01-klaviyo-walk.mp4" data-start="3.10" data-duration="3.75" data-track-index="0"></video></div>
+        <div class="vwrap" id="w3"><video id="vid3" muted playsinline poster="assets/posters/02-klaviyo-booths.jpg" src="assets/broll/02-klaviyo-booths.mp4" data-start="6.85" data-duration="2.15" data-track-index="0"></video></div>
+        <div class="vwrap" id="w4"><video id="vid4" muted playsinline poster="assets/posters/05-laptop-man.jpg" src="assets/broll/05-laptop-man.mp4" data-start="9.00" data-duration="1.60" data-track-index="0"></video></div>
+        <div class="vwrap" id="w5"><video id="vid5" muted playsinline poster="assets/posters/04-two-women.jpg" src="assets/broll/04-two-women.mp4" data-start="10.60" data-duration="2.25" data-track-index="0"></video></div>
+        <div class="vwrap" id="w6"><video id="vid6" muted playsinline poster="assets/posters/07-handshake.jpg" src="assets/broll/07-handshake.mp4" data-start="12.85" data-duration="1.40" data-track-index="0"></video></div>
+        <div class="vwrap" id="w7"><video id="vid7" muted playsinline poster="assets/posters/09-limitless-sign.jpg" src="assets/broll/09-limitless-sign.mp4" data-start="14.25" data-duration="2.48" data-track-index="0"></video></div>
+        <div class="vwrap" id="w8"><video id="vid8" muted playsinline poster="assets/posters/12-founder-studio.jpg" src="assets/broll/12-founder-studio.mp4" data-start="16.73" data-duration="7.45" data-track-index="0"></video></div>
+        <div class="vwrap" id="w9"><video id="vid9" muted playsinline poster="assets/posters/11-stage.jpg" src="assets/broll/11-stage.mp4" data-start="24.18" data-duration="2.92" data-track-index="0"></video></div>
+      </div>
+
+      <!-- ===================== TEXTURE ===================== -->
+      <div id="scrim"></div>
+      <div id="grain"></div>
+
+      <!-- ===================== BRAND CHROME ===================== -->
+      <img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+
+      <!-- PROFIT meter callback -->
+      <div id="meter">
+        <div id="meterTop"><span id="meterLabel">PROFIT</span><span id="meterPct">100%</span></div>
+        <div id="meterTrack"><div id="meterFill"></div></div>
+      </div>
+
+      <!-- ===================== STAMPS ===================== -->
+      <!-- B1 hook A -->
+      <div class="stamp" id="s1" style="top:18%">
+        <div class="kick">Record month</div>
+        <div class="big"><span class="em-white">MORE</span><br><span class="em-blue">REVENUE.</span></div>
+      </div>
+      <div id="tick"><span id="tickNum">$0.0M</span> <span id="tickArrow">&#9650;</span></div>
+
+      <!-- B2 hook B -->
+      <div class="stamp" id="s2" style="top:16%">
+        <div class="kick">So why does it feel tight?</div>
+        <div class="big"><span class="em-white">KEEPING</span><br><span class="em-flame">LESS.</span></div>
+      </div>
+
+      <!-- B3-B7 leak chips -->
+      <div class="chip" id="c1"><span class="lbl">AD SPEND <span class="up">&#9650;</span></span></div>
+      <div class="chip" id="c2"><span class="lbl">SHIPPING <span class="up">&#9650;</span></span></div>
+      <div class="chip" id="c3"><span class="lbl">RETURNS <span class="up">&#9650;</span></span></div>
+      <div class="chip" id="c4"><span class="lbl">COGS <span class="up">&#9650;</span></span></div>
+      <div class="chip" id="c5"><span class="lbl">DISCOUNTS <span class="up">&#9650;</span></span></div>
+
+      <!-- B8/B9 reframe -->
+      <div class="rf" id="rfRev">
+        <div class="word">REVENUE<span class="strike"></span></div>
+        <div class="sub">is what you sold.</div>
+      </div>
+      <div class="rf" id="rfProfit">
+        <div class="word">PROFIT</div>
+        <div class="sub">is what you <span class="keep">keep.</span></div>
+      </div>
+      <div id="rfKick">Only one of them pays you.</div>
+
+      <!-- B10 CTA setup -->
+      <div class="stamp" id="s3" style="top:14%">
+        <div class="kick">Growing, but not keeping it?</div>
+        <div class="big"><span class="em-white">WHERE'S IT</span><br><span class="em-flame">LEAKING?</span></div>
+      </div>
+
+      <!-- ===================== OUTRO BRAND CARD ===================== -->
+      <div id="brand">
+        <div id="bloom"></div>
+        <img id="bLogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="bHead">Find exactly where your margin is <span class="em">leaking</span>.</div>
+        <div id="bCta">Get your breakthrough &rarr;</div>
+        <div id="bTag">We guarantee it.</div>
+        <div id="bClick">&#8595; Click the link below</div>
+      </div>
+
+      <!-- ===================== WHIP STREAKS ===================== -->
+      <div class="whip" id="whipA"></div>
+      <div class="whip" id="whipB"></div>
+
+      <!-- ===================== AUDIO ===================== -->
+      <audio id="au-vo" src="assets/vo.wav" data-start="0" data-duration="33.0" data-track-index="40" data-volume="1.0"></audio>
+      <audio id="au-pad" src="assets/sfx/pad.wav" data-start="0" data-duration="33.0" data-track-index="41" data-volume="0.10"></audio>
+      <!-- whoosh on every cut (non-overlapping → one track) -->
+      <audio id="au-wh1" src="assets/sfx/whoosh.wav" data-start="3.10"  data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
+      <audio id="au-wh2" src="assets/sfx/whoosh.wav" data-start="6.85"  data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
+      <audio id="au-wh3" src="assets/sfx/whoosh.wav" data-start="9.00"  data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
+      <audio id="au-wh4" src="assets/sfx/whoosh.wav" data-start="10.60" data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
+      <audio id="au-wh5" src="assets/sfx/whoosh.wav" data-start="12.85" data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
+      <audio id="au-wh6" src="assets/sfx/whoosh.wav" data-start="14.25" data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
+      <audio id="au-wh7" src="assets/sfx/whoosh.wav" data-start="16.73" data-duration="0.45" data-track-index="42" data-volume="0.24"></audio>
+      <audio id="au-wh8" src="assets/sfx/whoosh.wav" data-start="24.18" data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
+      <audio id="au-wh9" src="assets/sfx/whoosh.wav" data-start="27.10" data-duration="0.45" data-track-index="42" data-volume="0.24"></audio>
+      <!-- impact on big stamps (non-overlapping → one track) -->
+      <audio id="au-im1" src="assets/sfx/impact.wav" data-start="0.15"  data-duration="0.30" data-track-index="43" data-volume="0.22"></audio>
+      <audio id="au-im2" src="assets/sfx/impact.wav" data-start="3.10"  data-duration="0.30" data-track-index="43" data-volume="0.24"></audio>
+      <audio id="au-im3" src="assets/sfx/impact.wav" data-start="6.85"  data-duration="0.30" data-track-index="43" data-volume="0.22"></audio>
+      <audio id="au-im4" src="assets/sfx/impact.wav" data-start="9.00"  data-duration="0.30" data-track-index="43" data-volume="0.22"></audio>
+      <audio id="au-im5" src="assets/sfx/impact.wav" data-start="10.60" data-duration="0.30" data-track-index="43" data-volume="0.22"></audio>
+      <audio id="au-im6" src="assets/sfx/impact.wav" data-start="12.85" data-duration="0.30" data-track-index="43" data-volume="0.22"></audio>
+      <audio id="au-im7" src="assets/sfx/impact.wav" data-start="14.25" data-duration="0.30" data-track-index="43" data-volume="0.22"></audio>
+      <audio id="au-im8" src="assets/sfx/impact.wav" data-start="24.18" data-duration="0.30" data-track-index="43" data-volume="0.24"></audio>
+      <audio id="au-im9" src="assets/sfx/impact.wav" data-start="27.10" data-duration="0.30" data-track-index="43" data-volume="0.26"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // ---- PROFIT meter driven by a proxy (deterministic) --------------------
+      const meter = { v: 100 };
+      const fill = document.getElementById('meterFill');
+      const pct  = document.getElementById('meterPct');
+      tl.eventCallback('onUpdate', () => {
+        const v = meter.v;
+        fill.style.width = v + '%';
+        pct.textContent = Math.round(v) + '%';
+      });
+
+      // ---- hook revenue ticker ----------------------------------------------
+      const rev = { v: 0.0 };
+      const tickNum = document.getElementById('tickNum');
+
+      // ---- whip helper (defined before use) ---------------------------------
+      let whipToggle = 0;
+      function whip(t) {
+        const el = (whipToggle++ % 2 === 0) ? '#whipA' : '#whipB';
+        tl.set(el, { opacity: 1 }, t - 0.02);
+        tl.fromTo(el, { xPercent: -130, scaleX: .7 }, { xPercent: 240, scaleX: 1.3, duration: .34, ease: 'power3.in' }, t - 0.02);
+        tl.set(el, { opacity: 0 }, t + 0.32);
+      }
+
+      // === B1 — RECORD REVENUE (0.00–3.10) ===================================
+      tl.fromTo('#logo', { opacity: 0, y: -12 }, { opacity: .96, y: 0, duration: .5, ease: 'power2.out' }, 0.2);
+      tl.fromTo('#s1', { opacity: 0, y: 40, scale: 1.12 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: 'power3.out' }, 0.15);
+      tl.fromTo('#w1', { scale: 1.1 }, { scale: 1.0, duration: 3.1, ease: 'none' }, 0);
+      tl.fromTo('#tick', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 0.7);
+      tl.to(rev, { v: 2.4, duration: 1.8, ease: 'power1.out',
+        onUpdate: () => { tickNum.textContent = '$' + rev.v.toFixed(1) + 'M'; } }, 0.7);
+      tl.to(['#s1', '#tick'], { opacity: 0, y: -28, duration: .28, ease: 'power2.in' }, 2.86);
+
+      // === B2 — KEEPING LESS (3.10–6.85) =====================================
+      whip(3.10);
+      tl.fromTo('#w2', { scale: 1.12 }, { scale: 1.0, duration: 3.75, ease: 'none' }, 3.10);
+      tl.fromTo('#s2', { opacity: 0, y: 44, scale: 1.14 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: 'power3.out' }, 3.18);
+      // meter ignites full, then begins to bleed
+      tl.fromTo('#meter', { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: .45, ease: 'power2.out' }, 3.30);
+      tl.to(meter, { v: 88, duration: 1.6, ease: 'power1.in' }, 4.4);
+      tl.to('#s2', { opacity: 0, y: -30, duration: .28, ease: 'power2.in' }, 6.62);
+
+      // === B3–B7 — THE LEAK (cost list) ======================================
+      const chips = [
+        { id: '#c1', t: 6.85,  to: 80 },
+        { id: '#c2', t: 9.00,  to: 64 },
+        { id: '#c3', t: 10.60, to: 48 },
+        { id: '#c4', t: 12.85, to: 32 },
+        { id: '#c5', t: 14.25, to: 16 },
+      ];
+      const vids = ['#w3', '#w4', '#w5', '#w6', '#w7'];
+      const vdur = [2.15, 1.60, 2.25, 1.40, 2.48];
+      chips.forEach((c, i) => {
+        whip(c.t);
+        tl.fromTo(vids[i], { scale: 1.12 }, { scale: 1.0, duration: vdur[i], ease: 'none' }, c.t);
+        tl.fromTo(c.id, { opacity: 0, scale: 1.35, y: 10 }, { opacity: 1, scale: 1, y: 0, duration: .26, ease: 'back.out(1.5)' }, c.t + 0.02);
+        tl.to(meter, { v: c.to, duration: .4, ease: 'power2.out' }, c.t + 0.05);
+        const out = (i < chips.length - 1) ? chips[i + 1].t - 0.12 : 16.40;
+        tl.to(c.id, { opacity: 0, scale: .92, duration: .22, ease: 'power2.in' }, out);
+      });
+
+      // === B8/B9 — REFRAME (breather, 16.73–24.18) ===========================
+      whip(16.73);
+      tl.fromTo('#w8', { scale: 1.08 }, { scale: 1.0, duration: 7.45, ease: 'none' }, 16.73);
+      tl.fromTo('#meter', { opacity: 1 }, { opacity: .55, duration: .6, ease: 'power1.out' }, 16.8);
+      // REVENUE = what you sold  (then struck through)
+      tl.fromTo('#rfRev', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .55, ease: 'power3.out' }, 16.9);
+      tl.fromTo('#rfRev .strike', { scaleX: 0 }, { scaleX: 1, duration: .5, ease: 'power2.inOut' }, 18.0);
+      tl.to('#rfRev', { opacity: 0, y: -24, duration: .35, ease: 'power2.in' }, 18.85);
+      // PROFIT = what you keep
+      tl.fromTo('#rfProfit', { opacity: 0, y: 34, scale: 1.06 }, { opacity: 1, y: 0, scale: 1, duration: .55, ease: 'power3.out' }, 19.05);
+      tl.fromTo('#rfKick', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 21.2);
+      tl.to(['#rfProfit', '#rfKick'], { opacity: 0, y: -26, duration: .3, ease: 'power2.in' }, 23.9);
+
+      // === B10 — WHERE'S IT LEAKING? (24.18–27.10) ===========================
+      whip(24.18);
+      tl.fromTo('#w9', { scale: 1.12 }, { scale: 1.0, duration: 2.92, ease: 'none' }, 24.18);
+      tl.fromTo('#meter', { opacity: .55 }, { opacity: 1, duration: .4, ease: 'power2.out' }, 24.18);
+      tl.fromTo('#s3', { opacity: 0, y: 44, scale: 1.14 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: 'power3.out' }, 24.28);
+      tl.to(meter, { v: 8, duration: .7, ease: 'power2.in' }, 24.4);
+      tl.to('#s3', { opacity: 0, y: -30, duration: .3, ease: 'power2.in' }, 26.85);
+
+      // === B11 — OUTRO BRAND CARD (27.10–33.0) ===============================
+      whip(27.10);
+      tl.fromTo('#brand', { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, 27.10);
+      tl.fromTo('#bLogo', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .55, ease: 'power3.out' }, 27.5);
+      tl.fromTo('#bHead', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .6, ease: 'power3.out' }, 27.9);
+      // meter heals (callback resolve): flame → blue-tint, refills 8 → 100
+      tl.to('#meterFill', { backgroundColor: '#9CD4FF', boxShadow: '0 0 24px rgba(156,212,255,.7)', duration: .8, ease: 'power2.out' }, 28.4);
+      tl.to(meter, { v: 100, duration: 1.5, ease: 'power2.out' }, 28.4);
+      tl.fromTo('#bCta', { opacity: 0, scale: .86 }, { opacity: 1, scale: 1, duration: .5, ease: 'back.out(1.6)' }, 29.6);
+      tl.fromTo('#bTag', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .45, ease: 'power2.out' }, 30.2);
+      tl.fromTo('#bClick', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .45, ease: 'power2.out' }, 30.7);
+      // gentle CTA pulse during the hold
+      tl.to('#bCta', { scale: 1.04, duration: .7, ease: 'sine.inOut', yoyo: true, repeat: 2 }, 31.0);
+
+      // ---- Law 11 anchor: fill the full slot --------------------------------
+      tl.to({}, { duration: 33.0 }, 0);
+
+      window.__timelines['scaling-but-losing-money-v3'] = tl;
+    </script>
+  </body>
+</html>

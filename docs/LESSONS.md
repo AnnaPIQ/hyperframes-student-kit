@@ -79,4 +79,21 @@ efficient over time instead of relearning the same lessons.
 
 ---
 
+- **`<video>` / `<audio>` with `data-start` but no `id` → frozen video / silent audio**
+  (lint error `media_missing_id`). The renderer discovers media by `id`. **Fix:** give every
+  timed `<video>`/`<audio>` a unique `id` (the wrapping `<div>`'s id does NOT count).
+- **Event/DSLR b-roll (Canon `A_0004…CANON.MP4`) imports rotated 90°** even though `ffmpeg`
+  auto-rotates phone clips fine — the display-matrix isn't honored in this build's
+  `-vf scale` path. **Fix:** prepend `transpose=1` (90° CW) to the filter chain
+  (`transpose=1,scale=…:increase,crop=…`) and **verify a frame** — direction can differ per camera.
+- **Pulling raw footage from a Google Drive *link* in the cloud container:** the MCP
+  `download_file_content` returns base64 (blows up context on 100MB+ files). Instead curl the
+  large-file confirm flow: GET `uc?export=download&id=<ID>` (saves cookies), scrape the
+  `uuid`/`confirm` hidden inputs, then GET `drive.usercontent.google.com/download?...&confirm=t&uuid=…`.
+  Files must be "anyone with link". Trim → normalize → delete the heavy source to stay disk-sane.
+- **Footage-montage ads = one root composition, not sub-comps.** With a single continuous VO
+  spine + fast cuts, put all `<video>` beats sequentially on one `data-track-index`, drive every
+  overlay (stamps, meters, whips) from the single master timeline by absolute time, and schedule
+  only media via `data-*`. Far easier to keep in sync than linked sub-composition timelines.
+
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
