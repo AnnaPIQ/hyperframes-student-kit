@@ -122,8 +122,7 @@
         <div class="vwrap" id="w5"><video id="vid5" muted playsinline poster="assets/posters/04-two-women.jpg" src="assets/broll/04-two-women.mp4" data-start="10.60" data-duration="2.25" data-track-index="0"></video></div>
         <div class="vwrap" id="w6"><video id="vid6" muted playsinline poster="assets/posters/07-handshake.jpg" src="assets/broll/07-handshake.mp4" data-start="12.85" data-duration="1.40" data-track-index="0"></video></div>
         <div class="vwrap" id="w7"><video id="vid7" muted playsinline poster="assets/posters/09-limitless-sign.jpg" src="assets/broll/09-limitless-sign.mp4" data-start="14.25" data-duration="2.48" data-track-index="0"></video></div>
-        <div class="vwrap" id="w8"><video id="vid8" muted playsinline poster="assets/posters/12-founder-studio.jpg" src="assets/broll/12-founder-studio.mp4" data-start="16.73" data-duration="7.45" data-track-index="0"></video></div>
-        <div class="vwrap" id="w9"><video id="vid9" muted playsinline poster="assets/posters/11-stage.jpg" src="assets/broll/11-stage.mp4" data-start="24.18" data-duration="2.92" data-track-index="0"></video></div>
+        <div class="vwrap" id="w8"><video id="vid8" muted playsinline poster="assets/posters/12-founder-studio.jpg" src="assets/broll/12-founder-studio.mp4" data-start="16.73" data-duration="10.37" data-track-index="0"></video></div>
       </div>
 
       <!-- ===================== TEXTURE ===================== -->
@@ -192,28 +191,9 @@
       <div class="whip" id="whipB"></div>
 
       <!-- ===================== AUDIO ===================== -->
+      <!-- VO spine + soft ambient pad only. Cut SFX (whoosh/impact) removed per direction. -->
       <audio id="au-vo" src="assets/vo.wav" data-start="0" data-duration="33.0" data-track-index="40" data-volume="1.0"></audio>
-      <audio id="au-pad" src="assets/sfx/pad.wav" data-start="0" data-duration="33.0" data-track-index="41" data-volume="0.10"></audio>
-      <!-- whoosh on every cut (non-overlapping → one track) -->
-      <audio id="au-wh1" src="assets/sfx/whoosh.wav" data-start="3.10"  data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
-      <audio id="au-wh2" src="assets/sfx/whoosh.wav" data-start="6.85"  data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
-      <audio id="au-wh3" src="assets/sfx/whoosh.wav" data-start="9.00"  data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
-      <audio id="au-wh4" src="assets/sfx/whoosh.wav" data-start="10.60" data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
-      <audio id="au-wh5" src="assets/sfx/whoosh.wav" data-start="12.85" data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
-      <audio id="au-wh6" src="assets/sfx/whoosh.wav" data-start="14.25" data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
-      <audio id="au-wh7" src="assets/sfx/whoosh.wav" data-start="16.73" data-duration="0.45" data-track-index="42" data-volume="0.24"></audio>
-      <audio id="au-wh8" src="assets/sfx/whoosh.wav" data-start="24.18" data-duration="0.45" data-track-index="42" data-volume="0.26"></audio>
-      <audio id="au-wh9" src="assets/sfx/whoosh.wav" data-start="27.10" data-duration="0.45" data-track-index="42" data-volume="0.24"></audio>
-      <!-- impact on big stamps (non-overlapping → one track) -->
-      <audio id="au-im1" src="assets/sfx/impact.wav" data-start="0.15"  data-duration="0.30" data-track-index="43" data-volume="0.22"></audio>
-      <audio id="au-im2" src="assets/sfx/impact.wav" data-start="3.10"  data-duration="0.30" data-track-index="43" data-volume="0.24"></audio>
-      <audio id="au-im3" src="assets/sfx/impact.wav" data-start="6.85"  data-duration="0.30" data-track-index="43" data-volume="0.22"></audio>
-      <audio id="au-im4" src="assets/sfx/impact.wav" data-start="9.00"  data-duration="0.30" data-track-index="43" data-volume="0.22"></audio>
-      <audio id="au-im5" src="assets/sfx/impact.wav" data-start="10.60" data-duration="0.30" data-track-index="43" data-volume="0.22"></audio>
-      <audio id="au-im6" src="assets/sfx/impact.wav" data-start="12.85" data-duration="0.30" data-track-index="43" data-volume="0.22"></audio>
-      <audio id="au-im7" src="assets/sfx/impact.wav" data-start="14.25" data-duration="0.30" data-track-index="43" data-volume="0.22"></audio>
-      <audio id="au-im8" src="assets/sfx/impact.wav" data-start="24.18" data-duration="0.30" data-track-index="43" data-volume="0.24"></audio>
-      <audio id="au-im9" src="assets/sfx/impact.wav" data-start="27.10" data-duration="0.30" data-track-index="43" data-volume="0.26"></audio>
+      <audio id="au-pad" src="assets/sfx/pad.wav" data-start="0" data-duration="33.0" data-track-index="41" data-volume="0.12"></audio>
     </div>
 
     <script>
@@ -280,9 +260,9 @@
         tl.to(c.id, { opacity: 0, scale: .92, duration: .22, ease: 'power2.in' }, out);
       });
 
-      // === B8/B9 — REFRAME (breather, 16.73–24.18) ===========================
+      // === B8/B9 — REFRAME + CTA, one continuous lip-synced take (16.73–27.10) ==
       whip(16.73);
-      tl.fromTo('#w8', { scale: 1.08 }, { scale: 1.0, duration: 7.45, ease: 'none' }, 16.73);
+      tl.fromTo('#w8', { scale: 1.08 }, { scale: 1.0, duration: 10.37, ease: 'none' }, 16.73);
       tl.fromTo('#meter', { opacity: 1 }, { opacity: .55, duration: .6, ease: 'power1.out' }, 16.8);
       // REVENUE = what you sold  (then struck through)
       tl.fromTo('#rfRev', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .55, ease: 'power3.out' }, 16.9);
@@ -293,9 +273,8 @@
       tl.fromTo('#rfKick', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 21.2);
       tl.to(['#rfProfit', '#rfKick'], { opacity: 0, y: -26, duration: .3, ease: 'power2.in' }, 23.9);
 
-      // === B10 — WHERE'S IT LEAKING? (24.18–27.10) ===========================
-      whip(24.18);
-      tl.fromTo('#w9', { scale: 1.12 }, { scale: 1.0, duration: 2.92, ease: 'none' }, 24.18);
+      // === B10 — WHERE'S IT LEAKING? (24.18–27.10, same continuous studio shot) =
+      // No cut here — the founder keeps delivering; only the stamp + meter change.
       tl.fromTo('#meter', { opacity: .55 }, { opacity: 1, duration: .4, ease: 'power2.out' }, 24.18);
       tl.fromTo('#s3', { opacity: 0, y: 44, scale: 1.14 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: 'power3.out' }, 24.28);
       tl.to(meter, { v: 8, duration: .7, ease: 'power2.in' }, 24.4);
