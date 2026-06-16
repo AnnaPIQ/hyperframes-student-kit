@@ -43,3 +43,6 @@ assets/incoming/*
 
 # Raw downloaded source clips (large; re-fetch via scripts/gdrive-dl.sh)
 **/assets/raw/
+
+# Raw downloaded source clips (batch 2; large)
+**/assets/raw2/
