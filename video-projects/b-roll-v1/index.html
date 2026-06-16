@@ -136,21 +136,18 @@
         </div>
       </div>
 
-      <!-- B3 · PRESSURE (13–18) — over thinking b-roll (stabilized) -->
-      <video class="broll" id="v-thinking" src="assets/proxies/sean-thinking.mp4" data-start="13.0" data-duration="5.1" data-track-index="7" muted></video>
-      <div class="scrim clip" id="b3scrim" data-start="13.0" data-duration="5.1" data-track-index="20"></div>
-      <div class="scene clip" id="b3" data-start="13.2" data-duration="4.8" data-track-index="44">
-        <div class="pad" style="justify-content:flex-end; padding-bottom:150px">
-          <div class="h-md">The fastest-growing brands<br>feel the <span class="em-hot">most</span> pressure.</div>
+      <!-- B3 · PRESSURE (13–18) — motion-graphic (b-roll removed per note) -->
+      <div class="scene clip" id="b3" data-start="13.0" data-duration="5.0" data-track-index="44">
+        <div class="pad" style="justify-content:center">
+          <div class="eyebrow" style="margin-bottom:30px; color:var(--brand-flame)">THE PRESSURE</div>
+          <div class="h-lg">The fastest-growing<br>brands feel the<br><span class="em-hot">most</span> pressure.</div>
         </div>
       </div>
 
-      <!-- B4 · COST STACK (17.9–29.8) — Sweet E's b-roll intro + hero list -->
-      <video class="broll" id="v-sweetEs" src="assets/proxies/sweetEs.mp4" data-start="17.9" data-duration="2.0" data-track-index="8" muted></video>
-      <div class="scrim clip" id="b4scrim" data-start="17.9" data-duration="2.0" data-track-index="21"></div>
-      <div class="scene clip" id="b4lead" data-start="18.1" data-duration="1.7" data-track-index="45">
-        <div class="pad" style="justify-content:flex-end; padding-bottom:150px">
-          <div class="h-md">More sales in…<br><span class="em">more</span> costs in.</div>
+      <!-- B4 · COST STACK (17.9–29.8) — motion-graphic (b-roll removed per note) -->
+      <div class="scene clip" id="b4lead" data-start="18.0" data-duration="1.8" data-track-index="45">
+        <div class="pad" style="justify-content:center">
+          <div class="h-lg">More sales in…<br><span class="em">more</span> costs in.</div>
         </div>
       </div>
       <div class="scene clip" id="b4" data-start="19.9" data-duration="9.9" data-track-index="46">
@@ -247,9 +244,8 @@
       <div class="grain clip"    id="grain"    data-start="0" data-duration="77" data-track-index="30"></div>
       <div class="vignette clip" id="vignette" data-start="0" data-duration="77" data-track-index="31"></div>
 
-      <!-- audio: VO stops after the first CTA (73.2); music bed underneath -->
-      <audio id="a-vo"    src="assets/audio/vo.m4a"        data-start="0" data-duration="73.2" data-track-index="90" data-volume="1.0"></audio>
-      <audio id="a-music" src="assets/audio/music-bed.m4a" data-start="0" data-duration="77"   data-track-index="91" data-volume="0.11"></audio>
+      <!-- audio: VO only (no music) — stops after the first CTA (73.2) -->
+      <audio id="a-vo" src="assets/audio/vo.m4a" data-start="0" data-duration="73.2" data-track-index="90" data-volume="1.0"></audio>
     </div>
 
     <script>
@@ -292,12 +288,13 @@
       enter("#b2bust", 10.2, { y: 18 });
       exitUp("#b2", 12.7, 0.3);
 
-      // ---- B3 pressure ----
-      enter("#b3 .h-md", 13.3, { y: 30 });
+      // ---- B3 pressure (MG) ----
+      enter("#b3 .eyebrow", 13.2, { y: 14, blur: false });
+      enter("#b3 .h-lg", 13.5, { y: 30 });
       exitUp("#b3", 17.75, 0.3);
 
       // ---- B4 cost stack ----
-      enter("#b4lead .h-md", 18.15, { y: 28 }); exitUp("#b4lead", 19.65, 0.3);
+      enter("#b4lead .h-lg", 18.15, { y: 28 }); exitUp("#b4lead", 19.65, 0.3);
       enter("#b4title", 20.0, { y: 16, blur: false });
       const rowAt = { r1: 20.6, r2: 22.0, r3: 23.5, r4: 25.1, r5: 26.8 };
       Object.entries(rowAt).forEach(([id, t]) =>
