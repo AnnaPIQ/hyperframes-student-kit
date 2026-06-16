@@ -3,7 +3,7 @@
     <style>
       [data-composition-id="we-help"] { position: absolute; inset: 0; overflow: hidden; }
       [data-composition-id="we-help"] .bw-wrap { position: absolute; inset: 0; }
-      [data-composition-id="we-help"] .bw-wrap img { width: 100%; height: 100%; object-fit: cover;
+      [data-composition-id="we-help"] .bw-wrap video { width: 100%; height: 100%; object-fit: cover;
         filter: grayscale(.4) saturate(.5) contrast(1.05) brightness(.5); }
       [data-composition-id="we-help"] .bw-grade { position: absolute; inset: 0;
         background: linear-gradient(180deg, rgba(2,16,31,.7) 0%, rgba(6,40,76,.55) 45%, rgba(2,16,31,.9) 100%);
@@ -23,7 +23,7 @@
       [data-composition-id="we-help"] .head em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
     </style>
 
-    <div class="bw-wrap" id="w-wrap"><img src="assets/still-car.jpg" alt="" /></div>
+    <div class="bw-wrap" id="w-wrap"><video id="wh-vid" src="assets/bw-car.mp4" data-start="0" data-duration="7.8" data-track-index="0" muted></video></div>
     <div class="bw-grade"></div>
 
     <img class="logo" id="w-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />

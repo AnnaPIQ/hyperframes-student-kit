@@ -29,7 +29,7 @@
     <script>
       (function(){
         window.__timelines = window.__timelines || {};
-        const SLOT = 15.05;
+        const SLOT = 10.05;
         const q = (s) => '[data-composition-id="cta"] ' + s;
         const tl = gsap.timeline({ paused: true });
         gsap.set(q('#cta-logo'), { opacity: 0, y: -18 });
@@ -41,10 +41,10 @@
         tl.to(q('#cta-head'), { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.6);
         tl.to(q('#cta-btn'), { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)' }, 2.8);
         tl.to(q('#cta-guar'), { opacity: 1, duration: 0.5, ease: 'power2.out' }, 3.6);
-        tl.to(q('#cta-btn'), { scale: 1.04, duration: 1.1, repeat: 5, yoyo: true, ease: 'sine.inOut' }, 3.6);
+        tl.to(q('#cta-btn'), { scale: 1.04, duration: 1.1, repeat: 3, yoyo: true, ease: 'sine.inOut' }, 3.6);
         tl.to(q('#cta-shim'), { xPercent: 320, duration: 1.1, ease: 'power2.inOut' }, 1.2);
-        tl.set(q('#cta-shim'), { xPercent: -180 }, 8.5);
-        tl.to(q('#cta-shim'), { xPercent: 320, duration: 1.1, ease: 'power2.inOut' }, 9.5);
+        tl.set(q('#cta-shim'), { xPercent: -180 }, 7.0);
+        tl.to(q('#cta-shim'), { xPercent: 320, duration: 1.1, ease: 'power2.inOut' }, 8.0);
         tl.to({}, { duration: SLOT }, 0);
         window.__timelines['cta'] = tl;
       })();
