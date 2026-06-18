@@ -32,6 +32,7 @@ If `MOTION_PHILOSOPHY.md` is missing from the workspace root, stop and ask Nate 
 
 | Skill                    | Command                    | When to use                                                                               |
 | ------------------------ | -------------------------- | ----------------------------------------------------------------------------------------- |
+| `generate` ⭐            | `/generate`                | **Start here to make a video end-to-end.** The one standalone command: interviews (intent, format, script, voice, style, footage) → builds → renders → visually verifies. Knows the B-Roll – EIQ Drive library + the "B-Roll Short Cut" copy matrix, handles 16:9 / 9:16 talking-head / 4:5 Meta-ad, built for this repo's cloud render loop. No hand-off. |
 | `hyperframes`            | `/hyperframes`             | Authoring/editing compositions, captions, TTS, audio-reactive animation, transitions      |
 | `hyperframes-cli`        | `/hyperframes-cli`         | CLI commands: `init`, `add`, `lint`, `preview`, `render`, `transcribe`, `tts`, `doctor`   |
 | `gsap`                   | `/gsap`                    | GSAP animation — timelines, easing, stagger, ScrollTrigger, plugins, performance          |
