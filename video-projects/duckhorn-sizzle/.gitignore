@@ -1,0 +1,4 @@
+# Large raw Drive captures — reproducible via assets/raw/dl.sh
+assets/raw/*.mp4
+# Throwaway frame grabs used during planning/verification
+scratch-frames/
