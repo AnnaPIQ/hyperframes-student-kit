@@ -6,7 +6,7 @@
  */
 const fs = require('fs');
 
-const W = 1920, H = 1080, FPS = 30, TOTAL = 50.0;
+const W = 1920, H = 1080, FPS = 30, TOTAL = 54.0;
 
 const INK = '#0E0A09', CREAM = '#F2E9DC', CREAM_DIM = 'rgba(242,233,220,0.60)',
       GOLD = '#C2A24B', BURG = '#6E1F2A';
@@ -20,20 +20,20 @@ const BRANDS = [
   { id:'duckhorn', start:11.5, dur:4.5, idx:'02',
     name:'Duckhorn Vineyards', nameSize:72, desc:'Napa Valley estate · est. 1976',
     domain:'DUCKHORN.COM', video:'duckhorn-home' },
-  { id:'decoy', start:16.0, dur:6.5, idx:'03',
+  { id:'decoy', start:16.0, dur:7.5, idx:'03',
     name:'Decoy', nameSize:104, desc:'Pour to what&rsquo;s possible',
     domain:'DECOYWINES.COM', video:'decoy-home' },
-  { id:'goldeneye', start:22.5, dur:6.5, idx:'04',
+  { id:'goldeneye', start:23.5, dur:7.5, idx:'04',
     name:'Goldeneye', nameSize:96, desc:'Anderson Valley Pinot Noir',
     domain:'GOLDENEYEWINERY.COM', video:'goldeneye-home' },
-  { id:'calera', start:29.0, dur:6.5, idx:'05',
+  { id:'calera', start:31.0, dur:7.5, idx:'05',
     name:'Calera', nameSize:104, desc:'A singular mountain, a radical belief',
     domain:'CALERAWINE.COM', video:'calera-home', endThumb:'calera-end' },
-  { id:'greenwing', start:35.5, dur:6.5, idx:'06',
+  { id:'greenwing', start:38.5, dur:7.5, idx:'06',
     name:'Greenwing', nameSize:96, desc:'Rooted in remarkable places',
     domain:'GREENWINGWINES.COM', video:'greenwing-home' },
 ];
-const OUTRO_START = 42.0, OUTRO_DUR = 8.0;
+const OUTRO_START = 46.0, OUTRO_DUR = 8.0;
 
 function beatMarkup(beat){
   const vdur = beat.dur.toFixed(2);
@@ -202,7 +202,7 @@ ${beatsHTML}
       <!-- AUDIO -->
       <audio id="music-bed" data-start="0" data-duration="${TOTAL}" data-track-index="30" data-volume="0.6" src="assets/music-bed.mp3"></audio>
 ${whooshes}
-      <audio id="twinkle" data-start="47.5" data-duration="0.55" data-track-index="40" data-volume="0.12" src="assets/sfx-twinkle.mp3"></audio>
+      <audio id="twinkle" data-start="${(OUTRO_START+5.5).toFixed(2)}" data-duration="0.55" data-track-index="40" data-volume="0.12" src="assets/sfx-twinkle.mp3"></audio>
     </div>
 
     <script>
@@ -234,21 +234,21 @@ ${beatsJS}
       tl.fromTo('#beat-outro .gcell',
         { autoAlpha: 0, y: 50, scale: 0.9 },
         { autoAlpha: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(1.2)', stagger: 0.09 }, ${(OUTRO_START+0.05).toFixed(2)});
-      tl.to('#grid', { scale: 0.86, autoAlpha: 0.18, filter: 'blur(7px)', duration: 0.9, ease: 'power2.inOut' }, 44.0);
-      tl.fromTo('#payline', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 44.2);
+      tl.to('#grid', { scale: 0.86, autoAlpha: 0.18, filter: 'blur(7px)', duration: 0.9, ease: 'power2.inOut' }, ${(OUTRO_START+2.0).toFixed(2)});
+      tl.fromTo('#payline', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, ${(OUTRO_START+2.2).toFixed(2)});
       tl.fromTo('#payline .l1', { y: 36, autoAlpha: 0, filter: 'blur(10px)' },
-        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 44.2);
+        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, ${(OUTRO_START+2.2).toFixed(2)});
       tl.fromTo('#payline .l2', { y: 36, autoAlpha: 0, filter: 'blur(10px)' },
-        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 44.7);
-      tl.to('#grid', { autoAlpha: 0, duration: 0.6, ease: 'power2.in' }, 46.4);
-      tl.to('#payline', { autoAlpha: 0, y: -40, filter: 'blur(12px)', duration: 0.7, ease: 'power2.in' }, 46.4);
-      tl.fromTo('#credit', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, 47.4);
-      tl.fromTo('#credit .builtby', { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 47.4);
+        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, ${(OUTRO_START+2.7).toFixed(2)});
+      tl.to('#grid', { autoAlpha: 0, duration: 0.6, ease: 'power2.in' }, ${(OUTRO_START+4.4).toFixed(2)});
+      tl.to('#payline', { autoAlpha: 0, y: -40, filter: 'blur(12px)', duration: 0.7, ease: 'power2.in' }, ${(OUTRO_START+4.4).toFixed(2)});
+      tl.fromTo('#credit', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, ${(OUTRO_START+5.4).toFixed(2)});
+      tl.fromTo('#credit .builtby', { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' }, ${(OUTRO_START+5.4).toFixed(2)});
       tl.fromTo('#credit .lockup', { autoAlpha: 0, y: 22, scale: 0.94 },
-        { autoAlpha: 1, y: 0, scale: 1, duration: 0.9, ease: 'expo.out' }, 47.7);
+        { autoAlpha: 1, y: 0, scale: 1, duration: 0.9, ease: 'expo.out' }, ${(OUTRO_START+5.7).toFixed(2)});
       tl.fromTo('#credit .glint', { autoAlpha: 1, backgroundPosition: '160% 0' },
-        { backgroundPosition: '-60% 0', duration: 1.1, ease: 'none' }, 48.7);
-      tl.to('#credit .glint', { autoAlpha: 0, duration: 0.2 }, 49.8);
+        { backgroundPosition: '-60% 0', duration: 1.1, ease: 'none' }, ${(OUTRO_START+6.7).toFixed(2)});
+      tl.to('#credit .glint', { autoAlpha: 0, duration: 0.2 }, ${(OUTRO_START+7.8).toFixed(2)});
 
       tl.to({}, { duration: ${TOTAL} }, 0);
       window.__timelines['duckhorn-sizzle'] = tl;
