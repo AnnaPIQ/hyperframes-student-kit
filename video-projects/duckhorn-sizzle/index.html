@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Duckhorn — Six-Site Launch Sizzle</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family:'Hedvig Letters Serif'; src:url('assets/fonts/HedvigLettersSerif.woff2') format('woff2'); font-weight:400; font-display:block; }
+      @font-face { font-family:'Rethink Sans'; src:url('assets/fonts/RethinkSans.woff2') format('woff2'); font-weight:400 800; font-display:block; }
+      * { margin:0; padding:0; box-sizing:border-box; }
+      html, body { width:1920px; height:1080px; overflow:hidden; background:#0E0A09; color:#F2E9DC; }
+      #root { position:absolute; inset:0; overflow:hidden; }
+
+      /* ---- background (always on) ---- */
+      .bg-radial { position:absolute; inset:0; background:
+        radial-gradient(120% 90% at 30% 18%, rgba(178,120,58,0.13) 0%, rgba(110,31,42,0.05) 38%, transparent 70%); }
+      .bg-vignette { position:absolute; inset:0; pointer-events:none;
+        background:radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,0.78) 100%); }
+      .bg-grain { position:absolute; inset:0; pointer-events:none; opacity:0.06; mix-blend-mode:overlay;
+        background-image:
+          radial-gradient(rgba(255,255,255,0.5) 0.6px, transparent 0.6px),
+          radial-gradient(rgba(255,255,255,0.4) 0.6px, transparent 0.6px);
+        background-size:3px 3px, 5px 5px; background-position:0 0, 1px 2px; }
+
+      /* ---- beats ---- */
+      .beat { position:absolute; inset:0; visibility:hidden; opacity:0; }
+      .textcol { position:absolute; left:120px; top:322px; width:486px; }
+      .idx { font-family:'Rethink Sans',sans-serif; font-weight:700; font-size:26px; letter-spacing:0.18em;
+        color:#C2A24B; margin-bottom:26px; }
+      .idx .of { color:rgba(242,233,220,0.60); font-weight:500; }
+      .bname { font-family:'Hedvig Letters Serif',Georgia,serif; line-height:1.02; color:#F2E9DC;
+        letter-spacing:0.005em; margin-bottom:24px; }
+      .desc { font-family:'Rethink Sans',sans-serif; font-weight:400; font-size:27px; line-height:1.4;
+        color:rgba(242,233,220,0.60); max-width:430px; margin-bottom:30px; }
+      .uline { width:300px; height:2px; background:linear-gradient(90deg, #C2A24B, #6E1F2A); transform-origin:left center; margin-bottom:18px; }
+      .domain { font-family:'Rethink Sans',sans-serif; font-weight:600; font-size:19px; letter-spacing:0.2em; color:#C2A24B; }
+
+      .card { position:absolute; left:660px; top:200px; width:1180px;
+        border-radius:15px; overflow:hidden; background:#16110f;
+        box-shadow:0 50px 110px rgba(0,0,0,0.7), 0 0 0 1px rgba(242,233,220,0.10), inset 0 1px 0 rgba(255,255,255,0.10); }
+      .card2 { }
+      .chrome { height:46px; display:flex; align-items:center; gap:9px; padding:0 18px;
+        background:linear-gradient(180deg,#221a17,#19120f); border-bottom:1px solid rgba(255,255,255,0.06); }
+      .dot { width:11px; height:11px; border-radius:50%; }
+      .d1{background:#7a4b3a;} .d2{background:#8a7448;} .d3{background:#5a6a4a;}
+      .urlpill { margin-left:18px; padding:6px 18px; border-radius:8px; background:rgba(0,0,0,0.35);
+        font-family:'Rethink Sans',sans-serif; font-size:15px; letter-spacing:0.04em; color:rgba(242,233,220,0.7); }
+      .screen { position:relative; width:1180px; height:640px; background-size:cover; background-position:center top; overflow:hidden; }
+      .vidwrap { position:absolute; inset:0; }
+      .vidwrap video { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; }
+
+      /* ---- open (beat 0) ---- */
+      #beat-open { position:absolute; inset:0; visibility:hidden; opacity:0; display:flex; flex-direction:column;
+        align-items:center; justify-content:center; }
+      #beat-open .o-rule { width:0px; height:2px; background:linear-gradient(90deg,transparent,#C2A24B,transparent); margin-bottom:34px; }
+      #beat-open .o-title { font-family:'Hedvig Letters Serif',serif; font-size:96px; color:#F2E9DC; text-align:center; line-height:1.05; }
+      #beat-open .o-sub { font-family:'Rethink Sans',sans-serif; font-weight:600; font-size:24px; letter-spacing:0.34em;
+        color:#C2A24B; margin-top:30px; }
+      .mote { position:absolute; width:4px; height:4px; border-radius:50%; background:#C2A24B; opacity:0; }
+
+      /* ---- outro (beat 9) ---- */
+      #beat-outro { position:absolute; inset:0; visibility:hidden; opacity:0; }
+      .o-layer { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+      #grid { width:1320px; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:26px; }
+      .gcell { border-radius:10px; overflow:hidden; aspect-ratio:16/9; box-shadow:0 24px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(194,162,75,0.35); opacity:0; }
+      .gcell img { width:100%; height:100%; object-fit:cover; object-position:center top; }
+      #payline { text-align:center; font-family:'Hedvig Letters Serif',serif; color:#F2E9DC; opacity:0; }
+      #payline .l1, #payline .l2 { font-size:104px; line-height:1.08; }
+      #payline .l2 em { font-style:normal; color:#C2A24B; }
+      #credit { text-align:center; opacity:0; }
+      #credit .builtby { font-family:'Rethink Sans',sans-serif; font-weight:600; font-size:20px; letter-spacing:0.4em; color:rgba(242,233,220,0.60); margin-bottom:34px; }
+      #credit .lockup { display:flex; align-items:center; justify-content:center; gap:24px; }
+      #credit .leaf { width:88px; height:88px; }
+      #credit .wordmark { font-family:'Rethink Sans',sans-serif; font-weight:800; font-size:72px; letter-spacing:-0.02em; color:#0500ED; position:relative; }
+      #credit .glint { position:absolute; inset:0; background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.85) 50%,transparent 60%);
+        background-size:260% 100%; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; opacity:0; }
+      #credit .url { font-family:'Rethink Sans',sans-serif; font-weight:500; font-size:24px; letter-spacing:0.22em; color:rgba(242,233,220,0.60); margin-top:36px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="duckhorn-sizzle" data-start="0" data-duration="45" data-width="1920" data-height="1080">
+
+      <!-- background -->
+      <div class="bg-radial"></div>
+      <div class="bg-vignette"></div>
+      <div class="bg-grain"></div>
+
+      <!-- OPEN -->
+      <div id="beat-open">
+        <div class="o-rule"></div>
+        <div class="o-title">The Duckhorn<br>Collection</div>
+        <div class="o-sub">SIX ESTATE BRANDS &middot; ONE LAUNCH</div>
+        <div class="mote" id="mote-0"></div><div class="mote" id="mote-1"></div><div class="mote" id="mote-2"></div><div class="mote" id="mote-3"></div><div class="mote" id="mote-4"></div><div class="mote" id="mote-5"></div><div class="mote" id="mote-6"></div><div class="mote" id="mote-7"></div><div class="mote" id="mote-8"></div><div class="mote" id="mote-9"></div><div class="mote" id="mote-10"></div><div class="mote" id="mote-11"></div><div class="mote" id="mote-12"></div><div class="mote" id="mote-13"></div>
+      </div>
+
+      <!-- BRAND BEATS -->
+
+    <!-- BEAT 01 — The Duckhorn Collection (5–10.5) -->
+    <div class="beat" id="beat-tdc">
+      <div class="textcol">
+        <div class="idx tline">01<span class="of">/06</span></div>
+        <div class="bname tline" style="font-size:60px">The Duckhorn Collection</div>
+        <div class="desc tline">The portfolio, reimagined</div>
+        <div class="uline"></div>
+        <div class="domain tline">THEDUCKHORNCOLLECTION.COM</div>
+      </div>
+      
+      <div class="card" id="tdc-card1">
+        <div class="chrome"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+          <span class="urlpill">theduckhorncollection.com</span></div>
+        <div class="screen" style="background-image:url('assets/posters/tdc-home.jpg')">
+          <div class="vidwrap"><video id="tdc-vid1" data-start="5" data-duration="3.40" data-track-index="20"
+            src="assets/site-tdc-home.mp4" muted playsinline></video></div>
+        </div>
+      </div>
+      <div class="card card2" id="tdc-card2">
+        <div class="chrome"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+          <span class="urlpill">theduckhorncollection.com/experiences</span></div>
+        <div class="screen" style="background-image:url('assets/posters/tdc-products.jpg')">
+          <div class="vidwrap"><video id="tdc-vid2" data-start="8.00" data-duration="2.80" data-track-index="21"
+            src="assets/site-tdc-products.mp4" muted playsinline></video></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEAT 02 — Duckhorn Vineyards (10.5–15.5) -->
+    <div class="beat" id="beat-duckhorn">
+      <div class="textcol">
+        <div class="idx tline">02<span class="of">/06</span></div>
+        <div class="bname tline" style="font-size:72px">Duckhorn Vineyards</div>
+        <div class="desc tline">Napa Valley estate · est. 1976</div>
+        <div class="uline"></div>
+        <div class="domain tline">DUCKHORN.COM</div>
+      </div>
+      
+      <div class="card" id="duckhorn-card1">
+        <div class="chrome"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+          <span class="urlpill">duckhorn.com</span></div>
+        <div class="screen" style="background-image:url('assets/posters/duckhorn-home.jpg')">
+          <div class="vidwrap"><video id="duckhorn-vid1" data-start="10.5" data-duration="5.00" data-track-index="20"
+            src="assets/site-duckhorn-home.mp4" muted playsinline></video></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEAT 03 — Decoy (15.5–20.5) -->
+    <div class="beat" id="beat-decoy">
+      <div class="textcol">
+        <div class="idx tline">03<span class="of">/06</span></div>
+        <div class="bname tline" style="font-size:104px">Decoy</div>
+        <div class="desc tline">Pour to what&rsquo;s possible</div>
+        <div class="uline"></div>
+        <div class="domain tline">DECOYWINES.COM</div>
+      </div>
+      
+      <div class="card" id="decoy-card1">
+        <div class="chrome"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+          <span class="urlpill">decoywines.com</span></div>
+        <div class="screen" style="background-image:url('assets/posters/decoy-home.jpg')">
+          <div class="vidwrap"><video id="decoy-vid1" data-start="15.5" data-duration="5.00" data-track-index="20"
+            src="assets/site-decoy-home.mp4" muted playsinline></video></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEAT 04 — Goldeneye (20.5–25.5) -->
+    <div class="beat" id="beat-goldeneye">
+      <div class="textcol">
+        <div class="idx tline">04<span class="of">/06</span></div>
+        <div class="bname tline" style="font-size:96px">Goldeneye</div>
+        <div class="desc tline">Anderson Valley Pinot Noir</div>
+        <div class="uline"></div>
+        <div class="domain tline">GOLDENEYEWINERY.COM</div>
+      </div>
+      
+      <div class="card" id="goldeneye-card1">
+        <div class="chrome"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+          <span class="urlpill">goldeneyewinery.com</span></div>
+        <div class="screen" style="background-image:url('assets/posters/goldeneye-home.jpg')">
+          <div class="vidwrap"><video id="goldeneye-vid1" data-start="20.5" data-duration="5.00" data-track-index="20"
+            src="assets/site-goldeneye-home.mp4" muted playsinline></video></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEAT 05 — Calera (25.5–30.5) -->
+    <div class="beat" id="beat-calera">
+      <div class="textcol">
+        <div class="idx tline">05<span class="of">/06</span></div>
+        <div class="bname tline" style="font-size:104px">Calera</div>
+        <div class="desc tline">A singular mountain, a radical belief</div>
+        <div class="uline"></div>
+        <div class="domain tline">CALERAWINE.COM</div>
+      </div>
+      
+      <div class="card" id="calera-card1">
+        <div class="chrome"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+          <span class="urlpill">calerawine.com</span></div>
+        <div class="screen" style="background-image:url('assets/posters/calera-home.jpg')">
+          <div class="vidwrap"><video id="calera-vid1" data-start="25.5" data-duration="5.00" data-track-index="20"
+            src="assets/site-calera-home.mp4" muted playsinline></video></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEAT 06 — Greenwing (30.5–36.0) -->
+    <div class="beat" id="beat-greenwing">
+      <div class="textcol">
+        <div class="idx tline">06<span class="of">/06</span></div>
+        <div class="bname tline" style="font-size:96px">Greenwing</div>
+        <div class="desc tline">Rooted in remarkable places</div>
+        <div class="uline"></div>
+        <div class="domain tline">GREENWINGWINES.COM</div>
+      </div>
+      
+      <div class="card" id="greenwing-card1">
+        <div class="chrome"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+          <span class="urlpill">greenwingwines.com</span></div>
+        <div class="screen" style="background-image:url('assets/posters/greenwing-home.jpg')">
+          <div class="vidwrap"><video id="greenwing-vid1" data-start="30.5" data-duration="3.40" data-track-index="20"
+            src="assets/site-greenwing-home.mp4" muted playsinline></video></div>
+        </div>
+      </div>
+      <div class="card card2" id="greenwing-card2">
+        <div class="chrome"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+          <span class="urlpill">greenwingwines.com/experiences</span></div>
+        <div class="screen" style="background-image:url('assets/posters/greenwing-product.jpg')">
+          <div class="vidwrap"><video id="greenwing-vid2" data-start="33.50" data-duration="2.80" data-track-index="21"
+            src="assets/site-greenwing-product.mp4" muted playsinline></video></div>
+        </div>
+      </div>
+    </div>
+
+      <!-- OUTRO -->
+      <div id="beat-outro">
+        <div class="o-layer" id="grid-layer">
+          <div id="grid">
+          <div class="gcell"><img src="assets/posters/tdc-home.jpg" alt=""></div>
+        <div class="gcell"><img src="assets/posters/duckhorn-home.jpg" alt=""></div>
+        <div class="gcell"><img src="assets/posters/decoy-home.jpg" alt=""></div>
+        <div class="gcell"><img src="assets/posters/goldeneye-home.jpg" alt=""></div>
+        <div class="gcell"><img src="assets/posters/calera-home.jpg" alt=""></div>
+        <div class="gcell"><img src="assets/posters/greenwing-home.jpg" alt=""></div>
+          </div>
+        </div>
+        <div class="o-layer" id="pay-layer">
+          <div id="payline">
+            <div class="l1">Six websites.</div>
+            <div class="l2"><em>One launch.</em></div>
+          </div>
+        </div>
+        <div class="o-layer" id="credit-layer">
+          <div id="credit">
+            <div class="builtby">BUILT BY</div>
+            <div class="lockup">
+              <img class="leaf" src="assets/piq-leaf.png" alt="PacificIQ">
+              <span class="wordmark">PacificIQ<span class="glint">PacificIQ</span></span>
+            </div>
+            <div class="url">PACIFICIQ.COM</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUDIO -->
+      <audio id="ambient-pad" data-start="0" data-duration="45" data-track-index="30" data-volume="0.16" src="assets/ambient-pad.mp3"></audio>
+      <audio id="whoosh-0" data-start="5.00" data-duration="0.42" data-track-index="31" data-volume="0.12" src="assets/sfx-whoosh-1.mp3"></audio>
+      <audio id="whoosh-1" data-start="10.50" data-duration="0.42" data-track-index="32" data-volume="0.12" src="assets/sfx-whoosh-2.mp3"></audio>
+      <audio id="whoosh-2" data-start="15.50" data-duration="0.42" data-track-index="33" data-volume="0.12" src="assets/sfx-whoosh-1.mp3"></audio>
+      <audio id="whoosh-3" data-start="20.50" data-duration="0.42" data-track-index="34" data-volume="0.12" src="assets/sfx-whoosh-2.mp3"></audio>
+      <audio id="whoosh-4" data-start="25.50" data-duration="0.42" data-track-index="35" data-volume="0.12" src="assets/sfx-whoosh-1.mp3"></audio>
+      <audio id="whoosh-5" data-start="30.50" data-duration="0.42" data-track-index="36" data-volume="0.12" src="assets/sfx-whoosh-2.mp3"></audio>
+      <audio id="twinkle" data-start="41.4" data-duration="0.55" data-track-index="40" data-volume="0.15" src="assets/sfx-twinkle.mp3"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      /* ===== OPEN (0.0–5.0) ===== */
+      tl.set('#beat-open', { autoAlpha: 1 }, 0);
+      tl.fromTo('#beat-open .o-rule', { width: 0 }, { width: 420, duration: 1.0, ease: 'power2.inOut' }, 0.2);
+      tl.fromTo('#beat-open .o-title', { y: 40, autoAlpha: 0, filter: 'blur(14px)' },
+        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 1.1, ease: 'power3.out' }, 0.5);
+      tl.fromTo('#beat-open .o-sub', { y: 18, autoAlpha: 0, letterSpacing: '0.5em' },
+        { y: 0, autoAlpha: 1, letterSpacing: '0.34em', duration: 0.9, ease: 'power3.out' }, 2.1);
+      // drifting motes
+      for (let i = 0; i < 14; i++) {
+        const px = (i * 137) % 1820 + 40, py = (i * 89) % 980 + 40;
+        const r = 0.4 + Math.abs(Math.sin(i * 1.7)) * 0.5;
+        gsap.set('#mote-' + i, { x: px, y: py });
+        tl.to('#mote-' + i, { autoAlpha: r * 0.8, duration: 1.2, ease: 'sine.inOut' }, 0.3 + (i % 5) * 0.18);
+        tl.to('#mote-' + i, { y: py - 60, duration: 4.5, ease: 'none' }, 0.3);
+      }
+      tl.to('#beat-open', { y: -60, autoAlpha: 0, filter: 'blur(16px)', duration: 0.6, ease: 'power2.in' }, 4.4);
+      tl.set('#beat-open', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 5.0);
+
+      /* ===== BRAND BEATS ===== */
+
+  // The Duckhorn Collection
+  tl.set('#beat-tdc', { autoAlpha: 1 }, 5);
+  gsap.set('#beat-tdc .card1, #beat-tdc .textcol', { });
+  // card1 rise
+  tl.fromTo('#beat-tdc #tdc-card1', { y: 130, autoAlpha: 0, filter: 'blur(30px)' },
+    { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 5);
+  tl.fromTo('#beat-tdc #tdc-card1 .screen', { scale: 1.0 }, { scale: 1.045, duration: 5.50, ease: 'none' }, 5);
+  // text column stagger
+  tl.fromTo('#beat-tdc .tline', { y: 28, autoAlpha: 0 },
+    { y: 0, autoAlpha: 1, duration: 0.62, ease: 'power3.out', stagger: 0.12 }, 5.28);
+  tl.fromTo('#beat-tdc .uline', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, 5.95);
+  // dual-card swap
+  gsap.set('#beat-tdc #tdc-card2', { autoAlpha: 0, x: 70, filter: 'blur(26px)' });
+  tl.to('#beat-tdc #tdc-card1', { x: -50, autoAlpha: 0, filter: 'blur(22px)', duration: 0.5, ease: 'power2.in' }, 8.00);
+  tl.fromTo('#beat-tdc #tdc-card2', { x: 70, autoAlpha: 0, filter: 'blur(26px)' },
+    { x: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' }, 8.00);
+  tl.fromTo('#beat-tdc #tdc-card2 .screen', { scale: 1.0 }, { scale: 1.03, duration: 2.50, ease: 'none' }, 8.00);
+  // exit
+  tl.to('#beat-tdc .beat-inner-x', {}, 10.00); // (no-op marker)
+  tl.to('#beat-tdc', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 10.00);
+  tl.set('#beat-tdc', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 10.50);
+
+  // Duckhorn Vineyards
+  tl.set('#beat-duckhorn', { autoAlpha: 1 }, 10.5);
+  gsap.set('#beat-duckhorn .card1, #beat-duckhorn .textcol', { });
+  // card1 rise
+  tl.fromTo('#beat-duckhorn #duckhorn-card1', { y: 130, autoAlpha: 0, filter: 'blur(30px)' },
+    { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 10.5);
+  tl.fromTo('#beat-duckhorn #duckhorn-card1 .screen', { scale: 1.0 }, { scale: 1.045, duration: 5.00, ease: 'none' }, 10.5);
+  // text column stagger
+  tl.fromTo('#beat-duckhorn .tline', { y: 28, autoAlpha: 0 },
+    { y: 0, autoAlpha: 1, duration: 0.62, ease: 'power3.out', stagger: 0.12 }, 10.78);
+  tl.fromTo('#beat-duckhorn .uline', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, 11.45);
+  // exit
+  tl.to('#beat-duckhorn .beat-inner-x', {}, 15.00); // (no-op marker)
+  tl.to('#beat-duckhorn', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 15.00);
+  tl.set('#beat-duckhorn', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 15.50);
+
+  // Decoy
+  tl.set('#beat-decoy', { autoAlpha: 1 }, 15.5);
+  gsap.set('#beat-decoy .card1, #beat-decoy .textcol', { });
+  // card1 rise
+  tl.fromTo('#beat-decoy #decoy-card1', { y: 130, autoAlpha: 0, filter: 'blur(30px)' },
+    { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 15.5);
+  tl.fromTo('#beat-decoy #decoy-card1 .screen', { scale: 1.0 }, { scale: 1.045, duration: 5.00, ease: 'none' }, 15.5);
+  // text column stagger
+  tl.fromTo('#beat-decoy .tline', { y: 28, autoAlpha: 0 },
+    { y: 0, autoAlpha: 1, duration: 0.62, ease: 'power3.out', stagger: 0.12 }, 15.78);
+  tl.fromTo('#beat-decoy .uline', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, 16.45);
+  // exit
+  tl.to('#beat-decoy .beat-inner-x', {}, 20.00); // (no-op marker)
+  tl.to('#beat-decoy', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 20.00);
+  tl.set('#beat-decoy', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 20.50);
+
+  // Goldeneye
+  tl.set('#beat-goldeneye', { autoAlpha: 1 }, 20.5);
+  gsap.set('#beat-goldeneye .card1, #beat-goldeneye .textcol', { });
+  // card1 rise
+  tl.fromTo('#beat-goldeneye #goldeneye-card1', { y: 130, autoAlpha: 0, filter: 'blur(30px)' },
+    { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 20.5);
+  tl.fromTo('#beat-goldeneye #goldeneye-card1 .screen', { scale: 1.0 }, { scale: 1.045, duration: 5.00, ease: 'none' }, 20.5);
+  // text column stagger
+  tl.fromTo('#beat-goldeneye .tline', { y: 28, autoAlpha: 0 },
+    { y: 0, autoAlpha: 1, duration: 0.62, ease: 'power3.out', stagger: 0.12 }, 20.78);
+  tl.fromTo('#beat-goldeneye .uline', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, 21.45);
+  // exit
+  tl.to('#beat-goldeneye .beat-inner-x', {}, 25.00); // (no-op marker)
+  tl.to('#beat-goldeneye', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 25.00);
+  tl.set('#beat-goldeneye', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 25.50);
+
+  // Calera
+  tl.set('#beat-calera', { autoAlpha: 1 }, 25.5);
+  gsap.set('#beat-calera .card1, #beat-calera .textcol', { });
+  // card1 rise
+  tl.fromTo('#beat-calera #calera-card1', { y: 130, autoAlpha: 0, filter: 'blur(30px)' },
+    { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 25.5);
+  tl.fromTo('#beat-calera #calera-card1 .screen', { scale: 1.0 }, { scale: 1.045, duration: 5.00, ease: 'none' }, 25.5);
+  // text column stagger
+  tl.fromTo('#beat-calera .tline', { y: 28, autoAlpha: 0 },
+    { y: 0, autoAlpha: 1, duration: 0.62, ease: 'power3.out', stagger: 0.12 }, 25.78);
+  tl.fromTo('#beat-calera .uline', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, 26.45);
+  // exit
+  tl.to('#beat-calera .beat-inner-x', {}, 30.00); // (no-op marker)
+  tl.to('#beat-calera', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 30.00);
+  tl.set('#beat-calera', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 30.50);
+
+  // Greenwing
+  tl.set('#beat-greenwing', { autoAlpha: 1 }, 30.5);
+  gsap.set('#beat-greenwing .card1, #beat-greenwing .textcol', { });
+  // card1 rise
+  tl.fromTo('#beat-greenwing #greenwing-card1', { y: 130, autoAlpha: 0, filter: 'blur(30px)' },
+    { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 30.5);
+  tl.fromTo('#beat-greenwing #greenwing-card1 .screen', { scale: 1.0 }, { scale: 1.045, duration: 5.50, ease: 'none' }, 30.5);
+  // text column stagger
+  tl.fromTo('#beat-greenwing .tline', { y: 28, autoAlpha: 0 },
+    { y: 0, autoAlpha: 1, duration: 0.62, ease: 'power3.out', stagger: 0.12 }, 30.78);
+  tl.fromTo('#beat-greenwing .uline', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, 31.45);
+  // dual-card swap
+  gsap.set('#beat-greenwing #greenwing-card2', { autoAlpha: 0, x: 70, filter: 'blur(26px)' });
+  tl.to('#beat-greenwing #greenwing-card1', { x: -50, autoAlpha: 0, filter: 'blur(22px)', duration: 0.5, ease: 'power2.in' }, 33.50);
+  tl.fromTo('#beat-greenwing #greenwing-card2', { x: 70, autoAlpha: 0, filter: 'blur(26px)' },
+    { x: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' }, 33.50);
+  tl.fromTo('#beat-greenwing #greenwing-card2 .screen', { scale: 1.0 }, { scale: 1.03, duration: 2.50, ease: 'none' }, 33.50);
+  // exit
+  tl.to('#beat-greenwing .beat-inner-x', {}, 35.50); // (no-op marker)
+  tl.to('#beat-greenwing', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 35.50);
+  tl.set('#beat-greenwing', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 36.00);
+
+      /* ===== OUTRO (36.0–45.0) ===== */
+      tl.set('#beat-outro', { autoAlpha: 1 }, 36.0);
+      // grid assemble
+      tl.fromTo('#beat-outro .gcell',
+        { autoAlpha: 0, y: 50, scale: 0.9 },
+        { autoAlpha: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(1.2)', stagger: 0.09 }, 36.05);
+      // grid hold then recede + dim
+      tl.to('#grid', { scale: 0.86, autoAlpha: 0.18, filter: 'blur(7px)', duration: 0.9, ease: 'power2.inOut' }, 38.0);
+      // payline
+      tl.fromTo('#payline', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 38.2);
+      tl.fromTo('#payline .l1', { y: 36, autoAlpha: 0, filter: 'blur(10px)' },
+        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 38.2);
+      tl.fromTo('#payline .l2', { y: 36, autoAlpha: 0, filter: 'blur(10px)' },
+        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 38.7);
+      // clear grid + payline to black
+      tl.to('#grid', { autoAlpha: 0, duration: 0.6, ease: 'power2.in' }, 40.2);
+      tl.to('#payline', { autoAlpha: 0, y: -40, filter: 'blur(12px)', duration: 0.7, ease: 'power2.in' }, 40.2);
+      // end credit
+      tl.fromTo('#credit', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, 41.2);
+      tl.fromTo('#credit .builtby', { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 41.2);
+      tl.fromTo('#credit .lockup', { autoAlpha: 0, y: 22, scale: 0.94 },
+        { autoAlpha: 1, y: 0, scale: 1, duration: 0.9, ease: 'expo.out' }, 41.5);
+      tl.fromTo('#credit .glint', { autoAlpha: 1, backgroundPosition: '160% 0' },
+        { backgroundPosition: '-60% 0', duration: 1.1, ease: 'none' }, 42.6);
+      tl.to('#credit .glint', { autoAlpha: 0, duration: 0.2 }, 43.7);
+      tl.fromTo('#credit .url', { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 42.4);
+
+      /* anchor — Law 11 */
+      tl.to({}, { duration: 45 }, 0);
+      window.__timelines['duckhorn-sizzle'] = tl;
+    </script>
+  </body>
+</html>
