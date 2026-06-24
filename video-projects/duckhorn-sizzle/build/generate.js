@@ -6,7 +6,7 @@
  */
 const fs = require('fs');
 
-const W = 1920, H = 1080, FPS = 30, TOTAL = 54.0;
+const W = 1920, H = 1080, FPS = 30, TOTAL = 56.0;
 
 const INK = '#0E0A09', CREAM = '#F2E9DC', CREAM_DIM = 'rgba(242,233,220,0.60)',
       GOLD = '#C2A24B', BURG = '#6E1F2A';
@@ -29,11 +29,11 @@ const BRANDS = [
   { id:'calera', start:31.0, dur:7.5, idx:'05',
     name:'Calera', nameSize:104, desc:'A singular mountain, a radical belief',
     domain:'CALERAWINE.COM', video:'calera-home', endThumb:'calera-end' },
-  { id:'greenwing', start:38.5, dur:7.5, idx:'06',
+  { id:'greenwing', start:38.5, dur:9.5, idx:'06',
     name:'Greenwing', nameSize:96, desc:'Rooted in remarkable places',
     domain:'GREENWINGWINES.COM', video:'greenwing-home' },
 ];
-const OUTRO_START = 46.0, OUTRO_DUR = 8.0;
+const OUTRO_START = 48.0, OUTRO_DUR = 8.0;
 
 function beatMarkup(beat){
   const vdur = beat.dur.toFixed(2);

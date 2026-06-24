@@ -73,7 +73,7 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="duckhorn-sizzle" data-start="0" data-duration="54" data-width="1920" data-height="1080">
+    <div id="root" data-composition-id="duckhorn-sizzle" data-start="0" data-duration="56" data-width="1920" data-height="1080">
 
       <div class="bg-radial"></div>
       <div class="bg-vignette"></div>
@@ -184,7 +184,7 @@
       </div>
     </div>
 
-    <!-- BEAT 06 — Greenwing (38.5–46.0) -->
+    <!-- BEAT 06 — Greenwing (38.5–48.0) -->
     <div class="beat" id="beat-greenwing">
       <div class="textcol">
         <div class="idx tline">06<span class="of">/06</span></div>
@@ -197,7 +197,7 @@
         <div class="chrome"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
           <span class="urlpill">greenwingwines.com</span></div>
         <div class="screen" style="background-image:url('assets/posters/greenwing-home.jpg')">
-          <div class="vidwrap"><video id="greenwing-vid" data-start="38.5" data-duration="7.50" data-track-index="20"
+          <div class="vidwrap"><video id="greenwing-vid" data-start="38.5" data-duration="9.50" data-track-index="20"
             src="assets/site-greenwing-home.mp4" muted playsinline></video></div>
         </div>
       </div>
@@ -233,14 +233,14 @@
       </div>
 
       <!-- AUDIO -->
-      <audio id="music-bed" data-start="0" data-duration="54" data-track-index="30" data-volume="0.6" src="assets/music-bed.mp3"></audio>
+      <audio id="music-bed" data-start="0" data-duration="56" data-track-index="30" data-volume="0.6" src="assets/music-bed.mp3"></audio>
       <audio id="whoosh-0" data-start="5.00" data-duration="0.42" data-track-index="31" data-volume="0.07" src="assets/sfx-whoosh-1.mp3"></audio>
       <audio id="whoosh-1" data-start="11.50" data-duration="0.42" data-track-index="32" data-volume="0.07" src="assets/sfx-whoosh-2.mp3"></audio>
       <audio id="whoosh-2" data-start="16.00" data-duration="0.42" data-track-index="33" data-volume="0.07" src="assets/sfx-whoosh-1.mp3"></audio>
       <audio id="whoosh-3" data-start="23.50" data-duration="0.42" data-track-index="34" data-volume="0.07" src="assets/sfx-whoosh-2.mp3"></audio>
       <audio id="whoosh-4" data-start="31.00" data-duration="0.42" data-track-index="35" data-volume="0.07" src="assets/sfx-whoosh-1.mp3"></audio>
       <audio id="whoosh-5" data-start="38.50" data-duration="0.42" data-track-index="36" data-volume="0.07" src="assets/sfx-whoosh-2.mp3"></audio>
-      <audio id="twinkle" data-start="51.50" data-duration="0.55" data-track-index="40" data-volume="0.12" src="assets/sfx-twinkle.mp3"></audio>
+      <audio id="twinkle" data-start="53.50" data-duration="0.55" data-track-index="40" data-volume="0.12" src="assets/sfx-twinkle.mp3"></audio>
     </div>
 
     <script>
@@ -325,35 +325,35 @@
   tl.set('#beat-greenwing', { autoAlpha: 1 }, 38.5);
   tl.fromTo('#beat-greenwing #greenwing-card', { y: 130, autoAlpha: 0, filter: 'blur(30px)' },
     { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 38.5);
-  tl.fromTo('#beat-greenwing #greenwing-card .screen', { scale: 1.0 }, { scale: 1.04, duration: 7.50, ease: 'none' }, 38.5);
+  tl.fromTo('#beat-greenwing #greenwing-card .screen', { scale: 1.0 }, { scale: 1.04, duration: 9.50, ease: 'none' }, 38.5);
   tl.fromTo('#beat-greenwing .tline', { y: 28, autoAlpha: 0 },
     { y: 0, autoAlpha: 1, duration: 0.62, ease: 'power3.out', stagger: 0.12 }, 38.78);
   tl.fromTo('#beat-greenwing .uline', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, 39.45);
-  tl.to('#beat-greenwing', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 45.50);
-  tl.set('#beat-greenwing', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 46.00);
+  tl.to('#beat-greenwing', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 47.50);
+  tl.set('#beat-greenwing', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 48.00);
 
-      /* ===== OUTRO (46–54) ===== */
-      tl.set('#beat-outro', { autoAlpha: 1 }, 46);
+      /* ===== OUTRO (48–56) ===== */
+      tl.set('#beat-outro', { autoAlpha: 1 }, 48);
       tl.fromTo('#beat-outro .gcell',
         { autoAlpha: 0, y: 50, scale: 0.9 },
-        { autoAlpha: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(1.2)', stagger: 0.09 }, 46.05);
-      tl.to('#grid', { scale: 0.86, autoAlpha: 0.18, filter: 'blur(7px)', duration: 0.9, ease: 'power2.inOut' }, 48.00);
-      tl.fromTo('#payline', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 48.20);
+        { autoAlpha: 1, y: 0, scale: 1, duration: 0.7, ease: 'back.out(1.2)', stagger: 0.09 }, 48.05);
+      tl.to('#grid', { scale: 0.86, autoAlpha: 0.18, filter: 'blur(7px)', duration: 0.9, ease: 'power2.inOut' }, 50.00);
+      tl.fromTo('#payline', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 50.20);
       tl.fromTo('#payline .l1', { y: 36, autoAlpha: 0, filter: 'blur(10px)' },
-        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 48.20);
+        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 50.20);
       tl.fromTo('#payline .l2', { y: 36, autoAlpha: 0, filter: 'blur(10px)' },
-        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 48.70);
-      tl.to('#grid', { autoAlpha: 0, duration: 0.6, ease: 'power2.in' }, 50.40);
-      tl.to('#payline', { autoAlpha: 0, y: -40, filter: 'blur(12px)', duration: 0.7, ease: 'power2.in' }, 50.40);
-      tl.fromTo('#credit', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, 51.40);
-      tl.fromTo('#credit .builtby', { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 51.40);
+        { y: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' }, 50.70);
+      tl.to('#grid', { autoAlpha: 0, duration: 0.6, ease: 'power2.in' }, 52.40);
+      tl.to('#payline', { autoAlpha: 0, y: -40, filter: 'blur(12px)', duration: 0.7, ease: 'power2.in' }, 52.40);
+      tl.fromTo('#credit', { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, 53.40);
+      tl.fromTo('#credit .builtby', { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 53.40);
       tl.fromTo('#credit .lockup', { autoAlpha: 0, y: 22, scale: 0.94 },
-        { autoAlpha: 1, y: 0, scale: 1, duration: 0.9, ease: 'expo.out' }, 51.70);
+        { autoAlpha: 1, y: 0, scale: 1, duration: 0.9, ease: 'expo.out' }, 53.70);
       tl.fromTo('#credit .glint', { autoAlpha: 1, backgroundPosition: '160% 0' },
-        { backgroundPosition: '-60% 0', duration: 1.1, ease: 'none' }, 52.70);
-      tl.to('#credit .glint', { autoAlpha: 0, duration: 0.2 }, 53.80);
+        { backgroundPosition: '-60% 0', duration: 1.1, ease: 'none' }, 54.70);
+      tl.to('#credit .glint', { autoAlpha: 0, duration: 0.2 }, 55.80);
 
-      tl.to({}, { duration: 54 }, 0);
+      tl.to({}, { duration: 56 }, 0);
       window.__timelines['duckhorn-sizzle'] = tl;
     </script>
   </body>
