@@ -117,7 +117,6 @@ function beatTimeline(beat){
   }
   js += `
   // exit
-  tl.to('${root} .beat-inner-x', {}, ${(end-0.5).toFixed(2)}); // (no-op marker)
   tl.to('${root}', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, ${(end-0.5).toFixed(2)});
   tl.set('${root}', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, ${end.toFixed(2)});`;
   return js;
@@ -157,7 +156,7 @@ const html = `<!doctype html>
       .idx { font-family:'Rethink Sans',sans-serif; font-weight:700; font-size:26px; letter-spacing:0.18em;
         color:${GOLD}; margin-bottom:26px; }
       .idx .of { color:${CREAM_DIM}; font-weight:500; }
-      .bname { font-family:'Hedvig Letters Serif',Georgia,serif; line-height:1.02; color:${CREAM};
+      .bname { font-family:'Hedvig Letters Serif',serif; line-height:1.02; color:${CREAM};
         letter-spacing:0.005em; margin-bottom:24px; }
       .desc { font-family:'Rethink Sans',sans-serif; font-weight:400; font-size:27px; line-height:1.4;
         color:${CREAM_DIM}; max-width:430px; margin-bottom:30px; }

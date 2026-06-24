@@ -29,7 +29,7 @@
       .idx { font-family:'Rethink Sans',sans-serif; font-weight:700; font-size:26px; letter-spacing:0.18em;
         color:#C2A24B; margin-bottom:26px; }
       .idx .of { color:rgba(242,233,220,0.60); font-weight:500; }
-      .bname { font-family:'Hedvig Letters Serif',Georgia,serif; line-height:1.02; color:#F2E9DC;
+      .bname { font-family:'Hedvig Letters Serif',serif; line-height:1.02; color:#F2E9DC;
         letter-spacing:0.005em; margin-bottom:24px; }
       .desc { font-family:'Rethink Sans',sans-serif; font-weight:400; font-size:27px; line-height:1.4;
         color:rgba(242,233,220,0.60); max-width:430px; margin-bottom:30px; }
@@ -263,14 +263,14 @@
       </div>
 
       <!-- AUDIO -->
-      <audio id="ambient-pad" data-start="0" data-duration="45" data-track-index="30" data-volume="0.16" src="assets/ambient-pad.mp3"></audio>
-      <audio id="whoosh-0" data-start="5.00" data-duration="0.42" data-track-index="31" data-volume="0.12" src="assets/sfx-whoosh-1.mp3"></audio>
-      <audio id="whoosh-1" data-start="10.50" data-duration="0.42" data-track-index="32" data-volume="0.12" src="assets/sfx-whoosh-2.mp3"></audio>
-      <audio id="whoosh-2" data-start="15.50" data-duration="0.42" data-track-index="33" data-volume="0.12" src="assets/sfx-whoosh-1.mp3"></audio>
-      <audio id="whoosh-3" data-start="20.50" data-duration="0.42" data-track-index="34" data-volume="0.12" src="assets/sfx-whoosh-2.mp3"></audio>
-      <audio id="whoosh-4" data-start="25.50" data-duration="0.42" data-track-index="35" data-volume="0.12" src="assets/sfx-whoosh-1.mp3"></audio>
-      <audio id="whoosh-5" data-start="30.50" data-duration="0.42" data-track-index="36" data-volume="0.12" src="assets/sfx-whoosh-2.mp3"></audio>
-      <audio id="twinkle" data-start="41.4" data-duration="0.55" data-track-index="40" data-volume="0.15" src="assets/sfx-twinkle.mp3"></audio>
+      <audio id="music-bed" data-start="0" data-duration="45" data-track-index="30" data-volume="0.62" src="assets/music-bed.mp3"></audio>
+      <audio id="whoosh-0" data-start="5.00" data-duration="0.42" data-track-index="31" data-volume="0.07" src="assets/sfx-whoosh-1.mp3"></audio>
+      <audio id="whoosh-1" data-start="10.50" data-duration="0.42" data-track-index="32" data-volume="0.07" src="assets/sfx-whoosh-2.mp3"></audio>
+      <audio id="whoosh-2" data-start="15.50" data-duration="0.42" data-track-index="33" data-volume="0.07" src="assets/sfx-whoosh-1.mp3"></audio>
+      <audio id="whoosh-3" data-start="20.50" data-duration="0.42" data-track-index="34" data-volume="0.07" src="assets/sfx-whoosh-2.mp3"></audio>
+      <audio id="whoosh-4" data-start="25.50" data-duration="0.42" data-track-index="35" data-volume="0.07" src="assets/sfx-whoosh-1.mp3"></audio>
+      <audio id="whoosh-5" data-start="30.50" data-duration="0.42" data-track-index="36" data-volume="0.07" src="assets/sfx-whoosh-2.mp3"></audio>
+      <audio id="twinkle" data-start="41.4" data-duration="0.55" data-track-index="40" data-volume="0.12" src="assets/sfx-twinkle.mp3"></audio>
     </div>
 
     <script>
@@ -315,7 +315,6 @@
     { x: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' }, 8.00);
   tl.fromTo('#beat-tdc #tdc-card2 .screen', { scale: 1.0 }, { scale: 1.03, duration: 2.50, ease: 'none' }, 8.00);
   // exit
-  tl.to('#beat-tdc .beat-inner-x', {}, 10.00); // (no-op marker)
   tl.to('#beat-tdc', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 10.00);
   tl.set('#beat-tdc', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 10.50);
 
@@ -331,7 +330,6 @@
     { y: 0, autoAlpha: 1, duration: 0.62, ease: 'power3.out', stagger: 0.12 }, 10.78);
   tl.fromTo('#beat-duckhorn .uline', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, 11.45);
   // exit
-  tl.to('#beat-duckhorn .beat-inner-x', {}, 15.00); // (no-op marker)
   tl.to('#beat-duckhorn', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 15.00);
   tl.set('#beat-duckhorn', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 15.50);
 
@@ -347,7 +345,6 @@
     { y: 0, autoAlpha: 1, duration: 0.62, ease: 'power3.out', stagger: 0.12 }, 15.78);
   tl.fromTo('#beat-decoy .uline', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, 16.45);
   // exit
-  tl.to('#beat-decoy .beat-inner-x', {}, 20.00); // (no-op marker)
   tl.to('#beat-decoy', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 20.00);
   tl.set('#beat-decoy', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 20.50);
 
@@ -363,7 +360,6 @@
     { y: 0, autoAlpha: 1, duration: 0.62, ease: 'power3.out', stagger: 0.12 }, 20.78);
   tl.fromTo('#beat-goldeneye .uline', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, 21.45);
   // exit
-  tl.to('#beat-goldeneye .beat-inner-x', {}, 25.00); // (no-op marker)
   tl.to('#beat-goldeneye', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 25.00);
   tl.set('#beat-goldeneye', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 25.50);
 
@@ -379,7 +375,6 @@
     { y: 0, autoAlpha: 1, duration: 0.62, ease: 'power3.out', stagger: 0.12 }, 25.78);
   tl.fromTo('#beat-calera .uline', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, 26.45);
   // exit
-  tl.to('#beat-calera .beat-inner-x', {}, 30.00); // (no-op marker)
   tl.to('#beat-calera', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 30.00);
   tl.set('#beat-calera', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 30.50);
 
@@ -401,7 +396,6 @@
     { x: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' }, 33.50);
   tl.fromTo('#beat-greenwing #greenwing-card2 .screen', { scale: 1.0 }, { scale: 1.03, duration: 2.50, ease: 'none' }, 33.50);
   // exit
-  tl.to('#beat-greenwing .beat-inner-x', {}, 35.50); // (no-op marker)
   tl.to('#beat-greenwing', { y: -70, autoAlpha: 0, filter: 'blur(18px)', duration: 0.5, ease: 'power2.in' }, 35.50);
   tl.set('#beat-greenwing', { autoAlpha: 0, y: 0, filter: 'blur(0px)' }, 36.00);
 
