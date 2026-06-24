@@ -87,7 +87,7 @@ const gridImgs = BRANDS.map(b => `<div class="gcell"><img src="assets/posters/${
 
 /* ---------- audio ---------- */
 const whooshes = BRANDS.map((b,i)=>
-  `      <audio id="whoosh-${i}" data-start="${b.start.toFixed(2)}" data-duration="0.42" data-track-index="${31+i}" data-volume="0.12" src="assets/sfx-whoosh-${(i%2)+1}.mp3"></audio>`).join('\n');
+  `      <audio id="whoosh-${i}" data-start="${b.start.toFixed(2)}" data-duration="0.42" data-track-index="${31+i}" data-volume="0.07" src="assets/sfx-whoosh-${(i%2)+1}.mp3"></audio>`).join('\n');
 
 /* ---------- GSAP timeline ---------- */
 function beatTimeline(beat){
@@ -251,9 +251,9 @@ ${beatsHTML}
       </div>
 
       <!-- AUDIO -->
-      <audio id="ambient-pad" data-start="0" data-duration="${TOTAL}" data-track-index="30" data-volume="0.16" src="assets/ambient-pad.mp3"></audio>
+      <audio id="music-bed" data-start="0" data-duration="${TOTAL}" data-track-index="30" data-volume="0.62" src="assets/music-bed.mp3"></audio>
 ${whooshes}
-      <audio id="twinkle" data-start="41.4" data-duration="0.55" data-track-index="40" data-volume="0.15" src="assets/sfx-twinkle.mp3"></audio>
+      <audio id="twinkle" data-start="41.4" data-duration="0.55" data-track-index="40" data-volume="0.12" src="assets/sfx-twinkle.mp3"></audio>
     </div>
 
     <script>
