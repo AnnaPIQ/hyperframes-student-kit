@@ -36,3 +36,6 @@ assets/incoming/*
 **/renders/frames/
 **/renders/frames-*/
 
+
+# descriptive render duplicates (named deliverables are tracked instead)
+video-projects/revenue-plateau/renders/revenue-plateau-*.mp4
