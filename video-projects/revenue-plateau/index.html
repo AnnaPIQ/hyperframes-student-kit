@@ -115,9 +115,6 @@
       <div id="sc-tiles" class="scmount" data-composition-id="metric-tiles"
            data-composition-src="compositions/metric-tiles.html"
            data-start="26.5" data-duration="10.5" data-track-index="5" data-width="1080" data-height="1350"></div>
-      <div id="sc-bottleneck" class="scmount" data-composition-id="bottleneck"
-           data-composition-src="compositions/bottleneck.html"
-           data-start="77" data-duration="6.5" data-track-index="4" data-width="1080" data-height="1350"></div>
 
       <!-- Brand mark -->
       <div id="logoBar" class="clip" data-start="0" data-duration="86.5" data-track-index="3">
@@ -165,8 +162,7 @@
         .set("#sc-montage", { opacity: 0 }, 13.4)
         .from("#sc-system", { opacity: 0, duration: 0.3, ease: "power2.out" }, 18.5)
         .to("#sc-tiles", { opacity: 0, duration: 0.3, ease: "power2.in" }, 36.7)
-        .set("#sc-tiles", { opacity: 0 }, 37)
-        .from("#sc-bottleneck", { opacity: 0, duration: 0.3, ease: "power2.out" }, 77);
+        .set("#sc-tiles", { opacity: 0 }, 37);
 
 
       // ---- Dryft b-roll: push in, slow settle, fade back to founder ----
