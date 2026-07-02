@@ -124,9 +124,8 @@
       #proof .numlabel { position: absolute; top: 928px; left: 96px; right: 96px; text-align: center;
         font-weight: 700; font-size: 56px; letter-spacing: -0.02em; color: var(--brand-white); }
       #proof .numlabel .ser { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
-      #proof .kicker { position: absolute; bottom: 180px; left: 50%; transform: translateX(-50%);
-        font-weight: 700; font-size: 44px; color: var(--brand-white); background: var(--brand-flame);
-        padding: 22px 48px; border-radius: 999px; box-shadow: 0 18px 56px -16px rgba(255,76,50,0.7); white-space: nowrap; }
+      #proof .kicker { position: absolute; bottom: 176px; left: 0; right: 0; text-align: center;
+        font-weight: 800; font-size: 66px; letter-spacing: -0.02em; color: var(--brand-flame); }
 
       /* --- CTA end card --- */
       #cta .clogo { position: absolute; top: 172px; left: 50%; transform: translateX(-50%); width: 360px; height: auto; }
@@ -175,7 +174,7 @@
         </svg>
         <div class="lbl spend" style="left:560px; top:300px;">Ad spend &uarr;</div>
         <div class="lbl rev" style="left:560px; top:560px;">Revenue &mdash;</div>
-        <div class="head">If more budget isn't growing <span class="ser">revenue</span>&hellip;</div>
+        <div class="head">If more budget isn't growing revenue&hellip;</div>
         <div class="kicker">&hellip;this is probably why.</div>
       </div>
 
@@ -219,7 +218,7 @@
         <div class="coinout" id="co2" style="left:446px; top:626px;">$</div>
         <div class="coinout" id="co3" style="left:610px; top:638px;">$</div>
         <div class="coinout" id="co4" style="left:620px; top:652px;">$</div>
-        <div class="head">The leak isn't in the <span class="ads">ads.</span></div>
+        <div class="head">The leak isn't in the ads.</div>
         <div class="sub">It's what happens after the click.</div>
       </div>
 
@@ -249,7 +248,7 @@
           </svg>
           <div class="num" id="proofnum">+0%</div>
         </div>
-        <div class="numlabel"><span class="ser">returning</span> customers</div>
+        <div class="numlabel">returning customers</div>
         <div class="kicker">$0 extra ad spend</div>
       </div>
 
@@ -259,7 +258,7 @@
       <div id="cta" class="panel clip" data-start="54.9" data-duration="7.8" data-track-index="13">
         <div class="bloom"></div>
         <img class="clogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-        <div class="head">Find the <span class="leak">leak</span><br />before you scale.</div>
+        <div class="head">Find the leak<br />before you scale.</div>
         <div class="sub">We help Shopify brands uncover the bottlenecks holding growth back.</div>
         <div class="btn">Click the link below <span class="arrow">&rarr;</span></div>
       </div>
@@ -280,8 +279,7 @@
       tl.from("#hkspenddot", { opacity: 0, scale: 0, duration: 0.3, ease: "back.out(2)", transformOrigin: "center" }, 1.65);
       tl.from(".lbl.rev", { opacity: 0, x: -14, duration: 0.4, ease: "power2.out" }, 1.4);
       tl.from(".lbl.spend", { opacity: 0, x: -14, duration: 0.4, ease: "power2.out" }, 1.7);
-      tl.from("#hook .head .ser", { opacity: 0, x: -22, duration: 0.6, ease: "power3.out" }, 2.0);
-      tl.from("#hook .head", { opacity: 0, y: 28, duration: 0.65, ease: "power3.out" }, 2.15);
+      tl.from("#hook .head", { opacity: 0, y: 28, duration: 0.65, ease: "power3.out" }, 2.0);
       tl.from("#hook .kicker", { opacity: 0, y: 16, duration: 0.5, ease: "power2.out" }, 3.6);
       // panel out → reveal the founder
       tl.to("#hook", { opacity: 0, scale: 1.04, filter: "blur(14px)", duration: 0.45, ease: "power2.in" }, 5.0);
@@ -316,7 +314,6 @@
       tl.fromTo("#co2", { x: 0, y: 0, opacity: 1, scale: 0.6 }, { x: -28, y: 172, opacity: 0, scale: 1, duration: 0.95, ease: "power1.in", repeat: 4, repeatDelay: 0.15 }, 15.05);
       tl.fromTo("#co3", { x: 0, y: 0, opacity: 1, scale: 0.6 }, { x: 46, y: 150, opacity: 0, scale: 1, duration: 0.95, ease: "power1.in", repeat: 4, repeatDelay: 0.15 }, 14.9);
       tl.fromTo("#co4", { x: 0, y: 0, opacity: 1, scale: 0.6 }, { x: 28, y: 172, opacity: 0, scale: 1, duration: 0.95, ease: "power1.in", repeat: 4, repeatDelay: 0.15 }, 15.15);
-      tl.fromTo("#leak .head .ads", { scale: 1 }, { scale: 1.12, duration: 0.3, ease: "back.out(2)", yoyo: true, repeat: 1, transformOrigin: "center" }, 16.8);
       // panel out (transition back to face)
       tl.to("#leak", { opacity: 0, scale: 1.04, filter: "blur(14px)", duration: 0.45, ease: "power2.in" }, 21.1);
       tl.set("#leak", { opacity: 0 }, 21.54);
@@ -355,8 +352,7 @@
       /* ---------- Scene 7 — CTA END CARD (final, holds) ---------- */
       tl.from("#cta", { opacity: 0, scale: 1.05, filter: "blur(14px)", duration: 0.5, ease: "power2.out" }, 54.9);
       tl.from("#cta .clogo", { opacity: 0, y: -22, duration: 0.55, ease: "power3.out" }, 55.3);
-      tl.from("#cta .head .leak", { opacity: 0, x: -28, duration: 0.6, ease: "power3.out" }, 55.6);
-      tl.from("#cta .head", { opacity: 0, y: 30, duration: 0.65, ease: "power3.out" }, 55.8);
+      tl.from("#cta .head", { opacity: 0, y: 30, duration: 0.65, ease: "power3.out" }, 55.6);
       tl.from("#cta .sub", { opacity: 0, y: 22, duration: 0.55, ease: "power2.out" }, 56.2);
       tl.from("#cta .btn", { opacity: 0, scale: 0.84, duration: 0.55, ease: "back.out(1.7)" }, 56.7);
       tl.to("#cta .btn", { scale: 1.05, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 3 }, 57.6);

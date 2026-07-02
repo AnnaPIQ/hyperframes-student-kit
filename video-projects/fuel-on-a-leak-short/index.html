@@ -169,7 +169,7 @@
       <div id="cta" class="panel clip" data-start="18.1" data-duration="5.9" data-track-index="7">
         <div class="bloom"></div>
         <img class="clogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-        <div class="head">Find the <span class="leak">leak</span><br />before you scale.</div>
+        <div class="head">Find the leak<br />before you scale.</div>
         <div class="sub">We help Shopify brands uncover the bottlenecks holding growth back.</div>
         <div class="btnwrap"><div class="btn">Click the link below <span class="arrow">&rarr;</span></div></div>
       </div>
@@ -240,8 +240,7 @@
       /* ---------- CTA (final, holds) ---------- */
       tl.from("#cta", { opacity: 0, scale: 1.04, filter: "blur(12px)", duration: 0.45, ease: "power2.out" }, 18.1);
       tl.from("#cta .clogo", { opacity: 0, y: -22, duration: 0.55, ease: "power3.out" }, 18.4);
-      tl.from("#cta .head .leak", { opacity: 0, x: -26, duration: 0.6, ease: "power3.out" }, 18.7);
-      tl.from("#cta .head", { opacity: 0, y: 28, duration: 0.6, ease: "power3.out" }, 18.9);
+      tl.from("#cta .head", { opacity: 0, y: 28, duration: 0.6, ease: "power3.out" }, 18.7);
       tl.from("#cta .sub", { opacity: 0, y: 20, duration: 0.55, ease: "power2.out" }, 19.3);
       tl.from("#cta .btn", { opacity: 0, scale: 0.84, duration: 0.55, ease: "back.out(1.7)" }, 19.8);
       tl.to("#cta .btn", { scale: 1.05, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 3 }, 20.6);
