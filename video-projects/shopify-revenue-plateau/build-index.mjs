@@ -168,9 +168,9 @@ const html = `<!doctype html>
       #cta #oeyebrow { font-weight: 700; font-size: 28px; letter-spacing: .32em; text-transform: uppercase;
         color: var(--brand-blue-tint); margin-bottom: 28px; }
       #cta #ohead { font-weight: 800; font-size: 110px; line-height: .96; letter-spacing: -.03em; color: #fff; }
-      #cta #ohead .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+      #cta #ohead .em { color: inherit; font: inherit; }
       #cta #oguar { margin-top: 40px; font-weight: 700; font-size: 40px; color: #fff; }
-      #cta #oguar .em { color: var(--brand-flame); }
+      #cta #oguar .em { color: #fff; }
       #cta #octa { margin-top: 50px; display: inline-flex; align-items: center; gap: 18px;
         font-weight: 700; font-size: 42px; color: #fff; background: var(--brand-flame);
         padding: 32px 62px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,.65); }
@@ -223,7 +223,7 @@ const html = `<!doctype html>
         <div class="frow" id="c1"><span class="dot"></span><span class="txt">Traffic has stalled</span></div>
         <div class="frow" id="c2"><span class="dot"></span><span class="txt">Conversion slipped</span></div>
         <div class="frow" id="c3"><span class="dot"></span><span class="txt">Customers aren't returning</span></div>
-        <div class="frow" id="c4"><span class="dot"></span><span class="txt">Order value fell</span></div>
+        <div class="frow" id="c4"><span class="dot"></span><span class="txt">Order value decreased</span></div>
       </div>
 
       <!-- CARD D : symptom vs cause -->
@@ -237,7 +237,7 @@ const html = `<!doctype html>
       <div id="cardE" class="card clip" data-start="${E_IN - 0.4}" data-duration="${E_OUT - E_IN + 1}" data-track-index="11">
         <div class="cbloom"></div><div class="cgrid"></div>
         <div class="l1">Not failure.</div>
-        <div class="l2 fg">INFORMATION.</div>
+        <div class="l2">INFORMATION.</div>
       </div>
 
       <!-- CARD F1 : Driftsleep b-roll -->
@@ -260,7 +260,7 @@ const html = `<!doctype html>
       <div id="cardG" class="card clip" data-start="${G_IN - 0.4}" data-duration="${G_OUT - G_IN + 1}" data-track-index="14">
         <div class="cbloom"></div><div class="cgrid"></div>
         <div class="l1">Growth isn't doing more.</div>
-        <div class="l2 fg">Fix what's already there.</div>
+        <div class="l2">Fix what's already there.</div>
       </div>
 
       <!-- CARD H : CTA -->

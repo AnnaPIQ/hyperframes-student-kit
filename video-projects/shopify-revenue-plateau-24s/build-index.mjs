@@ -112,9 +112,9 @@ const html = `<!doctype html>
       #cta #oeyebrow { font-weight: 700; font-size: 28px; letter-spacing: .32em; text-transform: uppercase;
         color: var(--brand-blue-tint); margin-bottom: 28px; }
       #cta #ohead { font-weight: 800; font-size: 110px; line-height: .96; letter-spacing: -.03em; color: #fff; }
-      #cta #ohead .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+      #cta #ohead .em { color: inherit; font: inherit; }
       #cta #oguar { margin-top: 40px; font-weight: 700; font-size: 40px; color: #fff; }
-      #cta #oguar .em { color: var(--brand-flame); }
+      #cta #oguar .em { color: #fff; }
       #cta #octa { margin-top: 50px; display: inline-flex; align-items: center; gap: 18px;
         font-weight: 700; font-size: 42px; color: #fff; background: var(--brand-flame);
         padding: 32px 62px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,.65); }
