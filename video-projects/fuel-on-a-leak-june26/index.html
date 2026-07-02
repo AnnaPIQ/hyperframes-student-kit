@@ -170,11 +170,11 @@
           <path d="M70 40 V360 H720" stroke="#1d4a7a" stroke-width="3" stroke-linecap="round"/>
           <path id="hkspend" d="M70 360 L700 70" stroke="#9CD4FF" stroke-width="9" stroke-linecap="round"/>
           <circle id="hkspenddot" cx="700" cy="70" r="13" fill="#9CD4FF"/>
-          <path id="hkrev" d="M70 360 L700 320" stroke="#FF4C32" stroke-width="9" stroke-linecap="round"/>
-          <circle id="hkrevdot" cx="700" cy="320" r="13" fill="#FF4C32"/>
+          <path id="hkrev" d="M70 360 L700 360" stroke="#FF4C32" stroke-width="9" stroke-linecap="round"/>
+          <circle id="hkrevdot" cx="700" cy="360" r="13" fill="#FF4C32"/>
         </svg>
         <div class="lbl spend" style="left:560px; top:300px;">Ad spend &uarr;</div>
-        <div class="lbl rev" style="left:560px; top:556px;">Revenue &mdash;</div>
+        <div class="lbl rev" style="left:560px; top:560px;">Revenue &mdash;</div>
         <div class="head">If more budget isn't growing <span class="ser">revenue</span>&hellip;</div>
         <div class="kicker">&hellip;this is probably why.</div>
       </div>
@@ -270,7 +270,7 @@
       const tl = gsap.timeline({ paused: true });
 
       /* ---------- Scene 0 — HOOK GRAPHIC (diverge chart) ---------- */
-      const Ls = 693.5, Lr = 631.1;   // line lengths for the draw-on
+      const Ls = 693.5, Lr = 630;   // line lengths for the draw-on
       tl.set("#hkspend", { strokeDasharray: Ls, strokeDashoffset: Ls }, 0);
       tl.set("#hkrev", { strokeDasharray: Lr, strokeDashoffset: Lr }, 0);
       tl.from("#hook .eyebrow", { opacity: 0, y: 16, duration: 0.45, ease: "power2.out" }, 0.3);
