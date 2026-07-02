@@ -84,6 +84,8 @@
         margin-top: 54px; color: var(--brand-flame); text-shadow: 0 16px 60px rgba(255,76,50,.4); }
 
       /* G6 — CTA */
+      #g6 .ctalogo { width: 460px; height: auto; display: block; margin: 0 auto 50px;
+        filter: drop-shadow(0 6px 22px rgba(0,0,0,.45)); }
       #g6 .eyebrow { font-weight: 700; font-size: 30px; letter-spacing: .30em;
         text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 34px; }
       #g6 .cta { display: inline-flex; align-items: center; gap: 16px;
@@ -131,7 +133,7 @@
 
       <!-- G4 -->
       <div id="g4" class="scene clip" data-start="43.2" data-duration="2.9" data-track-index="13">
-        <div class="huge">The problem<br />isn't <span class="em">sales.</span></div>
+        <div class="huge">The problem<br />isn't sales.</div>
       </div>
 
       <!-- G5 split -->
@@ -145,6 +147,7 @@
 
       <!-- G6 CTA -->
       <div id="g6" class="scene clip" data-start="67.0" data-duration="5.5" data-track-index="15">
+        <img class="ctalogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div class="eyebrow">Ready to fix it?</div>
         <div class="cta" id="ctapill">Click the link below <span>&rarr;</span></div>
         <div class="ctasub">We guarantee the breakthrough you're looking for.</div>
@@ -196,7 +199,9 @@
       tl.to('#colprof .k', { color: 'var(--brand-flame)', duration: 0.5, ease: 'power2.inOut' }, 55.3);
       tl.fromTo('#g5punch', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' }, 55.5);
 
-      // G6 — CTA
+      // G6 — CTA (persistent top-left logo hands off to the big centered one)
+      tl.to('#logobar', { opacity: 0, duration: 0.3, ease: 'power2.in' }, 66.8);
+      tl.fromTo('#g6 .ctalogo', { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 67.0);
       tl.fromTo('#g6 .eyebrow', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 67.1);
       tl.fromTo('#ctapill', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.55, ease: 'back.out(1.7)' }, 67.35);
       tl.fromTo('#g6 .ctasub', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 67.95);

@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1350" />
     <title>scaling-but-losing-money — 30s</title>
-    <script src="../assets/vendor/gsap.min.js"></script>
-    <link rel="stylesheet" href="../assets/brand-tokens.css" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
     <style>
       @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
-        font-display: block; src: url(../assets/fonts/RethinkSans.woff2) format('woff2'); }
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
       @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
-        font-display: block; src: url(../assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1080px; height: 1350px; overflow: hidden;
         background: var(--brand-navy);
@@ -53,6 +53,8 @@
         margin-top: 54px; color: var(--brand-flame); text-shadow: 0 16px 60px rgba(255,76,50,.4); }
 
       /* Gc — CTA */
+      #gc .ctalogo { width: 460px; height: auto; display: block; margin: 0 auto 50px;
+        filter: drop-shadow(0 6px 22px rgba(0,0,0,.45)); }
       #gc .eyebrow { font-weight: 700; font-size: 30px; letter-spacing: .30em;
         text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 34px; }
       #gc .cta { display: inline-flex; align-items: center; gap: 16px;
@@ -68,7 +70,7 @@
 
       <video id="vid" playsinline data-has-audio="true" data-volume="1"
              data-start="0" data-duration="22.7" data-track-index="0"
-             src="../assets/talking-head-short.mp4"></video>
+             src="assets/talking-head-short.mp4"></video>
       <div id="scrim" class="clip" data-start="0" data-duration="22.7" data-track-index="1"></div>
 
       <!-- G0 opening hook (dissolves into speaker) -->
@@ -79,7 +81,7 @@
 
       <!-- Gp — the problem isn't sales (covers the splice at 7.0s) -->
       <div id="gp" class="scene clip" data-start="7.0" data-duration="2.7" data-track-index="10">
-        <div class="huge">The problem<br />isn't <span class="em">sales.</span></div>
+        <div class="huge">The problem<br />isn't sales.</div>
       </div>
 
       <!-- Gs — revenue vs profit split (covers the splice at 9.7s) -->
@@ -93,13 +95,14 @@
 
       <!-- Gc — CTA -->
       <div id="gc" class="scene clip" data-start="19.8" data-duration="2.9" data-track-index="12">
+        <img class="ctalogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div class="eyebrow">Ready to fix it?</div>
         <div class="cta" id="ctapill">Click the link below <span>&rarr;</span></div>
         <div class="ctasub">We guarantee the breakthrough you're looking for.</div>
       </div>
 
       <div id="logobar">
-        <img id="logo" src="../assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
 
     </div>
@@ -126,7 +129,9 @@
       tl.to('#colprof .k', { color: 'var(--brand-flame)', duration: 0.5, ease: 'power2.inOut' }, 14.1);
       tl.fromTo('#gspunch', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' }, 14.3);
 
-      // Gc — CTA (hard cut in at 19.8)
+      // Gc — CTA (persistent top-left logo hands off to the big centered one)
+      tl.to('#logobar', { opacity: 0, duration: 0.3, ease: 'power2.in' }, 19.6);
+      tl.fromTo('#gc .ctalogo', { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 19.8);
       tl.fromTo('#gc .eyebrow', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 19.85);
       tl.fromTo('#ctapill', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' }, 20.05);
       tl.fromTo('#gc .ctasub', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 20.5);
