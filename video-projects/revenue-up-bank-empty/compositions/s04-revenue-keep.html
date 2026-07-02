@@ -28,7 +28,7 @@
     [data-composition-id="s04-revenue-keep"] #q { position: absolute; top: 540px; left: 0; right: 0; text-align: center;
       font-weight: 800; font-size: 104px; letter-spacing: -.025em; line-height: 1.02; color: #FFFFFF; padding: 0 90px; }
     [data-composition-id="s04-revenue-keep"] #q em { font-family: 'Hedvig Letters Serif', serif; font-style: italic;
-      font-weight: 400; color: #FF4C32; }
+      font-weight: 400; color: #FFFFFF; }
     [data-composition-id="s04-revenue-keep"] #q small { display: block; font-family: 'Rethink Sans', sans-serif;
       font-weight: 600; font-size: 38px; color: #9fb6d4; letter-spacing: .01em; margin-bottom: 18px; }
   </style>
@@ -75,7 +75,6 @@
       tl.to([S+'#figure', S+'#cap-b', S+'#costs'], { opacity:0, y:-40, duration:.45, ease:'power2.in' }, 8.0);
       tl.fromTo(S+'#q small', { opacity:0, y:16 }, { opacity:1, y:0, duration:.5, ease:'power2.out' }, 8.3);
       tl.fromTo(S+'#q', { opacity:0, y:40, scale:.94 }, { opacity:1, y:0, scale:1, duration:.7, ease:'back.out(1.4)' }, 8.4);
-      tl.fromTo(S+'#q em', { color:'#FFFFFF' }, { color:'#FF4C32', duration:.5, ease:'sine.out' }, 9.2);
 
       tl.to({}, { duration: SLOT }, 0);
       window.__timelines = window.__timelines || {};
