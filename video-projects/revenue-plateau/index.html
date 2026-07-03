@@ -85,6 +85,21 @@
       .roasline path { fill: none; stroke: url(#roasGrad); stroke-width: 8; stroke-linecap: round;
         filter: drop-shadow(0 0 14px rgba(255,90,50,.6)); }
 
+      /* ---- Bottleneck funnel (rebuilt from the provided graphic) ---- */
+      #b-funnel { position: relative; width: 400px; height: 520px; }
+      #b-funnel svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+      .fn-out { fill: none; stroke: #9CD4FF; stroke-width: 4; stroke-linejoin: round;
+        filter: drop-shadow(0 0 8px rgba(156,212,255,.4)); }
+      .dot3 { position: absolute; width: 26px; height: 26px; border-radius: 50%; opacity: 0;
+        background: radial-gradient(circle at 35% 30%, #dcEEFF, #6aa6e0); box-shadow: 0 0 10px rgba(156,212,255,.5); }
+      .dot3.leak { background: radial-gradient(circle at 35% 30%, #ffd2a6, #FF6A3D); box-shadow: 0 0 12px rgba(255,90,50,.6); }
+      #fn-band { position: absolute; left: 158px; top: 247px; width: 84px; height: 16px; border-radius: 8px; opacity: 0;
+        background: linear-gradient(90deg, #FF8A4C, #FF4C32); box-shadow: 0 0 22px rgba(255,76,50,.75); transform-origin: center; }
+      #fn-lead { position: absolute; left: 244px; top: 253px; width: 52px; height: 3px; opacity: 0;
+        background: var(--brand-flame); transform-origin: left center; }
+      #fn-label { position: absolute; left: 300px; top: 236px; opacity: 0; font-weight: 800; font-size: 30px;
+        letter-spacing: .06em; color: var(--brand-flame); white-space: nowrap; }
+
       /* ---- CTA card (centered) ---- */
       #cta { position: absolute; inset: 0; z-index: 20; opacity: 0; text-align: center;
         background: radial-gradient(90% 55% at 50% 22%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 58%), #06284C; }
@@ -155,6 +170,38 @@
           <div class="node" id="n4"><div class="dot"><i></i></div><div class="lab">Retention</div></div>
         </div>
         <div class="breaknote" id="bnote">One breaks &rarr; growth stalls</div>
+      </div>
+
+      <!-- ===== MG SCENE: BOTTLENECK (cut in 46s) — rebuilt from provided graphic ===== -->
+      <div class="mgscene clip" id="mgBottle" data-start="0" data-duration="67" data-track-index="13">
+        <div class="mg-bloom"></div>
+        <div class="mg-eyebrow">What's holding you back</div>
+        <div id="b-funnel">
+          <svg viewBox="0 0 400 520" preserveAspectRatio="none">
+            <path id="fn-out" class="fn-out" d="M186,470 L168,250 L60,40 L340,40 L232,250 L214,470" />
+          </svg>
+          <!-- revenue units jamming above the constriction -->
+          <div class="dot3" style="left:177px;top:225px"></div>
+          <div class="dot3" style="left:200px;top:223px"></div>
+          <div class="dot3" style="left:159px;top:203px"></div>
+          <div class="dot3" style="left:185px;top:202px"></div>
+          <div class="dot3" style="left:211px;top:204px"></div>
+          <div class="dot3" style="left:153px;top:181px"></div>
+          <div class="dot3" style="left:180px;top:180px"></div>
+          <div class="dot3" style="left:207px;top:181px"></div>
+          <div class="dot3" style="left:233px;top:183px"></div>
+          <div class="dot3" style="left:166px;top:159px"></div>
+          <div class="dot3" style="left:194px;top:158px"></div>
+          <div class="dot3" style="left:220px;top:160px"></div>
+          <!-- the flame constriction = the bottleneck -->
+          <div id="fn-band"></div>
+          <div id="fn-lead"></div>
+          <div id="fn-label">BOTTLENECK</div>
+          <!-- only a trickle gets through -->
+          <div class="dot3 leak" style="left:187px;top:300px"></div>
+          <div class="dot3 leak" style="left:186px;top:372px"></div>
+          <div class="dot3 leak" style="left:188px;top:442px"></div>
+        </div>
       </div>
 
       <!-- ===== CTA CARD (centered; cut in 57s) ===== -->
@@ -235,8 +282,27 @@
       tl.to(["#n1", "#n3", "#n4"], { opacity: 0.4, duration: 0.5, ease: "power2.out" }, 29.4);
       tl.fromTo("#bnote", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 29.3);
 
-      /* === S SEAN 31–57 (no graphic here — "work harder... same number... plateau isn't
-             because you stopped trying... we've helped hundreds of brands") === */
+      /* === S SEAN 31–46 ("work harder... same revenue number... the plateau isn't your effort") === */
+
+      /* === M: BOTTLENECK 46.0–53.8 ("something inside the business is holding growth back") === */
+      cut("#mgBottle", 46.0, 53.8);
+      gsap.set("#fn-out", { strokeDasharray: 1300 });
+      tl.fromTo("#mgBottle .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 46.15);
+      tl.fromTo("#fn-out", { strokeDashoffset: 1300 }, { strokeDashoffset: 0, duration: 1.0, ease: "power2.inOut", immediateRender: false }, 46.3);
+      // revenue units drop in and JAM above the constriction
+      tl.fromTo("#mgBottle .dot3:not(.leak)", { y: -330, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.5, ease: "power2.in", stagger: 0.075, immediateRender: false }, 46.7);
+      // the flame bottleneck clamps the neck
+      tl.fromTo("#fn-band", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.4, ease: "power3.out", immediateRender: false }, 47.9);
+      tl.to("#fn-band", { scaleX: 1.06, opacity: 0.75, duration: 0.6, yoyo: true, repeat: 5, ease: "sine.inOut" }, 48.4);
+      tl.fromTo("#fn-lead", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, 48.3);
+      tl.fromTo("#fn-label", { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 48.55);
+      // only a trickle gets through
+      tl.fromTo("#mgBottle .dot3.leak", { opacity: 0, y: -8 }, { opacity: 0.9, duration: 0.3, stagger: 0.5, immediateRender: false }, 48.7);
+      tl.to("#mgBottle .dot3.leak", { y: 132, duration: 2.6, ease: "none", stagger: 0.5 }, 48.7);
+      tl.to("#mgBottle .dot3.leak", { opacity: 0, duration: 0.4, stagger: 0.5 }, 50.9);
+
+      /* === S SEAN 53.8–57 ("we've helped hundreds of Shopify brands") === */
 
       /* === CTA 57.0–67 (centered card) === */
       tl.set("#cta", { opacity: 1 }, 57.0);
