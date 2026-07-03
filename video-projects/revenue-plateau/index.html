@@ -42,8 +42,7 @@
       .hook-eb { opacity: 0; font-weight: 700; font-size: 30px; letter-spacing: .28em; text-transform: uppercase;
         color: var(--brand-blue-tint); margin-bottom: 36px; }
       .hook-h1 { opacity: 0; font-weight: 800; font-size: 118px; line-height: .98; letter-spacing: -.03em; color: #fff; }
-      .hook-h2 { opacity: 0; font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400;
-        font-size: 116px; line-height: 1.02; letter-spacing: -.01em; color: var(--brand-blue-tint); }
+      .hook-h2 { opacity: 0; font-weight: 800; font-size: 118px; line-height: 1.0; letter-spacing: -.03em; color: #fff; }
 
       /* progress bar */
       #progtrack { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; z-index: 22;
@@ -247,40 +246,32 @@
       /* === S SEAN 4.8–11 (hook: "...this is probably why. Most founders...") === */
 
       /* === M: DO-MORE 11.0–20.0 === */
-      cut("#mgMore", 11.0, 20.0);
-      tl.fromTo("#mgMore .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 11.1);
-      // words LEAD his delivery by ~0.45s so each lands right as he says it (onsets 16.02/17.91/18.55/19.0)
-      var mwT = [15.55, 17.45, 18.1, 18.55];
+      cut("#mgMore", 11.0, 15.0);
+      tl.fromTo("#mgMore .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 11.15);
+      // explicit beats: ads 12s, emails 13s, products 13.5s, marketing 14s -> back to Sean 15s
+      var mwT = [12.0, 13.0, 13.5, 14.0];
       ["#mw1", "#mw2", "#mw3", "#mw4"].forEach(function (w, i) {
         tl.fromTo(w, { opacity: 0, scale: 1.28, filter: "blur(10px)" },
                   { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.28, ease: "power3.out", overwrite: "auto" }, mwT[i]);
       });
 
       /* === M: SYSTEM DIAGRAM 20.0–31.0 === */
-      cut("#mgNodes", 20.0, 31.0);
-      tl.fromTo("#mgNodes .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 20.1); // on "it's a system"
-      tl.fromTo("#nl", { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: "power2.out", immediateRender: false }, 20.3);
+      cut("#mgNodes", 18.0, 28.0);
+      tl.fromTo("#mgNodes .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 18.2);
+      tl.fromTo("#nl", { scaleX: 0 }, { scaleX: 1, duration: 1.5, ease: "power2.out", immediateRender: false }, 18.5);
       // dim placeholder dots form the system, then light up as each lever is NAMED
       tl.fromTo(".node .dot", { opacity: 0, scale: 0.6 },
-                { opacity: 0.3, scale: 1, duration: 0.4, ease: "power2.out", stagger: 0.12, immediateRender: false }, 21.2);
+                { opacity: 0.3, scale: 1, duration: 0.4, ease: "power2.out", stagger: 0.12, immediateRender: false }, 20.0);
+      tl.to(".node .dot", { opacity: 0.45, duration: 0.8, yoyo: true, repeat: 1, ease: "sine.inOut" }, 21.4); // gentle "waiting" pulse (ends ~23.0)
       var nodes = ["#n1", "#n2", "#n3", "#n4"];
-      // LEAD ~0.45s ahead of onsets (23.70/24.88/26.35/28.24) so each lights as he names it
-      var nodeT = [23.25, 24.43, 25.9, 27.79];
+      // light up as he names them (Traffic/Conversion/AOV/Retention), finishing before the 28s cut
+      var nodeT = [23.25, 24.43, 25.9, 27.3];
       nodes.forEach(function (n, i) {
-        tl.to(n + " .dot", { opacity: 1, duration: 0.3, ease: "power2.out" }, nodeT[i]);
+        tl.to(n + " .dot", { opacity: 1, duration: 0.3, ease: "power2.out", overwrite: "auto" }, nodeT[i]);
         tl.to(n + " .dot", { scale: 1.12, duration: 0.2, yoyo: true, repeat: 1, ease: "power2.inOut" }, nodeT[i]);
         tl.to(n + " .dot", { boxShadow: "0 0 30px rgba(156,212,255,.6)", duration: 0.3 }, nodeT[i]);
         tl.fromTo(n + " .lab", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, nodeT[i] + 0.05);
       });
-      // one breaks (leads "when one of those breaks", onset ~29.33)
-      tl.to("#n2 .dot", { borderColor: "#FF4C32", boxShadow: "0 0 36px rgba(255,76,50,.8)", duration: 0.3 }, 28.9);
-      tl.to("#n2 .dot i", { background: "#FF4C32", boxShadow: "0 0 18px rgba(255,76,50,.9)", duration: 0.3 }, 28.9);
-      tl.to("#n2 .dot", { scale: 1.15, duration: 0.22, yoyo: true, repeat: 1, ease: "power2.inOut" }, 29.0);
-      tl.to("#n2 .lab", { color: "#FF4C32", duration: 0.3 }, 29.0);
-      tl.to("#n2", { y: 26, duration: 0.5, ease: "power2.in" }, 29.3);
-      tl.to("#nl", { background: "rgba(255,76,50,.5)", duration: 0.4 }, 29.3);
-      tl.to(["#n1", "#n3", "#n4"], { opacity: 0.4, duration: 0.5, ease: "power2.out" }, 29.4);
-      tl.fromTo("#bnote", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 29.3);
 
       /* === S SEAN 31–46 ("work harder... same revenue number... the plateau isn't your effort") === */
 
