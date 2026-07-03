@@ -51,17 +51,15 @@
         color: var(--brand-blue-tint); }
 
       /* revenue bar-chart (reused: hook / callback / breakout) */
-      #chart { position: absolute; left: 90px; right: 90px; bottom: 470px; height: 260px; z-index: 11;
+      #chart { position: absolute; left: 90px; right: 90px; bottom: 400px; height: 260px; z-index: 11;
         display: flex; align-items: flex-end; justify-content: center; gap: 20px; }
       #chart .bar { width: 56px; height: 60px; border-radius: 8px 8px 3px 3px;
         background: linear-gradient(180deg, #9CD4FF 0%, #5aa0e0 100%);
         transform-origin: bottom center; opacity: .96; }
-      #chartbase { position: absolute; left: 90px; right: 90px; bottom: 468px; height: 2px; z-index: 11;
+      #chartbase { position: absolute; left: 90px; right: 90px; bottom: 398px; height: 2px; z-index: 11;
         background: rgba(156,212,255,.30); transform-origin: left center; }
-      #chartlabel { position: absolute; left: 90px; bottom: 748px; z-index: 12; opacity: 0;
-        font-weight: 700; font-size: 30px; letter-spacing: .04em; color: var(--brand-text-dim); }
-      #flatarrow { position: absolute; right: 96px; bottom: 560px; z-index: 12; opacity: 0;
-        font-weight: 800; font-size: 34px; color: var(--brand-flame); }
+      #flatarrow { position: absolute; right: 110px; bottom: 480px; z-index: 12; opacity: 0;
+        font-weight: 800; font-size: 34px; color: var(--brand-flame); text-shadow: 0 2px 12px rgba(0,0,0,.5); }
 
       /* "do more" chips */
       #chips { position: absolute; left: 0; right: 0; bottom: 790px; z-index: 12;
@@ -95,7 +93,7 @@
       #b-same { display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
         padding-bottom: 470px; gap: 14px; }
       #bignum { opacity: 0; font-weight: 800; font-size: 128px; letter-spacing: -.02em; color: #fff;
-        font-variant-numeric: tabular-nums; }
+        font-variant-numeric: tabular-nums; text-shadow: 0 4px 26px rgba(0,0,0,.6); }
       #samechip { opacity: 0; font-weight: 700; font-size: 30px; letter-spacing: .28em; text-transform: uppercase;
         color: var(--brand-text-dim); }
 
@@ -182,7 +180,6 @@
           <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
           <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
         </div>
-        <div id="chartlabel">MONTHLY REVENUE</div>
         <div id="flatarrow">&rarr; FLAT</div>
 
         <!-- beat 2: do-more chips -->
@@ -231,8 +228,35 @@
         </div>
       </div>
 
-      <!-- Captions (children of one always-present clip; opacity driven by the timeline) -->
-      <div id="caps" class="clip" data-start="0" data-duration="67" data-track-index="12"></div>
+      <!-- Captions (static children of one always-present clip; opacity driven by the timeline) -->
+      <div id="caps" class="clip" data-start="0" data-duration="67" data-track-index="12">
+        <div class="cap" id="cap-0">If your Shopify brand's revenue</div>
+        <div class="cap" id="cap-1">hasn't moved in <span class="cool">months</span> &mdash;</div>
+        <div class="cap" id="cap-2">despite trying everything to fix it,</div>
+        <div class="cap" id="cap-3">this is probably why.</div>
+        <div class="cap" id="cap-4">Most founders hit a plateau</div>
+        <div class="cap" id="cap-5">and assume they need to do <span class="cool">more</span>.</div>
+        <div class="cap" id="cap-6">More ads. More emails.</div>
+        <div class="cap" id="cap-7">More products. More marketing.</div>
+        <div class="cap" id="cap-8">But revenue isn't one lever.</div>
+        <div class="cap" id="cap-9">It's a <span class="cool">system</span>.</div>
+        <div class="cap" id="cap-10">Traffic.</div>
+        <div class="cap" id="cap-11">Conversion.</div>
+        <div class="cap" id="cap-12">Average order value.</div>
+        <div class="cap" id="cap-13">Retention.</div>
+        <div class="cap" id="cap-14">When one of those breaks,</div>
+        <div class="cap" id="cap-15">throwing effort at the others</div>
+        <div class="cap" id="cap-16">rarely fixes the problem.</div>
+        <div class="cap" id="cap-17">So you work harder than ever,</div>
+        <div class="cap" id="cap-18">and still end up staring at</div>
+        <div class="cap" id="cap-19">the same <span class="cool">revenue number</span></div>
+        <div class="cap" id="cap-20">month after month.</div>
+        <div class="cap" id="cap-21">The plateau isn't because</div>
+        <div class="cap" id="cap-22">you've stopped trying.</div>
+        <div class="cap" id="cap-23">It's something inside</div>
+        <div class="cap" id="cap-24"><span class="hot">holding your growth back</span>.</div>
+        <div class="cap" id="cap-25">We've helped hundreds of brands</div>
+      </div>
 
       <!-- CTA card -->
       <div id="cta" class="clip" data-start="0" data-duration="67" data-track-index="20">
@@ -253,47 +277,22 @@
       const SLOT = 67;
       const tl = gsap.timeline({ paused: true });
 
-      /* ================= CAPTIONS (from the VO, timed to speech boundaries) ================= */
-      // [start, end, html]
+      /* ================= CAPTIONS (static divs above; timed to speech boundaries) ============ */
+      // [start, end] per cap-N element, in order
       const CAPTIONS = [
-        [0.35, 2.70, "If your Shopify brand's revenue"],
-        [2.80, 5.25, "hasn't moved in <span class='cool'>months</span> &mdash;"],
-        [5.82, 7.37, "despite trying everything to fix it,"],
-        [8.00, 9.40, "this is probably why."],
-        [9.55, 11.37, "Most founders hit a plateau"],
-        [11.95, 15.27, "and assume they need to do <span class='cool'>more</span>."],
-        [16.02, 17.75, "More ads. More emails."],
-        [17.90, 19.36, "More products. More marketing."],
-        [19.83, 21.35, "But revenue isn't one lever."],
-        [21.45, 23.55, "It's a <span class='cool'>system</span>."],
-        [23.69, 24.62, "Traffic."],
-        [24.90, 26.10, "Conversion."],
-        [26.20, 27.55, "Average order value."],
-        [27.65, 28.80, "Retention."],
-        [28.90, 30.20, "When one of those breaks,"],
-        [30.43, 32.30, "throwing effort at the others"],
-        [32.40, 34.14, "rarely fixes the problem."],
-        [34.52, 36.40, "So you work harder than ever,"],
-        [36.50, 38.05, "and still end up staring at"],
-        [38.77, 41.60, "the same <span class='cool'>revenue number</span>"],
-        [41.70, 45.50, "month after month."],
-        [46.43, 48.70, "The plateau isn't because"],
-        [48.80, 50.82, "you've stopped trying."],
-        [51.37, 52.55, "It's something inside"],
-        [52.74, 54.30, "<span class='hot'>holding your growth back</span>."],
-        [54.54, 56.90, "We've helped hundreds of brands"]
+        [0.35, 2.70], [2.80, 5.25], [5.82, 7.37], [8.00, 9.40], [9.55, 11.37],
+        [11.95, 15.27], [16.02, 17.75], [17.90, 19.36], [19.83, 21.35], [21.45, 23.55],
+        [23.69, 24.62], [24.90, 26.10], [26.20, 27.55], [27.65, 28.80], [28.90, 30.20],
+        [30.43, 32.30], [32.40, 34.14], [34.52, 36.40], [36.50, 38.05], [38.77, 41.60],
+        [41.70, 45.50], [46.43, 48.70], [48.80, 50.82], [51.37, 52.55], [52.74, 54.30],
+        [54.54, 56.90]
       ];
-      const capWrap = document.getElementById("caps");
       CAPTIONS.forEach(function (c, i) {
         var start = c[0], end = c[1];
-        var el = document.createElement("div");
-        el.className = "cap";
-        el.id = "cap-" + i;
-        el.innerHTML = c[2];
-        capWrap.appendChild(el);
+        var el = document.getElementById("cap-" + i);
         tl.fromTo(el, { opacity: 0, y: 22 },
-                  { opacity: 1, y: 0, duration: 0.30, ease: "power2.out" }, start);
-        tl.to(el, { opacity: 0, y: -14, duration: 0.20, ease: "power2.in" }, Math.max(start + 0.31, end - 0.20));
+                  { opacity: 1, y: 0, duration: 0.30, ease: "power2.out", overwrite: "auto" }, start);
+        tl.to(el, { opacity: 0, y: -14, duration: 0.20, ease: "power2.in", overwrite: "auto" }, Math.max(start + 0.32, end - 0.20));
         tl.set(el, { opacity: 0 }, end); // deterministic kill
       });
 
@@ -309,13 +308,11 @@
       /* ================= BEAT 1 — HOOK: flat revenue line (0.3–8) ================= */
       tl.fromTo("#chartbase", { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power2.out" }, 0.6);
       tl.fromTo(".bar", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "power3.out", stagger: 0.05 }, 0.9);
-      tl.fromTo("#chartlabel", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4 }, 1.4);
       tl.fromTo("#flatarrow", { opacity: 0, x: 14 }, { opacity: 1, x: 0, duration: 0.4 }, 3.2);
       tl.to("#chart", { y: -4, duration: 1.6, ease: "sine.inOut", yoyo: true, repeat: 3 }, 3.6); // breathing
 
       /* ================= BEAT 2 — DO-MORE TRAP (8–15.6) ================= */
       tl.to("#flatarrow", { opacity: 0, duration: 0.3 }, 8.0);
-      tl.to("#chartlabel", { opacity: 0, duration: 0.3 }, 8.0);
       ["#chip1", "#chip2", "#chip3", "#chip4"].forEach(function (c, i) {
         tl.fromTo(c, { opacity: 0, scale: 0.7, y: 20 },
                   { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(1.6)" }, 8.2 + i * 1.9);
@@ -374,8 +371,7 @@
       tl.fromTo("#bottle-cap", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 52.4);
       tl.to("#b-bottle", { opacity: 0, duration: 0.35, ease: "power2.in" }, 53.9);
 
-      /* ================= BEAT 8 — PROOF (54–56.9, face-forward) ================= */
-      dimDown(53.9);
+      /* ================= BEAT 8 — PROOF (54–56.9, MG-forward: dim stays up from beat 7) ====== */
       tl.set("#b-proof", { opacity: 1 }, 54.4);
       tl.fromTo("#proofnum", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.5)" }, 54.5);
       tl.fromTo("#proofsub", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 54.9);
