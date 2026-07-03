@@ -18,12 +18,11 @@
       html, body { width: 1080px; height: 1350px; overflow: hidden;
         background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #fff; }
 
-      /* CAPTION-SAFE ZONE: keep the bottom ~300px clear of graphics for captions added later. */
+      /* CAPTION-SAFE ZONE: keep the bottom ~320px clear of graphics for captions added later. */
 
       /* ---- Sean (face video), reframed 16:9 -> 4:5 (fill height, center) ---- */
       #vidwrap { position: absolute; inset: 0; z-index: 0; background: #06284C; overflow: hidden; }
       #face { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
-      /* subtle bottom scrim so captions added later stay legible over Sean — no text now */
       #seanscrim { position: absolute; inset: auto 0 0 0; height: 420px; z-index: 2;
         background: linear-gradient(0deg, rgba(4,24,48,.55) 0%, rgba(4,24,48,0) 100%); }
 
@@ -39,31 +38,18 @@
       .mg-eyebrow { font-weight: 700; font-size: 28px; letter-spacing: .28em; text-transform: uppercase;
         color: var(--brand-blue-tint); margin-bottom: 60px; opacity: 0; }
 
-      /* progress bar (thin brand element at the very edge) */
+      /* progress bar */
       #progtrack { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; z-index: 22;
         background: rgba(156,212,255,.14); }
       #progbar { position: absolute; left: 0; top: 0; bottom: 0; width: 100%;
         transform-origin: left center; background: var(--brand-flame); box-shadow: 0 0 16px rgba(255,76,50,.6); }
-
-      /* ---- Line-graph motif ---- */
-      .graphwrap { position: relative; width: 760px; height: 220px; }
-      .graphwrap svg { width: 100%; height: 100%; overflow: visible; display: block; }
-      .g-grid { stroke: rgba(156,212,255,.13); stroke-width: 1.5; }
-      .g-flat { fill: none; stroke: #9CD4FF; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round;
-        filter: drop-shadow(0 0 10px rgba(156,212,255,.5)); }
-      .g-rise { fill: none; stroke: url(#riseGrad); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round;
-        filter: drop-shadow(0 0 18px rgba(255,120,60,.65)); }
-      .g-dot { fill: #9CD4FF; filter: drop-shadow(0 0 12px rgba(156,212,255,.9)); }
-      .mf-stuck { position: absolute; right: 4px; top: 96px; opacity: 0;
-        font-weight: 800; font-size: 34px; letter-spacing: .12em; color: var(--brand-flame);
-        text-shadow: 0 2px 12px rgba(0,0,0,.5); }
 
       /* ---- Do-more kinetic words ---- */
       .morelist { display: flex; flex-direction: column; align-items: center; gap: 20px; }
       .mword { opacity: 0; font-weight: 800; font-size: 78px; letter-spacing: -.02em; color: #fff; }
       .mword b { color: var(--brand-flame); font-weight: 800; }
 
-      /* ---- System reveal word (used inside nodes scene intro) & diagram ---- */
+      /* ---- System diagram (4 connected nodes) ---- */
       .netwrap { position: relative; width: 860px; display: flex; align-items: flex-start; justify-content: space-between; }
       .netline { position: absolute; left: 60px; right: 60px; top: 55px; height: 3px; background: rgba(156,212,255,.4);
         transform-origin: left center; }
@@ -76,42 +62,42 @@
       .breaknote { opacity: 0; margin-top: 70px; font-weight: 800; font-size: 40px; letter-spacing: -.01em;
         color: var(--brand-flame); }
 
-      /* ---- Same-number ---- */
-      .bignum { opacity: 0; font-weight: 800; font-size: 168px; line-height: .95; letter-spacing: -.03em; color: #fff;
-        font-variant-numeric: tabular-nums; margin-bottom: 42px; }
-      .markers { display: flex; gap: 16px; margin-top: 40px; }
-      .markers .m { opacity: 0; width: 72px; height: 12px; border-radius: 6px; background: var(--brand-text-dim); }
+      /* ---- SPEND up / ROAS down graph (the 40s emphasis beat) ---- */
+      .spend-pills { display: flex; align-items: center; gap: 24px; margin-bottom: 58px; }
+      .pill { opacity: 0; font-weight: 800; font-size: 30px; letter-spacing: .04em; padding: 14px 32px; border-radius: 999px; }
+      .pill-blue { color: var(--brand-blue-tint); border: 2px solid var(--brand-blue-tint); }
+      .pill-flame { color: var(--brand-flame); border: 2px solid var(--brand-flame); }
+      .pill-mid { opacity: 0; font-weight: 700; font-size: 22px; letter-spacing: .24em; text-transform: uppercase;
+        color: var(--brand-text-dim); }
+      .barchart { position: relative; width: 800px; height: 340px; display: flex; align-items: flex-end; justify-content: space-between; }
+      .barcol { display: flex; flex-direction: column; align-items: center; }
+      .bar2 { width: 96px; border-radius: 10px 10px 2px 2px;
+        background: linear-gradient(180deg, #cfe6ff 0%, #5a9fda 100%); transform-origin: bottom center; }
+      .ml { opacity: 0; margin-top: 18px; font-weight: 600; font-size: 24px; color: var(--brand-text-dim); }
+      .roasline { position: absolute; left: 0; top: 0; width: 100%; height: 298px; overflow: visible; }
+      .roasline path { fill: none; stroke: url(#roasGrad); stroke-width: 8; stroke-linecap: round;
+        filter: drop-shadow(0 0 14px rgba(255,90,50,.6)); }
 
-      /* ---- Bottleneck ---- */
-      .bottlewrap { position: relative; width: 760px; height: 240px; }
-      .bottlewrap svg { width: 100%; height: 100%; overflow: visible; display: block; }
-      .g-climb { fill: none; stroke: #9CD4FF; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round;
-        filter: drop-shadow(0 0 10px rgba(156,212,255,.5)); }
-      .ceil { position: absolute; left: 0; right: 0; top: 30px; height: 0; opacity: 0;
-        border-top: 4px dashed rgba(255,76,50,.9); }
-      .ceil span { position: absolute; right: 0; top: -44px; font-weight: 800; font-size: 26px;
-        letter-spacing: .16em; color: var(--brand-flame); }
-      .bottlecap { opacity: 0; margin-top: 66px; font-weight: 800; font-size: 52px; letter-spacing: -.02em; color: #fff; }
-
-      /* ---- CTA card ---- */
-      #cta { position: absolute; inset: 0; z-index: 20; opacity: 0;
-        background: radial-gradient(90% 55% at 50% 20%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%), #06284C; }
+      /* ---- CTA card (centered) ---- */
+      #cta { position: absolute; inset: 0; z-index: 20; opacity: 0; text-align: center;
+        background: radial-gradient(90% 55% at 50% 22%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 58%), #06284C; }
       #cta-bloom { position: absolute; left: -10%; bottom: -22%; width: 120%; height: 60%;
         background: var(--brand-gradient-2); filter: blur(90px); opacity: .34; }
-      #cta-logo { position: absolute; top: 150px; left: 96px; width: 340px; height: auto; opacity: 0; }
-      #cta-rule { position: absolute; top: 470px; left: 96px; width: 120px; height: 6px; border-radius: 3px;
-        background: var(--brand-flame); transform-origin: left center; }
-      #cta-stage { position: absolute; left: 96px; right: 96px; top: 520px; }
+      #cta-logo { position: absolute; top: 172px; left: 0; right: 0; margin: 0 auto; width: 360px; height: auto;
+        opacity: 0; display: block; }
+      #cta-rule { position: absolute; top: 468px; left: 0; right: 0; margin: 0 auto; width: 120px; height: 6px;
+        border-radius: 3px; background: var(--brand-flame); transform-origin: center; }
+      #cta-stage { position: absolute; left: 90px; right: 90px; top: 512px; }
       #cta-eyebrow { opacity: 0; font-weight: 700; font-size: 26px; letter-spacing: .32em; text-transform: uppercase;
-        color: var(--brand-blue-tint); margin-bottom: 26px; }
-      #cta-head { font-size: 128px; font-weight: 800; line-height: .96; letter-spacing: -.03em; color: #fff; }
-      #cta-head .plateau { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400;
-        letter-spacing: -.01em; color: var(--brand-blue-tint); }
-      #cta-sub { opacity: 0; margin-top: 36px; font-weight: 500; font-size: 38px; line-height: 1.34;
-        color: var(--brand-text-dim); max-width: 780px; }
-      #cta-pill { position: absolute; left: 96px; bottom: 250px; display: inline-flex; align-items: center; gap: 18px;
-        opacity: 0; font-weight: 700; font-size: 40px; color: #fff; background: var(--brand-flame);
-        padding: 32px 60px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,.65); }
+        color: var(--brand-blue-tint); margin-bottom: 28px; }
+      #cta-head { font-size: 112px; font-weight: 800; line-height: .98; letter-spacing: -.03em; color: #fff; }
+      #cta-head .plateau { color: #fff; }   /* centered, white, NOT italic */
+      #cta-sub { opacity: 0; margin: 34px auto 0; font-weight: 500; font-size: 37px; line-height: 1.34;
+        color: var(--brand-text-dim); max-width: 720px; }
+      #cta-pillwrap { position: absolute; left: 0; right: 0; bottom: 205px; display: flex; justify-content: center; }
+      #cta-pill { opacity: 0; display: inline-flex; align-items: center; gap: 18px; font-weight: 700; font-size: 40px;
+        color: #fff; background: var(--brand-flame); padding: 32px 60px; border-radius: 999px;
+        box-shadow: 0 22px 70px -16px rgba(255,76,50,.65); }
       #cta-pill .arrow { font-size: 42px; line-height: 1; transform: translateY(-1px); }
     </style>
   </head>
@@ -130,23 +116,7 @@
       <!-- single brand logo, shown only during MG scenes (keeps Sean shots clean) -->
       <img id="mglogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
 
-      <!-- ===== MG SCENE: FLAT LINE (cut in ~8s) ===== -->
-      <div class="mgscene clip" id="mgFlat" data-start="0" data-duration="67" data-track-index="10">
-        <div class="mg-bloom"></div>
-        <div class="mg-eyebrow" id="mf-eb">Monthly revenue &middot; 6 months</div>
-        <div class="graphwrap">
-          <svg viewBox="0 0 780 200" preserveAspectRatio="none">
-            <line class="g-grid" x1="0" y1="55" x2="780" y2="55" />
-            <line class="g-grid" x1="0" y1="110" x2="780" y2="110" />
-            <line class="g-grid" x1="0" y1="165" x2="780" y2="165" />
-            <path id="gf1" class="g-flat" d="M20,150 L145,148 L270,151 L395,149 L520,150 L645,148 L760,150" />
-            <circle id="gf1dot" class="g-dot" cx="760" cy="150" r="11" />
-          </svg>
-          <div class="mf-stuck" id="mf-stuck">STUCK</div>
-        </div>
-      </div>
-
-      <!-- ===== MG SCENE: DO MORE (cut in ~16s) ===== -->
+      <!-- ===== MG SCENE: DO MORE (cut in 11s) ===== -->
       <div class="mgscene clip" id="mgMore" data-start="0" data-duration="67" data-track-index="11">
         <div class="mg-bloom"></div>
         <div class="mg-eyebrow">Doing more isn't the fix</div>
@@ -158,7 +128,7 @@
         </div>
       </div>
 
-      <!-- ===== MG SCENE: SYSTEM DIAGRAM (cut in ~22.5s) ===== -->
+      <!-- ===== MG SCENE: SYSTEM DIAGRAM (cut in 20s) ===== -->
       <div class="mgscene clip" id="mgNodes" data-start="0" data-duration="67" data-track-index="12">
         <div class="mg-bloom"></div>
         <div class="mg-eyebrow">Revenue is a system</div>
@@ -172,46 +142,43 @@
         <div class="breaknote" id="bnote">One breaks &rarr; growth stalls</div>
       </div>
 
-      <!-- ===== MG SCENE: SAME NUMBER (cut in ~38s) ===== -->
-      <div class="mgscene clip" id="mgSame" data-start="0" data-duration="67" data-track-index="13">
+      <!-- ===== MG SCENE: SPEND UP / ROAS DOWN (NEW, cut in 40s) ===== -->
+      <div class="mgscene clip" id="mgSpend" data-start="0" data-duration="67" data-track-index="13">
         <div class="mg-bloom"></div>
-        <div class="mg-eyebrow">The same number</div>
-        <div class="bignum" id="bignum">$48,200</div>
-        <div class="graphwrap" style="height:150px;width:640px;">
-          <svg viewBox="0 0 780 200" preserveAspectRatio="none">
-            <path id="gf2" class="g-flat" d="M20,120 L145,118 L270,121 L395,119 L520,120 L645,118 L760,120" />
-          </svg>
+        <div class="spend-pills">
+          <div class="pill pill-blue" id="sp-spend">Spend &#9650;</div>
+          <div class="pill-mid" id="sp-mid">every month</div>
+          <div class="pill pill-flame" id="sp-roas">ROAS &#9660;</div>
         </div>
-        <div class="markers" id="mk">
-          <div class="m"></div><div class="m"></div><div class="m"></div>
-          <div class="m"></div><div class="m"></div><div class="m"></div>
+        <div class="barchart">
+          <div class="barcol"><div class="bar2" style="height:100px"></div><div class="ml">Jan</div></div>
+          <div class="barcol"><div class="bar2" style="height:135px"></div><div class="ml">Feb</div></div>
+          <div class="barcol"><div class="bar2" style="height:170px"></div><div class="ml">Mar</div></div>
+          <div class="barcol"><div class="bar2" style="height:205px"></div><div class="ml">Apr</div></div>
+          <div class="barcol"><div class="bar2" style="height:240px"></div><div class="ml">May</div></div>
+          <div class="barcol"><div class="bar2" style="height:275px"></div><div class="ml">Jun</div></div>
+          <svg class="roasline" viewBox="0 0 800 300" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="roasGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#FF8A4C" /><stop offset="1" stop-color="#FF4C32" />
+              </linearGradient>
+            </defs>
+            <path id="roaspath" d="M30,64 L770,262" />
+          </svg>
         </div>
       </div>
 
-      <!-- ===== MG SCENE: BOTTLENECK (cut in ~50.8s) ===== -->
-      <div class="mgscene clip" id="mgBottle" data-start="0" data-duration="67" data-track-index="14">
-        <div class="mg-bloom"></div>
-        <div class="mg-eyebrow">The real problem</div>
-        <div class="bottlewrap">
-          <svg viewBox="0 0 780 240" preserveAspectRatio="none">
-            <path id="gclimb" class="g-climb" d="M20,215 L150,205 L290,178 L430,135 L560,96 L680,82 L760,80" />
-          </svg>
-          <div class="ceil" id="ceil"><span>BOTTLENECK</span></div>
-        </div>
-        <div class="bottlecap" id="bcap">A hidden bottleneck</div>
-      </div>
-
-      <!-- ===== CTA CARD (cut in ~57s, with breakthrough flourish) ===== -->
+      <!-- ===== CTA CARD (centered; cut in 57s) ===== -->
       <div id="cta" class="clip" data-start="0" data-duration="67" data-track-index="20">
         <div id="cta-bloom"></div>
         <img id="cta-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
         <div id="cta-rule"></div>
         <div id="cta-stage">
           <div id="cta-eyebrow">For Shopify brands</div>
-          <div id="cta-head">Break the<br /><span class="plateau">plateau.</span></div>
+          <div id="cta-head">Break the <span class="plateau">plateau.</span></div>
           <div id="cta-sub">We find the bottleneck holding your store back &mdash; and the plan to grow past it.</div>
         </div>
-        <div id="cta-pill">Learn how we help <span class="arrow">&rarr;</span></div>
+        <div id="cta-pillwrap"><div id="cta-pill">Learn how we help <span class="arrow">&rarr;</span></div></div>
       </div>
 
       <div id="progtrack"><div id="progbar"></div></div>
@@ -223,58 +190,35 @@
       const tl = gsap.timeline({ paused: true });
       const DASH = 1000;
 
-      // hard CUT helper: scene fully covers Sean during [tIn,tOut], nothing during Sean windows
+      // hard CUT: scene covers Sean during [tIn,tOut]; logo shows only during MG scenes
       function cut(sel, tIn, tOut) {
         tl.set(sel, { opacity: 1 }, tIn);
         tl.set(sel, { opacity: 0 }, tOut);
-        tl.set("#mglogo", { opacity: 1 }, tIn);   // brand logo shows on MG scenes only
+        tl.set("#mglogo", { opacity: 1 }, tIn);
         tl.set("#mglogo", { opacity: 0 }, tOut);
       }
 
-      /* progress bar across the whole ad */
       tl.fromTo("#progbar", { scaleX: 0 }, { scaleX: 1, duration: SLOT, ease: "none" }, 0);
+      gsap.set("#roaspath", { strokeDasharray: DASH });
 
-      /* init graph dash states */
-      gsap.set(["#gf1", "#gf2"], { strokeDasharray: DASH });
-      gsap.set("#gclimb", { strokeDasharray: DASH });
+      /* === S1 SEAN 0–11 (hook + "this is probably why. Most founders...do more") === */
 
-      /* ===================================================================
-         S1 SEAN 0.0–8.0   (hook: "revenue hasn't moved... this is why")
-         =================================================================== */
-
-      /* ===== M1 mgFlat 8.0–11.95 ===== */
-      cut("#mgFlat", 8.0, 11.95);
-      tl.fromTo("#mf-eb", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 8.15);
-      tl.fromTo("#gf1", { strokeDashoffset: DASH }, { strokeDashoffset: 0, duration: 1.4, ease: "power2.inOut", immediateRender: false }, 8.3);
-      tl.fromTo("#gf1dot", { opacity: 0, x: -740 }, { opacity: 1, x: 0, duration: 1.4, ease: "power2.inOut" }, 8.3);
-      tl.fromTo("#mf-stuck", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 9.9);
-      tl.to("#mf-stuck", { opacity: 0.5, duration: 0.6, yoyo: true, repeat: 2, ease: "sine.inOut" }, 10.4);
-
-      /* ===================================================================
-         S2 SEAN 11.95–16.02   ("assume they need to do more")
-         =================================================================== */
-
-      /* ===== M2 mgMore 16.02–19.83 ===== */
-      cut("#mgMore", 16.02, 19.83);
-      tl.fromTo("#mgMore .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 16.1);
-      var mw = ["#mw1", "#mw2", "#mw3", "#mw4"];
-      mw.forEach(function (w, i) {
-        var t = 16.2 + i * 0.85;
+      /* === M: DO-MORE 11.0–20.0 === */
+      cut("#mgMore", 11.0, 20.0);
+      tl.fromTo("#mgMore .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 11.1);
+      ["#mw1", "#mw2", "#mw3", "#mw4"].forEach(function (w, i) {
+        var t = 11.7 + i * 1.75;
         tl.fromTo(w, { opacity: 0, scale: 1.3, filter: "blur(12px)" },
-                  { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, t);
-        if (i < 3) tl.to(w, { opacity: 0.34, duration: 0.4, ease: "power2.inOut" }, t + 0.9);
+                  { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.45, ease: "power3.out", overwrite: "auto" }, t);
+        if (i < 3) tl.to(w, { opacity: 0.34, duration: 0.4, ease: "power2.inOut", overwrite: "auto" }, t + 1.2);
       });
 
-      /* ===================================================================
-         S3 SEAN 19.83–22.45   ("revenue isn't one lever, it's a system")
-         =================================================================== */
-
-      /* ===== M3 mgNodes 22.45–31.0 ===== */
-      cut("#mgNodes", 22.45, 31.0);
-      tl.fromTo("#mgNodes .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 22.55);
-      tl.fromTo("#nl", { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: "power2.out", immediateRender: false }, 22.7);
+      /* === M: SYSTEM DIAGRAM 20.0–31.0 === */
+      cut("#mgNodes", 20.0, 31.0);
+      tl.fromTo("#mgNodes .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 20.1);
+      tl.fromTo("#nl", { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: "power2.out", immediateRender: false }, 20.2);
       var nodes = ["#n1", "#n2", "#n3", "#n4"];
-      var nodeT = [22.8, 24.1, 25.9, 27.6]; // synced to Traffic / Conversion / AOV / Retention
+      var nodeT = [20.5, 22.2, 24.1, 26.0]; // Traffic / Conversion / AOV / Retention
       nodes.forEach(function (n, i) {
         tl.fromTo(n + " .dot", { opacity: 0, scale: 0.5 },
                   { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.7)", immediateRender: false }, nodeT[i]);
@@ -292,46 +236,30 @@
       tl.to(["#n1", "#n3", "#n4"], { opacity: 0.4, duration: 0.5, ease: "power2.out" }, 29.5);
       tl.fromTo("#bnote", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 29.4);
 
-      /* ===================================================================
-         S4 SEAN 31.0–38.05   ("throwing effort... work harder than ever")
-         =================================================================== */
+      /* === S SEAN 31–40 ("throwing effort... work harder than ever") === */
 
-      /* ===== M4 mgSame 38.05–45.5 ===== */
-      cut("#mgSame", 38.05, 45.5);
-      tl.fromTo("#mgSame .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 38.2);
-      tl.fromTo("#bignum", { opacity: 0, y: 24, scale: 0.85 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.3)" }, 38.4);
-      tl.fromTo("#gf2", { strokeDashoffset: DASH }, { strokeDashoffset: 0, duration: 0.9, ease: "power2.out", immediateRender: false }, 38.9);
-      tl.fromTo("#mk .m", { opacity: 0 }, { opacity: 1, duration: 0.15, stagger: 0.12, ease: "steps(1)" }, 41.4);
-      tl.to("#mk .m", { opacity: 0.3, duration: 0.26, yoyo: true, repeat: 3, ease: "steps(1)" }, 42.8);
+      /* === M: SPEND↑ / ROAS↓ graph 40.0–45.5 (NEW emphasis beat) === */
+      cut("#mgSpend", 40.0, 45.5);
+      tl.fromTo("#sp-spend", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 40.15);
+      tl.fromTo("#sp-mid", { opacity: 0 }, { opacity: 1, duration: 0.35 }, 40.35);
+      tl.fromTo("#sp-roas", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 40.55);
+      tl.fromTo(".bar2", { scaleY: 0 }, { scaleY: 1, duration: 0.45, ease: "power3.out", stagger: 0.12, immediateRender: false }, 40.5);
+      tl.fromTo(".ml", { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.12 }, 40.7);
+      tl.fromTo("#roaspath", { strokeDashoffset: DASH }, { strokeDashoffset: 0, duration: 1.1, ease: "power2.inOut", immediateRender: false }, 41.9);
 
-      /* ===================================================================
-         S5 SEAN 45.5–50.82   ("the plateau isn't because you stopped trying")
-         =================================================================== */
+      /* === S SEAN 45.5–57 ("plateau isn't because you stopped trying... we've helped hundreds") === */
 
-      /* ===== M5 mgBottle 50.82–54.06 ===== */
-      cut("#mgBottle", 50.82, 54.06);
-      tl.fromTo("#mgBottle .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 50.95);
-      tl.fromTo("#gclimb", { strokeDashoffset: DASH }, { strokeDashoffset: 0, duration: 1.0, ease: "power2.out", immediateRender: false }, 51.05);
-      tl.fromTo("#ceil", { opacity: 0, scaleX: 0.2 }, { opacity: 1, scaleX: 1, duration: 0.5, ease: "power3.out", transformOrigin: "right center" }, 52.0);
-      tl.fromTo("#bcap", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 52.5);
-
-      /* ===================================================================
-         S6 SEAN 54.06–57.0   ("we've helped hundreds of Shopify brands")
-         =================================================================== */
-
-      /* ===== CTA 57.0–67 (breakthrough flourish -> card) ===== */
+      /* === CTA 57.0–67 (centered card) === */
       tl.set("#cta", { opacity: 1 }, 57.0);
       tl.fromTo("#cta-logo", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 57.4);
       tl.fromTo("#cta-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out", immediateRender: false }, 57.7);
       tl.fromTo("#cta-eyebrow", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 57.8);
-      tl.fromTo("#cta-head .plateau", { opacity: 0, x: -26 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 58.0);
-      tl.fromTo("#cta-head", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 58.1);
-      tl.fromTo("#cta-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 58.6);
-      tl.fromTo("#cta-pill", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)" }, 59.0);
-      tl.to("#cta-pill", { scale: 1.04, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 4 }, 60.2);
+      tl.fromTo("#cta-head", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 58.0);
+      tl.fromTo("#cta-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 58.5);
+      tl.fromTo("#cta-pill", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)" }, 58.9);
+      tl.to("#cta-pill", { scale: 1.04, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 4 }, 60.1);
 
-      // Law 11 anchor — fill the slot
-      tl.to({}, { duration: SLOT }, 0);
+      tl.to({}, { duration: SLOT }, 0);  // Law 11 anchor
       window.__timelines["revenue-plateau"] = tl;
     </script>
   </body>
