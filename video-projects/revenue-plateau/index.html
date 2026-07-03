@@ -38,6 +38,13 @@
       .mg-eyebrow { font-weight: 700; font-size: 28px; letter-spacing: .28em; text-transform: uppercase;
         color: var(--brand-blue-tint); margin-bottom: 60px; opacity: 0; }
 
+      /* ---- Opening hook title card ---- */
+      .hook-eb { opacity: 0; font-weight: 700; font-size: 30px; letter-spacing: .28em; text-transform: uppercase;
+        color: var(--brand-blue-tint); margin-bottom: 36px; }
+      .hook-h1 { opacity: 0; font-weight: 800; font-size: 118px; line-height: .98; letter-spacing: -.03em; color: #fff; }
+      .hook-h2 { opacity: 0; font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400;
+        font-size: 116px; line-height: 1.02; letter-spacing: -.01em; color: var(--brand-blue-tint); }
+
       /* progress bar */
       #progtrack { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; z-index: 22;
         background: rgba(156,212,255,.14); }
@@ -115,6 +122,14 @@
       <div id="seanscrim" class="clip" data-start="0" data-duration="67" data-track-index="3"></div>
       <!-- single brand logo, shown only during MG scenes (keeps Sean shots clean) -->
       <img id="mglogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+
+      <!-- ===== MG SCENE: OPENING HOOK CARD (0–4.8s) ===== -->
+      <div class="mgscene clip" id="mgHook" data-start="0" data-duration="67" data-track-index="9">
+        <div class="mg-bloom"></div>
+        <div class="hook-eb" id="hk-eb">For Shopify brands</div>
+        <div class="hook-h1" id="hk-h1">Revenue flat.</div>
+        <div class="hook-h2" id="hk-h2">For months?</div>
+      </div>
 
       <!-- ===== MG SCENE: DO MORE (cut in 11s) ===== -->
       <div class="mgscene clip" id="mgMore" data-start="0" data-duration="67" data-track-index="11">
@@ -201,40 +216,50 @@
       tl.fromTo("#progbar", { scaleX: 0 }, { scaleX: 1, duration: SLOT, ease: "none" }, 0);
       gsap.set("#roaspath", { strokeDasharray: DASH });
 
-      /* === S1 SEAN 0–11 (hook + "this is probably why. Most founders...do more") === */
+      /* === OPENING HOOK CARD 0.0–4.8 (title card, then cut to Sean) === */
+      cut("#mgHook", 0.0, 4.8);
+      tl.fromTo("#hk-eb", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.3);
+      tl.fromTo("#hk-h1", { opacity: 0, y: 28, filter: "blur(10px)" },
+                { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.6, ease: "power3.out" }, 0.65);
+      tl.fromTo("#hk-h2", { opacity: 0, y: 28, filter: "blur(10px)" },
+                { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.6, ease: "power3.out" }, 1.05);
+
+      /* === S SEAN 4.8–11 (hook: "...this is probably why. Most founders...") === */
 
       /* === M: DO-MORE 11.0–20.0 === */
       cut("#mgMore", 11.0, 20.0);
       tl.fromTo("#mgMore .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 11.1);
+      // words pop exactly on his delivery: "more ad spend / more emails / more products / more marketing"
+      var mwT = [16.05, 17.85, 18.5, 19.05];
       ["#mw1", "#mw2", "#mw3", "#mw4"].forEach(function (w, i) {
-        var t = 11.7 + i * 1.75;
-        tl.fromTo(w, { opacity: 0, scale: 1.3, filter: "blur(12px)" },
-                  { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.45, ease: "power3.out", overwrite: "auto" }, t);
-        if (i < 3) tl.to(w, { opacity: 0.34, duration: 0.4, ease: "power2.inOut", overwrite: "auto" }, t + 1.2);
+        tl.fromTo(w, { opacity: 0, scale: 1.28, filter: "blur(10px)" },
+                  { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "power3.out", overwrite: "auto" }, mwT[i]);
       });
 
       /* === M: SYSTEM DIAGRAM 20.0–31.0 === */
       cut("#mgNodes", 20.0, 31.0);
-      tl.fromTo("#mgNodes .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 20.1);
-      tl.fromTo("#nl", { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: "power2.out", immediateRender: false }, 20.2);
+      tl.fromTo("#mgNodes .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 20.1); // on "it's a system"
+      tl.fromTo("#nl", { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: "power2.out", immediateRender: false }, 20.3);
+      // dim placeholder dots form the system, then light up as each lever is NAMED
+      tl.fromTo(".node .dot", { opacity: 0, scale: 0.6 },
+                { opacity: 0.3, scale: 1, duration: 0.4, ease: "power2.out", stagger: 0.12, immediateRender: false }, 21.2);
       var nodes = ["#n1", "#n2", "#n3", "#n4"];
-      var nodeT = [20.5, 22.2, 24.1, 26.0]; // Traffic / Conversion / AOV / Retention
+      var nodeT = [23.7, 24.88, 26.35, 28.24]; // Traffic / Conversion / AOV / Retention — matched to audio
       nodes.forEach(function (n, i) {
-        tl.fromTo(n + " .dot", { opacity: 0, scale: 0.5 },
-                  { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.7)", immediateRender: false }, nodeT[i]);
-        tl.fromTo(n + " .dot", { boxShadow: "0 0 0 rgba(156,212,255,0)" },
-                  { boxShadow: "0 0 30px rgba(156,212,255,.55)", duration: 0.4, immediateRender: false }, nodeT[i] + 0.1);
-        tl.fromTo(n + " .lab", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, nodeT[i] + 0.15);
+        tl.to(n + " .dot", { opacity: 1, duration: 0.3, ease: "power2.out" }, nodeT[i]);
+        tl.to(n + " .dot", { scale: 1.12, duration: 0.2, yoyo: true, repeat: 1, ease: "power2.inOut" }, nodeT[i]);
+        tl.to(n + " .dot", { boxShadow: "0 0 30px rgba(156,212,255,.6)", duration: 0.3 }, nodeT[i]);
+        tl.fromTo(n + " .lab", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, nodeT[i] + 0.05);
       });
-      // one breaks (~29s: "when one of those breaks")
-      tl.to("#n2 .dot", { borderColor: "#FF4C32", boxShadow: "0 0 36px rgba(255,76,50,.8)", duration: 0.3 }, 28.9);
-      tl.to("#n2 .dot i", { background: "#FF4C32", boxShadow: "0 0 18px rgba(255,76,50,.9)", duration: 0.3 }, 28.9);
-      tl.to("#n2 .dot", { scale: 1.15, duration: 0.22, yoyo: true, repeat: 1, ease: "power2.inOut" }, 29.0);
-      tl.to("#n2 .lab", { color: "#FF4C32", duration: 0.3 }, 29.0);
-      tl.to("#n2", { y: 26, duration: 0.5, ease: "power2.in" }, 29.4);
-      tl.to("#nl", { background: "rgba(255,76,50,.5)", duration: 0.4 }, 29.4);
-      tl.to(["#n1", "#n3", "#n4"], { opacity: 0.4, duration: 0.5, ease: "power2.out" }, 29.5);
-      tl.fromTo("#bnote", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 29.4);
+      // one breaks (~29.3s: "when one of those breaks")
+      tl.to("#n2 .dot", { borderColor: "#FF4C32", boxShadow: "0 0 36px rgba(255,76,50,.8)", duration: 0.3 }, 29.3);
+      tl.to("#n2 .dot i", { background: "#FF4C32", boxShadow: "0 0 18px rgba(255,76,50,.9)", duration: 0.3 }, 29.3);
+      tl.to("#n2 .dot", { scale: 1.15, duration: 0.22, yoyo: true, repeat: 1, ease: "power2.inOut" }, 29.4);
+      tl.to("#n2 .lab", { color: "#FF4C32", duration: 0.3 }, 29.4);
+      tl.to("#n2", { y: 26, duration: 0.5, ease: "power2.in" }, 29.7);
+      tl.to("#nl", { background: "rgba(255,76,50,.5)", duration: 0.4 }, 29.7);
+      tl.to(["#n1", "#n3", "#n4"], { opacity: 0.4, duration: 0.5, ease: "power2.out" }, 29.8);
+      tl.fromTo("#bnote", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 29.7);
 
       /* === S SEAN 31–40 ("throwing effort... work harder than ever") === */
 
