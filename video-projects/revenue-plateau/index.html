@@ -120,8 +120,9 @@
         border: 1px solid var(--brand-border); border-radius: 999px; padding: 14px 30px; }
 
       /* ---- Captions ---- */
-      #caps { position: absolute; left: 0; right: 0; bottom: 172px; z-index: 12; text-align: center; }
-      .cap { position: absolute; left: 60px; right: 60px; opacity: 0;
+      /* full-frame box: a 0-height clip box gets its overflow clipped, hiding the captions */
+      #caps { position: absolute; inset: 0; z-index: 12; text-align: center; }
+      .cap { position: absolute; left: 60px; right: 60px; bottom: 150px; opacity: 0;
         font-weight: 700; font-size: 46px; line-height: 1.2; letter-spacing: -.01em; color: #fff;
         text-shadow: 0 3px 20px rgba(0,0,0,.55); }
       .cap .hot { color: var(--brand-flame); }
