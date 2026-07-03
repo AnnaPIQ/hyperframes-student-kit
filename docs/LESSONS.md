@@ -9,6 +9,18 @@ efficient over time instead of relearning the same lessons.
 
 ---
 
+## CLI / install (cloud container)
+
+- **`npx hyperframes <cmd>` exits 1 with NO output.** The `hyperframes` npm package pulls
+  `onnxruntime-node` (the offline Whisper engine), whose **postinstall binary download is
+  proxy-blocked (ECONNRESET)**. That aborts the whole install, so `npx` never runs the CLI
+  and dies silently. **Fix:** install once with scripts skipped —
+  `npm install --no-save --ignore-scripts hyperframes@0.7.26` — then call the local binary
+  directly: `node node_modules/hyperframes/dist/cli.js <lint|render|...>`. `lint`/`render`
+  don't need ONNX; only `transcribe` does (so transcription stays unavailable — caption from
+  the script + `silencedetect`, per the transcriber lesson below).
+- **Pulling a raw clip from a Google Drive share link:** `curl -sSL "https://drive.google.com/uc?export=download&id=<FILE_ID>" -o out.bin` works for reasonably-sized files without auth; the Google Drive MCP tools may fail with a permission-stream error in this env. Verify with `file`/`ffprobe` (it lands as .mov/.mp4).
+
 ## Render-breaking (these waste the most time)
 
 - **GSAP from a CDN freezes the render / timeline never registers.** The render env's

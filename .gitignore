@@ -40,3 +40,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Large raw source recordings (prepped .mp4 ships instead)
+**/assets/*.mov
