@@ -70,6 +70,17 @@ efficient over time instead of relearning the same lessons.
   cover`, identical 16:9 ratio) in the upper third and put kinetic callouts in the lower zone.
   No tight vertical crop, no cropped foreheads.
 
+- **Concatenating cutdown segments desyncs the FIRST segment if the source has a leading
+  audio-stream offset.** A raw clip whose audio `start_time` is e.g. `0.205` (video `0`) has a
+  silent gap before the first sample. `atrim=0:7,asetpts=PTS-STARTPTS` collapses that gap —
+  the first segment's audio ends up ~0.2s AHEAD of its video, while mid-file segments (no
+  gap) stay synced. **Fix:** extract each segment to its own file with the audio realigned to
+  the video start — `ffmpeg -ss <a> -i raw.mov -t <len> -af "aresample=async=1:first_pts=0"
+  -c:v libx264 ... seg.mp4` (first_pts=0 pads the leading gap with silence) — then concat via
+  the demuxer (`-f concat -c copy`). Verify per-segment: the audio speech onset of each
+  segment must equal the raw's onset at that cut. Don't "fix" it with a global `adelay` on the
+  whole concat — that over-corrects the segments that were already fine.
+
 ## Editing technique (talking-head cutdowns)
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +
