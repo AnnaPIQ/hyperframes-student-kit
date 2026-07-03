@@ -101,7 +101,7 @@
       #cta-head .plateau { color: #fff; }   /* centered, white, NOT italic */
       #cta-sub { opacity: 0; margin: 34px auto 0; font-weight: 500; font-size: 37px; line-height: 1.34;
         color: var(--brand-text-dim); max-width: 720px; }
-      #cta-pillwrap { position: absolute; left: 0; right: 0; bottom: 205px; display: flex; justify-content: center; }
+      #cta-pillwrap { position: absolute; left: 0; right: 0; bottom: 320px; display: flex; justify-content: center; }
       #cta-pill { opacity: 0; display: inline-flex; align-items: center; gap: 18px; font-weight: 700; font-size: 40px;
         color: #fff; background: var(--brand-flame); padding: 32px 60px; border-radius: 999px;
         box-shadow: 0 22px 70px -16px rgba(255,76,50,.65); }
@@ -157,32 +157,6 @@
         <div class="breaknote" id="bnote">One breaks &rarr; growth stalls</div>
       </div>
 
-      <!-- ===== MG SCENE: SPEND UP / ROAS DOWN (NEW, cut in 40s) ===== -->
-      <div class="mgscene clip" id="mgSpend" data-start="0" data-duration="67" data-track-index="13">
-        <div class="mg-bloom"></div>
-        <div class="spend-pills">
-          <div class="pill pill-blue" id="sp-spend">Spend &#9650;</div>
-          <div class="pill-mid" id="sp-mid">every month</div>
-          <div class="pill pill-flame" id="sp-roas">ROAS &#9660;</div>
-        </div>
-        <div class="barchart">
-          <div class="barcol"><div class="bar2" style="height:100px"></div><div class="ml">Jan</div></div>
-          <div class="barcol"><div class="bar2" style="height:135px"></div><div class="ml">Feb</div></div>
-          <div class="barcol"><div class="bar2" style="height:170px"></div><div class="ml">Mar</div></div>
-          <div class="barcol"><div class="bar2" style="height:205px"></div><div class="ml">Apr</div></div>
-          <div class="barcol"><div class="bar2" style="height:240px"></div><div class="ml">May</div></div>
-          <div class="barcol"><div class="bar2" style="height:275px"></div><div class="ml">Jun</div></div>
-          <svg class="roasline" viewBox="0 0 800 300" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="roasGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#FF8A4C" /><stop offset="1" stop-color="#FF4C32" />
-              </linearGradient>
-            </defs>
-            <path id="roaspath" d="M30,64 L770,262" />
-          </svg>
-        </div>
-      </div>
-
       <!-- ===== CTA CARD (centered; cut in 57s) ===== -->
       <div id="cta" class="clip" data-start="0" data-duration="67" data-track-index="20">
         <div id="cta-bloom"></div>
@@ -214,7 +188,6 @@
       }
 
       tl.fromTo("#progbar", { scaleX: 0 }, { scaleX: 1, duration: SLOT, ease: "none" }, 0);
-      gsap.set("#roaspath", { strokeDasharray: DASH });
 
       /* === OPENING HOOK CARD 0.0–4.8 (title card, then cut to Sean) === */
       cut("#mgHook", 0.0, 4.8);
@@ -229,11 +202,11 @@
       /* === M: DO-MORE 11.0–20.0 === */
       cut("#mgMore", 11.0, 20.0);
       tl.fromTo("#mgMore .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 11.1);
-      // words pop exactly on his delivery: "more ad spend / more emails / more products / more marketing"
-      var mwT = [16.05, 17.85, 18.5, 19.05];
+      // words LEAD his delivery by ~0.45s so each lands right as he says it (onsets 16.02/17.91/18.55/19.0)
+      var mwT = [15.55, 17.45, 18.1, 18.55];
       ["#mw1", "#mw2", "#mw3", "#mw4"].forEach(function (w, i) {
         tl.fromTo(w, { opacity: 0, scale: 1.28, filter: "blur(10px)" },
-                  { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "power3.out", overwrite: "auto" }, mwT[i]);
+                  { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.28, ease: "power3.out", overwrite: "auto" }, mwT[i]);
       });
 
       /* === M: SYSTEM DIAGRAM 20.0–31.0 === */
@@ -244,35 +217,26 @@
       tl.fromTo(".node .dot", { opacity: 0, scale: 0.6 },
                 { opacity: 0.3, scale: 1, duration: 0.4, ease: "power2.out", stagger: 0.12, immediateRender: false }, 21.2);
       var nodes = ["#n1", "#n2", "#n3", "#n4"];
-      var nodeT = [23.7, 24.88, 26.35, 28.24]; // Traffic / Conversion / AOV / Retention — matched to audio
+      // LEAD ~0.45s ahead of onsets (23.70/24.88/26.35/28.24) so each lights as he names it
+      var nodeT = [23.25, 24.43, 25.9, 27.79];
       nodes.forEach(function (n, i) {
         tl.to(n + " .dot", { opacity: 1, duration: 0.3, ease: "power2.out" }, nodeT[i]);
         tl.to(n + " .dot", { scale: 1.12, duration: 0.2, yoyo: true, repeat: 1, ease: "power2.inOut" }, nodeT[i]);
         tl.to(n + " .dot", { boxShadow: "0 0 30px rgba(156,212,255,.6)", duration: 0.3 }, nodeT[i]);
         tl.fromTo(n + " .lab", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, nodeT[i] + 0.05);
       });
-      // one breaks (~29.3s: "when one of those breaks")
-      tl.to("#n2 .dot", { borderColor: "#FF4C32", boxShadow: "0 0 36px rgba(255,76,50,.8)", duration: 0.3 }, 29.3);
-      tl.to("#n2 .dot i", { background: "#FF4C32", boxShadow: "0 0 18px rgba(255,76,50,.9)", duration: 0.3 }, 29.3);
-      tl.to("#n2 .dot", { scale: 1.15, duration: 0.22, yoyo: true, repeat: 1, ease: "power2.inOut" }, 29.4);
-      tl.to("#n2 .lab", { color: "#FF4C32", duration: 0.3 }, 29.4);
-      tl.to("#n2", { y: 26, duration: 0.5, ease: "power2.in" }, 29.7);
-      tl.to("#nl", { background: "rgba(255,76,50,.5)", duration: 0.4 }, 29.7);
-      tl.to(["#n1", "#n3", "#n4"], { opacity: 0.4, duration: 0.5, ease: "power2.out" }, 29.8);
-      tl.fromTo("#bnote", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 29.7);
+      // one breaks (leads "when one of those breaks", onset ~29.33)
+      tl.to("#n2 .dot", { borderColor: "#FF4C32", boxShadow: "0 0 36px rgba(255,76,50,.8)", duration: 0.3 }, 28.9);
+      tl.to("#n2 .dot i", { background: "#FF4C32", boxShadow: "0 0 18px rgba(255,76,50,.9)", duration: 0.3 }, 28.9);
+      tl.to("#n2 .dot", { scale: 1.15, duration: 0.22, yoyo: true, repeat: 1, ease: "power2.inOut" }, 29.0);
+      tl.to("#n2 .lab", { color: "#FF4C32", duration: 0.3 }, 29.0);
+      tl.to("#n2", { y: 26, duration: 0.5, ease: "power2.in" }, 29.3);
+      tl.to("#nl", { background: "rgba(255,76,50,.5)", duration: 0.4 }, 29.3);
+      tl.to(["#n1", "#n3", "#n4"], { opacity: 0.4, duration: 0.5, ease: "power2.out" }, 29.4);
+      tl.fromTo("#bnote", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 29.3);
 
-      /* === S SEAN 31–40 ("throwing effort... work harder than ever") === */
-
-      /* === M: SPEND↑ / ROAS↓ graph 40.0–45.5 (NEW emphasis beat) === */
-      cut("#mgSpend", 40.0, 45.5);
-      tl.fromTo("#sp-spend", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 40.15);
-      tl.fromTo("#sp-mid", { opacity: 0 }, { opacity: 1, duration: 0.35 }, 40.35);
-      tl.fromTo("#sp-roas", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 40.55);
-      tl.fromTo(".bar2", { scaleY: 0 }, { scaleY: 1, duration: 0.45, ease: "power3.out", stagger: 0.12, immediateRender: false }, 40.5);
-      tl.fromTo(".ml", { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.12 }, 40.7);
-      tl.fromTo("#roaspath", { strokeDashoffset: DASH }, { strokeDashoffset: 0, duration: 1.1, ease: "power2.inOut", immediateRender: false }, 41.9);
-
-      /* === S SEAN 45.5–57 ("plateau isn't because you stopped trying... we've helped hundreds") === */
+      /* === S SEAN 31–57 (no graphic here — "work harder... same number... plateau isn't
+             because you stopped trying... we've helped hundreds of brands") === */
 
       /* === CTA 57.0–67 (centered card) === */
       tl.set("#cta", { opacity: 1 }, 57.0);
