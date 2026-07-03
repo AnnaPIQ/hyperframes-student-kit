@@ -18,121 +18,84 @@
       html, body { width: 1080px; height: 1350px; overflow: hidden;
         background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #fff; }
 
-      /* ---- Face video, reframed 16:9 -> 4:5 (fill height, center) ---- */
+      /* CAPTION-SAFE ZONE: keep the bottom ~300px clear of graphics for captions added later. */
+
+      /* ---- Sean (face video), reframed 16:9 -> 4:5 (fill height, center) ---- */
       #vidwrap { position: absolute; inset: 0; z-index: 0; background: #06284C; overflow: hidden; }
-      #face { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; }
+      #face { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+      /* subtle bottom scrim so captions added later stay legible over Sean — no text now */
+      #seanscrim { position: absolute; inset: auto 0 0 0; height: 420px; z-index: 2;
+        background: linear-gradient(0deg, rgba(4,24,48,.55) 0%, rgba(4,24,48,0) 100%); }
 
-      /* ---- Scrims ---- */
-      #topscrim { position: absolute; inset: 0 0 auto 0; height: 300px; z-index: 5;
-        background: linear-gradient(180deg, rgba(6,40,76,.82) 0%, rgba(6,40,76,0) 100%); }
-      #botscrim { position: absolute; inset: auto 0 0 0; height: 640px; z-index: 5;
-        background: linear-gradient(0deg, rgba(4,28,55,.96) 0%, rgba(4,28,55,.80) 42%, rgba(6,40,76,0) 100%); }
-      /* full-frame dim used for MG-forward beats */
-      #dimscrim { position: absolute; inset: 0; z-index: 8; opacity: 0;
-        background: radial-gradient(120% 80% at 50% 42%, rgba(6,40,76,.72) 0%, rgba(4,22,44,.94) 70%); }
-
-      /* ---- Persistent brand ---- */
-      #brandbar { position: absolute; top: 54px; left: 64px; z-index: 15; }
-      #brandbar img { width: 250px; height: auto; display: block;
+      /* ---- Full-screen MG scenes (we CUT to these; they fully cover Sean) ---- */
+      .mgscene { position: absolute; inset: 0; z-index: 10; opacity: 0;
+        background: radial-gradient(92% 52% at 50% 28%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%), #06284C;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        padding: 250px 90px 320px; text-align: center; }   /* bottom 320 = caption-safe zone */
+      .mg-bloom { position: absolute; left: -10%; bottom: -20%; width: 120%; height: 55%;
+        background: var(--brand-gradient-2); filter: blur(90px); opacity: .26; }
+      #mglogo { position: absolute; top: 54px; left: 64px; width: 230px; height: auto; z-index: 11; opacity: 0;
         filter: drop-shadow(0 4px 18px rgba(0,0,0,.45)); }
-      #progtrack { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; z-index: 16;
+      .mg-eyebrow { font-weight: 700; font-size: 28px; letter-spacing: .28em; text-transform: uppercase;
+        color: var(--brand-blue-tint); margin-bottom: 60px; opacity: 0; }
+
+      /* progress bar (thin brand element at the very edge) */
+      #progtrack { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; z-index: 22;
         background: rgba(156,212,255,.14); }
       #progbar { position: absolute; left: 0; top: 0; bottom: 0; width: 100%;
-        transform-origin: left center; background: var(--brand-flame);
-        box-shadow: 0 0 16px rgba(255,76,50,.6); }
+        transform-origin: left center; background: var(--brand-flame); box-shadow: 0 0 16px rgba(255,76,50,.6); }
 
-      /* ---- MG layer ---- */
-      #mg { position: absolute; inset: 0; z-index: 10; pointer-events: none; }
-      .beat { position: absolute; inset: 0; opacity: 0; }
-      .eyebrow { font-weight: 700; font-size: 24px; letter-spacing: .32em; text-transform: uppercase;
-        color: var(--brand-blue-tint); }
-      .mg-big { font-weight: 800; font-size: 112px; line-height: .96; letter-spacing: -.03em; color: #fff; }
-      .mg-serif { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400;
-        color: var(--brand-blue-tint); }
+      /* ---- Line-graph motif ---- */
+      .graphwrap { position: relative; width: 760px; height: 220px; }
+      .graphwrap svg { width: 100%; height: 100%; overflow: visible; display: block; }
+      .g-grid { stroke: rgba(156,212,255,.13); stroke-width: 1.5; }
+      .g-flat { fill: none; stroke: #9CD4FF; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round;
+        filter: drop-shadow(0 0 10px rgba(156,212,255,.5)); }
+      .g-rise { fill: none; stroke: url(#riseGrad); stroke-width: 9; stroke-linecap: round; stroke-linejoin: round;
+        filter: drop-shadow(0 0 18px rgba(255,120,60,.65)); }
+      .g-dot { fill: #9CD4FF; filter: drop-shadow(0 0 12px rgba(156,212,255,.9)); }
+      .mf-stuck { position: absolute; right: 4px; top: 96px; opacity: 0;
+        font-weight: 800; font-size: 34px; letter-spacing: .12em; color: var(--brand-flame);
+        text-shadow: 0 2px 12px rgba(0,0,0,.5); }
 
-      /* revenue bar-chart (reused: hook / callback / breakout) */
-      #chart { position: absolute; left: 90px; right: 90px; bottom: 400px; height: 260px; z-index: 11;
-        display: flex; align-items: flex-end; justify-content: center; gap: 20px; }
-      #chart .bar { width: 56px; height: 60px; border-radius: 8px 8px 3px 3px;
-        background: linear-gradient(180deg, #9CD4FF 0%, #5aa0e0 100%);
-        transform-origin: bottom center; opacity: .96; }
-      #chartbase { position: absolute; left: 90px; right: 90px; bottom: 398px; height: 2px; z-index: 11;
-        background: rgba(156,212,255,.30); transform-origin: left center; }
-      #flatarrow { position: absolute; right: 110px; bottom: 480px; z-index: 12; opacity: 0;
-        font-weight: 800; font-size: 34px; color: var(--brand-flame); text-shadow: 0 2px 12px rgba(0,0,0,.5); }
+      /* ---- Do-more kinetic words ---- */
+      .morelist { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+      .mword { opacity: 0; font-weight: 800; font-size: 78px; letter-spacing: -.02em; color: #fff; }
+      .mword b { color: var(--brand-flame); font-weight: 800; }
 
-      /* "do more" chips */
-      #chips { position: absolute; left: 0; right: 0; bottom: 790px; z-index: 12;
-        display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; padding: 0 120px; }
-      .chip { opacity: 0; font-weight: 700; font-size: 34px; color: #fff;
-        padding: 16px 30px; border-radius: 999px; border: 2px solid var(--brand-flame);
-        background: rgba(255,76,50,.10); white-space: nowrap; }
+      /* ---- System reveal word (used inside nodes scene intro) & diagram ---- */
+      .netwrap { position: relative; width: 860px; display: flex; align-items: flex-start; justify-content: space-between; }
+      .netline { position: absolute; left: 60px; right: 60px; top: 55px; height: 3px; background: rgba(156,212,255,.4);
+        transform-origin: left center; }
+      .node { position: relative; width: 200px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+      .node .dot { opacity: 0; width: 112px; height: 112px; border-radius: 50%; border: 3px solid var(--brand-blue-tint);
+        background: rgba(9,50,95,.85); display: grid; place-items: center; box-shadow: 0 0 0 rgba(156,212,255,0); }
+      .node .dot i { width: 26px; height: 26px; border-radius: 50%; background: var(--brand-blue-tint);
+        box-shadow: 0 0 16px rgba(156,212,255,.8); font-style: normal; }
+      .node .lab { opacity: 0; font-weight: 700; font-size: 28px; color: #fff; text-align: center; }
+      .breaknote { opacity: 0; margin-top: 70px; font-weight: 800; font-size: 40px; letter-spacing: -.01em;
+        color: var(--brand-flame); }
 
-      /* system reveal */
-      #b-system { display: flex; flex-direction: column; align-items: center; justify-content: center;
-        gap: 20px; padding-bottom: 120px; text-align: center; }
-      #sys-not { position: relative; font-weight: 700; font-size: 44px; color: var(--brand-text-dim); }
-      #sys-strike { position: absolute; left: -6px; right: -6px; top: 52%; height: 5px; border-radius: 3px;
-        background: var(--brand-flame); transform-origin: left center; }
-      #sys-word { opacity: 0; }
+      /* ---- Same-number ---- */
+      .bignum { opacity: 0; font-weight: 800; font-size: 168px; line-height: .95; letter-spacing: -.03em; color: #fff;
+        font-variant-numeric: tabular-nums; margin-bottom: 42px; }
+      .markers { display: flex; gap: 16px; margin-top: 40px; }
+      .markers .m { opacity: 0; width: 72px; height: 12px; border-radius: 6px; background: var(--brand-text-dim); }
 
-      /* levers */
-      #b-levers { display: flex; flex-direction: column; align-items: center; justify-content: center;
-        padding-bottom: 90px; }
-      #lev-eyebrow { opacity: 0; margin-bottom: 60px; }
-      #levers { display: flex; align-items: flex-end; justify-content: center; gap: 40px; position: relative; }
-      #spine { position: absolute; left: -30px; right: -30px; bottom: -26px; height: 4px; border-radius: 2px;
-        background: rgba(156,212,255,.5); transform-origin: center; }
-      #crack { position: absolute; bottom: -34px; z-index: 3; opacity: 0; font-size: 40px; color: var(--brand-flame); }
-      .lever { display: flex; flex-direction: column; align-items: center; gap: 22px; }
-      .lever .stem { width: 58px; height: 190px; border-radius: 10px; transform-origin: bottom;
-        background: linear-gradient(180deg, #9CD4FF 0%, #4f93d6 100%); }
-      .lever .lab { opacity: 0; font-weight: 700; font-size: 28px; letter-spacing: .02em; color: #fff; text-align: center; }
-
-      /* same-number callback */
-      #b-same { display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-        padding-bottom: 470px; gap: 14px; }
-      #bignum { opacity: 0; font-weight: 800; font-size: 128px; letter-spacing: -.02em; color: #fff;
-        font-variant-numeric: tabular-nums; text-shadow: 0 4px 26px rgba(0,0,0,.6); }
-      #samechip { opacity: 0; font-weight: 700; font-size: 30px; letter-spacing: .28em; text-transform: uppercase;
-        color: var(--brand-text-dim); }
-
-      /* bottleneck */
-      #b-bottle { display: flex; flex-direction: column; align-items: center; justify-content: center;
-        padding-bottom: 150px; gap: 40px; }
-      #funnel { position: relative; width: 300px; height: 300px; }
-      #funnel .wallL, #funnel .wallR { position: absolute; top: 0; width: 0; height: 0; }
-      #funnel .wallL { left: 20px; border-left: 130px solid transparent; border-top: 300px solid rgba(255,76,50,.16); }
-      #funnel .wallR { right: 20px; border-right: 130px solid transparent; border-top: 300px solid rgba(255,76,50,.16); }
-      #uparrow { position: absolute; left: 50%; bottom: 0; transform-origin: bottom center;
-        width: 20px; height: 300px; border-radius: 10px;
-        background: linear-gradient(0deg, #4f93d6, #9CD4FF); }
-      #uparrow::after { content: '▲'; position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
-        font-size: 44px; color: var(--brand-blue-tint); }
-      #bottle-cap { opacity: 0; font-weight: 800; font-size: 60px; color: #fff; text-align: center; letter-spacing: -.02em; }
-
-      /* proof */
-      #b-proof { display: flex; flex-direction: column; align-items: center; justify-content: center;
-        gap: 16px; padding-bottom: 130px; text-align: center; }
-      #proofnum { opacity: 0; font-weight: 800; font-size: 150px; line-height: 1; letter-spacing: -.03em; color: #fff; }
-      #proofsub { opacity: 0; font-weight: 700; font-size: 36px; color: var(--brand-blue-tint); }
-      #prooftag { opacity: 0; margin-top: 22px; font-weight: 600; font-size: 28px; color: var(--brand-text-dim);
-        border: 1px solid var(--brand-border); border-radius: 999px; padding: 14px 30px; }
-
-      /* ---- Captions ---- */
-      /* full-frame box: a 0-height clip box gets its overflow clipped, hiding the captions */
-      #caps { position: absolute; inset: 0; z-index: 12; text-align: center; }
-      .cap { position: absolute; left: 60px; right: 60px; bottom: 150px; opacity: 0;
-        font-weight: 700; font-size: 46px; line-height: 1.2; letter-spacing: -.01em; color: #fff;
-        text-shadow: 0 3px 20px rgba(0,0,0,.55); }
-      .cap .hot { color: var(--brand-flame); }
-      .cap .cool { color: var(--brand-blue-tint); }
+      /* ---- Bottleneck ---- */
+      .bottlewrap { position: relative; width: 760px; height: 240px; }
+      .bottlewrap svg { width: 100%; height: 100%; overflow: visible; display: block; }
+      .g-climb { fill: none; stroke: #9CD4FF; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round;
+        filter: drop-shadow(0 0 10px rgba(156,212,255,.5)); }
+      .ceil { position: absolute; left: 0; right: 0; top: 30px; height: 0; opacity: 0;
+        border-top: 4px dashed rgba(255,76,50,.9); }
+      .ceil span { position: absolute; right: 0; top: -44px; font-weight: 800; font-size: 26px;
+        letter-spacing: .16em; color: var(--brand-flame); }
+      .bottlecap { opacity: 0; margin-top: 66px; font-weight: 800; font-size: 52px; letter-spacing: -.02em; color: #fff; }
 
       /* ---- CTA card ---- */
       #cta { position: absolute; inset: 0; z-index: 20; opacity: 0;
-        background:
-          radial-gradient(90% 55% at 50% 20%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%),
-          #06284C; }
+        background: radial-gradient(90% 55% at 50% 20%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%), #06284C; }
       #cta-bloom { position: absolute; left: -10%; bottom: -22%; width: 120%; height: 60%;
         background: var(--brand-gradient-2); filter: blur(90px); opacity: .34; }
       #cta-logo { position: absolute; top: 150px; left: 96px; width: 340px; height: auto; opacity: 0; }
@@ -146,7 +109,7 @@
         letter-spacing: -.01em; color: var(--brand-blue-tint); }
       #cta-sub { opacity: 0; margin-top: 36px; font-weight: 500; font-size: 38px; line-height: 1.34;
         color: var(--brand-text-dim); max-width: 780px; }
-      #cta-pill { position: absolute; left: 96px; bottom: 210px; display: inline-flex; align-items: center; gap: 18px;
+      #cta-pill { position: absolute; left: 96px; bottom: 250px; display: inline-flex; align-items: center; gap: 18px;
         opacity: 0; font-weight: 700; font-size: 40px; color: #fff; background: var(--brand-flame);
         padding: 32px 60px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,.65); }
       #cta-pill .arrow { font-size: 42px; line-height: 1; transform: translateY(-1px); }
@@ -156,110 +119,89 @@
     <div id="root" data-composition-id="revenue-plateau" data-start="0" data-duration="67"
          data-width="1080" data-height="1350">
 
-      <!-- Face video (muted) + separate audio sibling (same file -> married sync) -->
+      <!-- Sean: face video (muted) + separate audio sibling (same file -> married sync) -->
       <div id="vidwrap">
         <video id="face" src="assets/raw.mp4" muted playsinline
                data-start="0" data-duration="67" data-track-index="0"></video>
       </div>
       <audio id="aud" src="assets/raw.mp4" data-start="0" data-duration="67"
              data-track-index="1" data-volume="1"></audio>
+      <div id="seanscrim" class="clip" data-start="0" data-duration="67" data-track-index="3"></div>
+      <!-- single brand logo, shown only during MG scenes (keeps Sean shots clean) -->
+      <img id="mglogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
 
-      <div id="topscrim" class="clip" data-start="0" data-duration="67" data-track-index="2"></div>
-      <div id="botscrim" class="clip" data-start="0" data-duration="67" data-track-index="3"></div>
-      <div id="dimscrim" class="clip" data-start="0" data-duration="67" data-track-index="4"></div>
-
-      <!-- Persistent brand (non-clip so the engine never repositions the logo) -->
-      <div id="brandbar"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
-      <div id="progtrack"><div id="progbar"></div></div>
-
-      <!-- Motion-graphics layer -->
-      <div id="mg" class="clip" data-start="0" data-duration="67" data-track-index="10">
-
-        <!-- reused revenue bar chart -->
-        <div id="chartbase"></div>
-        <div id="chart">
-          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
-          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
-        </div>
-        <div id="flatarrow">&rarr; FLAT</div>
-
-        <!-- beat 2: do-more chips -->
-        <div id="chips">
-          <div class="chip" id="chip1">More ads</div>
-          <div class="chip" id="chip2">More emails</div>
-          <div class="chip" id="chip3">More products</div>
-          <div class="chip" id="chip4">More marketing</div>
-        </div>
-
-        <!-- beat 3: system -->
-        <div class="beat" id="b-system">
-          <div id="sys-not">Not one lever<span id="sys-strike"></span></div>
-          <div class="mg-big" id="sys-word">It's a <span class="mg-serif">system.</span></div>
-        </div>
-
-        <!-- beat 4/5: levers -->
-        <div class="beat" id="b-levers">
-          <div class="eyebrow" id="lev-eyebrow">Revenue is a system</div>
-          <div id="levers">
-            <div id="spine"></div><div id="crack">&#9889;</div>
-            <div class="lever" id="lev1"><div class="stem"></div><div class="lab">Traffic</div></div>
-            <div class="lever" id="lev2"><div class="stem"></div><div class="lab">Conversion</div></div>
-            <div class="lever" id="lev3"><div class="stem"></div><div class="lab">Avg order value</div></div>
-            <div class="lever" id="lev4"><div class="stem"></div><div class="lab">Retention</div></div>
-          </div>
-        </div>
-
-        <!-- beat 6: same number -->
-        <div class="beat" id="b-same">
-          <div id="bignum">$48,200</div>
-          <div id="samechip">Month after month</div>
-        </div>
-
-        <!-- beat 7: bottleneck -->
-        <div class="beat" id="b-bottle">
-          <div id="funnel"><div class="wallL"></div><div class="wallR"></div><div id="uparrow"></div></div>
-          <div id="bottle-cap">Something's holding you back</div>
-        </div>
-
-        <!-- beat 8: proof -->
-        <div class="beat" id="b-proof">
-          <div id="proofnum">100s</div>
-          <div id="proofsub">of Shopify brands unblocked</div>
-          <div id="prooftag">&#10003; bottleneck found &middot; plan built</div>
+      <!-- ===== MG SCENE: FLAT LINE (cut in ~8s) ===== -->
+      <div class="mgscene clip" id="mgFlat" data-start="0" data-duration="67" data-track-index="10">
+        <div class="mg-bloom"></div>
+        <div class="mg-eyebrow" id="mf-eb">Monthly revenue &middot; 6 months</div>
+        <div class="graphwrap">
+          <svg viewBox="0 0 780 200" preserveAspectRatio="none">
+            <line class="g-grid" x1="0" y1="55" x2="780" y2="55" />
+            <line class="g-grid" x1="0" y1="110" x2="780" y2="110" />
+            <line class="g-grid" x1="0" y1="165" x2="780" y2="165" />
+            <path id="gf1" class="g-flat" d="M20,150 L145,148 L270,151 L395,149 L520,150 L645,148 L760,150" />
+            <circle id="gf1dot" class="g-dot" cx="760" cy="150" r="11" />
+          </svg>
+          <div class="mf-stuck" id="mf-stuck">STUCK</div>
         </div>
       </div>
 
-      <!-- Captions (static children of one always-present clip; opacity driven by the timeline) -->
-      <div id="caps" class="clip" data-start="0" data-duration="67" data-track-index="12">
-        <div class="cap" id="cap-0">If your Shopify brand's revenue</div>
-        <div class="cap" id="cap-1">hasn't moved in <span class="cool">months</span> &mdash;</div>
-        <div class="cap" id="cap-2">despite trying everything to fix it,</div>
-        <div class="cap" id="cap-3">this is probably why.</div>
-        <div class="cap" id="cap-4">Most founders hit a plateau</div>
-        <div class="cap" id="cap-5">and assume they need to do <span class="cool">more</span>.</div>
-        <div class="cap" id="cap-6">More ads. More emails.</div>
-        <div class="cap" id="cap-7">More products. More marketing.</div>
-        <div class="cap" id="cap-8">But revenue isn't one lever.</div>
-        <div class="cap" id="cap-9">It's a <span class="cool">system</span>.</div>
-        <div class="cap" id="cap-10">Traffic.</div>
-        <div class="cap" id="cap-11">Conversion.</div>
-        <div class="cap" id="cap-12">Average order value.</div>
-        <div class="cap" id="cap-13">Retention.</div>
-        <div class="cap" id="cap-14">When one of those breaks,</div>
-        <div class="cap" id="cap-15">throwing effort at the others</div>
-        <div class="cap" id="cap-16">rarely fixes the problem.</div>
-        <div class="cap" id="cap-17">So you work harder than ever,</div>
-        <div class="cap" id="cap-18">and still end up staring at</div>
-        <div class="cap" id="cap-19">the same <span class="cool">revenue number</span></div>
-        <div class="cap" id="cap-20">month after month.</div>
-        <div class="cap" id="cap-21">The plateau isn't because</div>
-        <div class="cap" id="cap-22">you've stopped trying.</div>
-        <div class="cap" id="cap-23">It's something inside</div>
-        <div class="cap" id="cap-24"><span class="hot">holding your growth back</span>.</div>
-        <div class="cap" id="cap-25">We've helped hundreds of brands</div>
+      <!-- ===== MG SCENE: DO MORE (cut in ~16s) ===== -->
+      <div class="mgscene clip" id="mgMore" data-start="0" data-duration="67" data-track-index="11">
+        <div class="mg-bloom"></div>
+        <div class="mg-eyebrow">Doing more isn't the fix</div>
+        <div class="morelist">
+          <div class="mword" id="mw1"><b>More</b> ads</div>
+          <div class="mword" id="mw2"><b>More</b> emails</div>
+          <div class="mword" id="mw3"><b>More</b> products</div>
+          <div class="mword" id="mw4"><b>More</b> marketing</div>
+        </div>
       </div>
 
-      <!-- CTA card -->
+      <!-- ===== MG SCENE: SYSTEM DIAGRAM (cut in ~22.5s) ===== -->
+      <div class="mgscene clip" id="mgNodes" data-start="0" data-duration="67" data-track-index="12">
+        <div class="mg-bloom"></div>
+        <div class="mg-eyebrow">Revenue is a system</div>
+        <div class="netwrap">
+          <div class="netline" id="nl"></div>
+          <div class="node" id="n1"><div class="dot"><i></i></div><div class="lab">Traffic</div></div>
+          <div class="node" id="n2"><div class="dot"><i></i></div><div class="lab">Conversion</div></div>
+          <div class="node" id="n3"><div class="dot"><i></i></div><div class="lab">Avg order value</div></div>
+          <div class="node" id="n4"><div class="dot"><i></i></div><div class="lab">Retention</div></div>
+        </div>
+        <div class="breaknote" id="bnote">One breaks &rarr; growth stalls</div>
+      </div>
+
+      <!-- ===== MG SCENE: SAME NUMBER (cut in ~38s) ===== -->
+      <div class="mgscene clip" id="mgSame" data-start="0" data-duration="67" data-track-index="13">
+        <div class="mg-bloom"></div>
+        <div class="mg-eyebrow">The same number</div>
+        <div class="bignum" id="bignum">$48,200</div>
+        <div class="graphwrap" style="height:150px;width:640px;">
+          <svg viewBox="0 0 780 200" preserveAspectRatio="none">
+            <path id="gf2" class="g-flat" d="M20,120 L145,118 L270,121 L395,119 L520,120 L645,118 L760,120" />
+          </svg>
+        </div>
+        <div class="markers" id="mk">
+          <div class="m"></div><div class="m"></div><div class="m"></div>
+          <div class="m"></div><div class="m"></div><div class="m"></div>
+        </div>
+      </div>
+
+      <!-- ===== MG SCENE: BOTTLENECK (cut in ~50.8s) ===== -->
+      <div class="mgscene clip" id="mgBottle" data-start="0" data-duration="67" data-track-index="14">
+        <div class="mg-bloom"></div>
+        <div class="mg-eyebrow">The real problem</div>
+        <div class="bottlewrap">
+          <svg viewBox="0 0 780 240" preserveAspectRatio="none">
+            <path id="gclimb" class="g-climb" d="M20,215 L150,205 L290,178 L430,135 L560,96 L680,82 L760,80" />
+          </svg>
+          <div class="ceil" id="ceil"><span>BOTTLENECK</span></div>
+        </div>
+        <div class="bottlecap" id="bcap">A hidden bottleneck</div>
+      </div>
+
+      <!-- ===== CTA CARD (cut in ~57s, with breakthrough flourish) ===== -->
       <div id="cta" class="clip" data-start="0" data-duration="67" data-track-index="20">
         <div id="cta-bloom"></div>
         <img id="cta-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
@@ -271,136 +213,122 @@
         </div>
         <div id="cta-pill">Learn how we help <span class="arrow">&rarr;</span></div>
       </div>
+
+      <div id="progtrack"><div id="progbar"></div></div>
     </div>
 
     <script>
       window.__timelines = window.__timelines || {};
       const SLOT = 67;
       const tl = gsap.timeline({ paused: true });
+      const DASH = 1000;
 
-      /* ================= CAPTIONS (static divs above; timed to speech boundaries) ============ */
-      // [start, end] per cap-N element, in order
-      const CAPTIONS = [
-        [0.35, 2.70], [2.80, 5.25], [5.82, 7.37], [8.00, 9.40], [9.55, 11.37],
-        [11.95, 15.27], [16.02, 17.75], [17.90, 19.36], [19.83, 21.35], [21.45, 23.55],
-        [23.69, 24.62], [24.90, 26.10], [26.20, 27.55], [27.65, 28.80], [28.90, 30.20],
-        [30.43, 32.30], [32.40, 34.14], [34.52, 36.40], [36.50, 38.05], [38.77, 41.60],
-        [41.70, 45.50], [46.43, 48.70], [48.80, 50.82], [51.37, 52.55], [52.74, 54.30],
-        [54.54, 56.90]
-      ];
-      CAPTIONS.forEach(function (c, i) {
-        var start = c[0], end = c[1];
-        var el = document.getElementById("cap-" + i);
-        tl.fromTo(el, { opacity: 0, y: 22 },
-                  { opacity: 1, y: 0, duration: 0.30, ease: "power2.out", overwrite: "auto" }, start);
-        tl.to(el, { opacity: 0, y: -14, duration: 0.20, ease: "power2.in", overwrite: "auto" }, Math.max(start + 0.32, end - 0.20));
-        tl.set(el, { opacity: 0 }, end); // deterministic kill
+      // hard CUT helper: scene fully covers Sean during [tIn,tOut], nothing during Sean windows
+      function cut(sel, tIn, tOut) {
+        tl.set(sel, { opacity: 1 }, tIn);
+        tl.set(sel, { opacity: 0 }, tOut);
+        tl.set("#mglogo", { opacity: 1 }, tIn);   // brand logo shows on MG scenes only
+        tl.set("#mglogo", { opacity: 0 }, tOut);
+      }
+
+      /* progress bar across the whole ad */
+      tl.fromTo("#progbar", { scaleX: 0 }, { scaleX: 1, duration: SLOT, ease: "none" }, 0);
+
+      /* init graph dash states */
+      gsap.set(["#gf1", "#gf2"], { strokeDasharray: DASH });
+      gsap.set("#gclimb", { strokeDasharray: DASH });
+
+      /* ===================================================================
+         S1 SEAN 0.0–8.0   (hook: "revenue hasn't moved... this is why")
+         =================================================================== */
+
+      /* ===== M1 mgFlat 8.0–11.95 ===== */
+      cut("#mgFlat", 8.0, 11.95);
+      tl.fromTo("#mf-eb", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 8.15);
+      tl.fromTo("#gf1", { strokeDashoffset: DASH }, { strokeDashoffset: 0, duration: 1.4, ease: "power2.inOut", immediateRender: false }, 8.3);
+      tl.fromTo("#gf1dot", { opacity: 0, x: -740 }, { opacity: 1, x: 0, duration: 1.4, ease: "power2.inOut" }, 8.3);
+      tl.fromTo("#mf-stuck", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 9.9);
+      tl.to("#mf-stuck", { opacity: 0.5, duration: 0.6, yoyo: true, repeat: 2, ease: "sine.inOut" }, 10.4);
+
+      /* ===================================================================
+         S2 SEAN 11.95–16.02   ("assume they need to do more")
+         =================================================================== */
+
+      /* ===== M2 mgMore 16.02–19.83 ===== */
+      cut("#mgMore", 16.02, 19.83);
+      tl.fromTo("#mgMore .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 16.1);
+      var mw = ["#mw1", "#mw2", "#mw3", "#mw4"];
+      mw.forEach(function (w, i) {
+        var t = 16.2 + i * 0.85;
+        tl.fromTo(w, { opacity: 0, scale: 1.3, filter: "blur(12px)" },
+                  { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, t);
+        if (i < 3) tl.to(w, { opacity: 0.34, duration: 0.4, ease: "power2.inOut" }, t + 0.9);
       });
 
-      /* ================= PERSISTENT ================= */
-      tl.fromTo("#brandbar", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.15);
-      tl.fromTo("#progbar", { scaleX: 0 }, { scaleX: 1, duration: SLOT, ease: "none" }, 0);   // progress fills across the ad
-      tl.to("#brandbar", { opacity: 0, duration: 0.4, ease: "power2.in" }, 57.2);              // logo hands off to CTA card logo
+      /* ===================================================================
+         S3 SEAN 19.83–22.45   ("revenue isn't one lever, it's a system")
+         =================================================================== */
 
-      /* helper: raise / drop the full dim scrim for MG-forward beats */
-      function dimUp(t)   { tl.to("#dimscrim", { opacity: 1, duration: 0.5, ease: "power2.inOut" }, t); }
-      function dimDown(t) { tl.to("#dimscrim", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, t); }
-
-      /* ================= BEAT 1 — HOOK: flat revenue line (0.3–8) ================= */
-      tl.fromTo("#chartbase", { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power2.out" }, 0.6);
-      tl.fromTo(".bar", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "power3.out", stagger: 0.05 }, 0.9);
-      tl.fromTo("#flatarrow", { opacity: 0, x: 14 }, { opacity: 1, x: 0, duration: 0.4 }, 3.2);
-      tl.to("#chart", { y: -4, duration: 1.6, ease: "sine.inOut", yoyo: true, repeat: 3 }, 3.6); // breathing
-
-      /* ================= BEAT 2 — DO-MORE TRAP (8–15.6) ================= */
-      tl.to("#flatarrow", { opacity: 0, duration: 0.3 }, 8.0);
-      ["#chip1", "#chip2", "#chip3", "#chip4"].forEach(function (c, i) {
-        tl.fromTo(c, { opacity: 0, scale: 0.7, y: 20 },
-                  { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(1.6)" }, 8.2 + i * 1.9);
+      /* ===== M3 mgNodes 22.45–31.0 ===== */
+      cut("#mgNodes", 22.45, 31.0);
+      tl.fromTo("#mgNodes .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 22.55);
+      tl.fromTo("#nl", { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: "power2.out", immediateRender: false }, 22.7);
+      var nodes = ["#n1", "#n2", "#n3", "#n4"];
+      var nodeT = [22.8, 24.1, 25.9, 27.6]; // synced to Traffic / Conversion / AOV / Retention
+      nodes.forEach(function (n, i) {
+        tl.fromTo(n + " .dot", { opacity: 0, scale: 0.5 },
+                  { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.7)", immediateRender: false }, nodeT[i]);
+        tl.fromTo(n + " .dot", { boxShadow: "0 0 0 rgba(156,212,255,0)" },
+                  { boxShadow: "0 0 30px rgba(156,212,255,.55)", duration: 0.4, immediateRender: false }, nodeT[i] + 0.1);
+        tl.fromTo(n + " .lab", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, nodeT[i] + 0.15);
       });
-      tl.to("#chart", { y: 0, duration: 0.3 }, 11.2);          // line pointedly does NOT move
-      tl.to(["#chips", "#chart", "#chartbase"], { opacity: 0, duration: 0.4, ease: "power2.in" }, 15.4);
+      // one breaks (~29s: "when one of those breaks")
+      tl.to("#n2 .dot", { borderColor: "#FF4C32", boxShadow: "0 0 36px rgba(255,76,50,.8)", duration: 0.3 }, 28.9);
+      tl.to("#n2 .dot i", { background: "#FF4C32", boxShadow: "0 0 18px rgba(255,76,50,.9)", duration: 0.3 }, 28.9);
+      tl.to("#n2 .dot", { scale: 1.15, duration: 0.22, yoyo: true, repeat: 1, ease: "power2.inOut" }, 29.0);
+      tl.to("#n2 .lab", { color: "#FF4C32", duration: 0.3 }, 29.0);
+      tl.to("#n2", { y: 26, duration: 0.5, ease: "power2.in" }, 29.4);
+      tl.to("#nl", { background: "rgba(255,76,50,.5)", duration: 0.4 }, 29.4);
+      tl.to(["#n1", "#n3", "#n4"], { opacity: 0.4, duration: 0.5, ease: "power2.out" }, 29.5);
+      tl.fromTo("#bnote", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 29.4);
 
-      /* ================= BEAT 3 — IT'S A SYSTEM (16–23.3, MG-forward) ================= */
-      dimUp(15.7);
-      tl.set("#b-system", { opacity: 1 }, 16.0);
-      tl.fromTo("#sys-not", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 16.1);
-      tl.fromTo("#sys-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.inOut", immediateRender: false }, 20.0);
-      tl.fromTo("#sys-word", { opacity: 0, scale: 0.7, y: 30 },
-                { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: "expo.out" }, 21.3);   // land "system" on the word
-      tl.to("#b-system", { opacity: 0, duration: 0.4, ease: "power2.in" }, 23.3);
+      /* ===================================================================
+         S4 SEAN 31.0–38.05   ("throwing effort... work harder than ever")
+         =================================================================== */
 
-      /* ================= BEAT 4 — THE 4 LEVERS (23.6–30) ================= */
-      tl.set("#b-levers", { opacity: 1 }, 23.6);
-      tl.fromTo("#lev-eyebrow", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4 }, 23.7);
-      tl.fromTo("#spine", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power2.out", immediateRender: false }, 23.7);
-      var levers = ["#lev1", "#lev2", "#lev3", "#lev4"];
-      var levTimes = [23.75, 24.95, 26.25, 27.70];   // synced to Traffic / Conversion / AOV / Retention
-      levers.forEach(function (lv, i) {
-        tl.fromTo(lv + " .stem", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "power3.out", immediateRender: false }, levTimes[i]);
-        tl.fromTo(lv + " .lab", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, levTimes[i] + 0.15);
-      });
+      /* ===== M4 mgSame 38.05–45.5 ===== */
+      cut("#mgSame", 38.05, 45.5);
+      tl.fromTo("#mgSame .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 38.2);
+      tl.fromTo("#bignum", { opacity: 0, y: 24, scale: 0.85 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.3)" }, 38.4);
+      tl.fromTo("#gf2", { strokeDashoffset: DASH }, { strokeDashoffset: 0, duration: 0.9, ease: "power2.out", immediateRender: false }, 38.9);
+      tl.fromTo("#mk .m", { opacity: 0 }, { opacity: 1, duration: 0.15, stagger: 0.12, ease: "steps(1)" }, 41.4);
+      tl.to("#mk .m", { opacity: 0.3, duration: 0.26, yoyo: true, repeat: 3, ease: "steps(1)" }, 42.8);
 
-      /* ================= BEAT 5 — ONE BREAKS (29–34) ================= */
-      tl.to("#lev2 .stem", { background: "linear-gradient(180deg,#FF4C32 0%,#c8341f 100%)", duration: 0.25 }, 29.0);
-      tl.to("#lev2 .stem", { scaleY: 0.32, duration: 0.5, ease: "power3.in" }, 29.15);
-      tl.to("#lev2 .lab", { color: "#FF4C32", duration: 0.3 }, 29.15);
-      tl.fromTo("#crack", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 29.2);
-      tl.to(["#lev1", "#lev3", "#lev4"], { opacity: 0.4, duration: 0.5, ease: "power2.out" }, 30.4);
-      tl.to("#spine", { background: "rgba(255,76,50,.5)", duration: 0.4 }, 30.4);
-      tl.to("#b-levers", { opacity: 0, duration: 0.4, ease: "power2.in" }, 33.9);
+      /* ===================================================================
+         S5 SEAN 45.5–50.82   ("the plateau isn't because you stopped trying")
+         =================================================================== */
 
-      /* ================= BEAT 6 — SAME NUMBER, callback (34–45.7, face-forward) ================= */
-      dimDown(33.9);
-      tl.set(["#chart", "#chartbase"], { opacity: 1 }, 34.4);
-      tl.fromTo("#chartbase", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power2.out", immediateRender: false }, 34.4);
-      tl.fromTo(".bar", { scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: "power3.out", stagger: 0.04, immediateRender: false }, 34.6);
-      tl.set("#b-same", { opacity: 1 }, 38.6);
-      tl.fromTo("#bignum", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, 38.8);
-      tl.fromTo("#samechip", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 41.7);
-      tl.to("#samechip", { opacity: 0.35, duration: 0.24, yoyo: true, repeat: 5, ease: "steps(1)" }, 42.0);  // monotony stamp
-      tl.to(["#b-same", "#chart", "#chartbase"], { opacity: 0, duration: 0.4, ease: "power2.in" }, 45.7);
+      /* ===== M5 mgBottle 50.82–54.06 ===== */
+      cut("#mgBottle", 50.82, 54.06);
+      tl.fromTo("#mgBottle .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 50.95);
+      tl.fromTo("#gclimb", { strokeDashoffset: DASH }, { strokeDashoffset: 0, duration: 1.0, ease: "power2.out", immediateRender: false }, 51.05);
+      tl.fromTo("#ceil", { opacity: 0, scaleX: 0.2 }, { opacity: 1, scaleX: 1, duration: 0.5, ease: "power3.out", transformOrigin: "right center" }, 52.0);
+      tl.fromTo("#bcap", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 52.5);
 
-      /* ================= BEAT 7 — HOLDING YOU BACK (46–53.9, MG-forward) ================= */
-      dimUp(45.8);
-      tl.set("#b-bottle", { opacity: 1 }, 46.3);
-      tl.fromTo("#uparrow", { xPercent: -50, scaleY: 0 }, { xPercent: -50, scaleY: 1, duration: 0.7, ease: "power2.out", immediateRender: false }, 46.4);
-      tl.fromTo(["#funnel .wallL", "#funnel .wallR"], { opacity: 0 }, { opacity: 1, duration: 0.5 }, 47.0);
-      tl.to("#funnel .wallL", { x: 60, duration: 0.7, ease: "power2.inOut" }, 51.2);    // funnel chokes the arrow
-      tl.to("#funnel .wallR", { x: -60, duration: 0.7, ease: "power2.inOut" }, 51.2);
-      tl.to("#uparrow", { scaleX: 0.4, duration: 0.7, ease: "power2.inOut" }, 51.2);
-      tl.fromTo("#bottle-cap", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 52.4);
-      tl.to("#b-bottle", { opacity: 0, duration: 0.35, ease: "power2.in" }, 53.9);
+      /* ===================================================================
+         S6 SEAN 54.06–57.0   ("we've helped hundreds of Shopify brands")
+         =================================================================== */
 
-      /* ================= BEAT 8 — PROOF (54–56.9, MG-forward: dim stays up from beat 7) ====== */
-      tl.set("#b-proof", { opacity: 1 }, 54.4);
-      tl.fromTo("#proofnum", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.5)" }, 54.5);
-      tl.fromTo("#proofsub", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 54.9);
-      tl.fromTo("#prooftag", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 55.3);
-      tl.to("#b-proof", { opacity: 0, duration: 0.35, ease: "power2.in" }, 56.9);
-
-      /* ================= BEAT 9 — BREAKTHROUGH -> CTA (57–67) ================= */
-      dimUp(56.7);
-      tl.set(["#chart", "#chartbase"], { opacity: 1 }, 56.9);
-      tl.fromTo("#chartbase", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out", immediateRender: false }, 56.9);
-      tl.fromTo(".bar", { scaleY: 1 }, { scaleY: 1, duration: 0.35, ease: "none", immediateRender: false }, 57.0); // bars present at rest
-      // last three bars break UPWARD in flame = growth
-      tl.to("#chart .bar:nth-child(6)", { scaleY: 2.4, background: "linear-gradient(180deg,#FF8A4C,#FF4C32)", duration: 0.5, ease: "expo.out" }, 57.7);
-      tl.to("#chart .bar:nth-child(7)", { scaleY: 3.4, background: "linear-gradient(180deg,#FF8A4C,#FF4C32)", duration: 0.55, ease: "expo.out" }, 57.85);
-      tl.to("#chart .bar:nth-child(8)", { scaleY: 4.6, background: "linear-gradient(180deg,#FFA63D,#FF4C32)", duration: 0.6, ease: "expo.out" }, 58.0);
-      tl.to(["#chart", "#chartbase"], { y: -160, opacity: 0, filter: "blur(20px)", duration: 0.5, ease: "power2.in" }, 58.7); // whip up
-
-      // CTA card rises
-      tl.fromTo("#cta", { opacity: 0, y: 120, filter: "blur(24px)" },
-                { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.7, ease: "power2.out" }, 58.9);
-      tl.fromTo("#cta-logo", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 59.3);
-      tl.fromTo("#cta-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out", immediateRender: false }, 59.6);
-      tl.fromTo("#cta-eyebrow", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 59.7);
-      tl.fromTo("#cta-head .plateau", { opacity: 0, x: -26 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 59.9);
-      tl.fromTo("#cta-head", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 60.0);
-      tl.fromTo("#cta-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 60.5);
-      tl.fromTo("#cta-pill", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)" }, 60.9);
-      tl.to("#cta-pill", { scale: 1.04, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 4 }, 62.0); // breathing hold
+      /* ===== CTA 57.0–67 (breakthrough flourish -> card) ===== */
+      tl.set("#cta", { opacity: 1 }, 57.0);
+      tl.fromTo("#cta-logo", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 57.4);
+      tl.fromTo("#cta-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out", immediateRender: false }, 57.7);
+      tl.fromTo("#cta-eyebrow", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 57.8);
+      tl.fromTo("#cta-head .plateau", { opacity: 0, x: -26 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 58.0);
+      tl.fromTo("#cta-head", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 58.1);
+      tl.fromTo("#cta-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 58.6);
+      tl.fromTo("#cta-pill", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)" }, 59.0);
+      tl.to("#cta-pill", { scale: 1.04, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 4 }, 60.2);
 
       // Law 11 anchor — fill the slot
       tl.to({}, { duration: SLOT }, 0);
