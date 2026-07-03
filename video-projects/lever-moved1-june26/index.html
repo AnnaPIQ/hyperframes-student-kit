@@ -54,7 +54,7 @@
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="65.0"
+      data-duration="62.0"
       data-width="1080"
       data-height="1350"
     >
@@ -86,7 +86,7 @@
       <div id="ec-wrapper">
         <video
           id="ec-video"
-          data-start="60.0"
+          data-start="57.0"
           data-duration="4.9"
           data-track-index="6"
           src="assets/lever-endcard.mp4"
@@ -133,13 +133,13 @@
       <!-- Persistent frame: vignette + grain + logo (track 3, above captions) -->
       <div class="layer" id="ov-frame"
         data-composition-id="frame" data-composition-src="compositions/frame.html"
-        data-start="0" data-duration="60.0" data-track-index="3"
+        data-start="0" data-duration="57.0" data-track-index="3"
         data-width="1080" data-height="1350"></div>
 
       <!-- End card (track 5, top) -->
       <div class="layer" id="ov-endcard"
         data-composition-id="endcard" data-composition-src="compositions/endcard.html"
-        data-start="60.0" data-duration="5.0" data-track-index="5"
+        data-start="57.0" data-duration="5.0" data-track-index="5"
         data-width="1080" data-height="1350"></div>
     </div>
 
@@ -159,11 +159,11 @@
       tl.to("#face-wrapper", { scale: 1.06, duration: 0.6, ease: "power2.out" }, 54.0); // the offer lands
 
 
-      // Crossfade footage → end-card background at ~60s.
-      tl.to("#face-wrapper", { opacity: 0, duration: 0.6, ease: "power2.inOut" }, 59.6);
-      tl.to("#ec-wrapper",   { opacity: 1, duration: 0.6, ease: "power2.inOut" }, 59.6);
+      // Crossfade footage → end-card background at ~57s (card in 2s before Sean finishes ~59s).
+      tl.to("#face-wrapper", { opacity: 0, duration: 0.6, ease: "power2.inOut" }, 56.6);
+      tl.to("#ec-wrapper",   { opacity: 1, duration: 0.6, ease: "power2.inOut" }, 56.6);
 
-      tl.set({}, {}, 65.0); // duration anchor (Law 11)
+      tl.set({}, {}, 62.0); // duration anchor (Law 11)
       window.__timelines["main"] = tl;
     </script>
   </body>
