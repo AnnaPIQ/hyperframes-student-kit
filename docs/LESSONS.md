@@ -21,6 +21,19 @@ efficient over time instead of relearning the same lessons.
   the script + `silencedetect`, per the transcriber lesson below).
 - **Pulling a raw clip from a Google Drive share link:** `curl -sSL "https://drive.google.com/uc?export=download&id=<FILE_ID>" -o out.bin` works for reasonably-sized files without auth; the Google Drive MCP tools may fail with a permission-stream error in this env. Verify with `file`/`ffprobe` (it lands as .mov/.mp4).
 
+## Caption / graphic timing (sync)
+
+- **`ffmpeg silencedetect` gaps are NOT reliable word onsets — they drift 3–5s and cause
+  "graphics don't match the audio."** Mapping which gap = which word is guesswork and was
+  wrong by ~4.5s on a talking-head (placed the "more ads" beat at 16s when the VO says it at
+  11.6s). **Fix:** get real word-level timestamps with `faster-whisper` (installs via pip,
+  model downloads from HF through the proxy — works even when the CLI's onnxruntime path is
+  blocked):
+  `pip3 install -q faster-whisper` then
+  `WhisperModel("base.en","cpu","int8").transcribe(f, word_timestamps=True)` → print
+  `w.start w.end w.word`. Place every synced graphic/caption against those numbers. Save the
+  dump next to the asset (e.g. `assets/word-timings.txt`).
+
 ## Render-breaking (these waste the most time)
 
 - **GSAP from a CDN freezes the render / timeline never registers.** The render env's
