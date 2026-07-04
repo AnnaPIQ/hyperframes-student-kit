@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>revenue-plateau-30</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #fff; }
+
+      /* Sean */
+      #vidwrap { position: absolute; inset: 0; z-index: 0; background: #06284C; overflow: hidden; }
+      #face { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+      #seanscrim { position: absolute; inset: auto 0 0 0; height: 420px; z-index: 2;
+        background: linear-gradient(0deg, rgba(4,24,48,.55) 0%, rgba(4,24,48,0) 100%); }
+
+      /* MG scenes */
+      .mgscene { position: absolute; inset: 0; z-index: 10; opacity: 0;
+        background: radial-gradient(92% 52% at 50% 28%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%), #06284C;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        padding: 250px 90px 320px; text-align: center; }
+      .mg-bloom { position: absolute; left: -10%; bottom: -20%; width: 120%; height: 55%;
+        background: var(--brand-gradient-2); filter: blur(90px); opacity: .26; }
+      #mglogo { position: absolute; top: 54px; left: 64px; width: 230px; height: auto; z-index: 11; opacity: 0;
+        filter: drop-shadow(0 4px 18px rgba(0,0,0,.45)); }
+      .mg-eyebrow { font-weight: 700; font-size: 28px; letter-spacing: .28em; text-transform: uppercase;
+        color: var(--brand-blue-tint); margin-bottom: 60px; opacity: 0; }
+
+      .hook-eb { opacity: 0; font-weight: 700; font-size: 30px; letter-spacing: .28em; text-transform: uppercase;
+        color: var(--brand-blue-tint); margin-bottom: 36px; }
+      .hook-h1 { opacity: 0; font-weight: 800; font-size: 118px; line-height: .98; letter-spacing: -.03em; color: #fff; }
+      .hook-h2 { opacity: 0; font-weight: 800; font-size: 118px; line-height: 1.0; letter-spacing: -.03em; color: #fff; }
+
+      #progtrack { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; z-index: 22; background: rgba(156,212,255,.14); }
+      #progbar { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; transform-origin: left center;
+        background: var(--brand-flame); box-shadow: 0 0 16px rgba(255,76,50,.6); }
+
+      /* system diagram */
+      .netwrap { position: relative; width: 860px; display: flex; align-items: flex-start; justify-content: space-between; }
+      .netline { position: absolute; left: 60px; right: 60px; top: 55px; height: 3px; background: rgba(156,212,255,.4); transform-origin: left center; }
+      .node { position: relative; width: 200px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+      .node .dot { opacity: 0; width: 112px; height: 112px; border-radius: 50%; border: 3px solid var(--brand-blue-tint);
+        background: rgba(9,50,95,.85); display: grid; place-items: center; box-shadow: 0 0 0 rgba(156,212,255,0); }
+      .node .dot i { width: 26px; height: 26px; border-radius: 50%; background: var(--brand-blue-tint);
+        box-shadow: 0 0 16px rgba(156,212,255,.8); font-style: normal; }
+      .node .lab { opacity: 0; font-weight: 700; font-size: 28px; color: #fff; text-align: center; }
+
+      /* bottleneck funnel */
+      #b-funnel { position: relative; width: 400px; height: 520px; }
+      #b-funnel svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+      .fn-out { fill: none; stroke: #9CD4FF; stroke-width: 4; stroke-linejoin: round; filter: drop-shadow(0 0 8px rgba(156,212,255,.4)); }
+      .dot3 { position: absolute; width: 26px; height: 26px; border-radius: 50%; opacity: 0;
+        background: radial-gradient(circle at 35% 30%, #dcEEFF, #6aa6e0); box-shadow: 0 0 10px rgba(156,212,255,.5); }
+      .dot3.leak { background: radial-gradient(circle at 35% 30%, #ffd2a6, #FF6A3D); box-shadow: 0 0 12px rgba(255,90,50,.6); }
+      #fn-band { position: absolute; left: 158px; top: 247px; width: 84px; height: 16px; border-radius: 8px; opacity: 0;
+        background: linear-gradient(90deg, #FF8A4C, #FF4C32); box-shadow: 0 0 22px rgba(255,76,50,.75); transform-origin: center; }
+      #fn-lead { position: absolute; left: 244px; top: 253px; width: 52px; height: 3px; opacity: 0; background: var(--brand-flame); transform-origin: left center; }
+      #fn-label { position: absolute; left: 300px; top: 236px; opacity: 0; font-weight: 800; font-size: 30px; letter-spacing: .06em; color: var(--brand-flame); white-space: nowrap; }
+
+      /* CTA card (centered) */
+      #cta { position: absolute; inset: 0; z-index: 20; opacity: 0; text-align: center;
+        background: radial-gradient(90% 55% at 50% 22%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 58%), #06284C; }
+      #cta-bloom { position: absolute; left: -10%; bottom: -22%; width: 120%; height: 60%; background: var(--brand-gradient-2); filter: blur(90px); opacity: .34; }
+      #cta-logo { position: absolute; top: 172px; left: 0; right: 0; margin: 0 auto; width: 360px; height: auto; opacity: 0; display: block; }
+      #cta-rule { position: absolute; top: 468px; left: 0; right: 0; margin: 0 auto; width: 120px; height: 6px; border-radius: 3px; background: var(--brand-flame); transform-origin: center; }
+      #cta-stage { position: absolute; left: 90px; right: 90px; top: 512px; }
+      #cta-eyebrow { opacity: 0; font-weight: 700; font-size: 26px; letter-spacing: .32em; text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 28px; }
+      #cta-head { font-size: 112px; font-weight: 800; line-height: .98; letter-spacing: -.03em; color: #fff; }
+      #cta-head .plateau { color: #fff; }
+      #cta-sub { opacity: 0; margin: 34px auto 0; font-weight: 500; font-size: 37px; line-height: 1.34; color: var(--brand-text-dim); max-width: 720px; }
+      #cta-pillwrap { position: absolute; left: 0; right: 0; bottom: 320px; display: flex; justify-content: center; }
+      #cta-pill { opacity: 0; display: inline-flex; align-items: center; gap: 18px; font-weight: 700; font-size: 40px; color: #fff;
+        background: var(--brand-flame); padding: 32px 60px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,.65); }
+      #cta-pill .arrow { font-size: 42px; line-height: 1; transform: translateY(-1px); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="revenue-plateau-30" data-start="0" data-duration="27.8"
+         data-width="1080" data-height="1350">
+
+      <div id="vidwrap">
+        <video id="face" src="assets/raw30.mp4" muted playsinline data-start="0" data-duration="27.8" data-track-index="0"></video>
+      </div>
+      <audio id="aud" src="assets/raw30.mp4" data-start="0" data-duration="27.8" data-track-index="1" data-volume="1"></audio>
+      <div id="seanscrim" class="clip" data-start="0" data-duration="27.8" data-track-index="3"></div>
+      <img id="mglogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+
+      <!-- OPENING HOOK CARD 0–3 -->
+      <div class="mgscene clip" id="mgHook" data-start="0" data-duration="27.8" data-track-index="9">
+        <div class="mg-bloom"></div>
+        <div class="hook-eb" id="hk-eb">For Shopify brands</div>
+        <div class="hook-h1" id="hk-h1">Revenue flat.</div>
+        <div class="hook-h2" id="hk-h2">For months?</div>
+      </div>
+
+      <!-- SYSTEM DIAGRAM 7–15.4 -->
+      <div class="mgscene clip" id="mgNodes" data-start="0" data-duration="27.8" data-track-index="12">
+        <div class="mg-bloom"></div>
+        <div class="mg-eyebrow">Revenue is a system</div>
+        <div class="netwrap">
+          <div class="netline" id="nl"></div>
+          <div class="node" id="n1"><div class="dot"><i></i></div><div class="lab">Traffic</div></div>
+          <div class="node" id="n2"><div class="dot"><i></i></div><div class="lab">Conversion</div></div>
+          <div class="node" id="n3"><div class="dot"><i></i></div><div class="lab">Avg order value</div></div>
+          <div class="node" id="n4"><div class="dot"><i></i></div><div class="lab">Retention</div></div>
+        </div>
+      </div>
+
+      <!-- BOTTLENECK 19.5–23.3 -->
+      <div class="mgscene clip" id="mgBottle" data-start="0" data-duration="27.8" data-track-index="13">
+        <div class="mg-bloom"></div>
+        <div class="mg-eyebrow">We find the bottleneck</div>
+        <div id="b-funnel">
+          <svg viewBox="0 0 400 520" preserveAspectRatio="none">
+            <path id="fn-out" class="fn-out" d="M186,470 L168,250 L60,40 L340,40 L232,250 L214,470" />
+          </svg>
+          <div class="dot3" style="left:177px;top:225px"></div>
+          <div class="dot3" style="left:200px;top:223px"></div>
+          <div class="dot3" style="left:159px;top:203px"></div>
+          <div class="dot3" style="left:185px;top:202px"></div>
+          <div class="dot3" style="left:211px;top:204px"></div>
+          <div class="dot3" style="left:153px;top:181px"></div>
+          <div class="dot3" style="left:180px;top:180px"></div>
+          <div class="dot3" style="left:207px;top:181px"></div>
+          <div class="dot3" style="left:233px;top:183px"></div>
+          <div class="dot3" style="left:166px;top:159px"></div>
+          <div class="dot3" style="left:194px;top:158px"></div>
+          <div class="dot3" style="left:220px;top:160px"></div>
+          <div id="fn-band"></div>
+          <div id="fn-lead"></div>
+          <div id="fn-label">BOTTLENECK</div>
+          <div class="dot3 leak" style="left:187px;top:300px"></div>
+          <div class="dot3 leak" style="left:186px;top:372px"></div>
+          <div class="dot3 leak" style="left:188px;top:442px"></div>
+        </div>
+      </div>
+
+      <!-- CTA CARD 23.3–27.8 -->
+      <div id="cta" class="clip" data-start="0" data-duration="27.8" data-track-index="20">
+        <div id="cta-bloom"></div>
+        <img id="cta-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+        <div id="cta-rule"></div>
+        <div id="cta-stage">
+          <div id="cta-eyebrow">For Shopify brands</div>
+          <div id="cta-head">Break the <span class="plateau">plateau.</span></div>
+          <div id="cta-sub">We find the bottleneck holding your store back &mdash; and the plan to grow past it.</div>
+        </div>
+        <div id="cta-pillwrap"><div id="cta-pill">Learn how we help <span class="arrow">&rarr;</span></div></div>
+      </div>
+
+      <div id="progtrack"><div id="progbar"></div></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const SLOT = 27.8;
+      const tl = gsap.timeline({ paused: true });
+
+      function cut(sel, tIn, tOut) {
+        tl.set(sel, { opacity: 1 }, tIn);
+        tl.set(sel, { opacity: 0 }, tOut);
+        tl.set("#mglogo", { opacity: 1 }, tIn);
+        tl.set("#mglogo", { opacity: 0 }, tOut);
+      }
+
+      tl.fromTo("#progbar", { scaleX: 0 }, { scaleX: 1, duration: SLOT, ease: "none" }, 0);
+
+      /* === OPENING CARD 0–3 === */
+      cut("#mgHook", 0.0, 3.0);
+      tl.fromTo("#hk-eb", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 0.2);
+      tl.fromTo("#hk-h1", { opacity: 0, y: 26, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.55, ease: "power3.out" }, 0.45);
+      tl.fromTo("#hk-h2", { opacity: 0, y: 26, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.55, ease: "power3.out" }, 0.8);
+
+      /* === SEAN 3–7 (hook) === */
+
+      /* === SYSTEM DIAGRAM 7.0–15.4 (covers hook->system->levers splices) === */
+      cut("#mgNodes", 7.0, 15.4);
+      tl.fromTo("#mgNodes .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4 }, 7.15);
+      tl.fromTo("#nl", { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: "power2.out", immediateRender: false }, 7.3);
+      tl.fromTo(".node .dot", { opacity: 0, scale: 0.6 },
+                { opacity: 0.3, scale: 1, duration: 0.4, ease: "power2.out", stagger: 0.1, immediateRender: false }, 8.4);
+      var nodes = ["#n1", "#n2", "#n3", "#n4"];
+      var nodeT = [9.9, 11.1, 12.5, 14.0]; // Traffic / Conversion / AOV / Retention (spliced positions)
+      nodes.forEach(function (n, i) {
+        tl.to(n + " .dot", { opacity: 1, duration: 0.3, ease: "power2.out", overwrite: "auto" }, nodeT[i]);
+        tl.to(n + " .dot", { scale: 1.12, duration: 0.2, yoyo: true, repeat: 1, ease: "power2.inOut" }, nodeT[i]);
+        tl.to(n + " .dot", { boxShadow: "0 0 30px rgba(156,212,255,.6)", duration: 0.3 }, nodeT[i]);
+        tl.fromTo(n + " .lab", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, nodeT[i] + 0.05);
+      });
+
+      /* === SEAN 15.4–19.5 ("the plateau isn't because you stopped trying") === */
+
+      /* === BOTTLENECK 19.5–23.3 ("...identify the bottlenecks") === */
+      cut("#mgBottle", 19.5, 23.3);
+      gsap.set("#fn-out", { strokeDasharray: 1300 });
+      tl.fromTo("#mgBottle .mg-eyebrow", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35 }, 19.6);
+      tl.fromTo("#fn-out", { strokeDashoffset: 1300 }, { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut", immediateRender: false }, 19.7);
+      tl.fromTo("#mgBottle .dot3:not(.leak)", { y: -320, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.4, ease: "power2.in", stagger: 0.045, immediateRender: false }, 20.0);
+      tl.fromTo("#fn-band", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, 21.0);
+      tl.to("#fn-band", { scaleX: 1.06, opacity: 0.75, duration: 0.5, yoyo: true, repeat: 2, ease: "sine.inOut" }, 21.4);
+      tl.fromTo("#fn-lead", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, 21.3);
+      tl.fromTo("#fn-label", { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out" }, 21.55);
+      tl.fromTo("#mgBottle .dot3.leak", { opacity: 0, y: -8 }, { opacity: 0.9, duration: 0.3, stagger: 0.35, immediateRender: false }, 21.6);
+      tl.to("#mgBottle .dot3.leak", { y: 120, duration: 1.5, ease: "none", stagger: 0.35 }, 21.6);
+      tl.to("#mgBottle .dot3.leak", { opacity: 0, duration: 0.4, stagger: 0.35 }, 22.7);
+
+      /* === CTA CARD 23.3–27.8 === */
+      tl.set("#cta", { opacity: 1 }, 23.3);
+      tl.fromTo("#cta-logo", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 23.5);
+      tl.fromTo("#cta-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out", immediateRender: false }, 23.8);
+      tl.fromTo("#cta-eyebrow", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 23.9);
+      tl.fromTo("#cta-head", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 24.05);
+      tl.fromTo("#cta-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 24.5);
+      tl.fromTo("#cta-pill", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 24.9);
+      tl.to("#cta-pill", { scale: 1.04, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 2 }, 25.9);
+
+      tl.to({}, { duration: SLOT }, 0);
+      window.__timelines["revenue-plateau-30"] = tl;
+    </script>
+  </body>
+</html>
