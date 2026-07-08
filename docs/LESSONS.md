@@ -69,6 +69,14 @@ efficient over time instead of relearning the same lessons.
 - **Talking-head lips out of sync.** Source recordings often have a ~0.2s audio start
   offset that the engine drops. **Fix:** advance the video ~0.16s relative to audio so
   lips match (tune per clip).
+- **Muted `<video>` + separate `<audio>` sibling (same file) can drift lip-sync.** The
+  two tracks are seeked independently at render time, so any per-element offset shows as
+  the audio leading/lagging the mouth (bit us worst on a 9:16 recut). **Fix:** drop the
+  sibling `<audio>` and let the video carry its own track — `<video ... data-has-audio="true"
+  data-volume="1">` with the `muted` attribute REMOVED (lint `video_muted_with_declared_audio`
+  will flag it otherwise). One element = frames and audio are inseparable. Note this
+  overrides render-contract rule 5's "video must be muted" — that rule is for the
+  sibling-audio pattern; `data-has-audio` is the exception.
 - **Phone / vertical b-roll imports rotated.** **Fix:** rotate 90° CW during prep
   (`ffmpeg -vf "transpose=1"`).
 - **Offline transcriber can't run (model download egress-blocked).** Some environments
