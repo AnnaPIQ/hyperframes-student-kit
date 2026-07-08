@@ -1,0 +1,85 @@
+<template id="s04-revenue-keep-template">
+  <script src="../assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s04-revenue-keep" data-start="0" data-duration="11.76" data-width="1080" data-height="1920">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(../assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(../assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s04-revenue-keep"] { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(60% 46% at 50% 40%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 62%), #06284C;
+      font-family: 'Rethink Sans', system-ui, sans-serif; }
+    [data-composition-id="s04-revenue-keep"] .cap { position: absolute; left: 0; right: 0; text-align: center;
+      font-weight: 600; font-size: 34px; letter-spacing: .01em; color: #9fb6d4; }
+    [data-composition-id="s04-revenue-keep"] #cap-a { top: 657px; }
+    [data-composition-id="s04-revenue-keep"] #cap-b { top: 991px; color: #FF8A4C; }
+    /* celebrated revenue figure */
+    [data-composition-id="s04-revenue-keep"] #recChip { position: absolute; top: 731px; left: 50%; transform: translateX(-50%);
+      display: inline-flex; align-items: center; gap: 10px; background: rgba(156,212,255,.16);
+      border: 1px solid rgba(156,212,255,.5); color: #9CD4FF; font-weight: 700; font-size: 28px;
+      padding: 10px 22px; border-radius: 999px; white-space: nowrap; }
+    [data-composition-id="s04-revenue-keep"] #figure { position: absolute; top: 791px; left: 0; right: 0; text-align: center;
+      font-weight: 800; font-size: 154px; letter-spacing: -.04em; color: #FFFFFF; line-height: .9;
+      font-variant-numeric: tabular-nums; text-shadow: 0 0 64px rgba(156,212,255,.4); }
+    /* hidden-cost chips revealed beneath */
+    [data-composition-id="s04-revenue-keep"] #costs { position: absolute; top: 1053px; left: 70px; right: 70px;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; }
+    [data-composition-id="s04-revenue-keep"] #costs .cc { background: rgba(255,76,50,.12); border: 1px solid rgba(255,76,50,.5);
+      color: #FF8A4C; font-weight: 700; font-size: 32px; padding: 14px 26px; border-radius: 14px; white-space: nowrap; }
+    /* the question */
+    [data-composition-id="s04-revenue-keep"] #q { position: absolute; top: 825px; left: 0; right: 0; text-align: center;
+      font-weight: 800; font-size: 104px; letter-spacing: -.025em; line-height: 1.02; color: #FFFFFF; padding: 0 90px; }
+    [data-composition-id="s04-revenue-keep"] #q em { font: inherit; color: inherit; }
+    [data-composition-id="s04-revenue-keep"] #q small { display: block; font-family: 'Rethink Sans', sans-serif;
+      font-weight: 600; font-size: 38px; color: #9fb6d4; letter-spacing: .01em; margin-bottom: 18px; }
+  </style>
+
+  <div class="cap clip" id="cap-a" data-start="0.1" data-duration="3.3" data-track-index="1">The number everyone celebrates&hellip;</div>
+  <div id="recChip" class="clip" data-start="0.8" data-duration="2.6" data-track-index="2">&#9650;&nbsp; RECORD MONTH</div>
+  <div id="figure" class="clip" data-start="0.3" data-duration="8.1" data-track-index="3">$0</div>
+  <div class="cap clip" id="cap-b" data-start="3.4" data-duration="5.0" data-track-index="4">&hellip;and the one that hides the most problems.</div>
+  <div id="costs" class="clip" data-start="3.6" data-duration="4.8" data-track-index="5">
+    <span class="cc">&minus; Refunds</span>
+    <span class="cc">&minus; Ad waste</span>
+    <span class="cc">&minus; Fees</span>
+    <span class="cc">&minus; Returns</span>
+  </div>
+
+  <div id="q" class="clip" data-start="8.4" data-duration="3.36" data-track-index="6">
+    <small>The question was never how much you sold.</small>
+    How much did you <em>keep</em>?
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 11.76, S = '[data-composition-id="s04-revenue-keep"] ';
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo(S+'#cap-a', { opacity:0, y:14 }, { opacity:1, y:0, duration:.55, ease:'power2.out' }, 0.1);
+
+      // celebrated revenue figure counts up
+      const o = { v: 0 }, fig = document.querySelector(S+'#figure');
+      tl.fromTo(S+'#figure', { opacity:0, scale:.8 }, { opacity:1, scale:1, duration:.6, ease:'expo.out' }, 0.3);
+      tl.to(o, { v: 248000, duration:1.6, ease:'power2.out',
+        onUpdate(){ fig.textContent = '$' + Math.round(o.v).toLocaleString('en-US'); } }, 0.4);
+      tl.fromTo(S+'#recChip', { opacity:0, y:-12, scale:.9 }, { opacity:1, y:0, scale:1, duration:.5, ease:'back.out(1.8)' }, 0.8);
+
+      // the celebration cools — the figure dims, hidden costs surface beneath it
+      tl.to(S+'#cap-a', { opacity:0, y:-16, duration:.4, ease:'power2.in' }, 3.0);
+      tl.to(S+'#recChip', { opacity:0, duration:.4, ease:'power2.in' }, 3.0);
+      tl.to(S+'#figure', { color:'#7f9bbd', textShadow:'0 0 0 rgba(0,0,0,0)', scale:.9, y:-26, duration:.6, ease:'sine.inOut' }, 3.1);
+      tl.fromTo(S+'#cap-b', { opacity:0, y:12 }, { opacity:1, y:0, duration:.5, ease:'power2.out' }, 3.4);
+      tl.fromTo(S+'#costs .cc', { opacity:0, y:20, scale:.92 },
+        { opacity:1, y:0, scale:1, duration:.45, stagger:.13, ease:'back.out(1.6)' }, 3.7);
+
+      // clear to the question (lands with the VO "...how much did you keep?")
+      tl.to([S+'#figure', S+'#cap-b', S+'#costs'], { opacity:0, y:-40, duration:.45, ease:'power2.in' }, 8.0);
+      tl.fromTo(S+'#q small', { opacity:0, y:16 }, { opacity:1, y:0, duration:.5, ease:'power2.out' }, 8.3);
+      tl.fromTo(S+'#q', { opacity:0, y:40, scale:.94 }, { opacity:1, y:0, scale:1, duration:.7, ease:'back.out(1.4)' }, 8.4);
+
+      tl.to({}, { duration: SLOT }, 0);
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s04-revenue-keep'] = tl;
+    })();
+  </script>
+  </div>
+</template>
+</content>
