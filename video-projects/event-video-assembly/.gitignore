@@ -1,0 +1,6 @@
+# Downloaded source media (re-fetch via scripts/fetch_and_probe.sh) — do not commit
+assets/
+# Render outputs + probe artifacts
+renders/
+probe_report.tsv
+scripts/fetch_probe.log

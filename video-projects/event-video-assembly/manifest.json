@@ -1,0 +1,54 @@
+{
+  "project": "event-video-assembly",
+  "target": { "width": 1920, "height": 1080, "fps": 30, "orientation": "landscape", "delivery": "YouTube long-form" },
+  "sources": {
+    "aroll_folder": "https://drive.google.com/drive/folders/1vQuqtiSeGhp4IRZSJoKVVp7gdmjGOn9x",
+    "broll_sheet": "https://docs.google.com/spreadsheets/d/1TdA4lCWJTMRTmWDtU7yCzyrqeU6CyNeZygH5Opnvif8"
+  },
+  "exclusions": ["Sweet Es (any spelling)", "Shoptalk", "Dryft/Drft"],
+  "timecode_rule": "Numbers read as M.SS (minute.second). '0.29'=29s, '1.03'=63s, '6.02'=6m02s. Values with 'sec' and no decimal are literal seconds. Single value = in-mark, ~3s grab. Reconciled against real probed durations before EDL.",
+  "aroll": [
+    { "id": "a01", "file": "IMG_8304.MOV", "fileId": "19HV9umQD35LbEFhP33wimDocY7d7o09Q", "content": "TBD-after-thumbnail" },
+    { "id": "a02", "file": "IMG_8308.MOV", "fileId": "1mIqedZgpSdbUO-nlqzvkKrwN3ymnwRgo", "content": "TBD-after-thumbnail" },
+    { "id": "a03", "file": "IMG_8309.MOV", "fileId": "1wmlClSsPkDetNcl9MfL5xksVxHhQH-2g", "content": "TBD-after-thumbnail" },
+    { "id": "a04", "file": "IMG_8303.MOV", "fileId": "1DoPvD4Hblg2xq40HVvO45NOLEZshhpLy", "content": "TBD-after-thumbnail" },
+    { "id": "a05", "file": "IMG_8285.MOV", "fileId": "1wMh5vmVLccWDyh67a7Zh6-kXtOEap-iU", "content": "TBD-after-thumbnail" },
+    { "id": "a06", "file": "IMG_8286.MOV", "fileId": "1p5Dmz-vjdBCS2Lp6zK44Q9CVtxgLVwEK", "content": "TBD-after-thumbnail" },
+    { "id": "a07", "file": "IMG_8290.MOV", "fileId": "11MJoqPP3upERf2didJKmHkSZV8UFFeFc", "content": "TBD-after-thumbnail" },
+    { "id": "a08", "file": "IMG_0894.MOV", "fileId": "17OzTFpKK99hNCuIA4587VaE96MMpm1Bj", "content": "TBD-after-thumbnail" },
+    { "id": "a09", "file": "IMG_0878.MOV", "fileId": "1CcRclTXmCMKJ2Q2VPrhwur9W4p0WDp0a", "content": "TBD-after-thumbnail" },
+    { "id": "a10", "file": "IMG_0879.MOV", "fileId": "1xzznEiu-1UBOsrxJ3Q4Uyf4jNv6lsarw", "content": "TBD-after-thumbnail" },
+    { "id": "a11", "file": "IMG_8284.MOV", "fileId": "1trSt1GvQMvwP_km1jDpss095j1SrUETz", "content": "probed: portrait 1080x1920, 2.47s" },
+    { "id": "a12", "file": "IMG_0853.MOV", "fileId": "1gqoxMxcnGaOJxRb_UlpmxwX8q1QJD8Jo", "content": "TBD-after-thumbnail" }
+  ],
+  "broll": [
+    { "id": "b01", "name": "Sean on Laptop", "file": "b01_sean_laptop.mov", "fileId": "1OEhRQ9CeyZxdI_21Eqm9x-SqGXKuoCL2", "tc_raw": "9-12 sec", "in": 9.0, "out": 12.0 },
+    { "id": "b02", "name": "Bess and Sean - Old Podcast", "file": "b02_bess_sean_podcast.mov", "fileId": "1kjxpA__zg4O2RCkylC5cPLvoosXrkq0A", "tc_raw": "0.00 - 0.03", "in": 0.0, "out": 3.0 },
+    { "id": "b03", "name": "Walking in Klaviyo Event space", "file": "b03_klaviyo_event_space.mov", "fileId": "1cQ3NitKGYa1c4e--fehHg9eXAZ4_sjI4", "tc_raw": "0.07-0.11", "in": 7.0, "out": 11.0 },
+    { "id": "b04", "name": "Sean and Mason talking to 2 women", "file": "b04_sean_mason_2women.mov", "fileId": "1GycuM9sO1RClaXwnU7sdYi6HOqr6p15I", "tc_raw": "0.05-0.07", "in": 5.0, "out": 7.0 },
+    { "id": "b05", "name": "Limitless growth rebuy sign", "file": "b05_limitless_sign.mov", "fileId": "1dNYc4_WmlkTcBxo9J51bXnFXYsDtm1TF", "tc_raw": "0.18", "in": 18.0, "out": 21.0, "note": "single mark -> ~3s grab" },
+    { "id": "b06", "name": "Sean holding laptop talking to man", "file": "b06_sean_laptop_talking_man.mov", "fileId": "1HVH9tFgvcAfS-YczxU_aiLOmUxm18Ofu", "tc_raw": "0.03-0.07", "in": 3.0, "out": 7.0 },
+    { "id": "b07", "name": "Sean Laughing over mason shoulder", "file": "b07_sean_laughing_mason.mov", "fileId": "1oVTj4XGGc0JKgHr9jI2Chue_hLYais9O", "tc_raw": "0.02 - 0.05", "in": 2.0, "out": 5.0 },
+    { "id": "b08", "name": "Angle over laptop - Sean thinking", "file": "b08_over_laptop_thinking.mov", "fileId": "1x1uT_kVmPod-vpPn5SVIGY4kUZmfCwBo", "tc_raw": "0.04-0.08", "in": 4.0, "out": 8.0 },
+    { "id": "b09", "name": "Car driving into hotel in LA", "file": "b09_car_into_hotel_la.mov", "fileId": "1vmYi5ZP_zYfXkxcm57lQdwwCGJRDI0s7", "tc_raw": "0.05-0.06", "in": 5.0, "out": 6.0, "note": "very short 1s -> may pad to 2s" },
+    { "id": "b10", "name": "Sean and Mason walking away - industrial", "file": "b10_sean_mason_walking_industrial.mov", "fileId": "1ORRLYbkYhSU3NIaLTEcZ36tGhUFybGti", "tc_raw": "0.19-0.22", "in": 19.0, "out": 22.0 },
+    { "id": "b11", "name": "Following Sean walking into place", "file": "b11_following_sean_walking.mov", "fileId": "1vk6MsGPlFBwNjRb_CvsJ17lq6EokzIXi", "tc_raw": "0.12-0.15", "in": 12.0, "out": 15.0 },
+    { "id": "b12", "name": "Sean getting into Car", "file": "b12_sean_getting_into_car.mov", "fileId": "1mMQyiHcU5cb6KKnzUajxnTxOqKJlLgDj", "tc_raw": "0.02-0.10", "in": 2.0, "out": 10.0 },
+    { "id": "b13", "name": "Shopify intro", "file": "b13_shopify_intro.mov", "fileId": "1K-FUSQ43EWm80t6f4WT-2s_h1NPdlJL7", "tc_raw": "0.0-0.035", "in": 0.0, "out": 3.5, "note": "ambiguous '0.035' -> read as 0:00-0:03.5" },
+    { "id": "b14", "name": "Outside setting - Sean texting", "file": "b14_outside_sean_texting.mov", "fileId": "1bCUe9ETpsi_4LYDwqDXRHRHdaV0-dNi-", "tc_raw": "0 - 0.05", "in": 0.0, "out": 5.0 },
+    { "id": "b15", "name": "Jaren in Pacific IQ Car", "file": "b15_jaren_in_piq_car.mov", "fileId": "1VSu3Mqc8P78Kqnzkvge8vzIY9fGtIoCC", "tc_raw": "0.01-0.02", "in": 1.0, "out": 2.0, "note": "very short 1s -> may pad to 2s" },
+    { "id": "b16", "name": "Jaren getting into Pacific IQ Car", "file": "b16_jaren_getting_into_piq_car.mov", "fileId": "1WsMOk5hNhK5b-iNaELhBT6FZ0UWPXV6O", "tc_raw": "0.07 - 0.12", "in": 7.0, "out": 12.0 },
+    { "id": "b17", "name": "Hotel Room Sean typing on Laptop", "file": "b17_hotel_sean_typing.mov", "fileId": "1JNuCmTeW9-UxRyaW5SyWiffEqDqlM636", "tc_raw": "0.00-0.02", "in": 0.0, "out": 2.0 },
+    { "id": "b18", "name": "Pacific IQ reel", "file": "b18_pacific_iq_reel.mov", "fileId": "1Az_P577iqasuJeGVJuptFgfipG5jIKQC", "tc_raw": "", "in": null, "out": null, "note": "no timecode -> judgment, grab a clean 3-4s" },
+    { "id": "b19", "name": "Sean and Jaren - talking outside", "file": "b19_sean_jaren_outside.mov", "fileId": "1E-8ZHZQNI5jGseDnYnJ9Z4TazXH_MwSU", "tc_raw": "", "in": null, "out": null, "note": "no timecode -> judgment" },
+    { "id": "b20", "name": "Zoom in to Sean talk to two guys - Mason handshake", "file": "b20_zoom_sean_mason_handshake.mov", "fileId": "1reXIHROlDwRj2wAV-FQeVcoCzyakM2df", "tc_raw": "", "in": null, "out": null, "note": "no timecode -> judgment" }
+  ],
+  "broll_excluded": [
+    "Dryft Sleep (Dryft)", "Sweet Es team working (Sweet Es)", "Sean walking around at Shoptalk (Shoptalk)",
+    "Sean talking on stage at Shoptalk - rebuy x2 (Shoptalk)", "Dryft and Sean Walking in Store (Dryft)",
+    "Sweet Es Erica Packing Cake (Sweet Es)", "Sweet' Es cake being packed (Sweet Es)",
+    "Sweet Es Erica walking toward camera (Sweet Es)", "Sweet Es Sprinkle on cupcakes (Sweet Es)",
+    "Sweet E's Cookie Scroll (Sweet Es)", "Drft Hold product (Dryft/Drft)"
+  ],
+  "broll_skipped_no_link": "≈16 sheet rows have a descriptive name but no Drive link and no timecode (e.g. 'Looking out window driving in LA', 'Mason walking into location'). No resolvable fileId -> skipped."
+}
