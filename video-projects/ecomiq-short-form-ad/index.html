@@ -15,41 +15,104 @@
         font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1080px; height: 1920px; overflow: hidden;
-        background: var(--brand-bg); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
+        background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+
+      /* Base canvas — only visible at any 1-frame seam; footage fills the frame */
       #bg { position: absolute; inset: 0;
-        background: radial-gradient(90% 55% at 50% 20%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
-      #logo { position: absolute; top: 7%; left: 10%; width: 33%; height: auto; }
-      #stage { position: absolute; inset: 0; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; gap: 24px; padding: 10%; text-align: center; }
-      #eyebrow { font-weight: 600; font-size: 26px; letter-spacing: .34em; text-transform: uppercase; color: var(--brand-blue-tint); }
-      #headline { font-weight: 800; font-size: 96px; line-height: .98; letter-spacing: -.03em; }
-      #headline .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
-      #subhead { font-weight: 500; font-size: 34px; line-height: 1.3; color: var(--brand-text-dim); max-width: 70%; }
-      #cta { margin-top: 12px; font-weight: 700; font-size: 34px; color: var(--brand-white);
-        background: var(--brand-flame); padding: 26px 52px; border-radius: 999px;
+        background: radial-gradient(90% 55% at 50% 18%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
+
+      /* Footage clips fill the 9:16 frame */
+      video.v { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; z-index: 10; }
+
+      /* Top scrim so the white wordmark stays legible over bright footage */
+      #topscrim { position: absolute; top: 0; left: 0; width: 1080px; height: 300px; z-index: 30;
+        background: linear-gradient(180deg, rgba(6,40,76,.55) 0%, rgba(6,40,76,0) 100%); pointer-events: none; }
+
+      /* Persistent logo overlay (non-clip so the render engine won't reposition it) */
+      #logo-wrap { position: absolute; top: 64px; left: 72px; z-index: 40; }
+      #logo-wrap img { width: 300px; height: auto; display: block;
+        filter: drop-shadow(0 6px 20px rgba(0,0,0,.45)); }
+
+      /* End card */
+      #endcard { position: absolute; inset: 0; z-index: 60; opacity: 0;
+        background: radial-gradient(88% 60% at 50% 34%, #0a366a 0%, var(--brand-navy) 60%);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        text-align: center; padding: 0 120px; gap: 30px; }
+      #ec-logo { width: 360px; height: auto; opacity: 0; filter: drop-shadow(0 8px 28px rgba(0,0,0,.4)); }
+      #ec-eyebrow { opacity: 0; font-weight: 600; font-size: 26px; letter-spacing: .34em;
+        text-transform: uppercase; color: var(--brand-blue-tint); }
+      #ec-headline { opacity: 0; font-weight: 800; font-size: 104px; line-height: .98; letter-spacing: -.03em; }
+      #ec-headline .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+      #ec-sub { opacity: 0; font-weight: 500; font-size: 36px; line-height: 1.3; color: var(--brand-text-dim); max-width: 78%; }
+      #ec-cta { opacity: 0; margin-top: 14px; font-weight: 700; font-size: 38px; color: var(--brand-white);
+        background: var(--brand-flame); padding: 30px 60px; border-radius: 999px;
         box-shadow: 0 20px 64px -16px rgba(255,76,50,.6); }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="ecomiq-short-form-ad" data-start="0" data-duration="6" data-width="1080" data-height="1920">
-      <div id="bg" class="clip" data-start="0" data-duration="6" data-track-index="0"></div>
-      <img id="logo" class="clip" data-start="0" data-duration="6" data-track-index="1" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-      <div id="stage" class="clip" data-start="0" data-duration="6" data-track-index="2">
-        <div id="eyebrow">E-Commerce Intelligence</div>
-        <div id="headline"><span class="em">Rethink</span> your strategy.</div>
-        <div id="subhead">Replace this copy. Build your scene. Ship the ad.</div>
-        <div id="cta">Get started &rarr;</div>
+    <div id="root" data-composition-id="ecomiq-short-form-ad" data-start="0" data-duration="29.2" data-width="1080" data-height="1920">
+
+      <!-- Base canvas -->
+      <div id="bg" class="clip" data-start="0" data-duration="29.2" data-track-index="0"></div>
+
+      <!-- ============ A-ROLL FACE BEATS (track 1) — the spine ============ -->
+      <video class="v" id="f1" data-start="0"     data-duration="2.6" data-media-start="0"    data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+      <video class="v" id="f2" data-start="5.4"   data-duration="1.8" data-media-start="5.4"  data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+      <video class="v" id="f3" data-start="9.2"   data-duration="2.0" data-media-start="9.2"  data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+      <video class="v" id="f4" data-start="14.5"  data-duration="2.7" data-media-start="14.5" data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+      <video class="v" id="f5" data-start="20.5"  data-duration="1.7" data-media-start="40.4" data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+      <video class="v" id="f6" data-start="24.2"  data-duration="1.8" data-media-start="44.1" data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+
+      <!-- ============ B-ROLL CUTAWAYS (track 2) — on the beats ============ -->
+      <!-- Folder 1: the chaos (too many ideas / tools / booths) -->
+      <video class="v" id="b1"  data-start="2.6"  data-duration="1.4" data-media-start="3.0" data-track-index="2" src="assets/broll/br_expo.mp4"     muted playsinline preload="auto"></video>
+      <video class="v" id="b2"  data-start="4.0"  data-duration="1.4" data-media-start="0.4" data-track-index="2" src="assets/broll/br_phones.mp4"   muted playsinline preload="auto"></video>
+      <video class="v" id="b3"  data-start="7.2"  data-duration="2.0" data-media-start="1.0" data-track-index="2" src="assets/broll/br_kiosk.mp4"    muted playsinline preload="auto"></video>
+      <video class="v" id="b4"  data-start="11.2" data-duration="1.1" data-media-start="5.0" data-track-index="2" src="assets/broll/br_crowd.mp4"    muted playsinline preload="auto"></video>
+      <video class="v" id="b5"  data-start="12.3" data-duration="1.0" data-media-start="1.5" data-track-index="2" src="assets/broll/br_sidekick.mp4" muted playsinline preload="auto"></video>
+      <video class="v" id="b6"  data-start="13.3" data-duration="1.2" data-media-start="1.0" data-track-index="2" src="assets/broll/br_walk.mp4"     muted playsinline preload="auto"></video>
+      <!-- Folder 2: the calm / clarity (do one or two things really well) -->
+      <video class="v" id="b7"  data-start="17.2" data-duration="1.8" data-media-start="5.5" data-track-index="2" src="assets/broll/br_laptop1.mp4"  muted playsinline preload="auto"></video>
+      <video class="v" id="b8"  data-start="19.0" data-duration="1.5" data-media-start="1.0" data-track-index="2" src="assets/broll/br_laptop2.mp4"  muted playsinline preload="auto"></video>
+      <video class="v" id="b9"  data-start="22.2" data-duration="1.0" data-media-start="0.3" data-track-index="2" src="assets/broll/br_focus.mp4"    muted playsinline preload="auto"></video>
+      <video class="v" id="b10" data-start="23.2" data-duration="1.0" data-media-start="0.5" data-track-index="2" src="assets/broll/br_keys.mp4"     muted playsinline preload="auto"></video>
+
+      <!-- ============ AUDIO ============ -->
+      <!-- Voice (A-roll), spliced: part 1 (src 0-19) then part 2 (src 38.9-45.9). Join is silence-to-silence, hidden under the calm cutaway. -->
+      <audio id="vo1" data-start="0"  data-duration="19"  data-media-start="0"    data-track-index="3" src="assets/aroll/aroll_norm.mp4" data-volume="1"></audio>
+      <audio id="vo2" data-start="19" data-duration="7"   data-media-start="38.9" data-track-index="3" src="assets/aroll/aroll_norm.mp4" data-volume="1"></audio>
+      <!-- Duckable music-bed placeholder (silent). Swap the file + raise data-volume; it already sits under the VO. -->
+      <audio id="music" data-start="0" data-duration="29.2" data-media-start="0" data-track-index="4" src="assets/music-bed.m4a" data-volume="0.18"></audio>
+
+      <!-- ============ OVERLAYS (non-clip, always positioned) ============ -->
+      <div id="topscrim"></div>
+      <div id="logo-wrap"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+
+      <!-- ============ END CARD ============ -->
+      <div id="endcard">
+        <img id="ec-logo" src="assets/ecomiq-logo-white-endcard.svg" alt="EcomIQ" />
+        <div id="ec-eyebrow">E-Commerce Intelligence</div>
+        <div id="ec-headline"><span class="em">Rethink</span> your strategy.</div>
+        <div id="ec-sub">Turn your store's data into decisions you can trust.</div>
+        <div id="ec-cta">ecomiq.com &rarr;</div>
       </div>
     </div>
+
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
-      tl.from("#logo", { opacity: 0, y: -20, duration: .6, ease: "power3.out" }, .2)
-        .from("#eyebrow", { opacity: 0, y: 16, duration: .5, ease: "power2.out" }, .5)
-        .from("#headline", { opacity: 0, y: 32, duration: .7, ease: "power3.out" }, .7)
-        .from("#subhead", { opacity: 0, y: 20, duration: .6, ease: "power2.out" }, 1.1)
-        .from("#cta", { opacity: 0, scale: .85, duration: .55, ease: "back.out(1.7)" }, 1.5);
-      tl.to({}, { duration: 6 }, 0); // pad to data-duration
+
+      // Persistent logo — enters over the hook
+      tl.fromTo("#logo-wrap", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: .6, ease: "power3.out" }, .3);
+
+      // End card (final scene) — crossfades in as the last A-roll beat ends
+      tl.fromTo("#endcard",     { opacity: 0 },            { opacity: 1, duration: .45, ease: "power2.out" }, 25.9);
+      tl.fromTo("#ec-logo",     { opacity: 0, y: 24, scale: .92 }, { opacity: 1, y: 0, scale: 1, duration: .55, ease: "power3.out" }, 26.15);
+      tl.fromTo("#ec-eyebrow",  { opacity: 0, y: 16 },     { opacity: 1, y: 0, duration: .5, ease: "power2.out" }, 26.35);
+      tl.fromTo("#ec-headline", { opacity: 0, y: 30 },     { opacity: 1, y: 0, duration: .6, ease: "power3.out" }, 26.5);
+      tl.fromTo("#ec-sub",      { opacity: 0, y: 20 },     { opacity: 1, y: 0, duration: .55, ease: "power2.out" }, 26.8);
+      tl.fromTo("#ec-cta",      { opacity: 0, scale: .85 },{ opacity: 1, scale: 1, duration: .55, ease: "back.out(1.7)" }, 27.05);
+
       window.__timelines["ecomiq-short-form-ad"] = tl;
     </script>
   </body>
