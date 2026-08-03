@@ -16,7 +16,7 @@
   },
   "portrait_treatment": "fill \u2014 native vertical clips + oriented still fill 1080x1920.",
   "finishing": "Global grade + vignette once on composite.",
-  "revision": "v13 \u2014 move SHOP-hall (a04) after b12; add device-hero (a09/IMG_0878) + DOTDEV selfie still (p1) before a03; match-cuts where footage supports (car->car, SHOP-hall->walking).",
+  "revision": "v14 \u2014 remove p1 (DOTDEV selfie still); a09 hero -> a03 directly.",
   "fade_in": 0.5,
   "fade_out": 0.5,
   "segments": [
@@ -94,20 +94,6 @@
     },
     {
       "n": 6,
-      "id": "p1",
-      "src": "assets/braw/p1_IMG_0863_up.png",
-      "in": 0.0,
-      "out": 2.0,
-      "fit": "fill",
-      "label": "DOTDEV selfie photo (still, after hero)",
-      "reason": "",
-      "transition_out": {
-        "type": "dissolve",
-        "dur": 0.3
-      }
-    },
-    {
-      "n": 7,
       "id": "a03",
       "src": "assets/araw/IMG_8309.MOV",
       "in": 0.2,
@@ -121,7 +107,7 @@
       }
     },
     {
-      "n": 8,
+      "n": 7,
       "id": "a05",
       "src": "assets/araw/IMG_8285.MOV",
       "in": 1.0,
@@ -135,7 +121,7 @@
       }
     },
     {
-      "n": 9,
+      "n": 8,
       "id": "a07",
       "src": "assets/araw/IMG_8290.MOV",
       "in": 0.2,
@@ -149,7 +135,7 @@
       }
     },
     {
-      "n": 10,
+      "n": 9,
       "id": "a08",
       "src": "assets/araw/IMG_0894.MOV",
       "in": 1.0,
@@ -163,7 +149,7 @@
       }
     },
     {
-      "n": 11,
+      "n": 10,
       "id": "a10",
       "src": "assets/araw/IMG_0879.MOV",
       "in": 2.0,
@@ -177,7 +163,7 @@
       }
     },
     {
-      "n": 12,
+      "n": 11,
       "id": "a12",
       "src": "assets/araw/IMG_0853.MOV",
       "in": 0.5,
@@ -191,7 +177,7 @@
       }
     },
     {
-      "n": 13,
+      "n": 12,
       "id": "b24",
       "src": "assets/braw/b24_sean_jaren_talking.mov",
       "in": 1.0,
@@ -205,7 +191,7 @@
       }
     },
     {
-      "n": 14,
+      "n": 13,
       "id": "b21",
       "src": "assets/braw/b21_walkaway_sean_typing.mov",
       "in": 0.3,
