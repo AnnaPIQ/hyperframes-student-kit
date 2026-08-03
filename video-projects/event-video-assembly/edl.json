@@ -16,9 +16,9 @@
   },
   "portrait_treatment": "fill \u2014 native vertical clips fill 1080x1920 edge-to-edge.",
   "finishing": "Global grade (contrast 1.06 / sat 1.10 / gamma 0.98) + vignette once on composite.",
-  "revision": "v5 \u2014 swap a01/a04; add b22 (Rutherford Hill bag, arrival, short); swap a07 ahead of a08 + shorten a08 ('heading to social'); delete b04 & a11; replace b10 with b23 (Jaren PIQ car 5-11s).",
+  "revision": "v6 \u2014 clean-editorial transitions: cuts within scenes, 0.3s dissolves for flow, dip-black at act breaks, match-cuts on motion, dip-white into hall. Also: b24 replaces bag at clip 3; b23 removed.",
   "fade_in": 0.5,
-  "fade_out": 0.6,
+  "fade_out": 0.5,
   "segments": [
     {
       "n": 1,
@@ -48,23 +48,23 @@
       "reason": "",
       "transition_out": {
         "type": "dissolve",
-        "dur": 0.4
+        "dur": 0.3
       },
       "prerotate": "cw"
     },
     {
       "n": 3,
-      "id": "b22",
-      "src": "assets/braw/b22_outside_texting_bag.mov",
-      "in": 7.0,
-      "out": 9.5,
+      "id": "b24",
+      "src": "assets/braw/b24_sean_jaren_talking.mov",
+      "in": 1.0,
+      "out": 6.0,
       "fit": "fill",
       "act": "1 Arrival",
-      "label": "Outside \u2014 Rutherford Hill bag (NEW, short)",
+      "label": "Sean & Jaren talking outside (NEW, replaces bag)",
       "reason": "",
       "transition_out": {
         "type": "dipwhite",
-        "dur": 0.5
+        "dur": 0.4
       }
     },
     {
@@ -79,7 +79,7 @@
       "reason": "",
       "transition_out": {
         "type": "dissolve",
-        "dur": 0.5
+        "dur": 0.3
       }
     },
     {
@@ -140,7 +140,7 @@
       "reason": "",
       "transition_out": {
         "type": "dipblack",
-        "dur": 0.4
+        "dur": 0.35
       }
     },
     {
@@ -154,8 +154,8 @@
       "label": "AGENTIC demo table",
       "reason": "",
       "transition_out": {
-        "type": "dissolve",
-        "dur": 0.5
+        "type": "cut",
+        "dur": 0.033
       }
     },
     {
@@ -169,8 +169,8 @@
       "label": "Orange booth app screen (swapped ahead of a08)",
       "reason": "",
       "transition_out": {
-        "type": "dissolve",
-        "dur": 0.5
+        "type": "cut",
+        "dur": 0.033
       }
     },
     {
@@ -185,7 +185,7 @@
       "reason": "",
       "transition_out": {
         "type": "dissolve",
-        "dur": 0.5
+        "dur": 0.35
       }
     },
     {
@@ -200,7 +200,7 @@
       "reason": "",
       "transition_out": {
         "type": "dissolve",
-        "dur": 0.5
+        "dur": 0.3
       }
     },
     {
@@ -215,26 +215,11 @@
       "reason": "",
       "transition_out": {
         "type": "dipblack",
-        "dur": 0.5
+        "dur": 0.35
       }
     },
     {
       "n": 14,
-      "id": "b23",
-      "src": "assets/braw/b23_jaren_piq_car.mov",
-      "in": 5.0,
-      "out": 11.0,
-      "fit": "fill",
-      "act": "6 Close",
-      "label": "Jaren into PIQ car (NEW, replaces b10)",
-      "reason": "",
-      "transition_out": {
-        "type": "dissolve",
-        "dur": 0.5
-      }
-    },
-    {
-      "n": 15,
       "id": "b17",
       "src": "assets/braw/b17_hotel_sean_typing.mov",
       "in": 0.5,
@@ -245,11 +230,11 @@
       "reason": "",
       "transition_out": {
         "type": "dissolve",
-        "dur": 0.4
+        "dur": 0.3
       }
     },
     {
-      "n": 16,
+      "n": 15,
       "id": "b21",
       "src": "assets/braw/b21_walkaway_sean_typing.mov",
       "in": 0.3,
