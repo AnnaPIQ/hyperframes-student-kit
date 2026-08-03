@@ -81,13 +81,17 @@ def main():
         if s["dur"] <= 0:
             sys.exit(f"segment {s['n']} ({s['id']}) has non-positive duration")
 
-    # ffmpeg inputs (pre-trimmed via -ss/-t)
+    # ffmpeg inputs (video: pre-trimmed via -ss/-t; still image: looped for its duration)
+    IMG_EXT = (".jpg", ".jpeg", ".png", ".webp")
     inputs = []
     for s in segs:
         path = os.path.join(ROOT, s["src"])
         if not os.path.exists(path):
             sys.exit(f"missing source: {path}")
-        inputs += ["-ss", f"{s['in']}", "-t", f"{s['dur']}", "-i", path]
+        if path.lower().endswith(IMG_EXT):
+            inputs += ["-loop", "1", "-framerate", str(FPS), "-t", f"{s['dur']}", "-i", path]
+        else:
+            inputs += ["-ss", f"{s['in']}", "-t", f"{s['dur']}", "-i", path]
 
     # normalization chains
     fc = []

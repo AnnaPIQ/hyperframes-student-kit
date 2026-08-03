@@ -12,11 +12,11 @@
     "codec": "aac",
     "sample_rate": 48000,
     "channels": 2,
-    "note": "Empty/duckable stereo AAC bed. Sean VO drops on top later."
+    "note": "Empty/duckable stereo AAC bed. Sean VO later."
   },
-  "portrait_treatment": "fill \u2014 native vertical clips fill 1080x1920 edge-to-edge.",
-  "finishing": "Global grade (contrast 1.06 / sat 1.10 / gamma 0.98) + vignette once on composite.",
-  "revision": "v11 \u2014 restore a04 (SHOP hall) into floor between a01 and a03, fuller 5s window, to fix the abrupt thin spot at ~0:16.",
+  "portrait_treatment": "fill \u2014 native vertical clips + oriented still fill 1080x1920.",
+  "finishing": "Global grade + vignette once on composite.",
+  "revision": "v13 \u2014 move SHOP-hall (a04) after b12; add device-hero (a09/IMG_0878) + DOTDEV selfie still (p1) before a03; match-cuts where footage supports (car->car, SHOP-hall->walking).",
   "fade_in": 0.5,
   "fade_out": 0.5,
   "segments": [
@@ -27,7 +27,6 @@
       "in": 4.0,
       "out": 6.0,
       "fit": "fill",
-      "act": "1 Arrival",
       "label": "Car into LA hotel",
       "reason": "",
       "transition_out": {
@@ -43,28 +42,26 @@
       "in": 2.0,
       "out": 5.0,
       "fit": "fill",
-      "act": "1 Arrival",
       "label": "Sean getting into car",
       "reason": "",
       "transition_out": {
-        "type": "dissolve",
-        "dur": 0.3
+        "type": "dipwhite",
+        "dur": 0.4
       },
       "prerotate": "cw"
     },
     {
       "n": 3,
-      "id": "b24",
-      "src": "assets/braw/b24_sean_jaren_talking.mov",
+      "id": "a04",
+      "src": "assets/araw/IMG_8303.MOV",
       "in": 1.0,
       "out": 6.0,
       "fit": "fill",
-      "act": "1 Arrival",
-      "label": "Sean & Jaren talking outside (NEW, replaces bag)",
+      "label": "SHOP hall (moved after b12)",
       "reason": "",
       "transition_out": {
-        "type": "dipwhite",
-        "dur": 0.4
+        "type": "matchcut",
+        "dur": 0.2
       }
     },
     {
@@ -74,8 +71,7 @@
       "in": 0.5,
       "out": 5.5,
       "fit": "fill",
-      "act": "2 Floor",
-      "label": "Walking the floor (swapped ahead of a04)",
+      "label": "Walking the floor",
       "reason": "",
       "transition_out": {
         "type": "dissolve",
@@ -84,13 +80,12 @@
     },
     {
       "n": 5,
-      "id": "a04",
-      "src": "assets/araw/IMG_8303.MOV",
+      "id": "a09",
+      "src": "assets/araw/IMG_0878.MOV",
       "in": 1.0,
-      "out": 6.0,
+      "out": 4.0,
       "fit": "fill",
-      "act": "2 Floor",
-      "label": "SHOP hall (restored, fuller 5s)",
+      "label": "Device-macro HERO (added before a03)",
       "reason": "",
       "transition_out": {
         "type": "dissolve",
@@ -99,12 +94,25 @@
     },
     {
       "n": 6,
+      "id": "p1",
+      "src": "assets/braw/p1_IMG_0863_up.png",
+      "in": 0.0,
+      "out": 2.0,
+      "fit": "fill",
+      "label": "DOTDEV selfie photo (still, after hero)",
+      "reason": "",
+      "transition_out": {
+        "type": "dissolve",
+        "dur": 0.3
+      }
+    },
+    {
+      "n": 7,
       "id": "a03",
       "src": "assets/araw/IMG_8309.MOV",
       "in": 0.2,
       "out": 3.6,
       "fit": "fill",
-      "act": "2 Floor",
       "label": "SIDEKICK booth",
       "reason": "",
       "transition_out": {
@@ -113,13 +121,12 @@
       }
     },
     {
-      "n": 7,
+      "n": 8,
       "id": "a05",
       "src": "assets/araw/IMG_8285.MOV",
       "in": 1.0,
       "out": 7.0,
       "fit": "fill",
-      "act": "3 Demos",
       "label": "AGENTIC demo table",
       "reason": "",
       "transition_out": {
@@ -128,14 +135,13 @@
       }
     },
     {
-      "n": 8,
+      "n": 9,
       "id": "a07",
       "src": "assets/araw/IMG_8290.MOV",
       "in": 0.2,
       "out": 4.4,
       "fit": "fill",
-      "act": "3 Demos",
-      "label": "Orange booth app screen (swapped ahead of a08)",
+      "label": "Orange booth app screen",
       "reason": "",
       "transition_out": {
         "type": "dissolve",
@@ -143,14 +149,13 @@
       }
     },
     {
-      "n": 9,
+      "n": 10,
       "id": "a08",
       "src": "assets/araw/IMG_0894.MOV",
       "in": 1.0,
       "out": 3.5,
       "fit": "fill",
-      "act": "3 Demos",
-      "label": "Heading to the social (shortened, was 'a08')",
+      "label": "Heading to the social",
       "reason": "",
       "transition_out": {
         "type": "dissolve",
@@ -158,13 +163,12 @@
       }
     },
     {
-      "n": 10,
+      "n": 11,
       "id": "a10",
       "src": "assets/araw/IMG_0879.MOV",
       "in": 2.0,
       "out": 9.0,
       "fit": "fill",
-      "act": "5 Evening",
       "label": "Happy hour (LED)",
       "reason": "",
       "transition_out": {
@@ -173,13 +177,12 @@
       }
     },
     {
-      "n": 11,
+      "n": 12,
       "id": "a12",
       "src": "assets/araw/IMG_0853.MOV",
       "in": 0.5,
       "out": 7.5,
       "fit": "fill",
-      "act": "6 Close",
       "label": "Dinner (communal table)",
       "reason": "",
       "transition_out": {
@@ -188,14 +191,27 @@
       }
     },
     {
-      "n": 12,
+      "n": 13,
+      "id": "b24",
+      "src": "assets/braw/b24_sean_jaren_talking.mov",
+      "in": 1.0,
+      "out": 6.0,
+      "fit": "fill",
+      "label": "Sean & Jaren talking outside",
+      "reason": "",
+      "transition_out": {
+        "type": "dissolve",
+        "dur": 0.3
+      }
+    },
+    {
+      "n": 14,
       "id": "b21",
       "src": "assets/braw/b21_walkaway_sean_typing.mov",
       "in": 0.3,
       "out": 5.8,
       "fit": "fill",
-      "act": "6 Close",
-      "label": "Walk away from Sean typing",
+      "label": "Walk away (closer)",
       "reason": "",
       "transition_out": {
         "type": "end",
