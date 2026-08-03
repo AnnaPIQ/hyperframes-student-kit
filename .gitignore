@@ -28,6 +28,11 @@ raw-media/
 # Raw asset drop zone — stage media here; don't commit the big raw/prepped files
 assets/incoming/*
 !assets/incoming/README.md
+# Same drop zone, but for per-project staging (video-projects/<name>/assets/incoming)
+**/assets/incoming/
+# Local-only staging for prepped footage (normalized clips live here until final.mp4 ships)
+**/assets/aroll/
+**/assets/broll/
 
 # Playwright browser profiles
 .playwright-profile/
