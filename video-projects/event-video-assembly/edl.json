@@ -14,9 +14,9 @@
     "channels": 2,
     "note": "Empty/duckable stereo AAC bed. Sean VO drops on top later."
   },
-  "portrait_treatment": "fill \u2014 native vertical clips fill 1080x1920 edge-to-edge. No bars.",
+  "portrait_treatment": "fill \u2014 native vertical clips fill 1080x1920 edge-to-edge.",
   "finishing": "Global grade (contrast 1.06 / sat 1.10 / gamma 0.98) + vignette once on composite.",
-  "revision": "v4 \u2014 reorder per user: open swapped (b09,b12); evening flipped (a11 before a10); a11 shortened to ~1.2s; b10 moved into close. Dropped a09 (hero macro), b07, b03 per user's collapsed rows.",
+  "revision": "v5 \u2014 swap a01/a04; add b22 (Rutherford Hill bag, arrival, short); swap a07 ahead of a08 + shorten a08 ('heading to social'); delete b04 & a11; replace b10 with b23 (Jaren PIQ car 5-11s).",
   "fade_in": 0.5,
   "fade_out": 0.6,
   "segments": [
@@ -29,7 +29,7 @@
       "fit": "fill",
       "act": "1 Arrival",
       "label": "Car into LA hotel",
-      "reason": "Opener (swapped first per note).",
+      "reason": "",
       "transition_out": {
         "type": "matchcut",
         "dur": 0.2
@@ -45,25 +45,25 @@
       "fit": "fill",
       "act": "1 Arrival",
       "label": "Sean getting into car",
-      "reason": "Second; dip-to-white into the hall.",
+      "reason": "",
       "transition_out": {
-        "type": "dipwhite",
-        "dur": 0.5
+        "type": "dissolve",
+        "dur": 0.4
       },
       "prerotate": "cw"
     },
     {
       "n": 3,
-      "id": "a04",
-      "src": "assets/araw/IMG_8303.MOV",
-      "in": 1.0,
-      "out": 4.5,
+      "id": "b22",
+      "src": "assets/braw/b22_outside_texting_bag.mov",
+      "in": 7.0,
+      "out": 9.5,
       "fit": "fill",
-      "act": "2 Floor",
-      "label": "SHOP hall (shortened)",
-      "reason": "First dot.dev clip, trimmed.",
+      "act": "1 Arrival",
+      "label": "Outside \u2014 Rutherford Hill bag (NEW, short)",
+      "reason": "",
       "transition_out": {
-        "type": "dissolve",
+        "type": "dipwhite",
         "dur": 0.5
       }
     },
@@ -75,15 +75,30 @@
       "out": 5.5,
       "fit": "fill",
       "act": "2 Floor",
-      "label": "Walking the floor",
-      "reason": "Sets up walking match-cut.",
+      "label": "Walking the floor (swapped ahead of a04)",
+      "reason": "",
+      "transition_out": {
+        "type": "dissolve",
+        "dur": 0.5
+      }
+    },
+    {
+      "n": 5,
+      "id": "a04",
+      "src": "assets/araw/IMG_8303.MOV",
+      "in": 1.0,
+      "out": 4.5,
+      "fit": "fill",
+      "act": "2 Floor",
+      "label": "SHOP hall (shortened)",
+      "reason": "",
       "transition_out": {
         "type": "matchcut",
         "dur": 0.2
       }
     },
     {
-      "n": 5,
+      "n": 6,
       "id": "b11",
       "src": "assets/braw/b11_following_sean_walking.mov",
       "in": 12.0,
@@ -91,7 +106,7 @@
       "fit": "fill",
       "act": "2 Floor",
       "label": "Following Sean walking",
-      "reason": "Walking match-cut.",
+      "reason": "",
       "transition_out": {
         "type": "cut",
         "dur": 0.033
@@ -99,7 +114,7 @@
       "prerotate": "cw"
     },
     {
-      "n": 6,
+      "n": 7,
       "id": "a02",
       "src": "assets/araw/IMG_8308.MOV",
       "in": 0.3,
@@ -107,14 +122,14 @@
       "fit": "fill",
       "act": "2 Floor",
       "label": "COMMERCE crowd",
-      "reason": "Scale of the event.",
+      "reason": "",
       "transition_out": {
         "type": "cut",
         "dur": 0.033
       }
     },
     {
-      "n": 7,
+      "n": 8,
       "id": "a03",
       "src": "assets/araw/IMG_8309.MOV",
       "in": 0.2,
@@ -122,14 +137,14 @@
       "fit": "fill",
       "act": "2 Floor",
       "label": "SIDEKICK booth",
-      "reason": "Last floor beat.",
+      "reason": "",
       "transition_out": {
         "type": "dipblack",
         "dur": 0.4
       }
     },
     {
-      "n": 8,
+      "n": 9,
       "id": "a05",
       "src": "assets/araw/IMG_8285.MOV",
       "in": 1.0,
@@ -137,25 +152,10 @@
       "fit": "fill",
       "act": "3 Demos",
       "label": "AGENTIC demo table",
-      "reason": "Hands-on demoing.",
+      "reason": "",
       "transition_out": {
         "type": "dissolve",
         "dur": 0.5
-      }
-    },
-    {
-      "n": 9,
-      "id": "a08",
-      "src": "assets/araw/IMG_0894.MOV",
-      "in": 0.3,
-      "out": 5.3,
-      "fit": "fill",
-      "act": "3 Demos",
-      "label": "Product hand-off",
-      "reason": "Product moment.",
-      "transition_out": {
-        "type": "cut",
-        "dur": 0.033
       }
     },
     {
@@ -166,46 +166,30 @@
       "out": 4.4,
       "fit": "fill",
       "act": "3 Demos",
-      "label": "Orange booth app screen",
-      "reason": "Closes demos (a09 hero dropped per note).",
-      "transition_out": {
-        "type": "dipblack",
-        "dur": 0.4
-      }
-    },
-    {
-      "n": 11,
-      "id": "b04",
-      "src": "assets/braw/b04_sean_mason_2women.mov",
-      "in": 5.0,
-      "out": 7.0,
-      "fit": "fill",
-      "act": "4 Network",
-      "label": "Sean & Mason, two women",
-      "reason": "Networking beat; dip into evening.",
-      "transition_out": {
-        "type": "dipblack",
-        "dur": 0.5
-      },
-      "prerotate": "cw"
-    },
-    {
-      "n": 12,
-      "id": "a11",
-      "src": "assets/araw/IMG_8284.MOV",
-      "in": 0.7,
-      "out": 1.9,
-      "fit": "fill",
-      "act": "5 Evening",
-      "label": "Neon selfie (shortened)",
-      "reason": "Trimmed both ends ~1.2s punch; now before happy hour.",
+      "label": "Orange booth app screen (swapped ahead of a08)",
+      "reason": "",
       "transition_out": {
         "type": "dissolve",
         "dur": 0.5
       }
     },
     {
-      "n": 13,
+      "n": 11,
+      "id": "a08",
+      "src": "assets/araw/IMG_0894.MOV",
+      "in": 1.0,
+      "out": 3.5,
+      "fit": "fill",
+      "act": "3 Demos",
+      "label": "Heading to the social (shortened, was 'a08')",
+      "reason": "",
+      "transition_out": {
+        "type": "dissolve",
+        "dur": 0.5
+      }
+    },
+    {
+      "n": 12,
       "id": "a10",
       "src": "assets/araw/IMG_0879.MOV",
       "in": 2.0,
@@ -213,14 +197,14 @@
       "fit": "fill",
       "act": "5 Evening",
       "label": "Happy hour (LED)",
-      "reason": "Social night.",
+      "reason": "",
       "transition_out": {
         "type": "dissolve",
         "dur": 0.5
       }
     },
     {
-      "n": 14,
+      "n": 13,
       "id": "a12",
       "src": "assets/araw/IMG_0853.MOV",
       "in": 0.5,
@@ -228,30 +212,29 @@
       "fit": "fill",
       "act": "6 Close",
       "label": "Dinner (communal table)",
-      "reason": "Warm evening; dip bridges to daytime walk.",
+      "reason": "",
       "transition_out": {
         "type": "dipblack",
         "dur": 0.5
       }
     },
     {
-      "n": 15,
-      "id": "b10",
-      "src": "assets/braw/b10_sean_mason_walking_industrial.mov",
-      "in": 19.0,
-      "out": 22.0,
+      "n": 14,
+      "id": "b23",
+      "src": "assets/braw/b23_jaren_piq_car.mov",
+      "in": 5.0,
+      "out": 11.0,
       "fit": "fill",
       "act": "6 Close",
-      "label": "Walking away (industrial)",
-      "reason": "Moved into close per note.",
+      "label": "Jaren into PIQ car (NEW, replaces b10)",
+      "reason": "",
       "transition_out": {
         "type": "dissolve",
         "dur": 0.5
-      },
-      "prerotate": "cw"
+      }
     },
     {
-      "n": 16,
+      "n": 15,
       "id": "b17",
       "src": "assets/braw/b17_hotel_sean_typing.mov",
       "in": 0.5,
@@ -259,22 +242,22 @@
       "fit": "fill",
       "act": "6 Close",
       "label": "Hotel, Sean typing",
-      "reason": "Pairs into the walk-away closer.",
+      "reason": "",
       "transition_out": {
         "type": "dissolve",
         "dur": 0.4
       }
     },
     {
-      "n": 17,
+      "n": 16,
       "id": "b21",
       "src": "assets/braw/b21_walkaway_sean_typing.mov",
       "in": 0.3,
       "out": 5.8,
       "fit": "fill",
       "act": "6 Close",
-      "label": "Walk away from Sean typing (NEW)",
-      "reason": "Final leave-behind shot. Fade out.",
+      "label": "Walk away from Sean typing",
+      "reason": "",
       "transition_out": {
         "type": "end",
         "dur": 0.0
