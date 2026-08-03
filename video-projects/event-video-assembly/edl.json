@@ -16,7 +16,7 @@
   },
   "portrait_treatment": "fill \u2014 native vertical clips fill 1080x1920 edge-to-edge.",
   "finishing": "Global grade (contrast 1.06 / sat 1.10 / gamma 0.98) + vignette once on composite.",
-  "revision": "v10 \u2014 remove b11 (following walking) and b17 (hotel typing). Close: dinner -> walk-away.",
+  "revision": "v11 \u2014 restore a04 (SHOP hall) into floor between a01 and a03, fuller 5s window, to fix the abrupt thin spot at ~0:16.",
   "fade_in": 0.5,
   "fade_out": 0.5,
   "segments": [
@@ -84,6 +84,21 @@
     },
     {
       "n": 5,
+      "id": "a04",
+      "src": "assets/araw/IMG_8303.MOV",
+      "in": 1.0,
+      "out": 6.0,
+      "fit": "fill",
+      "act": "2 Floor",
+      "label": "SHOP hall (restored, fuller 5s)",
+      "reason": "",
+      "transition_out": {
+        "type": "dissolve",
+        "dur": 0.3
+      }
+    },
+    {
+      "n": 6,
       "id": "a03",
       "src": "assets/araw/IMG_8309.MOV",
       "in": 0.2,
@@ -98,7 +113,7 @@
       }
     },
     {
-      "n": 6,
+      "n": 7,
       "id": "a05",
       "src": "assets/araw/IMG_8285.MOV",
       "in": 1.0,
@@ -113,7 +128,7 @@
       }
     },
     {
-      "n": 7,
+      "n": 8,
       "id": "a07",
       "src": "assets/araw/IMG_8290.MOV",
       "in": 0.2,
@@ -128,7 +143,7 @@
       }
     },
     {
-      "n": 8,
+      "n": 9,
       "id": "a08",
       "src": "assets/araw/IMG_0894.MOV",
       "in": 1.0,
@@ -143,7 +158,7 @@
       }
     },
     {
-      "n": 9,
+      "n": 10,
       "id": "a10",
       "src": "assets/araw/IMG_0879.MOV",
       "in": 2.0,
@@ -158,7 +173,7 @@
       }
     },
     {
-      "n": 10,
+      "n": 11,
       "id": "a12",
       "src": "assets/araw/IMG_0853.MOV",
       "in": 0.5,
@@ -173,7 +188,7 @@
       }
     },
     {
-      "n": 11,
+      "n": 12,
       "id": "b21",
       "src": "assets/braw/b21_walkaway_sean_typing.mov",
       "in": 0.3,
