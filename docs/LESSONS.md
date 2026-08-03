@@ -54,6 +54,14 @@ efficient over time instead of relearning the same lessons.
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +
   placing motion-graphic overlays over the join make cutdowns feel seamless.
+- **Butt-joined VO clips jolt at the splice — in BOTH audio and video.** Two adjacent
+  `<audio>` clips from non-contiguous source times click/jump at the boundary (sample gap +
+  ambient-level discontinuity), and if a talking-head `<video>` also cuts there it's a
+  visible jump-cut. **Fix (two parts):** (1) pre-splice the VO into ONE file with a short
+  fade across the join — `atrim` each side, `afade` out/in ~0.15s at a silence, `concat` —
+  and reference that single file; (2) put a b-roll cutaway *over* the join so the face
+  splice happens off-camera. Verify the audio with `astats` RMS across the boundary (should
+  stay steady, no spike or drop-out).
 
 ## Delivery & resolution
 

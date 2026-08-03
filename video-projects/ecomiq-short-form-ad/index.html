@@ -59,9 +59,9 @@
       <video class="v" id="f1" data-start="0"     data-duration="2.6" data-media-start="0"    data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
       <video class="v" id="f2" data-start="5.4"   data-duration="1.8" data-media-start="5.4"  data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
       <video class="v" id="f3" data-start="9.2"   data-duration="2.0" data-media-start="9.2"  data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
-      <video class="v" id="f4" data-start="14.5"  data-duration="4.5" data-media-start="14.5" data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
-      <!-- payoff lands on the speaker's face (VO part 2) -->
-      <video class="v" id="f5" data-start="19.0"  data-duration="2.6" data-media-start="38.9" data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+      <video class="v" id="f4" data-start="14.5"  data-duration="4.2" data-media-start="14.5" data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+      <!-- payoff resolution lands on the speaker's face (VO part 2). The source splice (19s)
+           happens off-camera under the b8/b9 cutaways, so the face never jump-cuts. -->
       <video class="v" id="f6" data-start="23.1"  data-duration="3.0" data-media-start="43.0" data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
 
       <!-- ============ B-ROLL CUTAWAYS (track 2) — on the beats ============ -->
@@ -72,13 +72,13 @@
       <video class="v" id="b4"  data-start="11.2" data-duration="1.1" data-media-start="5.0" data-track-index="2" src="assets/broll/br_crowd.mp4"    muted playsinline preload="auto"></video>
       <video class="v" id="b5"  data-start="12.3" data-duration="1.0" data-media-start="1.5" data-track-index="2" src="assets/broll/br_sidekick.mp4" muted playsinline preload="auto"></video>
       <video class="v" id="b6"  data-start="13.3" data-duration="1.2" data-media-start="1.0" data-track-index="2" src="assets/broll/br_walk.mp4"     muted playsinline preload="auto"></video>
-      <!-- payoff cutaway: "20 things badly" over the busy expo floor -->
-      <video class="v" id="b7"  data-start="21.6" data-duration="1.5" data-media-start="12.0" data-track-index="2" src="assets/broll/br_expo.mp4"     muted playsinline preload="auto"></video>
+      <!-- payoff cutaways: hide the off-camera VO splice (19s) + carry "aren't doing 20 things badly" over the busy expo floor -->
+      <video class="v" id="b8"  data-start="18.7" data-duration="2.1" data-media-start="8.0" data-track-index="2" src="assets/broll/br_expo.mp4"     muted playsinline preload="auto"></video>
+      <video class="v" id="b9"  data-start="20.8" data-duration="2.3" data-media-start="6.0" data-track-index="2" src="assets/broll/br_crowd.mp4"    muted playsinline preload="auto"></video>
 
       <!-- ============ AUDIO ============ -->
-      <!-- Voice (A-roll), spliced: part 1 (src 0-19) then part 2 (src 38.9-45.9). Join is silence-to-silence, hidden under the calm cutaway. -->
-      <audio id="vo1" data-start="0"  data-duration="19"  data-media-start="0"    data-track-index="3" src="assets/aroll/aroll_norm.mp4" data-volume="1"></audio>
-      <audio id="vo2" data-start="19" data-duration="7.1" data-media-start="38.9" data-track-index="3" src="assets/aroll/aroll_norm.mp4" data-volume="1"></audio>
+      <!-- Voice (A-roll), pre-spliced into one file with a faded join at 19s (problem -> payoff) so there's no click or ambient jump. -->
+      <audio id="vo" data-start="0" data-duration="26.0" data-media-start="0" data-track-index="3" src="assets/aroll/vo.m4a" data-volume="1"></audio>
       <!-- Duckable music-bed placeholder (silent). Swap the file + raise data-volume; it already sits under the VO. -->
       <audio id="music" data-start="0" data-duration="29.2" data-media-start="0" data-track-index="4" src="assets/music-bed.m4a" data-volume="0.18"></audio>
 
