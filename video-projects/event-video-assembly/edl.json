@@ -1,9 +1,9 @@
 {
   "project": "event-video-assembly",
-  "title": "Commerce Expo \u2014 Event Recap (long-form, landscape)",
+  "title": "dot.dev Recap \u2014 YouTube Short (9:16 vertical)",
   "target": {
-    "width": 1920,
-    "height": 1080,
+    "width": 1080,
+    "height": 1920,
     "fps": 30,
     "pix_fmt": "yuv420p"
   },
@@ -12,46 +12,24 @@
     "codec": "aac",
     "sample_rate": 48000,
     "channels": 2,
-    "note": "Empty/duckable stereo AAC bed sized to the video. Drop music in later. Natural sound preserved in source clips if you want a nat-sound pass instead."
+    "note": "Empty/duckable stereo AAC bed. Sean VO drops on top later."
   },
-  "portrait_treatment": "pad_blur (blurred pillarbox) \u2014 vertical clip full-height center; blurred zoomed copy fills side bars, DARKENED + desaturated so the subject pops. Preserves booth signage; consistent across the cut.",
-  "finishing": "Global grade applied once to the composited timeline: contrast 1.06 / saturation 1.10 / gamma 0.98 + cinematic vignette. Unifies mixed phone cameras into one professional look.",
-  "revision": "v2 \u2014 arrival tightened from 7 shots (~24s) to 4 (~9.5s); professional grade + vignette + refined pillarbox added. Silent bed kept for Sean VO later.",
-  "transition_legend": {
-    "cut": "hard cut (implemented as 1-frame xfade)",
-    "dissolve": "crossfade between shots",
-    "matchcut": "short 0.2s dissolve where on-screen motion lines up (walking->walking, laptop->laptop)",
-    "dipblack": "dip to black at act boundaries",
-    "dipwhite": "dip to white into a brighter scene"
-  },
+  "portrait_treatment": "fill \u2014 every surviving clip is native vertical, so it fills 1080x1920 edge-to-edge. No bars, no pillarbox.",
+  "finishing": "Global grade (contrast 1.06 / sat 1.10 / gamma 0.98) + vignette applied once to the composite for mixed-camera cohesion.",
+  "revision": "v3 \u2014 pivot to 9:16 Short. Removed b18,b19,b01,a06,b06,b08,b05,b02. Shortened a04. Kept b03/b04/b07/b10 per user. Added b21 hotel walk-away closer. Sideways 4K clips transpose=1 then fill.",
   "fade_in": 0.5,
   "fade_out": 0.6,
   "segments": [
     {
       "n": 1,
-      "id": "b18",
-      "src": "assets/braw/b18_pacific_iq_reel.mov",
-      "in": 2.0,
-      "out": 4.5,
-      "fit": "scale",
-      "act": "1 Arrival",
-      "label": "Pacific IQ / e-commerce brand context",
-      "reason": "Short premium cold-open on the world these founders live in, before we travel.",
-      "transition_out": {
-        "type": "dipblack",
-        "dur": 0.4
-      }
-    },
-    {
-      "n": 2,
       "id": "b12",
       "src": "assets/braw/b12_sean_getting_into_car.mov",
       "in": 2.0,
       "out": 5.0,
-      "fit": "pad_blur",
+      "fit": "fill",
       "act": "1 Arrival",
       "label": "Sean getting into car",
-      "reason": "Single motion beat that launches (and compresses) the travel.",
+      "reason": "Opens on the car per note; motion beat into the trip.",
       "transition_out": {
         "type": "matchcut",
         "dur": 0.2
@@ -59,60 +37,45 @@
       "prerotate": "cw"
     },
     {
-      "n": 3,
+      "n": 2,
       "id": "b09",
       "src": "assets/braw/b09_car_into_hotel_la.mov",
       "in": 4.0,
       "out": 6.0,
-      "fit": "pad_blur",
+      "fit": "fill",
       "act": "1 Arrival",
-      "label": "Car driving into LA hotel",
-      "reason": "Match-cut off 'getting in car' \u2014 arrived in LA in one move.",
+      "label": "Car into LA hotel",
+      "reason": "Arrived; dip-to-white bridges into the event hall.",
       "transition_out": {
-        "type": "dissolve",
-        "dur": 0.4
+        "type": "dipwhite",
+        "dur": 0.5
       },
       "prerotate": "cw"
     },
     {
-      "n": 4,
-      "id": "b19",
-      "src": "assets/braw/b19_sean_jaren_outside.mov",
-      "in": 1.5,
-      "out": 3.5,
-      "fit": "pad_blur",
-      "act": "1 Arrival",
-      "label": "Sean & Jaren outside (patio)",
-      "reason": "Brief bright calm-before beat; dip-to-white bridges into the event hall.",
-      "transition_out": {
-        "type": "dipwhite",
-        "dur": 0.5
-      }
-    },
-    {
-      "n": 5,
+      "n": 3,
       "id": "a04",
       "src": "assets/araw/IMG_8303.MOV",
       "in": 1.0,
-      "out": 8.0,
-      "fit": "pad_blur",
+      "out": 4.5,
+      "fit": "fill",
       "act": "2 Floor",
-      "label": "SHOP hall \u2014 establishing",
-      "reason": "A-roll establisher: we're inside the expo. Long hold leaves room for VO intro.",
+      "label": "SHOP hall (shortened)",
+      "reason": "First dot.dev clip, trimmed 7s->3.5s so it doesn't drag.",
       "transition_out": {
         "type": "dissolve",
         "dur": 0.5
       }
     },
     {
-      "n": 6,
+      "n": 4,
       "id": "a01",
       "src": "assets/araw/IMG_8304.MOV",
       "in": 0.5,
       "out": 5.5,
-      "fit": "pad_blur",
+      "fit": "fill",
       "act": "2 Floor",
-      "label": "Walking the floor (red carpet)",
+      "label": "Walking the floor",
       "reason": "Move through the space; sets up a walking match-cut.",
       "transition_out": {
         "type": "matchcut",
@@ -120,15 +83,15 @@
       }
     },
     {
-      "n": 7,
+      "n": 5,
       "id": "b11",
       "src": "assets/braw/b11_following_sean_walking.mov",
       "in": 12.0,
       "out": 15.0,
-      "fit": "pad_blur",
+      "fit": "fill",
       "act": "2 Floor",
-      "label": "B-roll: following Sean walking",
-      "reason": "Walking->walking match-cut; smooth cutaway that keeps forward motion.",
+      "label": "Following Sean walking",
+      "reason": "Walking->walking match-cut; keeps forward motion.",
       "transition_out": {
         "type": "cut",
         "dur": 0.033
@@ -136,45 +99,75 @@
       "prerotate": "cw"
     },
     {
-      "n": 8,
+      "n": 6,
       "id": "a02",
       "src": "assets/araw/IMG_8308.MOV",
       "in": 0.3,
       "out": 4.8,
-      "fit": "pad_blur",
+      "fit": "fill",
       "act": "2 Floor",
-      "label": "COMMERCE booth crowd",
-      "reason": "Scale of the event \u2014 busy floor.",
+      "label": "COMMERCE crowd",
+      "reason": "Scale of the event.",
       "transition_out": {
         "type": "cut",
         "dur": 0.033
       }
     },
     {
-      "n": 9,
+      "n": 7,
       "id": "a03",
       "src": "assets/araw/IMG_8309.MOV",
       "in": 0.2,
       "out": 3.6,
-      "fit": "pad_blur",
+      "fit": "fill",
       "act": "2 Floor",
       "label": "SIDEKICK booth",
-      "reason": "Last floor beat before we go into the demos act.",
+      "reason": "Last floor beat before demos.",
       "transition_out": {
         "type": "dipblack",
         "dur": 0.4
       }
     },
     {
-      "n": 10,
+      "n": 8,
       "id": "a05",
       "src": "assets/araw/IMG_8285.MOV",
       "in": 1.0,
       "out": 7.0,
-      "fit": "pad_blur",
+      "fit": "fill",
       "act": "3 Demos",
       "label": "AGENTIC demo table",
-      "reason": "Open the product act on hands-on demoing.",
+      "reason": "Hands-on demoing.",
+      "transition_out": {
+        "type": "dissolve",
+        "dur": 0.5
+      }
+    },
+    {
+      "n": 9,
+      "id": "a08",
+      "src": "assets/araw/IMG_0894.MOV",
+      "in": 0.3,
+      "out": 5.3,
+      "fit": "fill",
+      "act": "3 Demos",
+      "label": "Product hand-off",
+      "reason": "Physical product moment into hero macro (a06 dropped).",
+      "transition_out": {
+        "type": "cut",
+        "dur": 0.033
+      }
+    },
+    {
+      "n": 10,
+      "id": "a09",
+      "src": "assets/araw/IMG_0878.MOV",
+      "in": 1.0,
+      "out": 6.0,
+      "fit": "fill",
+      "act": "3 Demos",
+      "label": "Device macro (hero)",
+      "reason": "Hero product close-up.",
       "transition_out": {
         "type": "dissolve",
         "dur": 0.5
@@ -182,45 +175,45 @@
     },
     {
       "n": 11,
-      "id": "b01",
-      "src": "assets/braw/b01_sean_laptop.mov",
-      "in": 9.0,
-      "out": 13.0,
-      "fit": "pad_blur",
+      "id": "a07",
+      "src": "assets/araw/IMG_8290.MOV",
+      "in": 0.2,
+      "out": 4.4,
+      "fit": "fill",
       "act": "3 Demos",
-      "label": "B-roll: Sean on laptop",
-      "reason": "Laptop cutaway \u2014 the work behind the demos; sets up a laptop match-cut.",
+      "label": "Orange booth app screen",
+      "reason": "Closes demos on the product UI.",
       "transition_out": {
-        "type": "matchcut",
-        "dur": 0.2
+        "type": "dipblack",
+        "dur": 0.4
+      }
+    },
+    {
+      "n": 12,
+      "id": "b04",
+      "src": "assets/braw/b04_sean_mason_2women.mov",
+      "in": 5.0,
+      "out": 7.0,
+      "fit": "fill",
+      "act": "4 Network",
+      "label": "Sean & Mason, two women",
+      "reason": "Networking beat (kept per your call).",
+      "transition_out": {
+        "type": "cut",
+        "dur": 0.033
       },
       "prerotate": "cw"
     },
     {
-      "n": 12,
-      "id": "a06",
-      "src": "assets/araw/IMG_8286.MOV",
-      "in": 1.0,
-      "out": 6.0,
-      "fit": "pad_blur",
-      "act": "3 Demos",
-      "label": "Phone demo w/ colleague",
-      "reason": "Match-cut off the laptop into a shared-screen moment.",
-      "transition_out": {
-        "type": "cut",
-        "dur": 0.033
-      }
-    },
-    {
       "n": 13,
-      "id": "b06",
-      "src": "assets/braw/b06_sean_laptop_talking_man.mov",
-      "in": 3.0,
-      "out": 6.5,
-      "fit": "pad_blur",
-      "act": "3 Demos",
-      "label": "B-roll: laptop, talking to a man",
-      "reason": "Conversation cutaway \u2014 selling/explaining the product.",
+      "id": "b07",
+      "src": "assets/braw/b07_sean_laughing_mason.mov",
+      "in": 2.0,
+      "out": 5.0,
+      "fit": "fill",
+      "act": "4 Network",
+      "label": "Sean laughing w/ Mason",
+      "reason": "Candid relationships beat.",
       "transition_out": {
         "type": "dissolve",
         "dur": 0.5
@@ -229,14 +222,14 @@
     },
     {
       "n": 14,
-      "id": "a08",
-      "src": "assets/araw/IMG_0894.MOV",
-      "in": 0.3,
-      "out": 5.3,
-      "fit": "pad_blur",
-      "act": "3 Demos",
-      "label": "Product hand-off at booth",
-      "reason": "Physical product moment leading into the hero macro.",
+      "id": "b03",
+      "src": "assets/braw/b03_klaviyo_event_space.mov",
+      "in": 3.9,
+      "out": 7.4,
+      "fit": "fill",
+      "act": "4 Network",
+      "label": "Event space",
+      "reason": "Venue cutaway (kept).",
       "transition_out": {
         "type": "cut",
         "dur": 0.033
@@ -244,107 +237,14 @@
     },
     {
       "n": 15,
-      "id": "a09",
-      "src": "assets/araw/IMG_0878.MOV",
-      "in": 1.0,
-      "out": 6.0,
-      "fit": "pad_blur",
-      "act": "3 Demos",
-      "label": "Device macro (hero detail)",
-      "reason": "Hero product close-up \u2014 the tactile payoff of the demos act.",
-      "transition_out": {
-        "type": "dissolve",
-        "dur": 0.5
-      }
-    },
-    {
-      "n": 16,
-      "id": "b08",
-      "src": "assets/braw/b08_over_laptop_thinking.mov",
-      "in": 4.0,
-      "out": 7.5,
-      "fit": "pad_blur",
-      "act": "3 Demos",
-      "label": "B-roll: over laptop, thinking",
-      "reason": "Quiet focus cutaway to breathe after the hero shot.",
-      "transition_out": {
-        "type": "cut",
-        "dur": 0.033
-      },
-      "prerotate": "cw"
-    },
-    {
-      "n": 17,
-      "id": "a07",
-      "src": "assets/araw/IMG_8290.MOV",
-      "in": 0.2,
-      "out": 4.4,
-      "fit": "pad_blur",
-      "act": "3 Demos",
-      "label": "Orange booth \u2014 app on screen",
-      "reason": "Closes the demos act on the product UI up on the wall.",
-      "transition_out": {
-        "type": "dipblack",
-        "dur": 0.4
-      }
-    },
-    {
-      "n": 18,
-      "id": "b04",
-      "src": "assets/braw/b04_sean_mason_2women.mov",
-      "in": 5.0,
-      "out": 7.0,
-      "fit": "pad_blur",
-      "act": "4 Network",
-      "label": "B-roll: Sean & Mason, two women",
-      "reason": "Networking act opens on a conversation.",
-      "transition_out": {
-        "type": "cut",
-        "dur": 0.033
-      },
-      "prerotate": "cw"
-    },
-    {
-      "n": 19,
-      "id": "b07",
-      "src": "assets/braw/b07_sean_laughing_mason.mov",
-      "in": 2.0,
-      "out": 5.0,
-      "fit": "pad_blur",
-      "act": "4 Network",
-      "label": "B-roll: Sean laughing w/ Mason",
-      "reason": "Human, candid beat \u2014 the relationships side of the event.",
-      "transition_out": {
-        "type": "dissolve",
-        "dur": 0.5
-      },
-      "prerotate": "cw"
-    },
-    {
-      "n": 20,
-      "id": "b03",
-      "src": "assets/braw/b03_klaviyo_event_space.mov",
-      "in": 3.9,
-      "out": 7.4,
-      "fit": "pad_blur",
-      "act": "4 Network",
-      "label": "B-roll: Klaviyo event space",
-      "reason": "Different-venue cutaway shows the broader circuit (clamped mark).",
-      "transition_out": {
-        "type": "cut",
-        "dur": 0.033
-      }
-    },
-    {
-      "n": 21,
       "id": "b10",
       "src": "assets/braw/b10_sean_mason_walking_industrial.mov",
       "in": 19.0,
       "out": 22.0,
-      "fit": "pad_blur",
+      "fit": "fill",
       "act": "4 Network",
-      "label": "B-roll: walking away (industrial)",
-      "reason": "Walking match-cut; a stylish transitional beat.",
+      "label": "Walking away (industrial)",
+      "reason": "Walking match-cut transition.",
       "transition_out": {
         "type": "matchcut",
         "dur": 0.2
@@ -352,96 +252,79 @@
       "prerotate": "cw"
     },
     {
-      "n": 22,
-      "id": "b05",
-      "src": "assets/braw/b05_limitless_sign.mov",
-      "in": 18.0,
-      "out": 21.0,
-      "fit": "pad_blur",
-      "act": "4 Network",
-      "label": "B-roll: 'Limitless growth' sign",
-      "reason": "Signage beat \u2014 a bit of theme/message punctuation.",
-      "transition_out": {
-        "type": "dissolve",
-        "dur": 0.5
-      },
-      "prerotate": "cw"
-    },
-    {
-      "n": 23,
-      "id": "b02",
-      "src": "assets/braw/b02_bess_sean_podcast.mov",
-      "in": 0.0,
-      "out": 3.0,
-      "fit": "scale",
-      "act": "4 Network",
-      "label": "B-roll: Bess & Sean (podcast)",
-      "reason": "Content-creation cutaway; caps the networking act, dip to black into evening.",
-      "transition_out": {
-        "type": "dipblack",
-        "dur": 0.5
-      }
-    },
-    {
-      "n": 24,
+      "n": 16,
       "id": "a10",
       "src": "assets/araw/IMG_0879.MOV",
       "in": 2.0,
       "out": 9.0,
-      "fit": "pad_blur",
+      "fit": "fill",
       "act": "5 Evening",
-      "label": "Happy hour (6PM\u20138AM LED)",
-      "reason": "Evening turn \u2014 the social night of the event.",
+      "label": "Happy hour (LED)",
+      "reason": "Social night.",
       "transition_out": {
         "type": "dissolve",
         "dur": 0.5
       }
     },
     {
-      "n": 25,
+      "n": 17,
       "id": "a11",
       "src": "assets/araw/IMG_8284.MOV",
       "in": 0.1,
       "out": 2.4,
-      "fit": "pad_blur",
+      "fit": "fill",
       "act": "5 Evening",
-      "label": "Neon selfie moment",
-      "reason": "Short punchy personal beat in the neon glow.",
+      "label": "Neon selfie",
+      "reason": "Punchy personal beat.",
       "transition_out": {
         "type": "dipblack",
         "dur": 0.5
       }
     },
     {
-      "n": 26,
-      "id": "b17",
-      "src": "assets/braw/b17_hotel_sean_typing.mov",
+      "n": 18,
+      "id": "a12",
+      "src": "assets/araw/IMG_0853.MOV",
       "in": 0.5,
-      "out": 3.5,
-      "fit": "pad_blur",
-      "act": "6 Winddown",
-      "label": "B-roll: hotel, late-night typing",
-      "reason": "Wind-down: back at the hotel, still working \u2014 the grind.",
+      "out": 7.5,
+      "fit": "fill",
+      "act": "6 Close",
+      "label": "Dinner (communal table)",
+      "reason": "Warm evening close.",
       "transition_out": {
         "type": "dissolve",
         "dur": 0.5
       }
     },
     {
-      "n": 27,
-      "id": "a12",
-      "src": "assets/araw/IMG_0853.MOV",
+      "n": 19,
+      "id": "b17",
+      "src": "assets/braw/b17_hotel_sean_typing.mov",
       "in": 0.5,
-      "out": 7.5,
-      "fit": "pad_blur",
-      "act": "6 Winddown",
-      "label": "Dinner \u2014 communal table (closer)",
-      "reason": "Warm closing beat: the team at dinner. Fade to black.",
+      "out": 3.5,
+      "fit": "fill",
+      "act": "6 Close",
+      "label": "Hotel, Sean typing",
+      "reason": "Back at the hotel, still working.",
+      "transition_out": {
+        "type": "dissolve",
+        "dur": 0.5
+      }
+    },
+    {
+      "n": 20,
+      "id": "b21",
+      "src": "assets/braw/b21_walkaway_sean_typing.mov",
+      "in": 0.3,
+      "out": 5.8,
+      "fit": "fill",
+      "act": "6 Close",
+      "label": "Walk away from Sean typing (NEW)",
+      "reason": "New closer from Drive; the leave-behind final shot. Fade out.",
       "transition_out": {
         "type": "end",
         "dur": 0.0
       }
     }
-  ],
-  "orientation_audit": "Verified every clip visually: coded dims + metadata were unreliable. True-landscape upright: b02,b18 (scale). Portrait upright (autorotated): all A-roll, b03,b14,b15,b16,b17,b19 (pad_blur). Sideways/baked-in-rotated, no metadata: b01,b04,b05,b06,b07,b08,b09,b10,b11,b12 -> transpose=1 (cw) then pad_blur. b20 dropped (rotated)."
+  ]
 }

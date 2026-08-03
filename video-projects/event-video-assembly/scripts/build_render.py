@@ -38,6 +38,13 @@ def norm_chain(idx, fit, W, H, FPS, prerotate=None):
     elif prerotate == "ccw":
         rot = "transpose=2,"
     v = f"{v}{rot}" if rot else v
+    if fit == "fill":
+        # Portrait source into a portrait (9:16) frame: scale to cover then
+        # center-crop. Fills edge-to-edge, no bars (native vertical footage).
+        return (
+            f"{v}fps={FPS},scale={W}:{H}:force_original_aspect_ratio=increase,"
+            f"crop={W}:{H},setsar=1,format=yuv420p{out}"
+        ), out
     if fit == "pad_blur":
         # Blurred pillarbox: subject full-height center; background = same frame
         # scaled to cover, heavily blurred AND darkened/desaturated so the
