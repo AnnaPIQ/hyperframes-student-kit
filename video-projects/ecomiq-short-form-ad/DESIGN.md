@@ -17,11 +17,15 @@ fonts are local `.woff2` in `assets/fonts/` (Rethink Sans + Hedvig Letters Serif
 ## Structure (~29s)
 A-roll is the spine (its own voice carries the ad); B-roll cuts away on the speech beats.
 
-- **0–17s — the chaos:** A-roll face beats intercut with **Folder-1 phone footage** (packed
+- **0–19s — the chaos:** A-roll face beats intercut with **Folder-1 phone footage** (packed
   expo floor, booths, screens, people on phones) = "too many ideas / tools."
-- **17–26s — the calm:** tonal shift to **Folder-2 cinematic footage** (same person focused
-  on a laptop in bright, airy, tropical light) = "do one or two things really well."
+- **19–26s — the payoff (on-camera):** lands on the speaker's face, with one conference
+  cutaway on the literal line *"20 things badly"* (busy floor) before returning to his face
+  for *"one or two things really, really well."*
 - **26–29.2s — end card:** navy, EcomIQ logo, *Rethink* your strategy. + flame `ecomiq.com →`.
+
+> Note: the Folder-2 laptop-typing b-roll was cut — it didn't land. The prepped clips remain
+> local under `assets/broll/` (unused) in case a calm beat is wanted later.
 
 ### VO cut
 The 47s source is spliced to problem→payoff: src `0–19s` (problem) + src `38.9–45.9s`
