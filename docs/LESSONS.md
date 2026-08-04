@@ -97,13 +97,18 @@ efficient over time instead of relearning the same lessons.
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
 
-- **Splicing a "breath" into a continuous-ambience VO (live/crowd audio):**
-  Symptom → a sentence-join splice leaks the onset of the *next* word (e.g. "When"),
-  or the inserted breath is a loud blip. Fix → (1) get **word-level timestamps**
-  (`hyperframes transcribe --json`) — RMS/`silencedetect` lie on loud room tone and
-  windowed `astats` gives seek-warmup artifacts; trim exactly to the word boundary.
-  (2) A **word-free gap ≠ a quiet gap** — measure each candidate gap's `volumedetect`
-  mean/max and pick one whose level ≈ the join neighbours (no dip, no blip).
-  (3) Build the breath to an **exact** length with `aloop`+`atrim` — `atempo` on a
-  sub-0.15s clip returns an unpredictable duration, desyncing everything downstream.
-  (4) Verify by **re-transcribing the rendered file**, not the source.
+- **Removing an interior sentence from a talking-head VO (splice-free join):**
+  Symptom → the cut leaks the first word of the removed section (a stray "When…"),
+  and no amount of nudging the trim by ±0.1s fixes it. Root cause → **the transcriber
+  quantizes word boundaries to round numbers**: it reported "flat." ending at 19.00 and
+  "When" starting at 19.00, but a **spectrogram** (`showspectrumpic`) showed "When"'s
+  voiced burst actually begins at ~18.92 — so every cut at 19.00 kept its onset, and
+  "extending the breath" to 19.45 pulled in the whole word. Fixes that finally worked:
+  (1) **Use a spectrogram/waveform to find the true acoustic onset**, not the transcript
+  timestamps — cut a hair *before* it (18.60 here). (2) The take already had ~0.5s of its
+  **own quiet room tone after the word** — use that as the pause; do NOT splice a foreign
+  "breath" snippet (word-free gaps elsewhere are often louder crowd noise and stick out).
+  (3) Join the two halves with an **equal-power `acrossfade` (c1=esin:c2=esin)**, not a
+  fade-to-silence on each side — the latter leaves an audible dropout notch in continuous
+  ambience. (4) Verify on the **rendered** file, both by re-transcribing AND by eye on a
+  join spectrogram.
