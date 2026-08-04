@@ -46,6 +46,20 @@ efficient over time instead of relearning the same lessons.
   lips match (tune per clip).
 - **Phone / vertical b-roll imports rotated.** **Fix:** rotate 90° CW during prep
   (`ffmpeg -vf "transpose=1"`).
+- **Phone selfie footage reads 1920×1080 in `ffprobe` but is actually portrait.** iPhone
+  clips store landscape pixels + a `rotation=-90` display-matrix flag, so `ffprobe
+  stream=width,height` says `1920×1080` and a naive landscape center-crop grabs ceiling/wall
+  with the face sliced off. **Check first:** `ffprobe -select_streams v:0 -show_frames
+  -read_intervals "%+#1" -show_entries frame_side_data=rotation`. If it's `-90`/`90`, the clip
+  is native **portrait 1080×1920** — no crop needed for a 9:16 short. ffmpeg **auto-rotates
+  before filtering** by default, so any `trim`/`xfade` graph outputs upright portrait with the
+  flag baked out (verify with a dims probe on the result). Grab a real frame and *look* before
+  committing a crop math.
+- **Handheld talking-head cutdown with "no graphics" still needs a smooth join.** When the brief
+  forbids b-roll/motion-graphics you can't hide a splice under an overlay — but a short (~0.3s)
+  **cross-dissolve** between the two face segments (video `xfade=fade` + audio `acrossfade`) masks
+  the background/hand jump and stays "full-frame talking head throughout." Cut on real silences
+  (find them with `silencedetect=noise=-34dB:d=0.18`), not whisper word-ends.
 - **Offline transcriber can't run (model download egress-blocked).** Some environments
   block the Whisper model download. **Fix:** caption from the known script text and
   anchor timing via silence analysis instead of word-level timestamps.
@@ -54,6 +68,14 @@ efficient over time instead of relearning the same lessons.
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +
   placing motion-graphic overlays over the join make cutdowns feel seamless.
+- **White logo vanishes on light backgrounds.** A persistent white corner logo disappears
+  when the handheld background swings to a bright white wall. **Fix:** seat it on a soft,
+  feathered top-left navy scrim (put the gradient on a *full-bleed* `inset:0` overlay clip so
+  the render engine can't drift it — small positioned clips drift, full-bleed ones don't) +
+  a subtle `drop-shadow` on the logo. Reads on both dark brick and white wall.
+- **Verify A/V sync by cross-correlating, not by eyeballing stills.** Extract the rendered
+  audio + the clean master at 16 kHz mono, envelope-correlate over ±0.5s. <1 frame (33ms) lag
+  = engine preserved sync, no offset comp needed. Frame stills can't show lip-sync; this can.
 
 ## Delivery & resolution
 
