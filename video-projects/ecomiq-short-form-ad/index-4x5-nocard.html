@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>ecomiq-short-form-ad</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time (latin subset) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+
+      /* Base canvas — only visible at any 1-frame seam; footage fills the frame */
+      #bg { position: absolute; inset: 0;
+        background: radial-gradient(90% 55% at 50% 18%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
+
+      /* Footage clips fill the 9:16 frame */
+      video.v { position: absolute; inset: 0; width: 1080px; height: 1350px; object-fit: cover; object-position: 50% 42%; z-index: 10; }
+
+      /* Top scrim so the white wordmark stays legible over bright footage */
+      #topscrim { position: absolute; top: 0; left: 0; width: 1080px; height: 300px; z-index: 30;
+        background: linear-gradient(180deg, rgba(6,40,76,.55) 0%, rgba(6,40,76,0) 100%); pointer-events: none; }
+
+      /* Persistent logo overlay (non-clip so the render engine won't reposition it) */
+      #logo-wrap { position: absolute; top: 64px; left: 72px; z-index: 40; }
+      #logo-wrap img { width: 300px; height: auto; display: block;
+        filter: drop-shadow(0 6px 20px rgba(0,0,0,.45)); }
+
+      /* End card */
+      #endcard { position: absolute; inset: 0; z-index: 60; opacity: 0;
+        background: radial-gradient(88% 60% at 50% 34%, #0a366a 0%, var(--brand-navy) 60%);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        text-align: center; padding: 0 120px; gap: 30px; }
+      #ec-logo { width: 360px; height: auto; opacity: 0; filter: drop-shadow(0 8px 28px rgba(0,0,0,.4)); }
+      #ec-eyebrow { opacity: 0; font-weight: 600; font-size: 26px; letter-spacing: .34em;
+        text-transform: uppercase; color: var(--brand-blue-tint); }
+      #ec-headline { opacity: 0; font-weight: 800; font-size: 104px; line-height: .98; letter-spacing: -.03em; }
+      #ec-headline .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+      #ec-sub { opacity: 0; font-weight: 500; font-size: 36px; line-height: 1.3; color: var(--brand-text-dim); max-width: 78%; }
+      #ec-cta { opacity: 0; margin-top: 14px; font-weight: 700; font-size: 38px; color: var(--brand-white);
+        background: var(--brand-flame); padding: 30px 60px; border-radius: 999px;
+        box-shadow: 0 20px 64px -16px rgba(255,76,50,.6); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="ecomiq-4x5-nocard" data-start="0" data-duration="25.5" data-width="1080" data-height="1350">
+
+      <!-- Base canvas -->
+      <div id="bg" class="clip" data-start="0" data-duration="25.5" data-track-index="0"></div>
+
+      <!-- ============ A-ROLL FACE BEATS (track 1) — the spine ============ -->
+      <video class="v" id="f1" data-start="0"     data-duration="2.6" data-media-start="0"    data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+      <video class="v" id="f2" data-start="5.4"   data-duration="1.8" data-media-start="5.4"  data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+      <video class="v" id="f3" data-start="9.2"   data-duration="2.0" data-media-start="9.2"  data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+      <video class="v" id="f4" data-start="14.5"  data-duration="4.0" data-media-start="14.5" data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+      <!-- payoff resolution lands on the speaker's face (VO part 2). The source splice
+           happens off-camera under the b8 cutaway, so the face never jump-cuts. -->
+      <video class="v" id="f6" data-start="22.40" data-duration="3.1" data-media-start="43.0" data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+
+      <!-- ============ B-ROLL CUTAWAYS (track 2) — on the beats ============ -->
+      <!-- Folder 1: the chaos (too many ideas / tools / booths) -->
+      <video class="v" id="b1"  data-start="2.6"  data-duration="1.4" data-media-start="3.0" data-track-index="2" src="assets/broll/br_expo.mp4"     muted playsinline preload="auto"></video>
+      <video class="v" id="b2"  data-start="4.0"  data-duration="1.4" data-media-start="0.4" data-track-index="2" src="assets/broll/br_phones.mp4"   muted playsinline preload="auto"></video>
+      <video class="v" id="b3"  data-start="7.2"  data-duration="2.0" data-media-start="1.0" data-track-index="2" src="assets/broll/br_kiosk.mp4"    muted playsinline preload="auto"></video>
+      <video class="v" id="b4"  data-start="11.2" data-duration="1.1" data-media-start="5.0" data-track-index="2" src="assets/broll/br_crowd.mp4"    muted playsinline preload="auto"></video>
+      <video class="v" id="b5"  data-start="12.3" data-duration="1.0" data-media-start="1.5" data-track-index="2" src="assets/broll/br_sidekick.mp4" muted playsinline preload="auto"></video>
+      <video class="v" id="b6"  data-start="13.3" data-duration="1.2" data-media-start="1.0" data-track-index="2" src="assets/broll/br_walk.mp4"     muted playsinline preload="auto"></video>
+      <!-- payoff cutaway: ONE continuous expo-floor shot hides the off-camera VO join (19s) and carries
+           "Because the brands that grow aren't doing 20 things badly" — no internal cut, so no jump. -->
+      <video class="v" id="b8"  data-start="18.5" data-duration="3.9" data-media-start="8.0" data-track-index="2" src="assets/broll/br_expo.mp4"     muted playsinline preload="auto"></video>
+
+      <!-- ============ AUDIO ============ -->
+      <!-- Voice (A-roll), pre-spliced into one file with a faded join at 19s (problem -> payoff) so there's no click or ambient jump. -->
+      <audio id="vo" data-start="0" data-duration="25.3" data-media-start="0" data-track-index="3" src="assets/aroll/vo.m4a" data-volume="1"></audio>
+      <!-- Duckable music-bed placeholder (silent). Swap the file + raise data-volume; it already sits under the VO. -->
+      <audio id="music" data-start="0" data-duration="25.5" data-media-start="0" data-track-index="4" src="assets/music-bed.m4a" data-volume="0.18"></audio>
+
+      <!-- ============ OVERLAYS (non-clip, always positioned) ============ -->
+      <div id="topscrim"></div>
+      <div id="logo-wrap"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Persistent logo — enters over the hook
+      tl.fromTo("#logo-wrap", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: .6, ease: "power3.out" }, .3);
+
+      tl.set({}, {}, 25.5); // hold to end (no end card)
+
+      window.__timelines["ecomiq-4x5-nocard"] = tl;
+    </script>
+  </body>
+</html>
