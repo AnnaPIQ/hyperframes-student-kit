@@ -14,7 +14,7 @@ fonts are local `.woff2` in `assets/fonts/` (Rethink Sans + Hedvig Letters Serif
   on what moves the numbers."
 - **CTA:** *Rethink* your strategy. → ecomiq.com
 
-## Structure (~29s)
+## Structure (~28s)
 A-roll is the spine (its own voice carries the ad); B-roll cuts away on the speech beats.
 
 - **0–19s — the chaos:** A-roll face beats intercut with **Folder-1 phone footage** (packed
@@ -22,20 +22,21 @@ A-roll is the spine (its own voice carries the ad); B-roll cuts away on the spee
 - **19–26s — the payoff (on-camera):** two expo-floor cutaways carry *"Because the brands
   that grow aren't doing 20 things badly"* (and hide the off-camera VO splice at 19s), then
   it lands on the speaker's face for *"one or two things really, really well."*
-- **26–29.2s — end card:** navy, EcomIQ logo, *Rethink* your strategy. + flame `ecomiq.com →`.
+- **~26–27.9s — end card (2s):** navy, EcomIQ logo, *Rethink* your strategy. + flame `ecomiq.com →`.
 
 > Note: the Folder-2 laptop-typing b-roll was cut — it didn't land. The prepped clips remain
 > local under `assets/broll/` (unused) in case a calm beat is wanted later.
 
 ### VO cut
-The 47s source is spliced to problem→payoff: src `0–19s` (problem) + src `38.9–46.0s`
-(payoff), pre-rendered into one file `assets/aroll/vo.m4a` with a ~0.15s fade across the
-join so there's no click or ambient jump (butt-joined `<audio>` clips jolt — see LESSONS).
+The 47s source is spliced to problem→payoff: src `0–19.00s` (ends exactly on "flat", excludes the next word "When") + src `39.00–46.0s` (starts exactly on "Because", excludes the trailing "…is")
+(payoff), pre-rendered into one file `assets/aroll/vo.m4a` with a short fade at the exact
+word boundaries so there's no click, ambient jump, or clipped-syllable fragment
+(butt-joined `<audio>` clips jolt, and mis-placed cuts leak the neighbouring word — see LESSONS).
 The video splice is hidden under the b8/b9 expo cutaways. Audio is loudness-normalized
 (`loudnorm I=-16`, high-pass 90Hz) to lift the quiet, ambient conference recording.
 
 ### Audio
-- `vo1`/`vo2` — the spliced A-roll voice (track 3), continuous 0–26s.
+- `vo` — the pre-spliced A-roll voice, one file `assets/aroll/vo.m4a` (track 3), 0–25.9s.
 - `music` — **silent, duckable placeholder** at `data-volume=0.18` (track 4). Drop a real
   bed into `assets/music-bed.m4a` and it already sits under the VO.
 

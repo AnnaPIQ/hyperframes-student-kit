@@ -58,10 +58,18 @@ efficient over time instead of relearning the same lessons.
   `<audio>` clips from non-contiguous source times click/jump at the boundary (sample gap +
   ambient-level discontinuity), and if a talking-head `<video>` also cuts there it's a
   visible jump-cut. **Fix (two parts):** (1) pre-splice the VO into ONE file with a short
-  fade across the join — `atrim` each side, `afade` out/in ~0.15s at a silence, `concat` —
-  and reference that single file; (2) put a b-roll cutaway *over* the join so the face
-  splice happens off-camera. Verify the audio with `astats` RMS across the boundary (should
-  stay steady, no spike or drop-out).
+  fade across the join — `atrim` each side, `afade` out/in at the cut, `concat` — and
+  reference that single file; (2) put a b-roll cutaway *over* the join so the face splice
+  happens off-camera. Verify the audio with `astats` RMS across the boundary (should stay
+  steady, no spike or drop-out).
+- **Splice on WORD boundaries from the transcript, not round numbers — a fade won't save a
+  cut placed mid-word.** Fast talkers leave ~0ms between words, so trimming at a tidy
+  timestamp (e.g. 19.0s / 38.9s) silently leaks the neighbouring word: it left the "Wh" of
+  the next "When" on one side and a stray "…is" fragment before "Because" on the other,
+  heard as a glitch even with fades + a b-roll cover. **Fix:** pull exact word start/end
+  times from the transcript JSON and cut so each side ends/starts on a full word
+  (`atrim=0:19.00` ended "flat"; `atrim=39.00:…` started "Because"). Re-transcribe the
+  spliced file to confirm the word sequence has no fragment before shipping.
 
 ## Delivery & resolution
 

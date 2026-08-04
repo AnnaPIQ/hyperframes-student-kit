@@ -50,10 +50,10 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="ecomiq-short-form-ad" data-start="0" data-duration="29.2" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="ecomiq-short-form-ad" data-start="0" data-duration="27.9" data-width="1080" data-height="1920">
 
       <!-- Base canvas -->
-      <div id="bg" class="clip" data-start="0" data-duration="29.2" data-track-index="0"></div>
+      <div id="bg" class="clip" data-start="0" data-duration="27.9" data-track-index="0"></div>
 
       <!-- ============ A-ROLL FACE BEATS (track 1) — the spine ============ -->
       <video class="v" id="f1" data-start="0"     data-duration="2.6" data-media-start="0"    data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
@@ -62,7 +62,7 @@
       <video class="v" id="f4" data-start="14.5"  data-duration="4.2" data-media-start="14.5" data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
       <!-- payoff resolution lands on the speaker's face (VO part 2). The source splice (19s)
            happens off-camera under the b8/b9 cutaways, so the face never jump-cuts. -->
-      <video class="v" id="f6" data-start="23.1"  data-duration="3.0" data-media-start="43.0" data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
+      <video class="v" id="f6" data-start="23.1"  data-duration="2.8" data-media-start="43.1" data-track-index="1" src="assets/aroll/aroll_norm.mp4" muted playsinline preload="auto"></video>
 
       <!-- ============ B-ROLL CUTAWAYS (track 2) — on the beats ============ -->
       <!-- Folder 1: the chaos (too many ideas / tools / booths) -->
@@ -78,9 +78,9 @@
 
       <!-- ============ AUDIO ============ -->
       <!-- Voice (A-roll), pre-spliced into one file with a faded join at 19s (problem -> payoff) so there's no click or ambient jump. -->
-      <audio id="vo" data-start="0" data-duration="26.0" data-media-start="0" data-track-index="3" src="assets/aroll/vo.m4a" data-volume="1"></audio>
+      <audio id="vo" data-start="0" data-duration="25.9" data-media-start="0" data-track-index="3" src="assets/aroll/vo.m4a" data-volume="1"></audio>
       <!-- Duckable music-bed placeholder (silent). Swap the file + raise data-volume; it already sits under the VO. -->
-      <audio id="music" data-start="0" data-duration="29.2" data-media-start="0" data-track-index="4" src="assets/music-bed.m4a" data-volume="0.18"></audio>
+      <audio id="music" data-start="0" data-duration="27.9" data-media-start="0" data-track-index="4" src="assets/music-bed.m4a" data-volume="0.18"></audio>
 
       <!-- ============ OVERLAYS (non-clip, always positioned) ============ -->
       <div id="topscrim"></div>
@@ -103,13 +103,13 @@
       // Persistent logo — enters over the hook
       tl.fromTo("#logo-wrap", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: .6, ease: "power3.out" }, .3);
 
-      // End card (final scene) — crossfades in as the last A-roll beat ends
-      tl.fromTo("#endcard",     { opacity: 0 },            { opacity: 1, duration: .45, ease: "power2.out" }, 25.9);
-      tl.fromTo("#ec-logo",     { opacity: 0, y: 24, scale: .92 }, { opacity: 1, y: 0, scale: 1, duration: .55, ease: "power3.out" }, 26.15);
-      tl.fromTo("#ec-eyebrow",  { opacity: 0, y: 16 },     { opacity: 1, y: 0, duration: .5, ease: "power2.out" }, 26.35);
-      tl.fromTo("#ec-headline", { opacity: 0, y: 30 },     { opacity: 1, y: 0, duration: .6, ease: "power3.out" }, 26.5);
-      tl.fromTo("#ec-sub",      { opacity: 0, y: 20 },     { opacity: 1, y: 0, duration: .55, ease: "power2.out" }, 26.8);
-      tl.fromTo("#ec-cta",      { opacity: 0, scale: .85 },{ opacity: 1, scale: 1, duration: .55, ease: "back.out(1.7)" }, 27.05);
+      // End card (final scene, ~2s) — crossfades in as the last A-roll beat ends, snappy entrances
+      tl.fromTo("#endcard",     { opacity: 0 },            { opacity: 1, duration: .4, ease: "power2.out" }, 25.6);
+      tl.fromTo("#ec-logo",     { opacity: 0, y: 22, scale: .92 }, { opacity: 1, y: 0, scale: 1, duration: .4, ease: "power3.out" }, 25.85);
+      tl.fromTo("#ec-eyebrow",  { opacity: 0, y: 14 },     { opacity: 1, y: 0, duration: .32, ease: "power2.out" }, 26.0);
+      tl.fromTo("#ec-headline", { opacity: 0, y: 26 },     { opacity: 1, y: 0, duration: .4, ease: "power3.out" }, 26.1);
+      tl.fromTo("#ec-sub",      { opacity: 0, y: 18 },     { opacity: 1, y: 0, duration: .32, ease: "power2.out" }, 26.3);
+      tl.fromTo("#ec-cta",      { opacity: 0, scale: .85 },{ opacity: 1, scale: 1, duration: .42, ease: "back.out(1.7)" }, 26.45);
 
       window.__timelines["ecomiq-short-form-ad"] = tl;
     </script>
