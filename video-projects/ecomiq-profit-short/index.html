@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>EcomIQ — Profit Short (20s)</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders (LESSONS.md) -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-white);
+      }
+
+      /* ---- Face video (source is already 1080x1920 portrait, fills the frame) ---- */
+      #face-wrapper {
+        position: absolute; top: 0; left: 0;
+        width: 1080px; height: 1920px;
+        transform-origin: center center;
+        z-index: 0;
+      }
+      #face-video {
+        display: block; width: 100%; height: 100%;
+        object-fit: cover;
+        transform-origin: center center;
+        /* Subtle short-form grade: lift contrast + saturation, ease brightness a hair
+           so the bright high-key footage reads punchy and sits on brand-navy. */
+        filter: contrast(1.06) saturate(1.07) brightness(0.98);
+      }
+      #face-wrapper::after {
+        /* Gentle edge vignette so the footage sinks into navy instead of a razor edge. */
+        content: ""; position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 78% 74% at 50% 42%,
+          transparent 60%, rgba(6,40,76,0.28) 88%, rgba(6,40,76,0.52) 100%);
+      }
+
+      /* ---- Persistent white logo, top-left. Non-clip wrapper holds position so the
+             render engine never drifts it (LESSONS.md). Soft scrim behind for legibility
+             over the bright ceiling/window in the footage. ---- */
+      #logo-wrap {
+        /* Anchored to the top-left CORNER so the legibility shade bleeds off the
+           frame edge and never reads as a box over the bright footage. */
+        position: absolute; top: 0; left: 0; width: 680px; height: 360px;
+        z-index: 20; pointer-events: none;
+        background: radial-gradient(120% 120% at 0% 0%,
+          rgba(4,20,40,0.52) 0%, rgba(4,20,40,0.24) 32%, rgba(4,20,40,0) 62%);
+      }
+      #logo { position: absolute; top: 58px; left: 52px; width: 300px; height: auto;
+        display: block; filter: drop-shadow(0 2px 12px rgba(0,0,0,0.40)); }
+
+      /* ---- End card (last ~3s) — matches the approved mockup ---- */
+      #end-card {
+        position: absolute; top: 0; left: 0; width: 1080px; height: 1920px;
+        z-index: 30; overflow: hidden;
+      }
+      #ec-bg { position: absolute; inset: 0; background:
+          radial-gradient(88% 52% at 50% 30%, rgba(156,212,255,0.12) 0%, rgba(6,40,76,0) 56%),
+          var(--brand-navy); }
+      #ec-bloom { position: absolute; left: -12%; bottom: -20%; width: 124%; height: 58%;
+        background: var(--brand-gradient-2); filter: blur(96px); opacity: 0.30; }
+      #ec-stage {
+        position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 0; text-align: center; padding: 0 96px;
+      }
+      #ec-logo { width: 468px; height: auto; margin-bottom: 46px; }
+      #ec-kicker { font-weight: 600; font-size: 34px; letter-spacing: 0.42em;
+        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 44px; }
+      #ec-btn {
+        display: inline-flex; align-items: center; gap: 22px;
+        font-weight: 700; font-size: 46px; color: var(--brand-white);
+        background: var(--brand-flame); padding: 34px 68px; border-radius: 999px;
+        box-shadow: 0 26px 80px -18px rgba(255,76,50,0.72);
+        margin-bottom: 52px; white-space: nowrap;
+      }
+      #ec-btn .arrow { font-size: 44px; line-height: 1; transform: translateY(-1px); }
+      #ec-sub { font-weight: 500; font-size: 42px; line-height: 1.3;
+        color: var(--brand-text-dim); max-width: 760px; }
+    </style>
+  </head>
+  <body>
+    <!-- Render Contract: root needs id, data-composition-id, data-start=0, data-width, data-height. -->
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20"
+         data-width="1080" data-height="1920">
+
+      <!-- Face video wrapped in a non-timed div; the <video> (exempt from class="clip")
+           carries the timing. Audio lives in a sibling <audio> for the mixer. -->
+      <div id="face-wrapper">
+        <video id="face-video" data-start="0" data-duration="20" data-track-index="0"
+               src="assets/edit-video.mp4" muted playsinline></video>
+      </div>
+
+      <!-- Cleaned voiceover (de-reverb, NR, de-ess, -16 LUFS) on its own track -->
+      <audio id="face-audio" data-start="0" data-duration="20" data-track-index="4"
+             data-volume="1" src="assets/edit-audio.wav"></audio>
+
+      <!-- Persistent brand logo (top-left). Static, non-clip — always on. -->
+      <div id="logo-wrap">
+        <img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <!-- End card layer — appears for the final ~3s -->
+      <div id="end-card" class="clip" data-start="16.9" data-duration="3.1" data-track-index="8">
+        <div id="ec-bg"></div>
+        <div id="ec-bloom"></div>
+        <div id="ec-stage">
+          <img id="ec-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+          <div id="ec-kicker">Ready to fix it?</div>
+          <div id="ec-btn">Click the link below <span class="arrow">&rarr;</span></div>
+          <div id="ec-sub">We guarantee the breakthrough you&rsquo;re looking for.</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Render Contract: exactly one paused GSAP timeline keyed to data-composition-id.
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Ken Burns — very subtle push over the full 20s so the footage has quiet
+      // "camera" life without reading as an effect. Linear so it never eases oddly.
+      tl.fromTo("#face-video", { scale: 1.0 }, { scale: 1.03, duration: 20, ease: "none" }, 0);
+
+      // --- End card entrance (soft, tasteful — not kinetic). Card local start = 16.9. ---
+      const EC = 16.9;
+      // Navy card + bloom dissolve up over the face.
+      tl.fromTo("#ec-bg",    { opacity: 0 }, { opacity: 1, duration: 0.42, ease: "power2.out" }, EC);
+      tl.fromTo("#ec-bloom", { opacity: 0 }, { opacity: 0.30, duration: 0.8, ease: "sine.out" }, EC);
+      // Content rises in a gentle stagger (fromTo — elements start hidden, LESSONS.md).
+      tl.fromTo("#ec-logo",   { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, EC + 0.18);
+      tl.fromTo("#ec-kicker", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.5,  ease: "power2.out" }, EC + 0.34);
+      tl.fromTo("#ec-btn",    { opacity: 0, y: 24, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, EC + 0.48);
+      tl.fromTo("#ec-sub",    { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5,  ease: "power2.out" }, EC + 0.66);
+      // Button breathes once to hold the eye on the CTA through the hold.
+      tl.to("#ec-btn", { scale: 1.04, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 1 }, EC + 1.5);
+
+      // Pad the timeline so its duration matches the root data-duration exactly (Law #11).
+      tl.set({}, {}, 20);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
