@@ -86,19 +86,20 @@
       id="root"
       data-composition-id="ecomiq-short-form"
       data-start="0"
-      data-duration="20"
+      data-duration="48"
       data-width="1080"
       data-height="1920"
     >
       <!-- Talking head (native 1080x1920). Wrapper is non-timed; the <video> is the
-           timed element. <video> is muted — audio rides on the sibling <audio>. -->
+           timed element. <video> is muted — audio rides on the sibling <audio>.
+           LONG version: full "first order_long" take, one continuous shot (no splice). -->
       <div id="face-wrapper">
         <video
           id="face-video"
           data-start="0"
-          data-duration="17.45"
+          data-duration="45.95"
           data-track-index="0"
-          src="assets/face.mp4"
+          src="assets/face-long.mp4"
           muted
           playsinline
         ></video>
@@ -108,10 +109,10 @@
       <audio
         id="face-audio"
         data-start="0"
-        data-duration="17.45"
+        data-duration="45.95"
         data-track-index="1"
         data-volume="1"
-        src="assets/face-audio.m4a"
+        src="assets/face-long-audio.m4a"
       ></audio>
 
       <!-- Vignette + top-left logo scrim (full-bleed clip, never drifts) -->
@@ -119,7 +120,7 @@
         id="overlay"
         class="clip"
         data-start="0"
-        data-duration="17.45"
+        data-duration="45.95"
         data-track-index="2"
       ></div>
 
@@ -129,19 +130,19 @@
           id="logo-corner"
           class="clip"
           data-start="0"
-          data-duration="17.45"
+          data-duration="45.95"
           data-track-index="3"
           src="assets/ecomiq-logo-white.svg"
           alt="EcomIQ"
         />
       </div>
 
-      <!-- End card (last ~3s): white logo + one line -->
+      <!-- End card (last ~2.7s): white logo + one line -->
       <div
         id="endcard"
         class="clip"
-        data-start="16.9"
-        data-duration="3.1"
+        data-start="45.3"
+        data-duration="2.7"
         data-track-index="4"
       >
         <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
@@ -158,29 +159,30 @@
       // life without amplifying the source's own motion. (Covered by end card at peak.)
       tl.fromTo("#face-video",
         { scale: 1.0 },
-        { scale: 1.02, duration: 17.45, ease: "none" }, 0);
+        { scale: 1.03, duration: 45.95, ease: "none" }, 0);
 
       // Corner logo fades in on the opener (starts hidden -> fromTo).
       tl.fromTo("#logo-corner",
         { opacity: 0, y: -14 },
         { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.35);
 
-      // End card — navy panel crossfades over the face, then logo + line settle in.
+      // End card — navy panel crossfades over the face as the spoken CTA lands,
+      // then logo + line settle in.
       tl.fromTo("#endcard",
         { opacity: 0 },
-        { opacity: 1, duration: 0.5, ease: "power2.out" }, 16.9);
+        { opacity: 1, duration: 0.5, ease: "power2.out" }, 45.3);
       tl.fromTo("#ec-logo",
         { opacity: 0, y: 28, scale: 0.96 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.62, ease: "power3.out" }, 17.2);
+        { opacity: 1, y: 0, scale: 1, duration: 0.62, ease: "power3.out" }, 45.6);
       tl.fromTo("#ec-divider",
         { opacity: 0, scaleX: 0 },
-        { opacity: 1, scaleX: 1, duration: 0.45, ease: "power2.out" }, 17.5);
+        { opacity: 1, scaleX: 1, duration: 0.45, ease: "power2.out" }, 45.9);
       tl.fromTo("#ec-line",
         { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 17.65);
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 46.05);
 
-      // Pad the timeline so tl.duration() === data-duration (20s).
-      tl.set({}, {}, 20.0);
+      // Pad the timeline so tl.duration() === data-duration (48s).
+      tl.set({}, {}, 48.0);
 
       window.__timelines["ecomiq-short-form"] = tl;
     </script>
