@@ -96,3 +96,14 @@ efficient over time instead of relearning the same lessons.
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
+
+- **Splicing a "breath" into a continuous-ambience VO (live/crowd audio):**
+  Symptom → a sentence-join splice leaks the onset of the *next* word (e.g. "When"),
+  or the inserted breath is a loud blip. Fix → (1) get **word-level timestamps**
+  (`hyperframes transcribe --json`) — RMS/`silencedetect` lie on loud room tone and
+  windowed `astats` gives seek-warmup artifacts; trim exactly to the word boundary.
+  (2) A **word-free gap ≠ a quiet gap** — measure each candidate gap's `volumedetect`
+  mean/max and pick one whose level ≈ the join neighbours (no dip, no blip).
+  (3) Build the breath to an **exact** length with `aloop`+`atrim` — `atempo` on a
+  sub-0.15s clip returns an unpredictable duration, desyncing everything downstream.
+  (4) Verify by **re-transcribing the rendered file**, not the source.
