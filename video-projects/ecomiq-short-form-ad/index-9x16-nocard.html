@@ -82,18 +82,11 @@
       <!-- Duckable music-bed placeholder (silent). Swap the file + raise data-volume; it already sits under the VO. -->
       <audio id="music" data-start="0" data-duration="25.5" data-media-start="0" data-track-index="4" src="assets/music-bed.m4a" data-volume="0.18"></audio>
 
-      <!-- ============ OVERLAYS (non-clip, always positioned) ============ -->
-      <div id="topscrim"></div>
-      <div id="logo-wrap"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
-
     </div>
 
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
-
-      // Persistent logo — enters over the hook
-      tl.fromTo("#logo-wrap", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: .6, ease: "power3.out" }, .3);
 
       tl.set({}, {}, 25.5); // hold to end (no end card)
 
