@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>ecomiq-short-form</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white);
+      }
+
+      /* ---- Face (talking head) — native portrait 1080x1920, fills the frame ---- */
+      #face-wrapper {
+        position: absolute; top: 0; left: 0;
+        width: 1080px; height: 1920px; overflow: hidden; z-index: 0;
+      }
+      #face-video {
+        display: block; width: 100%; height: 100%; object-fit: cover;
+        transform-origin: center center;
+        /* Subtle short-form grade — a touch more contrast + saturation so the
+           face reads punchy; brightness left near-neutral (source is well lit). */
+        filter: contrast(1.06) saturate(1.06) brightness(0.995);
+      }
+
+      /* ---- Overlay: gentle vignette + top-left bloom that seats the white logo
+             legibly whether the wall behind it is dark brick or bright white.
+             Full-bleed (inset:0) so the render engine never drifts it. ---- */
+      #overlay {
+        position: absolute; inset: 0; pointer-events: none; z-index: 2;
+        background:
+          /* top-left scrim bloom for the corner logo */
+          radial-gradient(115% 70% at 8% 3%,
+            rgba(6, 28, 54, 0.62) 0%,
+            rgba(6, 28, 54, 0.30) 20%,
+            rgba(6, 28, 54, 0) 42%),
+          /* soft overall vignette so edges sink toward navy */
+          radial-gradient(ellipse 92% 78% at 50% 45%,
+            rgba(4, 14, 28, 0) 58%,
+            rgba(4, 14, 28, 0.34) 100%);
+      }
+
+      /* ---- Persistent top-left EcomIQ logo (white). Non-clip wrapper holds the
+             position; the <img> inside is the timed clip (keeps it on a track above
+             the face while never drifting). ---- */
+      #logo-wrap { position: absolute; top: 74px; left: 60px; width: 196px; z-index: 3; }
+      #logo-corner {
+        display: block; width: 100%; height: auto;
+        filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
+      }
+
+      /* ---- End card ---- */
+      #endcard {
+        position: absolute; inset: 0; z-index: 10;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 40px; padding: 8%; text-align: center;
+        background:
+          radial-gradient(120% 70% at 50% 22%, rgba(156, 212, 255, 0.12) 0%, rgba(6, 40, 76, 0) 55%),
+          var(--brand-navy);
+      }
+      #ec-logo { width: 520px; height: auto; display: block; }
+      #ec-divider { width: 72px; height: 4px; border-radius: 2px; background: var(--brand-flame); }
+      #ec-line {
+        font-weight: 700; font-size: 60px; line-height: 1.04; letter-spacing: -0.02em;
+        color: var(--brand-white); max-width: 84%;
+      }
+      #ec-line .em {
+        font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
+        font-weight: 400; color: var(--brand-blue-tint);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="ecomiq-short-form"
+      data-start="0"
+      data-duration="20"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- Talking head (native 1080x1920). Wrapper is non-timed; the <video> is the
+           timed element. <video> is muted — audio rides on the sibling <audio>. -->
+      <div id="face-wrapper">
+        <video
+          id="face-video"
+          data-start="0"
+          data-duration="17.45"
+          data-track-index="0"
+          src="assets/face.mp4"
+          muted
+          playsinline
+        ></video>
+      </div>
+
+      <!-- Cleaned narration (separate element so the mixer owns it) -->
+      <audio
+        id="face-audio"
+        data-start="0"
+        data-duration="17.45"
+        data-track-index="1"
+        data-volume="1"
+        src="assets/face-audio.m4a"
+      ></audio>
+
+      <!-- Vignette + top-left logo scrim (full-bleed clip, never drifts) -->
+      <div
+        id="overlay"
+        class="clip"
+        data-start="0"
+        data-duration="17.45"
+        data-track-index="2"
+      ></div>
+
+      <!-- Persistent top-left white logo -->
+      <div id="logo-wrap">
+        <img
+          id="logo-corner"
+          class="clip"
+          data-start="0"
+          data-duration="17.45"
+          data-track-index="3"
+          src="assets/ecomiq-logo-white.svg"
+          alt="EcomIQ"
+        />
+      </div>
+
+      <!-- End card (last ~3s): white logo + one line -->
+      <div
+        id="endcard"
+        class="clip"
+        data-start="16.9"
+        data-duration="3.1"
+        data-track-index="4"
+      >
+        <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="ec-divider"></div>
+        <div id="ec-line">Free <span class="em">Profitability</span> Bootcamp</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Face — very subtle Ken Burns so a handheld-but-static feel gets a hint of
+      // life without amplifying the source's own motion. (Covered by end card at peak.)
+      tl.fromTo("#face-video",
+        { scale: 1.0 },
+        { scale: 1.02, duration: 17.45, ease: "none" }, 0);
+
+      // Corner logo fades in on the opener (starts hidden -> fromTo).
+      tl.fromTo("#logo-corner",
+        { opacity: 0, y: -14 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.35);
+
+      // End card — navy panel crossfades over the face, then logo + line settle in.
+      tl.fromTo("#endcard",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5, ease: "power2.out" }, 16.9);
+      tl.fromTo("#ec-logo",
+        { opacity: 0, y: 28, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.62, ease: "power3.out" }, 17.2);
+      tl.fromTo("#ec-divider",
+        { opacity: 0, scaleX: 0 },
+        { opacity: 1, scaleX: 1, duration: 0.45, ease: "power2.out" }, 17.5);
+      tl.fromTo("#ec-line",
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 17.65);
+
+      // Pad the timeline so tl.duration() === data-duration (20s).
+      tl.set({}, {}, 20.0);
+
+      window.__timelines["ecomiq-short-form"] = tl;
+    </script>
+  </body>
+</html>

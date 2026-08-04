@@ -40,3 +40,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Session scratch: raw Drive downloads / audio work (not deliverables)
+scratch-dl/
