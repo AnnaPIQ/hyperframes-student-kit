@@ -16,27 +16,12 @@
   },
   "portrait_treatment": "fill \u2014 native vertical clips + oriented still fill 1080x1920.",
   "finishing": "Global grade + vignette once on composite.",
-  "revision": "v18 \u2014 fix wrong deletion: restore a07 (orange booth) after a05, delete a08 (purple escalator). Keep a09->a05 phone match-cut.",
+  "revision": "v19 (FINAL) \u2014 remove b09; opener is b12. 11 shots.",
   "fade_in": 0.5,
   "fade_out": 0.5,
   "segments": [
     {
       "n": 1,
-      "id": "b09",
-      "src": "assets/braw/b09_car_into_hotel_la.mov",
-      "in": 4.0,
-      "out": 6.0,
-      "fit": "fill",
-      "label": "Car into LA hotel",
-      "reason": "",
-      "transition_out": {
-        "type": "matchcut",
-        "dur": 0.2
-      },
-      "prerotate": "cw"
-    },
-    {
-      "n": 2,
       "id": "b12",
       "src": "assets/braw/b12_sean_getting_into_car.mov",
       "in": 2.0,
@@ -51,7 +36,7 @@
       "prerotate": "cw"
     },
     {
-      "n": 3,
+      "n": 2,
       "id": "a04",
       "src": "assets/araw/IMG_8303.MOV",
       "in": 1.0,
@@ -65,7 +50,7 @@
       }
     },
     {
-      "n": 4,
+      "n": 3,
       "id": "a01",
       "src": "assets/araw/IMG_8304.MOV",
       "in": 0.5,
@@ -79,7 +64,7 @@
       }
     },
     {
-      "n": 5,
+      "n": 4,
       "id": "a03",
       "src": "assets/araw/IMG_8309.MOV",
       "in": 0.2,
@@ -93,7 +78,7 @@
       }
     },
     {
-      "n": 6,
+      "n": 5,
       "id": "a09",
       "src": "assets/araw/IMG_0878.MOV",
       "in": 1.0,
@@ -107,7 +92,7 @@
       }
     },
     {
-      "n": 7,
+      "n": 6,
       "id": "a05",
       "src": "assets/araw/IMG_8285.MOV",
       "in": 1.0,
@@ -121,7 +106,7 @@
       }
     },
     {
-      "n": 8,
+      "n": 7,
       "id": "a07",
       "src": "assets/araw/IMG_8290.MOV",
       "in": 0.2,
@@ -135,7 +120,7 @@
       }
     },
     {
-      "n": 9,
+      "n": 8,
       "id": "a10",
       "src": "assets/araw/IMG_0879.MOV",
       "in": 2.0,
@@ -149,7 +134,7 @@
       }
     },
     {
-      "n": 10,
+      "n": 9,
       "id": "a12",
       "src": "assets/araw/IMG_0853.MOV",
       "in": 0.5,
@@ -163,7 +148,7 @@
       }
     },
     {
-      "n": 11,
+      "n": 10,
       "id": "b24",
       "src": "assets/braw/b24_sean_jaren_talking.mov",
       "in": 1.0,
@@ -177,7 +162,7 @@
       }
     },
     {
-      "n": 12,
+      "n": 11,
       "id": "b21",
       "src": "assets/braw/b21_walkaway_sean_typing.mov",
       "in": 0.3,

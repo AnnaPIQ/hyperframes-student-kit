@@ -77,6 +77,16 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## EDL-based clip assembly (event-video-assembly, ffmpeg-native — not Hyperframes)
+
+- **Symptom:** Phone A-roll clips render sideways (90° rotated) even though `ffprobe` shows a landscape 3840x2160 and there's NO `rotate`/`displaymatrix` metadata. **Fix:** the rotation is *baked into the pixels* with no flag, so nothing auto-rotates. Detect orientation **visually** (extract a thumbnail and look) — never trust coded dims or metadata — then `transpose=1` (90° CW) the offending clips before scaling. A whole shoot can be affected identically.
+- **Symptom:** A clip auto-rotates correctly in one place but the "same" issue clip doesn't. **Fix:** some clips have real rotation metadata (ffmpeg autorotates on decode) and some have baked-in rotation (needs manual `transpose`). Verify each clip's *decoded* orientation with a native-resolution frame extract, not the stream's `width/height`.
+- **Symptom:** Still photos (JPEG) come in rotated or as the wrong aspect. **Fix:** EXIF orientation. Bake it once: `ffmpeg -i in.jpg -update 1 out.png` produces an upright PNG; point the timeline at the PNG so there's no render-time EXIF ambiguity. Feed stills to the timeline with `-loop 1 -framerate <fps> -t <dur> -i img` (no `-ss`).
+- **Symptom:** Final MP4 has a 3rd `data` stream; `-dn` + explicit `-map 0:v -map 0:a` don't remove it. **Fix:** it's the iPhone `tmcd` timecode track the mov/mp4 muxer re-writes. Strip it on a stream copy with **`-write_tmcd 0`** (harmless if left, but cleaner to remove for delivery).
+- **Pattern that worked:** drive the whole cut from a single `edl.json` (per-segment src/in/out/fit/prerotate/transition) + a Python builder that emits one `ffmpeg` `filter_complex`: normalize every segment (fps + scale/crop or blurred-pad to target + `setsar=1` + `format=yuv420p`), then chain with `xfade` using **cumulative offsets** (`offset_i = running_len - transition_dur`; `running_len += dur_i - transition_dur`). Map every transition type onto xfade: hard cut = `fade`@~1frame, dissolve/matchcut = `fade`, dip-to-black = `fadeblack`, dip-to-white = `fadewhite`. Apply one global grade+vignette on the final composite for mixed-camera cohesion. This makes 15+ rounds of "swap/trim/reorder/retime" cheap — edit JSON, re-render, no filtergraph surgery.
+- **Delivery-format sanity checks** worth running on the final: `pix_fmt=yuv420p`, faststart (`moov` before `mdat`), an AAC audio track present even if silent (empty/duckable bed for VO/music added later), and 2 streams only (v+a).
+- **Fit for 9:16 vertical:** native-portrait footage → scale-to-cover + center-crop (`force_original_aspect_ratio=increase,crop=W:H`) fills edge-to-edge with no bars. For landscape-into-vertical (or vertical-into-landscape) use a darkened+blurred copy of the same frame as the pillarbox/letterbox background so the subject pops.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
