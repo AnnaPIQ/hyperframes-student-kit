@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>EcomIQ — Profit Short (Long 4:5, 67s)</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders (LESSONS.md) -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-white);
+      }
+
+      /* ---- Face video: 1080x1920 source reframed to 4:5 via centered cover crop ---- */
+      #face-wrapper {
+        position: absolute; top: 0; left: 0;
+        width: 1080px; height: 1350px;
+        transform-origin: center center;
+        z-index: 0;
+      }
+      #face-video {
+        display: block; width: 100%; height: 100%;
+        object-fit: cover; object-position: 50% 50%;
+        transform-origin: center center;
+        filter: contrast(1.06) saturate(1.07) brightness(0.98);
+      }
+      #face-wrapper::after {
+        content: ""; position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 80% 78% at 50% 44%,
+          transparent 60%, rgba(6,40,76,0.28) 88%, rgba(6,40,76,0.52) 100%);
+      }
+
+      /* ---- Persistent white logo, top-left. Corner-anchored legibility scrim. ---- */
+      #logo-wrap {
+        position: absolute; top: 0; left: 0; width: 660px; height: 320px;
+        z-index: 20; pointer-events: none;
+        background: radial-gradient(120% 120% at 0% 0%,
+          rgba(4,20,40,0.52) 0%, rgba(4,20,40,0.24) 32%, rgba(4,20,40,0) 62%);
+      }
+      #logo { position: absolute; top: 50px; left: 50px; width: 296px; height: auto;
+        display: block; filter: drop-shadow(0 2px 12px rgba(0,0,0,0.40)); }
+
+      /* ---- End card (final ~4.4s) — lands on the spoken CTA ---- */
+      #end-card {
+        position: absolute; top: 0; left: 0; width: 1080px; height: 1350px;
+        z-index: 30; overflow: hidden;
+      }
+      #ec-bg { position: absolute; inset: 0; background:
+          radial-gradient(90% 56% at 50% 32%, rgba(156,212,255,0.12) 0%, rgba(6,40,76,0) 58%),
+          var(--brand-navy); }
+      #ec-bloom { position: absolute; left: -12%; bottom: -22%; width: 124%; height: 64%;
+        background: var(--brand-gradient-2); filter: blur(96px); opacity: 0.30; }
+      #ec-stage {
+        position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 0; text-align: center; padding: 0 90px;
+      }
+      #ec-logo { width: 430px; height: auto; margin-bottom: 40px; }
+      #ec-kicker { font-weight: 600; font-size: 32px; letter-spacing: 0.26em; white-space: nowrap;
+        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 44px; }
+      #ec-btn {
+        display: inline-flex; align-items: center; gap: 22px;
+        font-weight: 700; font-size: 44px; color: var(--brand-white);
+        background: var(--brand-flame); padding: 32px 64px; border-radius: 999px;
+        box-shadow: 0 26px 80px -18px rgba(255,76,50,0.72);
+        margin-bottom: 0; white-space: nowrap;
+      }
+      #ec-btn .arrow { font-size: 42px; line-height: 1; transform: translateY(-1px); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="67"
+         data-width="1080" data-height="1350">
+
+      <!-- ONE continuous a-roll take (Script 1_long) — full script, no internal cuts. -->
+      <div id="face-wrapper">
+        <video id="face-video" data-start="0" data-duration="66.1" data-track-index="0"
+               src="assets/edit-video.mp4" muted playsinline></video>
+      </div>
+
+      <!-- Cleaned voiceover (de-reverb, NR, de-ess, -16 LUFS) on its own track -->
+      <audio id="face-audio" data-start="0" data-duration="66.1" data-track-index="4"
+             data-volume="1" src="assets/edit-audio.wav"></audio>
+
+      <!-- Persistent brand logo (top-left). Static, non-clip — always on. -->
+      <div id="logo-wrap">
+        <img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <!-- End card layer — rises on the spoken CTA ("Click the link below…") -->
+      <div id="end-card" class="clip" data-start="62.6" data-duration="4.4" data-track-index="8">
+        <div id="ec-bg"></div>
+        <div id="ec-bloom"></div>
+        <div id="ec-stage">
+          <img id="ec-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+          <div id="ec-kicker">Ready to be more profitable.</div>
+          <div id="ec-btn">Click the link below <span class="arrow">&rarr;</span></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Ken Burns — very slow push over the full take so the long shot has quiet life.
+      tl.fromTo("#face-video", { scale: 1.0 }, { scale: 1.05, duration: 66.1, ease: "none" }, 0);
+      // ONE continuous a-roll take — no internal cuts, so no cut transitions needed.
+
+      // --- End card entrance (soft, not kinetic). Lands on the spoken CTA. ---
+      const EC = 62.6;
+      tl.fromTo("#ec-bg",    { opacity: 0 }, { opacity: 1, duration: 0.42, ease: "power2.out" }, EC);
+      tl.fromTo("#ec-bloom", { opacity: 0 }, { opacity: 0.30, duration: 0.8, ease: "sine.out" }, EC);
+      tl.fromTo("#ec-logo",   { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, EC + 0.18);
+      tl.fromTo("#ec-kicker", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.5,  ease: "power2.out" }, EC + 0.34);
+      tl.fromTo("#ec-btn",    { opacity: 0, y: 24, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, EC + 0.48);
+      tl.to("#ec-btn", { scale: 1.04, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 1 }, EC + 1.5);
+
+      // Pad the timeline so its duration matches the root data-duration exactly (Law #11).
+      tl.set({}, {}, 67);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
