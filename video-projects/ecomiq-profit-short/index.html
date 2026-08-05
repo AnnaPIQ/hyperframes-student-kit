@@ -87,7 +87,7 @@
   </head>
   <body>
     <!-- Render Contract: root needs id, data-composition-id, data-start=0, data-width, data-height. -->
-    <div id="root" data-composition-id="main" data-start="0" data-duration="22"
+    <div id="root" data-composition-id="main" data-start="0" data-duration="21.2"
          data-width="1080" data-height="1920">
 
       <!-- Face video wrapped in a non-timed div; the <video> (exempt from class="clip")
@@ -95,12 +95,12 @@
            Footage runs 20.933s (VO finishes "…apply for access"); the end card holds
            over navy for the remaining ~1.4s so the CTA never clips. -->
       <div id="face-wrapper">
-        <video id="face-video" data-start="0" data-duration="20.9333" data-track-index="0"
+        <video id="face-video" data-start="0" data-duration="20.1667" data-track-index="0"
                src="assets/edit-video.mp4" muted playsinline></video>
       </div>
 
       <!-- Cleaned voiceover (de-reverb, NR, de-ess, -16 LUFS) on its own track -->
-      <audio id="face-audio" data-start="0" data-duration="20.9333" data-track-index="4"
+      <audio id="face-audio" data-start="0" data-duration="20.1667" data-track-index="4"
              data-volume="1" src="assets/edit-audio.wav"></audio>
 
       <!-- Persistent brand logo (top-left). Static, non-clip — always on. -->
@@ -109,7 +109,7 @@
       </div>
 
       <!-- End card layer — appears for the final ~3s -->
-      <div id="end-card" class="clip" data-start="16.9" data-duration="5.1" data-track-index="8">
+      <div id="end-card" class="clip" data-start="16.1" data-duration="5.1" data-track-index="8">
         <div id="ec-bg"></div>
         <div id="ec-bloom"></div>
         <div id="ec-stage">
@@ -127,10 +127,10 @@
 
       // Ken Burns — very subtle push over the full 20s so the footage has quiet
       // "camera" life without reading as an effect. Linear so it never eases oddly.
-      tl.fromTo("#face-video", { scale: 1.0 }, { scale: 1.03, duration: 20.9333, ease: "none" }, 0);
+      tl.fromTo("#face-video", { scale: 1.0 }, { scale: 1.03, duration: 20.1667, ease: "none" }, 0);
 
       // --- End card entrance (soft, tasteful — not kinetic). Card local start = 16.9. ---
-      const EC = 16.9;
+      const EC = 16.1;
       // Navy card + bloom dissolve up over the face.
       tl.fromTo("#ec-bg",    { opacity: 0 }, { opacity: 1, duration: 0.42, ease: "power2.out" }, EC);
       tl.fromTo("#ec-bloom", { opacity: 0 }, { opacity: 0.30, duration: 0.8, ease: "sine.out" }, EC);
@@ -142,7 +142,7 @@
       tl.to("#ec-btn", { scale: 1.04, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 1 }, EC + 1.5);
 
       // Pad the timeline so its duration matches the root data-duration exactly (Law #11).
-      tl.set({}, {}, 22);
+      tl.set({}, {}, 21.2);
       window.__timelines["main"] = tl;
     </script>
   </body>
