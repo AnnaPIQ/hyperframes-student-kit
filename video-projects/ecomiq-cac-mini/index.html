@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>ecomiq-cac-mini</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time. */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-white);
+      }
+
+      #bg { position: absolute; inset: 0; background: var(--brand-navy); }
+
+      /* Footage — A-roll spine + one B-roll cutaway. All exactly 1080x1920.
+         Never animate width/height/top/left on <video> — only scale/opacity. */
+      .footage {
+        position: absolute; inset: 0;
+        width: 100%; height: 100%;
+        object-fit: cover; object-position: center;
+        transform-origin: center center;
+        display: block;
+      }
+
+      /* Persistent EcomIQ logo, top-left, with a soft navy corner scrim +
+         drop shadow so the WHITE logo reads on bright shots. */
+      #logo-wrap { position: absolute; top: 0; left: 0; width: 560px; height: 360px; pointer-events: none; }
+      #logo-scrim {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(120% 120% at 8% 12%, rgba(3, 20, 40, 0.55) 0%, rgba(3, 20, 40, 0.30) 34%, rgba(3, 20, 40, 0) 66%);
+      }
+      #logo {
+        position: absolute; top: 92px; left: 64px; width: 300px; height: auto;
+        filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.45));
+      }
+
+      /* ---- END CARD -------------------------------------------------------- */
+      #endcard {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(90% 50% at 50% 16%, rgba(156, 212, 255, 0.10) 0%, rgba(6, 40, 76, 0) 55%),
+          var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        text-align: center; padding: 0 120px;
+      }
+      #ec-bloom {
+        position: absolute; left: -10%; bottom: -18%; width: 120%; height: 55%;
+        background: var(--brand-gradient-2); filter: blur(90px); opacity: 0.34;
+      }
+      #ec-logo { width: 460px; height: auto; margin-bottom: 90px; position: relative; }
+      #ec-eyebrow {
+        position: relative;
+        font-size: 30px; font-weight: 600; letter-spacing: 0.32em; text-transform: uppercase;
+        color: var(--brand-blue-tint); margin-bottom: 34px;
+      }
+      #ec-headline {
+        position: relative;
+        font-size: 108px; font-weight: 800; line-height: 0.98; letter-spacing: -0.03em;
+        color: var(--brand-white);
+      }
+      #ec-cta {
+        position: relative;
+        margin-top: 74px;
+        display: inline-flex; align-items: center; gap: 20px;
+        font-size: 44px; font-weight: 700; color: var(--brand-white);
+        background: var(--brand-flame);
+        padding: 34px 68px; border-radius: 999px;
+        box-shadow: 0 24px 72px -16px rgba(255, 76, 50, 0.62);
+      }
+      #ec-cta .arrow { font-size: 46px; line-height: 1; transform: translateY(-2px); }
+    </style>
+  </head>
+  <body>
+    <!-- SHORT cut (~25s) of the CAC ad: supercut hook + bootcamp close from the
+         founder VO, one reveal cutaway bridging the splice, then the end card. -->
+    <div
+      id="root"
+      data-composition-id="ecomiq-cac-mini"
+      data-start="0"
+      data-duration="25.5"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div id="bg" class="clip" data-start="0" data-duration="25.5" data-track-index="0"></div>
+
+      <!-- 1 · A-ROLL spine (supercut: hook + true-CAC/bootcamp close) -->
+      <video
+        class="footage"
+        id="aroll-video"
+        data-start="0"
+        data-duration="22.55"
+        data-track-index="1"
+        src="assets/aroll-short.mp4"
+        muted
+        playsinline
+      ></video>
+
+      <!-- 2 · B-ROLL reveal — REPORTED $37.50 → TRUE CAC $61.69. Placed over the
+             hook→close splice (~9.35s): hides the jump cut AND pays off the hook's
+             "the number on your dashboard is almost never right." -->
+      <video
+        class="footage"
+        id="cut1"
+        data-start="8.3"
+        data-duration="4.66"
+        data-track-index="2"
+        src="assets/broll-3-reveal.mp4"
+        muted
+        playsinline
+      ></video>
+
+      <!-- 5 & 6 · Persistent logo group -->
+      <div id="logo-wrap">
+        <div id="logo-scrim" class="clip" data-start="0" data-duration="21" data-track-index="5"></div>
+        <img id="logo" class="clip" data-start="0" data-duration="21" data-track-index="6"
+             src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <!-- 7 · END CARD -->
+      <div id="endcard" class="clip" data-start="21" data-duration="4.5" data-track-index="7">
+        <div id="ec-bloom"></div>
+        <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="ec-eyebrow">More insights like this?</div>
+        <div id="ec-headline">The Free<br />Profitability<br />Bootcamp.</div>
+        <div id="ec-cta">Sign up here <span class="arrow">&rarr;</span></div>
+      </div>
+
+      <!-- 8 · A-ROLL audio (founder VO spine; mixer-managed) -->
+      <audio
+        id="aroll-audio"
+        data-start="0"
+        data-duration="22.55"
+        data-track-index="8"
+        data-volume="1"
+        src="assets/aroll-short.mp4"
+      ></audio>
+
+      <!-- 9 · Duckable MUSIC-BED PLACEHOLDER (silent). Swap src; already ducked. -->
+      <audio
+        id="music-bed"
+        data-start="0"
+        data-duration="25.5"
+        data-track-index="9"
+        data-volume="0.18"
+        src="assets/music-bed-PLACEHOLDER.m4a"
+      ></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Persistent logo: settle in, fade out just before the end card.
+      tl.fromTo("#logo-wrap", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.3)
+        .to("#logo-wrap", { opacity: 0, duration: 0.4, ease: "power1.in" }, 20.6)
+        .set("#logo-wrap", { opacity: 0 }, 21.0); // hard kill so non-linear seeks stay hidden
+
+      // Reveal cutaway: hard cut in, slow scale-push, quick dissolve out to founder.
+      tl.fromTo("#cut1", { scale: 1.0 }, { scale: 1.06, duration: 4.66, ease: "none" }, 8.3)
+        .to("#cut1", { opacity: 0, duration: 0.25, ease: "power1.in" }, 12.71);
+
+      // End card (21 → 25.5): dissolve in, stagger content, CTA breathes.
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 21.0)
+        .fromTo("#ec-logo", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 21.4)
+        .fromTo("#ec-eyebrow", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 21.6)
+        .fromTo("#ec-headline", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 21.8)
+        .fromTo("#ec-cta", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" }, 22.2)
+        .to("#ec-cta", { scale: 1.045, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 2 }, 23.0);
+
+      // Pad timeline to root data-duration (Law #7/#11).
+      tl.to({}, { duration: 25.5 }, 0);
+      window.__timelines["ecomiq-cac-mini"] = tl;
+    </script>
+  </body>
+</html>
