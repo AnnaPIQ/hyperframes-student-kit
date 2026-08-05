@@ -69,16 +69,19 @@
           radial-gradient(120% 70% at 50% 22%, rgba(156, 212, 255, 0.12) 0%, rgba(6, 40, 76, 0) 55%),
           var(--brand-navy);
       }
-      #ec-logo { width: 520px; height: auto; display: block; }
-      #ec-divider { width: 72px; height: 4px; border-radius: 2px; background: var(--brand-flame); }
+      #ec-logo { width: 470px; height: auto; display: block; }
       #ec-line {
-        font-weight: 700; font-size: 60px; line-height: 1.04; letter-spacing: -0.02em;
-        color: var(--brand-white); max-width: 84%;
+        font-weight: 700; font-size: 54px; line-height: 1.05; letter-spacing: -0.01em;
+        color: var(--brand-white); max-width: 88%;   /* all white, no italics */
       }
-      #ec-line .em {
-        font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
-        font-weight: 400; color: var(--brand-blue-tint);
+      #ec-cta {
+        margin-top: 12px; font-weight: 700; font-size: 40px; color: var(--brand-white);
+        background: var(--brand-flame); padding: 32px 68px; border-radius: 999px;
+        letter-spacing: 0.005em; white-space: nowrap;
+        display: inline-flex; align-items: center; gap: 18px;
+        box-shadow: 0 24px 74px -18px rgba(255, 76, 50, 0.8);
       }
+      #ec-cta .arrow { font-weight: 700; }
     </style>
   </head>
   <body>
@@ -86,20 +89,21 @@
       id="root"
       data-composition-id="ecomiq-short-form"
       data-start="0"
-      data-duration="48"
+      data-duration="34"
       data-width="1080"
       data-height="1920"
     >
       <!-- Talking head (native 1080x1920). Wrapper is non-timed; the <video> is the
            timed element. <video> is muted — audio rides on the sibling <audio>.
-           LONG version: full "first order_long" take, one continuous shot (no splice). -->
+           SHORT version: scripted cut of the long take — hook through "…to acquire that
+           customer", one cross-dissolve, then "And if you're not getting that right…" to CTA. -->
       <div id="face-wrapper">
         <video
           id="face-video"
           data-start="0"
-          data-duration="45.95"
+          data-duration="33.10"
           data-track-index="0"
-          src="assets/face-long.mp4"
+          src="assets/face-short.mp4"
           muted
           playsinline
         ></video>
@@ -109,10 +113,10 @@
       <audio
         id="face-audio"
         data-start="0"
-        data-duration="45.95"
+        data-duration="33.10"
         data-track-index="1"
         data-volume="1"
-        src="assets/face-long-audio.m4a"
+        src="assets/face-short-audio.m4a"
       ></audio>
 
       <!-- Vignette + top-left logo scrim (full-bleed clip, never drifts) -->
@@ -120,7 +124,7 @@
         id="overlay"
         class="clip"
         data-start="0"
-        data-duration="45.95"
+        data-duration="33.10"
         data-track-index="2"
       ></div>
 
@@ -130,24 +134,24 @@
           id="logo-corner"
           class="clip"
           data-start="0"
-          data-duration="45.95"
+          data-duration="33.10"
           data-track-index="3"
           src="assets/ecomiq-logo-white.svg"
           alt="EcomIQ"
         />
       </div>
 
-      <!-- End card (last ~2.7s): white logo + one line -->
+      <!-- End card (last ~3.7s): white logo + line + flame CTA button -->
       <div
         id="endcard"
         class="clip"
-        data-start="45.3"
-        data-duration="2.7"
+        data-start="30.3"
+        data-duration="3.7"
         data-track-index="4"
       >
         <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-        <div id="ec-divider"></div>
-        <div id="ec-line">Free <span class="em">Profitability</span> Bootcamp</div>
+        <div id="ec-line">Free Profitability Bootcamp</div>
+        <div id="ec-cta">Join now <span class="arrow">&rarr;</span></div>
       </div>
     </div>
 
@@ -159,7 +163,7 @@
       // life without amplifying the source's own motion. (Covered by end card at peak.)
       tl.fromTo("#face-video",
         { scale: 1.0 },
-        { scale: 1.03, duration: 45.95, ease: "none" }, 0);
+        { scale: 1.025, duration: 33.10, ease: "none" }, 0);
 
       // Corner logo fades in on the opener (starts hidden -> fromTo).
       tl.fromTo("#logo-corner",
@@ -167,22 +171,22 @@
         { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.35);
 
       // End card — navy panel crossfades over the face as the spoken CTA lands,
-      // then logo + line settle in.
+      // then logo, line, and the flame CTA button settle in.
       tl.fromTo("#endcard",
         { opacity: 0 },
-        { opacity: 1, duration: 0.5, ease: "power2.out" }, 45.3);
+        { opacity: 1, duration: 0.5, ease: "power2.out" }, 30.3);
       tl.fromTo("#ec-logo",
         { opacity: 0, y: 28, scale: 0.96 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.62, ease: "power3.out" }, 45.6);
-      tl.fromTo("#ec-divider",
-        { opacity: 0, scaleX: 0 },
-        { opacity: 1, scaleX: 1, duration: 0.45, ease: "power2.out" }, 45.9);
+        { opacity: 1, y: 0, scale: 1, duration: 0.62, ease: "power3.out" }, 30.6);
       tl.fromTo("#ec-line",
         { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 46.05);
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 30.9);
+      tl.fromTo("#ec-cta",
+        { opacity: 0, y: 16, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.6)" }, 31.1);
 
-      // Pad the timeline so tl.duration() === data-duration (48s).
-      tl.set({}, {}, 48.0);
+      // Pad the timeline so tl.duration() === data-duration (34s).
+      tl.set({}, {}, 34.0);
 
       window.__timelines["ecomiq-short-form"] = tl;
     </script>
