@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>ecomiq-profit-bootcamp</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time (latin subset) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text);
+      }
+
+      /* ---- Base navy canvas (only ever visible behind the end card) ---- */
+      #bg { position: absolute; inset: 0; z-index: 0;
+        background: radial-gradient(90% 55% at 50% 22%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
+
+      /* ---- Talking-head face, full frame ---- */
+      #face-wrapper { position: absolute; inset: 0; z-index: 1; overflow: hidden; transform-origin: 50% 42%; }
+      #face { width: 100%; height: 100%; object-fit: cover; display: block;
+        /* House grade: face is a character, never raw footage */
+        filter: contrast(1.06) saturate(1.07) brightness(.985); }
+      /* Soft navy vignette so the room sinks into the brand and the eye holds on the speaker */
+      #face-wrapper::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(116% 92% at 50% 40%, rgba(6,40,76,0) 56%, rgba(6,40,76,.30) 100%); }
+
+      /* ---- Branded end card ---- */
+      #endcard { position: absolute; inset: 0; z-index: 5;
+        background: var(--brand-navy); overflow: hidden; }
+      #ec-bloom { position: absolute; left: -12%; bottom: -20%; width: 124%; height: 58%;
+        background: var(--brand-gradient-2); filter: blur(96px); opacity: .40; }
+      #ec-vignette { position: absolute; inset: 0;
+        background: radial-gradient(78% 60% at 50% 40%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%); }
+      #ec-logo { position: absolute; top: 9%; left: 50%; transform: translateX(-50%); width: 46%; height: auto; }
+      #ec-stage { position: absolute; left: 92px; right: 92px; top: 50%; transform: translateY(-50%);
+        display: flex; flex-direction: column; align-items: center; text-align: center; }
+      #ec-eyebrow { font-weight: 600; font-size: 30px; letter-spacing: .32em; text-transform: uppercase;
+        color: var(--brand-blue-tint); margin-bottom: 34px; }
+      #ec-rule { width: 132px; height: 6px; border-radius: 3px; background: var(--brand-flame);
+        margin-bottom: 40px; transform-origin: center; }
+      #ec-headline { font-weight: 800; font-size: 96px; line-height: 1.0; letter-spacing: -.03em;
+        color: var(--brand-white); max-width: 780px; }
+      #ec-headline .em { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
+        font-weight: 400; letter-spacing: -.01em; color: var(--brand-blue-tint); }
+      #ec-cta { margin-top: 52px; display: inline-flex; align-items: center; gap: 18px;
+        font-weight: 700; font-size: 40px; color: var(--brand-white); background: var(--brand-flame);
+        padding: 30px 60px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,.62); }
+      #ec-cta .arrow { font-size: 42px; line-height: 1; transform: translateY(-2px); }
+    </style>
+  </head>
+  <body>
+    <!-- Render Contract: root carries id, data-composition-id, data-start=0, data-width/height.
+         Face = full-frame talking head (0–31s) crossfading into a 4.5s branded end card.
+         Video is muted; audio rides in a sibling <audio> for the mixer. -->
+    <div id="root" data-composition-id="ecomiq-profit-bootcamp" data-start="0" data-duration="35" data-width="1080" data-height="1920">
+
+      <div id="bg" class="clip" data-start="0" data-duration="35" data-track-index="0"></div>
+
+      <!-- Non-timed wrapper so GSAP can Ken-Burns / crossfade without animating the <video> element itself -->
+      <div id="face-wrapper">
+        <video id="face" data-start="0" data-duration="31" data-track-index="1"
+               src="assets/founder-cut.mp4" muted playsinline></video>
+      </div>
+      <audio id="face-audio" data-start="0" data-duration="31" data-track-index="2"
+             src="assets/founder-cut.mp4" data-volume="1"></audio>
+
+      <div id="endcard" class="clip" data-start="30.4" data-duration="4.6" data-track-index="3">
+        <div id="ec-bloom"></div>
+        <div id="ec-vignette"></div>
+        <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="ec-stage">
+          <div id="ec-eyebrow">Free Profitability Bootcamp</div>
+          <div id="ec-rule"></div>
+          <div id="ec-headline">Keep the <span class="em">margin</span> you give away.</div>
+          <div id="ec-cta">Join free — link below <span class="arrow">&rarr;</span></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Render Contract: exactly one paused GSAP timeline, keyed to data-composition-id.
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // --- Face: slow Ken Burns push across the whole read (face is a character) ---
+      tl.fromTo("#face-wrapper", { scale: 1.0 }, { scale: 1.035, duration: 31, ease: "none" }, 0);
+
+      // --- Crossfade face → end card, completing exactly as the video ends (31.0s) ---
+      // The end card owns an opaque navy bg, so fading its container in dissolves cleanly over the face.
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.inOut" }, 30.4);
+
+      // --- End-card entrances (staggered, varied eases) once the card is mostly in ---
+      tl.from("#ec-logo",     { opacity: 0, y: -24, duration: 0.6,  ease: "power3.out" }, 30.75)
+        .from("#ec-eyebrow",  { opacity: 0, y: 18,  duration: 0.5,  ease: "power2.out" }, 30.95)
+        .from("#ec-rule",     { scaleX: 0,          duration: 0.45, ease: "power3.out" }, 31.15)
+        .from("#ec-headline", { opacity: 0, y: 34,  duration: 0.7,  ease: "power3.out" }, 31.25)
+        .from("#ec-cta",      { opacity: 0, scale: 0.85, duration: 0.55, ease: "back.out(1.7)" }, 31.7)
+        // CTA breathes to hold attention through the outro hold (ends 34.9s, inside the 35s comp).
+        .to("#ec-cta", { scale: 1.045, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 3 }, 32.5);
+
+      // Duration comes from data-duration (35s); the tweens above fit inside it. No padding tween needed
+      // because the root's data-duration governs, but we assert it for clarity per the render contract.
+      window.__timelines["ecomiq-profit-bootcamp"] = tl;
+    </script>
+  </body>
+</html>
