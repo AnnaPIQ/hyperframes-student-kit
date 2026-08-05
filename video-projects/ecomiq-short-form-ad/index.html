@@ -63,7 +63,8 @@
       #callout-work { top: 300px; }
       .chip { display: inline-flex; align-items: center; gap: 16px; padding: 20px 34px; border-radius: 999px;
         font-weight: 800; letter-spacing: .02em; backdrop-filter: blur(6px); opacity: 0; }
-      .chip.stale { background: rgba(255,76,50,.16); border: 2px solid var(--brand-flame); color: #ffd9d1; font-size: 40px; }
+      .chip.stale { background: rgba(28,10,6,.5); border: 2px solid var(--brand-flame); color: #ffe3dc; font-size: 40px;
+        box-shadow: 0 10px 30px -8px rgba(0,0,0,.5); }
       .chip.stale .x { color: var(--brand-flame); font-size: 44px; line-height: 1; }
       .chip.work { flex-direction: column; gap: 6px; background: rgba(6,40,76,.55); border: 2px solid rgba(156,212,255,.55);
         padding: 28px 44px; }
@@ -226,24 +227,27 @@
       tl.to("#broll-work-wrap", { opacity: 0, duration: 0.4, ease: "power2.in" }, 22.7);
 
       // ---- Captions: karaoke per line ----
-      const PRE = 0.14, HOLD = 0.16, FADE = 0.2;
+      // Each line is fully hidden before the next fades in (outAt of line i ==
+      // inAt of line i+1) so two lines never stack at the same position.
+      const PRE = 0.14, HOLD = 0.5, FADE_IN = 0.16, FADE_OUT = 0.14;
+      const inAts = LINES.map((line) => Math.max(line[0].s - PRE, 0));
       LINES.forEach((line, li) => {
         const sel = "#cap-line-" + li;
-        const segStart = line[0].s;
+        const inAt = inAts[li];
         const segEnd = line[line.length - 1].e;
-        const inAt = Math.max(segStart - PRE, 0);
-        const outAt = segEnd + HOLD;
+        const outAt = (li < LINES.length - 1) ? inAts[li + 1] : Math.min(segEnd + HOLD, VO_END);
         // reset words dim before line shows
         line.forEach((wd) => tl.set("#cap-w-" + wd.gi, { color: DIM, scale: 1.0 }, inAt));
         tl.set(sel, { visibility: "visible" }, inAt);
-        tl.fromTo(sel, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: FADE, ease: "power2.out" }, inAt);
+        tl.fromTo(sel, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: FADE_IN, ease: "power2.out" }, inAt);
         // per-word pop
         line.forEach((wd) => {
           tl.to("#cap-w-" + wd.gi, { color: ACTIVE, scale: 1.12, duration: 0.08, ease: "back.out(3)" }, wd.s);
           tl.to("#cap-w-" + wd.gi, { color: SPOKEN, scale: 1.0, duration: 0.12, ease: "power2.out" }, wd.e);
         });
-        tl.to(sel, { opacity: 0, duration: FADE, ease: "power2.in" }, outAt);
-        tl.set(sel, { visibility: "hidden" }, outAt + FADE + 0.03);
+        const fadeOutAt = Math.max(outAt - FADE_OUT, inAt + FADE_IN + 0.02);
+        tl.to(sel, { opacity: 0, duration: FADE_OUT, ease: "power2.in" }, fadeOutAt);
+        tl.set(sel, { visibility: "hidden" }, outAt);
       });
 
       // ---- Brand callouts ----
