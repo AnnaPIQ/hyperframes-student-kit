@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>ecomiq-short-form-3</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time (latin subset) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
+
+      /* A-roll spine fills the vertical frame (source is native 1080x1920) */
+      #aroll { position: absolute; inset: 0; width: 1080px; height: 1920px;
+        object-fit: cover; z-index: 10; }
+
+      /* Persistent brand logo — top-left, subtle scrim + shadow so it reads on any shot */
+      #brand-logo { position: absolute; top: 5.5%; left: 6%; width: 40%; z-index: 50; }
+      #brand-logo::before { content: ''; position: absolute; inset: -22% -16%; z-index: -1;
+        background: radial-gradient(62% 62% at 38% 50%, rgba(6,40,76,.5) 0%, rgba(6,40,76,0) 72%); }
+      #brand-logo img { display: block; width: 100%; height: auto;
+        filter: drop-shadow(0 3px 12px rgba(0,0,0,.6)) drop-shadow(0 0 3px rgba(0,0,0,.45)); }
+
+      /* Full-frame cutaway cards sit above the video; end card above everything */
+      .cutaway { position: absolute; inset: 0; z-index: 40; }
+      #end-card-clip { position: absolute; inset: 0; z-index: 100; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="ecomiq-short-form-3" data-start="0" data-duration="26.5" data-width="1080" data-height="1920">
+
+      <!-- A-roll spine: muted video (track 0) + sibling VO audio (track 1) so cutaways
+           can cover the picture without cutting the voice. Trim 0.4s off the head. -->
+      <video id="aroll" data-start="0" data-duration="22.5" data-media-start="0.4" data-track-index="0"
+             src="assets/aroll-video3.mp4" muted playsinline></video>
+      <audio id="aroll-vo" data-start="0" data-duration="22.5" data-media-start="0.4" data-track-index="1"
+             src="assets/aroll-video3.mp4" data-volume="1"></audio>
+
+      <!-- Music-bed placeholder (track 2): silent for now, sits at a ducked-under-VO level.
+           Swap the src for your track later; raise data-volume when it should carry. -->
+      <audio id="music-bed" data-start="0" data-duration="26.5" data-track-index="2"
+             src="assets/music-bed-placeholder.m4a" data-volume="0.18"></audio>
+
+      <!-- Persistent brand logo (track 3) — over the A-roll spine only -->
+      <div id="brand-logo" class="clip" data-start="0" data-duration="22.5" data-track-index="3">
+        <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <!-- Branded motion-graphic cutaways (track 4) on the beats -->
+      <div id="cut1" class="cutaway clip" data-composition-id="cutaway-1" data-composition-src="compositions/cutaway-1.html"
+           data-start="5.0" data-duration="1.6" data-track-index="4"></div>
+      <div id="cut2" class="cutaway clip" data-composition-id="cutaway-2" data-composition-src="compositions/cutaway-2.html"
+           data-start="11.0" data-duration="1.6" data-track-index="4"></div>
+      <div id="cut3" class="cutaway clip" data-composition-id="cutaway-3" data-composition-src="compositions/cutaway-3.html"
+           data-start="16.8" data-duration="1.6" data-track-index="4"></div>
+
+      <!-- End card (track 5) — overlaps the last 0.3s of the spine as a soft cover-in -->
+      <div id="end-card-clip" class="clip" data-composition-id="end-card" data-composition-src="compositions/end-card.html"
+           data-start="22.2" data-duration="4.3" data-track-index="5"></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      // Logo entrance (the only master-track animation; media + sub-comps drive themselves)
+      tl.from("#brand-logo", { opacity: 0, y: -20, filter: "blur(6px)", duration: .6, ease: "power3.out" }, .3);
+      tl.set({}, {}, 26.5); // composition duration
+      window.__timelines["ecomiq-short-form-3"] = tl;
+    </script>
+  </body>
+</html>

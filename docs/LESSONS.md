@@ -79,4 +79,30 @@ efficient over time instead of relearning the same lessons.
 
 ---
 
+- **Sub-composition asset paths must be root-relative, NOT `../assets/`.** The
+  `/hyperframes` skill says "sub-compositions use `../`", but the linter errors with
+  `invalid_parent_traversal_in_asset_path` and Studio preview 404s: compositions are
+  served with the *project root* as their base URL. **Fix:** inside `compositions/*.html`
+  write `assets/fonts/...`, `assets/vendor/gsap.min.js`, `assets/logo.svg` — plain
+  root-relative, never `../assets/...`. (Renders happen to rewrite `../` per source path,
+  but Studio/live consumers don't — so root-relative is the only form that works in both.)
+- **Self-attribute-selector warnings (`composition_self_attribute_selector`).** Scoping a
+  sub-comp's CSS/GSAP with `[data-composition-id='x'] .foo` fires this warning for every
+  selector. **Fix:** give the sub-comp root a stable `id` (`<div id="x-root" ...>`) and
+  scope via `#x-root .foo` instead. Clears all the warnings and reads better.
+- **Portrait phone A-roll stored as 1920×1080 + `rotation=-90` metadata.** `ffprobe` shows
+  landscape dims, but the display orientation is 1080×1920 vertical. **Fix:** run it
+  through `npm run prep` (keep audio — no `--mute` for a VO/talking-head spine); the
+  H.264 re-encode bakes the rotation so the output is truly 1080×1920. When grabbing
+  verification frames, DON'T add `transpose=` — ffmpeg auto-applies rotation metadata, so
+  a manual transpose double-rotates. HEVC A-roll should always be prepped to H.264 anyway
+  (headless Chrome decodes it unreliably).
+- **Full-frame cutaways over a talking-head spine: split the audio off the video.**
+  Reference the same prepped mp4 as a muted `<video>` (spine) AND a sibling `<audio>` (VO)
+  on separate tracks. Then branded cutaway cards on a higher track can cover the *picture*
+  on the beats while the voice plays on uninterrupted underneath. Cutaways get a blur/scale
+  reveal-OUT (the one place an overlay legitimately animates out — the video is the "next
+  scene"). Give each ≥0.6s crisp hold; a 1.3s card with a staggered word-stack lands too
+  late to hold — 1.6s reads much better.
+
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
