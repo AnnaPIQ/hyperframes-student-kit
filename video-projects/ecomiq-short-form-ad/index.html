@@ -67,7 +67,7 @@
 
       <!-- Single b-roll cutaway — spans the audio splice (comp 15.75) so the A-roll jump-cut stays hidden -->
       <div id="broll-work-wrap" class="vid-wrap">
-        <video id="broll-work" data-start="14.7" data-duration="5.6" data-track-index="3"
+        <video id="broll-work" data-start="14.7" data-duration="5.5" data-track-index="3"
           src="assets/broll-work.mp4" muted playsinline></video>
       </div>
 
@@ -103,13 +103,13 @@
       // Logo entrance
       tl.from("#logo", { opacity: 0, y: -18, duration: 0.6, ease: "power3.out" }, 0.3);
 
-      // Subtle Ken Burns on both videos (animate wrappers, never the <video>).
+      // Subtle Ken Burns on the founder A-roll (the b-roll is a handheld walking
+      // shot that already carries its own motion, so it gets no added zoom).
       tl.fromTo("#aroll", { scale: 1.0 }, { scale: 1.06, duration: 30.77, ease: "none" }, 0);
-      tl.fromTo("#broll-work-wrap", { scale: 1.0 }, { scale: 1.08, duration: 5.6, ease: "none" }, 14.7);
 
       // B-roll crossfade over the A-roll (covers the splice at 15.75).
       tl.to("#broll-work-wrap", { opacity: 1, duration: 0.35, ease: "power2.out" }, 14.7);
-      tl.to("#broll-work-wrap", { opacity: 0, duration: 0.4, ease: "power2.in" }, 19.9);
+      tl.to("#broll-work-wrap", { opacity: 0, duration: 0.35, ease: "power2.in" }, 19.85);
 
       // ---- Outro ----
       tl.to("#outro", { clipPath: "inset(0 0 0% 0)", duration: 0.55, ease: "power4.inOut" }, VO_END - 0.1);
