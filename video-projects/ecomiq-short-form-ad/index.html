@@ -25,63 +25,30 @@
       .vid-wrap video { width: 1080px; height: 1920px; object-fit: cover; display: block; }
       #aroll-wrap { z-index: 1; }
       #aroll { filter: contrast(1.05) saturate(1.06) brightness(0.99); }
-      #broll-establish-wrap { z-index: 2; opacity: 0; }
       #broll-work-wrap { z-index: 3; opacity: 0; }
 
-      /* Cinematic overlays — sit over the video, under the text/UI */
+      /* Cinematic overlays — sit over the video, under the logo */
       #vignette { position: absolute; inset: 0; z-index: 4; pointer-events: none;
         background:
           radial-gradient(120% 80% at 50% 42%, transparent 50%, rgba(4,14,28,.34) 82%, rgba(3,10,22,.66) 100%); }
       #grain { position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: .05;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         background-size: 240px 240px; }
-
-      /* caption legibility scrim (bottom third) */
-      #scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 720px; z-index: 5; pointer-events: none;
-        background: linear-gradient(to top, rgba(4,16,32,.78) 0%, rgba(4,16,32,.5) 34%, rgba(4,16,32,0) 100%); }
       /* top scrim so the logo separates from bright A-roll ceilings */
       #scrim-top { position: absolute; left: 0; right: 0; top: 0; height: 360px; z-index: 5; pointer-events: none;
-        background: linear-gradient(to bottom, rgba(4,16,32,.6) 0%, rgba(4,16,32,0) 100%); }
+        background: linear-gradient(to bottom, rgba(4,16,32,.55) 0%, rgba(4,16,32,0) 100%); }
 
       /* ---- persistent logo ---- */
       #logo { position: absolute; top: 96px; left: 72px; width: 340px; height: auto; z-index: 8; }
-
-      /* ---- karaoke captions ---- */
-      #captions { position: absolute; left: 0; right: 0; bottom: 300px; z-index: 6; pointer-events: none;
-        display: flex; flex-direction: column; align-items: center; }
-      .cap-line { position: absolute; bottom: 0; left: 0; right: 0; display: flex; flex-wrap: wrap;
-        justify-content: center; align-content: flex-end; gap: 0 18px; padding: 0 70px; opacity: 0; visibility: hidden; }
-      .cap-word { display: inline-block; transform-origin: center bottom; will-change: transform, color;
-        font-family: 'Rethink Sans', sans-serif; font-weight: 800; font-size: 58px; line-height: 1.16;
-        letter-spacing: -.02em; color: rgba(255,255,255,.72);
-        text-shadow: -3px -3px 0 #04101f, 3px -3px 0 #04101f, -3px 3px 0 #04101f, 3px 3px 0 #04101f,
-          -4px 0 0 #04101f, 4px 0 0 #04101f, 0 -4px 0 #04101f, 0 4px 0 #04101f, 0 8px 18px rgba(0,0,0,.55); }
-
-      /* ---- brand callouts (kinetic chips) ---- */
-      .callout { position: absolute; z-index: 7; left: 0; right: 0; display: flex; justify-content: center; }
-      #callout-stale { top: 300px; }
-      #callout-work { top: 300px; }
-      .chip { display: inline-flex; align-items: center; gap: 16px; padding: 20px 34px; border-radius: 999px;
-        font-weight: 800; letter-spacing: .02em; backdrop-filter: blur(6px); opacity: 0; }
-      .chip.stale { background: rgba(28,10,6,.5); border: 2px solid var(--brand-flame); color: #ffe3dc; font-size: 40px;
-        box-shadow: 0 10px 30px -8px rgba(0,0,0,.5); }
-      .chip.stale .x { color: var(--brand-flame); font-size: 44px; line-height: 1; }
-      .chip.work { flex-direction: column; gap: 6px; background: rgba(6,40,76,.55); border: 2px solid rgba(156,212,255,.55);
-        padding: 28px 44px; }
-      .chip.work .k { font-size: 26px; font-weight: 700; letter-spacing: .34em; color: var(--brand-blue-tint); }
-      .chip.work .v { font-family: 'Rethink Sans', sans-serif; font-size: 64px; font-weight: 800; letter-spacing: -.02em; color: #fff; }
-      .chip.work .v em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
 
       /* ---- outro ---- */
       #outro { position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column;
         align-items: center; justify-content: center; text-align: center; padding: 10% 9%; gap: 30px;
         background: radial-gradient(88% 52% at 50% 30%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%), var(--brand-navy);
         clip-path: inset(0 0 100% 0); }
-      #outro-logo { width: 460px; height: auto; margin-bottom: 8px; }
-      #outro-eyebrow { font-weight: 600; font-size: 26px; letter-spacing: .36em; text-transform: uppercase; color: var(--brand-blue-tint); }
-      #outro-headline { font-weight: 800; font-size: 104px; line-height: .98; letter-spacing: -.03em; }
-      #outro-headline .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
-      #outro-sub { font-weight: 500; font-size: 36px; line-height: 1.32; color: var(--brand-text-dim); max-width: 78%; }
+      #outro-logo { width: 460px; height: auto; margin-bottom: 12px; }
+      #outro-headline { font-weight: 800; font-size: 104px; line-height: .98; letter-spacing: -.03em; color: var(--brand-white); }
+      #outro-sub { font-weight: 500; font-size: 36px; line-height: 1.32; color: var(--brand-text-dim); max-width: 80%; }
       #outro-cta { margin-top: 16px; font-weight: 700; font-size: 38px; color: #fff;
         background: var(--brand-flame); padding: 30px 62px; border-radius: 999px;
         box-shadow: 0 22px 70px -16px rgba(255,76,50,.62); }
@@ -98,13 +65,9 @@
           src="assets/aroll-cut.mp4" muted playsinline></video>
       </div>
 
-      <!-- B-roll cutaways (crossfade over the A-roll; hide the audio splice at 15.75) -->
-      <div id="broll-establish-wrap" class="vid-wrap">
-        <video id="broll-establish" data-start="12.0" data-duration="5.6" data-track-index="2"
-          src="assets/broll-establish.mp4" muted playsinline></video>
-      </div>
+      <!-- Single b-roll cutaway — spans the audio splice (comp 15.75) so the A-roll jump-cut stays hidden -->
       <div id="broll-work-wrap" class="vid-wrap">
-        <video id="broll-work" data-start="17.4" data-duration="5.6" data-track-index="3"
+        <video id="broll-work" data-start="14.7" data-duration="5.6" data-track-index="3"
           src="assets/broll-work.mp4" muted playsinline></video>
       </div>
 
@@ -116,30 +79,17 @@
       <div id="vignette" class="clip" data-start="0" data-duration="35.3" data-track-index="4"></div>
       <div id="grain" class="clip" data-start="0" data-duration="35.3" data-track-index="5"></div>
       <div id="scrim-top" class="clip" data-start="0" data-duration="30.77" data-track-index="6"></div>
-      <div id="scrim" class="clip" data-start="0" data-duration="30.77" data-track-index="7"></div>
 
       <!-- Persistent logo -->
       <img id="logo" class="clip" data-start="0.3" data-duration="30.47" data-track-index="8"
         src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
 
-      <!-- Karaoke captions (built + animated in the main script) -->
-      <div id="captions" class="clip" data-start="0" data-duration="30.77" data-track-index="10"></div>
-
-      <!-- Brand callouts -->
-      <div id="callout-stale" class="callout clip" data-start="13.9" data-duration="2.0" data-track-index="11">
-        <span class="chip stale"><span class="x">&#10007;</span> OUT OF DATE</span>
-      </div>
-      <div id="callout-work" class="callout clip" data-start="18.0" data-duration="3.4" data-track-index="12">
-        <span class="chip work"><span class="k">ECOMIQ SIGNAL</span><span class="v">What&rsquo;s <em>working</em> now</span></span>
-      </div>
-
       <!-- Outro -->
       <div id="outro" class="clip" data-start="30.77" data-duration="4.53" data-track-index="13">
         <img id="outro-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-        <div id="outro-eyebrow">E-Commerce Intelligence</div>
-        <div id="outro-headline">Know what&rsquo;s<br /><span class="em">working</span> right now.</div>
-        <div id="outro-sub">Tested against real brands &mdash; not last year&rsquo;s playbook.</div>
-        <div id="outro-cta">Get started &rarr;</div>
+        <div id="outro-headline">Know what&rsquo;s<br />working right now.</div>
+        <div id="outro-sub">Tested against real brands, not last year&rsquo;s playbook.</div>
+        <div id="outro-cta">Find out more</div>
       </div>
     </div>
 
@@ -148,126 +98,26 @@
       const DUR = 35.3;
       const VO_END = 30.77;
 
-      /* ---------- word-level karaoke captions (comp-time) ---------- */
-      const WORDS = [
-        {w:"People",s:0,e:1.04},{w:"ask",s:1.04,e:1.56},{w:"us",s:1.56,e:1.86},{w:"why",s:2.01,e:2.42},
-        {w:"we",s:2.42,e:2.76},{w:"fly",s:2.76,e:3.29},{w:"around",s:3.3,e:3.43},{w:"the",s:3.44,e:3.52},
-        {w:"world",s:3.52,e:4},{w:"for",s:4,e:4.18},{w:"these",s:4.18,e:4.48},{w:"big",s:4.48,e:4.66},
-        {w:"Shopify",s:4.66,e:5.07},{w:"and",s:5.08,e:5.26},{w:"e-commerce",s:5.26,e:5.86},{w:"events,",s:5.86,e:6.24},
-        {w:"and",s:6.24,e:6.43},{w:"the",s:6.43,e:6.62},{w:"answer",s:6.62,e:7.01},{w:"is",s:7.01,e:7.14},
-        {w:"super",s:7.14,e:7.46},{w:"simple.",s:7.48,e:8.08},{w:"This",s:8.08,e:8.43},{w:"industry",s:8.43,e:9.13},
-        {w:"moves",s:9.13,e:9.55},{w:"faster",s:9.6,e:10.1},{w:"than",s:10.1,e:10.45},{w:"almost",s:10.45,e:10.98},
-        {w:"any",s:10.98,e:11.24},{w:"other.",s:11.24,e:11.72},{w:"And",s:11.72,e:11.89},{w:"advice",s:11.89,e:12.23},
-        {w:"that",s:12.23,e:12.46},{w:"worked",s:12.46,e:12.79},{w:"last",s:12.8,e:13.03},{w:"year",s:13.03,e:13.28},
-        {w:"is",s:13.28,e:13.43},{w:"often",s:13.43,e:13.82},{w:"out",s:13.82,e:14.05},{w:"of",s:14.05,e:14.2},
-        {w:"date",s:14.2,e:14.51},{w:"within",s:14.55,e:14.98},{w:"months.",s:14.98,e:15.72},
-        {w:"It's",s:15.82,e:16.02},{w:"not",s:16.02,e:16.18},{w:"a",s:16.18,e:16.23},{w:"theory",s:16.23,e:16.55},
-        {w:"or",s:16.55,e:16.65},{w:"it's",s:16.65,e:16.85},{w:"last",s:16.85,e:17.06},{w:"year's",s:17.06,e:17.37},
-        {w:"playbook,",s:17.37,e:17.9},{w:"it's",s:17.9,e:18.2},{w:"what's",s:18.2,e:18.66},{w:"working",s:18.66,e:19.2},
-        {w:"right",s:19.22,e:19.59},{w:"now,",s:19.59,e:19.86},{w:"tested",s:19.86,e:20.46},{w:"and",s:20.46,e:20.76},
-        {w:"explained,",s:20.76,e:21.7},{w:"so",s:21.7,e:21.85},{w:"they",s:21.87,e:22.18},{w:"know",s:22.18,e:22.5},
-        {w:"how",s:22.5,e:22.74},{w:"to",s:22.74,e:22.83},{w:"act",s:22.94,e:23.13},{w:"on",s:23.14,e:23.29},
-        {w:"it.",s:23.3,e:23.5},{w:"Because",s:23.5,e:24.03},{w:"in",s:24.03,e:24.18},{w:"a",s:24.18,e:24.25},
-        {w:"market",s:24.25,e:24.7},{w:"moving",s:24.74,e:25.13},{w:"this",s:25.18,e:25.36},{w:"fast,",s:25.51,e:25.78},
-        {w:"the",s:25.78,e:26.01},{w:"worst",s:26.01,e:26.4},{w:"thing",s:26.4,e:26.79},{w:"you",s:26.79,e:27.02},
-        {w:"can",s:27.02,e:27.23},{w:"do",s:27.3,e:27.41},{w:"is",s:27.46,e:27.58},{w:"run",s:27.58,e:27.75},
-        {w:"a",s:27.79,e:27.85},{w:"brand",s:27.85,e:28.42},{w:"on",s:28.42,e:28.66},{w:"advice",s:28.66,e:29.38},
-        {w:"that's",s:29.38,e:29.69},{w:"already",s:29.69,e:30.07},{w:"gone",s:30.07,e:30.28},{w:"stale.",s:30.28,e:30.74}
-      ];
-
-      // Group words into short caption lines: break on sentence-end or after ~5 words / ~26 chars.
-      const LINES = [];
-      let cur = [];
-      let chars = 0;
-      for (let i = 0; i < WORDS.length; i++) {
-        const wd = WORDS[i];
-        cur.push({ ...wd, gi: i });
-        chars += wd.w.length + 1;
-        const endsSentence = /[.!?]$/.test(wd.w);
-        if (endsSentence || cur.length >= 5 || chars >= 30) {
-          LINES.push(cur); cur = []; chars = 0;
-        }
-      }
-      if (cur.length) LINES.push(cur);
-
-      const capStage = document.getElementById("captions");
-      const DIM = "rgba(255,255,255,0.72)";
-      const ACTIVE = "#9CD4FF";   // blue-tint
-      const SPOKEN = "#ffffff";
-
-      LINES.forEach((line, li) => {
-        const el = document.createElement("div");
-        el.className = "cap-line";
-        el.id = "cap-line-" + li;
-        line.forEach((wd) => {
-          const sp = document.createElement("span");
-          sp.className = "cap-word";
-          sp.id = "cap-w-" + wd.gi;
-          sp.textContent = wd.w;
-          el.appendChild(sp);
-        });
-        capStage.appendChild(el);
-      });
-
-      /* ---------- master timeline ---------- */
       const tl = gsap.timeline({ paused: true });
 
       // Logo entrance
       tl.from("#logo", { opacity: 0, y: -18, duration: 0.6, ease: "power3.out" }, 0.3);
 
-      // Subtle Ken Burns on every video (animate wrappers, never the <video>).
+      // Subtle Ken Burns on both videos (animate wrappers, never the <video>).
       tl.fromTo("#aroll", { scale: 1.0 }, { scale: 1.06, duration: 30.77, ease: "none" }, 0);
-      tl.fromTo("#broll-establish-wrap", { scale: 1.08 }, { scale: 1.0, duration: 5.6, ease: "none" }, 12.0);
-      tl.fromTo("#broll-work-wrap", { scale: 1.0 }, { scale: 1.08, duration: 5.6, ease: "none" }, 17.4);
+      tl.fromTo("#broll-work-wrap", { scale: 1.0 }, { scale: 1.08, duration: 5.6, ease: "none" }, 14.7);
 
-      // B-roll crossfades (opacity on the wrappers). Establish 12.0->17.6, Work 17.4->23.0.
-      tl.to("#broll-establish-wrap", { opacity: 1, duration: 0.35, ease: "power2.out" }, 12.0);
-      tl.to("#broll-establish-wrap", { opacity: 0, duration: 0.35, ease: "power2.in" }, 17.35);
-      tl.to("#broll-work-wrap", { opacity: 1, duration: 0.35, ease: "power2.out" }, 17.4);
-      tl.to("#broll-work-wrap", { opacity: 0, duration: 0.4, ease: "power2.in" }, 22.7);
-
-      // ---- Captions: karaoke per line ----
-      // Each line is fully hidden before the next fades in (outAt of line i ==
-      // inAt of line i+1) so two lines never stack at the same position.
-      const PRE = 0.14, HOLD = 0.5, FADE_IN = 0.16, FADE_OUT = 0.14;
-      const inAts = LINES.map((line) => Math.max(line[0].s - PRE, 0));
-      LINES.forEach((line, li) => {
-        const sel = "#cap-line-" + li;
-        const inAt = inAts[li];
-        const segEnd = line[line.length - 1].e;
-        const outAt = (li < LINES.length - 1) ? inAts[li + 1] : Math.min(segEnd + HOLD, VO_END);
-        // reset words dim before line shows
-        line.forEach((wd) => tl.set("#cap-w-" + wd.gi, { color: DIM, scale: 1.0 }, inAt));
-        tl.set(sel, { visibility: "visible" }, inAt);
-        tl.fromTo(sel, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: FADE_IN, ease: "power2.out" }, inAt);
-        // per-word pop
-        line.forEach((wd) => {
-          tl.to("#cap-w-" + wd.gi, { color: ACTIVE, scale: 1.12, duration: 0.08, ease: "back.out(3)" }, wd.s);
-          tl.to("#cap-w-" + wd.gi, { color: SPOKEN, scale: 1.0, duration: 0.12, ease: "power2.out" }, wd.e);
-        });
-        const fadeOutAt = Math.max(outAt - FADE_OUT, inAt + FADE_IN + 0.02);
-        tl.to(sel, { opacity: 0, duration: FADE_OUT, ease: "power2.in" }, fadeOutAt);
-        tl.set(sel, { visibility: "hidden" }, outAt);
-      });
-
-      // ---- Brand callouts ----
-      // OUT OF DATE stamp
-      tl.fromTo(".chip.stale", { opacity: 0, scale: 0.8, rotation: -4 },
-        { opacity: 1, scale: 1, rotation: -3, duration: 0.34, ease: "back.out(2.2)" }, 13.9);
-      tl.to(".chip.stale", { opacity: 0, scale: 0.92, duration: 0.3, ease: "power2.in" }, 15.5);
-      // WHAT'S WORKING NOW chip
-      tl.fromTo(".chip.work", { opacity: 0, y: 26 },
-        { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" }, 18.05);
-      tl.to(".chip.work", { opacity: 0, y: -18, duration: 0.34, ease: "power2.in" }, 20.95);
+      // B-roll crossfade over the A-roll (covers the splice at 15.75).
+      tl.to("#broll-work-wrap", { opacity: 1, duration: 0.35, ease: "power2.out" }, 14.7);
+      tl.to("#broll-work-wrap", { opacity: 0, duration: 0.4, ease: "power2.in" }, 19.9);
 
       // ---- Outro ----
       tl.to("#outro", { clipPath: "inset(0 0 0% 0)", duration: 0.55, ease: "power4.inOut" }, VO_END - 0.1);
       tl.from("#outro-logo", { opacity: 0, y: -22, duration: 0.6, ease: "power3.out" }, VO_END + 0.25);
-      tl.from("#outro-eyebrow", { opacity: 0, y: 14, duration: 0.5, ease: "power2.out" }, VO_END + 0.5);
-      tl.from("#outro-headline", { opacity: 0, y: 30, duration: 0.7, ease: "power3.out" }, VO_END + 0.66);
-      tl.from("#outro-sub", { opacity: 0, y: 18, duration: 0.55, ease: "power2.out" }, VO_END + 1.0);
-      tl.from("#outro-cta", { opacity: 0, scale: 0.85, duration: 0.55, ease: "back.out(1.7)" }, VO_END + 1.3);
-      tl.to("#outro-cta", { scale: 1.045, duration: 0.9, ease: "sine.inOut", yoyo: true, repeat: 2 }, VO_END + 2.1);
+      tl.from("#outro-headline", { opacity: 0, y: 30, duration: 0.7, ease: "power3.out" }, VO_END + 0.55);
+      tl.from("#outro-sub", { opacity: 0, y: 18, duration: 0.55, ease: "power2.out" }, VO_END + 0.95);
+      tl.from("#outro-cta", { opacity: 0, scale: 0.85, duration: 0.55, ease: "back.out(1.7)" }, VO_END + 1.25);
+      tl.to("#outro-cta", { scale: 1.045, duration: 0.9, ease: "sine.inOut", yoyo: true, repeat: 2 }, VO_END + 2.05);
 
       // Pad to exact duration
       tl.set({}, {}, DUR);
