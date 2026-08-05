@@ -28,17 +28,15 @@
       #brand-logo img { display: block; width: 100%; height: auto;
         filter: drop-shadow(0 3px 12px rgba(0,0,0,.6)) drop-shadow(0 0 3px rgba(0,0,0,.45)); }
 
-      /* Full-frame cutaway cards sit above the video; end card above everything */
-      .cutaway { position: absolute; inset: 0; z-index: 40; }
+      /* End card sits above everything */
       #end-card-clip { position: absolute; inset: 0; z-index: 100; }
     </style>
   </head>
   <body>
     <div id="root" data-composition-id="ecomiq-short-form-3" data-start="0" data-duration="44.8" data-width="1080" data-height="1920">
 
-      <!-- A-roll spine: full original take (~44.8s, continuous speech). Muted video
-           (track 0) + sibling VO audio (track 1) so cutaways cover the picture without
-           cutting the voice. -->
+      <!-- A-roll spine: full original take (~44.8s), plays uninterrupted. Muted video
+           (track 0) + sibling VO audio (track 1). -->
       <video id="aroll" data-start="0" data-duration="44.8" data-media-start="0" data-track-index="0"
              src="assets/aroll-video3.mp4" muted playsinline></video>
       <audio id="aroll-vo" data-start="0" data-duration="44.8" data-media-start="0" data-track-index="1"
@@ -49,20 +47,10 @@
       <audio id="music-bed" data-start="0" data-duration="44.8" data-track-index="2"
              src="assets/music-bed-placeholder.m4a" data-volume="0.18"></audio>
 
-      <!-- Persistent brand logo (track 3) — over the A-roll spine only -->
+      <!-- Persistent brand logo (track 3) — over the A-roll spine -->
       <div id="brand-logo" class="clip" data-start="0" data-duration="44.8" data-track-index="3">
         <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
-
-      <!-- Branded motion-graphic cutaways (track 4) on the beats, spread across the spine -->
-      <div id="cut1" class="cutaway clip" data-composition-id="cutaway-1" data-composition-src="compositions/cutaway-1.html"
-           data-start="7.0" data-duration="1.6" data-track-index="4"></div>
-      <div id="cut2" class="cutaway clip" data-composition-id="cutaway-2" data-composition-src="compositions/cutaway-2.html"
-           data-start="15.5" data-duration="1.6" data-track-index="4"></div>
-      <div id="cut3" class="cutaway clip" data-composition-id="cutaway-3" data-composition-src="compositions/cutaway-3.html"
-           data-start="24.0" data-duration="1.6" data-track-index="4"></div>
-      <div id="cut4" class="cutaway clip" data-composition-id="cutaway-4" data-composition-src="compositions/cutaway-4.html"
-           data-start="32.5" data-duration="1.6" data-track-index="4"></div>
 
       <!-- End card (track 5) — overlays the tail so total runtime ≈ the original length -->
       <div id="end-card-clip" class="clip" data-composition-id="end-card" data-composition-src="compositions/end-card.html"

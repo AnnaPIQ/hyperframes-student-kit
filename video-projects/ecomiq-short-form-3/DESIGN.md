@@ -12,21 +12,19 @@ Brand kit copied from `assets/ecomiq/`. Tokens in `assets/brand-tokens.css`; fon
 - **CTA:** Rethink your strategy. → **Start free → ecomiq.com**
 
 ## Structure (~44.8s — full original take)
-The A-roll is continuous speech for its whole ~44.8s (no dead air / no natural stop at 36s), so the ad runs
-the full length rather than trimming the presenter off mid-sentence. Total runtime ≈ the original length.
+The A-roll is continuous speech for its whole ~44.8s, so the ad runs the full length. No overlays / motion
+graphics — the talking-head plays uninterrupted with the logo in the corner; a branded end card closes it.
 - **Spine (0–44.8s):** `assets/aroll-video3.mp4`, muted `<video>` (track 0) + sibling `<audio>` VO (track 1),
-  full take from 0. Cutaways cover the picture without cutting the voice.
+  full take from 0, plays uninterrupted.
 - **Persistent logo (track 3):** `ecomiq-logo-white.svg` top-left with scrim + drop-shadow so it reads over
   the bright footage.
-- **Cutaways (track 4, ~1.6s each, whip/blur in-out), spread across the spine:**
-  - 7.0s — `cutaway-1` "Clear up the *confusion*." (eyebrow + serif-italic emphasis + flame rule)
-  - 15.5s — `cutaway-2` kinetic stack MORE / NEW / **CUSTOMERS**
-  - 24.0s — `cutaway-3` "Turn data into *decisions*." + rising bar motif (data-feel)
-  - 32.5s — `cutaway-4` "Grow with *confidence*." (matches cutaway-1 style)
-- **End card (40.8–44.8s, track 5):** navy, centered white logo, "*Rethink* your strategy.", flame CTA pill —
-  overlays the tail of the spine so total runtime ≈ the original length.
+- **End card (40.8–44.8s, track 5):** navy, centered white logo, headline **"Join our Free Profitability
+  Bootcamp"** (single color, no italic), flame CTA pill **"Start free →"** — overlays the tail so total
+  runtime ≈ the original length.
 - **Music bed (track 2):** `assets/music-bed-placeholder.m4a` — silent placeholder at a ducked-under-VO
   level (`data-volume="0.18"`). Swap the src for a real track and raise the volume where it should carry.
+
+No cutaways / motion-graphic overlays (removed at the client's request). No captions.
 
 ## No captions (by request).
 
