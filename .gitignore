@@ -40,3 +40,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Session scratch (raw downloads, thumbnails)
+scratch/

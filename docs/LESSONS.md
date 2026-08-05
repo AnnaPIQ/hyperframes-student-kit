@@ -79,4 +79,22 @@ efficient over time instead of relearning the same lessons.
 
 ---
 
+## Ingesting footage from Google Drive
+
+- **The Drive connector `download_file_content` hard-caps at 10 MB/file** ("File too
+  large for download, over limit of 10 MB"). Anything bigger — and most camera/phone
+  clips are 26 MB–2 GB — can't come through it at all. `curl`/`yt-dlp` only work if the
+  file is shared "Anyone with the link"; account-restricted files bounce to Google's
+  sign-in page. → For big files, ask the owner to set link-sharing to Viewer (then
+  `yt-dlp` pulls to disk) or to pre-trim <10 MB segments. Check `fileSize` via
+  `get_file_metadata` before planning a footage pull, not after.
+- **A Drive download that "exceeds maximum allowed tokens" is not lost** — the harness
+  saves the full base64 JSON (`{content,id,mimeType,title}`) to a tool-results `.txt`
+  and prints the path. `python3` decodes `content` (base64) straight to an mp4 on disk;
+  the base64 never has to pass through model context. This is how you get even a ~10 MB
+  clip in without blowing the window.
+- **Verify orientation on ingest.** Phone clips often carry rotation metadata. `ffprobe`
+  the `rotate` tag (and compare width/height) before cutting; scale with
+  `scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920` for true 9:16.
+
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
