@@ -93,8 +93,16 @@ efficient over time instead of relearning the same lessons.
   and prints the path. `python3` decodes `content` (base64) straight to an mp4 on disk;
   the base64 never has to pass through model context. This is how you get even a ~10 MB
   clip in without blowing the window.
-- **Verify orientation on ingest.** Phone clips often carry rotation metadata. `ffprobe`
-  the `rotate` tag (and compare width/height) before cutting; scale with
+- **Public Drive files skip the 10 MB cap.** If the owner shares a file/folder as
+  "Anyone with the link" (`get_file_permissions` shows `{"role":"reader","type":"anyone"}`),
+  `yt-dlp "https://drive.google.com/uc?id=<ID>&export=download"` pulls the full file
+  (even GB-sized) straight to disk — no connector cap, no base64, no model context.
+  A public Google Sheet exports the shot list too: `.../export?format=csv`.
+- **Verify orientation on ingest — including clips with NO rotation tag.** Some 4K
+  clips report `3840x2160` with `rotation=0` but the content is portrait shot sideways
+  (people appear lying down). Don't trust the tag — pull one frame and look. Fix with
+  `transpose=1` (90° CW) for head-left footage, then
   `scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920` for true 9:16.
+  Genuine landscape (e.g. 1920x1080 upright) just center-crops, no transpose.
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

@@ -3,132 +3,150 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
-    <title>Pacific IQ — About Us</title>
+    <title>EcomIQ — About Us (30s)</title>
     <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
     <script src="assets/vendor/gsap.min.js"></script>
     <style>
-      /* LOCAL font — no network dependency at render time.
-         Pacific IQ brand face is Inter; not available offline in this env,
-         so Rethink Sans (clean geometric grotesque) stands in with tight tracking. */
       @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
         font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
 
-      :root {
-        --piq-black: #000000;
-        --piq-off-black: #0D0D0D;
-        --piq-white: #FFFFFF;
-        --piq-warm-gray: #8A8A8A;
-        --piq-light-gray: #C4C4C4;
-        --piq-accent: #4A90D9;
-        --piq-font: 'Rethink Sans', 'Helvetica Neue', Arial, sans-serif;
-      }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1080px; height: 1920px; overflow: hidden;
-        background: var(--piq-black); font-family: var(--piq-font); color: var(--piq-white); }
+        background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+      #root { position: absolute; inset: 0; background: #06284C; overflow: hidden; }
 
-      #root { position: absolute; inset: 0; background: var(--piq-black); }
-
-      /* ---- footage shots ---- */
-      .shot { position: absolute; inset: 0; overflow: hidden; will-change: transform, opacity; }
+      /* ---------- footage ---------- */
+      .shot { position: absolute; inset: 0; overflow: hidden; opacity: 0; will-change: transform, opacity; }
       .shot video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-      #shot1 { z-index: 11; } #shot2 { z-index: 12; } #shot3 { z-index: 13; }
-      #shot4 { z-index: 14; } #shot5 { z-index: 15; } #shot6 { z-index: 16; }
 
-      /* ---- premium overlays over footage ---- */
-      #vignette { position: absolute; inset: 0; z-index: 20; pointer-events: none;
-        background: radial-gradient(120% 80% at 50% 42%, rgba(0,0,0,0) 40%, rgba(0,0,0,.62) 100%); }
-      #grain { position: absolute; inset: -20%; z-index: 22; pointer-events: none; opacity: .07;
-        mix-blend-mode: screen;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+      /* ---------- brand texture over footage ---------- */
+      #tint { position: absolute; inset: 0; z-index: 25; pointer-events: none;
+        background:
+          linear-gradient(180deg, rgba(6,40,76,.66) 0%, rgba(6,40,76,0) 26%, rgba(6,40,76,0) 55%, rgba(6,40,76,.82) 100%),
+          linear-gradient(0deg, rgba(6,40,76,.20), rgba(6,40,76,.20)); }
+      #grid { position: absolute; inset: -20% -10%; z-index: 26; pointer-events: none; opacity: .5;
+        perspective: 900px; }
+      #grid > i { position: absolute; inset: 0; display: block; transform: rotateX(62deg) translateY(6%);
+        background:
+          repeating-linear-gradient(0deg,  rgba(156,212,255,.06) 0 1px, transparent 1px 96px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.06) 0 1px, transparent 1px 96px);
+        mask-image: radial-gradient(70% 60% at 50% 42%, #000 30%, transparent 82%); }
+      #vignette { position: absolute; inset: 0; z-index: 28; pointer-events: none;
+        background: radial-gradient(122% 80% at 50% 44%, rgba(0,0,0,0) 46%, rgba(1,12,26,.62) 100%); }
+      #grain { position: absolute; inset: 0; z-index: 29; pointer-events: none; opacity: .45;
+        background-image:
+          radial-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+          radial-gradient(rgba(255,255,255,.02) 1px, transparent 1px);
+        background-size: 3px 3px, 5px 5px; background-position: 0 0, 1px 2px; }
 
-      /* persistent corner wordmark over footage */
-      #wordmark { position: absolute; top: 84px; left: 72px; z-index: 30;
-        font-weight: 700; font-size: 40px; letter-spacing: -.02em; color: var(--piq-white);
-        text-shadow: 0 2px 20px rgba(0,0,0,.55); }
-      #wordmark b { font-weight: 800; }
-      #wordmark .dot { color: var(--piq-accent); }
+      /* corner mark */
+      #topmark { position: absolute; top: 92px; left: 84px; z-index: 40; display: flex; align-items: center; gap: 15px; opacity: 0; }
+      #topmark img { width: 54px; height: 54px; display: block; }
+      #topmark span { font-weight: 700; font-size: 29px; color: #FFFFFF; text-shadow: 0 2px 14px rgba(0,0,0,.5); }
+      #topmark .iq { color: #9CD4FF; }
 
-      /* ---- title card ---- */
-      #title { position: absolute; inset: 0; z-index: 34; background: var(--piq-black);
-        display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-        padding: 0 96px; gap: 30px; }
-      #t-eyebrow { font-weight: 600; font-size: 30px; letter-spacing: .42em; text-transform: uppercase;
-        color: var(--piq-warm-gray); }
-      #t-rule { width: 132px; height: 3px; background: var(--piq-accent); transform-origin: left center; }
-      #t-mark { font-weight: 800; font-size: 168px; line-height: .9; letter-spacing: -.045em; color: var(--piq-white); }
-      #t-mark .iq { color: var(--piq-white); }
-      #t-mark .dot { color: var(--piq-accent); }
-      #t-sub { font-weight: 500; font-size: 38px; letter-spacing: .01em; color: var(--piq-light-gray); }
+      /* captions (lower third) */
+      #caps { position: absolute; left: 96px; right: 96px; bottom: 300px; z-index: 42; }
+      .cap { position: absolute; left: 0; right: 0; bottom: 0; opacity: 0; }
+      .cap .rule { width: 96px; height: 5px; background: #9CD4FF; border-radius: 3px; margin-bottom: 22px; transform-origin: left center; }
+      .cap .txt { font-weight: 800; font-size: 74px; line-height: 1.02; letter-spacing: -.02em; color: #FFFFFF;
+        text-shadow: 0 4px 30px rgba(0,0,0,.45); }
+      .cap .txt .serif { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: #9CD4FF; }
 
-      /* ---- end card ---- */
-      #endcard { position: absolute; inset: 0; z-index: 60; background: var(--piq-black);
-        display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-        padding: 0 96px; gap: 28px; overflow: hidden; }
-      #ec-glow { position: absolute; z-index: 0; top: 8%; left: -10%; width: 90%; height: 46%;
-        background: radial-gradient(60% 60% at 40% 40%, rgba(74,144,217,.20) 0%, rgba(74,144,217,0) 70%);
-        pointer-events: none; }
-      #endcard > *:not(#ec-glow) { position: relative; z-index: 1; }
-      #ec-mark { font-weight: 800; font-size: 150px; line-height: .9; letter-spacing: -.045em; color: var(--piq-white); }
-      #ec-mark .dot { color: var(--piq-accent); }
-      #ec-sub { font-weight: 600; font-size: 40px; letter-spacing: .02em; color: var(--piq-light-gray); }
-      #ec-rule { width: 132px; height: 3px; background: var(--piq-accent); transform-origin: left center; margin: 6px 0; }
-      #ec-tag { font-weight: 500; font-size: 42px; line-height: 1.22; letter-spacing: -.01em; color: var(--piq-white); max-width: 80%; }
-      #ec-cta { margin-top: 22px; font-weight: 700; font-size: 40px; letter-spacing: .01em; color: var(--piq-white);
-        border: 2px solid var(--piq-white); border-radius: 10px; padding: 26px 52px; align-self: flex-start; }
+      /* value words (centered) */
+      #vals { position: absolute; inset: 0; z-index: 44; display: flex; justify-content: center; align-items: center; }
+      .val { position: absolute; font-weight: 800; font-size: 176px; letter-spacing: -.04em; opacity: 0;
+        background: linear-gradient(180deg, #FFFFFF 0%, #9CD4FF 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+        text-shadow: 0 6px 40px rgba(0,0,0,.4); }
+      #valrule { position: absolute; z-index: 44; left: 50%; top: 58%; width: 150px; height: 6px; margin-left: -75px;
+        background: #FF4C32; border-radius: 3px; opacity: 0; }
+
+      /* whip streak */
+      #streak { position: absolute; top: 50%; left: -20%; z-index: 50; width: 55%; height: 10px;
+        transform: translateY(-50%); filter: blur(7px); opacity: 0;
+        background: linear-gradient(90deg, transparent, rgba(156,212,255,.9), #FFFFFF, rgba(156,212,255,.9), transparent); }
+
+      /* open + outro graphics */
+      #open { position: absolute; inset: 0; z-index: 60; background: #06284C;
+        display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 96px; gap: 30px; }
+      #open .eyebrow { font-weight: 600; font-size: 30px; letter-spacing: .38em; text-transform: uppercase; color: #9CD4FF; }
+      #open .oline { font-weight: 800; font-size: 112px; line-height: .98; letter-spacing: -.03em;
+        background: linear-gradient(180deg, #FFFFFF 0%, #DEEEFE 60%, #9CD4FF 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      #open .oline .hot { color: #FF4C32; -webkit-text-fill-color: #FF4C32; }
+      #open #orule { width: 132px; height: 5px; background: #FF4C32; border-radius: 3px; transform-origin: left center; }
+
+      #outro { position: absolute; inset: 0; z-index: 70; background: #06284C;
+        display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 34px; opacity: 0; }
+      #outro #bloom { position: absolute; z-index: -1; width: 92%; height: 44%; top: 28%;
+        background: radial-gradient(50% 60% at 50% 50%, rgba(156,212,255,.20) 0%, rgba(255,76,50,.10) 55%, transparent 78%); filter: blur(8px); }
+      #o-logo { width: 640px; height: auto; }
+      #o-tag { font-weight: 700; font-size: 52px; letter-spacing: -.02em; color: #FFFFFF; }
+      #o-tag .serif { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: #9CD4FF; }
+      #o-cta { margin-top: 8px; font-weight: 800; font-size: 44px; color: #FFFFFF; background: #FF4C32;
+        padding: 30px 62px; border-radius: 999px; box-shadow: 0 26px 70px -18px rgba(255,76,50,.65); }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="ecomiq-about-us" data-start="0" data-duration="13.9" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="ecomiq-about-us" data-start="0" data-duration="30" data-width="1080" data-height="1920">
 
-      <!-- FOOTAGE (each video wrapped in a non-timed div so we animate the wrapper, never the <video>) -->
-      <div id="shot1" class="shot">
-        <video id="v1" src="assets/video/jaren-drive.mp4" muted playsinline
-               data-start="2.05" data-duration="1.6" data-track-index="0" data-media-start="0.25"></video>
-      </div>
-      <div id="shot2" class="shot">
-        <video id="v2" src="assets/video/jaren-drive.mp4" muted playsinline
-               data-start="3.30" data-duration="1.5" data-track-index="1" data-media-start="1.45"></video>
-      </div>
-      <div id="shot3" class="shot">
-        <video id="v3" src="assets/video/jaren-enter.mp4" muted playsinline
-               data-start="4.55" data-duration="1.6" data-track-index="0" data-media-start="0.5"></video>
-      </div>
-      <div id="shot4" class="shot">
-        <video id="v4" src="assets/video/jaren-enter.mp4" muted playsinline
-               data-start="5.90" data-duration="1.6" data-track-index="1" data-media-start="7.6"></video>
-      </div>
-      <div id="shot5" class="shot">
-        <video id="v5" src="assets/video/winery.mp4" muted playsinline
-               data-start="7.25" data-duration="1.6" data-track-index="0" data-media-start="4.2"</video>
-      </div>
-      <div id="shot6" class="shot">
-        <video id="v6" src="assets/video/winery.mp4" muted playsinline
-               data-start="8.60" data-duration="1.9" data-track-index="1" data-media-start="8.9"></video>
-      </div>
+      <!-- FOOTAGE (video timed; wrapper animated) -->
+      <div class="shot" id="s2"><video id="v2" src="assets/video/aroll-stage.mp4" muted playsinline data-start="2.1" data-duration="3.3" data-track-index="0" data-media-start="0.6"></video></div>
+      <div class="shot" id="s3"><video id="v3" src="assets/video/thinking.mp4" muted playsinline data-start="5.1" data-duration="2.3" data-track-index="1" data-media-start="0.0"></video></div>
+      <div class="shot" id="s4"><video id="v4" src="assets/video/klaviyo.mp4" muted playsinline data-start="7.1" data-duration="2.3" data-track-index="0" data-media-start="0.1"></video></div>
+      <div class="shot" id="s5"><video id="v5" src="assets/video/laptop-man.mp4" muted playsinline data-start="9.1" data-duration="2.1" data-track-index="1" data-media-start="0.2"></video></div>
+      <div class="shot" id="s6"><video id="v6" src="assets/video/laughing.mp4" muted playsinline data-start="10.9" data-duration="1.6" data-track-index="0" data-media-start="0.0"></video></div>
+      <div class="shot" id="s7"><video id="v7" src="assets/video/industrial.mp4" muted playsinline data-start="12.2" data-duration="1.6" data-track-index="1" data-media-start="0.0"></video></div>
+      <div class="shot" id="s8"><video id="v8" src="assets/video/car-la.mp4" muted playsinline data-start="13.5" data-duration="1.7" data-track-index="0" data-media-start="0.3"></video></div>
+      <div class="shot" id="s9"><video id="v9" src="assets/video/aroll-stage.mp4" muted playsinline data-start="14.9" data-duration="3.3" data-track-index="1" data-media-start="1.2"></video></div>
+      <div class="shot" id="s10"><video id="v10" src="assets/video/women.mp4" muted playsinline data-start="17.9" data-duration="2.3" data-track-index="0" data-media-start="0.4"></video></div>
+      <div class="shot" id="s11"><video id="v11" src="assets/video/hotel-couch.mp4" muted playsinline data-start="19.9" data-duration="2.5" data-track-index="1" data-media-start="0.2"></video></div>
+      <div class="shot" id="s12"><video id="v12" src="assets/video/laughing.mp4" muted playsinline data-start="22.1" data-duration="2.7" data-track-index="0" data-media-start="0.3"></video></div>
 
-      <!-- overlays -->
-      <div id="vignette" class="clip" data-start="2.05" data-duration="8.45" data-track-index="2"></div>
-      <div id="grain" class="clip" data-start="2.05" data-duration="8.45" data-track-index="3"></div>
-      <div id="wordmark" class="clip" data-start="2.05" data-duration="8.05" data-track-index="4">
-        <b>Pacific</b>IQ<span class="dot">.</span>
-      </div>
+      <!-- brand texture -->
+      <div id="tint"></div>
+      <div id="grid"><i></i></div>
+      <div id="vignette"></div>
+      <div id="grain"></div>
 
-      <!-- title -->
-      <div id="title" class="clip" data-start="0" data-duration="2.5" data-track-index="5">
-        <div id="t-eyebrow">About&nbsp;Us</div>
-        <div id="t-rule"></div>
-        <div id="t-mark">Pacific<span class="iq">IQ</span><span class="dot">.</span></div>
-        <div id="t-sub">Shopify Premier Partner</div>
+      <div id="topmark"><img src="assets/ecomiq-icon-white.svg" alt="" /><span>Ecom<span class="iq">IQ</span></span></div>
+
+      <!-- captions -->
+      <div id="caps">
+        <div class="cap" id="c2"><div class="rule"></div><div class="txt">So we built EcomIQ.</div></div>
+        <div class="cap" id="c3"><div class="rule"></div><div class="txt">Signal, not noise.</div></div>
+        <div class="cap" id="c4"><div class="rule"></div><div class="txt">Where commerce moves.</div></div>
+        <div class="cap" id="c5"><div class="rule"></div><div class="txt">Guidance you can trust.</div></div>
+        <div class="cap" id="c9"><div class="rule"></div><div class="txt"><span class="serif">Rethink</span> what your data can do.</div></div>
+        <div class="cap" id="c10"><div class="rule"></div><div class="txt">Built by operators.</div></div>
+        <div class="cap" id="c11"><div class="rule"></div><div class="txt">Obsessed with the details.</div></div>
+        <div class="cap" id="c12"><div class="rule"></div><div class="txt">This is EcomIQ.</div></div>
       </div>
 
-      <!-- end card -->
-      <div id="endcard" class="clip" data-start="10.1" data-duration="3.8" data-track-index="6">
-        <div id="ec-glow"></div>
-        <div id="ec-mark">Pacific<span>IQ</span><span class="dot">.</span></div>
-        <div id="ec-sub">Shopify Premier Partner</div>
-        <div id="ec-rule"></div>
-        <div id="ec-tag">Elevated eCommerce, engineered.</div>
-        <div id="ec-cta">Let&rsquo;s build &rarr;</div>
+      <!-- value words -->
+      <div id="vals">
+        <div class="val" id="valA">Clarity.</div>
+        <div class="val" id="valB">Precision.</div>
+        <div class="val" id="valC">Confidence.</div>
+      </div>
+      <div id="valrule"></div>
+
+      <div id="streak"></div>
+
+      <!-- OPEN -->
+      <div id="open">
+        <div class="eyebrow">E-Commerce Intelligence</div>
+        <div id="orule"></div>
+        <div class="oline">Selling online<br>is a <span class="hot">guess.</span></div>
+      </div>
+
+      <!-- OUTRO -->
+      <div id="outro">
+        <div id="bloom"></div>
+        <img id="o-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="o-tag">E-commerce, <span class="serif">clarified</span>.</div>
+        <div id="o-cta">Get started &rarr;</div>
       </div>
     </div>
 
@@ -136,42 +154,76 @@
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
-      /* ---------- TITLE (0 – 2.5) ---------- */
-      tl.from("#t-eyebrow", { opacity: 0, y: 18, duration: .55, ease: "power2.out" }, 0.15)
-        .fromTo("#t-rule", { scaleX: 0 }, { scaleX: 1, duration: .5, ease: "power3.out" }, 0.35)
-        .from("#t-mark", { opacity: 0, y: 46, duration: .8, ease: "power4.out" }, 0.45)
-        .from("#t-sub", { opacity: 0, y: 22, duration: .6, ease: "power2.out" }, 0.85)
-        // dissolve title out into the first shot (scene transition, not a jump cut)
-        .to("#title", { opacity: 0, duration: .5, ease: "power2.inOut" }, 2.05);
-
-      /* ---------- helper: a footage shot = dissolve in + slow ken-burns push ---------- */
-      function shot(sel, start, dur, dir) {
-        tl.from(sel, { opacity: 0, x: 34 * dir, duration: .5, ease: "power2.out" }, start);
-        tl.fromTo(sel, { scale: 1.09 }, { scale: 1.17, duration: dur + .5, ease: "none" }, start);
+      /* whip: light streak fired AT a seam to hide the cut */
+      function whip(t) {
+        tl.fromTo('#streak', { xPercent: -30, scaleX: .6 }, { xPercent: 230, scaleX: 1.4, duration: .46, ease: 'power3.in' }, t);
+        tl.fromTo('#streak', { opacity: 0 }, { opacity: 1, duration: .22, ease: 'power2.out' }, t);
+        tl.to('#streak', { opacity: 0, duration: .22, ease: 'power2.in' }, t + .22);
       }
-      shot("#shot1", 2.05, 1.6,  1);
-      shot("#shot2", 3.30, 1.5, -1);
-      shot("#shot3", 4.55, 1.6,  1);
-      shot("#shot4", 5.90, 1.6, -1);
-      shot("#shot5", 7.25, 1.6,  1);
-      shot("#shot6", 8.60, 1.9, -1);
+      /* footage shot: crossfade in + slow ken-burns (animate wrapper, never the <video>) */
+      function shot(sel, start, dur) {
+        tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: .35, ease: 'power2.out' }, start);
+        tl.fromTo(sel, { scale: 1.06 }, { scale: 1.15, duration: dur + .4, ease: 'none' }, start);
+      }
+      /* caption in/out */
+      function cap(sel, tin, tout) {
+        tl.fromTo(sel, { opacity: 0, y: 34, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .5, ease: 'power3.out' }, tin);
+        tl.fromTo(sel + ' .rule', { scaleX: 0 }, { scaleX: 1, duration: .45, ease: 'power3.out' }, tin + .05);
+        tl.to(sel, { opacity: 0, y: -22, duration: .3, ease: 'power2.in' }, tout);
+      }
 
-      /* ---------- overlays ---------- */
-      tl.from("#vignette", { opacity: 0, duration: .5, ease: "power1.out" }, 2.05)
-        .from("#grain", { opacity: 0, duration: .5, ease: "power1.out" }, 2.05)
-        .from("#wordmark", { opacity: 0, y: -14, duration: .5, ease: "power2.out" }, 2.25)
-        .to("#wordmark", { opacity: 0, duration: .3, ease: "power1.in" }, 9.85);
+      /* ===== OPEN (0–2.4) ===== */
+      tl.fromTo('#open .eyebrow', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .55, ease: 'power2.out' }, 0.2)
+        .fromTo('#orule', { scaleX: 0 }, { scaleX: 1, duration: .5, ease: 'power3.out' }, 0.4)
+        .fromTo('#open .oline', { opacity: 0, y: 44 }, { opacity: 1, y: 0, duration: .8, ease: 'power4.out' }, 0.55)
+        .to('#open', { opacity: 0, duration: .45, ease: 'power2.inOut' }, 2.15);
+      whip(2.4);
 
-      /* ---------- END CARD (10.1 – 13.9) ---------- */
-      tl.from("#ec-mark", { opacity: 0, y: 40, duration: .7, ease: "power4.out" }, 10.3)
-        .fromTo("#ec-rule", { scaleX: 0 }, { scaleX: 1, duration: .5, ease: "power3.out" }, 10.75)
-        .from("#ec-sub", { opacity: 0, y: 20, duration: .55, ease: "power2.out" }, 10.6)
-        .from("#ec-tag", { opacity: 0, y: 24, duration: .6, ease: "power2.out" }, 10.9)
-        .from("#ec-cta", { opacity: 0, scale: .9, duration: .55, ease: "back.out(1.6)" }, 11.25)
-        // slow accent bloom holds the frame to the end (real tween → sets composition length)
-        .fromTo("#ec-glow", { scale: .9, opacity: .5 }, { scale: 1.12, opacity: 1, duration: 2.6, ease: "sine.inOut" }, 11.3);
+      /* ===== FOOTAGE SHOTS ===== */
+      shot('#s2', 2.1, 3.3);  shot('#s3', 5.1, 2.3);  shot('#s4', 7.1, 2.3);
+      shot('#s5', 9.1, 2.1);  shot('#s6', 10.9, 1.6); shot('#s7', 12.2, 1.6);
+      shot('#s8', 13.5, 1.7); shot('#s9', 14.9, 3.3); shot('#s10', 17.9, 2.3);
+      shot('#s11', 19.9, 2.5); shot('#s12', 22.1, 2.7);
 
-      window.__timelines["ecomiq-about-us"] = tl;
+      /* corner mark on during footage */
+      tl.fromTo('#topmark', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 2.5)
+        .to('#topmark', { opacity: 0, duration: .3 }, 24.4);
+
+      /* ===== CAPTIONS + whips at every seam ===== */
+      cap('#c2', 2.6, 5.2);
+      whip(5.4); cap('#c3', 5.6, 7.2);
+      whip(7.4); cap('#c4', 7.6, 9.2);
+      whip(9.4); cap('#c5', 9.6, 11.0);
+      whip(11.2);
+      /* value triplet (rule of three) over motion beats */
+      tl.fromTo('#valrule', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: .4, ease: 'power3.out', transformOrigin: 'center' }, 11.3);
+      function val(sel, t) {
+        tl.fromTo(sel, { opacity: 0, y: 40, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .45, ease: 'power4.out' }, t)
+          .to(sel, { opacity: 0, y: -28, filter: 'blur(9px)', duration: .26, ease: 'power2.in' }, t + 1.05);
+      }
+      val('#valA', 11.35); whip(12.5); val('#valB', 12.6); whip(13.8); val('#valC', 13.85);
+      tl.to('#valrule', { opacity: 0, duration: .3 }, 15.0);
+      whip(15.2); cap('#c9', 15.4, 18.0);
+      whip(18.2); cap('#c10', 18.4, 20.0);
+      whip(20.2); cap('#c11', 20.4, 22.2);
+      whip(22.4); cap('#c12', 22.6, 24.4);
+      whip(24.7);
+
+      /* ===== OUTRO (24.8–30) — 5s hold ===== */
+      tl.fromTo('#outro', { opacity: 0 }, { opacity: 1, duration: .5 }, 24.6)
+        .fromTo('#o-logo', { opacity: 0, y: 30, scale: .92 }, { opacity: 1, y: 0, scale: 1, duration: .9, ease: 'power3.out' }, 24.8)
+        .fromTo('#o-tag', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .6, ease: 'power2.out' }, 25.3)
+        .fromTo('#o-cta', { opacity: 0, scale: .88 }, { opacity: 1, scale: 1, duration: .6, ease: 'back.out(1.6)' }, 25.6)
+        .fromTo('#bloom', { opacity: .4, scale: .9 }, { opacity: 1, scale: 1.08, duration: 3.2, ease: 'sine.inOut' }, 25.7)
+        .to('#o-cta', { scale: 1.05, duration: 1.0, ease: 'sine.inOut', repeat: 2, yoyo: true }, 26.4);
+
+      /* ambient: grid drift + vignette breath (camera never sleeps) */
+      tl.to('#grid > i', { backgroundPositionY: '+=96px', duration: 30, ease: 'none' }, 0);
+      tl.to('#vignette', { opacity: .8, duration: 5, ease: 'sine.inOut', repeat: 5, yoyo: true }, 0);
+
+      /* Law #11 duration anchor */
+      tl.to({}, { duration: 30 }, 0);
+      window.__timelines['ecomiq-about-us'] = tl;
     </script>
   </body>
 </html>
