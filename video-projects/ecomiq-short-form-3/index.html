@@ -34,36 +34,39 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="ecomiq-short-form-3" data-start="0" data-duration="26.5" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="ecomiq-short-form-3" data-start="0" data-duration="44.8" data-width="1080" data-height="1920">
 
-      <!-- A-roll spine: muted video (track 0) + sibling VO audio (track 1) so cutaways
-           can cover the picture without cutting the voice. Trim 0.4s off the head. -->
-      <video id="aroll" data-start="0" data-duration="22.5" data-media-start="0.4" data-track-index="0"
+      <!-- A-roll spine: full original take (~44.8s, continuous speech). Muted video
+           (track 0) + sibling VO audio (track 1) so cutaways cover the picture without
+           cutting the voice. -->
+      <video id="aroll" data-start="0" data-duration="44.8" data-media-start="0" data-track-index="0"
              src="assets/aroll-video3.mp4" muted playsinline></video>
-      <audio id="aroll-vo" data-start="0" data-duration="22.5" data-media-start="0.4" data-track-index="1"
+      <audio id="aroll-vo" data-start="0" data-duration="44.8" data-media-start="0" data-track-index="1"
              src="assets/aroll-video3.mp4" data-volume="1"></audio>
 
       <!-- Music-bed placeholder (track 2): silent for now, sits at a ducked-under-VO level.
            Swap the src for your track later; raise data-volume when it should carry. -->
-      <audio id="music-bed" data-start="0" data-duration="26.5" data-track-index="2"
+      <audio id="music-bed" data-start="0" data-duration="44.8" data-track-index="2"
              src="assets/music-bed-placeholder.m4a" data-volume="0.18"></audio>
 
       <!-- Persistent brand logo (track 3) — over the A-roll spine only -->
-      <div id="brand-logo" class="clip" data-start="0" data-duration="22.5" data-track-index="3">
+      <div id="brand-logo" class="clip" data-start="0" data-duration="44.8" data-track-index="3">
         <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
 
-      <!-- Branded motion-graphic cutaways (track 4) on the beats -->
+      <!-- Branded motion-graphic cutaways (track 4) on the beats, spread across the spine -->
       <div id="cut1" class="cutaway clip" data-composition-id="cutaway-1" data-composition-src="compositions/cutaway-1.html"
-           data-start="5.0" data-duration="1.6" data-track-index="4"></div>
+           data-start="7.0" data-duration="1.6" data-track-index="4"></div>
       <div id="cut2" class="cutaway clip" data-composition-id="cutaway-2" data-composition-src="compositions/cutaway-2.html"
-           data-start="11.0" data-duration="1.6" data-track-index="4"></div>
+           data-start="15.5" data-duration="1.6" data-track-index="4"></div>
       <div id="cut3" class="cutaway clip" data-composition-id="cutaway-3" data-composition-src="compositions/cutaway-3.html"
-           data-start="16.8" data-duration="1.6" data-track-index="4"></div>
+           data-start="24.0" data-duration="1.6" data-track-index="4"></div>
+      <div id="cut4" class="cutaway clip" data-composition-id="cutaway-4" data-composition-src="compositions/cutaway-4.html"
+           data-start="32.5" data-duration="1.6" data-track-index="4"></div>
 
-      <!-- End card (track 5) — overlaps the last 0.3s of the spine as a soft cover-in -->
+      <!-- End card (track 5) — overlays the tail so total runtime ≈ the original length -->
       <div id="end-card-clip" class="clip" data-composition-id="end-card" data-composition-src="compositions/end-card.html"
-           data-start="22.2" data-duration="4.3" data-track-index="5"></div>
+           data-start="40.8" data-duration="4.0" data-track-index="5"></div>
     </div>
 
     <script>
@@ -71,7 +74,7 @@
       const tl = gsap.timeline({ paused: true });
       // Logo entrance (the only master-track animation; media + sub-comps drive themselves)
       tl.from("#brand-logo", { opacity: 0, y: -20, filter: "blur(6px)", duration: .6, ease: "power3.out" }, .3);
-      tl.set({}, {}, 26.5); // composition duration
+      tl.set({}, {}, 44.8); // composition duration
       window.__timelines["ecomiq-short-form-3"] = tl;
     </script>
   </body>

@@ -11,16 +11,20 @@ Brand kit copied from `assets/ecomiq/`. Tokens in `assets/brand-tokens.css`; fon
 - **Message:** clarity + growth — "clear up the confusion", "more new customers", "turn data into decisions".
 - **CTA:** Rethink your strategy. → **Start free → ecomiq.com**
 
-## Structure (~26.5s)
-- **Spine (0–22.5s):** `assets/aroll-video3.mp4`, muted `<video>` (track 0) + sibling `<audio>` VO (track 1),
-  head trimmed 0.4s. Cutaways cover the picture without cutting the voice.
+## Structure (~44.8s — full original take)
+The A-roll is continuous speech for its whole ~44.8s (no dead air / no natural stop at 36s), so the ad runs
+the full length rather than trimming the presenter off mid-sentence. Total runtime ≈ the original length.
+- **Spine (0–44.8s):** `assets/aroll-video3.mp4`, muted `<video>` (track 0) + sibling `<audio>` VO (track 1),
+  full take from 0. Cutaways cover the picture without cutting the voice.
 - **Persistent logo (track 3):** `ecomiq-logo-white.svg` top-left with scrim + drop-shadow so it reads over
   the bright footage.
-- **Cutaways (track 4, ~1.6s each, whip/blur in-out):**
-  - 5.0s — `cutaway-1` "Clear up the *confusion*." (eyebrow + serif-italic emphasis + flame rule)
-  - 11.0s — `cutaway-2` kinetic stack MORE / NEW / **CUSTOMERS**
-  - 16.8s — `cutaway-3` "Turn data into *decisions*." + rising bar motif (data-feel)
-- **End card (22.2–26.5s, track 5):** navy, centered white logo, "*Rethink* your strategy.", flame CTA pill.
+- **Cutaways (track 4, ~1.6s each, whip/blur in-out), spread across the spine:**
+  - 7.0s — `cutaway-1` "Clear up the *confusion*." (eyebrow + serif-italic emphasis + flame rule)
+  - 15.5s — `cutaway-2` kinetic stack MORE / NEW / **CUSTOMERS**
+  - 24.0s — `cutaway-3` "Turn data into *decisions*." + rising bar motif (data-feel)
+  - 32.5s — `cutaway-4` "Grow with *confidence*." (matches cutaway-1 style)
+- **End card (40.8–44.8s, track 5):** navy, centered white logo, "*Rethink* your strategy.", flame CTA pill —
+  overlays the tail of the spine so total runtime ≈ the original length.
 - **Music bed (track 2):** `assets/music-bed-placeholder.m4a` — silent placeholder at a ducked-under-VO
   level (`data-volume="0.18"`). Swap the src for a real track and raise the volume where it should carry.
 
