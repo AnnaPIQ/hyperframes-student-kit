@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>ecomiq-short-form-ad-4x5</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time (latin subset) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+
+      /* ---- background + video layers ---- */
+      #bg { position: absolute; inset: 0; z-index: 0;
+        background: radial-gradient(90% 55% at 50% 18%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
+
+      .vid-wrap { position: absolute; inset: 0; overflow: hidden; transform-origin: center center; }
+      .vid-wrap video { width: 1080px; height: 1350px; object-fit: cover; display: block; }
+      #aroll-wrap { z-index: 1; }
+      #aroll { filter: contrast(1.05) saturate(1.06) brightness(0.99); }
+      #broll-work-wrap { z-index: 3; opacity: 0; }
+
+      /* Cinematic overlays — sit over the video, under the logo */
+      #vignette { position: absolute; inset: 0; z-index: 4; pointer-events: none;
+        background:
+          radial-gradient(120% 80% at 50% 42%, transparent 50%, rgba(4,14,28,.34) 82%, rgba(3,10,22,.66) 100%); }
+      #grain { position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: .05;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 240px 240px; }
+      /* top scrim so the logo separates from bright A-roll ceilings */
+      #scrim-top { position: absolute; left: 0; right: 0; top: 0; height: 360px; z-index: 5; pointer-events: none;
+        background: linear-gradient(to bottom, rgba(4,16,32,.55) 0%, rgba(4,16,32,0) 100%); }
+
+      /* ---- persistent logo ---- */
+      #logo { position: absolute; top: 96px; left: 72px; width: 340px; height: auto; z-index: 8; }
+
+      /* ---- outro ---- */
+      #outro { position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; text-align: center; padding: 10% 9%; gap: 30px;
+        background: radial-gradient(88% 52% at 50% 30%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%), var(--brand-navy);
+        clip-path: inset(0 0 100% 0); }
+      #outro-logo { width: 460px; height: auto; margin-bottom: 12px; }
+      #outro-headline { font-weight: 800; font-size: 104px; line-height: .98; letter-spacing: -.03em; color: var(--brand-white); }
+      #outro-sub { font-weight: 500; font-size: 36px; line-height: 1.32; color: var(--brand-text-dim); max-width: 80%; }
+      #outro-cta { margin-top: 16px; font-weight: 700; font-size: 38px; color: #fff;
+        background: var(--brand-flame); padding: 30px 62px; border-radius: 999px;
+        box-shadow: 0 22px 70px -16px rgba(255,76,50,.62); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="ecomiq-short-form-ad-4x5" data-start="0" data-duration="35.3" data-width="1080" data-height="1350">
+
+      <div id="bg" class="clip" data-start="0" data-duration="35.3" data-track-index="0"></div>
+
+      <!-- Founder A-roll base (muted video; audio comes from the sibling <audio>) -->
+      <div id="aroll-wrap" class="vid-wrap">
+        <video id="aroll" data-start="0" data-duration="30.77" data-track-index="1"
+          src="assets/aroll-cut.mp4" muted playsinline></video>
+      </div>
+
+      <!-- Single b-roll cutaway — spans the audio splice (comp 15.75) so the A-roll jump-cut stays hidden -->
+      <div id="broll-work-wrap" class="vid-wrap">
+        <video id="broll-work" data-start="14.7" data-duration="5.5" data-track-index="3"
+          src="assets/broll-work.mp4" muted playsinline></video>
+      </div>
+
+      <!-- Narration (spliced founder VO) -->
+      <audio id="vo" data-start="0" data-duration="30.77" data-track-index="9" data-volume="1"
+        src="assets/aroll-cut.mp4"></audio>
+
+      <!-- Cinematic overlays -->
+      <div id="vignette" class="clip" data-start="0" data-duration="35.3" data-track-index="4"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="35.3" data-track-index="5"></div>
+      <div id="scrim-top" class="clip" data-start="0" data-duration="30.77" data-track-index="6"></div>
+
+      <!-- Persistent logo -->
+      <img id="logo" class="clip" data-start="0.3" data-duration="30.47" data-track-index="8"
+        src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+
+      <!-- Outro -->
+      <div id="outro" class="clip" data-start="30.77" data-duration="4.53" data-track-index="13">
+        <img id="outro-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="outro-headline">Know what&rsquo;s<br />working right now.</div>
+        <div id="outro-sub">Tested against real brands, not last year&rsquo;s playbook.</div>
+        <div id="outro-cta">Find out more</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const DUR = 35.3;
+      const VO_END = 30.77;
+
+      const tl = gsap.timeline({ paused: true });
+
+      // Logo entrance
+      tl.from("#logo", { opacity: 0, y: -18, duration: 0.6, ease: "power3.out" }, 0.3);
+
+      // Subtle Ken Burns on the founder A-roll (the b-roll is a handheld walking
+      // shot that already carries its own motion, so it gets no added zoom).
+      tl.fromTo("#aroll", { scale: 1.0 }, { scale: 1.06, duration: 30.77, ease: "none" }, 0);
+
+      // B-roll crossfade over the A-roll (covers the splice at 15.75).
+      tl.to("#broll-work-wrap", { opacity: 1, duration: 0.35, ease: "power2.out" }, 14.7);
+      tl.to("#broll-work-wrap", { opacity: 0, duration: 0.35, ease: "power2.in" }, 19.85);
+
+      // ---- Outro ----
+      tl.to("#outro", { clipPath: "inset(0 0 0% 0)", duration: 0.55, ease: "power4.inOut" }, VO_END - 0.1);
+      tl.from("#outro-logo", { opacity: 0, y: -22, duration: 0.6, ease: "power3.out" }, VO_END + 0.25);
+      tl.from("#outro-headline", { opacity: 0, y: 30, duration: 0.7, ease: "power3.out" }, VO_END + 0.55);
+      tl.from("#outro-sub", { opacity: 0, y: 18, duration: 0.55, ease: "power2.out" }, VO_END + 0.95);
+      tl.from("#outro-cta", { opacity: 0, scale: 0.85, duration: 0.55, ease: "back.out(1.7)" }, VO_END + 1.25);
+      tl.to("#outro-cta", { scale: 1.045, duration: 0.9, ease: "sine.inOut", yoyo: true, repeat: 2 }, VO_END + 2.05);
+
+      // Pad to exact duration
+      tl.set({}, {}, DUR);
+      window.__timelines["ecomiq-short-form-ad-4x5"] = tl;
+    </script>
+  </body>
+</html>
