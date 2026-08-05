@@ -45,7 +45,11 @@ efficient over time instead of relearning the same lessons.
   offset that the engine drops. **Fix:** advance the video ~0.16s relative to audio so
   lips match (tune per clip).
 - **Phone / vertical b-roll imports rotated.** **Fix:** rotate 90° CW during prep
-  (`ffmpeg -vf "transpose=1"`).
+  (`ffmpeg -vf "transpose=1"`). *Caveat:* if the file carries a rotation **display
+  matrix** (e.g. iPhone selfie stored 1920×1080 + `rotation=-90`), ffmpeg **autorotates
+  on decode by default** — a plain `scale=1080:1920,pad` already yields an upright
+  portrait frame. Adding `transpose` on top double-rotates it. Check
+  `ffprobe … -show_entries stream_side_data=rotation` before deciding.
 - **Offline transcriber can't run (model download egress-blocked).** Some environments
   block the Whisper model download. **Fix:** caption from the known script text and
   anchor timing via silence analysis instead of word-level timestamps.
@@ -54,6 +58,17 @@ efficient over time instead of relearning the same lessons.
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +
   placing motion-graphic overlays over the join make cutdowns feel seamless.
+- **Footage-forward UGC with NO overlays: mask splices with a 0.15s `xfade` dissolve.**
+  When the brief bans captions/graphics, a short cross-dissolve (baked in ffmpeg:
+  `xfade=transition=fade:duration=0.15:offset=<cum-dur-0.15>` + `acrossfade=d=0.15`)
+  hides both the jump-cut head-pop *and* the background change from a walking selfie —
+  reads as a clean transition, not a hard cut, and honors the "no hard cuts" rule
+  without any on-screen element. Cut on word boundaries / silence so the audio
+  crossfade doesn't clip a consonant.
+- **Multi-take reads rarely share a script.** Three "takes" of the same ad were three
+  different wordings — only one contained the exact target lines. Transcribe **every**
+  take (`hyperframes transcribe … --json`) and diff against the target script before
+  picking; don't assume take N is take 1 re-read.
 
 ## Delivery & resolution
 
@@ -71,6 +86,13 @@ efficient over time instead of relearning the same lessons.
 - **Runway's API is a multi-model gateway** — one `RUNWAYML_API_SECRET` reaches
   `kling3.0_pro`, `veo3.1`, `seedance2`, `gen4.5`, etc. via `npm run gen --model <id>`.
   Keep Runway as the single integration; pick the model per shot.
+
+## Environment
+
+- **`hyperframes doctor` can false-negative on FFmpeg.** It reported `FFmpeg — Failed to
+  run "/usr/bin/ffmpeg" -version` while `/usr/bin/ffmpeg -version` (and every real
+  encode) worked fine. Don't abandon an ffmpeg step over that one check — verify by
+  running ffmpeg directly. (`ffprobe` passed in the same doctor run.)
 
 ## Housekeeping
 
