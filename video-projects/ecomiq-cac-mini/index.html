@@ -83,37 +83,39 @@
     </style>
   </head>
   <body>
-    <!-- SHORT cut (~25s) of the CAC ad: supercut hook + bootcamp close from the
-         founder VO, one reveal cutaway bridging the splice, then the end card. -->
+    <!-- SHORT cut (~24.5s) of the CAC ad. Supercut (word-accurate):
+         HOOK  = "Most founders trust the cost-per-customer number... almost never right"  (0-6.78s of source)
+         CLOSE = "Understanding your true CAC... free profitability bootcamp... click the link below" (35.5-51.3s of source)
+         One reveal cutaway bridges the splice, then the end card. -->
     <div
       id="root"
       data-composition-id="ecomiq-cac-mini"
       data-start="0"
-      data-duration="25.5"
+      data-duration="24.5"
       data-width="1080"
       data-height="1920"
     >
-      <div id="bg" class="clip" data-start="0" data-duration="25.5" data-track-index="0"></div>
+      <div id="bg" class="clip" data-start="0" data-duration="24.5" data-track-index="0"></div>
 
-      <!-- 1 · A-ROLL spine (supercut: hook + true-CAC/bootcamp close) -->
+      <!-- 1 · A-ROLL spine (supercut: hook + true-CAC/bootcamp close), splice at 6.78s -->
       <video
         class="footage"
         id="aroll-video"
         data-start="0"
-        data-duration="22.55"
+        data-duration="22.6"
         data-track-index="1"
         src="assets/aroll-short.mp4"
         muted
         playsinline
       ></video>
 
-      <!-- 2 · B-ROLL reveal — REPORTED $37.50 → TRUE CAC $61.69. Placed over the
-             hook→close splice (~9.35s): hides the jump cut AND pays off the hook's
-             "the number on your dashboard is almost never right." -->
+      <!-- 2 · B-ROLL reveal — REPORTED $37.50 → TRUE CAC $61.69. Over the hook→close
+             splice (6.78s): hides the jump cut, pays off "the dashboard number is almost
+             never right", and lands under "understanding your true CAC". -->
       <video
         class="footage"
         id="cut1"
-        data-start="8.3"
+        data-start="6.6"
         data-duration="4.66"
         data-track-index="2"
         src="assets/broll-3-reveal.mp4"
@@ -123,13 +125,13 @@
 
       <!-- 5 & 6 · Persistent logo group -->
       <div id="logo-wrap">
-        <div id="logo-scrim" class="clip" data-start="0" data-duration="21" data-track-index="5"></div>
-        <img id="logo" class="clip" data-start="0" data-duration="21" data-track-index="6"
+        <div id="logo-scrim" class="clip" data-start="0" data-duration="20" data-track-index="5"></div>
+        <img id="logo" class="clip" data-start="0" data-duration="20" data-track-index="6"
              src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
 
       <!-- 7 · END CARD -->
-      <div id="endcard" class="clip" data-start="21" data-duration="4.5" data-track-index="7">
+      <div id="endcard" class="clip" data-start="20" data-duration="4.5" data-track-index="7">
         <div id="ec-bloom"></div>
         <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div id="ec-eyebrow">More insights like this?</div>
@@ -141,7 +143,7 @@
       <audio
         id="aroll-audio"
         data-start="0"
-        data-duration="22.55"
+        data-duration="22.6"
         data-track-index="8"
         data-volume="1"
         src="assets/aroll-short.mp4"
@@ -151,7 +153,7 @@
       <audio
         id="music-bed"
         data-start="0"
-        data-duration="25.5"
+        data-duration="24.5"
         data-track-index="9"
         data-volume="0.18"
         src="assets/music-bed-PLACEHOLDER.m4a"
@@ -164,23 +166,23 @@
 
       // Persistent logo: settle in, fade out just before the end card.
       tl.fromTo("#logo-wrap", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.3)
-        .to("#logo-wrap", { opacity: 0, duration: 0.4, ease: "power1.in" }, 20.6)
-        .set("#logo-wrap", { opacity: 0 }, 21.0); // hard kill so non-linear seeks stay hidden
+        .to("#logo-wrap", { opacity: 0, duration: 0.4, ease: "power1.in" }, 19.6)
+        .set("#logo-wrap", { opacity: 0 }, 20.0); // hard kill so non-linear seeks stay hidden
 
       // Reveal cutaway: hard cut in, slow scale-push, quick dissolve out to founder.
-      tl.fromTo("#cut1", { scale: 1.0 }, { scale: 1.06, duration: 4.66, ease: "none" }, 8.3)
-        .to("#cut1", { opacity: 0, duration: 0.25, ease: "power1.in" }, 12.71);
+      tl.fromTo("#cut1", { scale: 1.0 }, { scale: 1.06, duration: 4.66, ease: "none" }, 6.6)
+        .to("#cut1", { opacity: 0, duration: 0.25, ease: "power1.in" }, 11.01);
 
-      // End card (21 → 25.5): dissolve in, stagger content, CTA breathes.
-      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 21.0)
-        .fromTo("#ec-logo", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 21.4)
-        .fromTo("#ec-eyebrow", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 21.6)
-        .fromTo("#ec-headline", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 21.8)
-        .fromTo("#ec-cta", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" }, 22.2)
-        .to("#ec-cta", { scale: 1.045, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 2 }, 23.0);
+      // End card (20 → 24.5): dissolve in, stagger content, CTA breathes.
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 20.0)
+        .fromTo("#ec-logo", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 20.4)
+        .fromTo("#ec-eyebrow", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 20.6)
+        .fromTo("#ec-headline", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 20.8)
+        .fromTo("#ec-cta", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" }, 21.2)
+        .to("#ec-cta", { scale: 1.045, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 2 }, 22.0);
 
       // Pad timeline to root data-duration (Law #7/#11).
-      tl.to({}, { duration: 25.5 }, 0);
+      tl.to({}, { duration: 24.5 }, 0);
       window.__timelines["ecomiq-cac-mini"] = tl;
     </script>
   </body>

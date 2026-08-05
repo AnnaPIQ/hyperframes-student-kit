@@ -85,9 +85,16 @@ efficient over time instead of relearning the same lessons.
   crops as still frames first (`ffmpeg -ss <t> -vf crop=…,scale=…` → `Read`), pick a source
   window where the ROI is static, and cut short holds. Cropping to a vertical ROI (not
   letterboxing) also hides browser chrome/bookmarks/record-timer for free.
-- **No Whisper in the web container** → can't get word-level timestamps. Fallback: map a known
-  script to the audio via `silencedetect=noise=-30dB:d=0.3` (sentence gaps), and place b-roll
-  overlays on those boundaries. Overlays tolerate ±1s drift; hard captions would not.
+- **`npx hyperframes transcribe <file> --model small.en --json` DOES work in the web container**
+  even though `doctor` reports whisper-cpp "Not found" — the CLI downloads its own model on first
+  run (~1-2 min) and writes word-level `{text,start,end}` to `assets/transcript.json`. USE THIS for
+  any supercut/caption timing — do NOT eyeball cuts from `silencedetect` sentence gaps. Silence-gap
+  guessing put a splice 2.6s off (leaked the next sentence in, clipped the target sentence's open);
+  word timestamps nailed it. Silence maps are only a rough fallback when transcription is truly down.
+- **Talking-head supercut seams:** cut on the word boundary from the transcript, add a ~0.1s
+  `afade=t=out` at the end of segment A and `afade=t=in` at the start of segment B in the concat
+  filter to kill consonant clicks, and hide the visual jump-cut with a b-roll cutaway straddling
+  the splice.
 - **Drive footage downloads:** the MCP `download_file_content` returns base64 into context —
   catastrophic for a 40MB+ clip. For link-shared files just `curl -L "https://drive.google.com/uc?export=download&id=<ID>"`.
   Portrait phone clips carry `rotation=-90`; re-encoding bakes it to true 1080×1920 (probe to confirm).
