@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>ecomiq-short-form-45</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white);
+      }
+
+      /* ---- Face (talking head). Source is native 9:16 (1080x1920); object-fit cover
+             + a top-biased object-position crops it to this 4:5 frame while keeping
+             headroom so the head is never cut across the handheld drift. ---- */
+      #face-wrapper {
+        position: absolute; top: 0; left: 0;
+        width: 1080px; height: 1350px; overflow: hidden; z-index: 0;
+      }
+      #face-video {
+        display: block; width: 100%; height: 100%;
+        object-fit: cover; object-position: 50% 11%;
+        transform-origin: center center;
+        filter: contrast(1.06) saturate(1.06) brightness(0.995);
+      }
+
+      /* ---- Overlay: gentle vignette + top-left bloom that seats the white logo. ---- */
+      #overlay {
+        position: absolute; inset: 0; pointer-events: none; z-index: 2;
+        background:
+          radial-gradient(115% 82% at 8% 4%,
+            rgba(6, 28, 54, 0.62) 0%,
+            rgba(6, 28, 54, 0.30) 22%,
+            rgba(6, 28, 54, 0) 46%),
+          radial-gradient(ellipse 92% 82% at 50% 46%,
+            rgba(4, 14, 28, 0) 58%,
+            rgba(4, 14, 28, 0.34) 100%);
+      }
+
+      /* ---- Persistent top-left EcomIQ logo (white). ---- */
+      #logo-wrap { position: absolute; top: 60px; left: 60px; width: 196px; z-index: 3; }
+      #logo-corner {
+        display: block; width: 100%; height: auto;
+        filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
+      }
+
+      /* ---- End card ---- */
+      #endcard {
+        position: absolute; inset: 0; z-index: 10;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 34px; padding: 7%; text-align: center;
+        background:
+          radial-gradient(120% 76% at 50% 24%, rgba(156, 212, 255, 0.12) 0%, rgba(6, 40, 76, 0) 55%),
+          var(--brand-navy);
+      }
+      #ec-logo { width: 470px; height: auto; display: block; }
+      #ec-line {
+        font-weight: 700; font-size: 54px; line-height: 1.05; letter-spacing: -0.01em;
+        color: var(--brand-white); max-width: 90%;   /* all white, no italics */
+      }
+      #ec-cta {
+        margin-top: 10px; font-weight: 700; font-size: 40px; color: var(--brand-white);
+        background: var(--brand-flame); padding: 32px 68px; border-radius: 999px;
+        letter-spacing: 0.005em; white-space: nowrap;
+        display: inline-flex; align-items: center; gap: 18px;
+        box-shadow: 0 24px 74px -18px rgba(255, 76, 50, 0.8);
+      }
+      #ec-cta .arrow { font-weight: 700; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="ecomiq-short-form-45"
+      data-start="0"
+      data-duration="34"
+      data-width="1080"
+      data-height="1350"
+    >
+      <!-- 4:5 (Meta feed) cut of the short version. Same edit + audio as the 9:16;
+           reframed for 1080x1350. -->
+      <div id="face-wrapper">
+        <video
+          id="face-video"
+          data-start="0"
+          data-duration="33.10"
+          data-track-index="0"
+          src="assets/face-short.mp4"
+          muted
+          playsinline
+        ></video>
+      </div>
+
+      <audio
+        id="face-audio"
+        data-start="0"
+        data-duration="33.10"
+        data-track-index="1"
+        data-volume="1"
+        src="assets/face-short-audio.m4a"
+      ></audio>
+
+      <div
+        id="overlay"
+        class="clip"
+        data-start="0"
+        data-duration="33.10"
+        data-track-index="2"
+      ></div>
+
+      <div id="logo-wrap">
+        <img
+          id="logo-corner"
+          class="clip"
+          data-start="0"
+          data-duration="33.10"
+          data-track-index="3"
+          src="assets/ecomiq-logo-white.svg"
+          alt="EcomIQ"
+        />
+      </div>
+
+      <!-- End card (last ~3.7s): white logo + line + flame CTA button -->
+      <div
+        id="endcard"
+        class="clip"
+        data-start="30.3"
+        data-duration="3.7"
+        data-track-index="4"
+      >
+        <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="ec-line">Free Profitability Bootcamp</div>
+        <div id="ec-cta">Join now <span class="arrow">&rarr;</span></div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo("#face-video",
+        { scale: 1.0 },
+        { scale: 1.025, duration: 33.10, ease: "none" }, 0);
+
+      tl.fromTo("#logo-corner",
+        { opacity: 0, y: -14 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.35);
+
+      // End card — navy panel crossfades over the face as the spoken CTA lands,
+      // then logo, line, and the flame CTA button settle in.
+      tl.fromTo("#endcard",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5, ease: "power2.out" }, 30.3);
+      tl.fromTo("#ec-logo",
+        { opacity: 0, y: 28, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.62, ease: "power3.out" }, 30.6);
+      tl.fromTo("#ec-line",
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 30.9);
+      tl.fromTo("#ec-cta",
+        { opacity: 0, y: 16, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.6)" }, 31.1);
+
+      tl.set({}, {}, 34.0);
+      window.__timelines["ecomiq-short-form-45"] = tl;
+    </script>
+  </body>
+</html>
