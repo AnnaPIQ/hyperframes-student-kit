@@ -72,6 +72,34 @@ efficient over time instead of relearning the same lessons.
   `kling3.0_pro`, `veo3.1`, `seedance2`, `gen4.5`, etc. via `npm run gen --model <id>`.
   Keep Runway as the single integration; pick the model per shot.
 
+## Footage & cutaways
+
+- **Screen-recording b-roll of your OWN branded product collides with the persistent
+  overlay logo.** Symptom: the recorded page's own EcomIQ header sat top-left, doubling
+  with the ad's persistent top-left logo. Fix: crop the cutaway to a region that excludes
+  the product's own logo (e.g. the right-column result card), so only the overlay logo shows.
+- **A white overlay logo vanishes on bright cutaways / white ceilings.** A drop-shadow alone
+  won't save white-on-white. Fix: put a soft navy corner **scrim** behind the logo group
+  (radial-gradient, ~0.5 alpha → transparent) so the white lockup reads on any shot.
+- **Landscape screen recordings scroll — a fixed crop drifts off content.** Probe candidate
+  crops as still frames first (`ffmpeg -ss <t> -vf crop=…,scale=…` → `Read`), pick a source
+  window where the ROI is static, and cut short holds. Cropping to a vertical ROI (not
+  letterboxing) also hides browser chrome/bookmarks/record-timer for free.
+- **No Whisper in the web container** → can't get word-level timestamps. Fallback: map a known
+  script to the audio via `silencedetect=noise=-30dB:d=0.3` (sentence gaps), and place b-roll
+  overlays on those boundaries. Overlays tolerate ±1s drift; hard captions would not.
+- **Drive footage downloads:** the MCP `download_file_content` returns base64 into context —
+  catastrophic for a 40MB+ clip. For link-shared files just `curl -L "https://drive.google.com/uc?export=download&id=<ID>"`.
+  Portrait phone clips carry `rotation=-90`; re-encoding bakes it to true 1080×1920 (probe to confirm).
+
+## Verifying static changes without a full re-render
+
+- **A full render is ~13–15 min; don't pay it to check one text/CSS tweak.** Drive the paused
+  timeline directly with Playwright: load `index.html`, `page.evaluate(() => window.__timelines['<id>'].seek(<t>))`,
+  screenshot. Pure-DOM scenes (end cards, title cards) render correctly this way — video-backed
+  scenes won't (the engine, not GSAP, drives video frames). Run node from the workspace root so
+  `node_modules/playwright` resolves; Chromium is at `/opt/pw-browsers/chromium`.
+
 ## Housekeeping
 
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
