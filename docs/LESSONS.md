@@ -77,6 +77,46 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## Multi-format standalone comps (one project, several roots)
+
+- **Comps under `compositions/` must use ROOT-relative asset paths (`assets/...`), not
+  `../assets/...`.** Even though the file lives one level deep, Hyperframes serves every
+  composition with the project root as its base URL. `../assets/` renders (it's rewritten
+  per source path) but lint errors `invalid_parent_traversal_in_asset_path` and Studio
+  preview 404s. Use `assets/…`, `assets/vendor/gsap.min.js`, etc. everywhere.
+- **Render a specific format with `render --composition compositions/<file>.html`.** A
+  full-doc standalone comp (its own `<!doctype html>` + timeline) renders as a root via
+  `-c`; only `<template>`-wrapped sub-comps must be embedded from `index.html`. `lint`
+  needs `index.html` to exist — mirror the primary format into it (root-relative paths).
+- **Independent full comps in one project don't cross-flag audio.** Same track-4
+  `<audio>` at 0–47s in `index.html` + two comps lints 0/0 as long as paths match; a
+  path-prefix mismatch (`assets/` vs `../assets/`) is what triggered a spurious
+  `duplicate_audio_track` warning.
+
+## Footage-forward vertical (talking-head, no captions)
+
+- **Phone selfies are stored rotated.** A "1920×1080" HEVC source with a rotation flag is
+  really a 1080×1920 portrait — `ffprobe` shows the raw stream dims, but `ffmpeg` auto-
+  applies the display matrix on decode. Extract one frame to check orientation before
+  choosing a crop. Native portrait fits 9:16 with zero cropping.
+- **One prepped clip → both verticals.** Re-encode the portrait master once (muted H.264,
+  trim head/tail dead-air via `silencedetect`), then let CSS do the reframe: 9:16 is
+  `object-fit: cover` full-bleed; 4:5 is the same video cover-cropped with
+  `object-position: center 32%` (keeps face + headroom). Preview the 4:5 crop with
+  `ffmpeg -vf crop=1080:1350:0:182` on a source frame — no full render needed to check it.
+- **White corner logo needs a scrim on bright shots.** A top navy→transparent gradient
+  band + a logo `drop-shadow` keeps a persistent white logo legible over windows/sky.
+- **`doctor` false-negatives FFmpeg in this container.** It reported "FFmpeg failed to
+  run" while `ffmpeg -version` and every encode worked fine. Trust a direct `ffmpeg`
+  invocation over the doctor line.
+
+## Fetching source footage from Google Drive (no base64 into context)
+
+- **Don't pull a video through the Drive MCP `download_file_content`** — it returns
+  base64 into context and blows it up. For a link-shared file, download straight to disk:
+  `curl -sL "https://drive.usercontent.google.com/download?id=<FILEID>&export=download" -o out.mp4`
+  (handles the >25MB confirm gate; `get_file_metadata` first to size it).
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

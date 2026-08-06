@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>EcomIQ — Short-form 4:5</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL brand fonts — no network dependency at render time (latin subset). */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-white);
+      }
+
+      /* ---- Footage layer (1080x1920 source cover-cropped to the 4:5 frame) ---- */
+      #footage-wrap {
+        position: absolute; inset: 0;
+        transform-origin: center center;
+        z-index: 0;
+      }
+      #footage {
+        display: block; width: 100%; height: 100%;
+        object-fit: cover; object-position: center 32%;
+        filter: contrast(1.05) saturate(1.06) brightness(1.0);
+      }
+      #footage-wrap::after {
+        content: ""; position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 82% 88% at 50% 44%,
+          transparent 60%, rgba(6, 40, 76, 0.30) 100%);
+      }
+
+      /* ---- Top scrim for logo legibility ---- */
+      #top-scrim {
+        position: absolute; top: 0; left: 0; width: 1080px; height: 260px;
+        background: linear-gradient(180deg, rgba(6, 40, 76, 0.62) 0%,
+          rgba(6, 40, 76, 0.28) 45%, rgba(6, 40, 76, 0) 100%);
+        z-index: 1; pointer-events: none;
+      }
+
+      /* ---- Persistent EcomIQ logo, top-left ---- */
+      #logo {
+        position: absolute; top: 54px; left: 58px; width: 146px; height: auto;
+        z-index: 2;
+        filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.55));
+      }
+
+      /* ---- End card ---- */
+      #endcard {
+        position: absolute; inset: 0; z-index: 3;
+        background:
+          radial-gradient(90% 54% at 50% 24%, rgba(156, 212, 255, 0.12) 0%, rgba(6, 40, 76, 0) 55%),
+          var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 48px;
+      }
+      #endcard::before {
+        content: ""; position: absolute; left: -12%; bottom: -22%; width: 124%; height: 60%;
+        background: var(--brand-gradient-2); filter: blur(92px); opacity: 0.34;
+        pointer-events: none;
+      }
+      #ec-logo { width: 480px; height: auto; position: relative; }
+      #ec-cta {
+        position: relative;
+        display: inline-flex; align-items: center; gap: 18px;
+        font-weight: 700; font-size: 32px; letter-spacing: -0.01em;
+        color: var(--brand-white); background: var(--brand-flame);
+        padding: 28px 52px; border-radius: 999px; white-space: nowrap;
+        box-shadow: 0 22px 70px -16px rgba(255, 76, 50, 0.65);
+      }
+      #ec-cta .arrow { font-size: 34px; line-height: 1; transform: translateY(-1px); }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="ecomiq-short-4x5"
+      data-start="0"
+      data-duration="49.6"
+      data-width="1080"
+      data-height="1350"
+    >
+      <div id="footage-wrap">
+        <video
+          id="footage"
+          data-start="0"
+          data-duration="47.0"
+          data-track-index="0"
+          src="assets/script5-pricing.mp4"
+          muted
+          playsinline
+        ></video>
+      </div>
+
+      <audio
+        id="footage-audio"
+        data-start="0"
+        data-duration="47.0"
+        data-track-index="4"
+        data-volume="1"
+        src="assets/script5-pricing.m4a"
+      ></audio>
+
+      <div id="top-scrim" class="clip" data-start="0" data-duration="47.2" data-track-index="1"></div>
+
+      <img id="logo" class="clip" data-start="0" data-duration="47.2" data-track-index="2"
+           src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+
+      <div id="endcard" class="clip" data-start="46.5" data-duration="3.1" data-track-index="3">
+        <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="ec-cta">Join our Free Profitability Bootcamp <span class="arrow">&rarr;</span></div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      const FOOT = 47.0;
+      const XFADE = 0.5;
+      const TOTAL = 49.6;
+
+      tl.fromTo("#logo",
+        { opacity: 0, y: -18 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.3)
+        .fromTo("#top-scrim", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "sine.out" }, 0)
+        .to("#logo", { opacity: 0, duration: 0.35, ease: "power2.in" }, FOOT - XFADE)
+        .to("#top-scrim", { opacity: 0, duration: 0.35, ease: "power2.in" }, FOOT - XFADE);
+
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: XFADE, ease: "power2.inOut" }, FOOT - XFADE)
+        .fromTo("#ec-logo", { opacity: 0, y: 24, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" }, FOOT - 0.1)
+        .fromTo("#ec-cta", { opacity: 0, scale: 0.85 },
+          { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)" }, FOOT + 0.35)
+        .to("#ec-cta", { scale: 1.035, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 2 }, FOOT + 1.1);
+
+      tl.set({}, {}, TOTAL);
+      window.__timelines["ecomiq-short-4x5"] = tl;
+    </script>
+  </body>
+</html>
