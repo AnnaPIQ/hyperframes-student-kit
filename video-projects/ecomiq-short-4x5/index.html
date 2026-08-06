@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>EcomIQ — Short (4:5)</title>
+
+    <!-- Vendored GSAP + self-hosted fonts: no CDN/network at render time (LESSONS.md). -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face {
+        font-family: 'Rethink Sans'; font-weight: 400 800; font-style: normal;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2');
+      }
+      @font-face {
+        font-family: 'Hedvig Letters Serif'; font-weight: 400; font-style: italic;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2');
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-white);
+      }
+
+      /* ---- Footage, full-frame (already 1080x1350; cover guards against rounding) ---- */
+      #video { position: absolute; inset: 0; width: 1080px; height: 1350px; object-fit: cover; }
+
+      /* ---- Persistent top-left logo (clip fills frame so the mark never drifts) ---- */
+      #logo-layer { position: absolute; inset: 0; }
+      #logo-wrap {
+        position: absolute; top: 54px; left: 54px; width: 200px;
+        filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.55));
+      }
+      #logo-wrap img { display: block; width: 100%; height: auto; }
+
+      /* ---- End card (last ~2s): logo + one line + CTA ---- */
+      #endcard {
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        text-align: center;
+        background:
+          radial-gradient(88% 52% at 50% 32%, rgba(156, 212, 255, 0.10) 0%, rgba(6, 40, 76, 0) 58%),
+          var(--brand-navy);
+      }
+      #ec-bloom {
+        position: absolute; left: -12%; bottom: -22%; width: 124%; height: 60%;
+        background: var(--brand-gradient-2); filter: blur(90px); opacity: 0.34;
+      }
+      #ec-logo { position: relative; width: 500px; height: auto; }
+      #ec-line {
+        position: relative; margin-top: 50px; padding: 0 84px;
+        font-family: 'Rethink Sans', sans-serif; font-weight: 800;
+        font-size: 82px; line-height: 1.02; letter-spacing: -0.03em; color: var(--brand-white);
+      }
+      #ec-line .em {
+        font-family: 'Hedvig Letters Serif', Georgia, serif; font-weight: 400; font-style: italic;
+        letter-spacing: -0.01em; color: var(--brand-blue-tint);
+      }
+      #ec-cta {
+        position: relative; margin-top: 58px;
+        display: inline-flex; align-items: center; gap: 16px;
+        font-family: 'Rethink Sans', sans-serif; font-size: 40px; font-weight: 700;
+        color: var(--brand-white); background: var(--brand-flame);
+        padding: 28px 60px; border-radius: 999px;
+        box-shadow: 0 24px 72px -18px rgba(255, 76, 50, 0.7);
+      }
+      #ec-cta .arrow { font-size: 42px; line-height: 1; transform: translateY(-2px); }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="ecomiq-short-4x5"
+      data-start="0"
+      data-duration="59.9"
+      data-width="1080"
+      data-height="1350"
+    >
+      <video id="video" src="assets/talkinghead-4x5.mp4" muted
+             data-start="0" data-duration="57.9" data-track-index="0"></video>
+      <audio id="narration" src="assets/narration.m4a"
+             data-start="0" data-duration="57.9" data-track-index="1"></audio>
+
+      <div id="logo-layer" class="clip" data-start="0" data-duration="57.9" data-track-index="2">
+        <div id="logo-wrap"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+      </div>
+
+      <div id="endcard" class="clip" data-start="57.4" data-duration="2.5" data-track-index="3">
+        <div id="ec-bloom"></div>
+        <img id="ec-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+        <div id="ec-line">Join our <span class="em">Free</span><br />Profitability Bootcamp</div>
+        <div id="ec-cta">Start free <span class="arrow">&rarr;</span></div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo("#logo-wrap",
+        { opacity: 0, y: -14 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.25);
+
+      const EC = 57.4;
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, EC)
+        .fromTo("#ec-logo", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, EC + 0.18)
+        .fromTo("#ec-line", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, EC + 0.42)
+        .fromTo("#ec-cta", { opacity: 0, scale: 0.86 }, { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)" }, EC + 0.72)
+        .to("#ec-cta", { scale: 1.04, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 1 }, EC + 1.4);
+
+      tl.set({}, {}, 59.9);
+      window.__timelines["ecomiq-short-4x5"] = tl;
+    </script>
+  </body>
+</html>
