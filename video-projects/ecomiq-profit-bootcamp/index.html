@@ -31,11 +31,11 @@
       #face-wrapper::after { content: ""; position: absolute; inset: 0; pointer-events: none;
         background: radial-gradient(116% 92% at 50% 40%, rgba(6,40,76,0) 56%, rgba(6,40,76,.30) 100%); }
 
-      /* ---- Persistent white EcomIQ logo, top-right ---- */
-      #wm { position: absolute; top: 0; right: 0; width: 560px; height: 320px; z-index: 3; pointer-events: none;
+      /* ---- Persistent white EcomIQ logo, top-left ---- */
+      #wm { position: absolute; top: 0; left: 0; width: 560px; height: 320px; z-index: 3; pointer-events: none;
         /* soft navy corner scrim so the white mark reads on bright/white backgrounds */
-        background: radial-gradient(135% 135% at 100% 0%, rgba(6,40,76,.34) 0%, rgba(6,40,76,0) 62%); }
-      #wm-logo { position: absolute; top: 54px; right: 58px; width: 300px; height: auto;
+        background: radial-gradient(135% 135% at 0% 0%, rgba(6,40,76,.34) 0%, rgba(6,40,76,0) 62%); }
+      #wm-logo { position: absolute; top: 54px; left: 58px; width: 300px; height: auto;
         filter: drop-shadow(0 2px 12px rgba(0,0,0,.6)); opacity: .95; }
 
       /* ---- Branded end card ---- */
@@ -52,14 +52,11 @@
         color: var(--brand-blue-tint); margin-bottom: 34px; }
       #ec-rule { width: 132px; height: 6px; border-radius: 3px; background: var(--brand-flame);
         margin-bottom: 40px; transform-origin: center; }
-      #ec-headline { font-weight: 800; font-size: 96px; line-height: 1.0; letter-spacing: -.03em;
-        color: var(--brand-white); max-width: 780px; }
-      #ec-headline .em { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
-        font-weight: 400; letter-spacing: -.01em; color: var(--brand-blue-tint); }
-      #ec-cta { margin-top: 52px; display: inline-flex; align-items: center; gap: 18px;
+      #ec-headline { font-weight: 800; font-size: 68px; line-height: 1.05; letter-spacing: -.03em;
+        color: var(--brand-white); max-width: 720px; }
+      #ec-cta { margin-top: 48px; display: inline-flex; align-items: center;
         font-weight: 700; font-size: 40px; color: var(--brand-white); background: var(--brand-flame);
-        padding: 30px 60px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,.62); }
-      #ec-cta .arrow { font-size: 42px; line-height: 1; transform: translateY(-2px); }
+        padding: 30px 66px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,.62); }
     </style>
   </head>
   <body>
@@ -83,15 +80,15 @@
         <img id="wm-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
       </div>
 
-      <div id="endcard" class="clip" data-start="31.1" data-duration="4.5" data-track-index="3">
+      <div id="endcard" class="clip" data-start="29.9" data-duration="5.7" data-track-index="3">
         <div id="ec-bloom"></div>
         <div id="ec-vignette"></div>
         <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div id="ec-stage">
           <div id="ec-eyebrow">Free Profitability Bootcamp</div>
           <div id="ec-rule"></div>
-          <div id="ec-headline">Keep the <span class="em">margin</span> you give away.</div>
-          <div id="ec-cta">Join free — link below <span class="arrow">&rarr;</span></div>
+          <div id="ec-headline">Keep the margin<br>you give away.</div>
+          <div id="ec-cta">Join Free</div>
         </div>
       </div>
     </div>
@@ -106,19 +103,19 @@
 
       // --- Top-right logo: fade in at the top, fade out just before the end card covers ---
       tl.fromTo("#wm", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0.2)
-        .to("#wm", { opacity: 0, duration: 0.4, ease: "power2.in" }, 30.9);
+        .to("#wm", { opacity: 0, duration: 0.4, ease: "power2.in" }, 29.7);
 
-      // --- Crossfade face → end card, completing as the video ends (~31.5s) ---
-      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power2.inOut" }, 31.2);
+      // --- Crossfade face → end card, brought in early (over the tail of the CTA line) ---
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power2.inOut" }, 30.0);
 
       // --- End-card entrances (staggered, varied eases) once the card is mostly in ---
-      tl.from("#ec-logo",     { opacity: 0, y: -24, duration: 0.6,  ease: "power3.out" }, 31.55)
-        .from("#ec-eyebrow",  { opacity: 0, y: 18,  duration: 0.5,  ease: "power2.out" }, 31.75)
-        .from("#ec-rule",     { scaleX: 0,          duration: 0.45, ease: "power3.out" }, 31.95)
-        .from("#ec-headline", { opacity: 0, y: 34,  duration: 0.7,  ease: "power3.out" }, 32.05)
-        .from("#ec-cta",      { opacity: 0, scale: 0.85, duration: 0.55, ease: "back.out(1.7)" }, 32.5)
-        // CTA breathes to hold attention through the outro (ends ~35.5s, inside the 35.6s comp).
-        .to("#ec-cta", { scale: 1.045, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 3 }, 33.1);
+      tl.from("#ec-logo",     { opacity: 0, y: -24, duration: 0.6,  ease: "power3.out" }, 30.35)
+        .from("#ec-eyebrow",  { opacity: 0, y: 18,  duration: 0.5,  ease: "power2.out" }, 30.55)
+        .from("#ec-rule",     { scaleX: 0,          duration: 0.45, ease: "power3.out" }, 30.75)
+        .from("#ec-headline", { opacity: 0, y: 30,  duration: 0.7,  ease: "power3.out" }, 30.85)
+        .from("#ec-cta",      { opacity: 0, scale: 0.85, duration: 0.55, ease: "back.out(1.7)" }, 31.3)
+        // CTA breathes to hold attention through the outro (ends ~34.7s, inside the 35.6s comp).
+        .to("#ec-cta", { scale: 1.045, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 3 }, 32.3);
 
       window.__timelines["ecomiq-profit-bootcamp"] = tl;
     </script>
