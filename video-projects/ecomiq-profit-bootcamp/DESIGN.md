@@ -22,24 +22,30 @@ is UGC, so we adapt texture while keeping the craft.
   the only take whose wording matches the target lines verbatim → selected.
 - Native footage is vertical 1080×1920 (phone shot 1920×1080 + rotation −90) — fills the 9:16
   frame with no crop gymnastics.
-- Final cut = 4 segments of take2, dead air + the weakest meander removed, joined with **0.15s
-  dissolves** (soften the walking-UGC background jumps; keeps the "no hard cuts" rule), audio
-  loudness-normalized to ~−14 LUFS / −1.1 dBTP for social.
-  1. Hook `0.00–5.08`
-  2. Discount-offer tip `8.67–14.62`
-  3. Free-shipping tip + bootcamp `21.87–38.64`
-  4. CTA `47.02–end`
-  → `assets/founder-cut.mp4`, 31.0s. Original take: `assets/founder-take2-original.mp4`.
+- Final cut = the client's **exact 6-line script** — 3 segments of take2 (the two elaboration
+  tangents dropped), joined with **0.15s dissolves** (soften the walking-UGC background jumps;
+  keeps the "no hard cuts" rule), audio loudness-normalized to ~−14 LUFS for social.
+  1. `0.00–12.42` — "There's money walking out of your store on every single order, and here are
+     two quick things you should revisit… The first one is your new customer discount offer."
+  2. `21.95–23.36` — "And second one, free shipping."
+  3. `32.47–50.30` — "…it's things like this that we cover inside our profitability bootcamp. It
+     is completely free to join, and we are going to show you guys all these places where you can
+     find margin that you can keep instead of giving it away to your customers. Click the link
+     below to sign up for the free bootcamp."
+  → `assets/founder-cut.mp4`, 31.5s. Original take: `assets/founder-take2-original.mp4`.
 
 ## Composition (`index.html`)
-- **Face (0–31s):** full-frame `assets/founder-cut.mp4`, muted `<video>` + sibling `<audio>` for
+- **Face (0–31.5s):** full-frame `assets/founder-cut.mp4`, muted `<video>` + sibling `<audio>` for
   the mixer. House grade `contrast(1.06) saturate(1.07) brightness(.985)`, soft navy vignette,
   slow Ken Burns push `scale 1.0 → 1.035` over the whole read.
-- **End card (30.4–35s):** crossfades in as the CTA lands. Navy canvas + blue→flame bloom, white
+- **Top-right logo:** persistent white EcomIQ lockup (`ecomiq-logo-white.png`) with a soft navy
+  corner scrim + drop-shadow so it stays legible over the white-wall shots; fades out into the
+  end card.
+- **End card (31.1–35.6s):** crossfades in as the CTA lands. Navy canvas + blue→flame bloom, white
   EcomIQ logo, eyebrow "Free Profitability Bootcamp", flame accent rule, headline
   **"Keep the *margin* you give away."** (signature italic-serif emphasis word on *margin*, tying
   back to the hook), flame CTA pill "Join free — link below →" with a breathing hold.
-- Total 35.0s.
+- Total 35.6s.
 
 ## Palette / type (from brand-tokens.css)
 - Navy `#06284C` canvas · Blue-tint `#9CD4FF` accent/emphasis · Flame `#FF4C32` the one hot accent.

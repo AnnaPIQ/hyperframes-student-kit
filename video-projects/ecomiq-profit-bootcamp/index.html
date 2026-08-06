@@ -67,23 +67,23 @@
          Full continuous founder read (0–50.6s, every script line present, one shot) with a
          persistent top-right white logo, crossfading into a branded end card.
          Video is muted; audio rides in a sibling <audio> for the mixer. -->
-    <div id="root" data-composition-id="ecomiq-profit-bootcamp" data-start="0" data-duration="54.6" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="ecomiq-profit-bootcamp" data-start="0" data-duration="35.6" data-width="1080" data-height="1920">
 
-      <div id="bg" class="clip" data-start="0" data-duration="54.6" data-track-index="0"></div>
+      <div id="bg" class="clip" data-start="0" data-duration="35.6" data-track-index="0"></div>
 
       <!-- Non-timed wrapper so GSAP can Ken-Burns without animating the <video> element itself -->
       <div id="face-wrapper">
-        <video id="face" data-start="0" data-duration="50.6" data-track-index="1"
+        <video id="face" data-start="0" data-duration="31.5" data-track-index="1"
                src="assets/founder-cut.mp4" muted playsinline></video>
       </div>
-      <audio id="face-audio" data-start="0" data-duration="50.6" data-track-index="2"
+      <audio id="face-audio" data-start="0" data-duration="31.5" data-track-index="2"
              src="assets/founder-cut.mp4" data-volume="1"></audio>
 
-      <div id="wm" class="clip" data-start="0" data-duration="50.6" data-track-index="4">
+      <div id="wm" class="clip" data-start="0" data-duration="31.5" data-track-index="4">
         <img id="wm-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
       </div>
 
-      <div id="endcard" class="clip" data-start="50.1" data-duration="4.5" data-track-index="3">
+      <div id="endcard" class="clip" data-start="31.1" data-duration="4.5" data-track-index="3">
         <div id="ec-bloom"></div>
         <div id="ec-vignette"></div>
         <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
@@ -102,23 +102,23 @@
       const tl = gsap.timeline({ paused: true });
 
       // --- Face: slow Ken Burns push across the whole read ---
-      tl.fromTo("#face-wrapper", { scale: 1.0 }, { scale: 1.035, duration: 50.6, ease: "none" }, 0);
+      tl.fromTo("#face-wrapper", { scale: 1.0 }, { scale: 1.035, duration: 31.5, ease: "none" }, 0);
 
       // --- Top-right logo: fade in at the top, fade out just before the end card covers ---
       tl.fromTo("#wm", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0.2)
-        .to("#wm", { opacity: 0, duration: 0.4, ease: "power2.in" }, 49.8);
+        .to("#wm", { opacity: 0, duration: 0.4, ease: "power2.in" }, 30.9);
 
-      // --- Crossfade face → end card, completing as the video ends (~50.6s) ---
-      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.inOut" }, 50.1);
+      // --- Crossfade face → end card, completing as the video ends (~31.5s) ---
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power2.inOut" }, 31.2);
 
       // --- End-card entrances (staggered, varied eases) once the card is mostly in ---
-      tl.from("#ec-logo",     { opacity: 0, y: -24, duration: 0.6,  ease: "power3.out" }, 50.45)
-        .from("#ec-eyebrow",  { opacity: 0, y: 18,  duration: 0.5,  ease: "power2.out" }, 50.65)
-        .from("#ec-rule",     { scaleX: 0,          duration: 0.45, ease: "power3.out" }, 50.85)
-        .from("#ec-headline", { opacity: 0, y: 34,  duration: 0.7,  ease: "power3.out" }, 50.95)
-        .from("#ec-cta",      { opacity: 0, scale: 0.85, duration: 0.55, ease: "back.out(1.7)" }, 51.4)
-        // CTA breathes to hold attention through the outro (ends ~54.5s, inside the 54.6s comp).
-        .to("#ec-cta", { scale: 1.045, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 3 }, 52.1);
+      tl.from("#ec-logo",     { opacity: 0, y: -24, duration: 0.6,  ease: "power3.out" }, 31.55)
+        .from("#ec-eyebrow",  { opacity: 0, y: 18,  duration: 0.5,  ease: "power2.out" }, 31.75)
+        .from("#ec-rule",     { scaleX: 0,          duration: 0.45, ease: "power3.out" }, 31.95)
+        .from("#ec-headline", { opacity: 0, y: 34,  duration: 0.7,  ease: "power3.out" }, 32.05)
+        .from("#ec-cta",      { opacity: 0, scale: 0.85, duration: 0.55, ease: "back.out(1.7)" }, 32.5)
+        // CTA breathes to hold attention through the outro (ends ~35.5s, inside the 35.6s comp).
+        .to("#ec-cta", { scale: 1.045, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 3 }, 33.1);
 
       window.__timelines["ecomiq-profit-bootcamp"] = tl;
     </script>
