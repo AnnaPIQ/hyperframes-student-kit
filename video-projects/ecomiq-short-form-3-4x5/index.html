@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>ecomiq-short-form-3-4x5</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time (latin subset) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
+
+      /* A-roll spine — native 9:16 source cover-cropped to fill the 4:5 frame
+         (keeps the centered face; trims ceiling / lower mic). */
+      #aroll { position: absolute; inset: 0; width: 1080px; height: 1350px;
+        object-fit: cover; object-position: 50% 42%; z-index: 10; }
+
+      /* Persistent brand logo — top-left, subtle scrim + shadow so it reads on any shot */
+      #brand-logo { position: absolute; top: 5%; left: 6%; width: 37%; z-index: 50; }
+      #brand-logo::before { content: ''; position: absolute; inset: -22% -16%; z-index: -1;
+        background: radial-gradient(62% 62% at 38% 50%, rgba(6,40,76,.5) 0%, rgba(6,40,76,0) 72%); }
+      #brand-logo img { display: block; width: 100%; height: auto;
+        filter: drop-shadow(0 3px 12px rgba(0,0,0,.6)) drop-shadow(0 0 3px rgba(0,0,0,.45)); }
+
+      /* End card sits above everything */
+      #end-card-clip { position: absolute; inset: 0; z-index: 100; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="ecomiq-short-form-3-4x5" data-start="0" data-duration="44.8" data-width="1080" data-height="1350">
+
+      <!-- A-roll spine: full original take (~44.8s), plays uninterrupted. Muted video
+           (track 0) + sibling VO audio (track 1). -->
+      <video id="aroll" data-start="0" data-duration="44.8" data-media-start="0" data-track-index="0"
+             src="assets/aroll-video3.mp4" muted playsinline></video>
+      <audio id="aroll-vo" data-start="0" data-duration="44.8" data-media-start="0" data-track-index="1"
+             src="assets/aroll-video3.mp4" data-volume="1"></audio>
+
+      <!-- Music-bed placeholder (track 2): silent for now, sits at a ducked-under-VO level.
+           Swap the src for your track later; raise data-volume when it should carry. -->
+      <audio id="music-bed" data-start="0" data-duration="44.8" data-track-index="2"
+             src="assets/music-bed-placeholder.m4a" data-volume="0.18"></audio>
+
+      <!-- Persistent brand logo (track 3) — over the A-roll spine -->
+      <div id="brand-logo" class="clip" data-start="0" data-duration="44.8" data-track-index="3">
+        <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <!-- End card (track 5) — overlays the tail so total runtime ≈ the original length -->
+      <div id="end-card-clip" class="clip" data-composition-id="end-card" data-composition-src="compositions/end-card.html"
+           data-start="40.8" data-duration="4.0" data-track-index="5"></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      // Logo entrance (the only master-track animation; media + end card drive themselves)
+      tl.from("#brand-logo", { opacity: 0, y: -20, filter: "blur(6px)", duration: .6, ease: "power3.out" }, .3);
+      tl.set({}, {}, 44.8); // composition duration
+      window.__timelines["ecomiq-short-form-3-4x5"] = tl;
+    </script>
+  </body>
+</html>
