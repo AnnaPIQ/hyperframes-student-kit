@@ -94,6 +94,16 @@ efficient over time instead of relearning the same lessons.
   broadband hiss + proximity boom from a handheld lav), smooth it instead of notching:
   `highpass=85, afftdn(nr=12:nf=-30), equalizer f=280 -3dB (kills low-mid boom),
   deesser i=0.35, acompressor 2.5:1, loudnorm I=-16:TP=-1.5:LRA=11`.
+- **"Poffy" mic pops = plosives (P/B/T), not feedback.** They live as brief sub-100 Hz
+  blooms at word onsets (visible on a 0–800 Hz spectrogram). **Fix:** cascaded
+  `highpass=f=110:poles=2` twice (24 dB/oct) + `adeclick` + `adynamicequalizer`
+  ducking ~95 Hz *only when a pop spikes* (mode=cut, fast attack ~3 ms) + `bass -3 dB@110`
+  + `alimiter`. Verify by band: sub-100 Hz RMS should drop ~4–5 dB while the 150–450 Hz
+  voice body drops <1 dB (else you're thinning the voice, not de-popping).
+- **Swapping only the audio? Don't re-render.** When the `<video>` is muted and sound
+  comes from a sibling `<audio>`, the video frames are deterministic and unchanged — so
+  after editing the narration, **re-mux** the existing final (`-map 0:v -map 1:a
+  -c:v copy`) instead of paying another 10-min render.
 - **`ffmpeg -preset medium` on a 4K (2160×3840) source blows past a 2-min tool
   timeout** re-encoding ~58s. **Fix:** run the encode with `run_in_background: true`,
   or drop to `-preset fast` (visually identical at CRF19 for delivery footage).

@@ -19,6 +19,10 @@ recording. Sibling project `ecomiq-short-9x16` is the same edit at 9:16.
   headroom + face + mic, drops equal top/bottom) → `scale=1080:1350 lanczos` → CRF19.
 - **Audio cleanup** identical to the 9:16 (shared `assets/narration.m4a`):
   `highpass=85, afftdn, equalizer f=280 -3dB, deesser, acompressor, loudnorm`.
+- **De-plosive pass** (v2 audio, for the "poffy" mic pops): cascaded 24 dB/oct
+  high-pass at 110 Hz + `adeclick` + dynamic low-cut (`adynamicequalizer` at ~95 Hz)
+  + `bass -3 dB@110` + `alimiter`. Sub-100 Hz thump down ~5 dB, voice body intact.
+  Shipped MP4 audio re-muxed (video copied, not re-rendered).
 
 ## Assets (all local — no render-time network)
 - `assets/talkinghead-4x5.mp4` — prepped footage (muted in comp; audio via `<audio>`)

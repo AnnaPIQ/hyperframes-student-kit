@@ -22,6 +22,13 @@ recording. Sibling project `ecomiq-short-4x5` is the same edit at 4:5.
   `highpass=85, afftdn(nr=12,nf=-30), equalizer f=280 -3dB (proximity boom),
   deesser i=0.35, acompressor 2.5:1, loudnorm I=-16:TP=-1.5:LRA=11`.
   Shared `assets/narration.m4a` drives the `<audio>` element.
+- **De-plosive pass** (v2 audio, for the "poffy" mic pops on P/B/T): cascaded
+  24 dB/oct high-pass at 110 Hz + `adeclick` + a dynamic low-cut
+  (`adynamicequalizer` ducking ~95 Hz only when a pop spikes) + `bass -3 dB@110` +
+  `alimiter`. Cuts the sub-100 Hz plosive thump ~5 dB (RMS) while the voice body
+  (150–450 Hz) drops <0.6 dB. Because the `<video>` is muted and sound comes from
+  `<audio>`, the shipped MP4 audio was **re-muxed** (video stream copied, not
+  re-rendered) after swapping the narration.
 
 ## Assets (all local — no render-time network)
 - `assets/talkinghead-9x16.mp4` — prepped footage (muted in comp; audio via `<audio>`)
