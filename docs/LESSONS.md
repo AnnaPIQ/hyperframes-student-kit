@@ -41,6 +41,12 @@ efficient over time instead of relearning the same lessons.
 
 ## Footage & A/V sync
 
+- **Sparse keyframes → frame freezing / seek failures during render.** Phone/camera
+  recordings (and a plain `-crf` re-encode) land a keyframe only every ~8s, so the
+  render engine's frame extraction warns `Video "<id>" has sparse keyframes` and can
+  freeze frames — deadly on a talking head (frozen lips = A/V drift). **Fix:** re-encode
+  footage with a dense, closed GOP: `-g 30 -keyint_min 30 -sc_threshold 0` (keyframe
+  every 1s). Verify with `ffprobe ... -show_entries frame=key_frame,pts_time`.
 - **Talking-head lips out of sync.** Source recordings often have a ~0.2s audio start
   offset that the engine drops. **Fix:** advance the video ~0.16s relative to audio so
   lips match (tune per clip).
@@ -60,6 +66,16 @@ efficient over time instead of relearning the same lessons.
 - **There is no 4:5 render "preset."** Ship the final via `--quality high` at the
   project's native size (e.g. 1080×1350). For Meta hi-res deliverables, also export 2×
   (2160×2700).
+- **Two aspect ratios from one project = a second root comp under `compositions/`.**
+  Keep 9:16 as `index.html`, add e.g. `compositions/ad-4x5.html` with its own root
+  `data-width`/`data-height` and a unique `data-composition-id`, then render it with
+  `npx hyperframes render -c compositions/ad-4x5.html`. Asset URLs inside a
+  `compositions/` file stay project-root-relative (`assets/…`, NOT `../assets/…`) — the
+  CLI serves the project root as the base. Give the second comp's tracks distinct
+  indices (e.g. 10–13) or lint flags a cross-file `duplicate_audio_track`.
+- **`renders/` is gitignored.** Deliverable MP4s must be copied to a tracked location
+  (project root) to ship on the branch — the convention is `<name>.mp4` at the project
+  root.
 - **Preview localhost (3002) is unreachable from the browser on the web.** Use the
   render → frame-grab → `Read` loop instead. Live Studio works only on a local clone.
 
