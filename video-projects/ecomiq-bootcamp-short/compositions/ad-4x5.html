@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>EcomIQ — Free Profitability Bootcamp (4:5)</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders.
+         Asset paths are project-root-relative (matches the compositions/ convention). -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-text);
+      }
+
+      /* ---- Footage (full-frame, footage-forward) --------------------------- */
+      #footage-wrapper {
+        position: absolute; inset: 0; z-index: 0;
+        background: var(--brand-navy);
+      }
+      #footage {
+        display: block; width: 100%; height: 100%; object-fit: cover;
+        filter: contrast(1.04) saturate(1.05);
+      }
+
+      /* ---- Persistent brand bug (top-left, every frame) -------------------- */
+      #logo-bug {
+        position: absolute; top: 48px; left: 56px; width: 112px; z-index: 120;
+        filter:
+          drop-shadow(0 2px 6px rgba(0, 0, 0, 0.55))
+          drop-shadow(0 0 14px rgba(0, 0, 0, 0.45));
+      }
+      #logo-bug img { display: block; width: 100%; height: auto; }
+
+      /* ---- End card (last ~2s) --------------------------------------------- */
+      #endcard {
+        position: absolute; inset: 0; z-index: 100; opacity: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 48px; padding: 0 110px; text-align: center;
+        background:
+          radial-gradient(95% 55% at 50% 40%, rgba(156, 212, 255, 0.10) 0%, rgba(6, 40, 76, 0) 60%),
+          var(--brand-navy);
+      }
+      #endcard::before {
+        content: ""; position: absolute; left: -10%; bottom: -18%; width: 120%; height: 55%;
+        background: var(--brand-gradient-2); filter: blur(90px); opacity: 0.34; z-index: -1;
+      }
+      #endcard-logo { width: 480px; height: auto; }
+      #endcard-cta {
+        display: inline-flex; align-items: center; gap: 18px;
+        font-family: 'Rethink Sans', sans-serif; font-weight: 700; font-size: 38px;
+        letter-spacing: -0.01em; color: var(--brand-white);
+        background: var(--brand-flame);
+        padding: 30px 52px; border-radius: 999px; max-width: 820px; line-height: 1.05;
+        box-shadow: 0 24px 72px -16px rgba(255, 76, 50, 0.6);
+      }
+      #endcard-cta .arrow { font-size: 40px; line-height: 1; transform: translateY(-1px); }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="ecomiq-bootcamp-short-4x5"
+      data-start="0"
+      data-duration="30.27"
+      data-width="1080"
+      data-height="1350"
+    >
+      <div id="footage-wrapper">
+        <video
+          id="footage"
+          data-start="0"
+          data-duration="30.27"
+          data-track-index="10"
+          src="assets/bootcamp-4x5-edit.mp4"
+          muted
+          playsinline
+        ></video>
+      </div>
+
+      <audio
+        id="footage-audio"
+        data-start="0"
+        data-duration="30.27"
+        data-track-index="11"
+        data-volume="1"
+        src="assets/bootcamp-4x5-edit.mp4"
+      ></audio>
+
+      <div id="logo-bug">
+        <img
+          id="logo"
+          class="clip"
+          data-start="0"
+          data-duration="30.27"
+          data-track-index="12"
+          src="assets/ecomiq-logo-white.svg"
+          alt="EcomIQ"
+        />
+      </div>
+
+      <div id="endcard" class="clip" data-start="0" data-duration="30.27" data-track-index="13">
+        <img id="endcard-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="endcard-cta">Join our Free Profitability Bootcamp <span class="arrow">&rarr;</span></div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      const DUR = 30.27;
+      const END = DUR - 2;
+
+      tl.fromTo(
+        "#logo-bug",
+        { opacity: 0, y: -12 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+        0.3,
+      );
+
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power2.out" }, END)
+        .fromTo(
+          "#endcard-logo",
+          { opacity: 0, y: 24, scale: 0.92 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" },
+          END + 0.22,
+        )
+        .fromTo(
+          "#endcard-cta",
+          { opacity: 0, scale: 0.85 },
+          { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)" },
+          END + 0.6,
+        )
+        .to("#endcard-cta", { scale: 1.03, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 2 }, END + 1.3);
+
+      tl.set({}, {}, DUR);
+      window.__timelines["ecomiq-bootcamp-short-4x5"] = tl;
+    </script>
+  </body>
+</html>
