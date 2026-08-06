@@ -15,10 +15,11 @@
       html, body { width: 1080px; height: 1350px; overflow: hidden;
         background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
 
-      /* A-roll spine — native 9:16 source cover-cropped to fill the 4:5 frame
-         (keeps the centered face; trims ceiling / lower mic). */
+      /* A-roll spine — native 9:16 source cover-cropped to fill the 4:5 frame.
+         object-position biased low (72%) so more is trimmed off the TOP — raises
+         the head, keeps eyes on the upper third, hair not clipped across the clip. */
       #aroll { position: absolute; inset: 0; width: 1080px; height: 1350px;
-        object-fit: cover; object-position: 50% 42%; z-index: 10; }
+        object-fit: cover; object-position: 50% 72%; z-index: 10; }
 
       /* Persistent brand logo — top-left, subtle scrim + shadow so it reads on any shot */
       #brand-logo { position: absolute; top: 5%; left: 6%; width: 37%; z-index: 50; }

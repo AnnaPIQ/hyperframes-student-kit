@@ -7,8 +7,9 @@ copy, same brand system — only the frame/layout differ. Keep the two in sync.
 
 ## Structure (~44.8s — full original take)
 - **Spine (0–44.8s):** `assets/aroll-video3.mp4` (native 9:16) cover-cropped to fill the
-  4:5 frame with `object-fit: cover; object-position: 50% 42%` — keeps the centered face
-  and headroom, trims ceiling and the lower mic/hand. Muted `<video>` (track 0) + sibling
+  4:5 frame with `object-fit: cover; object-position: 50% 72%` — biased low so more is
+  trimmed off the top, raising the head so the eyes sit on the upper third (hair not
+  clipped across the clip). Muted `<video>` (track 0) + sibling
   `<audio>` VO (track 1). Plays uninterrupted, no overlays.
 - **Persistent logo (track 3):** `ecomiq-logo-white.svg` top-left, scrim + drop-shadow.
 - **End card (40.8–44.8s, track 5):** navy, centered white logo, headline **"Join our Free
