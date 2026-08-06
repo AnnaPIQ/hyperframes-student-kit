@@ -104,7 +104,7 @@
         data-duration="30.27"
         data-track-index="1"
         data-volume="1"
-        src="assets/bootcamp-9x16-edit.mp4"
+        src="assets/bootcamp-audio-clean.m4a"
       ></audio>
 
       <!-- Persistent EcomIQ logo, top-left, every frame -->
@@ -143,6 +143,10 @@
         { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
         0.3,
       );
+
+      // Corner brand bug persists through the whole video, then clears as the end
+      // card takes over (the end card carries its own centered logo).
+      tl.to("#logo-bug", { opacity: 0, duration: 0.3, ease: "power2.out" }, END);
 
       // End card: navy scrim fades up over the footage, then logo + CTA land.
       tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power2.out" }, END)
