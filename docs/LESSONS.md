@@ -79,4 +79,27 @@ efficient over time instead of relearning the same lessons.
 
 ---
 
+## Footage-forward builds (talking head, no captions/graphics)
+
+- **`<audio>` with no `id` renders SILENT** (and lint errors `media_missing_id`). The
+  renderer discovers media by `id`. **Fix:** always give the narration `<audio>` a
+  unique `id` (e.g. `id="narration"`). Video is muted; audio lives in a sibling
+  `<audio>` so the mixer owns it.
+- **Same logo file used twice trips `duplicate_media_discovery_risk`** (persistent
+  corner mark + big end-card mark = two `<img>` with identical src/start/dur). **Fix:**
+  point the two at *different* sources — SVG for the small corner mark, PNG for the
+  large end-card mark. Clears the warning and both render crisp.
+- **"Clean up mic feedback" ≠ always a notch.** Render a `showspectrumpic` first: a
+  real feedback squeal shows as a steady horizontal line. If there's none (just
+  broadband hiss + proximity boom from a handheld lav), smooth it instead of notching:
+  `highpass=85, afftdn(nr=12:nf=-30), equalizer f=280 -3dB (kills low-mid boom),
+  deesser i=0.35, acompressor 2.5:1, loudnorm I=-16:TP=-1.5:LRA=11`.
+- **`ffmpeg -preset medium` on a 4K (2160×3840) source blows past a 2-min tool
+  timeout** re-encoding ~58s. **Fix:** run the encode with `run_in_background: true`,
+  or drop to `-preset fast` (visually identical at CRF19 for delivery footage).
+- **Persistent corner logo, kept from drifting:** wrap it in a full-frame
+  `class="clip"` layer (`position:absolute; inset:0`) — the engine "reposition" of a
+  full-frame clip is a no-op — then absolutely-position the logo *inside* it. Keeps the
+  render-contract timing while the mark stays pinned top-left.
+
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
