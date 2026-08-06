@@ -47,6 +47,18 @@ efficient over time instead of relearning the same lessons.
   freeze frames — deadly on a talking head (frozen lips = A/V drift). **Fix:** re-encode
   footage with a dense, closed GOP: `-g 30 -keyint_min 30 -sc_threshold 0` (keyframe
   every 1s). Verify with `ffprobe ... -show_entries frame=key_frame,pts_time`.
+- **Plosive "pops" (P/B popping the mic).** These are short low-frequency transients
+  where the sub-160Hz band momentarily dominates the mid-band. Detect them by windowing
+  a `lowpass=f=160` copy (`asetnsamples` + `astats` peak per 50ms) and flag windows where
+  low-band ≫ mid-band (a vowel has strong low *and* mid; a pop is low-only). Kill each
+  one surgically with a time-gated low-shelf: `bass=g=-20:f=180:enable='between(t,S,E)'`
+  over a ~110ms window — drops the thump ~13dB while leaving the consonant's higher
+  frequencies (so speech is untouched). `bass`/`equalizer` support the `enable` timeline.
+- **Audio-only change → re-mux, don't re-render.** If a revision touches only the audio
+  (video/overlays unchanged), swap the track into the existing final with
+  `ffmpeg -i final.mp4 -i newaudio.m4a -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -shortest`
+  instead of paying a ~10-min frame re-render. Also update the composition's `<audio>`
+  asset so a future render matches the delivered file.
 - **Talking-head lips out of sync.** Source recordings often have a ~0.2s audio start
   offset that the engine drops. **Fix:** advance the video ~0.16s relative to audio so
   lips match (tune per clip).
