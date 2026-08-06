@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>ecomiq-profit-bootcamp — 4:5</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time (latin subset) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text);
+      }
+
+      /* ---- Base navy canvas (only ever visible behind the end card) ---- */
+      #bg { position: absolute; inset: 0; z-index: 0;
+        background: radial-gradient(90% 55% at 50% 22%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
+
+      /* ---- Talking-head face — 4:5 crop taken from the TOP (object-position bottom keeps the lower frame) ---- */
+      #face-wrapper { position: absolute; inset: 0; z-index: 1; overflow: hidden; transform-origin: 50% 55%; }
+      #face { width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; display: block;
+        filter: contrast(1.06) saturate(1.07) brightness(.985); }
+      #face-wrapper::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(116% 92% at 50% 42%, rgba(6,40,76,0) 56%, rgba(6,40,76,.30) 100%); }
+
+      /* ---- Persistent white EcomIQ logo, top-left ---- */
+      #wm { position: absolute; top: 0; left: 0; width: 560px; height: 300px; z-index: 3; pointer-events: none;
+        background: radial-gradient(135% 135% at 0% 0%, rgba(6,40,76,.34) 0%, rgba(6,40,76,0) 62%); }
+      #wm-logo { position: absolute; top: 50px; left: 58px; width: 290px; height: auto;
+        filter: drop-shadow(0 2px 12px rgba(0,0,0,.6)); opacity: .95; }
+
+      /* ---- Branded end card ---- */
+      #endcard { position: absolute; inset: 0; z-index: 5;
+        background: var(--brand-navy); overflow: hidden; }
+      #ec-bloom { position: absolute; left: -12%; bottom: -24%; width: 124%; height: 62%;
+        background: var(--brand-gradient-2); filter: blur(96px); opacity: .40; }
+      #ec-vignette { position: absolute; inset: 0;
+        background: radial-gradient(78% 60% at 50% 42%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%); }
+      #ec-logo { position: absolute; top: 7.5%; left: 50%; transform: translateX(-50%); width: 44%; height: auto; }
+      #ec-stage { position: absolute; left: 92px; right: 92px; top: 54%; transform: translateY(-50%);
+        display: flex; flex-direction: column; align-items: center; text-align: center; }
+      #ec-eyebrow { font-weight: 600; font-size: 30px; letter-spacing: .32em; text-transform: uppercase;
+        color: var(--brand-blue-tint); margin-bottom: 32px; }
+      #ec-rule { width: 132px; height: 6px; border-radius: 3px; background: var(--brand-flame);
+        margin-bottom: 38px; transform-origin: center; }
+      #ec-headline { font-weight: 800; font-size: 68px; line-height: 1.05; letter-spacing: -.03em;
+        color: var(--brand-white); max-width: 720px; }
+      #ec-cta { margin-top: 46px; display: inline-flex; align-items: center;
+        font-weight: 700; font-size: 40px; color: var(--brand-white); background: var(--brand-flame);
+        padding: 30px 66px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,.62); }
+    </style>
+  </head>
+  <body>
+    <!-- 4:5 (1080x1350) variant of the approved 9:16 build. Same cut, timings, logo, and end card;
+         the face is cropped from the TOP (object-position: 50% 100%) per the brief. -->
+    <div id="root" data-composition-id="ecomiq-profit-bootcamp-4x5" data-start="0" data-duration="35.6" data-width="1080" data-height="1350">
+
+      <div id="bg" class="clip" data-start="0" data-duration="35.6" data-track-index="0"></div>
+
+      <div id="face-wrapper">
+        <video id="face" data-start="0" data-duration="31.5" data-track-index="1"
+               src="assets/founder-cut.mp4" muted playsinline></video>
+      </div>
+      <audio id="face-audio" data-start="0" data-duration="31.5" data-track-index="2"
+             src="assets/founder-cut.mp4" data-volume="1"></audio>
+
+      <div id="wm" class="clip" data-start="0" data-duration="31.5" data-track-index="4">
+        <img id="wm-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+      </div>
+
+      <div id="endcard" class="clip" data-start="29.9" data-duration="5.7" data-track-index="3">
+        <div id="ec-bloom"></div>
+        <div id="ec-vignette"></div>
+        <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="ec-stage">
+          <div id="ec-eyebrow">Free Profitability Bootcamp</div>
+          <div id="ec-rule"></div>
+          <div id="ec-headline">Keep the margin<br>you give away.</div>
+          <div id="ec-cta">Join Free</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // --- Face: slow Ken Burns push across the whole read ---
+      tl.fromTo("#face-wrapper", { scale: 1.0 }, { scale: 1.035, duration: 31.5, ease: "none" }, 0);
+
+      // --- Top-left logo: fade in at the top, fade out just before the end card covers ---
+      tl.fromTo("#wm", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0.2)
+        .to("#wm", { opacity: 0, duration: 0.4, ease: "power2.in" }, 29.7);
+
+      // --- Crossfade face → end card, brought in early (over the tail of the CTA line) ---
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power2.inOut" }, 30.0);
+
+      // --- End-card entrances (staggered, varied eases) once the card is mostly in ---
+      tl.from("#ec-logo",     { opacity: 0, y: -24, duration: 0.6,  ease: "power3.out" }, 30.35)
+        .from("#ec-eyebrow",  { opacity: 0, y: 18,  duration: 0.5,  ease: "power2.out" }, 30.55)
+        .from("#ec-rule",     { scaleX: 0,          duration: 0.45, ease: "power3.out" }, 30.75)
+        .from("#ec-headline", { opacity: 0, y: 30,  duration: 0.7,  ease: "power3.out" }, 30.85)
+        .from("#ec-cta",      { opacity: 0, scale: 0.85, duration: 0.55, ease: "back.out(1.7)" }, 31.3)
+        .to("#ec-cta", { scale: 1.045, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 3 }, 32.3);
+
+      window.__timelines["ecomiq-profit-bootcamp-4x5"] = tl;
+    </script>
+  </body>
+</html>

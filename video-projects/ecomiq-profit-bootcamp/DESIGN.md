@@ -47,6 +47,13 @@ is UGC, so we adapt texture while keeping the craft.
   back to the hook), flame CTA pill "Join free — link below →" with a breathing hold.
 - Total 35.6s.
 
+## Deliverables — two aspect ratios
+- **9:16 (1080×1920)** — `index.html` → `final.mp4`. Primary Reels/TikTok/Shorts.
+- **4:5 (1080×1350)** — `index-4x5.html` → `final-4x5.mp4`. Meta feed. Same cut/timings/logo/end
+  card; the face is cropped **from the top** (`object-fit:cover; object-position:50% 100%` keeps
+  the lower frame where the face + mic sit). End card re-laid for 1350 height (not cropped).
+  Render with `npx hyperframes render -c index-4x5.html --quality high`.
+
 ## Palette / type (from brand-tokens.css)
 - Navy `#06284C` canvas · Blue-tint `#9CD4FF` accent/emphasis · Flame `#FF4C32` the one hot accent.
 - Rethink Sans (bold headline/CTA) + Hedvig Letters Serif italic (single emphasis word). −2% tracking.
