@@ -24,15 +24,16 @@ NOT the ad. Render each deliverable with the `-c` flag (see below).
 | Video B | 38–46s | `assets/videoB-1080.mp4` | second clip; 0.5s crossfade in at 38s |
 | End card | 45.5–48s | — | navy card fades up; logo + flame rule + CTA + pill |
 
-- **Persistent logo bug:** white EcomIQ lockup (SVG) top-left, `--bug-w: 105px`
-  (~10% width), with a soft dark radial scrim + drop-shadow so it reads over the
-  bright window shots. Present 0–46s; the opaque end card covers it at the close.
-  It's a single CSS custom property at the top of each comp — change once to resize.
+- **Persistent logo:** white EcomIQ lockup (SVG) top-left, `--bug-w: 520px`
+  (~48% width — a bold brand mark), with a soft dark radial scrim + drop-shadow so
+  it reads over the bright window shots. Present 0–46s; the opaque end card covers
+  it at the close. It's a single CSS custom property at the top of each comp —
+  change once to resize.
 - **A→B transition:** a 0.5s opacity crossfade (dissolve), not a hard cut. The two
   clips sit on separate `data-track-index` values so they can overlap; Video A holds
   an extra 0.5s (`data-duration 38.5`) to cover the dissolve.
 - **End card CTA:** "Join our Free Profitability Bootcamp" (all white, single weight,
-  no italics) + a flame **"Join now →"** pill with a soft glow.
+  no italics) + a flame **"Join now"** pill with a soft glow.
 - **Audio:** each clip's own audio via a sibling `<audio>` element (the `<video>`
   stays `muted`). End card (46–48s) is a quiet outro.
 
