@@ -77,6 +77,35 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## Multi-clip / full-frame video layering
+
+- **Symptom:** with two full-screen video clips in separate absolutely-positioned
+  wrappers, the first clip (and any overlay drawn later — logo bug, end card)
+  rendered as blank navy; only the second clip showed. **Cause:** the wrappers had
+  opaque `background` + manual `z-index` (0/1). The higher-z-index wrapper sat on
+  top of everything for the whole timeline, covering the other clip AND the
+  later-in-DOM `.clip` overlays (which had auto z-index). **Fix:** make video
+  wrappers **transparent** (no `background`), drop the manual `z-index`, put both
+  clips on the **same `data-track-index`** (sequential model), and drive the cut
+  with **wrapper opacity** via `tl.set("#wrapA",{opacity:0},t)` / `tl.set("#wrapB",{opacity:1},t)`.
+  Let DOM order put bug/end-card overlays on top. Verified in `ecomiq-short-form`.
+- **Corollary — file-size tell in frame verification:** a run of *identically tiny*
+  extracted PNGs (e.g. every frame exactly 10,308 bytes) across different
+  timestamps means those frames are a solid fill (blank), not real content. Cheap
+  signal to catch a dead layer before you even `Read` the images.
+
+## Standalone comps under `compositions/` (multiple aspect ratios in one project)
+
+- **Two aspect ratios = two self-contained root HTML files** in `compositions/`,
+  each a full `<html>` doc with its own root `data-width`/`data-height` and a
+  unique `data-composition-id`. Render either with `render -c compositions/<file>.html`.
+  Keep `index.html` as a light cover/index so the project's default entry stays valid.
+- **Asset paths in `compositions/*.html` must be root-relative** (`assets/…`, not
+  `../assets/…`). The engine serves comps with the **project root** as base URL;
+  `../` trips `invalid_parent_traversal_in_asset_path` and 404s in Studio.
+- **Every `<video>`/`<audio>` with `data-start` needs a unique `id`** or the renderer
+  can't discover it → frozen video / silent audio (a lint *error*, not a warning).
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
