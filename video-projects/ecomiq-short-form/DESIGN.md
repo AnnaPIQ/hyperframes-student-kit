@@ -20,17 +20,19 @@ NOT the ad. Render each deliverable with the `-c` flag (see below).
 
 | Segment | Time | Source | Notes |
 |---|---|---|---|
-| Video A | 0–38s | `assets/videoA-1080.mp4` | talking head, full-frame, own audio |
-| Video B | 38–46s | `assets/videoB-1080.mp4` | second clip, hard cut at 38s |
-| End card | 45.5–48s | — | navy card fades up; logo + flame rule + CTA |
+| Video A | 0–38.5s | `assets/videoA-1080.mp4` | talking head, full-frame, own audio |
+| Video B | 38–46s | `assets/videoB-1080.mp4` | second clip; 0.5s crossfade in at 38s |
+| End card | 45.5–48s | — | navy card fades up; logo + flame rule + CTA + pill |
 
-- **Persistent logo bug:** white EcomIQ lockup (SVG) top-left, `--bug-w: 150px`
-  (~14% width), with a soft dark radial scrim + drop-shadow so it reads over the
+- **Persistent logo bug:** white EcomIQ lockup (SVG) top-left, `--bug-w: 105px`
+  (~10% width), with a soft dark radial scrim + drop-shadow so it reads over the
   bright window shots. Present 0–46s; the opaque end card covers it at the close.
-  *To shrink toward the original 8–10% brief, drop `--bug-w` to ~110px — it's a
-  single CSS custom property at the top of each comp.*
-- **End card CTA:** "Join our *Free* Profitability Bootcamp" — "Free" is the
-  italic Hedvig-serif emphasis word (EcomIQ's headline signature; one word only).
+  It's a single CSS custom property at the top of each comp — change once to resize.
+- **A→B transition:** a 0.5s opacity crossfade (dissolve), not a hard cut. The two
+  clips sit on separate `data-track-index` values so they can overlap; Video A holds
+  an extra 0.5s (`data-duration 38.5`) to cover the dissolve.
+- **End card CTA:** "Join our Free Profitability Bootcamp" (all white, single weight,
+  no italics) + a flame **"Join now →"** pill with a soft glow.
 - **Audio:** each clip's own audio via a sibling `<audio>` element (the `<video>`
   stays `muted`). End card (46–48s) is a quiet outro.
 
