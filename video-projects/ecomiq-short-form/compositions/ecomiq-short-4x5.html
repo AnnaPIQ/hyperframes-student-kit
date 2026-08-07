@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>EcomIQ — Short-Form 4:5</title>
+    <script src="assets/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* Self-hosted brand fonts — no render-time network fetch (deterministic). */
+      @font-face {
+        font-family: "Rethink Sans";
+        font-weight: 400 800;
+        font-display: block;
+        src: url(assets/fonts/RethinkSans.woff2) format("woff2");
+      }
+      @font-face {
+        font-family: "Hedvig Letters Serif";
+        font-weight: 400;
+        font-display: block;
+        src: url(assets/fonts/HedvigLettersSerif.woff2) format("woff2");
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px;
+        height: 1350px;
+        overflow: hidden;
+        background: var(--brand-navy);
+        font-family: "Rethink Sans", system-ui, sans-serif;
+        color: var(--brand-white);
+      }
+
+      /* ------- Footage layers (full-frame, center-cropped to 4:5) ------- */
+      .vid-wrap {
+        position: absolute;
+        inset: 0;
+        width: 1080px;
+        height: 1350px;
+        overflow: hidden;
+      }
+      /* Video B stays hidden until the cut at 38s (set to opaque by GSAP). */
+      #vidB-wrap { opacity: 0; }
+      .vid-wrap video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* 9:16 source cropped to 4:5 — bias slightly up to hold the face. */
+        object-position: 50% 44%;
+        filter: contrast(1.05) saturate(1.06) brightness(0.99);
+      }
+
+      /* ------- Persistent EcomIQ logo bug (top-left, white) ------- */
+      #bug {
+        position: absolute;
+        top: 48px;
+        left: 48px;
+        --bug-w: 150px; /* small persistent corner bug */
+      }
+      #bug::before {
+        content: "";
+        position: absolute;
+        left: -26px;
+        top: -22px;
+        right: -30px;
+        bottom: -20px;
+        background: radial-gradient(
+          120% 145% at 32% 42%,
+          rgba(4, 20, 40, 0.55) 0%,
+          rgba(4, 20, 40, 0) 72%
+        );
+        border-radius: 44px;
+      }
+      #bug img {
+        position: relative;
+        display: block;
+        width: var(--bug-w);
+        height: auto;
+        filter: drop-shadow(0 2px 7px rgba(0, 0, 0, 0.55));
+      }
+
+      /* ------- Branded end card ------- */
+      #endcard { position: absolute; inset: 0; }
+      #endcard .ec-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(90% 54% at 50% 30%, rgba(156, 212, 255, 0.12) 0%, rgba(6, 40, 76, 0) 58%),
+          var(--brand-navy);
+      }
+      #endcard .ec-bloom {
+        position: absolute;
+        left: -12%;
+        bottom: -22%;
+        width: 124%;
+        height: 62%;
+        background: var(--brand-gradient-2);
+        filter: blur(92px);
+        opacity: 0.36;
+      }
+      #endcard .ec-content {
+        position: absolute;
+        left: 92px;
+        right: 92px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      #endcard .ec-logo { width: 460px; height: auto; }
+      #endcard .ec-rule {
+        width: 124px;
+        height: 6px;
+        background: var(--brand-flame);
+        border-radius: 3px;
+        margin: 46px 0 38px;
+      }
+      #endcard .ec-cta {
+        font-family: "Rethink Sans", sans-serif;
+        font-size: 60px;
+        font-weight: 700;
+        line-height: 1.06;
+        letter-spacing: -0.02em;
+        color: var(--brand-white);
+        max-width: 800px;
+      }
+      #endcard .ec-cta .emph {
+        font-family: "Hedvig Letters Serif", Georgia, serif;
+        font-weight: 400;
+        font-style: italic;
+        letter-spacing: -0.01em;
+        color: var(--brand-blue-tint);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="ecomiq-short-4x5"
+      data-start="0"
+      data-duration="48"
+      data-width="1080"
+      data-height="1350"
+      data-fps="30"
+    >
+      <!-- Video A: 0–38s. Both clips share track-index 0 (sequential); the cut
+           is driven by wrapper opacity so only the active clip is visible. -->
+      <div class="vid-wrap" id="vidA-wrap">
+        <video
+          id="vidA45"
+          data-start="0"
+          data-duration="38"
+          data-track-index="0"
+          src="assets/videoA-1080.mp4"
+          muted
+          playsinline
+        ></video>
+      </div>
+
+      <!-- Video B: 38–46s -->
+      <div class="vid-wrap" id="vidB-wrap">
+        <video
+          id="vidB45"
+          data-start="38"
+          data-duration="8"
+          data-track-index="0"
+          src="assets/videoB-1080.mp4"
+          muted
+          playsinline
+        ></video>
+      </div>
+
+      <!-- Footage audio -->
+      <audio
+        id="audA45"
+        data-start="0"
+        data-duration="38"
+        data-track-index="6"
+        data-volume="1"
+        src="assets/videoA-1080.mp4"
+      ></audio>
+      <audio
+        id="audB45"
+        data-start="38"
+        data-duration="8"
+        data-track-index="7"
+        data-volume="1"
+        src="assets/videoB-1080.mp4"
+      ></audio>
+
+      <!-- Persistent logo bug -->
+      <div id="bug" class="clip" data-start="0" data-duration="46" data-track-index="8">
+        <img id="bug-logo-45" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <!-- End card — last ~2.5s -->
+      <div id="endcard" class="clip" data-start="45.5" data-duration="2.5" data-track-index="9">
+        <div class="ec-bg"></div>
+        <div class="ec-bloom"></div>
+        <div class="ec-content">
+          <img id="ec-logo-45" class="ec-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+          <div class="ec-rule"></div>
+          <div class="ec-cta">Join our <span class="emph">Free</span> Profitability Bootcamp</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      tl.from("#bug", { opacity: 0, y: -10, duration: 0.5, ease: "power2.out" }, 0.25);
+      tl.set("#vidA-wrap", { opacity: 0 }, 38);
+      tl.set("#vidB-wrap", { opacity: 1 }, 38);
+      tl.from("#endcard", { opacity: 0, duration: 0.5, ease: "power1.inOut" }, 45.5);
+      tl.from("#endcard .ec-content", { opacity: 0, y: 14, duration: 0.6, ease: "power3.out" }, 45.7);
+
+      tl.to({}, { duration: 48 }, 0);
+
+      window.__timelines["ecomiq-short-4x5"] = tl;
+    </script>
+  </body>
+</html>
