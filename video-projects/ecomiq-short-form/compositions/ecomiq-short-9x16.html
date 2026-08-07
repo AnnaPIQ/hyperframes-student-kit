@@ -57,7 +57,7 @@
         position: absolute;
         top: 52px;
         left: 52px;
-        --bug-w: 150px; /* small persistent corner bug (~14% width) */
+        --bug-w: 105px; /* small persistent corner bug (~10% width) */
       }
       /* Soft dark halo so the white wordmark reads over bright shots. */
       #bug::before {
@@ -129,13 +129,25 @@
         color: var(--brand-white);
         max-width: 860px;
       }
-      #endcard .ec-cta .emph {
-        font-family: "Hedvig Letters Serif", Georgia, serif;
-        font-weight: 400;
-        font-style: italic;
+      /* Flame CTA pill under the headline. */
+      #endcard .ec-pill {
+        margin-top: 54px;
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        font-family: "Rethink Sans", sans-serif;
+        font-size: 44px;
+        font-weight: 700;
         letter-spacing: -0.01em;
-        color: var(--brand-blue-tint);
+        color: var(--brand-white);
+        background: var(--brand-flame);
+        padding: 30px 66px;
+        border-radius: 999px;
+        box-shadow:
+          0 20px 60px -12px rgba(255, 76, 50, 0.65),
+          0 0 44px rgba(255, 76, 50, 0.35);
       }
+      #endcard .ec-pill .ec-arrow { font-size: 44px; line-height: 1; transform: translateY(-2px); }
     </style>
   </head>
   <body>
@@ -159,7 +171,7 @@
         <video
           id="vidA916"
           data-start="0"
-          data-duration="38"
+          data-duration="38.5"
           data-track-index="0"
           src="assets/videoA-1080.mp4"
           muted
@@ -173,7 +185,7 @@
           id="vidB916"
           data-start="38"
           data-duration="8"
-          data-track-index="0"
+          data-track-index="1"
           src="assets/videoB-1080.mp4"
           muted
           playsinline
@@ -210,7 +222,8 @@
         <div class="ec-content">
           <img id="ec-logo-916" class="ec-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
           <div class="ec-rule"></div>
-          <div class="ec-cta">Join our <span class="emph">Free</span> Profitability Bootcamp</div>
+          <div class="ec-cta">Join our Free Profitability Bootcamp</div>
+          <div class="ec-pill">Join now <span class="ec-arrow">&rarr;</span></div>
         </div>
       </div>
     </div>
@@ -224,9 +237,10 @@
       // Logo bug settles in at the top.
       tl.from("#bug", { opacity: 0, y: -10, duration: 0.5, ease: "power2.out" }, 0.25);
 
-      // Hard cut A→B at 38s: swap which footage wrapper is visible.
-      tl.set("#vidA-wrap", { opacity: 0 }, 38);
-      tl.set("#vidB-wrap", { opacity: 1 }, 38);
+      // Smooth 0.5s crossfade A→B at 38s. The clips sit on separate tracks so
+      // they can overlap; Video A holds an extra 0.5s to cover the dissolve.
+      tl.to("#vidA-wrap", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 38);
+      tl.to("#vidB-wrap", { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 38);
 
       // End card crossfades up from the footage, content settles gently.
       tl.from("#endcard", { opacity: 0, duration: 0.5, ease: "power1.inOut" }, 45.5);
