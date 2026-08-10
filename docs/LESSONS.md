@@ -110,6 +110,18 @@ efficient over time instead of relearning the same lessons.
   run" while `ffmpeg -version` and every encode worked fine. Trust a direct `ffmpeg`
   invocation over the doctor line.
 
+## Kinetic karaoke captions (word highlight eats the space)
+
+- **A scaled active word swallows the space before it.** If caption words are
+  separated by literal `" "` text nodes and the active word pops via `scale`
+  (transform-origin center), the scale expansion covers the preceding space →
+  "yourprices". Fix: give each word a fixed horizontal margin
+  (`.cap-word { display:inline-block; margin:0 0.16em }`) instead of relying on the
+  text-node space, and keep the active pop gentle (`scale: 1.06–1.08`, not 1.12).
+- **Build caption spans in JS from `transcript.json`** and drive reveal + per-word
+  highlight from the single GSAP timeline (no per-span `class="clip"` needed) —
+  only the framework-timed layers (video, audio, logo, scrims, end card) are clips.
+
 ## Fetching source footage from Google Drive (no base64 into context)
 
 - **Don't pull a video through the Drive MCP `download_file_content`** — it returns

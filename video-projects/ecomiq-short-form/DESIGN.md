@@ -9,6 +9,14 @@ message; branding is a persistent corner logo plus a branded end card.
 |---|---|---|---|
 | `compositions/ecomiq-short-9x16.html` | 9:16 | 1080×1920 @ 30fps | `renders/ecomiq-short-9x16.mp4` |
 | `compositions/ecomiq-short-4x5.html`  | 4:5  | 1080×1350 @ 30fps | `renders/ecomiq-short-4x5.mp4` |
+| `compositions/ecomiq-short-9x16-mg.html` | 9:16 | 1080×1920 @ 30fps | `renders/ecomiq-short-9x16-mg.mp4` |
+
+`-mg` = **motion-graphics** variant: word-synced karaoke captions (from
+`assets/transcript.json`), three flame kinetic callouts on the hero beats (PRICES
+UP / TEST YOUR *ceiling* / LIFT YOUR PROFIT) with a rising-bars motif that returns
+on the end card, animated brand chrome (logo + flame rule), and blur/whip
+transitions. Keeps EcomIQ palette + Rethink Sans / Hedvig. The other two are the
+footage-forward (no-caption) cut.
 
 `index.html` mirrors the 9:16 comp (root-relative asset paths) so the project has a
 default entry and `hyperframes lint` has an entry point. Render each variant with
