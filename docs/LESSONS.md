@@ -79,4 +79,26 @@ efficient over time instead of relearning the same lessons.
 
 ---
 
+## Audio delivery
+
+- **The render engine re-normalizes audio (~-14 LUFS) regardless of your source level.** A VO
+  pre-normalized to -16 LUFS came out of `render` at -13.5 LUFS; the CLI has no audio-loudness
+  flag. **Fix:** post-normalize the finished MP4 without touching the picture —
+  `ffmpeg -i final.mp4 -c:v copy -af loudnorm=I=-16:TP=-1.5:LRA=11 -c:a aac -b:a 192k out.mp4`.
+  Verify with a 2-pass `loudnorm=...:print_format=json` read of the result.
+
+## Capture & assets (behind the agent proxy)
+
+- **Chromium can't reach sites through the agent proxy (ERR_CONNECTION_RESET) even though
+  `curl` can.** Both `hyperframes capture` and a Playwright launch with `proxy.server=$HTTPS_PROXY`
+  reset/hang on navigation while `curl https://site` returns 200. **Fix:** fetch the marketing
+  HTML with `curl -A "<UA>"`, regex out the CDN asset URLs (Webflow: `cdn.prod.website-files.com/...`),
+  and `curl` the images directly. Recreate login-gated in-app views in-brand instead of capturing them.
+- **Webflow AVIFs are transparent but ffmpeg bakes the alpha to black** (ffprobe reports `yuv444p`,
+  no alpha plane). **Fix:** use ImageMagick, which reads the alpha via libheif —
+  `convert in.avif -background white -flatten out.png`, then `-trim +repage` to crop the whitespace
+  so the UI fills its EcomIQ card.
+
+---
+
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
