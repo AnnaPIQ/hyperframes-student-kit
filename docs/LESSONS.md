@@ -86,6 +86,13 @@ efficient over time instead of relearning the same lessons.
   flag. **Fix:** post-normalize the finished MP4 without touching the picture —
   `ffmpeg -i final.mp4 -c:v copy -af loudnorm=I=-16:TP=-1.5:LRA=11 -c:a aac -b:a 192k out.mp4`.
   Verify with a 2-pass `loudnorm=...:print_format=json` read of the result.
+- **For a quiet, muddy VO, "clarity" is EQ + compression, not heavy denoise.** Over-aggressive
+  `afftdn` muffles the voice (sounds underwater). A clear broadcast chain:
+  `highpass=f=85, afftdn=nr=18:nf=-40:tn=1, adeclick, equalizer=f=280:t=q:w=1.1:g=-3` (de-mud),
+  `equalizer=f=3200:t=q:w=1.4:g=3.5` (presence), `highshelf=f=9000:g=1.5` (air),
+  `acompressor=threshold=-21dB:ratio=3:attack=12:release=180:makeup=3`, `deesser=i=0.35`,
+  then `loudnorm`. Note: ffmpeg's `equalizer` `t=` is width-type only — use the dedicated
+  `highshelf`/`lowshelf` filters for shelves, not `equalizer t=highshelf` (errors out).
 
 ## Capture & assets (behind the agent proxy)
 
