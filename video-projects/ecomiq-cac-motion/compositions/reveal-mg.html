@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden;
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+
+      /* Navy stage that fully covers the founder during the reveal. */
+      #mg-bg { position: absolute; inset: 0;
+        background:
+          radial-gradient(80% 40% at 50% 30%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%),
+          var(--brand-navy); }
+      /* Faint receding grid = the unifying texture (EcomIQ blue, very subtle). */
+      #mg-grid { position: absolute; inset: -20% -20% 0 -20%; height: 120%;
+        transform: perspective(900px) rotateX(58deg) translateY(6%);
+        transform-origin: 50% 100%;
+        background:
+          repeating-linear-gradient(0deg,  rgba(156,212,255,.10) 0 1px, transparent 1px 92px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.10) 0 1px, transparent 1px 92px);
+        mask-image: linear-gradient(to top, #000 0%, transparent 70%);
+        -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 70%); }
+
+      .wrap { position: absolute; left: 96px; right: 96px; }
+      .label { font-size: 30px; font-weight: 600; letter-spacing: .30em; text-transform: uppercase; color: var(--brand-text-dim); }
+
+      /* REPORTED block (top) */
+      #rep { top: 250px; }
+      #rep .num { font-size: 150px; font-weight: 700; line-height: 1; color: var(--brand-white); letter-spacing: -.02em; margin-top: 8px; }
+      #rep .strike { position: absolute; left: 0; top: 340px; height: 12px; width: 430px; background: var(--brand-flame); border-radius: 6px; transform-origin: left center; }
+      #rep .tag { position:absolute; left: 470px; top: 300px; font-size: 30px; font-weight:700; color: var(--brand-flame);
+        border: 3px solid var(--brand-flame); padding: 8px 20px; border-radius: 10px; transform: rotate(-7deg); }
+
+      /* HIDDEN-COST chips (middle) */
+      #chips { top: 690px; }
+      #chips .head { font-size: 30px; font-weight: 600; letter-spacing:.16em; text-transform:uppercase; color: var(--brand-blue-tint); margin-bottom: 26px; }
+      .chip { display:flex; align-items:center; justify-content:space-between;
+        background: var(--brand-surface); border:1px solid var(--brand-border); border-radius: 16px;
+        padding: 22px 30px; margin-bottom: 16px; }
+      .chip .cname { font-size: 40px; font-weight: 600; color: var(--brand-white); }
+      .chip .cval { font-size: 40px; font-weight: 700; color: var(--brand-flame); }
+      .chip .cval::before { content: "+ "; }
+
+      /* TRUE CAC block (bottom) */
+      #tru { top: 1500px; text-align:center; left:0; right:0; }
+      #tru .label { color: var(--brand-flame); }
+      #tru .num { font-size: 210px; font-weight: 800; line-height: 1; letter-spacing:-.03em;
+        color: var(--brand-flame); text-shadow: 0 20px 80px rgba(255,76,50,.45); }
+      #badge { display:inline-block; margin-top: 18px; font-size: 34px; font-weight:700; color: var(--brand-white);
+        background: var(--brand-flame); padding: 14px 34px; border-radius: 999px; }
+      #badge em { font-family:'Hedvig Letters Serif', serif; font-style:italic; font-weight:400; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="reveal-mg" data-start="0" data-duration="6.2" data-width="1080" data-height="1920">
+      <div id="mg-bg" class="clip" data-start="0" data-duration="6.2" data-track-index="0"></div>
+      <div id="mg-grid" class="clip" data-start="0" data-duration="6.2" data-track-index="1"></div>
+
+      <div id="rep" class="wrap clip" data-start="0" data-duration="6.2" data-track-index="2">
+        <div class="label">Reported CAC</div>
+        <div class="num">$37.50</div>
+        <div class="strike"></div>
+        <div class="tag">WRONG</div>
+      </div>
+
+      <div id="chips" class="wrap clip" data-start="0" data-duration="6.2" data-track-index="3">
+        <div class="head">The costs it ignores</div>
+        <div class="chip"><span class="cname">Free shipping</span><span class="cval">$4,800</span></div>
+        <div class="chip"><span class="cname">Welcome code</span><span class="cval">$4,480</span></div>
+        <div class="chip"><span class="cname">Agency &amp; creative</span><span class="cval">$3,900</span></div>
+        <div class="chip"><span class="cname">Payment processing</span><span class="cval">$1,856</span></div>
+        <div class="chip"><span class="cname">Returns &amp; the rest</span><span class="cval">$1,452</span></div>
+      </div>
+
+      <div id="tru" class="wrap clip" data-start="0" data-duration="6.2" data-track-index="4">
+        <div class="label">Your true CAC</div>
+        <div class="num" id="tru-num">$37.50</div>
+        <div id="badge"><em>1.65&times;</em> what you think</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // REPORTED slides in, then gets struck through + WRONG stamp.
+      tl.fromTo("#rep .label", { opacity:0, y:20 }, { opacity:1, y:0, duration:.4, ease:"power2.out" }, 0.1)
+        .fromTo("#rep .num", { opacity:0, y:30 }, { opacity:1, y:0, duration:.5, ease:"power3.out" }, 0.25)
+        .fromTo("#rep .strike", { scaleX:0 }, { scaleX:1, duration:.35, ease:"power3.in" }, 0.95)
+        .fromTo("#rep .tag", { opacity:0, scale:1.6, rotate:-7 }, { opacity:1, scale:1, duration:.35, ease:"back.out(2)" }, 1.15);
+
+      // Hidden-cost chips fly in from the right and stack (one idea: costs pile on).
+      tl.fromTo("#chips .head", { opacity:0, x:24 }, { opacity:1, x:0, duration:.4, ease:"power2.out" }, 1.4);
+      tl.fromTo("#chips .chip",
+        { opacity:0, x:120 },
+        { opacity:1, x:0, duration:.42, ease:"power3.out", stagger:0.16 }, 1.6);
+
+      // TRUE CAC: label + odometer count-up 37.50 -> 61.69, then the badge pops.
+      const n = { v: 37.50 };
+      const numEl = document.getElementById("tru-num");
+      tl.fromTo("#tru .label", { opacity:0, y:20 }, { opacity:1, y:0, duration:.4, ease:"power2.out" }, 3.0)
+        .fromTo("#tru .num", { opacity:0, scale:.7 }, { opacity:1, scale:1, duration:.5, ease:"back.out(1.5)" }, 3.15)
+        .to(n, { v:61.69, duration:1.5, ease:"power2.out",
+                 onUpdate:()=>{ numEl.textContent = "$"+n.v.toFixed(2); } }, 3.25)
+        .fromTo("#badge", { opacity:0, y:20, scale:.8 }, { opacity:1, y:0, scale:1, duration:.5, ease:"back.out(1.7)" }, 4.85)
+        // final number breathes to hold attention into the hand-off.
+        .to("#tru .num", { scale:1.04, duration:.6, ease:"sine.inOut", yoyo:true, repeat:1 }, 5.2);
+
+      // Slow grid parallax keeps the stage alive (camera never sleeps).
+      tl.fromTo("#mg-grid", { backgroundPositionY:"0px" }, { backgroundPositionY:"92px", duration:6.2, ease:"none" }, 0);
+
+      tl.to({}, { duration: 6.2 }, 0); // Law #11 anchor
+      window.__timelines["reveal-mg"] = tl;
+    </script>
+  </body>
+</html>
