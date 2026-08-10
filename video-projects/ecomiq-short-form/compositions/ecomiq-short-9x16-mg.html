@@ -86,7 +86,7 @@
       .cap-line { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
         width: 900px; text-align: center; opacity: 0;
         font-weight: 800; font-size: 60px; line-height: 1.16; letter-spacing: -0.015em; }
-      .cap-word { display: inline-block; color: var(--brand-white); transform-origin: center bottom;
+      .cap-word { display: inline-block; margin: 0 0.16em; color: var(--brand-white); transform-origin: center bottom;
         text-shadow: 0 3px 5px rgba(0,0,0,0.6), 0 0 3px rgba(3,18,38,0.75), 2px 2px 0 rgba(3,18,38,0.45); }
 
       /* ---- End card ---- */
@@ -218,7 +218,6 @@
           sp.className = "cap-word";
           sp.textContent = WORDS[i].t;
           line.appendChild(sp);
-          line.appendChild(document.createTextNode(" "));
           spans.push(sp);
         }
         capRoot.appendChild(line);
@@ -237,7 +236,7 @@
         // Karaoke: active word pops flame, then settles back to white (stays "read").
         spans.forEach((sp, k) => {
           const w = WORDS[a + k];
-          tl.to(sp, { color: FLAME, scale: 1.12, duration: 0.1, ease: "power2.out" }, w.s);
+          tl.to(sp, { color: FLAME, scale: 1.07, duration: 0.1, ease: "power2.out" }, w.s);
           tl.to(sp, { color: WHITE, scale: 1.0, duration: 0.18, ease: "power2.out" }, Math.max(w.s + 0.12, w.e));
         });
       });
