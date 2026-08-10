@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>ShopLift × EcomIQ — Explainer (4:5)</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders (LESSONS.md) -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-white);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ---------- persistent frame ---------- */
+      #bg { position: absolute; inset: 0; z-index: 0;
+        background:
+          radial-gradient(85% 45% at 50% 16%, rgba(156,212,255,.14) 0%, rgba(6,40,76,0) 60%),
+          radial-gradient(70% 40% at 50% 92%, rgba(45,127,214,.16) 0%, rgba(6,40,76,0) 60%),
+          var(--brand-navy); }
+      /* receding perspective grid floor (subtle, brand-tinted) */
+      #grid { position: absolute; left: -30%; right: -30%; bottom: -6%; height: 62%; z-index: 1;
+        transform: perspective(900px) rotateX(64deg);
+        transform-origin: 50% 100%;
+        background-image:
+          repeating-linear-gradient(0deg,  rgba(156,212,255,.10) 0 1px, transparent 1px 74px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.10) 0 1px, transparent 1px 74px);
+        -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.35) 45%, transparent 82%);
+        mask-image: linear-gradient(to top, #000 0%, rgba(0,0,0,.35) 45%, transparent 82%); }
+      #vignette { position: absolute; inset: 0; z-index: 9; pointer-events: none;
+        background: radial-gradient(120% 78% at 50% 42%, transparent 52%, rgba(2,14,30,.72) 100%); }
+      #grain { position: absolute; inset: 0; z-index: 10; pointer-events: none; opacity: .5;
+        background-image:
+          radial-gradient(rgba(255,255,255,.05) .5px, transparent .6px),
+          radial-gradient(rgba(255,255,255,.035) .5px, transparent .6px),
+          radial-gradient(rgba(0,0,0,.05) .5px, transparent .6px);
+        background-size: 3px 3px, 5px 5px, 7px 7px;
+        background-position: 0 0, 1px 2px, 3px 1px; }
+
+      #logo-wrap { position: absolute; top: 74px; left: 84px; z-index: 12; }
+      #logo-wrap img { display: block; width: 250px; height: auto; }
+
+      /* ---------- beat scaffolding ---------- */
+      .beat { position: absolute; inset: 0; z-index: 5; }
+      .wrap { position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; text-align: center;
+        padding: 300px 84px 200px; gap: 34px; }
+
+      .eyebrow { font-weight: 700; font-size: 25px; letter-spacing: .30em; text-transform: uppercase;
+        color: var(--brand-blue-tint); }
+      .headline { font-weight: 800; font-size: 84px; line-height: .98; letter-spacing: -.03em; }
+      .headline .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400;
+        letter-spacing: -.01em; }
+      .em.blue { color: var(--brand-blue-tint); }
+      .em.flame { color: var(--brand-flame); }
+      .subhead { font-weight: 500; font-size: 32px; line-height: 1.3; color: var(--brand-text-dim); max-width: 780px; }
+
+      /* card surface */
+      .card { background: var(--brand-surface); border: 1px solid var(--brand-border);
+        border-radius: 26px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.06); }
+
+      /* ===== BEAT 1 — test that never ends ===== */
+      #b1-cards { position: relative; display: flex; align-items: center; gap: 40px; }
+      .store { position: relative; width: 336px; padding: 18px; border-radius: 24px; }
+      .store img { display: block; width: 100%; height: 194px; object-fit: cover; border-radius: 14px; }
+      .store .badge { position: absolute; top: 12px; left: 12px; width: 46px; height: 46px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 24px; color: #fff;
+        box-shadow: 0 6px 18px rgba(0,0,0,.4); }
+      .store.a .badge { background: var(--brand-blue-tint); color: var(--brand-navy); }
+      .store.b .badge { background: var(--brand-surface-2); border: 2px solid var(--brand-blue-tint); }
+      .store .bar { height: 16px; border-radius: 8px; background: #16406e; margin: 16px 6px 10px; }
+      .store .bar.short { width: 62%; }
+      .store .chip { margin: 0 6px; height: 34px; border-radius: 9px; display: flex; align-items: center;
+        justify-content: center; font-weight: 700; font-size: 18px; }
+      .store.a .chip { background: var(--brand-blue-tint); color: var(--brand-navy); }
+      .store.b .chip { background: var(--brand-flame); color: #fff; }
+      #b1-vs { position: absolute; left: 50%; top: 50%; z-index: 3;
+        font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-size: 34px; color: #fff;
+        background: var(--brand-navy); border: 1px solid var(--brand-border); width: 66px; height: 66px;
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 10px 26px rgba(0,0,0,.5); }
+      #b1-sig { width: 712px; padding: 26px 30px; border-radius: 22px; }
+      .sig-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+      .sig-top .lbl { font-weight: 600; font-size: 26px; color: var(--brand-text-dim); }
+      .sig-top .pct { font-weight: 800; font-size: 34px; color: var(--brand-flame); font-variant-numeric: tabular-nums; }
+      .sig-track { position: relative; height: 16px; border-radius: 8px; background: #0b2b50; overflow: visible; }
+      #b1-fill { height: 100%; width: 0; border-radius: 8px;
+        background: linear-gradient(90deg, #ff7a4c, var(--brand-flame)); }
+      .sig-target { position: absolute; top: -8px; bottom: -8px; left: 95%; width: 3px; background: var(--brand-blue-tint); }
+      .sig-target span { position: absolute; top: 22px; right: -4px; left: auto; transform: none;
+        font-size: 15px; font-weight: 700; color: var(--brand-blue-tint); white-space: nowrap; }
+      .sig-run { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 46px; }
+      .spinner { width: 30px; height: 30px; border-radius: 50%; border: 4px solid #17416f;
+        border-top-color: var(--brand-blue-tint); }
+      .sig-run .txt { font-weight: 600; font-size: 26px; color: var(--brand-text-dim); }
+      .sig-run .txt b { color: #fff; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+      /* ===== BEAT 2 — not enough traffic ===== */
+      #b2-dots { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+      #b2-dots i { position: absolute; width: 12px; height: 12px; border-radius: 50%;
+        background: var(--brand-blue-tint); opacity: 0; box-shadow: 0 0 12px rgba(156,212,255,.6); }
+      #b2-counter { width: 620px; padding: 40px 44px; border-radius: 26px; }
+      #b2-counter .cap { font-weight: 700; font-size: 24px; letter-spacing: .16em; text-transform: uppercase;
+        color: var(--brand-text-dim); }
+      #b2-num { font-weight: 800; font-size: 132px; line-height: 1; letter-spacing: -.04em; color: #fff;
+        font-variant-numeric: tabular-nums; margin: 10px 0 6px; }
+      #b2-need { font-weight: 600; font-size: 30px; color: var(--brand-text-dim); }
+      #b2-need b { color: var(--brand-blue-tint); font-weight: 800; }
+      #b2-track { height: 14px; border-radius: 7px; background: #0b2b50; margin-top: 28px; overflow: hidden; }
+      #b2-trackfill { height: 100%; width: 0; border-radius: 7px; background: var(--brand-flame); }
+
+      /* ===== BEAT 3 — ShopLift's fix ===== */
+      #b3 .wrap { padding: 168px 84px 120px; gap: 22px; justify-content: center; }
+      #b3-headline { font-size: 74px; }
+      #b2-traffic { display: inline-block; }
+      #b3-card { position: relative; width: 712px; border-radius: 24px; overflow: hidden;
+        background: #05070c; border: 1px solid var(--brand-border);
+        box-shadow: 0 40px 110px -40px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.06); }
+      #b3-chrome { height: 62px; display: flex; align-items: center; gap: 12px; padding: 0 22px;
+        background: var(--brand-navy); border-bottom: 1px solid var(--brand-border); }
+      #b3-chrome .dot { width: 12px; height: 12px; border-radius: 50%; background: #1d4a7a; }
+      #b3-chrome .url { margin-left: 10px; font-weight: 600; font-size: 22px; color: var(--brand-text-dim); }
+      #b3-chrome .live { margin-left: auto; font-weight: 700; font-size: 18px; color: #37d39b;
+        display: flex; align-items: center; gap: 8px; }
+      #b3-chrome .live::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: #37d39b; }
+      #b3-shot { position: relative; }
+      #b3-shot img { display: block; width: 100%; height: auto; }
+      #b3-shimmer { position: absolute; top: 0; bottom: 0; width: 40%; left: 0; z-index: 3; pointer-events: none;
+        background: linear-gradient(105deg, transparent, rgba(156,212,255,.16) 45%, rgba(255,255,255,.28) 50%, rgba(156,212,255,.16) 55%, transparent);
+        transform: skewX(-12deg); }
+      /* stat pills */
+      #b3-stats { display: flex; gap: 22px; }
+      .stat { width: 345px; padding: 22px 26px; border-radius: 20px; text-align: left; position: relative; overflow: hidden; }
+      .stat .k { font-weight: 700; font-size: 22px; letter-spacing: .10em; text-transform: uppercase; color: var(--brand-text-dim); }
+      .stat .v { font-weight: 800; font-size: 66px; line-height: 1; letter-spacing: -.03em; margin-top: 8px; font-variant-numeric: tabular-nums; }
+      .stat.prob .v { color: var(--brand-blue-tint); }
+      .stat.up .v { color: var(--brand-flame); }
+      .stat .sub { font-weight: 600; font-size: 22px; color: var(--brand-text-dim); margin-top: 6px; }
+      .stat .meter { height: 10px; border-radius: 5px; background: #0b2b50; margin-top: 16px; overflow: hidden; }
+      .stat .meter i { display: block; height: 100%; width: 0; border-radius: 5px; }
+      .stat.prob .meter i { background: var(--brand-blue-tint); }
+      #b3-winner { position: absolute; left: 50%; top: 74%;
+        z-index: 6; background: var(--brand-flame); color: #fff; font-weight: 800; font-size: 32px;
+        letter-spacing: .02em; padding: 22px 40px; border-radius: 999px; white-space: nowrap;
+        box-shadow: 0 24px 70px -18px rgba(255,76,50,.75); display: flex; align-items: center; gap: 14px; }
+      #b3-winner .tick { width: 40px; height: 40px; border-radius: 50%; background: #fff; color: var(--brand-flame);
+        display: flex; align-items: center; justify-content: center; font-size: 26px; }
+
+      /* ===== BEAT 4 — end card ===== */
+      #b4 .wrap { justify-content: flex-start; gap: 44px; padding-top: 540px; }
+      #b4-logo { position: relative; width: 560px; }
+      #b4-logo img { display: block; width: 100%; height: auto; }
+      #b4-tag { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-size: 46px; color: var(--brand-blue-tint); }
+
+      /* ===== whip transitions ===== */
+      .whip { position: absolute; left: -10%; right: -10%; height: 240px; top: -280px; z-index: 8; pointer-events: none;
+        filter: blur(16px); opacity: 0;
+        background: linear-gradient(180deg, transparent, rgba(156,212,255,.5), rgba(255,255,255,.9), rgba(255,138,76,.6), transparent); }
+
+      /* =====================================================================
+         4:5 (1080×1350) LAYOUT OVERRIDES — same width as 9:16, shorter frame,
+         so only vertical rhythm + the beat-3 card are compacted. Timeline,
+         audio, and horizontal layouts are unchanged.
+         ===================================================================== */
+      #logo-wrap { top: 56px; }
+      #logo-wrap img { width: 220px; }
+      .wrap { padding: 168px 84px 104px; gap: 22px; }
+      .headline { font-size: 72px; }
+      /* beat 1 */
+      #b1-cards { gap: 34px; }
+      .store { width: 312px; padding: 15px; }
+      .store img { height: 152px; }
+      #b1-sig { width: 662px; padding: 22px 28px; }
+      .sig-run { margin-top: 42px; }
+      /* beat 2 */
+      #b2-counter { width: 580px; padding: 32px 40px; }
+      #b2-num { font-size: 108px; }
+      /* beat 3 — compact the tall hero card so headline + pills clear the frame */
+      #b3 .wrap { padding: 132px 84px 84px; gap: 18px; justify-content: center; }
+      #b3-headline { font-size: 60px; }
+      #b3-card { width: 604px; }
+      #b3-chrome { height: 56px; }
+      #b3-chrome .url { font-size: 20px; }
+      #b3-stats { gap: 18px; }
+      .stat { width: 302px; padding: 18px 22px; }
+      .stat .v { font-size: 54px; }
+      .stat .k { font-size: 20px; }
+      /* beat 4 end card — keep logo + tagline in the upper third */
+      #b4 .wrap { padding-top: 372px; gap: 38px; }
+      #b4-logo { width: 480px; }
+      #b4-tag { font-size: 40px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="shoplift-explainer-4x5" data-start="0" data-duration="20" data-width="1080" data-height="1350">
+
+      <!-- persistent frame -->
+      <div id="bg" class="clip" data-start="0" data-duration="20" data-track-index="0"></div>
+      <div id="grid" class="clip" data-start="0" data-duration="20" data-track-index="1"></div>
+      <div id="vignette" class="clip" data-start="0" data-duration="20" data-track-index="8"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="20" data-track-index="9"></div>
+      <div id="logo-wrap" class="clip" data-start="0" data-duration="20" data-track-index="11">
+        <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <!-- ===================== BEAT 1 — test that never ends ===================== -->
+      <div id="b1" class="beat clip" data-start="0" data-duration="4.85" data-track-index="3">
+        <div class="wrap">
+          <div class="eyebrow" id="b1-eyebrow">A/B Test · Live</div>
+          <div class="headline" id="b1-headline">The test that<br />never ends.</div>
+          <div id="b1-cards">
+            <div class="store a" id="b1-cardA">
+              <div class="badge">A</div>
+              <img src="assets/product/prod-a.png" alt="Variant A" />
+              <div class="bar"></div><div class="bar short"></div>
+              <div class="chip">Buy now</div>
+            </div>
+            <div id="b1-vs">vs</div>
+            <div class="store b" id="b1-cardB">
+              <div class="badge">B</div>
+              <img src="assets/product/prod-b.png" alt="Variant B" />
+              <div class="bar"></div><div class="bar short"></div>
+              <div class="chip">Add to cart</div>
+            </div>
+          </div>
+          <div class="card" id="b1-sig">
+            <div class="sig-top">
+              <span class="lbl">Statistical significance</span>
+              <span class="pct" id="b1-pct">0%</span>
+            </div>
+            <div class="sig-track">
+              <div id="b1-fill"></div>
+              <div class="sig-target"><span>95% needed</span></div>
+            </div>
+            <div class="sig-run">
+              <div class="spinner" id="b1-spinner"></div>
+              <div class="txt">Still running — day <b id="b1-day">12</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== BEAT 2 — not enough traffic ===================== -->
+      <div id="b2" class="beat clip" data-start="4.7" data-duration="3.8" data-track-index="4">
+        <div id="b2-dots"></div>
+        <div class="wrap">
+          <div class="eyebrow" id="b2-eyebrow">The real problem</div>
+          <div class="headline" id="b2-headline">It's simply<br /><span id="b2-traffic">traffic.</span></div>
+          <div class="card" id="b2-counter">
+            <div class="cap">Visitors collected</div>
+            <div id="b2-num">0</div>
+            <div id="b2-need">of <b>~4,000</b> needed to call a winner</div>
+            <div id="b2-track"><div id="b2-trackfill"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== BEAT 3 — ShopLift's fix ===================== -->
+      <div id="b3" class="beat clip" data-start="8.35" data-duration="8.85" data-track-index="5">
+        <div class="wrap">
+          <div class="eyebrow" id="b3-eyebrow">ShopLift · Latest update</div>
+          <div class="headline" id="b3-headline">Know the<br />winner early.</div>
+          <div id="b3-card">
+            <div id="b3-chrome">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="url">shoplift.ai / results</span>
+              <span class="live">Live</span>
+            </div>
+            <div id="b3-shot">
+              <img src="assets/product/results-chart.png" alt="ShopLift results — Lift +20.4%" />
+              <div id="b3-shimmer"></div>
+            </div>
+            <div id="b3-winner"><span class="tick">&#10003;</span>Variant B wins</div>
+          </div>
+          <div id="b3-stats">
+            <div class="stat prob card" id="b3-prob">
+              <div class="k">Probability to win</div>
+              <div class="v" id="b3-prob-v">0%</div>
+              <div class="sub">Variant B</div>
+              <div class="meter"><i id="b3-prob-bar"></i></div>
+            </div>
+            <div class="stat up card" id="b3-up">
+              <div class="k">Revenue uplift</div>
+              <div class="v" id="b3-up-v">+0.0%</div>
+              <div class="sub">per visitor</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== BEAT 4 — end card ===================== -->
+      <div id="b4" class="beat clip" data-start="17.0" data-duration="3.0" data-track-index="6">
+        <div class="wrap">
+          <div id="b4-logo">
+            <img src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+          </div>
+          <div id="b4-tag">Turn tests into decisions.</div>
+        </div>
+      </div>
+
+      <!-- ===================== whip transitions ===================== -->
+      <div class="whip clip" id="whip1" data-start="4.45" data-duration="0.5" data-track-index="7"></div>
+      <div class="whip clip" id="whip2" data-start="8.1"  data-duration="0.5" data-track-index="7"></div>
+      <div class="whip clip" id="whip3" data-start="16.75" data-duration="0.5" data-track-index="7"></div>
+
+      <!-- ===================== voiceover ===================== -->
+      <audio id="vo" src="assets/vo/shoplift-vo-cut.m4a" data-start="0" data-duration="17.77" data-track-index="20" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // deterministic pseudo-random for dot placement (mulberry32)
+      function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+      /* ---------- persistent ambient ---------- */
+      tl.fromTo("#grid", { backgroundPositionY: "0px" }, { backgroundPositionY: "420px", duration: 20, ease: "none" }, 0);
+      tl.fromTo("#vignette", { opacity: 0.82 }, { opacity: 1, duration: 2.6, ease: "sine.inOut", yoyo: true, repeat: 6 }, 0);
+      tl.from("#logo-wrap", { opacity: 0, y: -16, duration: 0.7, ease: "power3.out" }, 0.15);
+      // fade the corner mark on the end card so only the centered lockup reads
+      tl.to("#logo-wrap", { opacity: 0, duration: 0.4, ease: "power2.in" }, 16.85);
+
+      /* =================== BEAT 1 (0.0 – 4.85) =================== */
+      tl.from("#b1-eyebrow", { opacity: 0, y: 26, duration: 0.5, ease: "power2.out" }, 0.20);
+      tl.from("#b1-headline", { opacity: 0, y: 44, filter: "blur(12px)", duration: 0.6, ease: "power3.out" }, 0.34);
+      tl.fromTo("#b1-cardA", { opacity: 0, x: -150, rotate: -4 }, { opacity: 1, x: 0, rotate: 0, duration: 0.6, ease: "back.out(1.3)" }, 0.72);
+      tl.fromTo("#b1-cardB", { opacity: 0, x: 150, rotate: 4 }, { opacity: 1, x: 0, rotate: 0, duration: 0.6, ease: "back.out(1.3)" }, 0.94);
+      tl.fromTo("#b1-vs", { opacity: 0, xPercent: -50, yPercent: -50, scale: 0 },
+        { opacity: 1, xPercent: -50, yPercent: -50, scale: 1, duration: 0.5, ease: "back.out(2)" }, 1.18);
+      tl.from("#b1-sig", { opacity: 0, y: 30, duration: 0.55, ease: "power2.out" }, 1.55);
+      // significance climbs then STALLS at 47% (the frustration)
+      const sig = { v: 0 };
+      tl.to(sig, { v: 47, duration: 1.0, ease: "power2.out",
+        onUpdate: () => { document.getElementById("b1-pct").textContent = Math.round(sig.v) + "%"; } }, 1.75);
+      tl.to("#b1-fill", { width: "47%", duration: 1.0, ease: "power2.out" }, 1.75);
+      // stuck jitter — never reaches 95%
+      tl.to("#b1-fill", { width: "45.5%", duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 3 }, 2.85);
+      tl.to("#b1-spinner", { rotation: 360, duration: 0.85, ease: "none", repeat: 2 }, 2.55);
+      const day = { v: 12 };
+      tl.to(day, { v: 34, duration: 1.7, ease: "none",
+        onUpdate: () => { document.getElementById("b1-day").textContent = Math.round(day.v); } }, 2.55);
+      // exit (motion-blur up — masked by whip1)
+      tl.to("#b1 .wrap", { y: -130, filter: "blur(18px)", opacity: 0, duration: 0.32, ease: "power2.in" }, 4.52);
+      tl.set("#b1 .wrap", { opacity: 0 }, 4.84); // hard-kill stale state on non-linear seek
+
+      /* =================== BEAT 2 (4.7 – 8.5) =================== */
+      // build sparse falling dots (thin visitor stream)
+      (function () {
+        const host = document.getElementById("b2-dots");
+        const rnd = mulberry32(20260810);
+        for (let i = 0; i < 13; i++) {
+          const d = document.createElement("i");
+          d.style.left = (60 + rnd() * 960) + "px";
+          d.style.top = "0px";
+          d.dataset.delay = (rnd() * 2.6).toFixed(2);
+          d.dataset.dur = (2.0 + rnd() * 1.2).toFixed(2);
+          host.appendChild(d);
+        }
+      })();
+      tl.from("#b2-eyebrow", { opacity: 0, y: 26, duration: 0.5, ease: "power2.out" }, 4.80);
+      tl.from("#b2-headline", { opacity: 0, y: 44, filter: "blur(12px)", duration: 0.6, ease: "power3.out" }, 4.95);
+      // dots trickle down, sparse and slow
+      Array.from(document.querySelectorAll("#b2-dots i")).forEach((d, i) => {
+        const del = parseFloat(d.dataset.delay), dur = parseFloat(d.dataset.dur);
+        tl.fromTo(d, { y: -40, opacity: 0 },
+          { y: 1360, opacity: 0.9, duration: dur, ease: "none",
+            onComplete: () => gsap.set(d, { opacity: 0 }) }, 5.05 + del);
+      });
+      tl.from("#b2-counter", { opacity: 0, y: 40, duration: 0.55, ease: "power3.out" }, 5.35);
+      // counter climbs slowly and stalls far short of 4,000
+      const vis = { v: 0 };
+      tl.to(vis, { v: 182, duration: 2.2, ease: "power2.out",
+        onUpdate: () => { document.getElementById("b2-num").textContent = Math.round(vis.v).toLocaleString(); } }, 5.55);
+      tl.to("#b2-trackfill", { width: "5%", duration: 2.2, ease: "power2.out" }, 5.55);
+      tl.from("#b2-need", { opacity: 0, y: 16, duration: 0.5, ease: "power2.out" }, 6.30);
+      // "traffic" punch on the VO word (~7.50)
+      tl.fromTo("#b2-traffic", { scale: 1 }, { scale: 1.12, duration: 0.22, ease: "back.out(2.4)", yoyo: true, repeat: 1 }, 7.48);
+      tl.to("#b2-traffic", { textShadow: "0 0 30px rgba(255,255,255,.45)", duration: 0.3 }, 7.48);
+      // exit
+      tl.to("#b2 .wrap", { y: -120, filter: "blur(18px)", opacity: 0, duration: 0.32, ease: "power2.in" }, 8.18);
+      tl.to("#b2-dots", { opacity: 0, duration: 0.25 }, 8.18);
+      tl.set(["#b2 .wrap", "#b2-dots"], { opacity: 0 }, 8.49); // hard-kill on non-linear seek
+
+      /* =================== BEAT 3 (8.35 – 17.2) =================== */
+      tl.from("#b3-eyebrow", { opacity: 0, y: 26, duration: 0.5, ease: "power2.out" }, 8.55);
+      tl.from("#b3-headline", { opacity: 0, y: 44, filter: "blur(12px)", duration: 0.6, ease: "power3.out" }, 8.72);
+      // browser card slides up (product reveal on "ShopLift's latest update")
+      tl.fromTo("#b3-card", { opacity: 0, y: 150, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.85, ease: "power3.out" }, 9.35);
+      // camera never sleeps — a slow continuous push on the card (starts after the slide-up settles)
+      tl.fromTo("#b3-card", { scale: 1 }, { scale: 1.035, duration: 6.5, ease: "none" }, 10.2);
+      // shimmer sweeps across the real screenshot (transform-based for smooth capture)
+      tl.fromTo("#b3-shimmer", { x: -460 }, { x: 980, duration: 1.0, ease: "power1.inOut" }, 10.9);
+      tl.fromTo("#b3-shimmer", { x: -460 }, { x: 980, duration: 1.0, ease: "power1.inOut" }, 14.2);
+      // probability-to-win builds on "how likely each version is to win" (~13.2–14.9)
+      tl.fromTo("#b3-prob", { opacity: 0, x: 150 }, { opacity: 1, x: 0, duration: 0.6, ease: "back.out(1.4)" }, 12.9);
+      const prob = { v: 0 };
+      tl.to(prob, { v: 92, duration: 1.5, ease: "power2.out",
+        onUpdate: () => { document.getElementById("b3-prob-v").textContent = Math.round(prob.v) + "%"; } }, 13.0);
+      tl.to("#b3-prob-bar", { width: "92%", duration: 1.5, ease: "power2.out" }, 13.0);
+      tl.fromTo("#b3-prob", { boxShadow: "0 0 0 rgba(156,212,255,0)" }, { boxShadow: "0 0 40px rgba(156,212,255,.35)", duration: 0.3, yoyo: true, repeat: 1 }, 14.8);
+      // revenue uplift builds on "what kind of difference it could make" (~15.3–16.4)
+      tl.fromTo("#b3-up", { opacity: 0, x: -150 }, { opacity: 1, x: 0, duration: 0.6, ease: "back.out(1.4)" }, 15.25);
+      const up = { v: 0 };
+      tl.to(up, { v: 20.4, duration: 1.0, ease: "power2.out",
+        onUpdate: () => { document.getElementById("b3-up-v").textContent = "+" + up.v.toFixed(1) + "%"; } }, 15.4);
+      tl.fromTo("#b3-up", { boxShadow: "0 0 0 rgba(255,76,50,0)" }, { boxShadow: "0 0 46px rgba(255,76,50,.5)", duration: 0.35, yoyo: true, repeat: 1 }, 16.05);
+      // winner chosen — decide & move on (dashboard stays bright, flame stamp lands)
+      tl.fromTo("#b3-winner", { opacity: 0, xPercent: -50, yPercent: -50, scale: 0 },
+        { opacity: 1, xPercent: -50, yPercent: -50, scale: 1, duration: 0.35, ease: "back.out(1.9)" }, 16.55);
+      // exit to end card
+      tl.to("#b3 .wrap", { y: -110, filter: "blur(16px)", opacity: 0, duration: 0.3, ease: "power2.in" }, 16.9);
+      tl.to("#b3-winner", { xPercent: -50, yPercent: -50, opacity: 0, scale: 1.2, duration: 0.28, ease: "power2.in" }, 16.95);
+      tl.set(["#b3 .wrap", "#b3-winner"], { opacity: 0 }, 17.19); // hard-kill on non-linear seek
+
+      /* =================== BEAT 4 — end card (17.0 – 20.0) =================== */
+      tl.fromTo("#b4 .wrap", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 17.02);
+      tl.fromTo("#b4-logo", { opacity: 0, y: 26, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" }, 17.12);
+      tl.from("#b4-tag", { opacity: 0, y: 22, duration: 0.6, ease: "power2.out" }, 17.62);
+
+      /* =================== whip transitions =================== */
+      function whip(sel, at) {
+        tl.fromTo(sel, { y: -320, opacity: 0 }, { y: 720, opacity: 1, duration: 0.24, ease: "power2.in" }, at);
+        tl.to(sel, { opacity: 0, duration: 0.16, ease: "power2.out" }, at + 0.24);
+      }
+      whip("#whip1", 4.50);
+      whip("#whip2", 8.18);
+      whip("#whip3", 16.82);
+
+      // pad timeline to full slot (Law #11)
+      tl.to({}, { duration: 20 }, 0);
+      window.__timelines["shoplift-explainer-4x5"] = tl;
+    </script>
+  </body>
+</html>
