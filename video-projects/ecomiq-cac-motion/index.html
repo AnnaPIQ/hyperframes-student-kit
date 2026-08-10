@@ -38,13 +38,16 @@
         background: radial-gradient(120% 120% at 8% 12%, rgba(3,20,40,.55) 0%, rgba(3,20,40,.30) 34%, rgba(3,20,40,0) 66%); }
       #logo { position: absolute; top: 92px; left: 64px; width: 300px; height: auto; filter: drop-shadow(0 6px 18px rgba(0,0,0,.45)); }
 
-      /* Callback tag on the close beat. */
-      #tag { position: absolute; left: 50%; bottom: 210px; transform: translateX(-50%);
-        display: inline-flex; align-items: center; gap: 14px; white-space: nowrap;
-        font-size: 34px; font-weight: 700; letter-spacing: .04em; color: var(--brand-white);
-        background: rgba(6,40,76,.62); border: 1px solid var(--brand-border); backdrop-filter: blur(8px);
-        padding: 16px 30px; border-radius: 999px; }
-      #tag b { color: var(--brand-flame); }
+      /* "Free Profitability Bootcamp" graphic on the bootcamp VO line (~17s).
+         Sits mid-lower so the very bottom stays clear for captions later. */
+      #bootcamp { position: absolute; left: 90px; right: 90px; bottom: 470px; overflow: hidden;
+        background: rgba(6,40,76,.72); border: 1px solid var(--brand-border); border-radius: 26px;
+        backdrop-filter: blur(10px); padding: 34px 42px 38px; }
+      #bootcamp::before { content:""; position:absolute; left:0; top:0; bottom:0; width:10px; background: var(--brand-flame); }
+      #bootcamp .eb { font-size: 26px; font-weight:600; letter-spacing:.26em; text-transform:uppercase; color: var(--brand-blue-tint); margin-bottom: 14px; }
+      #bootcamp .ttl { font-size: 62px; font-weight: 800; line-height: 1.03; letter-spacing:-.02em; color: var(--brand-white); }
+      #bootcamp .ttl b { color: var(--brand-flame); }
+      #bootcamp .ul { margin-top: 20px; height: 8px; width: 160px; background: var(--brand-flame); border-radius: 4px; transform-origin: left center; }
 
       /* ---- END CARD ---- */
       #endcard { position: absolute; inset: 0; overflow: hidden;
@@ -59,10 +62,8 @@
         -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 72%); }
       #ec-bloom { position: absolute; left: -10%; bottom: -18%; width: 120%; height: 55%; background: var(--brand-gradient-2); filter: blur(90px); opacity: .34; }
       #ec-logo { width: 460px; height: auto; margin-bottom: 90px; position: relative; }
-      #ec-shimmer { position: absolute; top: 0; left: 0; width: 40%; height: 100%; pointer-events: none;
-        background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%); }
       #ec-eyebrow { position: relative; font-size: 30px; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 34px; }
-      #ec-headline { position: relative; font-size: 108px; font-weight: 800; line-height: .98; letter-spacing: -.03em; color: var(--brand-white); }
+      #ec-headline { position: relative; font-size: 84px; font-weight: 800; line-height: 1.0; letter-spacing: -.03em; color: var(--brand-white); }
       #ec-cta { position: relative; margin-top: 74px; display: inline-flex; align-items: center; gap: 20px;
         font-size: 44px; font-weight: 700; color: var(--brand-white); background: var(--brand-flame);
         padding: 34px 68px; border-radius: 999px; box-shadow: 0 24px 72px -16px rgba(255,76,50,.62); }
@@ -88,8 +89,12 @@
       <div id="vignette" class="clip" data-start="0" data-duration="20" data-track-index="3"></div>
       <div id="grain" class="clip" data-start="0" data-duration="20" data-track-index="4"></div>
 
-      <!-- 5 · Callback tag on the close -->
-      <div id="tag" class="clip" data-start="13.6" data-duration="5.8" data-track-index="5">Your <b>true CAC</b>&nbsp;·&nbsp;$61.69</div>
+      <!-- 5 · "Free Profitability Bootcamp" graphic on the bootcamp VO line -->
+      <div id="bootcamp" class="clip" data-start="16.6" data-duration="3.2" data-track-index="5">
+        <div class="eb">More insights inside</div>
+        <div class="ttl">The <b>Free</b> Profitability Bootcamp</div>
+        <div class="ul"></div>
+      </div>
 
       <!-- 6 & 7 · Persistent logo -->
       <div id="logo-wrap">
@@ -101,10 +106,7 @@
       <div id="endcard" class="clip" data-start="20" data-duration="4.5" data-track-index="8">
         <div id="ec-grid"></div>
         <div id="ec-bloom"></div>
-        <div style="position:relative;">
-          <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-          <div id="ec-shimmer"></div>
-        </div>
+        <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div id="ec-eyebrow">More insights like this?</div>
         <div id="ec-headline">The Free<br />Profitability<br />Bootcamp.</div>
         <div id="ec-cta">Sign up here <span class="arrow">&rarr;</span></div>
@@ -128,15 +130,15 @@
         .to("#logo-wrap", { opacity:0, duration:.4, ease:"power1.in" }, 19.6)
         .set("#logo-wrap", { opacity:0 }, 20.0);
 
-      // Callback tag on the close beat.
-      tl.fromTo("#tag", { opacity:0, y:20 }, { opacity:1, y:0, duration:.5, ease:"power3.out" }, 13.7)
-        .to("#tag", { opacity:0, duration:.4, ease:"power1.in" }, 19.0)
-        .set("#tag", { opacity:0 }, 19.4);
+      // "Free Profitability Bootcamp" graphic slides up on the bootcamp VO line, then clears.
+      tl.fromTo("#bootcamp", { opacity:0, y:40 }, { opacity:1, y:0, duration:.55, ease:"power3.out" }, 16.7)
+        .fromTo("#bootcamp .ul", { scaleX:0 }, { scaleX:1, duration:.5, ease:"power3.out" }, 17.0)
+        .to("#bootcamp", { opacity:0, y:-20, duration:.4, ease:"power1.in" }, 19.4)
+        .set("#bootcamp", { opacity:0 }, 19.8);
 
       // End card: dissolve in, stagger content, shimmer sweep, CTA breathes.
       tl.fromTo("#endcard", { opacity:0 }, { opacity:1, duration:.5, ease:"power2.out" }, 20.0)
         .fromTo("#ec-logo", { opacity:0, y:-18 }, { opacity:1, y:0, duration:.6, ease:"power3.out" }, 20.4)
-        .fromTo("#ec-shimmer", { xPercent:-160 }, { xPercent:420, duration:.9, ease:"power2.inOut" }, 21.0)
         .fromTo("#ec-eyebrow", { opacity:0, y:16 }, { opacity:1, y:0, duration:.5, ease:"power2.out" }, 20.6)
         .fromTo("#ec-headline", { opacity:0, y:30 }, { opacity:1, y:0, duration:.7, ease:"power3.out" }, 20.8)
         .fromTo("#ec-cta", { opacity:0, scale:.85 }, { opacity:1, scale:1, duration:.6, ease:"back.out(1.7)" }, 21.2)

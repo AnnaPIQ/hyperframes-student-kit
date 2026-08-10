@@ -14,7 +14,7 @@
         font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
 
       #mg-bg { position: absolute; inset: 0;
-        background: radial-gradient(80% 42% at 50% 28%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%), var(--brand-navy); }
+        background: radial-gradient(80% 42% at 50% 24%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%), var(--brand-navy); }
       #mg-grid { position: absolute; inset: -20% -20% 0 -20%; height: 120%;
         transform: perspective(900px) rotateX(58deg) translateY(6%); transform-origin: 50% 100%;
         background:
@@ -23,30 +23,31 @@
         mask-image: linear-gradient(to top, #000 0%, transparent 70%);
         -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 70%); }
 
+      /* Content in the top ~78% — lower band stays clear for captions. */
       .wrap { position: absolute; left: 84px; right: 84px; }
       .label { font-size: 26px; font-weight: 600; letter-spacing: .28em; text-transform: uppercase; color: var(--brand-text-dim); }
 
-      #rep { top: 120px; }
-      #rep .num { font-size: 112px; font-weight: 700; line-height: 1; color: var(--brand-white); letter-spacing: -.02em; margin-top: 6px; }
-      #rep .strike { position: absolute; left: 0; top: 232px; height: 10px; width: 320px; background: var(--brand-flame); border-radius: 5px; transform-origin: left center; }
-      #rep .tag { position:absolute; left: 356px; top: 198px; font-size: 26px; font-weight:700; color: var(--brand-flame);
+      #rep { top: 80px; }
+      #rep .num { font-size: 108px; font-weight: 700; line-height: 1; color: var(--brand-white); letter-spacing: -.02em; margin-top: 6px; }
+      #rep .strike { position: absolute; left: 0; top: 216px; height: 10px; width: 320px; background: var(--brand-flame); border-radius: 5px; transform-origin: left center; }
+      #rep .tag { position:absolute; left: 356px; top: 182px; font-size: 26px; font-weight:700; color: var(--brand-flame);
         border: 3px solid var(--brand-flame); padding: 6px 16px; border-radius: 9px; transform: rotate(-7deg); }
 
-      #chips { top: 448px; }
-      #chips .head { font-size: 26px; font-weight: 600; letter-spacing:.16em; text-transform:uppercase; color: var(--brand-blue-tint); margin-bottom: 18px; }
+      #chips { top: 384px; }
+      #chips .head { font-size: 26px; font-weight: 600; letter-spacing:.16em; text-transform:uppercase; color: var(--brand-blue-tint); margin-bottom: 16px; }
       .chip { display:flex; align-items:center; justify-content:space-between;
-        background: var(--brand-surface); border:1px solid var(--brand-border); border-radius: 14px;
-        padding: 15px 26px; margin-bottom: 12px; }
-      .chip .cname { font-size: 33px; font-weight: 600; color: var(--brand-white); }
-      .chip .cval { font-size: 33px; font-weight: 700; color: var(--brand-flame); }
+        background: var(--brand-surface); border:1px solid var(--brand-border); border-radius: 13px;
+        padding: 12px 24px; margin-bottom: 10px; }
+      .chip .cname { font-size: 31px; font-weight: 600; color: var(--brand-white); }
+      .chip .cval { font-size: 31px; font-weight: 700; color: var(--brand-flame); }
       .chip .cval::before { content: "+ "; }
 
-      #tru { top: 1000px; text-align:center; left:0; right:0; }
+      #tru { top: 850px; text-align:center; left:0; right:0; }
       #tru .label { color: var(--brand-flame); }
-      #tru .num { font-size: 168px; font-weight: 800; line-height: 1; letter-spacing:-.03em;
-        color: var(--brand-flame); text-shadow: 0 16px 64px rgba(255,76,50,.45); }
-      #badge { display:inline-block; margin-top: 14px; font-size: 30px; font-weight:700; color: var(--brand-white);
-        background: var(--brand-flame); padding: 12px 30px; border-radius: 999px; }
+      #tru .num { font-size: 132px; font-weight: 800; line-height: 1; letter-spacing:-.03em;
+        color: var(--brand-flame); text-shadow: 0 14px 56px rgba(255,76,50,.45); }
+      #badge { display:inline-block; margin-top: 12px; font-size: 28px; font-weight:700; color: var(--brand-white);
+        background: var(--brand-flame); padding: 11px 28px; border-radius: 999px; }
       #badge em { font-family:'Hedvig Letters Serif', serif; font-style:italic; font-weight:400; }
     </style>
   </head>
@@ -62,13 +63,14 @@
         <div class="tag">WRONG</div>
       </div>
 
+      <!-- Real per-month breakdown values from page.ecomiq.com/cac-calculator-page (default example) -->
       <div id="chips" class="wrap clip" data-start="0" data-duration="6.2" data-track-index="3">
         <div class="head">The costs it ignores</div>
         <div class="chip"><span class="cname">Free shipping</span><span class="cval">$4,800</span></div>
-        <div class="chip"><span class="cname">Welcome code</span><span class="cval">$4,480</span></div>
-        <div class="chip"><span class="cname">Agency &amp; creative</span><span class="cval">$3,900</span></div>
+        <div class="chip"><span class="cname">Welcome discount</span><span class="cval">$4,480</span></div>
+        <div class="chip"><span class="cname">Agency</span><span class="cval">$2,400</span></div>
         <div class="chip"><span class="cname">Payment processing</span><span class="cval">$1,856</span></div>
-        <div class="chip"><span class="cname">Returns &amp; the rest</span><span class="cval">$1,452</span></div>
+        <div class="chip"><span class="cname">Creative production</span><span class="cval">$1,500</span></div>
       </div>
 
       <div id="tru" class="wrap clip" data-start="0" data-duration="6.2" data-track-index="4">
