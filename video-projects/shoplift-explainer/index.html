@@ -125,6 +125,7 @@
       /* ===== BEAT 3 — ShopLift's fix ===== */
       #b3 .wrap { padding: 168px 84px 120px; gap: 22px; justify-content: center; }
       #b3-headline { font-size: 74px; }
+      #b2-traffic { display: inline-block; }
       #b3-card { position: relative; width: 712px; border-radius: 24px; overflow: hidden;
         background: #05070c; border: 1px solid var(--brand-border);
         box-shadow: 0 40px 110px -40px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.06); }
@@ -159,17 +160,10 @@
         display: flex; align-items: center; justify-content: center; font-size: 26px; }
 
       /* ===== BEAT 4 — end card ===== */
-      #b4 .wrap { gap: 44px; padding-top: 260px; }
+      #b4 .wrap { gap: 40px; padding-top: 260px; }
       #b4-logo { position: relative; width: 560px; }
       #b4-logo img { display: block; width: 100%; height: auto; }
-      #b4-logo .sweep { position: absolute; top: -20%; bottom: -20%; width: 34%; left: 0;
-        background: linear-gradient(105deg, transparent, rgba(255,255,255,.45) 50%, transparent);
-        transform: skewX(-12deg); pointer-events: none; }
       #b4-tag { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-size: 46px; color: var(--brand-blue-tint); }
-      #b4-cta { display: inline-flex; align-items: center; gap: 16px; font-weight: 800; font-size: 38px; color: #fff;
-        background: var(--brand-flame); padding: 30px 62px; border-radius: 999px;
-        box-shadow: 0 26px 80px -18px rgba(255,76,50,.7); }
-      #b4-cta .arw { font-size: 40px; }
 
       /* ===== whip transitions ===== */
       .whip { position: absolute; left: -10%; right: -10%; height: 240px; top: -280px; z-index: 8; pointer-events: none;
@@ -193,7 +187,7 @@
       <div id="b1" class="beat clip" data-start="0" data-duration="4.85" data-track-index="3">
         <div class="wrap">
           <div class="eyebrow" id="b1-eyebrow">A/B Test · Live</div>
-          <div class="headline" id="b1-headline">The test that<br />never <span class="em flame">ends.</span></div>
+          <div class="headline" id="b1-headline">The test that<br />never ends.</div>
           <div id="b1-cards">
             <div class="store a" id="b1-cardA">
               <div class="badge">A</div>
@@ -231,7 +225,7 @@
         <div id="b2-dots"></div>
         <div class="wrap">
           <div class="eyebrow" id="b2-eyebrow">The real problem</div>
-          <div class="headline" id="b2-headline">It's simply<br /><span class="em flame" id="b2-traffic">traffic.</span></div>
+          <div class="headline" id="b2-headline">It's simply<br /><span id="b2-traffic">traffic.</span></div>
           <div class="card" id="b2-counter">
             <div class="cap">Visitors collected</div>
             <div id="b2-num">0</div>
@@ -245,7 +239,7 @@
       <div id="b3" class="beat clip" data-start="8.35" data-duration="8.85" data-track-index="5">
         <div class="wrap">
           <div class="eyebrow" id="b3-eyebrow">ShopLift · Latest update</div>
-          <div class="headline" id="b3-headline">Know the<br /><span class="em blue">winner</span> — early.</div>
+          <div class="headline" id="b3-headline">Know the<br />winner early.</div>
           <div id="b3-card">
             <div id="b3-chrome">
               <span class="dot"></span><span class="dot"></span><span class="dot"></span>
@@ -279,10 +273,8 @@
         <div class="wrap">
           <div id="b4-logo">
             <img src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
-            <div class="sweep" id="b4-sweep"></div>
           </div>
           <div id="b4-tag">Turn tests into decisions.</div>
-          <div id="b4-cta">Find out more <span class="arw">&rarr;</span></div>
         </div>
       </div>
 
@@ -364,7 +356,7 @@
       tl.from("#b2-need", { opacity: 0, y: 16, duration: 0.5, ease: "power2.out" }, 6.30);
       // "traffic" punch on the VO word (~7.50)
       tl.fromTo("#b2-traffic", { scale: 1 }, { scale: 1.12, duration: 0.22, ease: "back.out(2.4)", yoyo: true, repeat: 1 }, 7.48);
-      tl.to("#b2-traffic", { textShadow: "0 0 34px rgba(255,76,50,.75)", duration: 0.3 }, 7.48);
+      tl.to("#b2-traffic", { textShadow: "0 0 30px rgba(255,255,255,.45)", duration: 0.3 }, 7.48);
       // exit
       tl.to("#b2 .wrap", { y: -120, filter: "blur(18px)", opacity: 0, duration: 0.32, ease: "power2.in" }, 8.18);
       tl.to("#b2-dots", { opacity: 0, duration: 0.25 }, 8.18);
@@ -373,7 +365,6 @@
       /* =================== BEAT 3 (8.35 – 17.2) =================== */
       tl.from("#b3-eyebrow", { opacity: 0, y: 26, duration: 0.5, ease: "power2.out" }, 8.55);
       tl.from("#b3-headline", { opacity: 0, y: 44, filter: "blur(12px)", duration: 0.6, ease: "power3.out" }, 8.72);
-      tl.from("#b3-headline .em", { opacity: 0, x: -26, duration: 0.5, ease: "power3.out" }, 8.95);
       // browser card slides up (product reveal on "ShopLift's latest update")
       tl.fromTo("#b3-card", { opacity: 0, y: 150, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.85, ease: "power3.out" }, 9.35);
       // camera never sleeps — a slow continuous push on the card (starts after the slide-up settles)
@@ -406,11 +397,6 @@
       tl.fromTo("#b4 .wrap", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 17.02);
       tl.fromTo("#b4-logo", { opacity: 0, y: 26, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" }, 17.12);
       tl.from("#b4-tag", { opacity: 0, y: 22, duration: 0.6, ease: "power2.out" }, 17.62);
-      tl.fromTo("#b4-cta", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.8)" }, 18.0);
-      tl.to("#b4-cta", { scale: 1.04, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 2 }, 18.7);
-      // logo shimmer sweeps during the hold (transform-based)
-      tl.fromTo("#b4-sweep", { x: -300 }, { x: 760, duration: 1.1, ease: "power1.inOut" }, 18.0);
-      tl.fromTo("#b4-sweep", { x: -300 }, { x: 760, duration: 1.1, ease: "power1.inOut" }, 19.3);
 
       /* =================== whip transitions =================== */
       function whip(sel, at) {
