@@ -9,7 +9,6 @@
       <div class="s7-lock" id="s7-lock">
         <img class="s7-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div class="s7-tag" id="s7-tag">Smarter tests. Faster decisions.</div>
-        <div class="s7-cta" id="s7-cta">Find out more <span class="s7-arrow" id="s7-arrow">→</span></div>
       </div>
 
       <div class="s7-vignette"></div>
@@ -53,8 +52,6 @@
         tl.fromTo(q('.s7-bloom'), { opacity: 0 }, { opacity: 1, duration: .7, ease: 'power2.out' }, 0.05);
         tl.fromTo(q('.s7-logo'), { opacity: 0, y: 26, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .55, ease: 'power3.out' }, 0.05);
         tl.fromTo(q('.s7-tag'), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .45, ease: 'power2.out' }, 0.4);
-        tl.fromTo(q('.s7-cta'), { opacity: 0, scale: .82 }, { opacity: 1, scale: 1, duration: .5, ease: 'back.out(1.8)' }, 0.6);
-        tl.to(q('.s7-arrow'), { x: 12, duration: .5, yoyo: true, repeat: 2, ease: 'sine.inOut' }, 1.0);
         tl.to(q('.s7-vignette'), { opacity: .78, duration: 1.4, ease: 'sine.inOut' }, 0.5);
 
         tl.to({}, { duration: SLOT }, 0);
