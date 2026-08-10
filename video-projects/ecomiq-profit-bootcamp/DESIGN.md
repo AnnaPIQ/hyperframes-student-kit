@@ -47,12 +47,22 @@ is UGC, so we adapt texture while keeping the craft.
   back to the hook), flame CTA pill "Join free — link below →" with a breathing hold.
 - Total 35.6s.
 
+## Motion graphics — restrained, concentrated at the end card
+Per brief ("don't over use, but do use at end for Free Profitability Bootcamp") the talking-head
+body stays clean (footage-forward, no captions). The motion lives in the **animated end-card
+reveal**: brand bloom drifts, the "FREE PROFITABILITY BOOTCAMP" eyebrow **wipes in left→right**
+(clip-path) while the flame rule **draws** in sync, the headline reveals **line-by-line from behind
+a mask** (slight overshoot), and the "Join Free" pill **pops + a light shimmer sweeps across** with
+one subtle ring pulse, then a gentle breathe. All GSAP/CSS, deterministic. (No `letterSpacing`
+tweens — they reflow/snap; the clip-path wipe carries the reveal.)
+
 ## Deliverables — two aspect ratios
 - **9:16 (1080×1920)** — `index.html` → `final.mp4`. Primary Reels/TikTok/Shorts.
-- **4:5 (1080×1350)** — `index-4x5.html` → `final-4x5.mp4`. Meta feed. Same cut/timings/logo/end
-  card; the face is cropped **from the top** (`object-fit:cover; object-position:50% 100%` keeps
-  the lower frame where the face + mic sit). End card re-laid for 1350 height (not cropped).
-  Render with `npx hyperframes render -c index-4x5.html --quality high`.
+- **4:5 (1080×1350)** — `compositions/index-4x5.html` → `final-4x5.mp4`. Meta feed. Same cut/timings/
+  logo/animated end card; the face is cropped **from the top** (`object-fit:cover;
+  object-position:50% 100%` keeps the lower frame where the face + mic sit). End card re-laid for
+  1350 height (not cropped). Asset paths are root-relative (`assets/…`) even from `compositions/`.
+  Render with `npx hyperframes render -c compositions/index-4x5.html --quality high`.
 
 ## Palette / type (from brand-tokens.css)
 - Navy `#06284C` canvas · Blue-tint `#9CD4FF` accent/emphasis · Flame `#FF4C32` the one hot accent.
