@@ -93,6 +93,10 @@ efficient over time instead of relearning the same lessons.
   `acompressor=threshold=-21dB:ratio=3:attack=12:release=180:makeup=3`, `deesser=i=0.35`,
   then `loudnorm`. Note: ffmpeg's `equalizer` `t=` is width-type only — use the dedicated
   `highshelf`/`lowshelf` filters for shelves, not `equalizer t=highshelf` (errors out).
+- **`loudnorm` silently changes the output sample rate (to 96/192 kHz).** A 48 kHz source
+  came out of a `loudnorm` mux as 96 kHz AAC — non-standard and wasteful for a VO. **Fix:**
+  pin the rate in the chain AND on the encoder — `...,loudnorm=...,aresample=48000` plus
+  `-ar 48000`. Always `ffprobe` the delivered audio stream's `sample_rate` before shipping.
 
 ## Capture & assets (behind the agent proxy)
 
