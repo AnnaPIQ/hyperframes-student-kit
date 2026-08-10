@@ -72,6 +72,46 @@ efficient over time instead of relearning the same lessons.
   `kling3.0_pro`, `veo3.1`, `seedance2`, `gen4.5`, etc. via `npm run gen --model <id>`.
   Keep Runway as the single integration; pick the model per shot.
 
+## Website capture (site → assets)
+
+- **`hyperframes capture` / Playwright Chromium can `ERR_CONNECTION_RESET` on an origin
+  even though `curl` reaches it fine** (bot/TLS fingerprinting past the agent proxy).
+  **Fix:** fall back to `curl` for the HTML, grep out the asset URLs, and download the
+  images directly with `curl` (public marketing CDNs like `cdn.prod.website-files.com`
+  work). Convert `.avif`/`.webp` → `.png` with `ffmpeg -i x.avif x.png`.
+- **Driving Playwright yourself:** pass an explicit `executablePath`
+  (`/opt/pw-browsers/chromium-1194/chrome-linux/chrome`) — the default resolves to a
+  `chromium_headless_shell-*` path that may be absent. Run the script from the **workspace
+  root** (where `node_modules` lives) or the `playwright` import won't resolve, and set
+  `proxy: { server: process.env.HTTPS_PROXY }` + `ignoreHTTPSErrors: true`.
+
+## Lint gotchas (0.7.x)
+
+- **`gsap_non_transform_motion`:** animating `left`/`top`/`width` snaps to integer pixels
+  and stutters under the capture engine. Animate `x`/`y`/`scale` transforms instead
+  (e.g. a shimmer sweep: `fromTo(el, {x:-460},{x:980})`, not `left`).
+- **`gsap_css_transform_conflict`:** if an element has a CSS `transform` (e.g.
+  `translate(-50%,-50%)` centering) AND GSAP animates `scale`, GSAP overwrites the whole
+  transform and the centering is lost. Drop the CSS transform and put
+  `xPercent:-50, yPercent:-50, scale:…` in a `gsap.fromTo` (fromTo is exempt from the rule).
+- **`gsap_exit_missing_hard_kill`:** an exit fade that ends exactly on another clip's
+  `data-start` boundary needs a `tl.set(sel, {opacity:0}, <exit-end>)` right after it, or
+  non-linear seeking leaves stale visibility state.
+- **`duplicate_media_discovery_risk`:** the same image `src` used in two `<img>` at the
+  same start/duration warns. Use a distinct file (a hue-shifted `ffmpeg -vf hue=h=165`
+  copy makes a clean "variant B" of the same product shot), or a different asset.
+
+## Audio (VO cutdowns)
+
+- **Two-pass `loudnorm` still undershoots -16 LUFS on a quiet, peaky VO** (high
+  crest factor → true-peak-limited at -1.5 dBTP before it reaches -16). **Fix:** put a
+  gentle `acompressor=threshold=-24dB:ratio=4:makeup=5` *before* `loudnorm` to lower the
+  crest factor; then loudnorm lands ~-16.8 LUFS with TP safe. Don't chase the last dB with
+  a plain `alimiter` — it's not true-peak-aware and pushed TP to +0.4 (clipping).
+- **Splice on `silencedetect` boundaries, not raw Whisper word times.** Run
+  `ffmpeg -af silencedetect=noise=-34dB:d=0.12` to find real gaps; cut there and add
+  50–100ms edge fades + a ~0.16s silence pad between sentences for a natural join.
+
 ## Housekeeping
 
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat

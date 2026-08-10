@@ -40,3 +40,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Website-capture scratch (raw screenshots; product assets live in assets/product/)
+**/captures/
