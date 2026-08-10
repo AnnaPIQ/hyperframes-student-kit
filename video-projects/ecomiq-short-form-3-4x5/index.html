@@ -28,20 +28,8 @@
       #brand-logo img { display: block; width: 100%; height: auto;
         filter: drop-shadow(0 3px 12px rgba(0,0,0,.6)) drop-shadow(0 0 3px rgba(0,0,0,.45)); }
 
-      /* Animated lower-third callouts — bottom-left, clear of the face/mic */
-      .callout { position: absolute; left: 6%; bottom: 10%; z-index: 45;
-        display: inline-flex; flex-direction: column; align-items: flex-start; gap: 11px;
-        padding: 22px 42px 24px 34px; border-radius: 26px;
-        background: rgba(6,40,76,.88); border: 1.5px solid rgba(156,212,255,.30);
-        box-shadow: 0 18px 50px -14px rgba(0,0,0,.6); white-space: nowrap; overflow: hidden; }
-      .callout .row { display: inline-flex; align-items: center; gap: 20px; }
-      .callout .dot { width: 22px; height: 22px; border-radius: 50%;
-        background: var(--brand-flame); box-shadow: 0 0 20px -2px rgba(255,76,50,.85); flex: none; }
-      .callout .txt { font-weight: 700; font-size: 44px; letter-spacing: -.01em; color: #FFFFFF; }
-      .callout .bar { height: 6px; width: 100%; border-radius: 999px; transform-origin: 0 50%;
-        background: linear-gradient(90deg, #FF4C32, #FF8A4C); box-shadow: 0 0 16px -2px rgba(255,76,50,.7); }
-
-      /* End card sits above everything */
+      /* Full-frame motion-graphic overlays cover the video on beats; end card on top */
+      .cutaway { position: absolute; inset: 0; z-index: 40; }
       #end-card-clip { position: absolute; inset: 0; z-index: 100; }
     </style>
   </head>
@@ -65,23 +53,16 @@
         <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
 
-      <!-- Animated lower-third callouts (track 4) across the video — slide in, the
-           accent bar draws, hold with a pulsing dot, slide out. Presenter stays visible. -->
-      <div id="callout1" class="callout clip" data-start="3.5" data-duration="3.4" data-track-index="4">
-        <div class="row"><span class="dot"></span><span class="txt">Clarity, not guesswork</span></div><div class="bar"></div>
-      </div>
-      <div id="callout2" class="callout clip" data-start="11.5" data-duration="3.4" data-track-index="4">
-        <div class="row"><span class="dot"></span><span class="txt">Know your real profit</span></div><div class="bar"></div>
-      </div>
-      <div id="callout3" class="callout clip" data-start="19.5" data-duration="3.4" data-track-index="4">
-        <div class="row"><span class="dot"></span><span class="txt">See your true margins</span></div><div class="bar"></div>
-      </div>
-      <div id="callout4" class="callout clip" data-start="27.5" data-duration="3.4" data-track-index="4">
-        <div class="row"><span class="dot"></span><span class="txt">Turn data into decisions</span></div><div class="bar"></div>
-      </div>
-      <div id="callout5" class="callout clip" data-start="35.5" data-duration="3.4" data-track-index="4">
-        <div class="row"><span class="dot"></span><span class="txt">Grow with confidence</span></div><div class="bar"></div>
-      </div>
+      <!-- Full-frame motion-graphic overlays (track 4) on beats — cover the picture,
+           VO continues underneath. Whip/blur in and out. -->
+      <div id="cut1" class="cutaway clip" data-composition-id="cutaway-1" data-composition-src="compositions/cutaway-1.html"
+           data-start="7.0" data-duration="1.6" data-track-index="4"></div>
+      <div id="cut2" class="cutaway clip" data-composition-id="cutaway-2" data-composition-src="compositions/cutaway-2.html"
+           data-start="15.5" data-duration="1.6" data-track-index="4"></div>
+      <div id="cut3" class="cutaway clip" data-composition-id="cutaway-3" data-composition-src="compositions/cutaway-3.html"
+           data-start="24.0" data-duration="1.6" data-track-index="4"></div>
+      <div id="cut4" class="cutaway clip" data-composition-id="cutaway-4" data-composition-src="compositions/cutaway-4.html"
+           data-start="32.5" data-duration="1.6" data-track-index="4"></div>
 
       <!-- End card (track 5) — overlays the tail so total runtime ≈ the original length -->
       <div id="end-card-clip" class="clip" data-composition-id="end-card" data-composition-src="compositions/end-card.html"
@@ -91,22 +72,8 @@
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
-      // Logo entrance
+      // Logo entrance (media + sub-comp overlays drive their own timelines)
       tl.from("#brand-logo", { opacity: 0, y: -20, filter: "blur(6px)", duration: .6, ease: "power3.out" }, .3);
-
-      // Lower-third callouts — slide in with overshoot, accent bar draws, dot pulses
-      // during the hold, then slide out (each within its own clip window).
-      [["#callout1", 3.5], ["#callout2", 11.5], ["#callout3", 19.5],
-       ["#callout4", 27.5], ["#callout5", 35.5]].forEach(([sel, t]) => {
-        tl.fromTo(sel, { x: -90, opacity: 0, filter: "blur(8px)" },
-                       { x: 0, opacity: 1, filter: "blur(0px)", duration: .55, ease: "back.out(1.5)" }, t)
-          .fromTo(`${sel} .dot`, { scale: 0 }, { scale: 1, duration: .4, ease: "back.out(2.4)" }, t + .1)
-          .fromTo(`${sel} .bar`, { scaleX: 0, opacity: 0 },
-                                 { scaleX: 1, opacity: 1, duration: .5, ease: "power3.out" }, t + .25)
-          .to(`${sel} .dot`, { scale: 1.28, duration: .5, ease: "sine.inOut", yoyo: true, repeat: 2 }, t + .8)
-          .to(sel, { x: -50, opacity: 0, filter: "blur(8px)", duration: .4, ease: "power2.in" }, t + 3.0);
-      });
-
       tl.set({}, {}, 44.8); // composition duration
       window.__timelines["ecomiq-short-form-3-4x5"] = tl;
     </script>

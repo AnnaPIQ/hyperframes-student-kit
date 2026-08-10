@@ -1,0 +1,45 @@
+<template id="cutaway-1-template">
+  <div id="cutaway-1-root" data-composition-id="cutaway-1" data-width="1080" data-height="1350">
+    <div class="c1-bg"></div>
+    <div class="c1-wrap">
+      <div class="c1-eyebrow">E-Commerce Intelligence</div>
+      <div class="c1-headline">Clear up the <span class="em">confusion</span>.</div>
+      <div class="c1-rule"></div>
+    </div>
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      #cutaway-1-root { position: absolute; inset: 0; overflow: hidden;
+        background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+      #cutaway-1-root .c1-bg { position: absolute; inset: 0;
+        background: radial-gradient(80% 50% at 50% 42%, rgba(156,212,255,.16) 0%, rgba(6,40,76,0) 60%), #06284C; }
+      #cutaway-1-root .c1-wrap { position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 40px; padding: 12% 9%; text-align: center; }
+      #cutaway-1-root .c1-eyebrow { font-weight: 600; font-size: 30px;
+        letter-spacing: .34em; text-transform: uppercase; color: #9CD4FF; }
+      #cutaway-1-root .c1-headline { font-weight: 800; font-size: 128px;
+        line-height: .98; letter-spacing: -.03em; max-width: 92%; }
+      #cutaway-1-root .c1-headline .em { font-family: 'Hedvig Letters Serif', serif;
+        font-style: italic; font-weight: 400; color: #9CD4FF; }
+      #cutaway-1-root .c1-rule { width: 180px; height: 8px; border-radius: 999px;
+        background: #FF4C32; box-shadow: 0 0 32px -4px rgba(255,76,50,.7); }
+    </style>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#cutaway-1-root .c1-bg", { opacity: 0, duration: .2, ease: "power1.out" }, 0)
+        .from("#cutaway-1-root .c1-eyebrow", { opacity: 0, y: 24, filter: "blur(8px)", duration: .35, ease: "power3.out" }, .05)
+        .from("#cutaway-1-root .c1-headline", { opacity: 0, y: 44, scale: .92, filter: "blur(14px)", duration: .42, ease: "expo.out" }, .12)
+        .from("#cutaway-1-root .c1-rule", { scaleX: 0, opacity: 0, transformOrigin: "50% 50%", duration: .4, ease: "power2.out" }, .3)
+        // reveal-out to underlying A-roll (overlay cutaway, not a sequential scene)
+        .to("#cutaway-1-root .c1-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.04, duration: .25, ease: "power2.in" }, 1.35)
+        .to("#cutaway-1-root .c1-bg", { opacity: 0, duration: .22, ease: "power2.in" }, 1.38);
+      tl.set({}, {}, 1.6); // pad to data-duration
+      window.__timelines["cutaway-1"] = tl;
+    </script>
+  </div>
+</template>
