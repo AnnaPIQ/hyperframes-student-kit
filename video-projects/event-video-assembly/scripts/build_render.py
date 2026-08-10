@@ -68,9 +68,10 @@ def main():
     ap.add_argument("--render", action="store_true")
     ap.add_argument("--draft", action="store_true")
     ap.add_argument("--output", default=None)
+    ap.add_argument("--edl", default=None, help="alternate EDL path (default edl.json)")
     args = ap.parse_args()
 
-    edl = json.load(open(EDL))
+    edl = json.load(open(args.edl if args.edl else EDL))
     W = edl["target"]["width"]; H = edl["target"]["height"]; FPS = edl["target"]["fps"]
     segs = edl["segments"]
     fin = edl.get("fade_in", 0.5); fout = edl.get("fade_out", 0.6)

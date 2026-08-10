@@ -7,7 +7,7 @@ import numpy as np, wave, os, sys
 SR = 48000
 DUR = float(sys.argv[1]) if len(sys.argv) > 1 else 51.05
 N = int(SR * DUR)
-OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets", "music_bed.wav")
+OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets", "music_bed.wav")
 
 def mtof(m): return 440.0 * 2 ** ((m - 69) / 12.0)
 
