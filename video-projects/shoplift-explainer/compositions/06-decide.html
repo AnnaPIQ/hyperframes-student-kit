@@ -1,0 +1,115 @@
+<template id="b6-decide-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div id="b6-decide" data-composition-id="b6-decide" data-start="0" data-duration="5.25" data-width="1080" data-height="1920">
+
+    <div class="s6-stage">
+      <div class="s6-grid"></div>
+
+      <div class="s6-kicker" id="s6-kicker">SO YOU CAN</div>
+      <div class="s6-head" id="s6-head">decide, and <span class="s6-em">move on.</span></div>
+
+      <div class="s6-cards">
+        <div class="s6-card s6-card-a" id="s6-cardA">
+          <div class="s6-badge">A</div>
+          <div class="s6-thumb s6-thumb-a"></div>
+          <div class="s6-bar" style="width:66%"></div>
+          <div class="s6-bar" style="width:50%"></div>
+        </div>
+        <div class="s6-card s6-card-b" id="s6-cardB">
+          <div class="s6-badge s6-badge-b">B</div>
+          <div class="s6-thumb s6-thumb-b"></div>
+          <div class="s6-bar" style="width:72%"></div>
+          <div class="s6-bar" style="width:60%"></div>
+          <div class="s6-win" id="s6-win">WINNER ✓</div>
+          <div class="s6-ring" id="s6-ring"></div>
+        </div>
+      </div>
+
+      <div class="s6-closed" id="s6-closed">TEST CLOSED</div>
+      <div class="s6-months" id="s6-months">no more <span class="s6-strike" id="s6-strike">months of waiting</span></div>
+
+      <div class="s6-vignette"></div>
+      <div class="s6-grain"></div>
+    </div>
+
+    <style>
+      @font-face { font-family:'Rethink Sans'; font-style:normal; font-weight:400 800; font-display:block; src:url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family:'Hedvig Letters Serif'; font-style:italic; font-weight:400; font-display:block; src:url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      #b6-decide{ position:absolute; inset:0; overflow:hidden; background:#06284C; font-family:'Rethink Sans',sans-serif; }
+      #b6-decide .s6-stage{ position:absolute; inset:0; }
+      #b6-decide .s6-grid{ position:absolute; inset:0;
+        background:
+          radial-gradient(120% 60% at 50% 6%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1px, transparent 1px 84px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.05) 0 1px, transparent 1px 84px);
+        background-color:#06284C; will-change:background-position; }
+
+      #b6-decide .s6-kicker{ position:absolute; top:340px; left:0; right:0; text-align:center;
+        font-weight:700; font-size:30px; letter-spacing:.34em; color:#9CD4FF; }
+      #b6-decide .s6-head{ position:absolute; top:392px; left:0; right:0; text-align:center;
+        font-weight:800; font-size:100px; line-height:1.0; letter-spacing:-.03em; color:#fff; }
+      #b6-decide .s6-em{ font-family:'Hedvig Letters Serif',serif; font-style:italic; font-weight:400; color:#9CD4FF; }
+
+      #b6-decide .s6-cards{ position:absolute; top:660px; left:96px; right:96px; display:flex; align-items:center; justify-content:center; gap:44px; }
+      #b6-decide .s6-card{ position:relative; width:360px; height:392px; border-radius:26px; background:#0a325f; border:1px solid #1d4a7a; padding:26px; box-shadow:0 30px 70px -30px rgba(0,0,0,.7); }
+      #b6-decide .s6-badge{ position:absolute; top:-22px; left:24px; width:52px; height:52px; border-radius:14px; background:#103d6f; border:1px solid #2a5c92; color:#DEEEFE; font-weight:800; font-size:30px; display:flex; align-items:center; justify-content:center; }
+      #b6-decide .s6-badge-b{ background:#FF4C32; border-color:#FF7A5C; color:#fff; }
+      #b6-decide .s6-thumb{ width:100%; height:200px; border-radius:16px; margin:12px 0 22px; }
+      #b6-decide .s6-thumb-a{ background:linear-gradient(135deg,#12508f,#0c3a68); }
+      #b6-decide .s6-thumb-b{ background:linear-gradient(135deg,#155ea8,#0e4374); }
+      #b6-decide .s6-bar{ height:20px; border-radius:8px; background:rgba(156,212,255,.28); margin-top:14px; }
+      #b6-decide .s6-win{ position:absolute; top:150px; left:-20px; right:-20px; text-align:center; transform:rotate(-6deg);
+        background:#FF4C32; color:#fff; font-weight:800; font-size:34px; letter-spacing:.04em; padding:14px 0; box-shadow:0 16px 40px -10px rgba(255,76,50,.6); opacity:0; }
+      #b6-decide .s6-ring{ position:absolute; inset:-8px; border:4px solid #FF4C32; border-radius:30px; box-shadow:0 0 44px rgba(255,76,50,.55); opacity:0; }
+
+      #b6-decide .s6-closed{ position:absolute; top:1200px; left:50%; transform:translateX(-50%);
+        background:rgba(156,212,255,.12); border:2px solid #9CD4FF; color:#9CD4FF; border-radius:999px; padding:20px 50px; font-weight:800; font-size:46px; letter-spacing:.06em; opacity:0; }
+      #b6-decide .s6-months{ position:absolute; top:1360px; left:0; right:0; text-align:center; color:#9fb6d4; font-weight:700; font-size:44px; opacity:0; }
+      #b6-decide .s6-strike{ position:relative; color:#DEEEFE; }
+      #b6-decide .s6-strike:after{ content:''; position:absolute; left:-4px; right:-4px; top:52%; height:4px; background:#FF4C32; transform:scaleX(0); transform-origin:0 50%; box-shadow:0 0 14px rgba(255,76,50,.6); }
+
+      #b6-decide .s6-vignette{ position:absolute; inset:0; pointer-events:none;
+        background:radial-gradient(ellipse at 50% 44%, transparent 48%, rgba(2,15,30,.82) 100%); opacity:.7; }
+      #b6-decide .s6-grain{ position:absolute; inset:0; pointer-events:none; opacity:.06;
+        background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px),radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);
+        background-size:3px 3px,5px 5px; background-position:0 0,1px 2px; }
+    </style>
+
+    <script>
+      (() => {
+        const SLOT = 5.25;
+        const q = (s) => `#b6-decide ${s}`;
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo(q('.s6-grid'), { backgroundPositionY: '0px' }, { backgroundPositionY: '34px', duration: SLOT, ease: 'none' }, 0);
+        tl.fromTo(q('.s6-vignette'), { opacity: .62 }, { opacity: .8, duration: 2.6, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 0);
+
+        tl.fromTo(q('.s6-kicker'), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .45, ease: 'power2.out' }, 0.15);
+        tl.fromTo(q('.s6-head'), { opacity: 0, y: 40, filter: 'blur(12px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .6, ease: 'power3.out' }, 0.3);
+
+        // cards in (callback to Beat 1)
+        tl.fromTo(q('.s6-card-a'), { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, 0.4);
+        tl.fromTo(q('.s6-card-b'), { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, 0.5);
+
+        // decision @ "make a decision" (0.76) — B wins, A dims
+        tl.fromTo(q('.s6-ring'), { opacity: 0, scale: 1.15 }, { opacity: 1, scale: 1, duration: .4, ease: 'back.out(1.6)' }, 0.8);
+        tl.fromTo(q('.s6-win'), { opacity: 0, scale: 1.6, rotate: -6 }, { opacity: 1, scale: 1, rotate: -6, duration: .32, ease: 'power4.out' }, 0.95);
+        tl.to(q('.s6-card-a'), { filter: 'grayscale(.6) brightness(.7)', opacity: .5, duration: .5 }, 0.9);
+
+        // test closed (1.4)
+        tl.fromTo(q('.s6-closed'), { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .45, ease: 'power2.out' }, 1.4);
+
+        // "instead of running for months" (2.09) — strike
+        tl.fromTo(q('.s6-months'), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 2.1);
+        tl.to(q('.s6-strike:after'), { scaleX: 1, duration: .45, ease: 'power2.inOut' }, 2.7);
+
+        // resolve "move on" @ 3.79
+        tl.to(q('.s6-em'), { x: 12, duration: .5, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 3.8);
+
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines['b6-decide'] = tl;
+      })();
+    </script>
+  </div>
+</template>

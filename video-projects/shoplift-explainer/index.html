@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>ShopLift — EcomIQ Explainer</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden;
+        background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #fff; }
+
+      .beat-layer { position: absolute; top: 0; left: 0; width: 1080px; height: 1920px; z-index: 1; }
+
+      /* Persistent EcomIQ brand frame — non-clip, stays put the whole piece */
+      #brandframe { position: absolute; inset: 0; z-index: 200; pointer-events: none; }
+      #logo-wrap { position: absolute; top: 84px; left: 96px; width: 300px; }
+      #logo-wrap img { display: block; width: 100%; height: auto;
+        filter: drop-shadow(0 6px 20px rgba(0,0,0,.45)); }
+      #progress-track { position: absolute; left: 0; bottom: 0; width: 1080px; height: 5px;
+        background: rgba(156,212,255,.12); }
+      #progress { position: absolute; left: 0; bottom: 0; width: 1080px; height: 5px;
+        transform-origin: 0% 50%; transform: scaleX(0);
+        background: linear-gradient(90deg, #FF4C32, #FF7A5C); box-shadow: 0 0 16px rgba(255,76,50,.6); }
+
+      /* Seam whip transitions — bright motion-blur streak over each cut */
+      .whip { position: absolute; left: -20%; top: 0; width: 140%; height: 260px; z-index: 300;
+        opacity: 0; pointer-events: none;
+        background: linear-gradient(90deg, transparent 0%, rgba(156,212,255,.5) 32%, rgba(255,255,255,.95) 50%, rgba(255,76,50,.9) 66%, transparent 100%);
+        filter: blur(16px); transform: translateY(-160%) rotate(-16deg); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="shoplift-explainer" data-start="0" data-duration="57.47"
+         data-width="1080" data-height="1920">
+
+      <!-- Beat 01 — A/B test that never ends (0–8.95) -->
+      <div class="beat-layer" id="layer-b1-never-ends" data-composition-id="b1-never-ends"
+        data-composition-src="compositions/01-never-ends.html"
+        data-start="0" data-duration="8.95" data-track-index="0"
+        data-width="1080" data-height="1920"></div>
+
+      <!-- Beat 02 — Give up; the issue is traffic (8.95–16.0) -->
+      <div class="beat-layer" id="layer-b2-traffic" data-composition-id="b2-traffic"
+        data-composition-src="compositions/02-traffic.html"
+        data-start="8.95" data-duration="7.05" data-track-index="0"
+        data-width="1080" data-height="1920"></div>
+
+      <!-- Beat 03 — Needs thousands / not enough data (16.0–31.0) -->
+      <div class="beat-layer" id="layer-b3-not-enough-data" data-composition-id="b3-not-enough-data"
+        data-composition-src="compositions/03-not-enough-data.html"
+        data-start="16.0" data-duration="15.0" data-track-index="0"
+        data-width="1080" data-height="1920"></div>
+
+      <!-- Beat 04 — ShopLift's fix: probability-to-win + uplift (31.0–43.2) -->
+      <div class="beat-layer" id="layer-b4-shoplift-fix" data-composition-id="b4-shoplift-fix"
+        data-composition-src="compositions/04-shoplift-fix.html"
+        data-start="31.0" data-duration="12.2" data-track-index="0"
+        data-width="1080" data-height="1920"></div>
+
+      <!-- Beat 05 — Flags no meaningful difference (43.2–50.05) -->
+      <div class="beat-layer" id="layer-b5-no-difference" data-composition-id="b5-no-difference"
+        data-composition-src="compositions/05-no-difference.html"
+        data-start="43.2" data-duration="6.85" data-track-index="0"
+        data-width="1080" data-height="1920"></div>
+
+      <!-- Beat 06 — Decide and move on (50.05–55.3) -->
+      <div class="beat-layer" id="layer-b6-decide" data-composition-id="b6-decide"
+        data-composition-src="compositions/06-decide.html"
+        data-start="50.05" data-duration="5.25" data-track-index="0"
+        data-width="1080" data-height="1920"></div>
+
+      <!-- Beat 07 — End card (55.3–57.47) -->
+      <div class="beat-layer" id="layer-b7-endcard" data-composition-id="b7-endcard"
+        data-composition-src="compositions/07-endcard.html"
+        data-start="55.3" data-duration="2.17" data-track-index="0"
+        data-width="1080" data-height="1920"></div>
+
+      <!-- Voiceover — cleaned + normalized to ~-16 LUFS -->
+      <audio id="vo" data-start="0" data-duration="57.47" data-track-index="8" data-volume="1"
+        src="assets/shoplift-vo.wav"></audio>
+
+      <!-- Seam whip transitions (track 5) -->
+      <div class="whip clip" id="whip1" data-start="8.77" data-duration="0.4" data-track-index="5"></div>
+      <div class="whip clip" id="whip2" data-start="15.82" data-duration="0.4" data-track-index="5"></div>
+      <div class="whip clip" id="whip3" data-start="30.82" data-duration="0.4" data-track-index="5"></div>
+      <div class="whip clip" id="whip4" data-start="43.02" data-duration="0.4" data-track-index="5"></div>
+      <div class="whip clip" id="whip5" data-start="49.87" data-duration="0.4" data-track-index="5"></div>
+      <div class="whip clip" id="whip6" data-start="55.12" data-duration="0.4" data-track-index="5"></div>
+
+      <!-- Persistent brand frame -->
+      <div id="brandframe">
+        <div id="logo-wrap"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+        <div id="progress-track"></div>
+        <div id="progress"></div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Logo fade-in
+      tl.fromTo("#logo-wrap", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.15);
+      // Flame progress line fills across the whole piece — camera never sleeps
+      tl.fromTo("#progress", { scaleX: 0 }, { scaleX: 1, duration: 57.47, ease: "none" }, 0);
+
+      // Seam whips — each sweeps top→bottom, peaking on the cut
+      const seams = [
+        ["#whip1", 8.77], ["#whip2", 15.82], ["#whip3", 30.82],
+        ["#whip4", 43.02], ["#whip5", 49.87], ["#whip6", 55.12]
+      ];
+      seams.forEach(([sel, t0]) => {
+        tl.fromTo(sel, { yPercent: -160, opacity: 0 },
+          { yPercent: 160, opacity: 1, duration: 0.36, ease: "power1.inOut" }, t0);
+        tl.to(sel, { opacity: 0, duration: 0.16, ease: "power2.in" }, t0 + 0.2);
+      });
+
+      // Fade the persistent top-left logo out for the end card (its own centered lockup takes over)
+      tl.to("#logo-wrap", { opacity: 0, duration: 0.35, ease: "power2.in" }, 55.15);
+
+      // Root anchor — sub-composition timelines auto-link and fill their slots
+      tl.to({}, { duration: 57.47 }, 0);
+      window.__timelines["shoplift-explainer"] = tl;
+    </script>
+  </body>
+</html>
