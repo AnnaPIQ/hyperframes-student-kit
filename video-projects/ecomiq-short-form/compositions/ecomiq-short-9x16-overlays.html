@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>EcomIQ — Short-form 9:16 (overlays)</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+
+      /* ---- Footage ---- */
+      #footage-wrap { position: absolute; inset: 0; z-index: 0; }
+      #footage { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center center;
+        filter: contrast(1.05) saturate(1.06) brightness(0.99); }
+      #footage-wrap::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 80% 84% at 50% 44%, transparent 58%, rgba(6,40,76,0.34) 100%); }
+
+      /* ---- Scrims + grain ---- */
+      #top-scrim { position: absolute; top: 0; left: 0; width: 1080px; height: 340px; z-index: 1; pointer-events: none;
+        background: linear-gradient(180deg, rgba(6,40,76,0.66) 0%, rgba(6,40,76,0.3) 48%, rgba(6,40,76,0) 100%); }
+      #grain { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0.5; mix-blend-mode: overlay;
+        background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.5px), radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1.5px);
+        background-size: 3px 3px, 5px 5px; background-position: 0 0, 1px 2px; }
+
+      /* ---- Persistent brand chrome ---- */
+      #logo { position: absolute; top: 70px; left: 66px; width: 152px; height: auto; z-index: 6;
+        filter: drop-shadow(0 3px 10px rgba(0,0,0,0.55)); }
+      #logo-rule { position: absolute; top: 116px; left: 68px; width: 96px; height: 5px; z-index: 6;
+        background: var(--brand-flame); border-radius: 3px; transform-origin: left center; box-shadow: 0 0 16px rgba(255,76,50,0.6); }
+
+      /* ---- Overlays (full-timeline kinetic callouts) ---- */
+      #overlays { position: absolute; top: 300px; left: 0; width: 1080px; z-index: 5; pointer-events: none; }
+      .ov { position: absolute; top: 0; left: 0; right: 0; margin-inline: auto; width: fit-content; max-width: 912px;
+        display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; opacity: 0; }
+      .ov-kicker { font-weight: 700; font-size: 30px; letter-spacing: 0.32em; text-transform: uppercase;
+        color: var(--brand-blue-tint); text-shadow: 0 2px 12px rgba(0,0,0,0.55); }
+      .ov-big { position: relative; font-weight: 800; font-size: 92px; line-height: 0.96; letter-spacing: -0.03em;
+        color: var(--brand-flame); text-shadow: 0 3px 22px rgba(255,76,50,0.5), 0 2px 6px rgba(0,0,0,0.55); }
+      .ov-big.white { color: var(--brand-white); text-shadow: 0 3px 20px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.5); }
+      .ov-big .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400;
+        color: var(--brand-blue-tint); text-shadow: 0 2px 18px rgba(156,212,255,0.45); }
+      .ov-big .arw { font-family: 'Rethink Sans', sans-serif; font-style: normal; }
+      .ov-strike { position: absolute; left: -5%; top: 50%; width: 110%; height: 9px; border-radius: 5px;
+        background: var(--brand-flame); box-shadow: 0 0 18px rgba(255,76,50,0.7); transform: scaleX(0); transform-origin: left center; }
+      .bars { display: flex; align-items: flex-end; gap: 12px; height: 92px; margin-top: 4px; }
+      .bars i { display: block; width: 26px; border-radius: 6px 6px 2px 2px;
+        background: linear-gradient(180deg, #FF8A4C 0%, #FF4C32 100%); box-shadow: 0 0 18px rgba(255,76,50,0.5);
+        transform-origin: bottom center; transform: scaleY(0); }
+      .bars i:nth-child(1){height:32px;} .bars i:nth-child(2){height:52px;}
+      .bars i:nth-child(3){height:72px;} .bars i:nth-child(4){height:92px;}
+
+      /* ---- End card ---- */
+      #endcard { position: absolute; inset: 0; z-index: 8; opacity: 0;
+        background: radial-gradient(88% 52% at 50% 22%, rgba(156,212,255,0.12) 0%, rgba(6,40,76,0) 55%), var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 46px; }
+      #endcard::before { content: ""; position: absolute; left: -12%; bottom: -20%; width: 124%; height: 58%;
+        background: var(--brand-gradient-2); filter: blur(96px); opacity: 0.34; pointer-events: none; }
+      #ec-logo { width: 520px; height: auto; position: relative; }
+      #ec-bars { display: flex; align-items: flex-end; gap: 14px; height: 92px; position: relative; }
+      #ec-bars i { display: block; width: 28px; border-radius: 6px 6px 2px 2px;
+        background: linear-gradient(180deg, #FF8A4C 0%, #FF4C32 100%); box-shadow: 0 0 18px rgba(255,76,50,0.5);
+        transform-origin: bottom center; transform: scaleY(0); }
+      #ec-bars i:nth-child(1){height:36px;} #ec-bars i:nth-child(2){height:58px;}
+      #ec-bars i:nth-child(3){height:76px;} #ec-bars i:nth-child(4){height:92px;}
+      #ec-cta { position: relative; display: inline-flex; align-items: center; gap: 20px; font-weight: 700; font-size: 34px;
+        letter-spacing: -0.01em; color: var(--brand-white); background: var(--brand-flame); padding: 30px 56px;
+        border-radius: 999px; white-space: nowrap; box-shadow: 0 22px 70px -16px rgba(255,76,50,0.65); }
+      #ec-cta .arrow { font-size: 36px; line-height: 1; transform: translateY(-1px); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="ecomiq-short-9x16-overlays" data-start="0" data-duration="49.6"
+         data-width="1080" data-height="1920">
+
+      <div id="footage-wrap">
+        <video id="footage" data-start="0" data-duration="47.0" data-track-index="0"
+               src="assets/script5-pricing.mp4" muted playsinline></video>
+      </div>
+      <audio id="footage-audio" data-start="0" data-duration="47.0" data-track-index="9"
+             data-volume="1" src="assets/script5-pricing.m4a"></audio>
+
+      <div id="top-scrim" class="clip" data-start="0" data-duration="47.2" data-track-index="1"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="47.2" data-track-index="2"></div>
+      <img id="logo" class="clip" data-start="0" data-duration="47.2" data-track-index="6"
+           src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      <div id="logo-rule" class="clip" data-start="0" data-duration="47.2" data-track-index="7"></div>
+
+      <div id="overlays"></div>
+
+      <div id="endcard">
+        <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="ec-bars"><i></i><i></i><i></i><i></i></div>
+        <div id="ec-cta">Join our Free Profitability Bootcamp <span class="arrow">&rarr;</span></div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const FOOT = 47.0, TOTAL = 49.6;
+      const tl = gsap.timeline({ paused: true });
+
+      // ---- Brand chrome intro ----
+      tl.fromTo("#logo", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.2)
+        .fromTo("#logo-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, 0.5)
+        .fromTo("#top-scrim", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "sine.out" }, 0)
+        .to("#logo", { opacity: 0, duration: 0.35, ease: "power2.in" }, FOOT - 0.5)
+        .to("#top-scrim", { opacity: 0, duration: 0.35, ease: "power2.in" }, FOOT - 0.5);
+
+      // ---- Overlay beats (no captions — graphics carry the whole timeline) ----
+      const barsHTML = '<div class="bars"><i></i><i></i><i></i><i></i></div>';
+      const BEATS = [
+        { k:"Every guru says", big:"DISCOUNT", white:true, strike:true, trans:"pop",      tIn:0.5,  tOut:4.6 },
+        { k:"Try the opposite", big:'PRICES UP <span class="arw">&#8593;</span>', motif:true, trans:"whip", tIn:4.9, tOut:8.4 },
+        { k:"Have you ever", big:"TESTED YOUR PRICE?",              trans:"slideL",  tIn:8.6,  tOut:12.0 },
+        { k:"The reality", big:'MOST <span class="em">haven’t</span>', trans:"riseblur", tIn:12.2, tOut:14.9 },
+        { k:"Set once", big:'NEVER TOUCHED <span class="em">again</span>',  trans:"slideR", tIn:15.2, tOut:19.5 },
+        { k:"How do you", big:"COMPARE?",                          trans:"slideL",  tIn:20.4, tOut:23.4 },
+        { k:"Stacked up", big:'VS <span class="em">competitors</span>',    trans:"slideR", tIn:23.6, tOut:26.8 },
+        { k:"Someone charges more", big:'FOR <span class="em">less</span>', trans:"whip",  tIn:27.0, tOut:32.2 },
+        { k:"The lesson", big:'TEST YOUR <span class="em">ceiling</span>', trans:"pop",   tIn:32.5, tOut:35.5 },
+        { k:"Right now", big:'CHARGING <span class="em">too little</span>', trans:"riseblur", tIn:35.9, tOut:38.6 },
+        { k:"There’s more", big:"LIFT YOUR PROFIT", motif:true, trans:"whip",         tIn:38.9, tOut:43.3 },
+        { k:"Join the free", big:"PROFITABILITY BOOTCAMP",         trans:"pop",     tIn:43.6, tOut:46.3 }
+      ];
+
+      const FLAV = {
+        whip:     [{opacity:0,y:46,scale:0.92,filter:"blur(14px)"}, {duration:0.42,ease:"power3.out"}, {opacity:0,y:-32,scale:0.98,filter:"blur(12px)",duration:0.32,ease:"power2.in"}],
+        slideL:   [{opacity:0,x:-96,filter:"blur(10px)"},           {duration:0.44,ease:"power3.out"}, {opacity:0,x:74,filter:"blur(10px)",duration:0.30,ease:"power2.in"}],
+        slideR:   [{opacity:0,x:96,filter:"blur(10px)"},            {duration:0.44,ease:"power3.out"}, {opacity:0,x:-74,filter:"blur(10px)",duration:0.30,ease:"power2.in"}],
+        riseblur: [{opacity:0,y:64,filter:"blur(18px)"},            {duration:0.50,ease:"power3.out"}, {opacity:0,y:-26,filter:"blur(12px)",duration:0.30,ease:"power2.in"}],
+        pop:      [{opacity:0,scale:0.62,filter:"blur(8px)"},       {duration:0.46,ease:"back.out(1.6)"},{opacity:0,scale:1.08,filter:"blur(8px)",duration:0.30,ease:"power2.in"}]
+      };
+
+      const ovRoot = document.getElementById("overlays");
+      BEATS.forEach((b) => {
+        const ov = document.createElement("div");
+        ov.className = "ov";
+        ov.innerHTML =
+          (b.k ? `<div class="ov-kicker">${b.k}</div>` : "") +
+          `<div class="ov-big${b.white ? " white" : ""}">${b.big}${b.strike ? '<span class="ov-strike"></span>' : ""}</div>` +
+          (b.motif ? barsHTML : "");
+        ovRoot.appendChild(ov);
+
+        const [from, toOpts, out] = FLAV[b.trans];
+        const to = Object.assign({ opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)" }, toOpts);
+        tl.fromTo(ov, from, to, b.tIn);
+        tl.to(ov, out, b.tOut);
+
+        if (b.strike)
+          tl.fromTo(ov.querySelector(".ov-strike"), { scaleX: 0 },
+            { scaleX: 1, duration: 0.42, ease: "power3.inOut" }, b.tIn + 0.4);
+        if (b.motif)
+          tl.fromTo(ov.querySelectorAll(".bars i"), { scaleY: 0 },
+            { scaleY: 1, duration: 0.5, ease: "back.out(1.5)", stagger: 0.07 }, b.tIn + 0.28);
+      });
+
+      // ---- End card ----
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, FOOT - 0.5)
+        .fromTo("#ec-logo", { opacity: 0, y: 26, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" }, FOOT - 0.1)
+        .fromTo("#ec-bars i", { scaleY: 0 }, { scaleY: 1, duration: 0.55, ease: "back.out(1.6)", stagger: 0.08 }, FOOT + 0.15)
+        .fromTo("#ec-cta", { opacity: 0, scale: 0.85 },
+          { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)" }, FOOT + 0.5)
+        .to("#ec-cta", { scale: 1.035, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 2 }, FOOT + 1.25);
+
+      tl.set({}, {}, TOTAL); // Law #11 anchor
+      window.__timelines["ecomiq-short-9x16-overlays"] = tl;
+    </script>
+  </body>
+</html>
