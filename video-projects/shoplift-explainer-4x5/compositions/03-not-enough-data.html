@@ -1,0 +1,133 @@
+<template id="b3-not-enough-data-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div id="b3-not-enough-data" data-composition-id="b3-not-enough-data" data-start="0" data-duration="15.0" data-width="1080" data-height="1350">
+
+    <div class="s3-stage">
+      <div class="s3-grid"></div>
+
+      <div class="s3-kicker" id="s3-kicker">A SIGNIFICANCE TEST CAN NEED</div>
+      <div class="s3-head" id="s3-head"><span class="s3-em">thousands</span> of visitors.</div>
+
+      <!-- required vs your-store comparison -->
+      <div class="s3-card" id="s3-card">
+        <div class="s3-row">
+          <div class="s3-rowtop">
+            <span class="s3-rl">Required to call a winner</span>
+            <span class="s3-rv" id="s3-reqv">0</span>
+          </div>
+          <div class="s3-track"><div class="s3-fill s3-fill-req" id="s3-reqfill"></div>
+            <div class="s3-target" id="s3-target"></div></div>
+        </div>
+        <div class="s3-row">
+          <div class="s3-rowtop">
+            <span class="s3-rl">A typical store’s traffic</span>
+            <span class="s3-rv s3-rv-hot" id="s3-yourv">0</span>
+          </div>
+          <div class="s3-track"><div class="s3-fill s3-fill-you" id="s3-youfill"></div></div>
+        </div>
+        <div class="s3-gap" id="s3-gap">not enough volume</div>
+      </div>
+
+      <div class="s3-note" id="s3-note">✓ Nothing’s wrong with the test</div>
+      <div class="s3-flag" id="s3-flag">NOT ENOUGH DATA</div>
+      <div class="s3-answer" id="s3-answer">no clear answer<span class="s3-q">?</span></div>
+
+      <div class="s3-vignette"></div>
+      <div class="s3-grain"></div>
+    </div>
+
+    <style>
+      @font-face { font-family:'Rethink Sans'; font-style:normal; font-weight:400 800; font-display:block; src:url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family:'Hedvig Letters Serif'; font-style:italic; font-weight:400; font-display:block; src:url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      #b3-not-enough-data{ position:absolute; inset:0; overflow:hidden; background:#06284C; font-family:'Rethink Sans',sans-serif; }
+      #b3-not-enough-data .s3-stage{ position:absolute; inset:0; }
+      #b3-not-enough-data .s3-grid{ position:absolute; inset:0;
+        background:
+          radial-gradient(120% 60% at 50% 6%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1px, transparent 1px 84px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.05) 0 1px, transparent 1px 84px);
+        background-color:#06284C; will-change:background-position; }
+
+      #b3-not-enough-data .s3-kicker{ position:absolute; top:168px; left:0; right:0; text-align:center;
+        font-weight:700; font-size:30px; letter-spacing:.28em; color:#9CD4FF; }
+      #b3-not-enough-data .s3-head{ position:absolute; top:220px; left:0; right:0; text-align:center;
+        font-weight:800; font-size:100px; line-height:1.0; letter-spacing:-.03em; color:#fff; }
+      #b3-not-enough-data .s3-em{ font: inherit; color: inherit; }
+
+      #b3-not-enough-data .s3-card{ position:absolute; top:400px; left:96px; right:96px;
+        background:#0a325f; border:1px solid #1d4a7a; border-radius:26px; padding:44px 46px; box-shadow:0 30px 70px -30px rgba(0,0,0,.7); }
+      #b3-not-enough-data .s3-row{ margin-bottom:44px; }
+      #b3-not-enough-data .s3-rowtop{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:18px; }
+      #b3-not-enough-data .s3-rl{ font-weight:600; font-size:34px; color:#DEEEFE; }
+      #b3-not-enough-data .s3-rv{ font-weight:800; font-size:44px; color:#9CD4FF; font-variant-numeric:tabular-nums; }
+      #b3-not-enough-data .s3-rv-hot{ color:#FF7A5C; }
+      #b3-not-enough-data .s3-track{ position:relative; height:30px; border-radius:15px; background:#04203c; overflow:visible; }
+      #b3-not-enough-data .s3-fill{ position:absolute; left:0; top:0; height:100%; width:0%; border-radius:15px; }
+      #b3-not-enough-data .s3-fill-req{ background:linear-gradient(90deg,#2d7fd6,#9CD4FF); box-shadow:0 0 22px rgba(156,212,255,.4); }
+      #b3-not-enough-data .s3-fill-you{ background:linear-gradient(90deg,#7a2417,#FF4C32); box-shadow:0 0 22px rgba(255,76,50,.35); }
+      #b3-not-enough-data .s3-target{ position:absolute; top:-10px; bottom:-10px; left:95%; width:0; border-left:3px dashed #DEEEFE; opacity:0; }
+      #b3-not-enough-data .s3-target span{ position:absolute; top:-38px; left:-136px; width:120px; text-align:right; color:#DEEEFE; font-weight:700; font-size:24px; }
+      #b3-not-enough-data .s3-gap{ text-align:right; color:#FF7A5C; font-weight:700; font-size:28px; opacity:0; }
+
+      #b3-not-enough-data .s3-note{ position:absolute; top:880px; left:0; right:0; text-align:center; color:#9fb6d4; font-weight:600; font-size:34px; opacity:0; }
+      #b3-not-enough-data .s3-flag{ position:absolute; top:950px; left:50%; transform:translateX(-50%);
+        background:rgba(255,76,50,.14); border:2px solid #FF4C32; color:#FF6A4A; border-radius:999px; padding:22px 52px;
+        font-weight:800; font-size:52px; letter-spacing:.02em; opacity:0; box-shadow:0 0 50px rgba(255,76,50,.3); white-space:nowrap; }
+      #b3-not-enough-data .s3-answer{ position:absolute; top:1140px; left:0; right:0; text-align:center; color:#DEEEFE; font-weight:700; font-size:52px; opacity:0; }
+      #b3-not-enough-data .s3-q{ color:#DEEEFE; font-weight:800; font-size:72px; margin-left:6px; }
+
+      #b3-not-enough-data .s3-vignette{ position:absolute; inset:0; pointer-events:none;
+        background:radial-gradient(ellipse at 50% 42%, transparent 46%, rgba(2,15,30,.82) 100%); opacity:.72; }
+      #b3-not-enough-data .s3-grain{ position:absolute; inset:0; pointer-events:none; opacity:.06;
+        background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px),radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);
+        background-size:3px 3px,5px 5px; background-position:0 0,1px 2px; }
+    </style>
+
+    <script>
+      (() => {
+        const SLOT = 15.0;
+        const q = (s) => `#b3-not-enough-data ${s}`;
+        const tl = gsap.timeline({ paused: true });
+        const fmt = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        const reqEl = document.querySelector(q('#s3-reqv'));
+        const youEl = document.querySelector(q('#s3-yourv'));
+
+        tl.fromTo(q('.s3-grid'), { backgroundPositionY: '0px' }, { backgroundPositionY: '70px', duration: SLOT, ease: 'none' }, 0);
+        tl.fromTo(q('.s3-vignette'), { opacity: .64 }, { opacity: .82, duration: 4, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 0);
+
+        // headline
+        tl.fromTo(q('.s3-kicker'), { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 0.3);
+        tl.fromTo(q('.s3-head'), { opacity: 0, y: 40, filter: 'blur(12px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .7, ease: 'power3.out' }, 0.55);
+        tl.fromTo(q('.s3-em'), { scale: .8 }, { scale: 1, duration: .4, ease: 'back.out(2)' }, 1.9);
+
+        // comparison card in
+        tl.fromTo(q('.s3-card'), { opacity: 0, y: 46 }, { opacity: 1, y: 0, duration: .6, ease: 'power3.out' }, 1.9);
+        // required bar grows + counter climbs to 6,240 (needs thousands of visitors)
+        tl.to(q('.s3-fill-req'), { width: '95%', duration: 2.1, ease: 'power2.out' }, 2.2);
+        const rq = { v: 0 };
+        tl.to(rq, { v: 6240, duration: 2.1, ease: 'power2.out', onUpdate: () => { if (reqEl) reqEl.textContent = fmt(rq.v); } }, 2.2);
+        // target lock @ "confident enough to call a winner"
+        tl.to(q('.s3-target'), { opacity: 1, duration: .4 }, 4.5);
+
+        // your-store bar falls short @ "don't have that volume" (7.0)
+        tl.to(q('.s3-fill-you'), { width: '20%', duration: 1.8, ease: 'power2.out' }, 7.0);
+        const yv = { v: 0 };
+        tl.to(yv, { v: 1300, duration: 1.8, ease: 'power2.out', onUpdate: () => { if (youEl) youEl.textContent = fmt(yv.v); } }, 7.0);
+        tl.fromTo(q('.s3-gap'), { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: .5, ease: 'power2.out' }, 8.6);
+
+        // "nothing wrong with the test" (9.53)
+        tl.fromTo(q('.s3-note'), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 9.5);
+        // "not enough data" slam (11.49)
+        tl.fromTo(q('.s3-flag'), { opacity: 0, scale: 1.5 }, { opacity: 1, scale: 1, duration: .34, ease: 'power4.out' }, 11.49);
+        tl.to(q('.s3-flag'), { boxShadow: '0 0 70px rgba(255,76,50,.55)', duration: .8, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 11.9);
+        // "no clear answer ?" (12.65)
+        tl.fromTo(q('.s3-answer'), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 12.65);
+        tl.fromTo(q('.s3-q'), { scale: 0, rotate: -30 }, { scale: 1, rotate: 0, duration: .5, ease: 'back.out(2)' }, 13.0);
+
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines['b3-not-enough-data'] = tl;
+      })();
+    </script>
+  </div>
+</template>

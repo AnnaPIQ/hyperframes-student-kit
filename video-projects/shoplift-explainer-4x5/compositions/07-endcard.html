@@ -1,0 +1,63 @@
+<template id="b7-endcard-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div id="b7-endcard" data-composition-id="b7-endcard" data-start="0" data-duration="2.17" data-width="1080" data-height="1350">
+
+    <div class="s7-stage">
+      <div class="s7-grid"></div>
+      <div class="s7-bloom" id="s7-bloom"></div>
+
+      <div class="s7-lock" id="s7-lock">
+        <img class="s7-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div class="s7-tag" id="s7-tag">Smarter tests. Faster decisions.</div>
+      </div>
+
+      <div class="s7-vignette"></div>
+      <div class="s7-grain"></div>
+    </div>
+
+    <style>
+      @font-face { font-family:'Rethink Sans'; font-style:normal; font-weight:400 800; font-display:block; src:url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      #b7-endcard{ position:absolute; inset:0; overflow:hidden; background:#06284C; font-family:'Rethink Sans',sans-serif; }
+      #b7-endcard .s7-stage{ position:absolute; inset:0; }
+      #b7-endcard .s7-grid{ position:absolute; inset:0;
+        background:
+          radial-gradient(120% 70% at 50% 42%, rgba(156,212,255,.14) 0%, rgba(6,40,76,0) 60%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.045) 0 1px, transparent 1px 84px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.045) 0 1px, transparent 1px 84px);
+        background-color:#06284C; }
+      #b7-endcard .s7-bloom{ position:absolute; inset:0; opacity:0;
+        background:radial-gradient(46% 30% at 50% 58%, rgba(255,76,50,.20), rgba(6,40,76,0) 70%); }
+
+      #b7-endcard .s7-lock{ position:absolute; top:50%; left:0; right:0; transform:translateY(-50%); text-align:center; padding:0 96px; }
+      #b7-endcard .s7-logo{ width:560px; height:auto; margin:0 auto; display:block; filter:drop-shadow(0 10px 40px rgba(0,0,0,.5)); }
+      #b7-endcard .s7-tag{ margin-top:44px; font-weight:600; font-size:40px; letter-spacing:.01em; color:#9CD4FF; }
+      #b7-endcard .s7-cta{ display:inline-flex; align-items:center; gap:16px; margin-top:64px;
+        background:#FF4C32; color:#fff; font-weight:800; font-size:46px; padding:34px 66px; border-radius:999px;
+        box-shadow:0 26px 70px -18px rgba(255,76,50,.7); }
+      #b7-endcard .s7-arrow{ display:inline-block; }
+
+      #b7-endcard .s7-vignette{ position:absolute; inset:0; pointer-events:none;
+        background:radial-gradient(ellipse at 50% 50%, transparent 46%, rgba(2,15,30,.85) 100%); opacity:.7; }
+      #b7-endcard .s7-grain{ position:absolute; inset:0; pointer-events:none; opacity:.06;
+        background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px),radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);
+        background-size:3px 3px,5px 5px; background-position:0 0,1px 2px; }
+    </style>
+
+    <script>
+      (() => {
+        const SLOT = 2.17;
+        const q = (s) => `#b7-endcard ${s}`;
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo(q('.s7-bloom'), { opacity: 0 }, { opacity: 1, duration: .7, ease: 'power2.out' }, 0.05);
+        tl.fromTo(q('.s7-logo'), { opacity: 0, y: 26, scale: .9 }, { opacity: 1, y: 0, scale: 1, duration: .55, ease: 'power3.out' }, 0.05);
+        tl.fromTo(q('.s7-tag'), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .45, ease: 'power2.out' }, 0.4);
+        tl.to(q('.s7-vignette'), { opacity: .78, duration: 1.4, ease: 'sine.inOut' }, 0.5);
+
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines['b7-endcard'] = tl;
+      })();
+    </script>
+  </div>
+</template>

@@ -1,0 +1,111 @@
+<template id="b5-no-difference-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div id="b5-no-difference" data-composition-id="b5-no-difference" data-start="0" data-duration="6.85" data-width="1080" data-height="1350">
+
+    <div class="s5-stage">
+      <div class="s5-grid"></div>
+
+      <div class="s5-kicker" id="s5-kicker">IT ALSO TELLS YOU WHEN</div>
+      <div class="s5-head" id="s5-head">there’s no real <span class="s5-em">difference.</span></div>
+
+      <div class="s5-card" id="s5-card">
+        <div class="s5-brow">
+          <span class="s5-chip s5-chip-a">A</span>
+          <div class="s5-btrack"><div class="s5-bfill s5-bfill-a" id="s5-ba"></div></div>
+          <span class="s5-bval">3.58%</span>
+        </div>
+        <div class="s5-approx" id="s5-approx">≈</div>
+        <div class="s5-brow">
+          <span class="s5-chip s5-chip-b">B</span>
+          <div class="s5-btrack"><div class="s5-bfill s5-bfill-b" id="s5-bb"></div></div>
+          <span class="s5-bval">3.61%</span>
+        </div>
+        <div class="s5-delta" id="s5-delta">Δ +0.3% · not significant</div>
+      </div>
+
+      <div class="s5-verdict" id="s5-verdict">NO MEANINGFUL DIFFERENCE</div>
+      <div class="s5-useful" id="s5-useful">and that’s still <span class="s5-ue">useful.</span> <span class="s5-check" id="s5-check">✓</span></div>
+
+      <div class="s5-vignette"></div>
+      <div class="s5-grain"></div>
+    </div>
+
+    <style>
+      @font-face { font-family:'Rethink Sans'; font-style:normal; font-weight:400 800; font-display:block; src:url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family:'Hedvig Letters Serif'; font-style:italic; font-weight:400; font-display:block; src:url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      #b5-no-difference{ position:absolute; inset:0; overflow:hidden; background:#06284C; font-family:'Rethink Sans',sans-serif; }
+      #b5-no-difference .s5-stage{ position:absolute; inset:0; }
+      #b5-no-difference .s5-grid{ position:absolute; inset:0;
+        background:
+          radial-gradient(120% 60% at 50% 6%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1px, transparent 1px 84px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.05) 0 1px, transparent 1px 84px);
+        background-color:#06284C; will-change:background-position; }
+
+      #b5-no-difference .s5-kicker{ position:absolute; top:180px; left:0; right:0; text-align:center;
+        font-weight:700; font-size:30px; letter-spacing:.28em; color:#9CD4FF; }
+      #b5-no-difference .s5-head{ position:absolute; top:232px; left:0; right:0; text-align:center;
+        font-weight:800; font-size:92px; line-height:1.0; letter-spacing:-.03em; color:#fff; }
+      #b5-no-difference .s5-em{ font: inherit; color: inherit; }
+
+      #b5-no-difference .s5-card{ position:absolute; top:430px; left:96px; right:96px;
+        background:#0a325f; border:1px solid #1d4a7a; border-radius:26px; padding:48px 46px 42px; box-shadow:0 30px 70px -30px rgba(0,0,0,.7); }
+      #b5-no-difference .s5-brow{ display:flex; align-items:center; gap:24px; }
+      #b5-no-difference .s5-chip{ width:56px; height:56px; border-radius:14px; font-weight:800; font-size:32px; display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+      #b5-no-difference .s5-chip-a{ background:#103d6f; color:#9CD4FF; }
+      #b5-no-difference .s5-chip-b{ background:#12508f; color:#DEEEFE; }
+      #b5-no-difference .s5-btrack{ flex:1 1 auto; height:40px; border-radius:12px; background:#04203c; overflow:hidden; }
+      #b5-no-difference .s5-bfill{ height:100%; width:0%; border-radius:12px; }
+      #b5-no-difference .s5-bfill-a{ background:linear-gradient(90deg,#2d7fd6,#7fbdf0); }
+      #b5-no-difference .s5-bfill-b{ background:linear-gradient(90deg,#2f86df,#9CD4FF); }
+      #b5-no-difference .s5-bval{ flex:0 0 auto; width:150px; text-align:right; font-weight:800; font-size:40px; color:#DEEEFE; font-variant-numeric:tabular-nums; }
+      #b5-no-difference .s5-approx{ text-align:center; color:#9fb6d4; font-size:52px; font-weight:700; margin:6px 0; opacity:0; }
+      #b5-no-difference .s5-delta{ text-align:center; color:#9fb6d4; font-weight:700; font-size:32px; margin-top:16px; opacity:0; }
+
+      #b5-no-difference .s5-verdict{ position:absolute; top:900px; left:50%; transform:translateX(-50%);
+        background:rgba(255,76,50,.14); border:2px solid #FF4C32; color:#FF6A4A; border-radius:999px; padding:24px 56px;
+        font-weight:800; font-size:50px; letter-spacing:.01em; opacity:0; box-shadow:0 0 50px rgba(255,76,50,.3); white-space:nowrap; }
+      #b5-no-difference .s5-useful{ position:absolute; top:1090px; left:0; right:0; text-align:center; color:#DEEEFE; font-weight:500; font-size:56px; opacity:0; }
+      #b5-no-difference .s5-ue{ font: inherit; color: inherit; }
+      #b5-no-difference .s5-check{ display:inline-block; color:#FF4C32; font-weight:800; margin-left:8px; text-shadow:0 0 22px rgba(255,76,50,.5); }
+
+      #b5-no-difference .s5-vignette{ position:absolute; inset:0; pointer-events:none;
+        background:radial-gradient(ellipse at 50% 44%, transparent 48%, rgba(2,15,30,.82) 100%); opacity:.7; }
+      #b5-no-difference .s5-grain{ position:absolute; inset:0; pointer-events:none; opacity:.06;
+        background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px),radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);
+        background-size:3px 3px,5px 5px; background-position:0 0,1px 2px; }
+    </style>
+
+    <script>
+      (() => {
+        const SLOT = 6.85;
+        const q = (s) => `#b5-no-difference ${s}`;
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo(q('.s5-grid'), { backgroundPositionY: '0px' }, { backgroundPositionY: '40px', duration: SLOT, ease: 'none' }, 0);
+        tl.fromTo(q('.s5-vignette'), { opacity: .62 }, { opacity: .8, duration: 3.4, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 0);
+
+        tl.fromTo(q('.s5-kicker'), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 0.15);
+        tl.fromTo(q('.s5-head'), { opacity: 0, y: 38, filter: 'blur(12px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .65, ease: 'power3.out' }, 0.35);
+
+        // bars nearly equal @ "isn't enough of a difference between the two versions" (1.18)
+        tl.fromTo(q('.s5-card'), { opacity: 0, y: 44 }, { opacity: 1, y: 0, duration: .6, ease: 'power3.out' }, 1.15);
+        tl.to(q('.s5-bfill-a'), { width: '60%', duration: 1.1, ease: 'power2.out' }, 1.35);
+        tl.to(q('.s5-bfill-b'), { width: '60.6%', duration: 1.1, ease: 'power2.out' }, 1.55);
+        tl.fromTo(q('.s5-approx'), { opacity: 0, scale: .5 }, { opacity: 1, scale: 1, duration: .4, ease: 'back.out(2)' }, 2.6);
+        tl.fromTo(q('.s5-delta'), { opacity: 0 }, { opacity: 1, duration: .4 }, 2.9);
+
+        // verdict (flame) @ ~"to even matter" (3.4)
+        tl.fromTo(q('.s5-verdict'), { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: .34, ease: 'power4.out' }, 3.5);
+
+        // "still very, very useful" (4.69)
+        tl.fromTo(q('.s5-useful'), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 4.7);
+        tl.fromTo(q('.s5-check'), { scale: 0, rotate: -40 }, { scale: 1, rotate: 0, duration: .5, ease: 'back.out(2.2)' }, 5.0);
+
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines['b5-no-difference'] = tl;
+      })();
+    </script>
+  </div>
+</template>

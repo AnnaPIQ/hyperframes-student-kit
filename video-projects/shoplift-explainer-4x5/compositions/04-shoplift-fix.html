@@ -1,0 +1,148 @@
+<template id="b4-shoplift-fix-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div id="b4-shoplift-fix" data-composition-id="b4-shoplift-fix" data-start="0" data-duration="12.2" data-width="1080" data-height="1350">
+
+    <div class="s4-stage">
+      <div class="s4-grid"></div>
+      <div class="s4-bloom" id="s4-bloom"></div>
+
+      <div class="s4-kicker" id="s4-kicker">SHOPLIFT’S LATEST UPDATE</div>
+      <div class="s4-head" id="s4-head">See the answer, <span class="s4-em">sooner.</span></div>
+      <div class="s4-sub" id="s4-sub">not just <span class="s4-strike" id="s4-strike">pass or fail</span></div>
+
+      <!-- real ShopLift UI in an EcomIQ device card -->
+      <div class="s4-device" id="s4-device">
+        <div class="s4-titlebar">
+          <span class="s4-dot"></span><span class="s4-dot"></span><span class="s4-dot"></span>
+          <span class="s4-tbtext">shoplift · test insights</span>
+        </div>
+        <div class="s4-screen">
+          <img src="assets/product/analyze-trim.png" alt="ShopLift uplift insights" />
+          <div class="s4-ring" id="s4-ring"></div>
+          <div class="s4-ringtag" id="s4-ringtag">REAL UPLIFT</div>
+        </div>
+      </div>
+
+      <!-- probability-to-win gauge (EcomIQ recreation of the in-app view) -->
+      <div class="s4-gauge" id="s4-gauge">
+        <svg class="s4-donut" viewBox="0 0 360 360" width="330" height="330">
+          <circle cx="180" cy="180" r="150" fill="none" stroke="#04203c" stroke-width="34"/>
+          <circle id="s4-arc" cx="180" cy="180" r="150" fill="none" stroke="#FF4C32" stroke-width="34"
+            stroke-linecap="round" transform="rotate(-90 180 180)"
+            stroke-dasharray="942.48" stroke-dashoffset="942.48"/>
+        </svg>
+        <div class="s4-donutctr"><div class="s4-pct" id="s4-pct">0%</div><div class="s4-pctl">probability<br/>to win</div></div>
+        <div class="s4-gtext">
+          <div class="s4-gtitle">PROBABILITY TO WIN</div>
+          <div class="s4-grow s4-grow-b"><span class="s4-gchip">B</span> Variant <b id="s4-gb">0%</b></div>
+          <div class="s4-grow s4-grow-a"><span class="s4-gchip s4-gchip-a">A</span> Original <b id="s4-ga">0%</b></div>
+        </div>
+      </div>
+
+      <div class="s4-vignette"></div>
+      <div class="s4-grain"></div>
+    </div>
+
+    <style>
+      @font-face { font-family:'Rethink Sans'; font-style:normal; font-weight:400 800; font-display:block; src:url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family:'Hedvig Letters Serif'; font-style:italic; font-weight:400; font-display:block; src:url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      #b4-shoplift-fix{ position:absolute; inset:0; overflow:hidden; background:#06284C; font-family:'Rethink Sans',sans-serif; }
+      #b4-shoplift-fix .s4-stage{ position:absolute; inset:0; }
+      #b4-shoplift-fix .s4-grid{ position:absolute; inset:0;
+        background:
+          radial-gradient(120% 60% at 50% 6%, rgba(156,212,255,.14) 0%, rgba(6,40,76,0) 55%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1px, transparent 1px 84px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.05) 0 1px, transparent 1px 84px);
+        background-color:#06284C; will-change:background-position; }
+      #b4-shoplift-fix .s4-bloom{ position:absolute; inset:0; opacity:0;
+        background:radial-gradient(60% 40% at 50% 40%, rgba(156,212,255,.16), rgba(6,40,76,0) 70%); }
+
+      #b4-shoplift-fix .s4-kicker{ position:absolute; top:170px; left:0; right:0; text-align:center;
+        font-weight:700; font-size:30px; letter-spacing:.30em; color:#9CD4FF; }
+      #b4-shoplift-fix .s4-head{ position:absolute; top:212px; left:0; right:0; text-align:center;
+        font-weight:800; font-size:88px; line-height:1.0; letter-spacing:-.03em; color:#fff; }
+      #b4-shoplift-fix .s4-em{ font: inherit; color: inherit; }
+      #b4-shoplift-fix .s4-sub{ position:absolute; top:314px; left:0; right:0; text-align:center; font-weight:600; font-size:36px; color:#9fb6d4; }
+      #b4-shoplift-fix .s4-strike{ position:relative; }
+      #b4-shoplift-fix .s4-strike:after{ content:''; position:absolute; left:-4px; right:-4px; top:52%; height:4px; background:#FF4C32; transform:scaleX(0); transform-origin:0 50%; box-shadow:0 0 14px rgba(255,76,50,.6); }
+
+      #b4-shoplift-fix .s4-device{ position:absolute; top:380px; left:210px; width:660px;
+        background:#0a325f; border:1px solid #2a5c92; border-radius:26px; padding:0 0 20px; box-shadow:0 40px 90px -30px rgba(0,0,0,.75); overflow:hidden; }
+      #b4-shoplift-fix .s4-titlebar{ height:66px; display:flex; align-items:center; gap:12px; padding:0 26px; background:#08294c; border-bottom:1px solid #1d4a7a; }
+      #b4-shoplift-fix .s4-dot{ width:16px; height:16px; border-radius:50%; background:#1d4a7a; }
+      #b4-shoplift-fix .s4-dot:nth-child(1){ background:#FF4C32; }
+      #b4-shoplift-fix .s4-tbtext{ margin-left:12px; color:#9fb6d4; font-weight:600; font-size:26px; }
+      #b4-shoplift-fix .s4-screen{ position:relative; margin:20px 24px 0; border-radius:14px; overflow:hidden; background:#fff; }
+      #b4-shoplift-fix .s4-screen img{ display:block; width:100%; height:auto; }
+      #b4-shoplift-fix .s4-ring{ position:absolute; left:2.2%; top:1.4%; width:29%; height:37%; border:5px solid #FF4C32; border-radius:18px;
+        box-shadow:0 0 34px rgba(255,76,50,.6), inset 0 0 20px rgba(255,76,50,.25); opacity:0; }
+      #b4-shoplift-fix .s4-ringtag{ position:absolute; left:2.2%; top:-2px; transform:translateY(-100%); background:#FF4C32; color:#fff;
+        font-weight:800; font-size:22px; letter-spacing:.08em; padding:8px 16px; border-radius:10px; opacity:0; }
+
+      #b4-shoplift-fix .s4-gauge{ position:absolute; top:812px; left:96px; right:96px; height:400px;
+        background:#0a325f; border:1px solid #1d4a7a; border-radius:26px; padding:36px 44px; display:flex; align-items:center; gap:40px; box-shadow:0 30px 70px -30px rgba(0,0,0,.7); }
+      #b4-shoplift-fix .s4-donut{ flex:0 0 auto; }
+      #b4-shoplift-fix .s4-donutctr{ position:absolute; left:calc(44px + 165px); top:50%; transform:translate(-50%,-50%); text-align:center; }
+      #b4-shoplift-fix .s4-pct{ font-weight:800; font-size:82px; color:#fff; line-height:1; font-variant-numeric:tabular-nums; }
+      #b4-shoplift-fix .s4-pctl{ font-weight:600; font-size:24px; color:#9fb6d4; margin-top:6px; }
+      #b4-shoplift-fix .s4-gtext{ flex:1 1 auto; }
+      #b4-shoplift-fix .s4-gtitle{ font-weight:700; font-size:30px; letter-spacing:.14em; color:#9CD4FF; margin-bottom:22px; }
+      #b4-shoplift-fix .s4-grow{ display:flex; align-items:center; gap:16px; font-size:40px; font-weight:600; color:#DEEEFE; margin:14px 0; }
+      #b4-shoplift-fix .s4-grow b{ margin-left:auto; font-weight:800; font-variant-numeric:tabular-nums; }
+      #b4-shoplift-fix .s4-grow-b b{ color:#FF6A4A; }
+      #b4-shoplift-fix .s4-gchip{ width:46px; height:46px; border-radius:12px; background:#FF4C32; color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; }
+      #b4-shoplift-fix .s4-gchip-a{ background:#103d6f; color:#9CD4FF; }
+
+      #b4-shoplift-fix .s4-vignette{ position:absolute; inset:0; pointer-events:none;
+        background:radial-gradient(ellipse at 50% 46%, transparent 50%, rgba(2,15,30,.8) 100%); opacity:.66; }
+      #b4-shoplift-fix .s4-grain{ position:absolute; inset:0; pointer-events:none; opacity:.06;
+        background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px),radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);
+        background-size:3px 3px,5px 5px; background-position:0 0,1px 2px; }
+    </style>
+
+    <script>
+      (() => {
+        const SLOT = 12.2;
+        const q = (s) => `#b4-shoplift-fix ${s}`;
+        const tl = gsap.timeline({ paused: true });
+        const pctEl = document.querySelector(q('#s4-pct'));
+        const gbEl = document.querySelector(q('#s4-gb'));
+        const gaEl = document.querySelector(q('#s4-ga'));
+
+        tl.fromTo(q('.s4-grid'), { backgroundPositionY: '0px' }, { backgroundPositionY: '44px', duration: SLOT, ease: 'none' }, 0);
+        tl.fromTo(q('.s4-bloom'), { opacity: 0 }, { opacity: 1, duration: 1.0, ease: 'power2.out' }, 0.2);
+        tl.fromTo(q('.s4-vignette'), { opacity: .58 }, { opacity: .72, duration: 4, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 0);
+
+        // pivot headline (ShopLift's latest update)
+        tl.fromTo(q('.s4-kicker'), { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 0.25);
+        tl.fromTo(q('.s4-head'), { opacity: 0, y: 40, filter: 'blur(12px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .7, ease: 'power3.out' }, 0.9);
+        // "not just pass or fail" (4.17), strike at ~5.3
+        tl.fromTo(q('.s4-sub'), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 4.2);
+        tl.to(q('.s4-strike:after'), { scaleX: 1, duration: .4, ease: 'power2.inOut' }, 5.3);
+
+        // device card w/ real UI rises in @ "helps solve this" (2.7)
+        tl.fromTo(q('.s4-device'), { opacity: 0, y: 70, scale: .94 }, { opacity: 1, y: 0, scale: 1, duration: .7, ease: 'power3.out' }, 2.6);
+
+        // probability gauge @ "how likely each version is to win" (7.24)
+        tl.fromTo(q('.s4-gauge'), { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: .6, ease: 'power3.out' }, 6.9);
+        tl.to(q('#s4-arc'), { attr: { 'stroke-dashoffset': 75.4 }, duration: 1.7, ease: 'power2.out' }, 7.24);
+        const pv = { v: 0 };
+        tl.to(pv, { v: 92, duration: 1.7, ease: 'power2.out', onUpdate: () => {
+          const n = Math.round(pv.v);
+          if (pctEl) pctEl.textContent = n + '%';
+          if (gbEl) gbEl.textContent = n + '%';
+          if (gaEl) gaEl.textContent = (100 - n) + '%';
+        } }, 7.24);
+
+        // uplift ring highlight @ "what difference it could make" (9.6)
+        tl.fromTo(q('.s4-ring'), { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: .45, ease: 'back.out(1.6)' }, 9.6);
+        tl.fromTo(q('.s4-ringtag'), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .4, ease: 'power2.out' }, 9.85);
+        tl.to(q('.s4-ring'), { boxShadow: '0 0 54px rgba(255,76,50,.8), inset 0 0 24px rgba(255,76,50,.35)', duration: .9, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 10.3);
+
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines['b4-shoplift-fix'] = tl;
+      })();
+    </script>
+  </div>
+</template>

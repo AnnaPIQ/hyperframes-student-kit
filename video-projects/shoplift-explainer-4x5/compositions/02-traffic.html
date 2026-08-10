@@ -1,0 +1,118 @@
+<template id="b2-traffic-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div id="b2-traffic" data-composition-id="b2-traffic" data-start="0" data-duration="7.05" data-width="1080" data-height="1350">
+
+    <div class="s2-stage">
+      <div class="s2-grid"></div>
+
+      <div class="s2-kicker" id="s2-kicker">SO YOU GIVE UP</div>
+      <div class="s2-head" id="s2-head">and launch the one you <span class="s2-em">liked.</span></div>
+
+      <!-- launched-anyway storefront -->
+      <div class="s2-store" id="s2-store">
+        <div class="s2-badge">B</div>
+        <div class="s2-thumb"></div>
+        <div class="s2-line" style="width:74%"></div>
+        <div class="s2-line" style="width:56%"></div>
+        <div class="s2-ribbon" id="s2-ribbon">LAUNCHED ANYWAY</div>
+        <div class="s2-abandoned" id="s2-abandoned">test never called · 58%</div>
+      </div>
+
+      <!-- the real issue: traffic -->
+      <div class="s2-issue" id="s2-issue">FOR MANY SHOPIFY STORES, THE ISSUE IS SIMPLY</div>
+      <div class="s2-traffic" id="s2-traffic">traffic.</div>
+
+      <div class="s2-flow" id="s2-flow">
+        <span class="s2-dot"></span><span class="s2-dot"></span><span class="s2-dot"></span>
+        <span class="s2-dot"></span><span class="s2-dot"></span><span class="s2-dot"></span>
+        <span class="s2-dot"></span><span class="s2-dot"></span>
+        <span class="s2-storeicon" id="s2-storeicon">🛍</span>
+      </div>
+
+      <div class="s2-vignette"></div>
+      <div class="s2-grain"></div>
+    </div>
+
+    <style>
+      @font-face { font-family:'Rethink Sans'; font-style:normal; font-weight:400 800; font-display:block; src:url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family:'Hedvig Letters Serif'; font-style:italic; font-weight:400; font-display:block; src:url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      #b2-traffic{ position:absolute; inset:0; overflow:hidden; background:#06284C; font-family:'Rethink Sans',sans-serif; }
+      #b2-traffic .s2-stage{ position:absolute; inset:0; }
+      #b2-traffic .s2-grid{ position:absolute; inset:0;
+        background:
+          radial-gradient(120% 60% at 50% 6%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1px, transparent 1px 84px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.05) 0 1px, transparent 1px 84px);
+        background-color:#06284C; will-change:background-position; }
+
+      #b2-traffic .s2-kicker{ position:absolute; top:170px; left:0; right:0; text-align:center;
+        font-weight:700; font-size:30px; letter-spacing:.32em; color:#9CD4FF; }
+      #b2-traffic .s2-head{ position:absolute; top:222px; left:96px; right:96px; text-align:center;
+        font-weight:800; font-size:88px; line-height:1.02; letter-spacing:-.03em; color:#fff; }
+      #b2-traffic .s2-em{ font: inherit; color: inherit; }
+
+      #b2-traffic .s2-store{ position:absolute; top:430px; left:360px; width:360px; height:360px; border-radius:26px;
+        background:#0a325f; border:1px solid #1d4a7a; padding:26px; box-shadow:0 30px 70px -30px rgba(0,0,0,.7); }
+      #b2-traffic .s2-badge{ position:absolute; top:-22px; left:24px; width:52px; height:52px; border-radius:14px;
+        background:#103d6f; border:1px solid #2a5c92; color:#DEEEFE; font-weight:800; font-size:30px; display:flex; align-items:center; justify-content:center; }
+      #b2-traffic .s2-thumb{ width:100%; height:180px; border-radius:16px; margin:10px 0 18px; background:linear-gradient(135deg,#155ea8,#0e4374); filter:saturate(.6) brightness(.8); }
+      #b2-traffic .s2-line{ height:18px; border-radius:8px; background:rgba(156,212,255,.22); margin-top:14px; }
+      #b2-traffic .s2-ribbon{ position:absolute; top:150px; left:-26px; right:-26px; text-align:center; transform:rotate(-7deg);
+        background:#FF4C32; color:#fff; font-weight:800; font-size:34px; letter-spacing:.04em; padding:16px 0; box-shadow:0 16px 40px -10px rgba(255,76,50,.6); }
+      #b2-traffic .s2-abandoned{ position:absolute; bottom:22px; left:26px; right:26px; text-align:center; color:#9fb6d4; font-weight:600; font-size:24px; }
+
+      #b2-traffic .s2-issue{ position:absolute; top:835px; left:96px; right:96px; text-align:center;
+        font-weight:700; font-size:30px; letter-spacing:.14em; color:#9fb6d4; }
+      #b2-traffic .s2-traffic{ position:absolute; top:880px; left:0; right:0; text-align:center;
+        font-family:'Rethink Sans',sans-serif; font-weight:800; font-size:150px; line-height:1; letter-spacing:-.04em; color:#FF4C32;
+        text-shadow:0 0 60px rgba(255,76,50,.45); }
+
+      #b2-traffic .s2-flow{ position:absolute; top:1120px; left:150px; right:150px; height:80px;
+        display:flex; align-items:center; gap:34px; }
+      #b2-traffic .s2-dot{ width:22px; height:22px; border-radius:50%; background:rgba(156,212,255,.55); box-shadow:0 0 14px rgba(156,212,255,.5); }
+      #b2-traffic .s2-storeicon{ margin-left:auto; font-size:64px; filter:drop-shadow(0 0 18px rgba(156,212,255,.4)); }
+
+      #b2-traffic .s2-vignette{ position:absolute; inset:0; pointer-events:none;
+        background:radial-gradient(ellipse at 50% 42%, transparent 46%, rgba(2,15,30,.82) 100%); opacity:.72; }
+      #b2-traffic .s2-grain{ position:absolute; inset:0; pointer-events:none; opacity:.06;
+        background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px),radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);
+        background-size:3px 3px,5px 5px; background-position:0 0,1px 2px; }
+    </style>
+
+    <script>
+      (() => {
+        const SLOT = 7.05;
+        const q = (s) => `#b2-traffic ${s}`;
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo(q('.s2-grid'), { backgroundPositionY: '0px' }, { backgroundPositionY: '48px', duration: SLOT, ease: 'none' }, 0);
+        tl.fromTo(q('.s2-vignette'), { opacity: .64 }, { opacity: .82, duration: 3.5, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 0);
+
+        // headline in (content rises through the incoming whip)
+        tl.fromTo(q('.s2-kicker'), { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 0.15);
+        tl.fromTo(q('.s2-head'), { opacity: 0, y: 44, filter: 'blur(14px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .7, ease: 'power3.out' }, 0.35);
+
+        // storefront @ "launch the version you preferred" (1.23)
+        tl.fromTo(q('.s2-store'), { opacity: 0, y: 60, scale: .92 }, { opacity: 1, y: 0, scale: 1, duration: .6, ease: 'power3.out' }, 1.2);
+        // stamp slams on
+        tl.fromTo(q('.s2-ribbon'), { opacity: 0, scale: 1.6, rotate: -7 }, { opacity: 1, scale: 1, rotate: -7, duration: .32, ease: 'power4.out' }, 2.3);
+        tl.fromTo(q('.s2-abandoned'), { opacity: 0 }, { opacity: 1, duration: .4 }, 2.7);
+        tl.to(q('.s2-store'), { filter: 'grayscale(.4)', duration: .6 }, 2.5);
+
+        // the issue is traffic @ 4.96
+        tl.fromTo(q('.s2-issue'), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 4.7);
+        tl.fromTo(q('.s2-traffic'), { opacity: 0, scale: .7, filter: 'blur(18px)' }, { opacity: 1, scale: 1, filter: 'blur(0px)', duration: .5, ease: 'back.out(1.5)' }, 4.96);
+        tl.fromTo(q('.s2-traffic'), { y: 12 }, { y: 0, duration: 1.4, ease: 'sine.inOut' }, 5.5);
+
+        // sparse trickle of visitor dots — few + slow = low traffic
+        tl.fromTo(q('.s2-flow'), { opacity: 0 }, { opacity: 1, duration: .4 }, 5.0);
+        tl.fromTo(q('.s2-dot'), { opacity: .12, x: -20 }, { opacity: .6, x: 0, duration: .8, stagger: .12, ease: 'sine.out' }, 5.1);
+        tl.fromTo(q('.s2-storeicon'), { opacity: .4, scale: .9 }, { opacity: 1, scale: 1, duration: .5, ease: 'back.out(1.6)' }, 5.6);
+
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines['b2-traffic'] = tl;
+      })();
+    </script>
+  </div>
+</template>

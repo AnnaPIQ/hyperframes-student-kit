@@ -1,0 +1,161 @@
+<template id="b1-never-ends-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div id="b1-never-ends" data-composition-id="b1-never-ends" data-start="0" data-duration="8.95" data-width="1080" data-height="1350">
+
+    <div class="s1-stage">
+      <div class="s1-grid"></div>
+
+      <!-- headline -->
+      <div class="s1-kicker" id="s1-kicker">YOUR A/B TEST</div>
+      <div class="s1-head" id="s1-head">just keeps <span class="s1-em">running.</span></div>
+
+      <!-- A vs B cards -->
+      <div class="s1-cards">
+        <div class="s1-card" id="s1-cardA">
+          <div class="s1-badge">A</div>
+          <div class="s1-thumb s1-thumb-a"></div>
+          <div class="s1-bar" style="width:70%"></div>
+          <div class="s1-bar" style="width:52%"></div>
+        </div>
+        <div class="s1-vs" id="s1-vs">vs</div>
+        <div class="s1-card" id="s1-cardB">
+          <div class="s1-badge">B</div>
+          <div class="s1-thumb s1-thumb-b"></div>
+          <div class="s1-bar" style="width:64%"></div>
+          <div class="s1-bar" style="width:58%"></div>
+        </div>
+      </div>
+
+      <!-- significance meter (stuck) -->
+      <div class="s1-meter" id="s1-meter">
+        <div class="s1-meter-row">
+          <span class="s1-meter-label">Statistical significance</span>
+          <span class="s1-meter-val" id="s1-meterval">0%</span>
+        </div>
+        <div class="s1-track">
+          <div class="s1-fill" id="s1-fill"></div>
+          <div class="s1-need" id="s1-need"><span>95% needed</span></div>
+        </div>
+      </div>
+
+      <!-- calendar + still-running pill -->
+      <div class="s1-footrow">
+        <div class="s1-cal" id="s1-cal">
+          <div class="s1-cal-k">RUNNING FOR</div>
+          <div class="s1-cal-v"><span id="s1-week">2</span> weeks</div>
+        </div>
+        <div class="s1-pill" id="s1-pill">
+          still running<span class="s1-dots"><i>.</i><i>.</i><i>.</i></span>
+        </div>
+      </div>
+
+      <div class="s1-vignette"></div>
+      <div class="s1-grain"></div>
+    </div>
+
+    <style>
+      @font-face { font-family:'Rethink Sans'; font-style:normal; font-weight:400 800; font-display:block; src:url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family:'Hedvig Letters Serif'; font-style:italic; font-weight:400; font-display:block; src:url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      #b1-never-ends{ position:absolute; inset:0; overflow:hidden; background:#06284C; font-family:'Rethink Sans',sans-serif; }
+      #b1-never-ends .s1-stage{ position:absolute; inset:0; }
+      #b1-never-ends .s1-grid{ position:absolute; inset:0;
+        background:
+          radial-gradient(120% 60% at 50% 6%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%),
+          repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1px, transparent 1px 84px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.05) 0 1px, transparent 1px 84px);
+        background-color:#06284C; will-change:background-position; }
+      #b1-never-ends .s1-kicker{ position:absolute; top:175px; left:0; right:0; text-align:center;
+        font-weight:700; font-size:30px; letter-spacing:.36em; color:#9CD4FF; }
+      #b1-never-ends .s1-head{ position:absolute; top:227px; left:0; right:0; text-align:center;
+        font-weight:800; font-size:104px; line-height:1.0; letter-spacing:-.03em; color:#fff; }
+      #b1-never-ends .s1-em{ font: inherit; color: inherit; }
+
+      #b1-never-ends .s1-cards{ position:absolute; top:405px; left:96px; right:96px;
+        display:flex; align-items:center; justify-content:center; gap:34px; }
+      #b1-never-ends .s1-card{ position:relative; width:360px; height:392px; border-radius:26px;
+        background:#0a325f; border:1px solid #1d4a7a; padding:26px; box-shadow:0 30px 70px -30px rgba(0,0,0,.7); }
+      #b1-never-ends .s1-badge{ position:absolute; top:-22px; left:24px; width:52px; height:52px; border-radius:14px;
+        background:#103d6f; border:1px solid #2a5c92; color:#DEEEFE; font-weight:800; font-size:30px; display:flex; align-items:center; justify-content:center; }
+      #b1-never-ends .s1-thumb{ width:100%; height:210px; border-radius:16px; margin:14px 0 22px;
+        background:linear-gradient(135deg,#12508f,#0c3a68); }
+      #b1-never-ends .s1-thumb-b{ background:linear-gradient(135deg,#155ea8,#0e4374); }
+      #b1-never-ends .s1-bar{ height:20px; border-radius:8px; background:rgba(156,212,255,.28); margin-top:14px; }
+      #b1-never-ends .s1-vs{ font-family:'Hedvig Letters Serif',serif; font-style:italic; font-weight:400; font-size:44px; color:#9fb6d4; }
+
+      #b1-never-ends .s1-meter{ position:absolute; top:850px; left:96px; right:96px;
+        background:#0a325f; border:1px solid #1d4a7a; border-radius:22px; padding:34px 40px 64px; }
+      #b1-never-ends .s1-meter-row{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:22px; }
+      #b1-never-ends .s1-meter-label{ font-weight:600; font-size:34px; color:#DEEEFE; }
+      #b1-never-ends .s1-meter-val{ font-weight:800; font-size:46px; color:#9CD4FF; font-variant-numeric:tabular-nums; }
+      #b1-never-ends .s1-track{ position:relative; height:26px; border-radius:13px; background:#04203c; overflow:visible; }
+      #b1-never-ends .s1-fill{ position:absolute; left:0; top:0; height:100%; width:0%; border-radius:13px;
+        background:linear-gradient(90deg,#2d7fd6,#9CD4FF); box-shadow:0 0 22px rgba(156,212,255,.4); }
+      #b1-never-ends .s1-need{ position:absolute; top:-8px; bottom:-8px; left:95%; width:0; border-left:3px dashed #FF4C32; }
+      #b1-never-ends .s1-need span{ position:absolute; top:38px; left:auto; right:-4px; width:200px; text-align:right; color:#FF4C32; font-weight:700; font-size:24px; }
+
+      #b1-never-ends .s1-footrow{ position:absolute; top:1120px; left:96px; right:96px;
+        display:flex; align-items:center; justify-content:center; gap:28px; }
+      #b1-never-ends .s1-cal{ background:#0a325f; border:1px solid #1d4a7a; border-radius:18px; padding:20px 30px; text-align:left; }
+      #b1-never-ends .s1-cal-k{ font-weight:700; font-size:22px; letter-spacing:.2em; color:#9fb6d4; }
+      #b1-never-ends .s1-cal-v{ font-weight:800; font-size:44px; color:#fff; font-variant-numeric:tabular-nums; }
+      #b1-never-ends .s1-cal-v span{ color:#9CD4FF; }
+      #b1-never-ends .s1-pill{ background:rgba(255,76,50,.12); border:1px solid rgba(255,76,50,.5); color:#FF7A5C;
+        border-radius:999px; padding:20px 34px; font-weight:700; font-size:34px; display:flex; align-items:center; }
+      #b1-never-ends .s1-dots{ display:inline-flex; margin-left:6px; }
+      #b1-never-ends .s1-dots i{ font-style:normal; }
+
+      #b1-never-ends .s1-vignette{ position:absolute; inset:0; pointer-events:none;
+        background:radial-gradient(ellipse at 50% 42%, transparent 46%, rgba(2,15,30,.82) 100%); opacity:.7; }
+      #b1-never-ends .s1-grain{ position:absolute; inset:0; pointer-events:none; opacity:.06;
+        background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px),radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);
+        background-size:3px 3px,5px 5px; background-position:0 0,1px 2px; }
+    </style>
+
+    <script>
+      (() => {
+        const SLOT = 8.95;
+        const q = (s) => `#b1-never-ends ${s}`;
+        const tl = gsap.timeline({ paused: true });
+
+        // ambient
+        tl.fromTo(q('.s1-grid'), { backgroundPositionY: '0px' }, { backgroundPositionY: '54px', duration: SLOT, ease: 'none' }, 0);
+        tl.fromTo(q('.s1-vignette'), { opacity: .62 }, { opacity: .8, duration: 4, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 0);
+
+        // headline (0.2 / "your a/b test")
+        tl.fromTo(q('.s1-kicker'), { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 0.2);
+        tl.fromTo(q('.s1-head'), { opacity: 0, y: 40, filter: 'blur(12px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .7, ease: 'power3.out' }, 0.45);
+
+        // A/B cards @ "A-B test" (1.35)
+        tl.fromTo(q('.s1-cardA'), { opacity: 0, y: 60, rotate: -3 }, { opacity: 1, y: 0, rotate: 0, duration: .55, ease: 'back.out(1.3)' }, 1.35);
+        tl.fromTo(q('.s1-vs'), { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .4, ease: 'back.out(2)' }, 1.62);
+        tl.fromTo(q('.s1-cardB'), { opacity: 0, y: 60, rotate: 3 }, { opacity: 1, y: 0, rotate: 0, duration: .55, ease: 'back.out(1.3)' }, 1.55);
+
+        // significance meter @ "keeps running" (3.72) — fills then STALLS at 58%
+        tl.fromTo(q('.s1-meter'), { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: .5, ease: 'power2.out' }, 3.5);
+        const mv = { v: 0 };
+        const valEl = document.querySelector(q('#s1-meterval'));
+        tl.to(q('.s1-fill'), { width: '58%', duration: 1.6, ease: 'power2.out' }, 3.7);
+        tl.to(mv, { v: 58, duration: 1.6, ease: 'power2.out', onUpdate: () => { if (valEl) valEl.textContent = Math.round(mv.v) + '%'; } }, 3.7);
+        tl.fromTo(q('.s1-need'), { opacity: 0 }, { opacity: 1, duration: .4 }, 4.4);
+        // tiny jitter to sell "stuck"
+        tl.to(q('.s1-fill'), { width: '60%', duration: .5, yoyo: true, repeat: 3, ease: 'sine.inOut' }, 5.4);
+
+        // calendar @ "Two weeks" (4.87) then flips to 4 @ "four" (6.0)
+        tl.fromTo(q('.s1-cal'), { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: .45, ease: 'power2.out' }, 4.7);
+        tl.fromTo(q('.s1-pill'), { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: .45, ease: 'power2.out' }, 4.85);
+        const wk = document.querySelector(q('#s1-week'));
+        tl.to(q('.s1-cal-v'), { scale: 1.12, duration: .16, yoyo: true, repeat: 1, ease: 'power2.out',
+          onStart: () => { if (wk) wk.textContent = '4'; } }, 6.0);
+        // running dots pulse
+        tl.fromTo(q('.s1-dots i'), { opacity: .2 }, { opacity: 1, duration: .4, stagger: .18, yoyo: true, repeat: 6, ease: 'sine.inOut' }, 5.0);
+
+        // "no closer" — meter val flickers, head holds
+        tl.to(q('.s1-meter-val'), { color: '#FF7A5C', duration: .3, yoyo: true, repeat: 1 }, 7.4);
+
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines = window.__timelines || {};
+        window.__timelines['b1-never-ends'] = tl;
+      })();
+    </script>
+  </div>
+</template>
