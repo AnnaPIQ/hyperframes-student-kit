@@ -129,6 +129,21 @@
         color: var(--brand-white);
         max-width: 860px;
       }
+      /* Wrap + flame energy-bloom behind the offer phrase (animated in). */
+      #endcard .ec-cta-wrap { position: relative; display: flex; justify-content: center; }
+      #endcard .ec-cta-glow {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 118%;
+        height: 150%;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(60% 60% at 50% 50%, rgba(255, 96, 52, 0.6) 0%, rgba(255, 96, 52, 0) 70%);
+        filter: blur(36px);
+        opacity: 0;
+        pointer-events: none;
+      }
+      #endcard .ec-cta .w { display: inline-block; will-change: transform; }
       /* Flame CTA pill under the headline. */
       #endcard .ec-pill {
         margin-top: 54px;
@@ -215,14 +230,17 @@
         <img id="bug-logo-916" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
 
-      <!-- End card — last ~2.5s -->
-      <div id="endcard" class="clip" data-start="45.5" data-duration="2.5" data-track-index="9">
+      <!-- End card — last ~3.4s (given room for the animated reveal) -->
+      <div id="endcard" class="clip" data-start="44.6" data-duration="3.4" data-track-index="9">
         <div class="ec-bg"></div>
         <div class="ec-bloom"></div>
         <div class="ec-content">
           <img id="ec-logo-916" class="ec-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
           <div class="ec-rule"></div>
-          <div class="ec-cta">Join our Free Profitability Bootcamp</div>
+          <div class="ec-cta-wrap">
+            <div class="ec-cta-glow"></div>
+            <div class="ec-cta"><span class="w">Join</span> <span class="w">our</span> <span class="w hot">Free</span> <span class="w hot">Profitability</span> <span class="w hot">Bootcamp</span></div>
+          </div>
           <div class="ec-pill">Join now</div>
         </div>
       </div>
@@ -242,9 +260,20 @@
       tl.to("#vidA-wrap", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 38);
       tl.to("#vidB-wrap", { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 38);
 
-      // End card crossfades up from the footage, content settles gently.
-      tl.from("#endcard", { opacity: 0, duration: 0.5, ease: "power1.inOut" }, 45.5);
-      tl.from("#endcard .ec-content", { opacity: 0, y: 14, duration: 0.6, ease: "power3.out" }, 45.7);
+      // ---- End card: the one big motion moment (restrained everywhere else) ----
+      const ec = 44.6; // end-card start (matches data-start)
+      tl.from("#endcard", { opacity: 0, duration: 0.45, ease: "power1.inOut" }, ec);
+      tl.from("#endcard .ec-bloom", { opacity: 0, scale: 0.9, duration: 0.9, ease: "power2.out" }, ec + 0.1);
+      tl.from("#endcard .ec-logo", { opacity: 0, y: 18, scale: 0.92, duration: 0.55, ease: "back.out(1.4)" }, ec + 0.2);
+      tl.from("#endcard .ec-rule", { scaleX: 0, duration: 0.45, ease: "power3.inOut", transformOrigin: "50% 50%" }, ec + 0.45);
+      // Headline assembles; the offer words get the hero pop + a flame bloom behind them.
+      tl.from("#endcard .ec-cta .w:not(.hot)", { opacity: 0, y: 20, duration: 0.45, ease: "power3.out", stagger: 0.06 }, ec + 0.55);
+      tl.from("#endcard .ec-cta .hot", { opacity: 0, y: 24, scale: 0.6, duration: 0.5, ease: "back.out(1.9)", stagger: 0.09 }, ec + 0.8);
+      tl.fromTo("#endcard .ec-cta-glow", { opacity: 0, scale: 0.7 }, { opacity: 0.6, scale: 1, duration: 0.45, ease: "power2.out" }, ec + 0.95);
+      tl.to("#endcard .ec-cta-glow", { opacity: 0.16, duration: 0.7, ease: "power2.inOut" }, ec + 1.45);
+      // CTA pill pops in, then one subtle pulse.
+      tl.from("#endcard .ec-pill", { opacity: 0, scale: 0.7, y: 10, duration: 0.5, ease: "back.out(2)", transformOrigin: "50% 50%" }, ec + 1.15);
+      tl.to("#endcard .ec-pill", { scale: 1.04, duration: 0.2, yoyo: true, repeat: 1, ease: "sine.inOut" }, ec + 1.85);
 
       // Pad the timeline so tl.duration() matches root data-duration.
       tl.to({}, { duration: 48 }, 0);

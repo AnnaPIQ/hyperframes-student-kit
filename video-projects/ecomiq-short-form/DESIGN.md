@@ -34,6 +34,12 @@ NOT the ad. Render each deliverable with the `-c` flag (see below).
   an extra 0.5s (`data-duration 38.5`) to cover the dissolve.
 - **End card CTA:** "Join our Free Profitability Bootcamp" (all white, single weight,
   no italics) + a flame **"Join now"** pill with a soft glow.
+- **Motion:** deliberately restrained — the body is footage-forward with only the
+  logo settle-in and the A→B dissolve. The one real motion moment is the end card:
+  logo scale-in → flame rule draw → headline assembles word-by-word, with the offer
+  words ("Free Profitability Bootcamp") getting a back-eased hero pop and a flame
+  energy-bloom behind them, then the pill pops with one subtle pulse. End card start
+  moved to 44.6s (3.4s) to give the reveal room to breathe.
 - **Audio:** each clip's own audio via a sibling `<audio>` element (the `<video>`
   stays `muted`). End card (46–48s) is a quiet outro.
 
