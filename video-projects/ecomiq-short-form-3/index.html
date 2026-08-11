@@ -30,6 +30,15 @@
 
       /* Full-frame motion-graphic overlays cover the video on beats; end card on top */
       .cutaway { position: absolute; inset: 0; z-index: 40; }
+
+      /* "Free Profitability Bootcamp" emphasis banner over the footage (~37s) */
+      #promo-wrap { position: absolute; inset: 0; z-index: 60; pointer-events: none;
+        display: flex; align-items: center; justify-content: center; }
+      #promo-banner { margin-top: 12%; font-weight: 800; font-size: 52px; letter-spacing: .01em;
+        text-transform: uppercase; color: #FFFFFF; white-space: nowrap; text-align: center;
+        background: #FF4C32; padding: 30px 56px; border-radius: 22px;
+        box-shadow: 0 26px 70px -14px rgba(255,76,50,.75), inset 0 0 0 2px rgba(255,160,130,.35); }
+
       #end-card-clip { position: absolute; inset: 0; z-index: 100; }
     </style>
   </head>
@@ -71,6 +80,11 @@
       <div id="cut5" class="cutaway clip" data-composition-id="cutaway-5" data-composition-src="compositions/cutaway-5.html"
            data-start="30.0" data-duration="2.2" data-track-index="4"></div>
 
+      <!-- ~37s: emphasise the offer as he says "completely free profitability bootcamp" -->
+      <div id="promo-wrap" class="clip" data-start="37.0" data-duration="3.7" data-track-index="6">
+        <div id="promo-banner">Free Profitability Bootcamp</div>
+      </div>
+
       <!-- End card (track 5) — overlays the tail so total runtime ≈ the original length -->
       <div id="end-card-clip" class="clip" data-composition-id="end-card" data-composition-src="compositions/end-card.html"
            data-start="40.8" data-duration="4.0" data-track-index="5"></div>
@@ -81,6 +95,13 @@
       const tl = gsap.timeline({ paused: true });
       // Logo entrance (media + sub-comp overlays drive their own timelines)
       tl.from("#brand-logo", { opacity: 0, y: -20, filter: "blur(6px)", duration: .6, ease: "power3.out" }, .3);
+
+      // "Free Profitability Bootcamp" banner — pop in on the offer, pulse, pop out into end card
+      tl.fromTo("#promo-banner", { opacity: 0, scale: .8, y: 28 },
+                                 { opacity: 1, scale: 1, y: 0, duration: .5, ease: "back.out(1.7)" }, 37.15)
+        .to("#promo-banner", { scale: 1.045, duration: .6, ease: "sine.inOut", yoyo: true, repeat: 2 }, 37.8)
+        .to("#promo-banner", { opacity: 0, scale: .94, duration: .3, ease: "power2.in" }, 40.3);
+
       tl.set({}, {}, 44.8); // composition duration
       window.__timelines["ecomiq-short-form-3"] = tl;
     </script>
