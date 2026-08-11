@@ -3,10 +3,9 @@
     <div class="c3-bg"></div>
     <div class="c3-grid"></div>
     <div class="c3-wrap">
-      <div class="c3-eyebrow">The Simple Answer</div>
-      <div class="c3-q">Need more revenue?</div>
-      <div class="c3-arrow">&#8595;</div>
-      <div class="c3-a">Spend more on ads.</div>
+      <div class="c3-eyebrow">The First Number</div>
+      <div class="c3-row"><span class="c3-idx">01</span><span class="c3-title">Repeat Rate</span><span class="c3-tri">&#9650;</span></div>
+      <div class="c3-sub">how often they come back</div>
     </div>
     <style>
       @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
@@ -14,23 +13,25 @@
       #cutaway-3-root { position: absolute; inset: 0; overflow: hidden;
         background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
       #cutaway-3-root .c3-bg { position: absolute; inset: 0;
-        background: radial-gradient(80% 50% at 50% 42%, rgba(156,212,255,.14) 0%, rgba(6,40,76,0) 60%), #06284C; }
+        background: radial-gradient(80% 50% at 50% 44%, rgba(156,212,255,.14) 0%, rgba(6,40,76,0) 60%), #06284C; }
       #cutaway-3-root .c3-grid { position: absolute; inset: 0; opacity: .5;
         background-image:
           repeating-linear-gradient(0deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px),
           repeating-linear-gradient(90deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px);
-        -webkit-mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%);
-                mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%); }
+        -webkit-mask-image: radial-gradient(75% 60% at 50% 48%, #000 0%, transparent 85%);
+                mask-image: radial-gradient(75% 60% at 50% 48%, #000 0%, transparent 85%); }
       #cutaway-3-root .c3-wrap { position: absolute; inset: 0;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
-        gap: 34px; padding: 12% 9%; text-align: center; }
+        gap: 26px; padding: 12% 8%; text-align: center; }
       #cutaway-3-root .c3-eyebrow { font-weight: 700; font-size: 34px; letter-spacing: .3em;
-        text-transform: uppercase; color: #7ea6cf; margin-bottom: 8px; }
-      #cutaway-3-root .c3-q { font-weight: 800; font-size: 104px; line-height: 1.0;
+        text-transform: uppercase; color: #7ea6cf; margin-bottom: 6px; }
+      #cutaway-3-root .c3-row { display: flex; align-items: center; justify-content: center; gap: 26px; }
+      #cutaway-3-root .c3-idx { font-weight: 800; font-size: 52px; color: #06284C;
+        background: #9CD4FF; border-radius: 18px; padding: 8px 20px; letter-spacing: -.02em; }
+      #cutaway-3-root .c3-title { font-weight: 800; font-size: 116px; line-height: .95;
         letter-spacing: -.03em; color: #FFFFFF; }
-      #cutaway-3-root .c3-arrow { font-size: 84px; line-height: 1; color: #9CD4FF; }
-      #cutaway-3-root .c3-a { font-weight: 800; font-size: 92px; line-height: 1.0;
-        letter-spacing: -.03em; color: rgba(174,199,224,.28); }
+      #cutaway-3-root .c3-tri { font-size: 70px; line-height: 1; color: #9CD4FF; }
+      #cutaway-3-root .c3-sub { font-weight: 600; font-size: 46px; color: #a9c4e0; letter-spacing: .01em; }
     </style>
     <script src="assets/vendor/gsap.min.js"></script>
     <script>
@@ -39,12 +40,13 @@
       tl.from("#cutaway-3-root .c3-bg", { opacity: 0, duration: .2, ease: "power1.out" }, 0)
         .from("#cutaway-3-root .c3-grid", { opacity: 0, duration: .4, ease: "power1.out" }, 0)
         .from("#cutaway-3-root .c3-eyebrow", { opacity: 0, y: 20, duration: .35, ease: "power3.out" }, .05)
-        .from("#cutaway-3-root .c3-q", { opacity: 0, y: 40, filter: "blur(12px)", duration: .45, ease: "expo.out" }, .15)
-        .from("#cutaway-3-root .c3-arrow", { opacity: 0, y: -18, scale: .6, duration: .35, ease: "back.out(2)" }, .5)
-        .from("#cutaway-3-root .c3-a", { opacity: 0, y: 26, duration: .45, ease: "power3.out" }, .7)
-        .to("#cutaway-3-root .c3-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.03, duration: .25, ease: "power2.in" }, 1.5)
-        .to("#cutaway-3-root .c3-grid", { opacity: 0, duration: .22, ease: "power2.in" }, 1.52);
-      tl.set({}, {}, 1.8); // pad to data-duration
+        .from("#cutaway-3-root .c3-idx", { opacity: 0, scale: 0, duration: .4, ease: "back.out(2)" }, .18)
+        .from("#cutaway-3-root .c3-title", { opacity: 0, y: 40, filter: "blur(12px)", duration: .5, ease: "expo.out" }, .24)
+        .from("#cutaway-3-root .c3-tri", { opacity: 0, scale: 0, duration: .35, ease: "back.out(2.2)" }, .5)
+        .from("#cutaway-3-root .c3-sub", { opacity: 0, y: 20, duration: .4, ease: "power3.out" }, .5)
+        .to("#cutaway-3-root .c3-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.03, duration: .25, ease: "power2.in" }, 1.9)
+        .to("#cutaway-3-root .c3-grid", { opacity: 0, duration: .22, ease: "power2.in" }, 1.92);
+      tl.set({}, {}, 2.2); // pad to data-duration
       window.__timelines["cutaway-3"] = tl;
     </script>
   </div>

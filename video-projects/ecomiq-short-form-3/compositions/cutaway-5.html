@@ -1,0 +1,53 @@
+<template id="cutaway-5-template">
+  <div id="cutaway-5-root" data-composition-id="cutaway-5" data-width="1080" data-height="1920">
+    <div class="c5-bg"></div>
+    <div class="c5-grid"></div>
+    <div class="c5-wrap">
+      <div class="c5-eyebrow">The Hidden Lever</div>
+      <div class="c5-title">Retention</div>
+      <div class="c5-rule"></div>
+      <div class="c5-foot"><span class="c5-arrow">&#9650;</span> More profit to your bottom line</div>
+    </div>
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      #cutaway-5-root { position: absolute; inset: 0; overflow: hidden;
+        background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+      #cutaway-5-root .c5-bg { position: absolute; inset: 0;
+        background: radial-gradient(80% 50% at 50% 42%, rgba(156,212,255,.16) 0%, rgba(6,40,76,0) 60%), #06284C; }
+      #cutaway-5-root .c5-grid { position: absolute; inset: 0; opacity: .5;
+        background-image:
+          repeating-linear-gradient(0deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px);
+        -webkit-mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%);
+                mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%); }
+      #cutaway-5-root .c5-wrap { position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 30px; padding: 12% 8%; text-align: center; }
+      #cutaway-5-root .c5-eyebrow { font-weight: 700; font-size: 34px; letter-spacing: .3em;
+        text-transform: uppercase; color: #7ea6cf; }
+      #cutaway-5-root .c5-title { font-weight: 800; font-size: 168px; line-height: .9;
+        letter-spacing: -.03em; color: #9CD4FF; }
+      #cutaway-5-root .c5-rule { width: 240px; height: 6px; border-radius: 999px;
+        background: linear-gradient(90deg, rgba(156,212,255,0), rgba(156,212,255,.6), rgba(156,212,255,0)); }
+      #cutaway-5-root .c5-foot { font-weight: 700; font-size: 48px; color: #FFFFFF; letter-spacing: .01em;
+        display: inline-flex; align-items: center; gap: 16px; }
+      #cutaway-5-root .c5-arrow { color: #9CD4FF; font-size: 44px; }
+    </style>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#cutaway-5-root .c5-bg", { opacity: 0, duration: .2, ease: "power1.out" }, 0)
+        .from("#cutaway-5-root .c5-grid", { opacity: 0, duration: .4, ease: "power1.out" }, 0)
+        .from("#cutaway-5-root .c5-eyebrow", { opacity: 0, y: 20, duration: .35, ease: "power3.out" }, .05)
+        .from("#cutaway-5-root .c5-title", { opacity: 0, y: 44, scale: .92, filter: "blur(14px)", duration: .5, ease: "expo.out" }, .15)
+        .from("#cutaway-5-root .c5-rule", { scaleX: 0, opacity: 0, transformOrigin: "50% 50%", duration: .4, ease: "power2.out" }, .45)
+        .from("#cutaway-5-root .c5-foot", { opacity: 0, y: 22, duration: .45, ease: "power3.out" }, .55)
+        .to("#cutaway-5-root .c5-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.03, duration: .25, ease: "power2.in" }, 1.9)
+        .to("#cutaway-5-root .c5-grid", { opacity: 0, duration: .22, ease: "power2.in" }, 1.92);
+      tl.set({}, {}, 2.2); // pad to data-duration
+      window.__timelines["cutaway-5"] = tl;
+    </script>
+  </div>
+</template>
