@@ -31,7 +31,7 @@
         color: var(--brand-white);
       }
 
-      /* ------- Footage layers (full-frame, footage-forward) ------- */
+      /* ------- Footage layers (full-frame talking head) ------- */
       .vid-wrap {
         position: absolute;
         inset: 0;
@@ -39,8 +39,7 @@
         height: 1920px;
         overflow: hidden;
       }
-      /* Video B stays hidden until the cut at 38s (set to opaque by GSAP). */
-      #vidB-wrap { opacity: 0; }
+      #vidB-wrap { opacity: 0; } /* Video B revealed at the 38s cut by GSAP. */
       .vid-wrap video {
         position: absolute;
         inset: 0;
@@ -48,38 +47,268 @@
         height: 100%;
         object-fit: cover;
         object-position: 50% 50%;
-        /* Subtle grade so footage reads premium against the navy brand world. */
-        filter: contrast(1.05) saturate(1.06) brightness(0.99);
+        /* Cinematic grade so the face seats into the navy brand world. */
+        filter: contrast(1.08) saturate(1.05) brightness(0.95);
+      }
+      /* Persistent vignette over the footage (covered by full-screen scenes). */
+      #face-vig {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(128% 92% at 50% 40%, rgba(0, 0, 0, 0) 52%, rgba(3, 12, 26, 0.62) 100%),
+          linear-gradient(180deg, rgba(3, 12, 26, 0.36) 0%, rgba(3, 12, 26, 0) 22%);
       }
 
-      /* ------- Persistent EcomIQ logo bug (top-left, white) ------- */
+      /* ------- Persistent EcomIQ logo bug (top-left, small — matches ref) ------- */
       #bug {
         position: absolute;
-        top: 52px;
-        left: 52px;
-        --bug-w: 520px; /* large persistent top-left logo (~48% width) */
+        top: 46px;
+        left: 50px;
+        --bug-w: 188px;
       }
-      /* Soft dark halo so the white wordmark reads over bright shots. */
       #bug::before {
         content: "";
         position: absolute;
-        left: -26px;
-        top: -22px;
-        right: -30px;
-        bottom: -20px;
-        background: radial-gradient(
-          120% 145% at 32% 42%,
-          rgba(4, 20, 40, 0.55) 0%,
-          rgba(4, 20, 40, 0) 72%
-        );
-        border-radius: 44px;
+        left: -18px; top: -14px; right: -20px; bottom: -14px;
+        background: radial-gradient(120% 145% at 32% 42%, rgba(4, 20, 40, 0.5) 0%, rgba(4, 20, 40, 0) 72%);
+        border-radius: 30px;
       }
       #bug img {
         position: relative;
         display: block;
         width: var(--bug-w);
         height: auto;
-        filter: drop-shadow(0 2px 7px rgba(0, 0, 0, 0.55));
+        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.55));
+      }
+
+      /* =====================================================================
+         Full-screen graphic scenes — shared chrome (navy world + grid + vig)
+         ===================================================================== */
+      .scene { position: absolute; inset: 0; opacity: 0; }
+      .scene .sc-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(92% 58% at 50% 34%, rgba(64, 132, 214, 0.22) 0%, rgba(6, 26, 52, 0) 60%),
+          linear-gradient(180deg, #0a2138 0%, #071627 100%);
+      }
+      .scene .sc-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(120, 172, 232, 0.075) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(120, 172, 232, 0.075) 1px, transparent 1px);
+        background-size: 94px 94px;
+        -webkit-mask-image: radial-gradient(102% 80% at 50% 46%, #000 52%, transparent 100%);
+        mask-image: radial-gradient(102% 80% at 50% 46%, #000 52%, transparent 100%);
+      }
+      .scene .sc-vig {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(122% 100% at 50% 42%, rgba(0, 0, 0, 0) 54%, rgba(2, 10, 22, 0.5) 100%);
+      }
+      .sc-center {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 92px;
+      }
+      .sc-eyebrow {
+        font-family: "Rethink Sans", sans-serif;
+        font-weight: 700;
+        font-size: 34px;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: rgba(150, 196, 240, 0.8);
+      }
+
+      /* ---- Scene 1 — big ROAS number, stamped DOESN'T MATTER ---- */
+      #s1 .s1-eb { margin-bottom: 46px; }
+      #s1 .s1-num {
+        font-family: "Rethink Sans", sans-serif;
+        font-weight: 800;
+        font-size: 300px;
+        line-height: 0.9;
+        letter-spacing: -0.03em;
+        color: #c4e2ff;
+        text-shadow: 0 0 64px rgba(96, 172, 255, 0.45);
+      }
+      #s1 .s1-arrow { font-size: 118px; color: #8fc4ff; vertical-align: middle; margin-right: 14px; }
+      #s1 .s1-x { font-size: 172px; color: #7fb4f0; }
+      #s1 .s1-sub {
+        margin-top: 10px;
+        font-weight: 700;
+        font-size: 40px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(150, 196, 240, 0.72);
+      }
+      #s1 .s1-stamp {
+        position: relative;
+        margin-top: 74px;
+        font-family: "Rethink Sans", sans-serif;
+        font-weight: 800;
+        font-size: 98px;
+        letter-spacing: -0.01em;
+        color: var(--brand-flame);
+        transform: rotate(-7deg);
+        text-shadow: 0 6px 30px rgba(255, 80, 40, 0.4);
+      }
+      #s1 .s1-strike {
+        position: absolute;
+        left: -5%;
+        top: 52%;
+        width: 110%;
+        height: 10px;
+        background: var(--brand-flame);
+        border-radius: 5px;
+        transform: scaleX(0);
+        transform-origin: 0 50%;
+        box-shadow: 0 0 22px rgba(255, 90, 50, 0.7);
+      }
+
+      /* ---- Scene 2 — Great ROAS / Thin margins / = $0 profit ---- */
+      #s2 .sc-eyebrow { margin-bottom: 50px; }
+      #s2 .s2-l {
+        font-family: "Rethink Sans", sans-serif;
+        font-weight: 800;
+        font-size: 106px;
+        line-height: 1.14;
+        letter-spacing: -0.02em;
+      }
+      #s2 .s2-l.white { color: #ffffff; }
+      #s2 .s2-l.blue { color: #c4e2ff; text-shadow: 0 0 40px rgba(96, 172, 255, 0.32); }
+      #s2 .s2-eq {
+        margin-top: 30px;
+        font-family: "Rethink Sans", sans-serif;
+        font-weight: 800;
+        font-size: 124px;
+        letter-spacing: -0.02em;
+      }
+      #s2 .s2-eq .eqsign { color: rgba(150, 196, 240, 0.55); }
+      #s2 .s2-eq .flame { color: var(--brand-flame); text-shadow: 0 6px 30px rgba(255, 80, 40, 0.42); }
+
+      /* ---- Scene 3 — rising spend bars, flat profit line, $0 LEFT ---- */
+      #s3 .s3-top {
+        position: absolute;
+        top: 236px;
+        left: 0; right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+      }
+      #s3 .s3-pills { display: flex; gap: 22px; }
+      #s3 .s3-pill {
+        font-family: "Rethink Sans", sans-serif;
+        font-weight: 800;
+        font-size: 40px;
+        letter-spacing: 0.01em;
+        padding: 15px 34px;
+        border-radius: 999px;
+        border: 2px solid;
+      }
+      #s3 .s3-pill.blue { color: #c4e2ff; border-color: rgba(120, 180, 255, 0.5); background: rgba(90, 150, 230, 0.12); }
+      #s3 .s3-pill.flame { color: var(--brand-flame); border-color: rgba(255, 110, 60, 0.55); background: rgba(255, 90, 50, 0.1); }
+      #s3 .s3-chart {
+        position: absolute;
+        left: 112px; right: 112px;
+        bottom: 486px;
+        height: 640px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 26px;
+      }
+      #s3 .s3-bar {
+        flex: 1;
+        border-radius: 14px 14px 0 0;
+        background: linear-gradient(180deg, #c4e2ff 0%, #4d86c8 100%);
+        transform: scaleY(0);
+        transform-origin: 50% 100%;
+        box-shadow: 0 0 30px rgba(120, 180, 255, 0.22);
+      }
+      #s3 .s3-baseline {
+        position: absolute;
+        left: 112px; right: 112px;
+        bottom: 486px;
+        height: 3px;
+        background: rgba(150, 196, 240, 0.3);
+        transform: scaleX(0);
+        transform-origin: 0 50%;
+      }
+      #s3 .s3-profit {
+        position: absolute;
+        left: 112px; right: 112px;
+        bottom: 536px;
+        height: 7px;
+        background: var(--brand-flame);
+        border-radius: 4px;
+        transform: scaleX(0);
+        transform-origin: 0 50%;
+        box-shadow: 0 0 20px rgba(255, 90, 50, 0.6);
+      }
+      #s3 .s3-profit-label {
+        position: absolute;
+        bottom: 548px;
+        right: 122px;
+        font-weight: 800;
+        font-size: 32px;
+        letter-spacing: 0.12em;
+        color: var(--brand-flame);
+      }
+      #s3 .s3-months {
+        position: absolute;
+        left: 112px; right: 112px;
+        bottom: 446px;
+        display: flex;
+        justify-content: space-between;
+      }
+      #s3 .s3-month {
+        flex: 1;
+        text-align: center;
+        font-weight: 700;
+        font-size: 30px;
+        color: rgba(150, 196, 240, 0.7);
+      }
+      #s3 .s3-stamp {
+        position: absolute;
+        left: 0; right: 0;
+        bottom: 236px;
+        text-align: center;
+        font-family: "Rethink Sans", sans-serif;
+        font-weight: 800;
+        font-size: 132px;
+        letter-spacing: -0.02em;
+        color: var(--brand-flame);
+        text-shadow: 0 8px 34px rgba(255, 80, 40, 0.45);
+      }
+
+      /* ---- Scene 4 — THE SIMPLE ANSWER ---- */
+      #s4 .sc-eyebrow { margin-bottom: 46px; }
+      #s4 .s4-l1 {
+        font-family: "Rethink Sans", sans-serif;
+        font-weight: 800;
+        font-size: 120px;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+      }
+      #s4 .s4-l1 .flame { color: var(--brand-flame); text-shadow: 0 6px 30px rgba(255, 80, 40, 0.42); }
+      #s4 .s4-l2 {
+        margin-top: 20px;
+        font-family: "Rethink Sans", sans-serif;
+        font-weight: 800;
+        font-size: 96px;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: #c4e2ff;
+        text-shadow: 0 0 40px rgba(96, 172, 255, 0.3);
       }
 
       /* ------- Branded end card ------- */
@@ -93,18 +322,15 @@
       }
       #endcard .ec-bloom {
         position: absolute;
-        left: -12%;
-        bottom: -20%;
-        width: 124%;
-        height: 58%;
+        left: -12%; bottom: -20%;
+        width: 124%; height: 58%;
         background: var(--brand-gradient-2);
         filter: blur(96px);
         opacity: 0.36;
       }
       #endcard .ec-content {
         position: absolute;
-        left: 96px;
-        right: 96px;
+        left: 96px; right: 96px;
         top: 50%;
         transform: translateY(-50%);
         display: flex;
@@ -114,8 +340,7 @@
       }
       #endcard .ec-logo { width: 500px; height: auto; }
       #endcard .ec-rule {
-        width: 132px;
-        height: 6px;
+        width: 132px; height: 6px;
         background: var(--brand-flame);
         border-radius: 3px;
         margin: 58px 0 46px;
@@ -136,13 +361,10 @@
         margin-bottom: 20px;
       }
       #endcard .ec-offer-wrap { position: relative; display: inline-block; text-align: center; }
-      /* Flame energy-bloom behind the offer phrase (animated in). */
       #endcard .ec-cta-glow {
         position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 124%;
-        height: 172%;
+        left: 50%; top: 50%;
+        width: 124%; height: 172%;
         transform: translate(-50%, -50%);
         background: radial-gradient(60% 60% at 50% 50%, rgba(255, 96, 52, 0.74) 0%, rgba(255, 96, 52, 0) 70%);
         filter: blur(40px);
@@ -159,8 +381,7 @@
       }
       #endcard .ec-offer .w { display: inline-block; will-change: transform; }
       #endcard .ec-offer-underline {
-        height: 9px;
-        width: 100%;
+        height: 9px; width: 100%;
         margin-top: 18px;
         background: var(--brand-flame);
         border-radius: 5px;
@@ -168,40 +389,6 @@
         transform-origin: 0% 50%;
         box-shadow: 0 0 20px rgba(255, 90, 50, 0.65);
       }
-
-      /* ------- Full-frame animated brand overlay (edge frame + corners + sweep) ------- */
-      #overlay { position: absolute; inset: 0; pointer-events: none; }
-      #overlay .ov-vignette {
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(122% 100% at 50% 44%, rgba(0, 0, 0, 0) 56%, rgba(2, 10, 24, 0.44) 100%);
-      }
-      #overlay .ov-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-      #overlay .ov-rect {
-        fill: none;
-        stroke: rgba(255, 110, 60, 0.62);
-        stroke-width: 2.5;
-        stroke-dasharray: 5776;
-        stroke-dashoffset: 5776;
-      }
-      #overlay .ov-corner {
-        position: absolute;
-        width: 92px;
-        height: 92px;
-        filter: drop-shadow(0 0 8px rgba(255, 90, 50, 0.5));
-      }
-      #overlay .ov-corner.tr { top: 26px; right: 26px; border-top: 5px solid var(--brand-flame); border-right: 5px solid var(--brand-flame); border-top-right-radius: 12px; }
-      #overlay .ov-corner.bl { bottom: 26px; left: 26px; border-bottom: 5px solid var(--brand-flame); border-left: 5px solid var(--brand-flame); border-bottom-left-radius: 12px; }
-      #overlay .ov-corner.br { bottom: 26px; right: 26px; border-bottom: 5px solid var(--brand-flame); border-right: 5px solid var(--brand-flame); border-bottom-right-radius: 12px; }
-      #overlay .ov-sweep {
-        position: absolute;
-        top: -20%;
-        left: 0;
-        width: 42%;
-        height: 140%;
-        background: linear-gradient(90deg, rgba(255, 120, 70, 0) 0%, rgba(255, 150, 90, 0.10) 45%, rgba(255, 185, 130, 0.18) 50%, rgba(255, 150, 90, 0.10) 55%, rgba(255, 120, 70, 0) 100%);
-      }
-      /* Flame CTA pill under the headline (with an expanding glow ring). */
       #endcard .ec-pill-wrap { position: relative; display: inline-flex; margin-top: 52px; }
       #endcard .ec-pill-ring {
         position: absolute;
@@ -232,9 +419,9 @@
   </head>
   <body>
     <!-- Render Contract: root needs id, data-composition-id, data-start=0,
-         data-width, data-height. Footage-forward short: two clips full-frame,
-         persistent white logo bug top-left, branded end card at the close.
-         No captions, no kinetic type. -->
+         data-width, data-height. Reference style: talking head punctuated by
+         full-screen graphic scenes cut to the VO, small logo bug, end card.
+         Captions are added downstream, so the lower third is kept clear. -->
     <div
       id="root"
       data-composition-id="ecomiq-short-9x16"
@@ -244,71 +431,92 @@
       data-height="1920"
       data-fps="30"
     >
-      <!-- Video A: 0–38s (talking head, footage's own audio via sibling <audio>).
-           Both clips share track-index 0 (sequential, back-to-back) and the
-           cut is driven by wrapper opacity so only the active clip is visible. -->
+      <!-- Video A: 0–38s -->
       <div class="vid-wrap" id="vidA-wrap">
-        <video
-          id="vidA916"
-          data-start="0"
-          data-duration="38.5"
-          data-track-index="0"
-          src="assets/videoA-1080.mp4"
-          muted
-          playsinline
-        ></video>
+        <video id="vidA916" data-start="0" data-duration="38.5" data-track-index="0"
+          src="assets/videoA-1080.mp4" muted playsinline></video>
       </div>
-
       <!-- Video B: 38–46s -->
       <div class="vid-wrap" id="vidB-wrap">
-        <video
-          id="vidB916"
-          data-start="38"
-          data-duration="8"
-          data-track-index="1"
-          src="assets/videoB-1080.mp4"
-          muted
-          playsinline
-        ></video>
+        <video id="vidB916" data-start="38" data-duration="8" data-track-index="1"
+          src="assets/videoB-1080.mp4" muted playsinline></video>
       </div>
 
       <!-- Footage audio — separate elements so the mixer owns them -->
-      <audio
-        id="audA916"
-        data-start="0"
-        data-duration="38"
-        data-track-index="6"
-        data-volume="1"
-        src="assets/videoA-1080.mp4"
-      ></audio>
-      <audio
-        id="audB916"
-        data-start="38"
-        data-duration="8"
-        data-track-index="7"
-        data-volume="1"
-        src="assets/videoB-1080.mp4"
-      ></audio>
+      <audio id="audA916" data-start="0" data-duration="38" data-track-index="6" data-volume="1" src="assets/videoA-1080.mp4"></audio>
+      <audio id="audB916" data-start="38" data-duration="8" data-track-index="7" data-volume="1" src="assets/videoB-1080.mp4"></audio>
 
-      <!-- Persistent logo bug (covered by the opaque end card at the close) -->
-      <div id="bug" class="clip" data-start="0" data-duration="46" data-track-index="8">
+      <!-- Persistent footage vignette (below scenes) -->
+      <div id="face-vig" class="clip" data-start="0" data-duration="46" data-track-index="2"></div>
+
+      <!-- ================= Full-screen graphic scenes ================= -->
+      <!-- S1: ROAS number, stamped DOESN'T MATTER (2.55–9.10) -->
+      <div id="s1" class="scene clip" data-start="2.55" data-duration="6.55" data-track-index="4">
+        <div class="sc-bg"></div><div class="sc-grid"></div><div class="sc-vig"></div>
+        <div class="sc-center">
+          <div class="sc-eyebrow s1-eb">Return on ad spend</div>
+          <div class="s1-num"><span class="s1-arrow">&#9650;</span>4.8<span class="s1-x">x</span></div>
+          <div class="s1-sub">Meta&nbsp;&nbsp;&middot;&nbsp;&nbsp;Google</div>
+          <div class="s1-stamp"><span>DOESN&rsquo;T MATTER</span><i class="s1-strike"></i></div>
+        </div>
+      </div>
+
+      <!-- S2: Great ROAS / Thin margins / = $0 profit (8.95–16.90) -->
+      <div id="s2" class="scene clip" data-start="8.95" data-duration="7.95" data-track-index="5">
+        <div class="sc-bg"></div><div class="sc-grid"></div><div class="sc-vig"></div>
+        <div class="sc-center">
+          <div class="sc-eyebrow">High ROAS, no margin</div>
+          <div class="s2-l white">Great ROAS.</div>
+          <div class="s2-l blue">Thin margins.</div>
+          <div class="s2-eq"><span class="eqsign">=</span> <span class="flame">$0 profit.</span></div>
+        </div>
+      </div>
+
+      <!-- S3: rising spend bars, flat profit line, $0 LEFT (18.85–29.30) -->
+      <div id="s3" class="scene clip" data-start="18.85" data-duration="10.45" data-track-index="4">
+        <div class="sc-bg"></div><div class="sc-grid"></div><div class="sc-vig"></div>
+        <div class="s3-top">
+          <div class="sc-eyebrow s3-eb">$10K&ndash;$50K / month in ad spend</div>
+          <div class="s3-pills">
+            <div class="s3-pill blue">SPEND &#9650;</div>
+            <div class="s3-pill flame">PROFIT &#9660;</div>
+          </div>
+        </div>
+        <div class="s3-profit-label">PROFIT</div>
+        <div class="s3-chart">
+          <div class="s3-bar" style="height:132px"></div>
+          <div class="s3-bar" style="height:204px"></div>
+          <div class="s3-bar" style="height:288px"></div>
+          <div class="s3-bar" style="height:378px"></div>
+          <div class="s3-bar" style="height:476px"></div>
+          <div class="s3-bar" style="height:580px"></div>
+        </div>
+        <div class="s3-baseline"></div>
+        <div class="s3-profit"></div>
+        <div class="s3-months">
+          <div class="s3-month">Jan</div><div class="s3-month">Feb</div><div class="s3-month">Mar</div>
+          <div class="s3-month">Apr</div><div class="s3-month">May</div><div class="s3-month">Jun</div>
+        </div>
+        <div class="s3-stamp">$0 LEFT</div>
+      </div>
+
+      <!-- S4: THE SIMPLE ANSWER (32.85–38.00) -->
+      <div id="s4" class="scene clip" data-start="32.85" data-duration="5.15" data-track-index="5">
+        <div class="sc-bg"></div><div class="sc-grid"></div><div class="sc-vig"></div>
+        <div class="sc-center">
+          <div class="sc-eyebrow">The simple answer</div>
+          <div class="s4-l1">Not enough <span class="flame">profit</span></div>
+          <div class="s4-l2">built into the products.</div>
+        </div>
+      </div>
+
+      <!-- Persistent logo bug (above scenes; covered by the end card) -->
+      <div id="bug" class="clip" data-start="0" data-duration="43.4" data-track-index="8">
         <img id="bug-logo-916" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
 
-      <!-- Full-frame animated brand overlay (edge frame + corners + flame sweep) -->
-      <div id="overlay" class="clip" data-start="0" data-duration="46" data-track-index="11">
-        <div class="ov-vignette"></div>
-        <svg class="ov-svg" viewBox="0 0 1080 1920" preserveAspectRatio="none">
-          <rect class="ov-rect" x="28" y="28" width="1024" height="1864" rx="12" ry="12" />
-        </svg>
-        <div class="ov-corner tr"></div>
-        <div class="ov-corner bl"></div>
-        <div class="ov-corner br"></div>
-        <div class="ov-sweep"></div>
-      </div>
-
-      <!-- End card — last ~3.4s (given room for the animated reveal) -->
-      <div id="endcard" class="clip" data-start="44.6" data-duration="3.4" data-track-index="9">
+      <!-- End card — CTA close -->
+      <div id="endcard" class="clip" data-start="43.4" data-duration="4.6" data-track-index="9">
         <div class="ec-bg"></div>
         <div class="ec-bloom"></div>
         <div class="ec-content">
@@ -324,47 +532,77 @@
           </div>
           <div class="ec-pill-wrap">
             <div class="ec-pill-ring"></div>
-            <div class="ec-pill">Join now</div>
+            <div class="ec-pill">Apply free</div>
           </div>
         </div>
       </div>
     </div>
 
     <script>
-      // Render Contract: exactly one paused GSAP timeline keyed to the
-      // data-composition-id, registered on window.__timelines.
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
-      // Logo bug settles in at the top.
+      // Logo bug settles in.
       tl.from("#bug", { opacity: 0, y: -10, duration: 0.5, ease: "power2.out" }, 0.25);
+      // Slow Ken Burns on the footage so the face never sits still.
+      tl.fromTo(".vid-wrap video", { scale: 1.0 }, { scale: 1.05, duration: 46, ease: "none" }, 0);
 
-      // Smooth 0.5s crossfade A→B at 38s. The clips sit on separate tracks so
-      // they can overlap; Video A holds an extra 0.5s to cover the dissolve.
+      // A→B cut at 38s (separate tracks; A holds an extra 0.5s under the dissolve).
       tl.to("#vidA-wrap", { opacity: 0, duration: 0.5, ease: "power2.inOut" }, 38);
       tl.to("#vidB-wrap", { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 38);
 
-      // ---- Full-frame brand overlay: draw the frame on, corners pop, slow flame sweep ----
-      tl.to("#overlay .ov-rect", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, 0.4);
-      tl.from("#overlay .ov-corner", { opacity: 0, scale: 0.4, duration: 0.5, ease: "back.out(2)", stagger: 0.12, transformOrigin: "50% 50%" }, 0.9);
-      tl.set("#overlay .ov-sweep", { rotation: 8, xPercent: -170 }, 0);
-      tl.to("#overlay .ov-sweep", { xPercent: 260, duration: 1.7, ease: "power1.inOut", repeat: 4, repeatDelay: 7.3 }, 3);
+      // ===================== Scene 1 — 2.55s =====================
+      tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.30, ease: "power2.out" }, 2.55);
+      tl.from("#s1 .s1-eb", { opacity: 0, y: 18, duration: 0.4, ease: "power3.out" }, 2.75);
+      tl.from("#s1 .s1-num", { opacity: 0, scale: 1.4, duration: 0.55, ease: "back.out(1.7)", transformOrigin: "50% 50%" }, 2.95);
+      tl.from("#s1 .s1-sub", { opacity: 0, y: 14, duration: 0.4, ease: "power2.out" }, 3.35);
+      // Stamp lands AFTER the number is fully visible ("it doesn't matter" ~7.0–8.5).
+      tl.fromTo("#s1 .s1-stamp", { opacity: 0, scale: 1.6, rotation: -15 }, { opacity: 1, scale: 1, rotation: -7, duration: 0.42, ease: "back.out(2.2)", transformOrigin: "50% 50%" }, 6.7);
+      tl.fromTo("#s1 .s1-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.inOut" }, 7.05);
+      tl.to("#s1", { opacity: 0, duration: 0.28, ease: "power2.in" }, 8.82);
 
-      // ---- End card: the big motion moment ----
-      const ec = 44.6; // end-card start (matches data-start)
+      // ===================== Scene 2 — 8.95s =====================
+      tl.fromTo("#s2", { opacity: 0 }, { opacity: 1, duration: 0.32, ease: "power2.out" }, 8.95);
+      tl.from("#s2 .sc-eyebrow", { opacity: 0, y: 16, duration: 0.4, ease: "power3.out" }, 9.15);
+      tl.from("#s2 .s2-l.white", { opacity: 0, x: -44, duration: 0.45, ease: "power3.out" }, 9.8);
+      tl.from("#s2 .s2-l.blue", { opacity: 0, x: -44, duration: 0.45, ease: "power3.out" }, 11.2);
+      // Payoff lands on "not making any money" (~15.4–16.5).
+      tl.from("#s2 .s2-eq", { opacity: 0, scale: 1.32, duration: 0.5, ease: "back.out(1.9)", transformOrigin: "0% 50%" }, 14.4);
+      tl.to("#s2", { opacity: 0, duration: 0.30, ease: "power2.in" }, 16.6);
+
+      // ===================== Scene 3 — 18.85s =====================
+      tl.fromTo("#s3", { opacity: 0 }, { opacity: 1, duration: 0.32, ease: "power2.out" }, 18.85);
+      tl.from("#s3 .s3-eb", { opacity: 0, y: 16, duration: 0.4, ease: "power3.out" }, 19.05);
+      tl.from("#s3 .s3-pill", { opacity: 0, y: 18, scale: 0.8, duration: 0.4, ease: "back.out(2)", stagger: 0.12, transformOrigin: "50% 50%" }, 19.4);
+      tl.fromTo("#s3 .s3-baseline", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, 19.7);
+      tl.from("#s3 .s3-month", { opacity: 0, duration: 0.3, stagger: 0.06 }, 19.85);
+      // Bars rise during "3 to 5x ... $10k to $50k a month" (20.2–24.7).
+      tl.from("#s3 .s3-bar", { scaleY: 0, duration: 0.5, ease: "power3.out", stagger: 0.16 }, 20.05);
+      tl.fromTo("#s3 .s3-profit", { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: "power1.inOut" }, 21.3);
+      tl.from("#s3 .s3-profit-label", { opacity: 0, x: 20, duration: 0.4, ease: "power2.out" }, 22.0);
+      // "$0 LEFT" slams on "they've got no money left" (~27.0–28.6).
+      tl.fromTo("#s3 .s3-stamp", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2.2)", transformOrigin: "50% 50%" }, 26.9);
+      tl.to("#s3", { opacity: 0, duration: 0.30, ease: "power2.in" }, 29.0);
+
+      // ===================== Scene 4 — 32.85s =====================
+      tl.fromTo("#s4", { opacity: 0 }, { opacity: 1, duration: 0.32, ease: "power2.out" }, 32.85);
+      tl.from("#s4 .sc-eyebrow", { opacity: 0, y: 16, duration: 0.5, ease: "power3.out" }, 33.1);
+      // Statement lands on "not enough profit built into the products" (35.0–37.5).
+      tl.from("#s4 .s4-l1", { opacity: 0, y: 32, duration: 0.5, ease: "power3.out" }, 35.0);
+      tl.from("#s4 .s4-l2", { opacity: 0, y: 32, duration: 0.5, ease: "power3.out" }, 35.85);
+      tl.to("#s4", { opacity: 0, duration: 0.30, ease: "power2.in" }, 37.7);
+
+      // ===================== End card — 43.4s =====================
+      const ec = 43.4;
       tl.from("#endcard", { opacity: 0, duration: 0.45, ease: "power1.inOut" }, ec);
       tl.from("#endcard .ec-bloom", { opacity: 0, scale: 0.9, duration: 0.9, ease: "power2.out" }, ec + 0.1);
       tl.from("#endcard .ec-logo", { opacity: 0, y: -24, scale: 0.9, duration: 0.55, ease: "back.out(1.6)" }, ec + 0.15);
       tl.from("#endcard .ec-rule", { scaleX: 0, duration: 0.4, ease: "power3.inOut", transformOrigin: "50% 50%" }, ec + 0.4);
       tl.from("#endcard .ec-cta-top", { opacity: 0, y: 20, duration: 0.4, ease: "power3.out" }, ec + 0.5);
-      // Offer words SLAM in big, staggered.
       tl.from("#endcard .ec-offer .w", { opacity: 0, scale: 1.6, y: 6, duration: 0.5, ease: "back.out(2.2)", stagger: 0.12, transformOrigin: "50% 50%" }, ec + 0.7);
-      // Flame energy-bloom blooms behind the offer, then settles to a warm halo.
       tl.fromTo("#endcard .ec-cta-glow", { opacity: 0, scale: 0.7 }, { opacity: 0.72, scale: 1, duration: 0.4, ease: "power2.out" }, ec + 0.85);
       tl.to("#endcard .ec-cta-glow", { opacity: 0.2, duration: 0.7, ease: "power2.inOut" }, ec + 1.4);
-      // Flame underline sweeps in under the offer phrase.
       tl.fromTo("#endcard .ec-offer-underline", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.inOut" }, ec + 1.15);
-      // Pill pops, then an expanding glow ring pulses out (twice).
       tl.from("#endcard .ec-pill", { opacity: 0, scale: 0.6, y: 12, duration: 0.5, ease: "back.out(2.4)", transformOrigin: "50% 50%" }, ec + 1.35);
       tl.fromTo("#endcard .ec-pill-ring", { opacity: 0.85, scale: 0.92 }, { opacity: 0, scale: 1.5, duration: 0.8, ease: "power2.out", repeat: 1, immediateRender: false }, ec + 1.65);
 
