@@ -26,7 +26,6 @@
         transform-origin: center center;
         filter: contrast(1.06) saturate(1.06) brightness(0.995);
       }
-      /* vignette + logo scrim + a soft TOP scrim so top graphics always read */
       #overlay {
         position: absolute; inset: 0; pointer-events: none; z-index: 2;
         background:
@@ -37,34 +36,45 @@
       #logo-wrap { position: absolute; top: 74px; left: 60px; width: 178px; z-index: 4; }
       #logo-corner { display: block; width: 100%; height: auto; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5)); }
 
-      /* ---------- Motion-graphic system (top-anchored, example style) ---------- */
+      /* ---------- Top captions (all-white, keyword just carries weight) ---------- */
       .mg { position: absolute; left: 0; right: 0; z-index: 6; display: flex; flex-direction: column; align-items: center; }
       .mg-top { top: 210px; }
-
-      /* keyword-emphasis caption on a subtle navy plate */
       .cap { max-width: 900px; padding: 22px 40px; border-radius: 26px;
         background: rgba(5,18,38,0.62); border: 1px solid rgba(156,212,255,0.16);
         box-shadow: 0 24px 60px -24px rgba(0,0,0,0.7); text-align: center; }
       .cap .line { font-weight: 800; font-size: 82px; line-height: 1.0; letter-spacing: -0.02em; color: var(--brand-white); }
-      .cap .hot { color: var(--brand-flame); }
+      .cap .hot { color: var(--brand-white); }
       .cap .sub { display: block; margin-top: 10px; font-weight: 600; font-size: 40px; letter-spacing: 0.01em; color: var(--brand-text-dim); }
+      /* flame pill banner ("FREE PROFITABILITY BOOTCAMP") */
+      .pill { font-weight: 800; font-size: 46px; letter-spacing: 0.01em; text-transform: uppercase;
+        color: #fff; background: var(--brand-flame); padding: 26px 48px; border-radius: 22px;
+        box-shadow: 0 24px 64px -18px rgba(255,76,50,0.85); text-align: center; white-space: nowrap; }
 
-      /* pill badges (Meta / Google) */
-      .chips { display: flex; gap: 20px; justify-content: center; }
-      .chip { display: inline-flex; align-items: center; gap: 16px;
-        font-weight: 700; font-size: 40px; color: var(--brand-white); letter-spacing: -0.005em;
-        padding: 20px 34px 20px 22px; border-radius: 20px;
-        background: rgba(6,22,44,0.92); border: 1px solid rgba(156,212,255,0.20);
-        box-shadow: 0 20px 48px -22px rgba(0,0,0,0.75); white-space: nowrap; }
-      .chip .dot { width: 26px; height: 26px; border-radius: 8px; background: var(--brand-blue-tint); flex: none; }
-      .chip.g .dot { background: #f0a500; }
-      /* red "not accurate" tag */
-      .xtag { margin-top: 22px; display: inline-flex; align-items: center; gap: 16px;
-        font-weight: 800; font-size: 46px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--brand-white);
-        padding: 16px 32px; border-radius: 999px; background: var(--brand-flame);
-        box-shadow: 0 22px 60px -20px rgba(255,76,50,0.85); }
-      .xtag .x { width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.28);
-        display: inline-flex; align-items: center; justify-content: center; font-size: 30px; }
+      /* ---------- Full-screen chart beat ---------- */
+      #graph {
+        position: absolute; inset: 0; z-index: 7;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px;
+        padding: 70px 58px; text-align: center;
+        background:
+          radial-gradient(120% 66% at 50% 24%, rgba(156,212,255,0.10) 0%, rgba(6,40,76,0) 55%),
+          var(--brand-navy);
+      }
+      #graph .g-vig { position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 80% 66% at 50% 46%, transparent 54%, rgba(3,12,26,0.62) 100%); }
+      #graph .g-grain { position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+        background: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px) 0 0/3px 3px,
+                    radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px) 1px 2px/5px 5px; }
+      .g-title { position: relative; font-weight: 800; font-size: 60px; letter-spacing: -0.02em; color: var(--brand-white); }
+      .g-title .dim { color: var(--brand-text-dim); font-weight: 700; }
+      .g-chart { position: relative; width: 960px; }
+      .g-legend { position: relative; display: flex; gap: 34px; justify-content: center; }
+      .g-leg { display: inline-flex; align-items: center; gap: 14px; font-weight: 700; font-size: 34px; color: var(--brand-white); }
+      .g-leg .sw { width: 30px; height: 30px; border-radius: 8px; }
+      .g-leg.rep .sw { background: var(--brand-blue-tint); }
+      .g-leg.act .sw { background: var(--brand-flame); }
+      .g-leg .muted { color: var(--brand-text-dim); font-weight: 600; }
+      /* svg line-draw */
+      .draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
 
       /* ---------- End card ---------- */
       #endcard {
@@ -89,7 +99,7 @@
   </head>
   <body>
     <div id="root" data-composition-id="ecomiq-short-form-mg" data-start="0" data-duration="34" data-width="1080" data-height="1920">
-      <!-- Base talking head (face stays fully visible the whole time) -->
+      <!-- Base talking head -->
       <div id="face-wrapper">
         <video id="face-video" data-start="0" data-duration="33.10" data-track-index="0" src="assets/face-short.mp4" muted playsinline></video>
       </div>
@@ -109,13 +119,39 @@
         <div class="cap"><div class="line">You <span class="hot">lose money</span><span class="sub">on the first order</span></div></div>
       </div>
 
-      <!-- B3 — Meta / Google dashboards → NOT ACCURATE (11.0) -->
-      <div id="b3" class="mg mg-top clip" data-start="11.0" data-duration="5.2" data-track-index="7" style="top:190px;">
-        <div class="chips">
-          <div class="chip" id="b3-meta"><span class="dot"></span>Meta Ads</div>
-          <div class="chip g" id="b3-goog"><span class="dot"></span>Google Ads</div>
+      <!-- B3 — FULL-SCREEN animated chart: reported vs. actual (11.0) -->
+      <div id="graph" class="clip" data-start="11.0" data-duration="5.2" data-track-index="7">
+        <div class="g-vig"></div>
+        <div class="g-title" id="g-title">What your dashboard shows<span class="dim" id="g-title2"> — vs. what you keep</span></div>
+        <div class="g-chart">
+          <svg viewBox="0 0 1000 560" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <!-- gridlines -->
+            <g stroke="rgba(156,212,255,0.12)" stroke-width="2">
+              <line x1="70" y1="70"  x2="965" y2="70"/>
+              <line x1="70" y1="180" x2="965" y2="180"/>
+              <line x1="70" y1="400" x2="965" y2="400"/>
+              <line x1="70" y1="500" x2="965" y2="500"/>
+            </g>
+            <!-- break-even (zero) line -->
+            <line id="g-zero" x1="70" y1="290" x2="965" y2="290" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-dasharray="10 12"/>
+            <text x="78" y="278" fill="rgba(255,255,255,0.65)" font-family="Rethink Sans" font-weight="700" font-size="26">Break-even</text>
+            <!-- red loss area under the actual curve -->
+            <path id="g-area" d="M70,290 L249,330 L428,392 L607,452 L786,506 L965,540 L965,560 L70,560 Z"
+                  fill="rgba(255,76,50,0.18)" opacity="0"/>
+            <!-- reported line (blue, rises) -->
+            <polyline id="g-rep" class="draw" points="70,290 249,236 428,196 607,160 786,128 965,104"
+                      fill="none" stroke="#9CD4FF" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+            <!-- actual line (flame, dives below zero) -->
+            <polyline id="g-act" class="draw" points="70,290 249,330 428,392 607,452 786,506 965,540"
+                      fill="none" stroke="#FF4C32" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+            <!-- end marker on the actual line -->
+            <circle id="g-dot" cx="965" cy="540" r="14" fill="#FF4C32" opacity="0"/>
+          </svg>
         </div>
-        <div class="xtag" id="b3-x"><span class="x">&#10005;</span> Not accurate</div>
+        <div class="g-legend">
+          <div class="g-leg rep" id="g-leg-rep"><span class="sw"></span>Reported</div>
+          <div class="g-leg act" id="g-leg-act"><span class="sw"></span>Actual <span class="muted">&nbsp;after hidden costs</span></div>
+        </div>
       </div>
 
       <!-- B4 — "the true cost to acquire" (16.4) -->
@@ -123,9 +159,9 @@
         <div class="cap"><div class="line">The <span class="hot">true cost</span><span class="sub">to acquire a customer</span></div></div>
       </div>
 
-      <!-- B5 — "fundamentally doomed" (25.3) -->
-      <div id="b5" class="mg mg-top clip" data-start="25.3" data-duration="2.7" data-track-index="9">
-        <div class="cap"><div class="line">You're <span class="hot">doomed</span><span class="sub">if you get it wrong</span></div></div>
+      <!-- B5 — flame pill above head when he says "free profitability bootcamp" (28.8) -->
+      <div id="b5" class="mg clip" data-start="28.6" data-duration="1.9" data-track-index="9" style="top:180px;">
+        <div class="pill" id="b5-pill">Free Profitability Bootcamp</div>
       </div>
 
       <!-- End card -->
@@ -139,7 +175,7 @@
         <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div id="ec-line">Free Profitability Bootcamp</div>
         <div id="ec-div"></div>
-        <div id="ec-cta">Join now <span class="arrow">&rarr;</span></div>
+        <div id="ec-cta">Join now</div>
       </div>
     </div>
 
@@ -148,41 +184,50 @@
       const tl = gsap.timeline({ paused: true });
       const POP = "back.out(1.7)";
 
-      // Base: subtle Ken Burns + logo intro
       tl.fromTo("#face-video", { scale: 1.0 }, { scale: 1.02, duration: 33.10, ease: "none" }, 0);
       tl.fromTo("#logo-corner", { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.35);
 
-      // Reusable caption pop-in/out (plate rises + settles; exits by sliding up)
       function cap(sel, tIn, tOut) {
         tl.fromTo(sel + " .cap", { opacity: 0, y: -26, scale: 0.94 },
           { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: POP }, tIn);
         tl.to(sel + " .cap", { opacity: 0, y: -22, duration: 0.3, ease: "power2.in" }, tOut);
       }
 
-      // B1 — "the biggest trap" (word "trap" ~1.66)
+      // B1 — "the biggest trap"
       cap("#b1", 1.5, 3.9);
-      // B2 — "lose money" (~8.84)
+      // B2 — "lose money"
       cap("#b2", 8.6, 10.75);
-      // B4 — "true cost to acquire" (~17.8)
+      // B4 — "true cost to acquire"
       cap("#b4", 16.6, 20.05);
-      // B5 — "doomed" (~25.89)
-      cap("#b5", 25.5, 27.55);
-      tl.to("#b5 .line", { x: 8, duration: 0.05, ease: "power1.inOut", yoyo: true, repeat: 3 }, 25.95);
 
-      // B3 — chips build as he names each platform, then NOT ACCURATE stamps
-      tl.fromTo("#b3-meta", { opacity: 0, y: -24, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: POP }, 11.3);
-      tl.fromTo("#b3-goog", { opacity: 0, y: -24, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: POP }, 12.65);
-      tl.fromTo("#b3-x", { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.4, ease: POP }, 14.05);
-      tl.to("#b3-x", { x: 7, duration: 0.05, ease: "power1.inOut", yoyo: true, repeat: 3 }, 14.45);
-      tl.to(["#b3-meta", "#b3-goog", "#b3-x"], { opacity: 0, y: -20, duration: 0.32, ease: "power2.in" }, 15.9);
+      // B5 — flame pill "FREE PROFITABILITY BOOTCAMP" above head as he says it (~28.78)
+      tl.fromTo("#b5-pill", { opacity: 0, y: -24, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: POP }, 28.8);
+      tl.to("#b5-pill", { opacity: 0, y: -18, duration: 0.28, ease: "power2.in" }, 30.15);
 
-      // End card — crossfade over the face as the CTA lands
+      // ---------- B3 — full-screen chart (11.0 -> 16.2) ----------
+      tl.fromTo("#graph", { opacity: 0, filter: "blur(24px)", scale: 1.05 },
+        { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.4, ease: "power2.out" }, 11.05);
+      tl.fromTo("#g-title", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 11.2);
+      tl.set("#g-title2", { opacity: 0 }, 11.2);
+      // reported line rises (dashboard looks great)
+      tl.fromTo("#g-leg-rep", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 11.5);
+      tl.fromTo("#g-rep", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.5, ease: "power1.inOut" }, 11.55);
+      // reveal the truth on "not accurate" (~14.04): actual line dives below break-even
+      tl.to("#g-title2", { opacity: 1, duration: 0.4, ease: "power2.out" }, 13.6);
+      tl.fromTo("#g-leg-act", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 13.7);
+      tl.fromTo("#g-act", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.4, ease: "power2.in" }, 13.8);
+      tl.fromTo("#g-area", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.out" }, 14.4);
+      tl.fromTo("#g-dot", { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.4, ease: POP, transformOrigin: "center" }, 15.1);
+      // exit back to face
+      tl.to("#graph", { opacity: 0, filter: "blur(20px)", scale: 1.03, duration: 0.36, ease: "power2.in" }, 15.9);
+
+      // ---------- End card ----------
       tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 30.3);
       tl.fromTo("#ec-logo", { opacity: 0, y: 26, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, 30.6);
       tl.fromTo("#ec-line", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 30.9);
       tl.fromTo("#ec-div", { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.4, ease: "power2.out" }, 31.15);
       tl.fromTo("#ec-cta", { opacity: 0, y: 16, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.6)" }, 31.3);
-      // gentle particle drift (finite repeats)
       tl.fromTo("[data-p]", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.out", stagger: 0.06 }, 30.5);
       tl.to("[data-p]", { y: -22, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: 1, stagger: { each: 0.15, from: "random" } }, 31.0);
 
