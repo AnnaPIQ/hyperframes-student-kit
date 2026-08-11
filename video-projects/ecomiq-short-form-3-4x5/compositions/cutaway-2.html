@@ -3,25 +3,18 @@
     <div class="c2-bg"></div>
     <div class="c2-grid"></div>
     <div class="c2-wrap">
-      <div class="c2-pills">
-        <span class="c2-pill blue">Spend &#9650;</span>
-        <span class="c2-ctx">Every Month</span>
-        <span class="c2-pill flame">ROAS &#9660;</span>
+      <div class="c2-eyebrow">Cost To Reach Them Again</div>
+      <div class="c2-rule"></div>
+      <div class="c2-stat">
+        <div class="c2-label">Brand-new customer</div>
+        <div class="c2-num flame">$$$</div>
       </div>
-      <div class="c2-chart">
-        <div class="c2-bars">
-          <div class="c2-bar" style="height:40%"></div>
-          <div class="c2-bar" style="height:52%"></div>
-          <div class="c2-bar" style="height:64%"></div>
-          <div class="c2-bar" style="height:76%"></div>
-          <div class="c2-bar" style="height:88%"></div>
-          <div class="c2-bar" style="height:100%"></div>
-        </div>
-        <svg class="c2-trend" viewBox="0 0 1000 600" preserveAspectRatio="none">
-          <line x1="30" y1="120" x2="970" y2="470" stroke="#FF5A3C" stroke-width="11" stroke-linecap="round" />
-        </svg>
+      <div class="c2-rule"></div>
+      <div class="c2-stat">
+        <div class="c2-label">Someone who already bought</div>
+        <div class="c2-num blue">&#8776; $0</div>
       </div>
-      <div class="c2-months"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+      <div class="c2-rule"></div>
     </div>
     <style>
       @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
@@ -29,51 +22,38 @@
       #cutaway-2-root { position: absolute; inset: 0; overflow: hidden;
         background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
       #cutaway-2-root .c2-bg { position: absolute; inset: 0;
-        background: radial-gradient(80% 50% at 50% 45%, rgba(156,212,255,.13) 0%, rgba(6,40,76,0) 60%), #06284C; }
+        background: radial-gradient(80% 50% at 50% 42%, rgba(156,212,255,.14) 0%, rgba(6,40,76,0) 60%), #06284C; }
       #cutaway-2-root .c2-grid { position: absolute; inset: 0; opacity: .5;
         background-image:
           repeating-linear-gradient(0deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px),
           repeating-linear-gradient(90deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px);
-        -webkit-mask-image: radial-gradient(75% 60% at 50% 50%, #000 0%, transparent 85%);
-                mask-image: radial-gradient(75% 60% at 50% 50%, #000 0%, transparent 85%); }
+        -webkit-mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%);
+                mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%); }
       #cutaway-2-root .c2-wrap { position: absolute; inset: 0;
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        gap: 60px; padding: 12% 9%; }
-      #cutaway-2-root .c2-pills { display: flex; align-items: center; gap: 24px; }
-      #cutaway-2-root .c2-pill { font-weight: 800; font-size: 40px; letter-spacing: .04em;
-        padding: 16px 34px; border-radius: 999px; border: 2.5px solid; }
-      #cutaway-2-root .c2-pill.blue { color: #9CD4FF; border-color: rgba(156,212,255,.6); }
-      #cutaway-2-root .c2-pill.flame { color: #FF5A3C; border-color: rgba(255,90,60,.65); }
-      #cutaway-2-root .c2-ctx { font-weight: 700; font-size: 32px; letter-spacing: .26em;
-        text-transform: uppercase; color: #7ea6cf; }
-      #cutaway-2-root .c2-chart { position: relative; width: 100%; height: 620px; }
-      #cutaway-2-root .c2-bars { position: absolute; inset: 0; display: flex; align-items: flex-end;
-        justify-content: space-between; gap: 26px; }
-      #cutaway-2-root .c2-bar { flex: 1; border-radius: 16px 16px 6px 6px; transform-origin: 50% 100%;
-        background: linear-gradient(180deg, #b9deff 0%, #4f9be0 65%, #2f7fd6 100%);
-        box-shadow: 0 0 30px -8px rgba(156,212,255,.5); }
-      #cutaway-2-root .c2-trend { position: absolute; inset: 0; width: 100%; height: 100%;
-        overflow: visible; filter: drop-shadow(0 0 14px rgba(255,90,60,.5)); }
-      #cutaway-2-root .c2-months { width: 100%; display: flex; justify-content: space-between; }
-      #cutaway-2-root .c2-months span { flex: 1; text-align: center; font-weight: 600; font-size: 34px;
-        color: #a9c4e0; letter-spacing: .02em; }
+        display: flex; flex-direction: column; align-items: stretch; justify-content: center;
+        gap: 30px; padding: 12% 11%; }
+      #cutaway-2-root .c2-eyebrow { font-weight: 700; font-size: 34px; letter-spacing: .3em;
+        text-transform: uppercase; color: #7ea6cf; text-align: center; margin-bottom: 6px; }
+      #cutaway-2-root .c2-rule { height: 2px; background: linear-gradient(90deg, rgba(156,212,255,0), rgba(156,212,255,.35), rgba(156,212,255,0)); }
+      #cutaway-2-root .c2-stat { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+      #cutaway-2-root .c2-label { font-weight: 700; font-size: 40px; letter-spacing: .01em; color: #a9c4e0; max-width: 58%; }
+      #cutaway-2-root .c2-num { font-weight: 800; font-size: 130px; line-height: .9; letter-spacing: -.02em;
+        font-variant-numeric: tabular-nums; white-space: nowrap; }
+      #cutaway-2-root .c2-num.flame { color: #FF5A3C; }
+      #cutaway-2-root .c2-num.blue { color: #9CD4FF; }
     </style>
     <script src="assets/vendor/gsap.min.js"></script>
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
-      const line = document.querySelector("#cutaway-2-root .c2-trend line");
-      const LEN = 1005; line.style.strokeDasharray = LEN;
       tl.from("#cutaway-2-root .c2-bg", { opacity: 0, duration: .2, ease: "power1.out" }, 0)
         .from("#cutaway-2-root .c2-grid", { opacity: 0, duration: .4, ease: "power1.out" }, 0)
-        .from("#cutaway-2-root .c2-pill", { opacity: 0, y: -20, scale: .85, duration: .35, ease: "back.out(1.8)", stagger: .1 }, .05)
-        .from("#cutaway-2-root .c2-ctx", { opacity: 0, duration: .3, ease: "power2.out" }, .2)
-        .from("#cutaway-2-root .c2-bar", { scaleY: 0, opacity: 0, duration: .5, ease: "power3.out", stagger: .08 }, .3)
-        .from("#cutaway-2-root .c2-months span", { opacity: 0, y: 14, duration: .3, ease: "power2.out", stagger: .06 }, .45)
-        .fromTo(line, { strokeDashoffset: LEN }, { strokeDashoffset: 0, duration: .7, ease: "power2.inOut" }, .7)
-        .to("#cutaway-2-root .c2-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.03, duration: .25, ease: "power2.in" }, 1.5)
-        .to("#cutaway-2-root .c2-grid", { opacity: 0, duration: .22, ease: "power2.in" }, 1.52);
-      tl.set({}, {}, 1.8); // pad to data-duration
+        .from("#cutaway-2-root .c2-eyebrow", { opacity: 0, y: 20, duration: .35, ease: "power3.out" }, .05)
+        .from("#cutaway-2-root .c2-rule", { scaleX: 0, opacity: 0, duration: .4, ease: "power2.out", stagger: .07 }, .12)
+        .from("#cutaway-2-root .c2-stat", { opacity: 0, y: 26, filter: "blur(8px)", duration: .45, ease: "power3.out", stagger: .16 }, .25)
+        .to("#cutaway-2-root .c2-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.03, duration: .25, ease: "power2.in" }, 2.1)
+        .to("#cutaway-2-root .c2-grid", { opacity: 0, duration: .22, ease: "power2.in" }, 2.12);
+      tl.set({}, {}, 2.4); // pad to data-duration
       window.__timelines["cutaway-2"] = tl;
     </script>
   </div>
