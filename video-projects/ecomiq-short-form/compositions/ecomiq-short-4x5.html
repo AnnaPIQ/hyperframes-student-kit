@@ -210,7 +210,7 @@
       #s3 .s3-chart {
         position: absolute;
         left: 108px; right: 108px;
-        bottom: 358px;
+        bottom: 430px;
         height: 470px;
         display: flex;
         align-items: flex-end;
@@ -227,7 +227,7 @@
       #s3 .s3-baseline {
         position: absolute;
         left: 108px; right: 108px;
-        bottom: 358px;
+        bottom: 430px;
         height: 3px;
         background: rgba(150, 196, 240, 0.3);
         transform: scaleX(0);
@@ -236,7 +236,7 @@
       #s3 .s3-profit {
         position: absolute;
         left: 108px; right: 108px;
-        bottom: 400px;
+        bottom: 472px;
         height: 7px;
         background: var(--brand-flame);
         border-radius: 4px;
@@ -256,7 +256,7 @@
       #s3 .s3-months {
         position: absolute;
         left: 108px; right: 108px;
-        bottom: 320px;
+        bottom: 392px;
         display: flex;
         justify-content: space-between;
       }
@@ -270,7 +270,7 @@
       #s3 .s3-stamp {
         position: absolute;
         left: 0; right: 0;
-        bottom: 150px;
+        bottom: 240px;
         text-align: center;
         font-family: "Rethink Sans", sans-serif;
         font-weight: 800;
@@ -300,6 +300,24 @@
         letter-spacing: -0.02em;
         color: #c4e2ff;
         text-shadow: 0 0 40px rgba(96, 172, 255, 0.3);
+      }
+
+      /* ------- Flame CTA band over clip B ("free profitability bootcamp") ------- */
+      #cta-band { position: absolute; left: 0; right: 0; bottom: 470px; display: flex; justify-content: center; }
+      #cta-band .cb-pill {
+        display: inline-flex;
+        align-items: center;
+        font-family: "Rethink Sans", sans-serif;
+        font-weight: 800;
+        font-size: 46px;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: var(--brand-white);
+        background: var(--brand-flame);
+        padding: 26px 50px;
+        border-radius: 16px;
+        white-space: nowrap;
+        box-shadow: 0 22px 60px -18px rgba(255, 76, 50, 0.7), 0 0 42px rgba(255, 76, 50, 0.3);
       }
 
       /* ------- Branded end card ------- */
@@ -484,6 +502,11 @@
         <img id="bug-logo-45" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
 
+      <!-- Flame CTA band — lands on "free profitability bootcamp" (~41s) -->
+      <div id="cta-band" class="clip" data-start="40.5" data-duration="2.9" data-track-index="10">
+        <div class="cb-pill">Free Profitability Bootcamp</div>
+      </div>
+
       <!-- End card -->
       <div id="endcard" class="clip" data-start="43.4" data-duration="4.6" data-track-index="9">
         <div class="ec-bg"></div>
@@ -543,6 +566,11 @@
       tl.from("#s4 .s4-l1", { opacity: 0, y: 32, duration: 0.5, ease: "power3.out" }, 35.0);
       tl.from("#s4 .s4-l2", { opacity: 0, y: 32, duration: 0.5, ease: "power3.out" }, 35.85);
       tl.to("#s4", { opacity: 0, duration: 0.30, ease: "power2.in" }, 37.7);
+
+      // ---- Flame CTA band — 40.5s ----
+      tl.from("#cta-band .cb-pill", { opacity: 0, y: 44, scale: 0.92, duration: 0.5, ease: "back.out(1.7)", transformOrigin: "50% 100%" }, 40.5);
+      tl.to("#cta-band .cb-pill", { opacity: 0, y: -18, duration: 0.3, ease: "power2.in" }, 43.1);
+      tl.set("#cta-band .cb-pill", { opacity: 0 }, 43.4);
 
       // ---- End card ----
       const ec = 43.4;
