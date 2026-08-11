@@ -42,6 +42,10 @@
         transform: scale(1.16) translate(5%, -9%); transform-origin: 50% 50%;
         filter: contrast(1.06) saturate(1.08) brightness(.99); }
 
+      /* Persistent EcomIQ logo, top-left */
+      #wm-logo { position: absolute; top: 72px; left: 64px; width: 280px; height: auto; z-index: 4; opacity: 0;
+        filter: drop-shadow(0 2px 12px rgba(0,0,0,.55)); }
+
       /* ---------- Kinetic scenes ---------- */
       #scenes { position: absolute; inset: 0; z-index: 2; }
       .scn { position: absolute; left: 70px; right: 70px; top: 43%; transform: translateY(-50%);
@@ -118,11 +122,12 @@
       <div id="pip">
         <video id="pip-v" data-start="0" data-duration="31.5" data-track-index="8" src="assets/founder-cut.mp4" muted playsinline></video>
       </div>
+      <img id="wm-logo" class="clip" data-start="0" data-duration="30" data-track-index="10" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
 
       <!-- Kinetic scenes -->
       <div id="scenes">
         <div id="s-hook" class="scn">
-          <span class="k" style="font-size:80px">MONEY'S <span class="hot">WALKING OUT</span></span>
+          <span class="k" style="font-size:80px">MONEY'S WALKING OUT</span>
           <div id="door-stage">
             <div id="door">
               <div class="door-light"></div>
@@ -134,7 +139,7 @@
         </div>
         <div id="s-order" class="scn">
           <span class="k" style="font-size:150px">EVERY</span>
-          <span class="k" style="font-size:150px">SINGLE <span class="hot">ORDER</span></span>
+          <span class="k" style="font-size:150px">SINGLE ORDER</span>
         </div>
         <div id="s-two" class="scn">
           <span class="k hot" style="font-size:280px">2</span>
@@ -164,7 +169,7 @@
         </div>
         <div id="s-m2" class="scn">
           <span class="k" style="font-size:126px">KEEP</span>
-          <span class="k hot" style="font-size:126px">WHAT'S YOURS</span>
+          <span class="k" style="font-size:126px">WHAT'S YOURS</span>
         </div>
         <div id="s-cta" class="scn">
           <span class="k" style="font-size:112px">LINK BELOW</span>
@@ -210,8 +215,12 @@
         tl.fromTo(el, { opacity: 0 }, { opacity: peak, duration: dur * 0.3, ease: "sine.inOut", yoyo: true, repeat: 7 }, delay);
       }
 
-      /* --- Circular face PiP: pops in / out over the piece --- */
-      [[0.4, 5.0], [8.8, 15.8], [16.0, 19.2], [27.8, 30.0]].forEach(([tin, tout]) => {
+      // Top-left EcomIQ logo (fades out just before the end card covers)
+      tl.fromTo("#wm-logo", { opacity: 0, y: -14 }, { opacity: .96, y: 0, duration: 0.6, ease: "power2.out" }, 0.3)
+        .to("#wm-logo", { opacity: 0, duration: 0.4, ease: "power2.in" }, 29.6);
+
+      /* --- Circular face PiP: comes in on the hook, out for the "2 fixes" title, then stays in until the end card --- */
+      [[0.4, 5.0], [8.8, 30.0]].forEach(([tin, tout]) => {
         tl.fromTo("#pip", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.7)" }, tin)
           .to("#pip", { opacity: 0, scale: 0.6, duration: 0.35, ease: "power2.in" }, tout);
       });
@@ -227,14 +236,14 @@
       }
 
       scn("#s-hook", 0.2, 2.6);
-      scn("#s-order", 2.7, 5.0, ".hot");
+      scn("#s-order", 2.7, 5.0, ".k:nth-child(2)");
       scn("#s-two", 5.2, 8.6, ".hot");
       scn("#s-c1", 8.8, 12.4, ".num");
       scn("#s-c2", 12.6, 15.8, ".num");
       scn("#s-boot", 16.0, 18.8, ".pill");
       scn("#s-free", 18.9, 22.0, ".hot");
       scn("#s-m1", 22.2, 24.8, ".k:nth-child(2)");
-      scn("#s-m2", 24.9, 27.6, ".hot");
+      scn("#s-m2", 24.9, 27.6, ".k:nth-child(1)");
       scn("#s-cta", 27.8, 30.0);
       // CTA arrow bounce
       tl.fromTo("#s-cta .tri", { y: -12 }, { y: 16, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 3 }, 28.2);
