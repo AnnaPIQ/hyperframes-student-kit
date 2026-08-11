@@ -11,14 +11,15 @@ message; branding is a persistent corner logo plus a branded end card.
 | `compositions/ecomiq-short-4x5.html`  | 4:5  | 1080×1350 @ 30fps | `renders/ecomiq-short-4x5.mp4` |
 | `compositions/ecomiq-short-9x16-overlays.html` | 9:16 | 1080×1920 @ 30fps | `renders/ecomiq-short-9x16-overlays.mp4` |
 
-`-overlays` = **motion-graphics (house style)** variant — **no captions**. Matches
-the EcomIQ reference ad: cooled talking-head footage cuts away to full-screen navy
-**cards** with sentence-case editorial type — tracked kicker → two-part headline
-split by a **↓** → outlined **✓/✗ chip** — over a subtle grid. Four cards
-(hook "prices up" · priced-on-a-*guess* · **ceiling bar-chart** with flame "YOU ▼" +
-blue market bars + dashed headroom line · lift-your-*profit*), then the house-style
-end card (logo + "Ready to lift your profit?" + flame Bootcamp pill). Blue = brand,
-flame = problem/CTA. The other two files are the footage-forward (plain) cut.
+`-overlays` = **motion-graphics** variant — **no captions**. Footage stays
+full-screen the whole time; each beat gets a **flame pill banner** near the top
+(white uppercase Rethink Sans on flame, soft glow) that pops in and out — the style
+from the client reference ad. Eight pills (Put your prices up · Test your highest
+price · Priced on a guess · Someone charges more · Test your ceiling · You're
+charging too little · Lift your profit · Free Profitability Bootcamp), persistent
+top-left logo, then the flame-pill end card (logo + "Ready to lift your profit?" +
+"Join our Free Profitability Bootcamp"). The other two files are the footage-forward
+(plain) cut.
 
 `index.html` mirrors the 9:16 comp (root-relative asset paths) so the project has a
 default entry and `hyperframes lint` has an entry point. Render each variant with
