@@ -1,0 +1,50 @@
+<template id="scene-offer-template">
+  <div id="scene-offer-root" data-composition-id="scene-offer" data-width="1080" data-height="1920">
+    <div class="so-bg"></div>
+    <div class="so-grid"></div>
+    <div class="so-wrap">
+      <div class="so-eyebrow">What We Coach Inside</div>
+      <div class="so-pill">100% Free</div>
+      <div class="so-title">Profitability<br>Bootcamp</div>
+    </div>
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      #scene-offer-root { position: absolute; inset: 0; overflow: hidden;
+        background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+      #scene-offer-root .so-bg { position: absolute; inset: 0;
+        background: radial-gradient(80% 50% at 50% 42%, rgba(255,120,90,.16) 0%, rgba(6,40,76,0) 60%), #06284C; }
+      #scene-offer-root .so-grid { position: absolute; inset: 0; opacity: .5;
+        background-image:
+          repeating-linear-gradient(0deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px);
+        -webkit-mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%);
+                mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%); }
+      #scene-offer-root .so-wrap { position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 34px; padding: 12% 8%; text-align: center; }
+      #scene-offer-root .so-eyebrow { font-weight: 700; font-size: 34px; letter-spacing: .3em;
+        text-transform: uppercase; color: #7ea6cf; }
+      #scene-offer-root .so-pill { font-weight: 800; font-size: 58px; letter-spacing: .02em;
+        text-transform: uppercase; color: #FFFFFF; background: #FF4C32; padding: 20px 50px; border-radius: 999px;
+        box-shadow: 0 24px 66px -14px rgba(255,76,50,.7); }
+      #scene-offer-root .so-title { font-weight: 800; font-size: 128px; line-height: .98;
+        letter-spacing: -.03em; color: #FFFFFF; }
+    </style>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#scene-offer-root .so-bg", { opacity: 0, duration: .2, ease: "power1.out" }, 0)
+        .from("#scene-offer-root .so-grid", { opacity: 0, duration: .4, ease: "power1.out" }, 0)
+        .from("#scene-offer-root .so-eyebrow", { opacity: 0, y: 20, duration: .35, ease: "power3.out" }, .05)
+        .from("#scene-offer-root .so-pill", { opacity: 0, scale: .7, duration: .45, ease: "back.out(2)" }, .18)
+        .from("#scene-offer-root .so-title", { opacity: 0, y: 40, filter: "blur(12px)", duration: .5, ease: "expo.out" }, .32)
+        .to("#scene-offer-root .so-pill", { scale: 1.05, duration: .7, ease: "sine.inOut", yoyo: true, repeat: 2 }, 1.0)
+        .to("#scene-offer-root .so-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.03, duration: .28, ease: "power2.in" }, 3.1)
+        .to("#scene-offer-root .so-grid", { opacity: 0, duration: .24, ease: "power2.in" }, 3.12);
+      tl.set({}, {}, 3.5); // pad to data-duration
+      window.__timelines["scene-offer"] = tl;
+    </script>
+  </div>
+</template>

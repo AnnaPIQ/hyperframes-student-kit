@@ -1,0 +1,81 @@
+<template id="bg-template">
+  <div id="bg-root" data-composition-id="bg" data-width="1080" data-height="1920">
+    <div class="bg-base"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+    <div class="bg-particles"></div>
+    <svg class="bg-chart" viewBox="0 0 1080 1920" preserveAspectRatio="none">
+      <polyline class="bg-line" points="-40,1500 160,1440 360,1470 560,1360 760,1400 980,1260 1120,1300" fill="none" stroke="rgba(156,212,255,.22)" stroke-width="4" />
+      <polyline class="bg-line2" points="-40,520 200,560 420,470 640,540 860,430 1120,480" fill="none" stroke="rgba(156,212,255,.14)" stroke-width="4" />
+    </svg>
+    <div class="bg-vignette"></div>
+    <style>
+      #bg-root { position: absolute; inset: 0; overflow: hidden; background: #06284C; }
+      #bg-root .bg-base { position: absolute; inset: 0;
+        background: radial-gradient(85% 55% at 50% 32%, rgba(28,74,122,.55) 0%, rgba(6,40,76,0) 60%), #06284C; }
+      #bg-root .bg-grid { position: absolute; inset: -80px;
+        background-image:
+          repeating-linear-gradient(0deg, rgba(156,212,255,.05) 0 1.5px, transparent 1.5px 76px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.05) 0 1.5px, transparent 1.5px 76px);
+        -webkit-mask-image: radial-gradient(80% 70% at 50% 42%, #000 0%, transparent 88%);
+                mask-image: radial-gradient(80% 70% at 50% 42%, #000 0%, transparent 88%); }
+      #bg-root .bg-glow { position: absolute; width: 900px; height: 900px; left: 90px; top: 300px;
+        border-radius: 50%; background: radial-gradient(circle, rgba(84,150,220,.30) 0%, rgba(84,150,220,0) 65%);
+        filter: blur(10px); }
+      #bg-root .bg-particles { position: absolute; inset: 0; }
+      #bg-root .p { position: absolute; border-radius: 50%; background: #9CD4FF; }
+      #bg-root .node { position: absolute; border-radius: 50%; border: 2px solid rgba(156,212,255,.5); }
+      #bg-root .bg-chart { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
+        filter: drop-shadow(0 0 10px rgba(156,212,255,.25)); }
+      #bg-root .bg-vignette { position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(120% 90% at 50% 45%, rgba(6,40,76,0) 55%, rgba(3,20,40,.8) 100%); }
+    </style>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      // seeded PRNG (deterministic)
+      function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+      const rnd = mulberry32(20260806);
+      const root = document.getElementById('bg-root');
+      const pc = root.querySelector('.bg-particles');
+      const dots = [];
+      for (let i = 0; i < 16; i++) {
+        const d = document.createElement('div');
+        const isNode = i % 6 === 0;
+        d.className = isNode ? 'node' : 'p';
+        const size = isNode ? (60 + rnd()*70) : (5 + rnd()*9);
+        d.style.width = size + 'px'; d.style.height = size + 'px';
+        d.style.left = (rnd()*1000 + 40) + 'px';
+        d.style.top = (rnd()*1760 + 80) + 'px';
+        d.style.opacity = isNode ? 0.5 : (0.35 + rnd()*0.4);
+        pc.appendChild(d); dots.push({ el: d, isNode, seed: rnd() });
+      }
+      const tl = gsap.timeline({ paused: true });
+      const DUR = 44.8;
+      // slow grid drift (loops)
+      tl.to("#bg-root .bg-grid", { y: 76, x: 76, duration: 9, ease: "none", repeat: Math.ceil(DUR/9), yoyo: false }, 0);
+      // ambient glow drift
+      tl.to("#bg-root .bg-glow", { x: 120, y: -80, duration: 11, ease: "sine.inOut", yoyo: true, repeat: Math.ceil(DUR/11) }, 0);
+      // chart lines draw + gentle shift
+      root.querySelectorAll('.bg-line, .bg-line2').forEach((ln, i) => {
+        const len = 1400;
+        ln.style.strokeDasharray = len; ln.style.strokeDashoffset = len;
+        tl.to(ln, { strokeDashoffset: 0, duration: 2.4, ease: "power2.out" }, 0.4 + i*0.5)
+          .to(ln, { y: (i? 18 : -20), duration: 8, ease: "sine.inOut", yoyo: true, repeat: Math.ceil(DUR/8) }, 3);
+      });
+      // particles drift + twinkle (finite repeats spanning DUR)
+      dots.forEach((o, i) => {
+        const dy = (o.isNode ? 26 : 60) * (o.seed > .5 ? 1 : -1);
+        const per = 6 + o.seed * 6;
+        tl.to(o.el, { y: dy, x: dy*0.4, duration: per, ease: "sine.inOut", yoyo: true, repeat: Math.ceil(DUR/per) }, 0);
+        if (o.isNode) {
+          tl.to(o.el, { scale: 1.35, opacity: 0.15, duration: 2.2 + o.seed, ease: "sine.inOut", yoyo: true, repeat: Math.ceil(DUR/2.2) }, o.seed*2);
+        } else {
+          tl.to(o.el, { opacity: 0.1, duration: 1.6 + o.seed*1.5, ease: "sine.inOut", yoyo: true, repeat: Math.ceil(DUR/1.6) }, o.seed*3);
+        }
+      });
+      tl.set({}, {}, DUR);
+      window.__timelines["bg"] = tl;
+    </script>
+  </div>
+</template>
