@@ -4,52 +4,185 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1350" />
     <title>ecomiq-cac-animated-4x5</title>
-    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
     <script src="assets/vendor/gsap.min.js"></script>
     <link rel="stylesheet" href="assets/brand-tokens.css" />
     <style>
-      /* LOCAL fonts — no network dependency at render time (latin subset) */
       @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
         font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
-      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
         font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1080px; height: 1350px; overflow: hidden;
-        background: var(--brand-bg); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
+        background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+
       #bg { position: absolute; inset: 0;
-        background: radial-gradient(90% 55% at 50% 20%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
-      #logo { position: absolute; top: 7%; left: 10%; width: 33%; height: auto; }
-      #stage { position: absolute; inset: 0; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; gap: 24px; padding: 10%; text-align: center; }
-      #eyebrow { font-weight: 600; font-size: 26px; letter-spacing: .34em; text-transform: uppercase; color: var(--brand-blue-tint); }
-      #headline { font-weight: 800; font-size: 96px; line-height: .98; letter-spacing: -.03em; }
-      #headline .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
-      #subhead { font-weight: 500; font-size: 34px; line-height: 1.3; color: var(--brand-text-dim); max-width: 70%; }
-      #cta { margin-top: 12px; font-weight: 700; font-size: 34px; color: var(--brand-white);
-        background: var(--brand-flame); padding: 26px 52px; border-radius: 999px;
-        box-shadow: 0 20px 64px -16px rgba(255,76,50,.6); }
+        background: radial-gradient(85% 48% at 50% 20%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 60%), var(--brand-navy); }
+      #grid { position: absolute; inset: -20% -20% 0 -20%; height: 120%;
+        transform: perspective(1000px) rotateX(60deg) translateY(6%); transform-origin: 50% 100%;
+        background:
+          repeating-linear-gradient(0deg,  rgba(156,212,255,.09) 0 1px, transparent 1px 96px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.09) 0 1px, transparent 1px 96px);
+        mask-image: linear-gradient(to top, #000 0%, transparent 72%);
+        -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 72%); }
+      #vignette { position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 84% 68% at 50% 44%, transparent 52%, rgba(2,14,28,.66) 100%); }
+      #grain { position: absolute; inset: 0; pointer-events: none; opacity:.5; mix-blend-mode: overlay;
+        background-image:
+          radial-gradient(rgba(255,255,255,.05) .5px, transparent .6px),
+          radial-gradient(rgba(255,255,255,.04) .5px, transparent .6px),
+          radial-gradient(rgba(0,0,0,.05) .5px, transparent .6px);
+        background-size: 3px 3px, 5px 5px, 7px 7px; background-position: 0 0, 1px 2px, 2px 1px; }
+
+      #logo-wrap { position: absolute; top: 0; left: 0; width: 500px; height: 260px; pointer-events: none; }
+      #logo-scrim { position: absolute; inset: 0;
+        background: radial-gradient(120% 120% at 8% 12%, rgba(3,20,40,.55) 0%, rgba(3,20,40,.30) 34%, rgba(3,20,40,0) 66%); }
+      #logo { position: absolute; top: 54px; left: 60px; width: 284px; height: auto; filter: drop-shadow(0 6px 18px rgba(0,0,0,.45)); }
+
+      #sean-wrap { position: absolute; top: 108px; right: 66px; width: 258px; height: 258px; border-radius: 50%;
+        overflow: hidden; border: 5px solid rgba(255,255,255,.92); box-shadow: 0 16px 52px rgba(0,0,0,.55); transform-origin: center; }
+      #sean-vid { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block; }
+
+      .scene { position: absolute; inset: 0; }
+      .kline { position: absolute; left: 84px; right: 300px; font-weight: 800; letter-spacing: -.02em; line-height: 1.05; }
+      .em-flame { color: var(--brand-flame); }
+
+      #kA1 { top: 360px; font-size: 58px; color: var(--brand-white); }
+      #kA2 { top: 436px; font-size: 58px; color: var(--brand-white); }
+      #kA3 { top: 512px; font-size: 58px; color: var(--brand-white); }
+      #dash { position: absolute; left: 84px; right: 84px; top: 700px;
+        background: var(--brand-surface); border: 1px solid var(--brand-border); border-radius: 22px; padding: 34px 40px; overflow: hidden; }
+      #dash .dl { font-size: 26px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--brand-text-dim); margin-bottom: 10px; }
+      #dash .dv { font-size: 128px; font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--brand-white); }
+      #dash .dstrike { position: absolute; left: 40px; top: 160px; height: 10px; width: 360px; background: var(--brand-flame); border-radius: 5px; transform-origin: left center; }
+      #dwrong { position: absolute; right: 50px; top: 116px; font-size: 36px; font-weight: 800; letter-spacing:.04em; color: var(--brand-flame);
+        border: 4px solid var(--brand-flame); padding: 8px 20px; border-radius: 10px; transform: rotate(-8deg); }
+
+      #kC1 { top: 420px; font-size: 50px; color: var(--brand-text-dim); }
+      #bcbuild { position: absolute; left: 84px; right: 84px; top: 540px; }
+      #bcbuild .eb { font-size: 30px; font-weight: 600; letter-spacing: .30em; text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 18px; }
+      #bcbuild .b1 { font-size: 118px; font-weight: 800; line-height: .96; letter-spacing:-.03em; color: var(--brand-white); }
+      #bcbuild .b1 .f { color: var(--brand-flame); }
+      #bcbuild .b2 { font-size: 100px; font-weight: 800; line-height: 1.0; letter-spacing:-.03em; color: var(--brand-white); margin-top: 4px; }
+
+      #endcard { position: absolute; inset: 0; overflow: hidden;
+        background: radial-gradient(90% 55% at 50% 14%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 96px; }
+      #ec-grid { position: absolute; inset: -20% -20% 0 -20%; height: 120%;
+        transform: perspective(1000px) rotateX(60deg) translateY(6%); transform-origin: 50% 100%;
+        background:
+          repeating-linear-gradient(0deg,  rgba(156,212,255,.10) 0 1px, transparent 1px 96px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.10) 0 1px, transparent 1px 96px);
+        mask-image: linear-gradient(to top, #000 0%, transparent 72%); -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 72%); }
+      #ec-bloom { position: absolute; left: -10%; bottom: -20%; width: 120%; height: 58%; background: var(--brand-gradient-2); filter: blur(84px); opacity:.34; }
+      #ec-logo { width: 380px; height: auto; margin-bottom: 56px; position: relative; }
+      #ec-eyebrow { position: relative; font-size: 28px; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 26px; }
+      #ec-headline { position: relative; font-size: 72px; font-weight: 800; line-height: 1.0; letter-spacing: -.03em; color: var(--brand-white); }
+      #ec-cta { position: relative; margin-top: 52px; display: inline-flex; align-items: center; gap: 18px;
+        font-size: 40px; font-weight: 700; color: var(--brand-white); background: var(--brand-flame);
+        padding: 30px 60px; border-radius: 999px; box-shadow: 0 22px 66px -16px rgba(255,76,50,.62); }
+      #ec-cta .arrow { font-size: 42px; line-height: 1; transform: translateY(-2px); }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="ecomiq-cac-animated-4x5" data-start="0" data-duration="6" data-width="1080" data-height="1350">
-      <div id="bg" class="clip" data-start="0" data-duration="6" data-track-index="0"></div>
-      <img id="logo" class="clip" data-start="0" data-duration="6" data-track-index="1" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-      <div id="stage" class="clip" data-start="0" data-duration="6" data-track-index="2">
-        <div id="eyebrow">E-Commerce Intelligence</div>
-        <div id="headline"><span class="em">Rethink</span> your strategy.</div>
-        <div id="subhead">Replace this copy. Build your scene. Ship the ad.</div>
-        <div id="cta">Get started &rarr;</div>
+    <!-- FULLY ANIMATED version, 4:5 (1080x1350). Same scenes/timeline as the 9:16 animated build. -->
+    <div id="root" data-composition-id="ecomiq-cac-animated-4x5" data-start="0" data-duration="24.5" data-width="1080" data-height="1350">
+      <div id="bg" class="clip" data-start="0" data-duration="24.5" data-track-index="0"></div>
+      <div id="grid" class="clip" data-start="0" data-duration="24.5" data-track-index="1"></div>
+
+      <div id="sceneA" class="scene clip" data-start="0" data-duration="7.6" data-track-index="2">
+        <div class="kline" id="kA1">Most founders trust</div>
+        <div class="kline" id="kA2">the <span class="em-flame">cost-per-customer</span></div>
+        <div class="kline" id="kA3">number on their dashboard.</div>
+        <div id="dash">
+          <div class="dl">Cost per customer</div>
+          <div class="dv">$37.50</div>
+          <div class="dstrike"></div>
+          <div id="dwrong">WRONG</div>
+        </div>
       </div>
+
+      <div id="reveal" class="scene clip" data-composition-id="reveal-mg-4x5" data-composition-src="compositions/reveal-mg.html"
+           data-start="7.3" data-duration="6.8" data-track-index="3" data-width="1080" data-height="1350"></div>
+
+      <div id="sceneC" class="scene clip" data-start="14.1" data-duration="5.6" data-track-index="4">
+        <div class="kline" id="kC1">Insights like this &mdash;</div>
+        <div id="bcbuild">
+          <div class="eb">More insights inside</div>
+          <div class="b1">The <span class="f">Free</span></div>
+          <div class="b1">Profitability</div>
+          <div class="b2">Bootcamp.</div>
+        </div>
+      </div>
+
+      <div id="endcard" class="scene clip" data-start="19.5" data-duration="5.0" data-track-index="5">
+        <div id="ec-grid"></div>
+        <div id="ec-bloom"></div>
+        <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="ec-eyebrow">Free Profitability Bootcamp</div>
+        <div id="ec-headline">Sign up<br />for access.</div>
+        <div id="ec-cta">Sign up here <span class="arrow">&rarr;</span></div>
+      </div>
+
+      <div id="sean-wrap">
+        <video id="sean-vid" data-start="0" data-duration="19.6" data-track-index="6" src="assets/sean.mp4" muted playsinline></video>
+      </div>
+
+      <div id="vignette" class="clip" data-start="0" data-duration="24.5" data-track-index="7"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="24.5" data-track-index="8"></div>
+
+      <div id="logo-wrap">
+        <div id="logo-scrim" class="clip" data-start="0" data-duration="19.5" data-track-index="9"></div>
+        <img id="logo" class="clip" data-start="0" data-duration="19.5" data-track-index="10" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <audio id="vo" data-start="0" data-duration="22.6" data-track-index="11" data-volume="1" src="assets/vo.m4a"></audio>
+      <audio id="music-bed" data-start="0" data-duration="24.5" data-track-index="12" data-volume="0.18" src="assets/music-bed-PLACEHOLDER.m4a"></audio>
     </div>
+
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
-      tl.from("#logo", { opacity: 0, y: -20, duration: .6, ease: "power3.out" }, .2)
-        .from("#eyebrow", { opacity: 0, y: 16, duration: .5, ease: "power2.out" }, .5)
-        .from("#headline", { opacity: 0, y: 32, duration: .7, ease: "power3.out" }, .7)
-        .from("#subhead", { opacity: 0, y: 20, duration: .6, ease: "power2.out" }, 1.1)
-        .from("#cta", { opacity: 0, scale: .85, duration: .55, ease: "back.out(1.7)" }, 1.5);
-      tl.to({}, { duration: 6 }, 0); // pad to data-duration
+
+      tl.fromTo("#grid", { backgroundPositionY: "0px" }, { backgroundPositionY: "96px", duration: 24.5, ease: "none" }, 0);
+      tl.fromTo("#vignette", { opacity: .82 }, { opacity: 1, duration: 5, ease: "sine.inOut", yoyo: true, repeat: 4 }, 0);
+
+      tl.fromTo("#logo-wrap", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: .6, ease: "power3.out" }, 0.3)
+        .to("#logo-wrap", { opacity: 0, duration: .4, ease: "power1.in" }, 19.1)
+        .set("#logo-wrap", { opacity: 0 }, 19.5);
+
+      tl.fromTo("#sean-wrap", { opacity: 0, scale: .5 }, { opacity: 1, scale: 1, duration: .6, ease: "back.out(1.7)" }, 0.4)
+        .to("#sean-wrap", { opacity: 0, scale: .6, duration: .45, ease: "power2.in" }, 6.9)
+        .set("#sean-wrap", { opacity: 0 }, 7.4)
+        .to("#sean-wrap", { opacity: 1, scale: 1, duration: .55, ease: "back.out(1.7)" }, 14.3)
+        .to("#sean-wrap", { opacity: 0, scale: .6, duration: .45, ease: "power2.in" }, 19.2)
+        .set("#sean-wrap", { opacity: 0 }, 19.65);
+
+      tl.fromTo("#kA1", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, 0.15)
+        .fromTo("#kA2", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, 1.4)
+        .fromTo("#kA3", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, 2.55);
+      tl.fromTo("#dash", { opacity: 0, y: 40, scale: .96 }, { opacity: 1, y: 0, scale: 1, duration: .55, ease: "back.out(1.4)" }, 3.25);
+      tl.fromTo("#dash .dstrike", { scaleX: 0 }, { scaleX: 1, duration: .4, ease: "power3.in" }, 6.1)
+        .fromTo("#dwrong", { opacity: 0, scale: 1.7, rotate: -8 }, { opacity: 1, scale: 1, duration: .4, ease: "back.out(2)" }, 6.35);
+      tl.to("#sceneA", { opacity: 0, y: -120, filter: "blur(24px)", duration: .5, ease: "power2.in" }, 7.1)
+        .set("#sceneA", { opacity: 0 }, 7.6);
+
+      tl.fromTo("#kC1", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: .5, ease: "power3.out" }, 14.35)
+        .to("#kC1", { opacity: 0, duration: .35, ease: "power1.in" }, 16.9);
+      tl.fromTo("#bcbuild .eb", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .45, ease: "power2.out" }, 16.9)
+        .fromTo("#bcbuild .b1:nth-of-type(2)", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, 17.2)
+        .fromTo("#bcbuild .b1:nth-of-type(3)", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, 17.75)
+        .fromTo("#bcbuild .b2", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, 18.35);
+      tl.to("#sceneC", { opacity: 0, y: -120, filter: "blur(24px)", duration: .5, ease: "power2.in" }, 19.1)
+        .set("#sceneC", { opacity: 0 }, 19.5);
+
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: .5, ease: "power2.out" }, 19.5)
+        .fromTo("#ec-logo", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: .6, ease: "power3.out" }, 19.9)
+        .fromTo("#ec-eyebrow", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .5, ease: "power2.out" }, 20.1)
+        .fromTo("#ec-headline", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .7, ease: "power3.out" }, 20.3)
+        .fromTo("#ec-cta", { opacity: 0, scale: .85 }, { opacity: 1, scale: 1, duration: .6, ease: "back.out(1.7)" }, 20.7)
+        .to("#ec-cta", { scale: 1.045, duration: .7, ease: "sine.inOut", yoyo: true, repeat: 2 }, 21.6);
+
+      tl.to({}, { duration: 24.5 }, 0);
       window.__timelines["ecomiq-cac-animated-4x5"] = tl;
     </script>
   </body>
