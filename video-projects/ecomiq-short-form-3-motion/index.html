@@ -87,19 +87,11 @@
       tl.from("#brand-logo", { opacity: 0, y: -18, duration: .6, ease: "power3.out" }, .3);
 
       // Sean PiP — pop in/out at two moments, with a gentle idle bob while visible
+      // Sean PiP stays on the whole time (top-right), then fades out before the end card
       gsap.set("#sean-pip", { opacity: 0, scale: .6, transformOrigin: "50% 50%" });
-      // window 1 — intro / hook
-      tl.to("#sean-pip", { opacity: 1, scale: 1, duration: .5, ease: "back.out(1.7)" }, 1.4)
-        .to("#sean-pip", { y: -14, duration: 2.2, ease: "sine.inOut", yoyo: true, repeat: 3 }, 2.3)
-        .to("#sean-pip", { opacity: 0, scale: .7, duration: .4, ease: "power2.in" }, 9.2)
-      // window 2 — mid
-        .to("#sean-pip", { opacity: 1, scale: 1, y: 0, duration: .5, ease: "back.out(1.7)" }, 15.0)
-        .to("#sean-pip", { y: -14, duration: 2.2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 15.8)
-        .to("#sean-pip", { opacity: 0, scale: .7, duration: .4, ease: "power2.in" }, 20.2)
-      // window 3 — retention / close
-        .to("#sean-pip", { opacity: 1, scale: 1, y: 0, duration: .5, ease: "back.out(1.7)" }, 29.0)
-        .to("#sean-pip", { y: -14, duration: 2.2, ease: "sine.inOut", yoyo: true, repeat: 2 }, 29.8)
-        .to("#sean-pip", { opacity: 0, scale: .7, duration: .4, ease: "power2.in" }, 36.6);
+      tl.to("#sean-pip", { opacity: 1, scale: 1, duration: .5, ease: "back.out(1.7)" }, 1.2)
+        .to("#sean-pip", { y: -12, duration: 3.0, ease: "sine.inOut", yoyo: true, repeat: 12 }, 2.0)
+        .to("#sean-pip", { opacity: 0, scale: .7, duration: .4, ease: "power2.in" }, 40.4);
 
       tl.set({}, {}, 44.8); // composition duration
       window.__timelines["ecomiq-short-form-3-motion"] = tl;
