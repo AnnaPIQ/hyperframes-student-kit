@@ -577,7 +577,7 @@
       tl.fromTo("#s3 .s3-baseline", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, 19.7);
       tl.from("#s3 .s3-month", { opacity: 0, duration: 0.3, stagger: 0.06 }, 19.85);
       // Bars rise during "3 to 5x ... $10k to $50k a month" (20.2–24.7).
-      tl.from("#s3 .s3-bar", { scaleY: 0, duration: 0.5, ease: "power3.out", stagger: 0.16 }, 20.05);
+      tl.fromTo("#s3 .s3-bar", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "power3.out", stagger: 0.16 }, 20.05);
       tl.fromTo("#s3 .s3-profit", { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: "power1.inOut" }, 21.3);
       tl.from("#s3 .s3-profit-label", { opacity: 0, x: 20, duration: 0.4, ease: "power2.out" }, 22.0);
       // "$0 LEFT" slams on "they've got no money left" (~27.0–28.6).
