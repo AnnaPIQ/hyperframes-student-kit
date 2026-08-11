@@ -461,17 +461,6 @@
         </div>
       </div>
 
-      <!-- S2: Great ROAS / Thin margins / = $0 profit (8.95–16.90) -->
-      <div id="s2" class="scene clip" data-start="8.95" data-duration="7.95" data-track-index="5">
-        <div class="sc-bg"></div><div class="sc-grid"></div><div class="sc-vig"></div>
-        <div class="sc-center">
-          <div class="sc-eyebrow">High ROAS, no margin</div>
-          <div class="s2-l white">Great ROAS.</div>
-          <div class="s2-l blue">Thin margins.</div>
-          <div class="s2-eq"><span class="eqsign">=</span> <span class="flame">$0 profit.</span></div>
-        </div>
-      </div>
-
       <!-- S3: rising spend bars, flat profit line, $0 LEFT (18.85–29.30) -->
       <div id="s3" class="scene clip" data-start="18.85" data-duration="10.45" data-track-index="4">
         <div class="sc-bg"></div><div class="sc-grid"></div><div class="sc-vig"></div>
@@ -559,15 +548,6 @@
       tl.fromTo("#s1 .s1-stamp", { opacity: 0, scale: 1.6, rotation: -15 }, { opacity: 1, scale: 1, rotation: -7, duration: 0.42, ease: "back.out(2.2)", transformOrigin: "50% 50%" }, 6.7);
       tl.fromTo("#s1 .s1-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.inOut" }, 7.05);
       tl.to("#s1", { opacity: 0, duration: 0.28, ease: "power2.in" }, 8.82);
-
-      // ===================== Scene 2 — 8.95s =====================
-      tl.fromTo("#s2", { opacity: 0 }, { opacity: 1, duration: 0.32, ease: "power2.out" }, 8.95);
-      tl.from("#s2 .sc-eyebrow", { opacity: 0, y: 16, duration: 0.4, ease: "power3.out" }, 9.15);
-      tl.from("#s2 .s2-l.white", { opacity: 0, x: -44, duration: 0.45, ease: "power3.out" }, 9.8);
-      tl.from("#s2 .s2-l.blue", { opacity: 0, x: -44, duration: 0.45, ease: "power3.out" }, 11.2);
-      // Payoff lands on "not making any money" (~15.4–16.5).
-      tl.from("#s2 .s2-eq", { opacity: 0, scale: 1.32, duration: 0.5, ease: "back.out(1.9)", transformOrigin: "0% 50%" }, 14.4);
-      tl.to("#s2", { opacity: 0, duration: 0.30, ease: "power2.in" }, 16.6);
 
       // ===================== Scene 3 — 18.85s =====================
       tl.fromTo("#s3", { opacity: 0 }, { opacity: 1, duration: 0.32, ease: "power2.out" }, 18.85);
