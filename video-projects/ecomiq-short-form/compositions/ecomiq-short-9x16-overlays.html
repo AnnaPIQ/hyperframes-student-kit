@@ -26,10 +26,8 @@
         background: linear-gradient(180deg, rgba(6,40,76,0.62) 0%, rgba(6,40,76,0.28) 48%, rgba(6,40,76,0) 100%); }
 
       /* ---- Persistent brand chrome ---- */
-      #logo { position: absolute; top: 70px; left: 66px; width: 152px; height: auto; z-index: 7;
-        filter: drop-shadow(0 3px 10px rgba(0,0,0,0.55)); }
-      #logo-rule { position: absolute; top: 116px; left: 68px; width: 96px; height: 5px; z-index: 7;
-        background: var(--brand-flame); border-radius: 3px; transform-origin: left center; box-shadow: 0 0 16px rgba(255,76,50,0.6); }
+      #logo { position: absolute; top: 72px; left: 66px; width: 304px; height: auto; z-index: 7;
+        filter: drop-shadow(0 3px 12px rgba(0,0,0,0.55)); }
 
       /* ---- Full-screen navy cards (the "overlay" cutaways) ---- */
       .card { position: absolute; inset: 0; z-index: 5; opacity: 0;
@@ -62,6 +60,9 @@
       .c-note { position: relative; margin-top: 40px; font-weight: 500; font-size: 40px; line-height: 1.28;
         color: var(--brand-text-dim); max-width: 820px; }
       .c-note b { color: var(--brand-white); font-weight: 700; }
+      /* Hero offer (the emphasised CTA line) */
+      .c-offer { position: relative; font-weight: 800; font-size: 92px; line-height: 1.0; letter-spacing: -0.03em;
+        color: var(--brand-flame); max-width: 860px; text-shadow: 0 4px 26px rgba(255,76,50,0.5), 0 2px 6px rgba(0,0,0,0.5); }
 
       /* Chart card */
       #card-chart { justify-content: center; }
@@ -82,7 +83,8 @@
       /* Flame "ceiling" line across the top of the tallest bar */
       .ch-ceiling { position: absolute; left: 0; right: 0; top: 40px; height: 0;
         border-top: 4px dashed var(--brand-flame); opacity: 0.9; transform-origin: left center; transform: scaleX(0); }
-      .ch-ceiling span { position: absolute; right: 0; top: -46px; font-weight: 800; font-size: 26px; color: var(--brand-flame); letter-spacing: 0.04em; }
+      .ch-ceiling span { position: absolute; left: 0; top: -48px; font-weight: 800; font-size: 26px; color: var(--brand-flame);
+        letter-spacing: 0.04em; white-space: nowrap; text-shadow: 0 2px 8px rgba(3,16,36,0.8); }
 
       /* ---- End card ---- */
       #endcard { position: absolute; inset: 0; z-index: 8; opacity: 0;
@@ -113,7 +115,6 @@
       <div id="top-scrim" class="clip" data-start="0" data-duration="47.2" data-track-index="2"></div>
       <img id="logo" class="clip" data-start="0" data-duration="47.2" data-track-index="7"
            src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-      <div id="logo-rule" class="clip" data-start="0" data-duration="47.2" data-track-index="8"></div>
 
       <!-- Card 1 — the hook -->
       <div class="card clip" id="card-hook" data-start="4.9" data-duration="4.0" data-track-index="5">
@@ -127,7 +128,7 @@
       <!-- Card 2 — priced on a guess -->
       <div class="card clip" id="card-guess" data-start="15.1" data-duration="4.8" data-track-index="5">
         <div class="c-kicker">The reality</div>
-        <div class="c-h1">Priced once, on a <span class="em">guess</span>.</div>
+        <div class="c-h1">Priced once, on a guess.</div>
         <div class="c-arrow">&#8595;</div>
         <div class="c-h2">Never tested again.</div>
         <div class="c-chip"><span class="no">&#10007;</span> No research</div>
@@ -154,13 +155,11 @@
         <div class="c-note">You're probably charging <b>less than you could.</b></div>
       </div>
 
-      <!-- Card 4 — lift your profit -->
+      <!-- Card 4 — hero the offer -->
       <div class="card clip" id="card-profit" data-start="38.8" data-duration="4.9" data-track-index="5">
-        <div class="c-kicker">There's more</div>
-        <div class="c-h1">Lift your <span class="em">profit</span>.</div>
-        <div class="c-arrow">&#8595;</div>
-        <div class="c-h2">Proven, <span class="flame">simple</span> plays.</div>
-        <div class="c-chip"><span class="ok">&#10003;</span> Free Profitability Bootcamp</div>
+        <div class="c-kicker">Lift your profit &mdash; there's more</div>
+        <div class="c-offer">Free Profitability Bootcamp</div>
+        <div class="c-note">Proven, simple plays to grow your <b>margin</b>.</div>
       </div>
 
       <!-- End card -->
@@ -178,7 +177,6 @@
 
       // ---- Brand chrome ----
       tl.fromTo("#logo", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.2)
-        .fromTo("#logo-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, 0.5)
         .fromTo("#top-scrim", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "sine.out" }, 0)
         .to(["#logo", "#top-scrim"], { opacity: 0, duration: 0.35, ease: "power2.in" }, FOOT - 0.5);
 
@@ -203,7 +201,7 @@
       tl.fromTo("#card-chart .ch-ceiling", { scaleX: 0 },
         { scaleX: 1, duration: 0.7, ease: "power2.inOut" }, 27.9);
 
-      card("card-profit", 38.8, 43.3, "#card-profit .c-kicker, #card-profit .c-h1, #card-profit .c-arrow, #card-profit .c-h2, #card-profit .c-chip");
+      card("card-profit", 38.8, 43.3, "#card-profit .c-kicker, #card-profit .c-offer, #card-profit .c-note");
 
       // ---- End card ----
       tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, FOOT - 0.5)
