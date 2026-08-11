@@ -212,11 +212,20 @@
         box-shadow: 0 22px 54px -14px rgba(0, 0, 0, 0.72), 0 0 44px rgba(255, 90, 50, 0.32);
       }
       .pip { background: #0a2138; }
-      .pip video {
-        position: absolute; inset: 0; width: 100%; height: 100%;
-        object-fit: cover; object-position: 50% 20%;
-        transform: scale(0.78); transform-origin: 50% 40%;
-        filter: contrast(1.07) saturate(1.06) brightness(0.99);
+      .pip video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      /* Blurred, darkened fill so the circle is always full — no square, no navy. */
+      .pip .pv-blur {
+        object-position: 50% 40%;
+        transform: scale(1.28);
+        filter: blur(26px) brightness(0.5) saturate(1.05);
+      }
+      /* Sharp subject, smaller (head-and-shoulders), edges feathered into the blur. */
+      .pip .pv-main {
+        object-position: 50% 46%;
+        transform: scale(0.82);
+        filter: contrast(1.06) saturate(1.06);
+        -webkit-mask-image: radial-gradient(circle at 50% 48%, #000 60%, rgba(0, 0, 0, 0) 84%);
+        mask-image: radial-gradient(circle at 50% 48%, #000 60%, rgba(0, 0, 0, 0) 84%);
       }
 
       /* ===== Persistent EcomIQ logo bug (top-left, small) ===== */
@@ -373,10 +382,12 @@
 
       <!-- ===== Sean circular PIP (top-right, in/out) ===== -->
       <div id="pipA" class="pip">
-        <video id="vidA" data-start="0" data-duration="38.5" data-track-index="0" src="assets/videoA-1080.mp4" muted playsinline></video>
+        <video class="pv-blur" id="vidAb" data-start="0" data-duration="38.5" data-track-index="0" src="assets/videoA-1080.mp4" muted playsinline></video>
+        <video class="pv-main" id="vidA" data-start="0" data-duration="38.5" data-track-index="3" src="assets/videoA-1080.mp4" muted playsinline></video>
       </div>
       <div id="pipB" class="pip">
-        <video id="vidB" data-start="38" data-duration="8" data-track-index="2" src="assets/videoB-1080.mp4" muted playsinline></video>
+        <video class="pv-blur" id="vidBb" data-start="38" data-duration="8" data-track-index="2" src="assets/videoB-1080.mp4" muted playsinline></video>
+        <video class="pv-main" id="vidB" data-start="38" data-duration="8" data-track-index="10" src="assets/videoB-1080.mp4" muted playsinline></video>
       </div>
 
       <!-- Persistent logo bug -->
