@@ -21,8 +21,8 @@
       #aroll { position: absolute; inset: 0; width: 1080px; height: 1350px;
         object-fit: cover; object-position: 50% 72%; z-index: 10; }
 
-      /* Persistent brand logo — top-left, subtle scrim + shadow so it reads on any shot */
-      #brand-logo { position: absolute; top: 5%; left: 6%; width: 37%; z-index: 50; }
+      /* Persistent brand logo — small, top-left (matches the reference ad) */
+      #brand-logo { position: absolute; top: 4%; left: 5%; width: 21%; z-index: 50; }
       #brand-logo::before { content: ''; position: absolute; inset: -22% -16%; z-index: -1;
         background: radial-gradient(62% 62% at 38% 50%, rgba(6,40,76,.5) 0%, rgba(6,40,76,0) 72%); }
       #brand-logo img { display: block; width: 100%; height: auto;
@@ -56,13 +56,13 @@
       <!-- Full-frame motion-graphic overlays (track 4) on beats — cover the picture,
            VO continues underneath. Whip/blur in and out. -->
       <div id="cut1" class="cutaway clip" data-composition-id="cutaway-1" data-composition-src="compositions/cutaway-1.html"
-           data-start="7.0" data-duration="1.6" data-track-index="4"></div>
+           data-start="7.0" data-duration="1.8" data-track-index="4"></div>
       <div id="cut2" class="cutaway clip" data-composition-id="cutaway-2" data-composition-src="compositions/cutaway-2.html"
-           data-start="15.5" data-duration="1.6" data-track-index="4"></div>
+           data-start="15.5" data-duration="1.8" data-track-index="4"></div>
       <div id="cut3" class="cutaway clip" data-composition-id="cutaway-3" data-composition-src="compositions/cutaway-3.html"
-           data-start="24.0" data-duration="1.6" data-track-index="4"></div>
+           data-start="24.0" data-duration="1.8" data-track-index="4"></div>
       <div id="cut4" class="cutaway clip" data-composition-id="cutaway-4" data-composition-src="compositions/cutaway-4.html"
-           data-start="32.5" data-duration="1.6" data-track-index="4"></div>
+           data-start="32.5" data-duration="1.8" data-track-index="4"></div>
 
       <!-- End card (track 5) — overlays the tail so total runtime ≈ the original length -->
       <div id="end-card-clip" class="clip" data-composition-id="end-card" data-composition-src="compositions/end-card.html"

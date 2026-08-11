@@ -1,51 +1,50 @@
 <template id="cutaway-3-template">
   <div id="cutaway-3-root" data-composition-id="cutaway-3" data-width="1080" data-height="1350">
     <div class="c3-bg"></div>
+    <div class="c3-grid"></div>
     <div class="c3-wrap">
-      <div class="c3-headline">Turn data into <span class="em">decisions</span>.</div>
-      <div class="c3-bars">
-        <div class="c3-bar c3-b1"></div>
-        <div class="c3-bar c3-b2"></div>
-        <div class="c3-bar c3-b3"></div>
-        <div class="c3-bar c3-b4"></div>
-      </div>
+      <div class="c3-eyebrow">The Simple Answer</div>
+      <div class="c3-q">Need more revenue?</div>
+      <div class="c3-arrow">&#8595;</div>
+      <div class="c3-a">Spend more on ads.</div>
     </div>
     <style>
       @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
         font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
-      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
-        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
       #cutaway-3-root { position: absolute; inset: 0; overflow: hidden;
         background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
       #cutaway-3-root .c3-bg { position: absolute; inset: 0;
-        background: radial-gradient(78% 48% at 50% 40%, rgba(156,212,255,.16) 0%, rgba(6,40,76,0) 60%), #06284C; }
+        background: radial-gradient(80% 50% at 50% 42%, rgba(156,212,255,.14) 0%, rgba(6,40,76,0) 60%), #06284C; }
+      #cutaway-3-root .c3-grid { position: absolute; inset: 0; opacity: .5;
+        background-image:
+          repeating-linear-gradient(0deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px);
+        -webkit-mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%);
+                mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%); }
       #cutaway-3-root .c3-wrap { position: absolute; inset: 0;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
-        gap: 90px; padding: 12% 9%; text-align: center; }
-      #cutaway-3-root .c3-headline { font-weight: 800; font-size: 122px;
-        line-height: .98; letter-spacing: -.03em; max-width: 92%; }
-      #cutaway-3-root .c3-headline .em { font-family: 'Hedvig Letters Serif', serif;
-        font-style: italic; font-weight: 400; color: #9CD4FF; }
-      #cutaway-3-root .c3-bars { display: flex; align-items: flex-end;
-        gap: 34px; height: 320px; }
-      #cutaway-3-root .c3-bar { width: 96px; border-radius: 16px 16px 4px 4px;
-        background: linear-gradient(180deg, #9CD4FF 0%, #2d7fd6 100%); transform-origin: 50% 100%; }
-      #cutaway-3-root .c3-b1 { height: 42%; }
-      #cutaway-3-root .c3-b2 { height: 64%; }
-      #cutaway-3-root .c3-b3 { height: 82%; }
-      #cutaway-3-root .c3-b4 { height: 100%;
-        background: linear-gradient(180deg, #FF7A4C 0%, #FF4C32 100%); }
+        gap: 34px; padding: 12% 9%; text-align: center; }
+      #cutaway-3-root .c3-eyebrow { font-weight: 700; font-size: 34px; letter-spacing: .3em;
+        text-transform: uppercase; color: #7ea6cf; margin-bottom: 8px; }
+      #cutaway-3-root .c3-q { font-weight: 800; font-size: 104px; line-height: 1.0;
+        letter-spacing: -.03em; color: #FFFFFF; }
+      #cutaway-3-root .c3-arrow { font-size: 84px; line-height: 1; color: #9CD4FF; }
+      #cutaway-3-root .c3-a { font-weight: 800; font-size: 92px; line-height: 1.0;
+        letter-spacing: -.03em; color: rgba(174,199,224,.28); }
     </style>
     <script src="assets/vendor/gsap.min.js"></script>
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
       tl.from("#cutaway-3-root .c3-bg", { opacity: 0, duration: .2, ease: "power1.out" }, 0)
-        .from("#cutaway-3-root .c3-headline", { opacity: 0, y: 40, filter: "blur(12px)", duration: .4, ease: "expo.out" }, .08)
-        .from("#cutaway-3-root .c3-bar", { scaleY: 0, opacity: 0, duration: .42, ease: "power3.out", stagger: .08 }, .3)
-        .to("#cutaway-3-root .c3-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.04, duration: .25, ease: "power2.in" }, 1.35)
-        .to("#cutaway-3-root .c3-bg", { opacity: 0, duration: .22, ease: "power2.in" }, 1.38);
-      tl.set({}, {}, 1.6); // pad to data-duration
+        .from("#cutaway-3-root .c3-grid", { opacity: 0, duration: .4, ease: "power1.out" }, 0)
+        .from("#cutaway-3-root .c3-eyebrow", { opacity: 0, y: 20, duration: .35, ease: "power3.out" }, .05)
+        .from("#cutaway-3-root .c3-q", { opacity: 0, y: 40, filter: "blur(12px)", duration: .45, ease: "expo.out" }, .15)
+        .from("#cutaway-3-root .c3-arrow", { opacity: 0, y: -18, scale: .6, duration: .35, ease: "back.out(2)" }, .5)
+        .from("#cutaway-3-root .c3-a", { opacity: 0, y: 26, duration: .45, ease: "power3.out" }, .7)
+        .to("#cutaway-3-root .c3-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.03, duration: .25, ease: "power2.in" }, 1.5)
+        .to("#cutaway-3-root .c3-grid", { opacity: 0, duration: .22, ease: "power2.in" }, 1.52);
+      tl.set({}, {}, 1.8); // pad to data-duration
       window.__timelines["cutaway-3"] = tl;
     </script>
   </div>
