@@ -33,27 +33,49 @@
       #wm-logo { position: absolute; top: 50px; left: 58px; width: 290px; height: auto;
         filter: drop-shadow(0 2px 12px rgba(0,0,0,.6)); opacity: .95; }
 
-      /* Branded end card */
+      /* ---- Motion-graphic overlays (emphasize each spoken point) ---- */
+      #overlays { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+      .ov { position: absolute; opacity: 0; will-change: transform, opacity; }
+      .ov-top { left: 56px; right: 56px; top: 5%; text-align: center; }
+      .ov-top .l { display: block; font-weight: 800; letter-spacing: -.02em; line-height: .96; color: #fff;
+        text-shadow: 0 2px 4px rgba(3,16,32,.92), 0 10px 34px rgba(3,16,32,.85), 0 0 70px rgba(3,16,32,.7); }
+      .ov-top .l.sub { font-weight: 700; margin-top: 14px;
+        text-shadow: 0 2px 4px rgba(3,16,32,.92), 0 8px 26px rgba(3,16,32,.8); }
+      .ov .hot { color: var(--brand-flame); }
+      .ov-chip { left: 50%; top: 6.5%; display: inline-flex; align-items: center; gap: 24px;
+        white-space: nowrap; background: rgba(4,24,48,.9); border: 2px solid var(--brand-flame); border-radius: 22px;
+        padding: 24px 42px 24px 26px; box-shadow: 0 26px 64px -22px rgba(0,0,0,.8); }
+      .ov-chip .num { width: 68px; height: 68px; border-radius: 50%; background: var(--brand-flame); color: #fff;
+        font-weight: 800; font-size: 40px; display: flex; align-items: center; justify-content: center; }
+      .ov-chip .txt { font-weight: 700; font-size: 52px; color: #fff; letter-spacing: -.01em; }
+      .ov-badge { left: 0; right: 0; top: 7%; text-align: center; }
+      .ov-badge span { display: inline-block; background: var(--brand-flame); color: #fff; font-weight: 800;
+        font-size: 52px; text-transform: uppercase; text-align: center; line-height: 1.05; letter-spacing: -.01em;
+        padding: 22px 46px; border-radius: 18px; box-shadow: 0 24px 60px -18px rgba(255,76,50,.75);
+        text-shadow: 0 2px 8px rgba(0,0,0,.3); }
+      .ov-arrow { left: 50%; bottom: 7%; text-align: center; }
+      .ov-arrow .txt { font-weight: 800; font-size: 66px; color: #fff; letter-spacing: -.01em;
+        text-shadow: 0 2px 4px rgba(3,16,32,.9), 0 10px 30px rgba(3,16,32,.85); }
+      .ov-arrow .tri { width: 0; height: 0; margin: 18px auto 0; border-left: 46px solid transparent;
+        border-right: 46px solid transparent; border-top: 60px solid var(--brand-flame);
+        filter: drop-shadow(0 8px 14px rgba(0,0,0,.5)); }
+
+      /* ---- Branded end card ---- */
       #endcard { position: absolute; inset: 0; z-index: 5; background: var(--brand-navy); overflow: hidden; }
       #ec-bloom { position: absolute; left: -12%; bottom: -24%; width: 124%; height: 62%; z-index: 0;
         background: var(--brand-gradient-2); filter: blur(96px); opacity: .40; }
       #ec-vignette { position: absolute; inset: 0; z-index: 0;
         background: radial-gradient(78% 60% at 50% 42%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%); }
-      /* Rising "margin" particles — continuous motion behind the content */
       #ec-fx { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
       #ec-fx .p { position: absolute; bottom: -30px; border-radius: 50%; opacity: 0; filter: blur(.6px); }
-      #ec-logo { position: absolute; top: 7.5%; left: 50%; transform: translateX(-50%); width: 44%; height: auto; z-index: 2; }
+      #ec-logo { position: absolute; top: 10%; left: 50%; transform: translateX(-50%); width: 44%; height: auto; z-index: 2; }
       #ec-stage { position: absolute; left: 92px; right: 92px; top: 54%; transform: translateY(-50%); z-index: 2;
         display: flex; flex-direction: column; align-items: center; text-align: center; }
-      #ec-eyebrow { position: relative; font-weight: 600; font-size: 30px; letter-spacing: .32em;
-        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 32px; white-space: nowrap; }
+      #ec-eyebrow { position: relative; font-weight: 800; font-size: 72px; letter-spacing: -.02em; line-height: 1.04;
+        color: var(--brand-white); margin-bottom: 38px; max-width: 700px; }
       #ec-rule { width: 132px; height: 6px; border-radius: 3px; background: var(--brand-flame);
-        margin-bottom: 38px; transform-origin: left center; }
-      #ec-headline { font-weight: 800; font-size: 68px; line-height: 1.05; letter-spacing: -.03em;
-        color: var(--brand-white); max-width: 760px; }
-      #ec-headline .ln { display: block; overflow: hidden; }
-      #ec-headline .in { display: block; }
-      #ec-cta-wrap { position: relative; margin-top: 46px; display: inline-flex; }
+        margin-bottom: 44px; transform-origin: left center; }
+      #ec-cta-wrap { position: relative; display: inline-flex; }
       #ec-cta { position: relative; overflow: hidden; display: inline-flex; align-items: center;
         font-weight: 700; font-size: 40px; color: var(--brand-white); background: var(--brand-flame);
         padding: 30px 66px; border-radius: 999px; box-shadow: 0 22px 70px -16px rgba(255,76,50,.62); }
@@ -68,7 +90,7 @@
     </style>
   </head>
   <body>
-    <!-- 4:5 (1080x1350) variant. Same cut/timings/logo/animated end card; face cropped from the TOP. -->
+    <!-- 4:5 (1080x1350) variant. Same cut/timings/overlays/end card; face cropped from the TOP. -->
     <div id="root" data-composition-id="ecomiq-profit-bootcamp-4x5" data-start="0" data-duration="35.6" data-width="1080" data-height="1350">
 
       <div id="bg" class="clip" data-start="0" data-duration="35.6" data-track-index="0"></div>
@@ -84,6 +106,21 @@
         <img id="wm-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
       </div>
 
+      <div id="overlays">
+        <div id="ov-two" class="ov ov-top">
+          <span class="l"><span class="hot" style="font-size:150px">2</span></span>
+          <span class="l" style="font-size:70px;margin-top:6px">QUICK FIXES</span>
+        </div>
+        <div id="ov-c1" class="ov ov-chip"><span class="num">1</span><span class="txt">New-customer discount</span></div>
+        <div id="ov-c2" class="ov ov-chip"><span class="num">2</span><span class="txt">Free shipping</span></div>
+        <div id="ov-boot" class="ov ov-badge"><span>Free Profitability Bootcamp</span></div>
+        <div id="ov-where" class="ov ov-top">
+          <span class="l" style="font-size:84px"><span class="hot">HIDDEN</span> MARGIN</span>
+          <span class="l sub" style="font-size:44px">is everywhere in your store</span>
+        </div>
+        <div id="ov-link" class="ov ov-arrow"><div class="txt">LINK BELOW</div><div class="tri"></div></div>
+      </div>
+
       <div id="endcard" class="clip" data-start="29.9" data-duration="5.7" data-track-index="3">
         <div id="ec-bloom"></div>
         <div id="ec-vignette"></div>
@@ -92,7 +129,6 @@
         <div id="ec-stage">
           <div id="ec-eyebrow">Free Profitability Bootcamp</div>
           <div id="ec-rule"></div>
-          <div id="ec-headline"><span class="ln"><span class="in">Keep the margin</span></span><span class="ln"><span class="in">you give away.</span></span></div>
           <div id="ec-cta-wrap"><span class="cta-glow"></span><span class="cta-ring ra"></span><span class="cta-ring rb"></span><div id="ec-cta"><span class="cta-txt">Join Free</span><span class="cta-shine"></span></div></div>
         </div>
       </div>
@@ -114,7 +150,7 @@
         el.style.left = (5 + _r() * 90) + "%";
         el.style.background = _r() < 0.5 ? "var(--brand-flame)" : "var(--brand-blue-tint)";
         _fx.appendChild(el);
-        _parts.push({ el, rise: 620 + Math.round(_r() * 300), dur: 3.0 + _r() * 2.4,
+        _parts.push({ el, rise: 560 + Math.round(_r() * 300), dur: 3.0 + _r() * 2.4,
                       delay: _r() * 2.6, drift: Math.round((_r() * 2 - 1) * 46), peak: 0.34 + _r() * 0.26 });
       }
 
@@ -123,27 +159,44 @@
       tl.fromTo("#wm", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0.2)
         .to("#wm", { opacity: 0, duration: 0.4, ease: "power2.in" }, 29.7);
 
-      // Crossfade face → end card, brought in early (over the tail of the CTA line)
+      // Motion-graphic emphasis overlays (cut-time)
+      gsap.set(["#ov-c1", "#ov-c2", "#ov-link"], { xPercent: -50 });
+
+      tl.fromTo("#ov-two", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power1.out" }, 5.4)
+        .from("#ov-two", { scale: 0.55, y: 20, transformOrigin: "50% 30%", duration: 0.55, ease: "back.out(1.6)" }, 5.4)
+        .from("#ov-two .l:nth-child(2)", { y: 22, duration: 0.4, ease: "power2.out" }, 5.75)
+        .to("#ov-two", { opacity: 0, y: -20, duration: 0.4, ease: "power2.in" }, 8.1);
+      tl.fromTo("#ov-c1", { opacity: 0, y: 64 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.4)" }, 9.0)
+        .to("#ov-c1", { opacity: 0, y: -30, duration: 0.4, ease: "power2.in" }, 12.2);
+      tl.fromTo("#ov-c2", { opacity: 0, y: 64 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.4)" }, 13.0)
+        .to("#ov-c2", { opacity: 0, y: -30, duration: 0.4, ease: "power2.in" }, 15.2);
+      tl.fromTo("#ov-boot", { opacity: 0, scale: 0.8, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.6)" }, 16.3)
+        .to("#ov-boot", { opacity: 0, scale: 1.05, duration: 0.4, ease: "power2.in" }, 18.6);
+      tl.fromTo("#ov-where", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 20.6)
+        .from("#ov-where .l:nth-child(1)", { y: 40, scale: 1.1, transformOrigin: "50% 50%", duration: 0.5, ease: "back.out(1.4)" }, 20.6)
+        .from("#ov-where .l:nth-child(2)", { y: 24, duration: 0.4, ease: "power2.out" }, 20.9)
+        .to("#ov-where", { opacity: 0, y: -22, duration: 0.4, ease: "power2.in" }, 24.0);
+      tl.fromTo("#ov-link", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 28.2)
+        .fromTo("#ov-link .tri", { y: -10 }, { y: 14, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 3 }, 28.65)
+        .to("#ov-link", { opacity: 0, duration: 0.35, ease: "power2.in" }, 30.0);
+
+      // Crossfade face → end card
       tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power2.inOut" }, 30.0);
 
-      // Animated end-card sequence (the "Free Profitability Bootcamp" motion moment)
+      // Animated end-card sequence
       tl.fromTo("#ec-bloom", { x: -20, scale: 1.0, opacity: .36 },
                              { x: 25, scale: 1.12, opacity: .46, duration: 5.6, ease: "sine.inOut" }, 30.0)
         .from("#ec-logo", { opacity: 0, y: -24, duration: 0.6, ease: "power3.out" }, 30.10)
         .fromTo("#ec-eyebrow", { clipPath: "inset(0 100% 0 0)", filter: "blur(2px)" },
                                { clipPath: "inset(0 0% 0 0)", filter: "blur(0px)", duration: 0.62, ease: "power2.out" }, 30.30)
         .fromTo("#ec-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, 30.42)
-        .from("#ec-headline .ln:nth-child(1) .in", { yPercent: 115, duration: 0.62, ease: "back.out(1.3)" }, 30.66)
-        .from("#ec-headline .ln:nth-child(2) .in", { yPercent: 115, duration: 0.62, ease: "back.out(1.3)" }, 30.80)
-        .from("#ec-cta-wrap", { opacity: 0, scale: .85, duration: 0.5, ease: "back.out(1.7)" }, 31.15)
-        // Repeating shimmer + two radar rings + breathing glow keep the CTA in motion
+        .from("#ec-cta-wrap", { opacity: 0, scale: .85, duration: 0.5, ease: "back.out(1.7)" }, 31.05)
         .fromTo(".cta-shine", { x: "-220%" }, { x: "260%", duration: 0.85, ease: "power2.inOut", repeat: 2, repeatDelay: 1.35 }, 31.5)
         .fromTo(".cta-ring.ra", { scale: .85, opacity: .5 }, { scale: 1.5, opacity: 0, duration: 1.5, ease: "power2.out", repeat: 3 }, 31.4)
         .fromTo(".cta-ring.rb", { scale: .85, opacity: .42 }, { scale: 1.5, opacity: 0, duration: 1.5, ease: "power2.out", repeat: 3 }, 32.15)
         .fromTo(".cta-glow", { opacity: .18 }, { opacity: .5, duration: 0.9, ease: "sine.inOut", yoyo: true, repeat: 4 }, 31.4)
         .to("#ec-cta", { scale: 1.045, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 4 }, 32.0);
 
-      // Rising particles — continuous ambient motion across the whole end-card hold
       _parts.forEach((p) => {
         const t0 = 30.2 + p.delay;
         tl.fromTo(p.el, { y: 0, x: 0 }, { y: -p.rise, x: p.drift, duration: p.dur, ease: "sine.out" }, t0)
