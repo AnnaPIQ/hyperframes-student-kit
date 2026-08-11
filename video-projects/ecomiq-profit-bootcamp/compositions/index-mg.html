@@ -38,12 +38,13 @@
       #pip { position: absolute; top: 84px; right: 56px; width: 300px; height: 300px; z-index: 3;
         border-radius: 50%; overflow: hidden; border: 4px solid var(--brand-flame); opacity: 0;
         box-shadow: 0 18px 54px -12px rgba(0,0,0,.72), 0 0 0 9px rgba(6,40,76,.45); }
-      #pip video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 33%;
+      #pip video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%;
+        transform: scale(1.16) translate(5%, -9%); transform-origin: 50% 50%;
         filter: contrast(1.06) saturate(1.08) brightness(.99); }
 
       /* ---------- Kinetic scenes ---------- */
       #scenes { position: absolute; inset: 0; z-index: 2; }
-      .scn { position: absolute; left: 70px; right: 70px; top: 50%; transform: translateY(-50%);
+      .scn { position: absolute; left: 70px; right: 70px; top: 43%; transform: translateY(-50%);
         text-align: center; opacity: 0; will-change: transform, opacity, filter; }
       .k { display: block; font-weight: 800; letter-spacing: -.03em; line-height: .94; color: #fff;
         text-shadow: 0 3px 6px rgba(3,16,32,.7), 0 14px 44px rgba(3,16,32,.6), 0 0 80px rgba(3,16,32,.5); }
@@ -61,10 +62,19 @@
       .tri { width: 0; height: 0; margin: 30px auto 0; border-left: 54px solid transparent;
         border-right: 54px solid transparent; border-top: 72px solid var(--brand-flame);
         filter: drop-shadow(0 10px 16px rgba(0,0,0,.5)); }
-      /* falling money marks (hook) */
-      #coins { position: absolute; left: 0; right: 0; top: -8%; height: 120%; }
-      #coins .c { position: absolute; font-weight: 800; color: var(--brand-flame); opacity: 0;
-        text-shadow: 0 3px 10px rgba(0,0,0,.5); }
+      /* money-walking-out-the-door graphic (hook) */
+      #door-stage { position: relative; width: 520px; height: 380px; margin: 44px auto 0; }
+      #door { position: absolute; left: 46px; bottom: 0; width: 220px; height: 360px; }
+      .door-frame { position: absolute; inset: 0; border-radius: 14px 14px 0 0; border: 12px solid #123f70;
+        border-bottom: none; background: transparent; box-shadow: 0 26px 60px -26px rgba(0,0,0,.7); }
+      .door-light { position: absolute; left: 12px; right: 12px; top: 12px; bottom: 0; border-radius: 8px 8px 0 0;
+        background: linear-gradient(90deg, rgba(255,148,60,.65), rgba(255,76,50,.14)); filter: blur(3px); }
+      .door-panel { position: absolute; left: 12px; top: 12px; bottom: 0; width: 118px; border-radius: 8px 8px 0 0;
+        background: linear-gradient(90deg, #0e3160, #0a2547); border: 2px solid #1d4a7a; border-bottom: none;
+        transform: perspective(720px) rotateY(-48deg); transform-origin: left center; box-shadow: 10px 0 26px -10px rgba(0,0,0,.65); }
+      .walker { position: absolute; width: 66px; height: 66px; border-radius: 50%; background: var(--brand-flame);
+        display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 40px; color: #fff;
+        box-shadow: 0 10px 22px -6px rgba(0,0,0,.55), 0 0 0 4px rgba(255,255,255,.12); opacity: 0; }
 
       /* ---------- Branded end card ---------- */
       #endcard { position: absolute; inset: 0; z-index: 5; background: var(--brand-navy); overflow: hidden; opacity: 0; }
@@ -112,9 +122,15 @@
       <!-- Kinetic scenes -->
       <div id="scenes">
         <div id="s-hook" class="scn">
-          <div id="coins"></div>
-          <span class="k" style="font-size:104px">MONEY'S</span>
-          <span class="k hot" style="font-size:118px">WALKING OUT</span>
+          <span class="k" style="font-size:80px">MONEY'S <span class="hot">WALKING OUT</span></span>
+          <div id="door-stage">
+            <div id="door">
+              <div class="door-light"></div>
+              <div class="door-frame"></div>
+              <div class="door-panel"></div>
+            </div>
+            <div id="walkers"></div>
+          </div>
         </div>
         <div id="s-order" class="scn">
           <span class="k" style="font-size:150px">EVERY</span>
@@ -127,11 +143,11 @@
         <div id="s-c1" class="scn">
           <span class="num">1</span>
           <span class="k" style="font-size:100px">New-customer</span>
-          <span class="k hot" style="font-size:100px">discount</span>
+          <span class="k" style="font-size:100px">discount</span>
         </div>
         <div id="s-c2" class="scn">
           <span class="num">2</span>
-          <span class="k" style="font-size:118px">Free <span class="hot">shipping</span></span>
+          <span class="k" style="font-size:118px">Free shipping</span>
         </div>
         <div id="s-boot" class="scn">
           <span class="kick">Inside the</span>
@@ -223,16 +239,18 @@
       // CTA arrow bounce
       tl.fromTo("#s-cta .tri", { y: -12 }, { y: 16, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 3 }, 28.2);
 
-      // Falling money marks during the hook
-      const coins = document.getElementById("coins");
-      for (let i = 0; i < 7; i++) {
-        const c = document.createElement("div"); c.className = "c";
-        c.textContent = R() < 0.5 ? "$" : "%";
-        c.style.left = (8 + R() * 84) + "%"; c.style.fontSize = (46 + Math.round(R() * 40)) + "px";
-        coins.appendChild(c);
-        const d = 0.3 + R() * 0.5;
-        tl.fromTo(c, { y: -60, opacity: 0 }, { y: 360, opacity: 1, duration: 1.4, ease: "power1.in" }, d)
-          .to(c, { opacity: 0, duration: 0.4, ease: "power1.in" }, d + 1.1);
+      // Hook graphic: $ coins walk OUT of the open door (money leaving the store)
+      const walkers = document.getElementById("walkers");
+      for (let i = 0; i < 3; i++) {
+        const w = document.createElement("div"); w.className = "walker"; w.textContent = "$";
+        walkers.appendChild(w);
+        const startX = 150, startY = 250 + i * 26;
+        gsap.set(w, { x: startX, y: startY, scale: 0.9, opacity: 0 });
+        const d = 0.5 + i * 0.5;
+        tl.to(w, { opacity: 1, duration: 0.2, ease: "power1.out" }, d)
+          .to(w, { x: startX + 320, duration: 1.35, ease: "power1.in" }, d)          // walk out to the right
+          .to(w, { y: "-=15", duration: 0.26, ease: "sine.inOut", yoyo: true, repeat: 4 }, d)  // bobbing "steps"
+          .to(w, { opacity: 0, scale: 0.68, duration: 0.4, ease: "power1.in" }, d + 1.05);
       }
 
       /* --- End card (crossfade in, kinetic reveal, continuous CTA) --- */
