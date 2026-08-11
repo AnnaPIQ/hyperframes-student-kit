@@ -1,0 +1,61 @@
+<template id="cutaway-2-template">
+  <div id="cutaway-2-root" data-composition-id="cutaway-2" data-width="1080" data-height="1350">
+    <div class="c2-bg"></div>
+    <div class="c2-grid"></div>
+    <div class="c2-wrap">
+      <div class="c2-eyebrow">Cost To Reach Them Again</div>
+      <div class="c2-rule"></div>
+      <div class="c2-stat">
+        <div class="c2-label">Brand-new customer</div>
+        <div class="c2-num flame">$$$</div>
+      </div>
+      <div class="c2-rule"></div>
+      <div class="c2-stat">
+        <div class="c2-label">Someone who already bought</div>
+        <div class="c2-num blue">&#8776; $0</div>
+      </div>
+      <div class="c2-rule"></div>
+    </div>
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      #cutaway-2-root { position: absolute; inset: 0; overflow: hidden;
+        background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+      #cutaway-2-root .c2-bg { position: absolute; inset: 0;
+        background: radial-gradient(80% 50% at 50% 42%, rgba(156,212,255,.14) 0%, rgba(6,40,76,0) 60%), #06284C; }
+      #cutaway-2-root .c2-grid { position: absolute; inset: 0; opacity: .5;
+        background-image:
+          repeating-linear-gradient(0deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px);
+        -webkit-mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%);
+                mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%); }
+      #cutaway-2-root .c2-wrap { position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: stretch; justify-content: center;
+        gap: 30px; padding: 12% 11%; }
+      #cutaway-2-root .c2-eyebrow { font-weight: 700; font-size: 34px; letter-spacing: .3em;
+        text-transform: uppercase; color: #7ea6cf; text-align: center; margin-bottom: 6px; }
+      #cutaway-2-root .c2-rule { height: 2px; background: linear-gradient(90deg, rgba(156,212,255,0), rgba(156,212,255,.35), rgba(156,212,255,0)); }
+      #cutaway-2-root .c2-stat { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+      #cutaway-2-root .c2-label { font-weight: 700; font-size: 40px; letter-spacing: .01em; color: #a9c4e0; max-width: 58%; }
+      #cutaway-2-root .c2-num { font-weight: 800; font-size: 130px; line-height: .9; letter-spacing: -.02em;
+        font-variant-numeric: tabular-nums; white-space: nowrap; }
+      #cutaway-2-root .c2-num.flame { color: #FF5A3C; }
+      #cutaway-2-root .c2-num.blue { color: #9CD4FF; }
+    </style>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#cutaway-2-root .c2-bg", { opacity: 0, duration: .2, ease: "power1.out" }, 0)
+        .from("#cutaway-2-root .c2-grid", { opacity: 0, duration: .4, ease: "power1.out" }, 0)
+        .from("#cutaway-2-root .c2-eyebrow", { opacity: 0, y: 20, duration: .35, ease: "power3.out" }, .05)
+        .from("#cutaway-2-root .c2-rule", { scaleX: 0, opacity: 0, duration: .4, ease: "power2.out", stagger: .07 }, .12)
+        .from("#cutaway-2-root .c2-stat", { opacity: 0, y: 26, filter: "blur(8px)", duration: .45, ease: "power3.out", stagger: .16 }, .25)
+        .to("#cutaway-2-root .c2-grid", { x: 48, y: 36, duration: 7.2, ease: "none" }, 0)
+        .to("#cutaway-2-root .c2-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.03, duration: .25, ease: "power2.in" }, 6.85)
+        .to("#cutaway-2-root .c2-grid", { opacity: 0, duration: .22, ease: "power2.in" }, 6.87);
+      tl.set({}, {}, 7.2); // pad to data-duration
+      window.__timelines["cutaway-2"] = tl;
+    </script>
+  </div>
+</template>

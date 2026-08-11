@@ -1,0 +1,642 @@
+[
+  {
+    "text": "It's",
+    "start": 0,
+    "end": 0.69
+  },
+  {
+    "text": "easy",
+    "start": 0.94,
+    "end": 1.39
+  },
+  {
+    "text": "to",
+    "start": 1.4,
+    "end": 1.72
+  },
+  {
+    "text": "focus",
+    "start": 1.91,
+    "end": 2.63
+  },
+  {
+    "text": "so",
+    "start": 2.63,
+    "end": 2.98
+  },
+  {
+    "text": "hard",
+    "start": 2.98,
+    "end": 3.36
+  },
+  {
+    "text": "on",
+    "start": 3.73,
+    "end": 3.84
+  },
+  {
+    "text": "finding",
+    "start": 3.84,
+    "end": 4.25
+  },
+  {
+    "text": "new",
+    "start": 4.26,
+    "end": 4.36
+  },
+  {
+    "text": "customers",
+    "start": 4.42,
+    "end": 4.99
+  },
+  {
+    "text": "that",
+    "start": 5,
+    "end": 5.32
+  },
+  {
+    "text": "you",
+    "start": 5.32,
+    "end": 5.56
+  },
+  {
+    "text": "forget",
+    "start": 5.94,
+    "end": 6.04
+  },
+  {
+    "text": "that",
+    "start": 6.04,
+    "end": 6.15
+  },
+  {
+    "text": "the",
+    "start": 6.23,
+    "end": 6.35
+  },
+  {
+    "text": "growth",
+    "start": 6.35,
+    "end": 6.65
+  },
+  {
+    "text": "potential",
+    "start": 6.65,
+    "end": 7.12
+  },
+  {
+    "text": "already",
+    "start": 7.12,
+    "end": 7.59
+  },
+  {
+    "text": "lives",
+    "start": 7.59,
+    "end": 8.06
+  },
+  {
+    "text": "inside",
+    "start": 8.06,
+    "end": 8.38
+  },
+  {
+    "text": "your",
+    "start": 8.38,
+    "end": 8.66
+  },
+  {
+    "text": "business.",
+    "start": 8.66,
+    "end": 9.46
+  },
+  {
+    "text": "The",
+    "start": 9.46,
+    "end": 9.62
+  },
+  {
+    "text": "customers",
+    "start": 9.62,
+    "end": 10.1
+  },
+  {
+    "text": "you've",
+    "start": 10.1,
+    "end": 10.42
+  },
+  {
+    "text": "already",
+    "start": 10.42,
+    "end": 10.8
+  },
+  {
+    "text": "paid",
+    "start": 10.8,
+    "end": 11.01
+  },
+  {
+    "text": "for,",
+    "start": 11.01,
+    "end": 11.2
+  },
+  {
+    "text": "they",
+    "start": 11.2,
+    "end": 11.44
+  },
+  {
+    "text": "already",
+    "start": 11.44,
+    "end": 11.86
+  },
+  {
+    "text": "know",
+    "start": 11.86,
+    "end": 12.14
+  },
+  {
+    "text": "who",
+    "start": 12.14,
+    "end": 12.26
+  },
+  {
+    "text": "you",
+    "start": 12.29,
+    "end": 12.46
+  },
+  {
+    "text": "are,",
+    "start": 12.46,
+    "end": 12.78
+  },
+  {
+    "text": "they",
+    "start": 12.78,
+    "end": 12.93
+  },
+  {
+    "text": "already",
+    "start": 13.11,
+    "end": 13.69
+  },
+  {
+    "text": "trust",
+    "start": 13.69,
+    "end": 14.1
+  },
+  {
+    "text": "you.",
+    "start": 14.1,
+    "end": 14.36
+  },
+  {
+    "text": "And",
+    "start": 14.36,
+    "end": 14.6
+  },
+  {
+    "text": "they",
+    "start": 14.6,
+    "end": 14.92
+  },
+  {
+    "text": "cost",
+    "start": 14.92,
+    "end": 15.3
+  },
+  {
+    "text": "you",
+    "start": 15.3,
+    "end": 15.48
+  },
+  {
+    "text": "next",
+    "start": 15.48,
+    "end": 15.8
+  },
+  {
+    "text": "to",
+    "start": 15.8,
+    "end": 15.96
+  },
+  {
+    "text": "nothing",
+    "start": 15.96,
+    "end": 16.53
+  },
+  {
+    "text": "to",
+    "start": 16.53,
+    "end": 16.69
+  },
+  {
+    "text": "reach",
+    "start": 16.69,
+    "end": 17.1
+  },
+  {
+    "text": "again.",
+    "start": 17.1,
+    "end": 17.56
+  },
+  {
+    "text": "And",
+    "start": 17.56,
+    "end": 17.72
+  },
+  {
+    "text": "there",
+    "start": 17.72,
+    "end": 17.97
+  },
+  {
+    "text": "are",
+    "start": 17.97,
+    "end": 18.14
+  },
+  {
+    "text": "two",
+    "start": 18.14,
+    "end": 18.29
+  },
+  {
+    "text": "numbers",
+    "start": 18.5,
+    "end": 18.68
+  },
+  {
+    "text": "that",
+    "start": 18.68,
+    "end": 19.1
+  },
+  {
+    "text": "decide",
+    "start": 19.1,
+    "end": 19.74
+  },
+  {
+    "text": "whether",
+    "start": 19.74,
+    "end": 20.21
+  },
+  {
+    "text": "they're",
+    "start": 20.22,
+    "end": 20.69
+  },
+  {
+    "text": "worth",
+    "start": 20.69,
+    "end": 21.03
+  },
+  {
+    "text": "it",
+    "start": 21.03,
+    "end": 21.16
+  },
+  {
+    "text": "over",
+    "start": 21.16,
+    "end": 21.43
+  },
+  {
+    "text": "time.",
+    "start": 21.43,
+    "end": 21.96
+  },
+  {
+    "text": "Your",
+    "start": 21.96,
+    "end": 22.17
+  },
+  {
+    "text": "repeat",
+    "start": 22.17,
+    "end": 22.48
+  },
+  {
+    "text": "rate,",
+    "start": 22.48,
+    "end": 22.8
+  },
+  {
+    "text": "so",
+    "start": 22.9,
+    "end": 22.95
+  },
+  {
+    "text": "how",
+    "start": 22.95,
+    "end": 23.11
+  },
+  {
+    "text": "often",
+    "start": 23.19,
+    "end": 23.55
+  },
+  {
+    "text": "they",
+    "start": 23.55,
+    "end": 23.69
+  },
+  {
+    "text": "come",
+    "start": 23.87,
+    "end": 24.15
+  },
+  {
+    "text": "back",
+    "start": 24.15,
+    "end": 24.48
+  },
+  {
+    "text": "and",
+    "start": 24.48,
+    "end": 24.59
+  },
+  {
+    "text": "your",
+    "start": 24.59,
+    "end": 24.73
+  },
+  {
+    "text": "average",
+    "start": 24.73,
+    "end": 24.98
+  },
+  {
+    "text": "order",
+    "start": 24.98,
+    "end": 25.16
+  },
+  {
+    "text": "value,",
+    "start": 25.34,
+    "end": 25.44
+  },
+  {
+    "text": "how",
+    "start": 25.44,
+    "end": 25.63
+  },
+  {
+    "text": "much",
+    "start": 25.71,
+    "end": 26.03
+  },
+  {
+    "text": "they",
+    "start": 26.03,
+    "end": 26.21
+  },
+  {
+    "text": "actually",
+    "start": 26.39,
+    "end": 27.02
+  },
+  {
+    "text": "spend.",
+    "start": 27.09,
+    "end": 27.48
+  },
+  {
+    "text": "And",
+    "start": 27.48,
+    "end": 27.75
+  },
+  {
+    "text": "it's",
+    "start": 27.75,
+    "end": 28.1
+  },
+  {
+    "text": "why",
+    "start": 28.1,
+    "end": 28.42
+  },
+  {
+    "text": "retention",
+    "start": 28.42,
+    "end": 29.17
+  },
+  {
+    "text": "is",
+    "start": 29.17,
+    "end": 29.21
+  },
+  {
+    "text": "usually",
+    "start": 29.39,
+    "end": 30
+  },
+  {
+    "text": "the",
+    "start": 30,
+    "end": 30.23
+  },
+  {
+    "text": "hidden",
+    "start": 30.23,
+    "end": 30.68
+  },
+  {
+    "text": "lever",
+    "start": 30.68,
+    "end": 30.88
+  },
+  {
+    "text": "in",
+    "start": 31.08,
+    "end": 31.22
+  },
+  {
+    "text": "established",
+    "start": 31.22,
+    "end": 32.02
+  },
+  {
+    "text": "e-commerce",
+    "start": 32.02,
+    "end": 32.72
+  },
+  {
+    "text": "brands",
+    "start": 32.72,
+    "end": 33.16
+  },
+  {
+    "text": "to",
+    "start": 33.18,
+    "end": 33.3
+  },
+  {
+    "text": "getting",
+    "start": 33.3,
+    "end": 33.71
+  },
+  {
+    "text": "more",
+    "start": 33.71,
+    "end": 33.96
+  },
+  {
+    "text": "money",
+    "start": 34.12,
+    "end": 34.24
+  },
+  {
+    "text": "back",
+    "start": 34.27,
+    "end": 34.5
+  },
+  {
+    "text": "onto",
+    "start": 34.5,
+    "end": 34.74
+  },
+  {
+    "text": "your",
+    "start": 34.74,
+    "end": 34.91
+  },
+  {
+    "text": "bottom",
+    "start": 35.09,
+    "end": 35.34
+  },
+  {
+    "text": "line.",
+    "start": 35.34,
+    "end": 35.6
+  },
+  {
+    "text": "And",
+    "start": 35.6,
+    "end": 35.73
+  },
+  {
+    "text": "it's",
+    "start": 35.73,
+    "end": 35.89
+  },
+  {
+    "text": "things",
+    "start": 35.89,
+    "end": 36.14
+  },
+  {
+    "text": "like",
+    "start": 36.15,
+    "end": 36.32
+  },
+  {
+    "text": "this",
+    "start": 36.32,
+    "end": 36.54
+  },
+  {
+    "text": "that",
+    "start": 36.54,
+    "end": 36.75
+  },
+  {
+    "text": "we",
+    "start": 36.83,
+    "end": 36.88
+  },
+  {
+    "text": "help",
+    "start": 36.88,
+    "end": 37.12
+  },
+  {
+    "text": "coach",
+    "start": 37.12,
+    "end": 37.33
+  },
+  {
+    "text": "you",
+    "start": 37.51,
+    "end": 37.59
+  },
+  {
+    "text": "through",
+    "start": 37.7,
+    "end": 38.14
+  },
+  {
+    "text": "inside",
+    "start": 38.16,
+    "end": 38.61
+  },
+  {
+    "text": "our",
+    "start": 38.61,
+    "end": 38.83
+  },
+  {
+    "text": "completely",
+    "start": 39.1,
+    "end": 39.58
+  },
+  {
+    "text": "free",
+    "start": 39.58,
+    "end": 39.88
+  },
+  {
+    "text": "profitability",
+    "start": 39.88,
+    "end": 40.85
+  },
+  {
+    "text": "bootcamp.",
+    "start": 40.85,
+    "end": 41.56
+  },
+  {
+    "text": "Click",
+    "start": 41.7,
+    "end": 42.02
+  },
+  {
+    "text": "the",
+    "start": 42.02,
+    "end": 42.2
+  },
+  {
+    "text": "link",
+    "start": 42.2,
+    "end": 42.47
+  },
+  {
+    "text": "below",
+    "start": 42.64,
+    "end": 42.76
+  },
+  {
+    "text": "to",
+    "start": 42.79,
+    "end": 42.85
+  },
+  {
+    "text": "sign",
+    "start": 42.93,
+    "end": 43.18
+  },
+  {
+    "text": "up",
+    "start": 43.18,
+    "end": 43.31
+  },
+  {
+    "text": "for",
+    "start": 43.31,
+    "end": 43.43
+  },
+  {
+    "text": "access.",
+    "start": 43.61,
+    "end": 44.12
+  }
+]

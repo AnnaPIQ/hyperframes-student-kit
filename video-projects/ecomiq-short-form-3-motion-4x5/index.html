@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>ecomiq-short-form-3-motion-4x5</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+
+      #bg-clip { position: absolute; inset: 0; z-index: 0; }
+      .scene { position: absolute; inset: 0; z-index: 40; }
+
+      /* Sean — circular picture-in-picture, top-right */
+      #sean-pip { position: absolute; top: 5%; right: 5%; width: 262px; height: 262px;
+        border-radius: 50%; overflow: hidden; z-index: 70; opacity: 0;
+        border: 5px solid rgba(156,212,255,.9);
+        box-shadow: 0 22px 60px -12px rgba(0,0,0,.6), 0 0 0 2px rgba(6,40,76,.7), 0 0 40px -6px rgba(156,212,255,.4); }
+      #sean-vid { position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; object-position: 50% 48%; }
+
+      #brand-logo { position: absolute; top: 4.5%; left: 5%; width: 22%; z-index: 50; }
+      #brand-logo img { display: block; width: 100%; height: auto;
+        filter: drop-shadow(0 3px 12px rgba(0,0,0,.6)); }
+
+      #end-card-clip { position: absolute; inset: 0; z-index: 100; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="ecomiq-short-form-3-motion-4x5" data-start="0" data-duration="44.8" data-width="1080" data-height="1350">
+
+      <div id="bg-clip" data-composition-id="bg" data-composition-src="compositions/bg.html"
+           data-start="0" data-duration="44.8" data-track-index="0"></div>
+
+      <audio id="aroll-vo" data-start="0" data-duration="44.8" data-media-start="0" data-track-index="1"
+             src="assets/aroll-video3.mp4" data-volume="1"></audio>
+      <audio id="music-bed" data-start="0" data-duration="44.8" data-track-index="2"
+             src="assets/music-bed-placeholder.m4a" data-volume="0.18"></audio>
+
+      <div id="sean-pip">
+        <video id="sean-vid" data-start="0" data-duration="44.8" data-media-start="0" data-track-index="3"
+               src="assets/aroll-video3.mp4" muted playsinline></video>
+      </div>
+
+      <!-- Full-frame scenes (track 4), back-to-back — content + timing track Sean's VO -->
+      <div id="intro" class="scene clip" data-composition-id="scene-intro" data-composition-src="compositions/scene-intro.html"
+           data-start="0.4" data-duration="6.0" data-track-index="4"></div>
+      <div id="cut1" class="scene clip" data-composition-id="cutaway-1" data-composition-src="compositions/cutaway-1.html"
+           data-start="6.4" data-duration="7.0" data-track-index="4"></div>
+      <div id="cut2" class="scene clip" data-composition-id="cutaway-2" data-composition-src="compositions/cutaway-2.html"
+           data-start="13.4" data-duration="7.2" data-track-index="4"></div>
+      <div id="cut3" class="scene clip" data-composition-id="cutaway-3" data-composition-src="compositions/cutaway-3.html"
+           data-start="20.6" data-duration="4.4" data-track-index="4"></div>
+      <div id="cut4" class="scene clip" data-composition-id="cutaway-4" data-composition-src="compositions/cutaway-4.html"
+           data-start="25.0" data-duration="5.0" data-track-index="4"></div>
+      <div id="cut5" class="scene clip" data-composition-id="cutaway-5" data-composition-src="compositions/cutaway-5.html"
+           data-start="30.0" data-duration="7.0" data-track-index="4"></div>
+      <div id="offer" class="scene clip" data-composition-id="scene-offer" data-composition-src="compositions/scene-offer.html"
+           data-start="37.0" data-duration="3.5" data-track-index="4"></div>
+
+      <div id="brand-logo" class="clip" data-start="0" data-duration="44.8" data-track-index="5">
+        <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <div id="end-card-clip" class="clip" data-composition-id="end-card" data-composition-src="compositions/end-card.html"
+           data-start="40.8" data-duration="4.0" data-track-index="6"></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      tl.from("#brand-logo", { opacity: 0, y: -18, duration: .6, ease: "power3.out" }, .3);
+
+      // Sean PiP stays on the whole time (top-right), then fades out before the end card
+      gsap.set("#sean-pip", { opacity: 0, scale: .6, transformOrigin: "50% 50%" });
+      tl.to("#sean-pip", { opacity: 1, scale: 1, duration: .5, ease: "back.out(1.7)" }, 1.2)
+        .to("#sean-pip", { y: -12, duration: 3.0, ease: "sine.inOut", yoyo: true, repeat: 12 }, 2.0)
+        .to("#sean-pip", { opacity: 0, scale: .7, duration: .4, ease: "power2.in" }, 40.4);
+
+      tl.set({}, {}, 44.8);
+      window.__timelines["ecomiq-short-form-3-motion-4x5"] = tl;
+    </script>
+  </body>
+</html>
