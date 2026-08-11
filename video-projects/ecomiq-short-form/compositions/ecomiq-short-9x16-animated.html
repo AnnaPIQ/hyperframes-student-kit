@@ -43,8 +43,8 @@
         border-radius: 50%; overflow: hidden; opacity: 0; transform-origin: center center;
         border: 4px solid rgba(156,212,255,0.55);
         box-shadow: 0 22px 60px -10px rgba(0,0,0,0.6), 0 0 0 8px rgba(6,40,76,0.55); }
-      /* Framed on the face: shows the source region x[220..860] y[640..1280] inside the 340px circle */
-      #sean-pip video { position: absolute; width: 574px; height: 1020px; left: -117px; top: -340px;
+      /* Framed on the head with margin: source region x[140..940] y[560..1360] inside the 340px circle */
+      #sean-pip video { position: absolute; width: 459px; height: 816px; left: -60px; top: -238px;
         object-fit: cover; filter: contrast(1.05) saturate(1.05) brightness(1.0); }
 
       /* ---- Kinetic scenes (navy canvas is the base; type is the show) ---- */
@@ -142,7 +142,7 @@
       </div>
       <div class="scene" id="s2">
         <div class="ln kick">Try the opposite</div>
-        <div class="ln big flame">Prices up <span class="arw">&#8593;</span></div>
+        <div class="ln big">Prices up <span class="arw">&#8593;</span></div>
         <div class="ln bars"><i></i><i></i><i></i><i></i></div>
       </div>
       <div class="scene" id="s3">
@@ -185,7 +185,7 @@
 
       <div class="scene" id="s8">
         <div class="ln kick">Right now</div>
-        <div class="ln big flame">Charging<br />too little.</div>
+        <div class="ln big">Charging<br />too little.</div>
       </div>
       <div class="scene" id="s9">
         <div class="ln kick">There's more</div>
@@ -205,7 +205,7 @@
 
     <script>
       window.__timelines = window.__timelines || {};
-      const FOOT = 47.0, TOTAL = 49.6;
+      const FOOT = 47.0, TOTAL = 49.6, END_IN = 44.6; // end card comes in before he finishes talking
       const tl = gsap.timeline({ paused: true });
 
       // ---- Particles (deterministic positions + gentle drift) ----
@@ -229,14 +229,14 @@
 
       // ---- Brand chrome + Sean bubble ----
       tl.fromTo("#logo", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.2)
-        .to("#logo", { opacity: 0, duration: 0.35, ease: "power2.in" }, FOOT - 0.5);
+        .to("#logo", { opacity: 0, duration: 0.35, ease: "power2.in" }, END_IN - 0.1);
 
       // Sean pops in/out (in for talking beats, out during the chart and the outro)
       function pipIn(t)  { tl.fromTo("#sean-pip", { opacity: 0, scale: 0.6, y: -20 },
         { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.6)" }, t); }
       function pipOut(t) { tl.to("#sean-pip", { opacity: 0, scale: 0.6, y: -20, duration: 0.4, ease: "power2.in" }, t); }
       pipIn(0.5);   pipOut(26.6);   // out for the full-screen chart
-      pipIn(33.9);  pipOut(46.3);   // out for the end card
+      pipIn(33.9);  pipOut(44.3);   // out as the end card takes over
       // Idle bob while visible
       tl.to("#sean-pip", { y: "+=12", duration: 3, ease: "sine.inOut", yoyo: true, repeat: Math.ceil(TOTAL / 3) }, 1.2);
 
@@ -272,16 +272,16 @@
       // Flame pill — appears exactly when he says "free profitability bootcamp"
       tl.fromTo("#bootcamp-pill", { opacity: 0, scale: 0.86, y: "-=30" },
         { opacity: 1, scale: 1, y: "-=0", duration: 0.45, ease: "back.out(1.6)" }, 41.35)
-        .to("#bootcamp-pill", { opacity: 0, scale: 0.97, duration: 0.3, ease: "power2.in" }, 44.4);
+        .to("#bootcamp-pill", { opacity: 0, scale: 0.97, duration: 0.3, ease: "power2.in" }, 44.1);
 
       // ---- End card ----
-      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, FOOT - 0.5)
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, END_IN)
         .fromTo("#ec-logo", { opacity: 0, y: 24, scale: 0.96 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" }, FOOT - 0.1)
-        .fromTo("#ec-kicker", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, FOOT + 0.3)
+          { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" }, END_IN + 0.4)
+        .fromTo("#ec-kicker", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, END_IN + 0.9)
         .fromTo("#ec-cta", { opacity: 0, scale: 0.85 },
-          { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)" }, FOOT + 0.55)
-        .to("#ec-cta", { scale: 1.035, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 2 }, FOOT + 1.3);
+          { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)" }, END_IN + 1.15)
+        .to("#ec-cta", { scale: 1.035, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 2 }, END_IN + 1.9);
 
       tl.set({}, {}, TOTAL); // Law #11 anchor
       window.__timelines["ecomiq-short-9x16-animated"] = tl;
