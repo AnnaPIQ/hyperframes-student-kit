@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>ecomiq-cac-animated</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+
+      /* ---- Persistent stage: navy + receding grid + vignette + grain ---- */
+      #bg { position: absolute; inset: 0;
+        background: radial-gradient(85% 45% at 50% 22%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 60%), var(--brand-navy); }
+      #grid { position: absolute; inset: -20% -20% 0 -20%; height: 120%;
+        transform: perspective(1000px) rotateX(60deg) translateY(6%); transform-origin: 50% 100%;
+        background:
+          repeating-linear-gradient(0deg,  rgba(156,212,255,.09) 0 1px, transparent 1px 96px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.09) 0 1px, transparent 1px 96px);
+        mask-image: linear-gradient(to top, #000 0%, transparent 72%);
+        -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 72%); }
+      #vignette { position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 82% 66% at 50% 42%, transparent 52%, rgba(2,14,28,.66) 100%); }
+      #grain { position: absolute; inset: 0; pointer-events: none; opacity:.5; mix-blend-mode: overlay;
+        background-image:
+          radial-gradient(rgba(255,255,255,.05) .5px, transparent .6px),
+          radial-gradient(rgba(255,255,255,.04) .5px, transparent .6px),
+          radial-gradient(rgba(0,0,0,.05) .5px, transparent .6px);
+        background-size: 3px 3px, 5px 5px, 7px 7px; background-position: 0 0, 1px 2px, 2px 1px; }
+
+      /* ---- Persistent logo (top-left) ---- */
+      #logo-wrap { position: absolute; top: 0; left: 0; width: 520px; height: 300px; pointer-events: none; }
+      #logo-scrim { position: absolute; inset: 0;
+        background: radial-gradient(120% 120% at 8% 12%, rgba(3,20,40,.55) 0%, rgba(3,20,40,.30) 34%, rgba(3,20,40,0) 66%); }
+      #logo { position: absolute; top: 88px; left: 64px; width: 292px; height: auto; filter: drop-shadow(0 6px 18px rgba(0,0,0,.45)); }
+
+      /* ---- Sean — circular video bubble, top-right, in/out ---- */
+      #sean-wrap { position: absolute; top: 150px; right: 80px; width: 320px; height: 320px; border-radius: 50%;
+        overflow: hidden; border: 6px solid rgba(255,255,255,.92); box-shadow: 0 18px 60px rgba(0,0,0,.55); transform-origin: center; }
+      #sean-vid { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block; }
+
+      /* ---- Scene layers ---- */
+      .scene { position: absolute; inset: 0; }
+      .kline { position: absolute; left: 96px; right: 300px; font-weight: 800; letter-spacing: -.02em; line-height: 1.04; }
+      .em-flame { color: var(--brand-flame); }
+      .em-blue { color: var(--brand-blue-tint); }
+      .em-serif { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+
+      /* Scene A — hook */
+      #kA1 { top: 470px; font-size: 70px; color: var(--brand-white); }
+      #kA2 { top: 560px; font-size: 70px; color: var(--brand-white); }
+      #kA3 { top: 650px; font-size: 70px; color: var(--brand-white); }
+      #dash { position: absolute; left: 96px; right: 96px; top: 900px;
+        background: var(--brand-surface); border: 1px solid var(--brand-border); border-radius: 26px; padding: 44px 48px; overflow: hidden; }
+      #dash .dl { font-size: 30px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--brand-text-dim); margin-bottom: 14px; }
+      #dash .dv { font-size: 168px; font-weight: 800; line-height: 1; letter-spacing: -.03em; color: var(--brand-white); }
+      #dash .dstrike { position: absolute; left: 48px; top: 210px; height: 12px; width: 470px; background: var(--brand-flame); border-radius: 6px; transform-origin: left center; }
+      #dwrong { position: absolute; right: 60px; top: 150px; font-size: 44px; font-weight: 800; letter-spacing:.04em; color: var(--brand-flame);
+        border: 4px solid var(--brand-flame); padding: 10px 24px; border-radius: 12px; transform: rotate(-8deg); }
+
+      /* Scene C — bootcamp name build */
+      #kC1 { top: 560px; font-size: 62px; color: var(--brand-text-dim); }
+      #bcbuild { position: absolute; left: 96px; right: 96px; top: 720px; }
+      #bcbuild .eb { font-size: 34px; font-weight: 600; letter-spacing: .30em; text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 22px; }
+      #bcbuild .b1 { font-size: 150px; font-weight: 800; line-height: .96; letter-spacing:-.03em; color: var(--brand-white); }
+      #bcbuild .b1 .f { color: var(--brand-flame); }
+      #bcbuild .b2 { font-size: 128px; font-weight: 800; line-height: 1.0; letter-spacing:-.03em; color: var(--brand-white); margin-top: 4px; }
+
+      /* Scene D — end card CTA */
+      #endcard { position: absolute; inset: 0; overflow: hidden;
+        background: radial-gradient(90% 50% at 50% 16%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 110px; }
+      #ec-grid { position: absolute; inset: -20% -20% 0 -20%; height: 120%;
+        transform: perspective(1000px) rotateX(60deg) translateY(6%); transform-origin: 50% 100%;
+        background:
+          repeating-linear-gradient(0deg,  rgba(156,212,255,.10) 0 1px, transparent 1px 96px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.10) 0 1px, transparent 1px 96px);
+        mask-image: linear-gradient(to top, #000 0%, transparent 72%); -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 72%); }
+      #ec-bloom { position: absolute; left: -10%; bottom: -18%; width: 120%; height: 55%; background: var(--brand-gradient-2); filter: blur(90px); opacity:.34; }
+      #ec-logo { width: 440px; height: auto; margin-bottom: 74px; position: relative; }
+      #ec-eyebrow { position: relative; font-size: 30px; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 30px; }
+      #ec-headline { position: relative; font-size: 84px; font-weight: 800; line-height: 1.0; letter-spacing: -.03em; color: var(--brand-white); }
+      #ec-cta { position: relative; margin-top: 66px; display: inline-flex; align-items: center; gap: 20px;
+        font-size: 44px; font-weight: 700; color: var(--brand-white); background: var(--brand-flame);
+        padding: 34px 68px; border-radius: 999px; box-shadow: 0 24px 72px -16px rgba(255,76,50,.62); }
+      #ec-cta .arrow { font-size: 46px; line-height: 1; transform: translateY(-2px); }
+    </style>
+  </head>
+  <body>
+    <!-- FULLY ANIMATED version (~24.5s). No talking-head spine: the canvas is
+         motion graphics driven by the VO; Sean appears as a circular top-right
+         bubble on the hook + bootcamp beats, out during the data reveal + end card. -->
+    <div id="root" data-composition-id="ecomiq-cac-animated" data-start="0" data-duration="24.5" data-width="1080" data-height="1920">
+      <!-- persistent stage -->
+      <div id="bg" class="clip" data-start="0" data-duration="24.5" data-track-index="0"></div>
+      <div id="grid" class="clip" data-start="0" data-duration="24.5" data-track-index="1"></div>
+
+      <!-- Scene A · hook (0–7.6) -->
+      <div id="sceneA" class="scene clip" data-start="0" data-duration="7.6" data-track-index="2">
+        <div class="kline" id="kA1">Most founders trust</div>
+        <div class="kline" id="kA2">the <span class="em-flame">cost-per-customer</span></div>
+        <div class="kline" id="kA3">number on their dashboard.</div>
+        <div id="dash">
+          <div class="dl">Cost per customer</div>
+          <div class="dv">$37.50</div>
+          <div class="dstrike"></div>
+          <div id="dwrong">WRONG</div>
+        </div>
+      </div>
+
+      <!-- Scene B · the reveal (7.3–14.1) -->
+      <div id="reveal" class="scene clip" data-composition-id="reveal-mg" data-composition-src="compositions/reveal-mg.html"
+           data-start="7.3" data-duration="6.8" data-track-index="3" data-width="1080" data-height="1920"></div>
+
+      <!-- Scene C · bootcamp name build (14.1–19.7) -->
+      <div id="sceneC" class="scene clip" data-start="14.1" data-duration="5.6" data-track-index="4">
+        <div class="kline" id="kC1">Insights like this &mdash;</div>
+        <div id="bcbuild">
+          <div class="eb">More insights inside</div>
+          <div class="b1">The <span class="f">Free</span></div>
+          <div class="b1">Profitability</div>
+          <div class="b2">Bootcamp.</div>
+        </div>
+      </div>
+
+      <!-- Scene D · end card CTA (19.5–24.5) -->
+      <div id="endcard" class="scene clip" data-start="19.5" data-duration="5.0" data-track-index="5">
+        <div id="ec-grid"></div>
+        <div id="ec-bloom"></div>
+        <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="ec-eyebrow">Free Profitability Bootcamp</div>
+        <div id="ec-headline">Sign up<br />for access.</div>
+        <div id="ec-cta">Sign up here <span class="arrow">&rarr;</span></div>
+      </div>
+
+      <!-- Sean bubble (video muted; audio rides the VO track) -->
+      <div id="sean-wrap">
+        <video id="sean-vid" data-start="0" data-duration="19.6" data-track-index="6" src="assets/sean.mp4" muted playsinline></video>
+      </div>
+
+      <!-- texture over content -->
+      <div id="vignette" class="clip" data-start="0" data-duration="24.5" data-track-index="7"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="24.5" data-track-index="8"></div>
+
+      <!-- logo -->
+      <div id="logo-wrap">
+        <div id="logo-scrim" class="clip" data-start="0" data-duration="19.5" data-track-index="9"></div>
+        <img id="logo" class="clip" data-start="0" data-duration="19.5" data-track-index="10" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <!-- audio -->
+      <audio id="vo" data-start="0" data-duration="22.6" data-track-index="11" data-volume="1" src="assets/vo.m4a"></audio>
+      <audio id="music-bed" data-start="0" data-duration="24.5" data-track-index="12" data-volume="0.18" src="assets/music-bed-PLACEHOLDER.m4a"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Persistent grid parallax (camera never sleeps) + breathing vignette.
+      tl.fromTo("#grid", { backgroundPositionY: "0px" }, { backgroundPositionY: "96px", duration: 24.5, ease: "none" }, 0);
+      tl.fromTo("#vignette", { opacity: .82 }, { opacity: 1, duration: 5, ease: "sine.inOut", yoyo: true, repeat: 4 }, 0);
+
+      // Logo in; out just before the end card.
+      tl.fromTo("#logo-wrap", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: .6, ease: "power3.out" }, 0.3)
+        .to("#logo-wrap", { opacity: 0, duration: .4, ease: "power1.in" }, 19.1)
+        .set("#logo-wrap", { opacity: 0 }, 19.5);
+
+      // Sean bubble — in for the hook, out for the reveal, back for bootcamp, out for CTA.
+      tl.fromTo("#sean-wrap", { opacity: 0, scale: .5 }, { opacity: 1, scale: 1, duration: .6, ease: "back.out(1.7)" }, 0.4)
+        .to("#sean-wrap", { opacity: 0, scale: .6, duration: .45, ease: "power2.in" }, 6.9)
+        .set("#sean-wrap", { opacity: 0 }, 7.4)
+        .to("#sean-wrap", { opacity: 1, scale: 1, duration: .55, ease: "back.out(1.7)" }, 14.3)
+        .to("#sean-wrap", { opacity: 0, scale: .6, duration: .45, ease: "power2.in" }, 19.2)
+        .set("#sean-wrap", { opacity: 0 }, 19.65);
+
+      // ---- Scene A · hook (words anchored to VO onsets) ----
+      tl.fromTo("#kA1", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, 0.15)
+        .fromTo("#kA2", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, 1.4)
+        .fromTo("#kA3", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, 2.55);
+      // dashboard card lands as he says "dashboard"
+      tl.fromTo("#dash", { opacity: 0, y: 40, scale: .96 }, { opacity: 1, y: 0, scale: 1, duration: .55, ease: "back.out(1.4)" }, 3.25);
+      // "…almost never right" → strike + WRONG stamp
+      tl.fromTo("#dash .dstrike", { scaleX: 0 }, { scaleX: 1, duration: .4, ease: "power3.in" }, 6.1)
+        .fromTo("#dwrong", { opacity: 0, scale: 1.7, rotate: -8 }, { opacity: 1, scale: 1, duration: .4, ease: "back.out(2)" }, 6.35);
+      // Scene A blur-out
+      tl.to("#sceneA", { opacity: 0, y: -120, filter: "blur(24px)", duration: .5, ease: "power2.in" }, 7.1)
+        .set("#sceneA", { opacity: 0 }, 7.6);
+
+      // ---- Scene C · bootcamp name build ----
+      tl.fromTo("#kC1", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: .5, ease: "power3.out" }, 14.35)
+        .to("#kC1", { opacity: 0, duration: .35, ease: "power1.in" }, 16.9);
+      tl.fromTo("#bcbuild .eb", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .45, ease: "power2.out" }, 16.9)
+        .fromTo("#bcbuild .b1:nth-of-type(2)", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, 17.2)
+        .fromTo("#bcbuild .b1:nth-of-type(3)", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, 17.75)
+        .fromTo("#bcbuild .b2", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, 18.35);
+      tl.to("#sceneC", { opacity: 0, y: -120, filter: "blur(24px)", duration: .5, ease: "power2.in" }, 19.1)
+        .set("#sceneC", { opacity: 0 }, 19.5);
+
+      // ---- Scene D · end card ----
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: .5, ease: "power2.out" }, 19.5)
+        .fromTo("#ec-logo", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: .6, ease: "power3.out" }, 19.9)
+        .fromTo("#ec-eyebrow", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .5, ease: "power2.out" }, 20.1)
+        .fromTo("#ec-headline", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .7, ease: "power3.out" }, 20.3)
+        .fromTo("#ec-cta", { opacity: 0, scale: .85 }, { opacity: 1, scale: 1, duration: .6, ease: "back.out(1.7)" }, 20.7)
+        .to("#ec-cta", { scale: 1.045, duration: .7, ease: "sine.inOut", yoyo: true, repeat: 2 }, 21.6);
+
+      tl.to({}, { duration: 24.5 }, 0); // Law #11 anchor
+      window.__timelines["ecomiq-cac-animated"] = tl;
+    </script>
+  </body>
+</html>

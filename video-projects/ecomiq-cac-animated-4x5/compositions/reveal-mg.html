@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: italic; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+
+      #mg-bg { position: absolute; inset: 0;
+        background: radial-gradient(80% 42% at 50% 24%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%), var(--brand-navy); }
+      #mg-grid { position: absolute; inset: -20% -20% 0 -20%; height: 120%;
+        transform: perspective(900px) rotateX(58deg) translateY(6%); transform-origin: 50% 100%;
+        background:
+          repeating-linear-gradient(0deg,  rgba(156,212,255,.10) 0 1px, transparent 1px 92px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.10) 0 1px, transparent 1px 92px);
+        mask-image: linear-gradient(to top, #000 0%, transparent 70%);
+        -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 70%); }
+
+      /* Content in the top ~78% — lower band stays clear for captions. */
+      .wrap { position: absolute; left: 84px; right: 84px; }
+      .label { font-size: 26px; font-weight: 600; letter-spacing: .28em; text-transform: uppercase; color: var(--brand-text-dim); }
+
+      #rep { top: 138px; }
+      #rep .num { font-size: 108px; font-weight: 700; line-height: 1; color: var(--brand-white); letter-spacing: -.02em; margin-top: 6px; }
+      #rep .strike { position: absolute; left: 0; top: 216px; height: 10px; width: 320px; background: var(--brand-flame); border-radius: 5px; transform-origin: left center; }
+      #rep .tag { position:absolute; left: 356px; top: 182px; font-size: 26px; font-weight:700; color: var(--brand-flame);
+        border: 3px solid var(--brand-flame); padding: 6px 16px; border-radius: 9px; transform: rotate(-7deg); }
+
+      #chips { top: 400px; }
+      #chips .head { font-size: 26px; font-weight: 600; letter-spacing:.16em; text-transform:uppercase; color: var(--brand-blue-tint); margin-bottom: 16px; }
+      .chip { display:flex; align-items:center; justify-content:space-between;
+        background: var(--brand-surface); border:1px solid var(--brand-border); border-radius: 13px;
+        padding: 12px 24px; margin-bottom: 10px; }
+      .chip .cname { font-size: 31px; font-weight: 600; color: var(--brand-white); }
+      .chip .cval { font-size: 31px; font-weight: 700; color: var(--brand-flame); }
+      .chip .cval::before { content: "+ "; }
+
+      #tru { top: 850px; text-align:center; left:0; right:0; }
+      #tru .label { color: var(--brand-flame); }
+      #tru .num { font-size: 132px; font-weight: 800; line-height: 1; letter-spacing:-.03em;
+        color: var(--brand-flame); text-shadow: 0 14px 56px rgba(255,76,50,.45); }
+      #badge { display:inline-block; margin-top: 12px; font-size: 28px; font-weight:700; color: var(--brand-white);
+        background: var(--brand-flame); padding: 11px 28px; border-radius: 999px; }
+      #badge em { font-family:'Hedvig Letters Serif', serif; font-style:italic; font-weight:400; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="reveal-mg-4x5" data-start="0" data-duration="6.8" data-width="1080" data-height="1350">
+      <div id="mg-bg" class="clip" data-start="0" data-duration="6.8" data-track-index="0"></div>
+      <div id="mg-grid" class="clip" data-start="0" data-duration="6.8" data-track-index="1"></div>
+
+      <div id="rep" class="wrap clip" data-start="0" data-duration="6.8" data-track-index="2">
+        <div class="label">Reported CAC</div>
+        <div class="num">$37.50</div>
+        <div class="strike"></div>
+        <div class="tag">WRONG</div>
+      </div>
+
+      <!-- Real per-month breakdown values from page.ecomiq.com/cac-calculator-page (default example) -->
+      <div id="chips" class="wrap clip" data-start="0" data-duration="6.8" data-track-index="3">
+        <div class="head">The costs it ignores</div>
+        <div class="chip"><span class="cname">Free shipping</span><span class="cval">$4,800</span></div>
+        <div class="chip"><span class="cname">Welcome discount</span><span class="cval">$4,480</span></div>
+        <div class="chip"><span class="cname">Agency</span><span class="cval">$2,400</span></div>
+        <div class="chip"><span class="cname">Payment processing</span><span class="cval">$1,856</span></div>
+        <div class="chip"><span class="cname">Creative production</span><span class="cval">$1,500</span></div>
+      </div>
+
+      <div id="tru" class="wrap clip" data-start="0" data-duration="6.8" data-track-index="4">
+        <div class="label">Your true CAC</div>
+        <div class="num" id="tru-num">$37.50</div>
+        <div id="badge"><em>1.65&times;</em> what you think</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo("#rep .label", { opacity:0, y:20 }, { opacity:1, y:0, duration:.4, ease:"power2.out" }, 0.1)
+        .fromTo("#rep .num", { opacity:0, y:30 }, { opacity:1, y:0, duration:.5, ease:"power3.out" }, 0.25)
+        .fromTo("#rep .strike", { scaleX:0 }, { scaleX:1, duration:.35, ease:"power3.in" }, 0.95)
+        .fromTo("#rep .tag", { opacity:0, scale:1.6, rotate:-7 }, { opacity:1, scale:1, duration:.35, ease:"back.out(2)" }, 1.15);
+
+      tl.fromTo("#chips .head", { opacity:0, x:24 }, { opacity:1, x:0, duration:.4, ease:"power2.out" }, 1.4);
+      tl.fromTo("#chips .chip", { opacity:0, x:120 }, { opacity:1, x:0, duration:.42, ease:"power3.out", stagger:0.16 }, 1.6);
+
+      const n = { v: 37.50 };
+      const numEl = document.getElementById("tru-num");
+      tl.fromTo("#tru .label", { opacity:0, y:20 }, { opacity:1, y:0, duration:.4, ease:"power2.out" }, 3.0)
+        .fromTo("#tru .num", { opacity:0, scale:.7 }, { opacity:1, scale:1, duration:.5, ease:"back.out(1.5)" }, 3.15)
+        .to(n, { v:61.69, duration:1.5, ease:"power2.out",
+                 onUpdate:()=>{ numEl.textContent = "$"+n.v.toFixed(2); } }, 3.25)
+        .fromTo("#badge", { opacity:0, y:20, scale:.8 }, { opacity:1, y:0, scale:1, duration:.5, ease:"back.out(1.7)" }, 4.85)
+        .to("#tru .num", { scale:1.04, duration:.6, ease:"sine.inOut", yoyo:true, repeat:1 }, 5.2);
+
+      tl.fromTo("#mg-grid", { backgroundPositionY:"0px" }, { backgroundPositionY:"92px", duration:6.8, ease:"none" }, 0);
+
+      tl.to({}, { duration: 6.8 }, 0);
+      window.__timelines["reveal-mg-4x5"] = tl;
+    </script>
+  </body>
+</html>
