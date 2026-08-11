@@ -26,95 +26,70 @@
         transform-origin: center center;
         filter: contrast(1.06) saturate(1.06) brightness(0.995);
       }
+      /* vignette + logo scrim + a soft TOP scrim so top graphics always read */
       #overlay {
         position: absolute; inset: 0; pointer-events: none; z-index: 2;
         background:
-          radial-gradient(115% 70% at 8% 3%, rgba(6,28,54,0.62) 0%, rgba(6,28,54,0.30) 20%, rgba(6,28,54,0) 42%),
-          radial-gradient(ellipse 92% 78% at 50% 45%, rgba(4,14,28,0) 58%, rgba(4,14,28,0.34) 100%);
+          linear-gradient(180deg, rgba(4,16,34,0.55) 0%, rgba(4,16,34,0.16) 16%, rgba(4,16,34,0) 30%),
+          radial-gradient(115% 60% at 8% 3%, rgba(6,28,54,0.55) 0%, rgba(6,28,54,0) 40%),
+          radial-gradient(ellipse 92% 78% at 50% 48%, rgba(4,14,28,0) 60%, rgba(4,14,28,0.32) 100%);
       }
-      #logo-wrap { position: absolute; top: 74px; left: 60px; width: 196px; z-index: 3; }
-      #logo-corner { display: block; width: 100%; height: auto; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.45)); }
+      #logo-wrap { position: absolute; top: 74px; left: 60px; width: 178px; z-index: 4; }
+      #logo-corner { display: block; width: 100%; height: auto; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5)); }
 
-      /* ---------- Shared motion-graphic system ---------- */
-      .mg { position: absolute; inset: 0; z-index: 6; overflow: hidden; }
-      /* lower-third scrim so callout text always reads over the face */
-      .mg-scrim {
-        position: absolute; left: 0; right: 0; bottom: 0; height: 62%;
-        background: linear-gradient(180deg, rgba(6,28,54,0) 0%, rgba(5,22,44,0.72) 55%, rgba(4,17,36,0.94) 100%);
-      }
-      .mg-lower { position: absolute; left: 84px; right: 84px; bottom: 250px; }
-      .kicker {
-        font-weight: 700; font-size: 34px; letter-spacing: 0.32em; text-transform: uppercase;
-        color: var(--brand-blue-tint);
-      }
-      .kicker.flame { color: var(--brand-flame); }
-      .headline {
-        font-weight: 800; font-size: 150px; line-height: 0.92; letter-spacing: -0.03em;
-        color: var(--brand-white); text-shadow: 0 6px 40px rgba(0,0,0,0.5);
-      }
-      .headline .em { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
-      .headline.flame { color: var(--brand-flame); text-shadow: 0 0 46px rgba(255,76,50,0.45), 0 6px 40px rgba(0,0,0,0.5); }
-      .bar { height: 10px; border-radius: 6px; background: var(--brand-flame); transform-origin: left center; }
-      .sub { font-weight: 600; font-size: 40px; color: var(--brand-text-dim); letter-spacing: -0.01em; }
+      /* ---------- Motion-graphic system (top-anchored, example style) ---------- */
+      .mg { position: absolute; left: 0; right: 0; z-index: 6; display: flex; flex-direction: column; align-items: center; }
+      .mg-top { top: 210px; }
 
-      /* full-frame takeover card + unifying texture (grid + crosshairs + vignette + grain) */
-      .mg-card {
-        position: absolute; inset: 0; z-index: 7;
-        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px;
-        padding: 9%; text-align: center;
-        background:
-          radial-gradient(120% 68% at 50% 26%, rgba(156,212,255,0.10) 0%, rgba(6,40,76,0) 55%),
-          var(--brand-navy);
-      }
-      .tex-grid {
-        position: absolute; inset: 0; opacity: 0.5; pointer-events: none;
-        background:
-          repeating-linear-gradient(0deg,  rgba(156,212,255,0.06) 0 1px, transparent 1px 96px),
-          repeating-linear-gradient(90deg, rgba(156,212,255,0.06) 0 1px, transparent 1px 96px);
-        transform: perspective(1200px) rotateX(56deg) scale(1.6); transform-origin: 50% 82%;
-      }
-      .tex-vig { position: absolute; inset: 0; pointer-events: none;
-        background: radial-gradient(ellipse 78% 66% at 50% 46%, transparent 52%, rgba(3,12,26,0.66) 100%); }
-      .tex-grain { position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
-        background:
-          radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px) 0 0 / 3px 3px,
-          radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px) 1px 2px / 5px 5px; }
-      .chips { display: flex; gap: 22px; }
-      .chip {
-        font-weight: 700; font-size: 34px; letter-spacing: 0.06em;
-        padding: 16px 34px; border-radius: 999px; color: var(--brand-white);
-        border: 2px solid var(--brand-border); background: rgba(16,61,111,0.55);
-      }
-      .stamp {
-        font-weight: 800; font-size: 176px; line-height: 0.9; letter-spacing: -0.035em;
-        color: var(--brand-flame); text-shadow: 0 0 60px rgba(255,76,50,0.5);
-      }
-      .strike { height: 12px; width: 62%; border-radius: 8px; background: var(--brand-flame);
-        transform-origin: left center; box-shadow: 0 0 30px rgba(255,76,50,0.6); }
-      .card-kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--brand-text-dim); }
+      /* keyword-emphasis caption on a subtle navy plate */
+      .cap { max-width: 900px; padding: 22px 40px; border-radius: 26px;
+        background: rgba(5,18,38,0.62); border: 1px solid rgba(156,212,255,0.16);
+        box-shadow: 0 24px 60px -24px rgba(0,0,0,0.7); text-align: center; }
+      .cap .line { font-weight: 800; font-size: 82px; line-height: 1.0; letter-spacing: -0.02em; color: var(--brand-white); }
+      .cap .hot { color: var(--brand-flame); }
+      .cap .sub { display: block; margin-top: 10px; font-weight: 600; font-size: 40px; letter-spacing: 0.01em; color: var(--brand-text-dim); }
+
+      /* pill badges (Meta / Google) */
+      .chips { display: flex; gap: 20px; justify-content: center; }
+      .chip { display: inline-flex; align-items: center; gap: 16px;
+        font-weight: 700; font-size: 40px; color: var(--brand-white); letter-spacing: -0.005em;
+        padding: 20px 34px 20px 22px; border-radius: 20px;
+        background: rgba(6,22,44,0.92); border: 1px solid rgba(156,212,255,0.20);
+        box-shadow: 0 20px 48px -22px rgba(0,0,0,0.75); white-space: nowrap; }
+      .chip .dot { width: 26px; height: 26px; border-radius: 8px; background: var(--brand-blue-tint); flex: none; }
+      .chip.g .dot { background: #f0a500; }
+      /* red "not accurate" tag */
+      .xtag { margin-top: 22px; display: inline-flex; align-items: center; gap: 16px;
+        font-weight: 800; font-size: 46px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--brand-white);
+        padding: 16px 32px; border-radius: 999px; background: var(--brand-flame);
+        box-shadow: 0 22px 60px -20px rgba(255,76,50,0.85); }
+      .xtag .x { width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.28);
+        display: inline-flex; align-items: center; justify-content: center; font-size: 30px; }
 
       /* ---------- End card ---------- */
       #endcard {
-        position: absolute; inset: 0; z-index: 10;
+        position: absolute; inset: 0; z-index: 10; overflow: hidden;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
         gap: 36px; padding: 8%; text-align: center;
         background:
-          radial-gradient(120% 70% at 50% 22%, rgba(156,212,255,0.12) 0%, rgba(6,40,76,0) 55%),
+          radial-gradient(120% 70% at 50% 22%, rgba(156,212,255,0.14) 0%, rgba(6,40,76,0) 55%),
           var(--brand-navy);
       }
-      #ec-logo { width: 470px; height: auto; display: block; }
-      #ec-line { font-weight: 700; font-size: 54px; line-height: 1.05; letter-spacing: -0.01em; color: var(--brand-white); max-width: 88%; }
+      .ec-particle { position: absolute; border-radius: 50%; z-index: 0; }
+      #ec-logo { width: 470px; height: auto; display: block; position: relative; z-index: 1; }
+      #ec-line { font-weight: 800; font-size: 62px; line-height: 1.04; letter-spacing: -0.02em; color: var(--brand-white); max-width: 88%; position: relative; z-index: 1; }
+      #ec-div { width: 76px; height: 5px; border-radius: 3px; background: var(--brand-flame); position: relative; z-index: 1; }
       #ec-cta {
-        margin-top: 12px; font-weight: 700; font-size: 40px; color: var(--brand-white);
-        background: var(--brand-flame); padding: 32px 68px; border-radius: 999px;
-        display: inline-flex; align-items: center; gap: 18px; white-space: nowrap;
-        box-shadow: 0 24px 74px -18px rgba(255,76,50,0.8);
+        margin-top: 6px; font-weight: 700; font-size: 42px; color: var(--brand-white);
+        background: var(--brand-flame); padding: 32px 70px; border-radius: 999px;
+        display: inline-flex; align-items: center; gap: 18px; white-space: nowrap; position: relative; z-index: 1;
+        box-shadow: 0 24px 74px -18px rgba(255,76,50,0.85);
       }
     </style>
   </head>
   <body>
     <div id="root" data-composition-id="ecomiq-short-form-mg" data-start="0" data-duration="34" data-width="1080" data-height="1920">
-      <!-- Base talking head -->
+      <!-- Base talking head (face stays fully visible the whole time) -->
       <div id="face-wrapper">
         <video id="face-video" data-start="0" data-duration="33.10" data-track-index="0" src="assets/face-short.mp4" muted playsinline></video>
       </div>
@@ -124,64 +99,46 @@
         <img id="logo-corner" class="clip" data-start="0" data-duration="33.10" data-track-index="3" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
 
-      <!-- BEAT 1 — "THE BIGGEST TRAP" (lower-third) -->
-      <div id="b1" class="mg clip" data-start="1.4" data-duration="2.7" data-track-index="5">
-        <div class="mg-scrim" id="b1-scrim"></div>
-        <div class="mg-lower">
-          <div class="kicker flame" id="b1-kick">The biggest</div>
-          <div class="headline flame" id="b1-head" style="font-size:220px; margin-top:6px;">TRAP</div>
-          <div class="bar" id="b1-bar" style="width:340px; margin-top:14px;"></div>
-        </div>
+      <!-- B1 — "the biggest trap" (1.4) -->
+      <div id="b1" class="mg mg-top clip" data-start="1.4" data-duration="2.8" data-track-index="5">
+        <div class="cap"><div class="line">The biggest <span class="hot">trap</span></div></div>
       </div>
 
-      <!-- BEAT 2 — "LOSING MONEY on the first order" (lower-third) -->
-      <div id="b2" class="mg clip" data-start="8.4" data-duration="3.0" data-track-index="6">
-        <div class="mg-scrim" id="b2-scrim"></div>
-        <div class="mg-lower">
-          <div class="kicker flame" id="b2-kick">↓ On every first order</div>
-          <div class="headline flame" id="b2-head" style="font-size:120px; margin-top:8px;">Losing money</div>
-          <div class="bar" id="b2-bar" style="width:300px; margin-top:16px;"></div>
-        </div>
+      <!-- B2 — "lose money on the first order" (8.4) -->
+      <div id="b2" class="mg mg-top clip" data-start="8.4" data-duration="2.7" data-track-index="6">
+        <div class="cap"><div class="line">You <span class="hot">lose money</span><span class="sub">on the first order</span></div></div>
       </div>
 
-      <!-- BEAT 3 — "NOT ACCURATE" (full-frame takeover) -->
-      <div id="b3" class="mg-card clip" data-start="13.7" data-duration="2.6" data-track-index="7">
-        <div class="tex-grid" id="b3-grid"></div>
-        <div class="tex-vig"></div>
-        <div class="tex-grain"></div>
-        <div class="chips" id="b3-chips" style="position:relative;">
-          <div class="chip">Meta Ads</div>
-          <div class="chip">Google Ads</div>
+      <!-- B3 — Meta / Google dashboards → NOT ACCURATE (11.0) -->
+      <div id="b3" class="mg mg-top clip" data-start="11.0" data-duration="5.2" data-track-index="7" style="top:190px;">
+        <div class="chips">
+          <div class="chip" id="b3-meta"><span class="dot"></span>Meta Ads</div>
+          <div class="chip g" id="b3-goog"><span class="dot"></span>Google Ads</div>
         </div>
-        <div class="card-kicker" id="b3-kick" style="position:relative;">Your dashboard is</div>
-        <div class="stamp" id="b3-stamp" style="position:relative; max-width:920px;">NOT ACCURATE</div>
-        <div class="strike" id="b3-strike" style="position:relative;"></div>
+        <div class="xtag" id="b3-x"><span class="x">&#10005;</span> Not accurate</div>
       </div>
 
-      <!-- BEAT 4 — "the TRUE COST to acquire" (lower-third) -->
-      <div id="b4" class="mg clip" data-start="16.6" data-duration="3.6" data-track-index="8">
-        <div class="mg-scrim" id="b4-scrim"></div>
-        <div class="mg-lower">
-          <div class="kicker" id="b4-kick">The number that matters</div>
-          <div class="headline" id="b4-head" style="font-size:118px; margin-top:8px;">The <span class="em">true</span> cost<br/>to acquire</div>
-          <div class="bar" id="b4-bar" style="width:300px; margin-top:18px; background:var(--brand-blue-tint);"></div>
-        </div>
+      <!-- B4 — "the true cost to acquire" (16.4) -->
+      <div id="b4" class="mg mg-top clip" data-start="16.4" data-duration="4.0" data-track-index="8">
+        <div class="cap"><div class="line">The <span class="hot">true cost</span><span class="sub">to acquire a customer</span></div></div>
       </div>
 
-      <!-- BEAT 5 — "fundamentally DOOMED" (full-frame slam) -->
-      <div id="b5" class="mg-card clip" data-start="25.5" data-duration="2.5" data-track-index="9">
-        <div class="tex-grid" id="b5-grid"></div>
-        <div class="tex-vig"></div>
-        <div class="tex-grain"></div>
-        <div class="card-kicker" id="b5-kick" style="position:relative;">Get it wrong and you're</div>
-        <div class="stamp" id="b5-stamp" style="position:relative; color:var(--brand-white); text-shadow:0 0 60px rgba(255,76,50,0.55);">DOOMED</div>
-        <div class="strike" id="b5-strike" style="position:relative; width:52%;"></div>
+      <!-- B5 — "fundamentally doomed" (25.3) -->
+      <div id="b5" class="mg mg-top clip" data-start="25.3" data-duration="2.7" data-track-index="9">
+        <div class="cap"><div class="line">You're <span class="hot">doomed</span><span class="sub">if you get it wrong</span></div></div>
       </div>
 
       <!-- End card -->
       <div id="endcard" class="clip" data-start="30.3" data-duration="3.7" data-track-index="11">
+        <div class="ec-particle" data-p style="left:14%; top:30%; width:12px; height:12px; background:rgba(156,212,255,0.5);"></div>
+        <div class="ec-particle" data-p style="left:82%; top:24%; width:9px; height:9px; background:rgba(255,76,50,0.55);"></div>
+        <div class="ec-particle" data-p style="left:24%; top:70%; width:8px; height:8px; background:rgba(156,212,255,0.4);"></div>
+        <div class="ec-particle" data-p style="left:76%; top:74%; width:12px; height:12px; background:rgba(156,212,255,0.35);"></div>
+        <div class="ec-particle" data-p style="left:50%; top:82%; width:8px; height:8px; background:rgba(255,76,50,0.45);"></div>
+        <div class="ec-particle" data-p style="left:64%; top:16%; width:7px; height:7px; background:rgba(156,212,255,0.4);"></div>
         <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div id="ec-line">Free Profitability Bootcamp</div>
+        <div id="ec-div"></div>
         <div id="ec-cta">Join now <span class="arrow">&rarr;</span></div>
       </div>
     </div>
@@ -189,71 +146,46 @@
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
+      const POP = "back.out(1.7)";
 
-      // Base: subtle Ken Burns on the face + logo intro
+      // Base: subtle Ken Burns + logo intro
       tl.fromTo("#face-video", { scale: 1.0 }, { scale: 1.02, duration: 33.10, ease: "none" }, 0);
       tl.fromTo("#logo-corner", { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.35);
 
-      // ---------- BEAT 1 — TRAP (1.4) ----------
-      tl.fromTo("#b1-scrim", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, 1.4);
-      tl.fromTo("#b1-kick", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 1.5);
-      tl.fromTo("#b1-head", { opacity: 0, y: 40, scale: 0.8 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.5)" }, 1.63);
-      tl.fromTo("#b1-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, 1.9);
-      // exit (overlay pops off to reveal face)
-      tl.to(["#b1-kick", "#b1-head", "#b1-bar"], { opacity: 0, y: -26, duration: 0.3, ease: "power2.in" }, 3.7);
-      tl.to("#b1-scrim", { opacity: 0, duration: 0.35, ease: "power2.in" }, 3.75);
+      // Reusable caption pop-in/out (plate rises + settles; exits by sliding up)
+      function cap(sel, tIn, tOut) {
+        tl.fromTo(sel + " .cap", { opacity: 0, y: -26, scale: 0.94 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: POP }, tIn);
+        tl.to(sel + " .cap", { opacity: 0, y: -22, duration: 0.3, ease: "power2.in" }, tOut);
+      }
 
-      // ---------- BEAT 2 — LOSING MONEY (8.4) ----------
-      tl.fromTo("#b2-scrim", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, 8.4);
-      tl.fromTo("#b2-kick", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 8.5);
-      tl.fromTo("#b2-head", { opacity: 0, y: 40, scale: 0.85 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.4)" }, 8.78);
-      tl.fromTo("#b2-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, 9.1);
-      tl.to(["#b2-kick", "#b2-head", "#b2-bar"], { opacity: 0, y: -24, duration: 0.3, ease: "power2.in" }, 10.95);
-      tl.to("#b2-scrim", { opacity: 0, duration: 0.35, ease: "power2.in" }, 11.0);
+      // B1 — "the biggest trap" (word "trap" ~1.66)
+      cap("#b1", 1.5, 3.9);
+      // B2 — "lose money" (~8.84)
+      cap("#b2", 8.6, 10.75);
+      // B4 — "true cost to acquire" (~17.8)
+      cap("#b4", 16.6, 20.05);
+      // B5 — "doomed" (~25.89)
+      cap("#b5", 25.5, 27.55);
+      tl.to("#b5 .line", { x: 8, duration: 0.05, ease: "power1.inOut", yoyo: true, repeat: 3 }, 25.95);
 
-      // ---------- BEAT 3 — NOT ACCURATE full-frame (13.7) ----------
-      // whip-in: card blurs + scales in, lands on "accurate" (14.04)
-      tl.fromTo("#b3", { opacity: 0, filter: "blur(26px)", scale: 1.06 },
-                       { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.34, ease: "power2.out" }, 13.72);
-      tl.fromTo("#b3-grid", { yPercent: 6, opacity: 0 }, { yPercent: 0, opacity: 0.5, duration: 0.6, ease: "power2.out" }, 13.72);
-      tl.fromTo("#b3-chips", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 13.85);
-      tl.fromTo("#b3-kick", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 14.0);
-      // stamp slams in on the word "accurate"
-      tl.fromTo("#b3-stamp", { opacity: 0, scale: 1.35 },
-                             { opacity: 1, scale: 1, duration: 0.42, ease: "back.out(1.7)" }, 14.06);
-      tl.fromTo("#b3-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "power3.out" }, 14.34);
-      // slow drift so the "camera never sleeps" (starts after the grid entrance ends)
-      tl.to("#b3-grid", { yPercent: -3, duration: 1.5, ease: "none" }, 14.34);
-      // exit — blur out to reveal face
-      tl.to("#b3", { opacity: 0, filter: "blur(22px)", scale: 1.04, duration: 0.36, ease: "power2.in" }, 15.9);
+      // B3 — chips build as he names each platform, then NOT ACCURATE stamps
+      tl.fromTo("#b3-meta", { opacity: 0, y: -24, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: POP }, 11.3);
+      tl.fromTo("#b3-goog", { opacity: 0, y: -24, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: POP }, 12.65);
+      tl.fromTo("#b3-x", { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.4, ease: POP }, 14.05);
+      tl.to("#b3-x", { x: 7, duration: 0.05, ease: "power1.inOut", yoyo: true, repeat: 3 }, 14.45);
+      tl.to(["#b3-meta", "#b3-goog", "#b3-x"], { opacity: 0, y: -20, duration: 0.32, ease: "power2.in" }, 15.9);
 
-      // ---------- BEAT 4 — TRUE COST (16.6) ----------
-      tl.fromTo("#b4-scrim", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, 16.6);
-      tl.fromTo("#b4-kick", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 16.72);
-      tl.fromTo("#b4-head", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 17.7);
-      tl.fromTo("#b4-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, 18.4);
-      tl.to(["#b4-kick", "#b4-head", "#b4-bar"], { opacity: 0, y: -24, duration: 0.3, ease: "power2.in" }, 19.9);
-      tl.to("#b4-scrim", { opacity: 0, duration: 0.35, ease: "power2.in" }, 19.95);
-
-      // ---------- BEAT 5 — DOOMED full-frame (25.5) ----------
-      tl.fromTo("#b5", { opacity: 0, filter: "blur(26px)", scale: 1.06 },
-                       { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.32, ease: "power2.out" }, 25.55);
-      tl.fromTo("#b5-grid", { yPercent: 6, opacity: 0 }, { yPercent: 0, opacity: 0.5, duration: 0.6, ease: "power2.out" }, 25.55);
-      tl.fromTo("#b5-kick", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.32, ease: "power3.out" }, 25.66);
-      // DOOMED slam with a small settle shake
-      tl.fromTo("#b5-stamp", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 25.86);
-      tl.to("#b5-stamp", { x: 10, duration: 0.05, ease: "power1.inOut", yoyo: true, repeat: 3 }, 26.26);
-      tl.fromTo("#b5-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "power3.out" }, 26.1);
-      tl.to("#b5-grid", { yPercent: -3, duration: 1.32, ease: "none" }, 26.16);
-      tl.to("#b5", { opacity: 0, filter: "blur(22px)", scale: 1.04, duration: 0.36, ease: "power2.in" }, 27.6);
-
-      // ---------- End card (30.3) ----------
+      // End card — crossfade over the face as the CTA lands
       tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 30.3);
-      tl.fromTo("#ec-logo", { opacity: 0, y: 28, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.62, ease: "power3.out" }, 30.6);
+      tl.fromTo("#ec-logo", { opacity: 0, y: 26, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, 30.6);
       tl.fromTo("#ec-line", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 30.9);
-      tl.fromTo("#ec-cta", { opacity: 0, y: 16, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.6)" }, 31.1);
+      tl.fromTo("#ec-div", { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.4, ease: "power2.out" }, 31.15);
+      tl.fromTo("#ec-cta", { opacity: 0, y: 16, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.6)" }, 31.3);
+      // gentle particle drift (finite repeats)
+      tl.fromTo("[data-p]", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.out", stagger: 0.06 }, 30.5);
+      tl.to("[data-p]", { y: -22, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: 1, stagger: { each: 0.15, from: "random" } }, 31.0);
 
-      // Law #11 — anchor timeline to the full slot
       tl.set({}, {}, 34.0);
       window.__timelines["ecomiq-short-form-mg"] = tl;
     </script>
