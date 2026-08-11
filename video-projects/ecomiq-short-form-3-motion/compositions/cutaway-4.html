@@ -44,9 +44,10 @@
         .from("#cutaway-4-root .c4-title", { opacity: 0, y: 40, filter: "blur(12px)", duration: .5, ease: "expo.out" }, .24)
         .from("#cutaway-4-root .c4-tri", { opacity: 0, scale: 0, duration: .35, ease: "back.out(2.2)" }, .5)
         .from("#cutaway-4-root .c4-sub", { opacity: 0, y: 20, duration: .4, ease: "power3.out" }, .5)
-        .to("#cutaway-4-root .c4-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.03, duration: .25, ease: "power2.in" }, 1.9)
-        .to("#cutaway-4-root .c4-grid", { opacity: 0, duration: .22, ease: "power2.in" }, 1.92);
-      tl.set({}, {}, 2.2); // pad to data-duration
+        .to("#cutaway-4-root .c4-grid", { x: 44, y: 32, duration: 5.0, ease: "none" }, 0)
+        .to("#cutaway-4-root .c4-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.03, duration: .25, ease: "power2.in" }, 4.65)
+        .to("#cutaway-4-root .c4-grid", { opacity: 0, duration: .22, ease: "power2.in" }, 4.67);
+      tl.set({}, {}, 5.0); // pad to data-duration
       window.__timelines["cutaway-4"] = tl;
     </script>
   </div>

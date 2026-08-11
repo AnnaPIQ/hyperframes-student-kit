@@ -51,9 +51,10 @@
         .from("#cutaway-2-root .c2-eyebrow", { opacity: 0, y: 20, duration: .35, ease: "power3.out" }, .05)
         .from("#cutaway-2-root .c2-rule", { scaleX: 0, opacity: 0, duration: .4, ease: "power2.out", stagger: .07 }, .12)
         .from("#cutaway-2-root .c2-stat", { opacity: 0, y: 26, filter: "blur(8px)", duration: .45, ease: "power3.out", stagger: .16 }, .25)
-        .to("#cutaway-2-root .c2-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.03, duration: .25, ease: "power2.in" }, 2.1)
-        .to("#cutaway-2-root .c2-grid", { opacity: 0, duration: .22, ease: "power2.in" }, 2.12);
-      tl.set({}, {}, 2.4); // pad to data-duration
+        .to("#cutaway-2-root .c2-grid", { x: 48, y: 36, duration: 7.2, ease: "none" }, 0)
+        .to("#cutaway-2-root .c2-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.03, duration: .25, ease: "power2.in" }, 6.85)
+        .to("#cutaway-2-root .c2-grid", { opacity: 0, duration: .22, ease: "power2.in" }, 6.87);
+      tl.set({}, {}, 7.2); // pad to data-duration
       window.__timelines["cutaway-2"] = tl;
     </script>
   </div>

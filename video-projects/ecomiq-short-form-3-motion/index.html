@@ -24,7 +24,7 @@
         border: 5px solid rgba(156,212,255,.9);
         box-shadow: 0 22px 60px -12px rgba(0,0,0,.6), 0 0 0 2px rgba(6,40,76,.7), 0 0 40px -6px rgba(156,212,255,.4); }
       #sean-vid { position: absolute; inset: 0; width: 100%; height: 100%;
-        object-fit: cover; object-position: 50% 24%; }
+        object-fit: cover; object-position: 50% 48%; }
 
       /* Small brand logo — top-left */
       #brand-logo { position: absolute; top: 4.5%; left: 5%; width: 20%; z-index: 50; }
@@ -53,17 +53,19 @@
                src="assets/aroll-video3.mp4" muted playsinline></video>
       </div>
 
-      <!-- Data-card scenes (track 4) — content + timing track Sean's VO -->
+      <!-- Full-frame scenes (track 4), back-to-back — content + timing track Sean's VO -->
+      <div id="intro" class="scene clip" data-composition-id="scene-intro" data-composition-src="compositions/scene-intro.html"
+           data-start="0.4" data-duration="6.0" data-track-index="4"></div>
       <div id="cut1" class="scene clip" data-composition-id="cutaway-1" data-composition-src="compositions/cutaway-1.html"
-           data-start="6.2" data-duration="2.0" data-track-index="4"></div>
+           data-start="6.4" data-duration="7.0" data-track-index="4"></div>
       <div id="cut2" class="scene clip" data-composition-id="cutaway-2" data-composition-src="compositions/cutaway-2.html"
-           data-start="13.6" data-duration="2.4" data-track-index="4"></div>
+           data-start="13.4" data-duration="7.2" data-track-index="4"></div>
       <div id="cut3" class="scene clip" data-composition-id="cutaway-3" data-composition-src="compositions/cutaway-3.html"
-           data-start="20.7" data-duration="2.2" data-track-index="4"></div>
+           data-start="20.6" data-duration="4.4" data-track-index="4"></div>
       <div id="cut4" class="scene clip" data-composition-id="cutaway-4" data-composition-src="compositions/cutaway-4.html"
-           data-start="25.0" data-duration="2.2" data-track-index="4"></div>
+           data-start="25.0" data-duration="5.0" data-track-index="4"></div>
       <div id="cut5" class="scene clip" data-composition-id="cutaway-5" data-composition-src="compositions/cutaway-5.html"
-           data-start="30.0" data-duration="2.2" data-track-index="4"></div>
+           data-start="30.0" data-duration="7.0" data-track-index="4"></div>
       <div id="offer" class="scene clip" data-composition-id="scene-offer" data-composition-src="compositions/scene-offer.html"
            data-start="37.0" data-duration="3.5" data-track-index="4"></div>
 
@@ -86,11 +88,17 @@
 
       // Sean PiP — pop in/out at two moments, with a gentle idle bob while visible
       gsap.set("#sean-pip", { opacity: 0, scale: .6, transformOrigin: "50% 50%" });
+      // window 1 — intro / hook
       tl.to("#sean-pip", { opacity: 1, scale: 1, duration: .5, ease: "back.out(1.7)" }, 1.4)
         .to("#sean-pip", { y: -14, duration: 2.2, ease: "sine.inOut", yoyo: true, repeat: 3 }, 2.3)
-        .to("#sean-pip", { opacity: 0, scale: .7, duration: .4, ease: "power2.in" }, 11.5)
-        .to("#sean-pip", { opacity: 1, scale: 1, y: 0, duration: .5, ease: "back.out(1.7)" }, 28.6)
-        .to("#sean-pip", { y: -14, duration: 2.2, ease: "sine.inOut", yoyo: true, repeat: 2 }, 29.4)
+        .to("#sean-pip", { opacity: 0, scale: .7, duration: .4, ease: "power2.in" }, 9.2)
+      // window 2 — mid
+        .to("#sean-pip", { opacity: 1, scale: 1, y: 0, duration: .5, ease: "back.out(1.7)" }, 15.0)
+        .to("#sean-pip", { y: -14, duration: 2.2, ease: "sine.inOut", yoyo: true, repeat: 1 }, 15.8)
+        .to("#sean-pip", { opacity: 0, scale: .7, duration: .4, ease: "power2.in" }, 20.2)
+      // window 3 — retention / close
+        .to("#sean-pip", { opacity: 1, scale: 1, y: 0, duration: .5, ease: "back.out(1.7)" }, 29.0)
+        .to("#sean-pip", { y: -14, duration: 2.2, ease: "sine.inOut", yoyo: true, repeat: 2 }, 29.8)
         .to("#sean-pip", { opacity: 0, scale: .7, duration: .4, ease: "power2.in" }, 36.6);
 
       tl.set({}, {}, 44.8); // composition duration

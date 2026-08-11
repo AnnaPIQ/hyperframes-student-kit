@@ -1,0 +1,51 @@
+<template id="scene-intro-template">
+  <div id="scene-intro-root" data-composition-id="scene-intro" data-width="1080" data-height="1920">
+    <div class="si-bg"></div>
+    <div class="si-grid"></div>
+    <div class="si-wrap">
+      <div class="si-eyebrow">The Costly Habit</div>
+      <div class="si-headline">Always chasing<br><span class="em">new</span> customers?</div>
+      <div class="si-rule"></div>
+    </div>
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      #scene-intro-root { position: absolute; inset: 0; overflow: hidden;
+        background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+      #scene-intro-root .si-bg { position: absolute; inset: 0;
+        background: radial-gradient(80% 50% at 50% 42%, rgba(156,212,255,.15) 0%, rgba(6,40,76,0) 60%), #06284C; }
+      #scene-intro-root .si-grid { position: absolute; inset: 0; opacity: .5;
+        background-image:
+          repeating-linear-gradient(0deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.06) 0 1.5px, transparent 1.5px 68px);
+        -webkit-mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%);
+                mask-image: radial-gradient(75% 60% at 50% 45%, #000 0%, transparent 85%); }
+      #scene-intro-root .si-wrap { position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 40px; padding: 12% 8%; text-align: center; }
+      #scene-intro-root .si-eyebrow { font-weight: 700; font-size: 34px; letter-spacing: .3em;
+        text-transform: uppercase; color: #7ea6cf; }
+      #scene-intro-root .si-headline { font-weight: 800; font-size: 116px; line-height: 1.0;
+        letter-spacing: -.03em; color: #FFFFFF; }
+      #scene-intro-root .si-headline .em { color: #FF5A3C; }
+      #scene-intro-root .si-rule { width: 200px; height: 8px; border-radius: 999px;
+        background: #9CD4FF; box-shadow: 0 0 26px -2px rgba(156,212,255,.7); }
+    </style>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#scene-intro-root .si-bg", { opacity: 0, duration: .2, ease: "power1.out" }, 0)
+        .from("#scene-intro-root .si-grid", { opacity: 0, duration: .4, ease: "power1.out" }, 0)
+        .to("#scene-intro-root .si-grid", { x: 50, y: 40, duration: 6.0, ease: "none" }, 0)
+        .from("#scene-intro-root .si-eyebrow", { opacity: 0, y: 20, duration: .4, ease: "power3.out" }, .1)
+        .from("#scene-intro-root .si-headline", { opacity: 0, y: 46, filter: "blur(14px)", duration: .55, ease: "expo.out" }, .25)
+        .from("#scene-intro-root .si-rule", { scaleX: 0, opacity: 0, transformOrigin: "50% 50%", duration: .5, ease: "power2.out" }, .6)
+        .to("#scene-intro-root .si-headline .em", { scale: 1.08, duration: .8, ease: "sine.inOut", yoyo: true, repeat: 2, transformOrigin: "50% 60%" }, 1.4)
+        .to("#scene-intro-root .si-wrap", { opacity: 0, filter: "blur(12px)", scale: 1.03, duration: .3, ease: "power2.in" }, 5.65)
+        .to("#scene-intro-root .si-grid", { opacity: 0, duration: .25, ease: "power2.in" }, 5.7);
+      tl.set({}, {}, 6.0); // pad to data-duration
+      window.__timelines["scene-intro"] = tl;
+    </script>
+  </div>
+</template>
