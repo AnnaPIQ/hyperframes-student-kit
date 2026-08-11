@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>ecomiq-profit-bootcamp — motion graphics</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden; background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: #fff; }
+
+      /* ---------- Animated brand background (always moving) ---------- */
+      #bg { position: absolute; inset: 0; z-index: 0; background:
+        radial-gradient(120% 80% at 50% 12%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
+      #grid { position: absolute; left: -20%; right: -20%; top: 44%; height: 80%; z-index: 0;
+        transform: perspective(900px) rotateX(62deg); transform-origin: 50% 0;
+        background:
+          repeating-linear-gradient(0deg, rgba(156,212,255,.10) 0 2px, transparent 2px 92px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,.08) 0 2px, transparent 2px 92px);
+        mask-image: radial-gradient(120% 80% at 50% 0%, #000 30%, transparent 78%);
+        -webkit-mask-image: radial-gradient(120% 80% at 50% 0%, #000 30%, transparent 78%); }
+      .bloom { position: absolute; z-index: 0; border-radius: 50%; filter: blur(120px); opacity: .5; }
+      #bloomA { width: 720px; height: 720px; left: -160px; top: -160px; background: var(--brand-blue-tint); opacity: .28; }
+      #bloomB { width: 780px; height: 780px; right: -220px; bottom: -160px; background: var(--brand-flame); opacity: .30; }
+      #fx { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+      #fx .p { position: absolute; border-radius: 50%; opacity: 0; filter: blur(.5px); }
+      #vign { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+        background: radial-gradient(120% 100% at 50% 42%, rgba(3,16,32,0) 46%, rgba(3,16,32,.55) 100%); }
+      #grain { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: .5; background:
+        radial-gradient(rgba(255,255,255,.03) 1px, transparent 1px) 0 0/3px 3px,
+        radial-gradient(rgba(255,255,255,.02) 1px, transparent 1px) 1px 2px/5px 5px; }
+
+      /* ---------- Circular face PiP, top-right (comes in / out) ---------- */
+      #pip { position: absolute; top: 84px; right: 56px; width: 300px; height: 300px; z-index: 3;
+        border-radius: 50%; overflow: hidden; border: 4px solid var(--brand-flame); opacity: 0;
+        box-shadow: 0 18px 54px -12px rgba(0,0,0,.72), 0 0 0 9px rgba(6,40,76,.45); }
+      #pip video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%;
+        transform: scale(1.16) translate(5%, -9%); transform-origin: 50% 50%;
+        filter: contrast(1.06) saturate(1.08) brightness(.99); }
+
+      /* Persistent EcomIQ logo, top-left */
+      #wm-logo { position: absolute; top: 72px; left: 64px; width: 280px; height: auto; z-index: 4; opacity: 0;
+        filter: drop-shadow(0 2px 12px rgba(0,0,0,.55)); }
+
+      /* ---------- Kinetic scenes ---------- */
+      #scenes { position: absolute; inset: 0; z-index: 2; }
+      .scn { position: absolute; left: 70px; right: 70px; top: 43%; transform: translateY(-50%);
+        text-align: center; opacity: 0; will-change: transform, opacity, filter; }
+      .k { display: block; font-weight: 800; letter-spacing: -.03em; line-height: .94; color: #fff;
+        text-shadow: 0 3px 6px rgba(3,16,32,.7), 0 14px 44px rgba(3,16,32,.6), 0 0 80px rgba(3,16,32,.5); }
+      .k.sub { font-weight: 700; letter-spacing: -.01em; margin-top: 20px; }
+      .hot { color: var(--brand-flame); }
+      .tint { color: var(--brand-blue-tint); }
+      .kick { display: inline-block; font-weight: 700; font-size: 34px; letter-spacing: .28em;
+        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 26px; }
+      .num { display: inline-flex; align-items: center; justify-content: center; width: 128px; height: 128px;
+        border-radius: 50%; background: var(--brand-flame); color: #fff; font-weight: 800; font-size: 76px;
+        box-shadow: 0 20px 54px -16px rgba(255,76,50,.7); margin-bottom: 30px; }
+      .pill { display: inline-block; background: var(--brand-flame); color: #fff; font-weight: 800;
+        text-transform: uppercase; letter-spacing: -.01em; padding: 24px 50px; border-radius: 20px;
+        box-shadow: 0 24px 64px -18px rgba(255,76,50,.7); }
+      .tri { width: 0; height: 0; margin: 30px auto 0; border-left: 54px solid transparent;
+        border-right: 54px solid transparent; border-top: 72px solid var(--brand-flame);
+        filter: drop-shadow(0 10px 16px rgba(0,0,0,.5)); }
+      /* money-walking-out-the-door graphic (hook) */
+      #door-stage { position: relative; width: 520px; height: 380px; margin: 44px auto 0; }
+      #door { position: absolute; left: 46px; bottom: 0; width: 220px; height: 360px; }
+      .door-frame { position: absolute; inset: 0; border-radius: 14px 14px 0 0; border: 12px solid #123f70;
+        border-bottom: none; background: transparent; box-shadow: 0 26px 60px -26px rgba(0,0,0,.7); }
+      .door-light { position: absolute; left: 12px; right: 12px; top: 12px; bottom: 0; border-radius: 8px 8px 0 0;
+        background: linear-gradient(90deg, rgba(255,148,60,.65), rgba(255,76,50,.14)); filter: blur(3px); }
+      .door-panel { position: absolute; left: 12px; top: 12px; bottom: 0; width: 118px; border-radius: 8px 8px 0 0;
+        background: linear-gradient(90deg, #0e3160, #0a2547); border: 2px solid #1d4a7a; border-bottom: none;
+        transform: perspective(720px) rotateY(-48deg); transform-origin: left center; box-shadow: 10px 0 26px -10px rgba(0,0,0,.65); }
+      .walker { position: absolute; width: 66px; height: 66px; border-radius: 50%; background: var(--brand-flame);
+        display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 40px; color: #fff;
+        box-shadow: 0 10px 22px -6px rgba(0,0,0,.55), 0 0 0 4px rgba(255,255,255,.12); opacity: 0; }
+
+      /* ---------- Branded end card ---------- */
+      #endcard { position: absolute; inset: 0; z-index: 5; background: var(--brand-navy); overflow: hidden; opacity: 0; }
+      #ec-bloom { position: absolute; left: -12%; bottom: -24%; width: 124%; height: 62%; z-index: 0;
+        background: var(--brand-gradient-2); filter: blur(96px); opacity: .40; }
+      #ec-vignette { position: absolute; inset: 0; z-index: 0;
+        background: radial-gradient(78% 60% at 50% 40%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 60%); }
+      #ec-logo { position: absolute; top: 10%; left: 50%; transform: translateX(-50%); width: 46%; height: auto; z-index: 2; }
+      #ec-stage { position: absolute; left: 92px; right: 92px; top: 54%; transform: translateY(-50%); z-index: 2;
+        display: flex; flex-direction: column; align-items: center; text-align: center; }
+      #ec-eyebrow { position: relative; font-weight: 800; font-size: 70px; letter-spacing: -.02em; line-height: 1.04;
+        color: #fff; margin-bottom: 38px; max-width: 700px; }
+      #ec-rule { width: 132px; height: 6px; border-radius: 3px; background: var(--brand-flame);
+        margin-bottom: 46px; transform-origin: left center; }
+      #ec-cta-wrap { position: relative; display: inline-flex; }
+      #ec-cta { position: relative; overflow: hidden; display: inline-flex; align-items: center; font-weight: 700;
+        font-size: 40px; color: #fff; background: var(--brand-flame); padding: 30px 66px; border-radius: 999px;
+        box-shadow: 0 22px 70px -16px rgba(255,76,50,.62); }
+      #ec-cta .cta-shine { position: absolute; top: 0; left: 0; width: 55%; height: 100%; z-index: 1;
+        transform: skewX(-18deg) translateX(-220%);
+        background: linear-gradient(105deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 50%, rgba(255,255,255,0) 100%); }
+      #ec-cta .cta-txt { position: relative; z-index: 2; }
+      #ec-cta-wrap .cta-glow { position: absolute; inset: -6px; z-index: -1; border-radius: 999px;
+        background: var(--brand-flame); filter: blur(26px); opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="ecomiq-profit-bootcamp-mg-4x5" data-start="0" data-duration="35.6" data-width="1080" data-height="1350">
+
+      <!-- Animated background (each clip on its own track; z-index controls visual stacking) -->
+      <div id="bg" class="clip" data-start="0" data-duration="35.6" data-track-index="0"></div>
+      <div id="grid" class="clip" data-start="0" data-duration="35.6" data-track-index="1"></div>
+      <div id="bloomA" class="bloom clip" data-start="0" data-duration="35.6" data-track-index="2"></div>
+      <div id="bloomB" class="bloom clip" data-start="0" data-duration="35.6" data-track-index="3"></div>
+      <div id="fx" class="clip" data-start="0" data-duration="35.6" data-track-index="5"></div>
+      <div id="vign" class="clip" data-start="0" data-duration="35.6" data-track-index="6"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="35.6" data-track-index="7"></div>
+
+      <!-- Pulled VO audio (from the source clip); video is muted and only shown in the circular PiP -->
+      <audio id="vo" data-start="0" data-duration="31.5" data-track-index="9" src="assets/founder-vo.m4a" data-volume="1"></audio>
+      <div id="pip">
+        <video id="pip-v" data-start="0" data-duration="31.5" data-track-index="8" src="assets/founder-cut.mp4" muted playsinline></video>
+      </div>
+      <img id="wm-logo" class="clip" data-start="0" data-duration="30" data-track-index="10" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+
+      <!-- Kinetic scenes -->
+      <div id="scenes">
+        <div id="s-hook" class="scn">
+          <span class="k" style="font-size:80px">MONEY'S WALKING OUT</span>
+          <div id="door-stage">
+            <div id="door">
+              <div class="door-light"></div>
+              <div class="door-frame"></div>
+              <div class="door-panel"></div>
+            </div>
+            <div id="walkers"></div>
+          </div>
+        </div>
+        <div id="s-order" class="scn">
+          <span class="k" style="font-size:150px">EVERY</span>
+          <span class="k" style="font-size:150px">SINGLE ORDER</span>
+        </div>
+        <div id="s-two" class="scn">
+          <span class="k hot" style="font-size:280px">2</span>
+          <span class="k" style="font-size:96px">QUICK FIXES</span>
+        </div>
+        <div id="s-c1" class="scn">
+          <span class="num">1</span>
+          <span class="k" style="font-size:100px">New-customer</span>
+          <span class="k" style="font-size:100px">discount</span>
+        </div>
+        <div id="s-c2" class="scn">
+          <span class="num">2</span>
+          <span class="k" style="font-size:118px">Free shipping</span>
+        </div>
+        <div id="s-boot" class="scn">
+          <span class="kick">Inside the</span>
+          <span class="pill" style="font-size:64px">Profitability Bootcamp</span>
+        </div>
+        <div id="s-free" class="scn">
+          <span class="k hot" style="font-size:220px">100%</span>
+          <span class="k" style="font-size:110px">FREE TO JOIN</span>
+        </div>
+        <div id="s-m1" class="scn">
+          <span class="kick">Find the</span>
+          <span class="k" style="font-size:132px">MARGIN</span>
+          <span class="k sub tint" style="font-size:64px">you're giving away</span>
+        </div>
+        <div id="s-m2" class="scn">
+          <span class="k" style="font-size:126px">KEEP</span>
+          <span class="k" style="font-size:126px">WHAT'S YOURS</span>
+        </div>
+        <div id="s-cta" class="scn">
+          <span class="k" style="font-size:112px">LINK BELOW</span>
+          <div class="tri"></div>
+        </div>
+      </div>
+
+      <!-- End card -->
+      <div id="endcard" class="clip" data-start="29.9" data-duration="5.7" data-track-index="4">
+        <div id="ec-bloom"></div>
+        <div id="ec-vignette"></div>
+        <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="ec-stage">
+          <div id="ec-eyebrow">Free Profitability Bootcamp</div>
+          <div id="ec-rule"></div>
+          <div id="ec-cta-wrap"><span class="cta-glow"></span><div id="ec-cta"><span class="cta-txt">Join Free</span><span class="cta-shine"></span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+      const R = mulberry32(20260811);
+
+      /* --- Background motion (always alive) --- */
+      tl.to("#grid", { backgroundPositionY: "184px", duration: 35.6, ease: "none" }, 0);
+      tl.to("#bloomA", { x: 120, y: 90, duration: 17.8, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+      tl.to("#bloomB", { x: -120, y: -70, duration: 17.8, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+      tl.fromTo("#vign", { opacity: .82 }, { opacity: 1, duration: 5, ease: "sine.inOut", yoyo: true, repeat: 6 }, 0);
+      // drifting ambient particles across the whole piece
+      const fx = document.getElementById("fx");
+      for (let i = 0; i < 16; i++) {
+        const el = document.createElement("div"); el.className = "p";
+        const sz = 5 + Math.round(R() * 10);
+        el.style.width = el.style.height = sz + "px";
+        el.style.left = (4 + R() * 92) + "%"; el.style.top = (100 + R() * 10) + "%";
+        el.style.background = R() < 0.5 ? "var(--brand-flame)" : "var(--brand-blue-tint)";
+        fx.appendChild(el);
+        const dur = 6 + R() * 5, delay = R() * 6, peak = 0.25 + R() * 0.25, rise = 1500 + R() * 500;
+        tl.fromTo(el, { y: 0, x: 0 }, { y: -rise, x: (R() * 2 - 1) * 60, duration: dur, ease: "none", repeat: 3 }, delay);
+        tl.fromTo(el, { opacity: 0 }, { opacity: peak, duration: dur * 0.3, ease: "sine.inOut", yoyo: true, repeat: 7 }, delay);
+      }
+
+      // Top-left EcomIQ logo (fades out just before the end card covers)
+      tl.fromTo("#wm-logo", { opacity: 0, y: -14 }, { opacity: .96, y: 0, duration: 0.6, ease: "power2.out" }, 0.3)
+        .to("#wm-logo", { opacity: 0, duration: 0.4, ease: "power2.in" }, 29.6);
+
+      /* --- Circular face PiP: comes in on the hook, out for the "2 fixes" title, then stays in until the end card --- */
+      [[0.4, 5.0], [8.8, 30.0]].forEach(([tin, tout]) => {
+        tl.fromTo("#pip", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.7)" }, tin)
+          .to("#pip", { opacity: 0, scale: 0.6, duration: 0.35, ease: "power2.in" }, tout);
+      });
+      // gentle continuous bob while visible
+      tl.to("#pip", { y: "-=10", duration: 2.4, ease: "sine.inOut", yoyo: true, repeat: 14 }, 0.4);
+
+      /* --- Scene helper: vertical blur-whip in, blur-whip out --- */
+      function scn(id, tin, tout, heroSel) {
+        tl.fromTo(id, { opacity: 0, y: 150, filter: "blur(26px)" },
+                      { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power2.out" }, tin);
+        if (heroSel) tl.from(id + " " + heroSel, { scale: 0.7, duration: 0.5, ease: "back.out(1.6)", transformOrigin: "50% 50%" }, tin + 0.04);
+        tl.to(id, { opacity: 0, y: -150, filter: "blur(26px)", duration: 0.34, ease: "power2.in" }, tout);
+      }
+
+      scn("#s-hook", 0.2, 2.6);
+      scn("#s-order", 2.7, 5.0, ".k:nth-child(2)");
+      scn("#s-two", 5.2, 8.6, ".hot");
+      scn("#s-c1", 8.8, 12.4, ".num");
+      scn("#s-c2", 12.6, 15.8, ".num");
+      scn("#s-boot", 16.0, 18.8, ".pill");
+      scn("#s-free", 18.9, 22.0, ".hot");
+      scn("#s-m1", 22.2, 24.8, ".k:nth-child(2)");
+      scn("#s-m2", 24.9, 27.6, ".k:nth-child(1)");
+      scn("#s-cta", 27.8, 30.0);
+      // CTA arrow bounce
+      tl.fromTo("#s-cta .tri", { y: -12 }, { y: 16, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 3 }, 28.2);
+
+      // Hook graphic: $ coins walk OUT of the open door (money leaving the store)
+      const walkers = document.getElementById("walkers");
+      for (let i = 0; i < 3; i++) {
+        const w = document.createElement("div"); w.className = "walker"; w.textContent = "$";
+        walkers.appendChild(w);
+        const startX = 150, startY = 250 + i * 26;
+        gsap.set(w, { x: startX, y: startY, scale: 0.9, opacity: 0 });
+        const d = 0.5 + i * 0.5;
+        tl.to(w, { opacity: 1, duration: 0.2, ease: "power1.out" }, d)
+          .to(w, { x: startX + 320, duration: 1.35, ease: "power1.in" }, d)          // walk out to the right
+          .to(w, { y: "-=15", duration: 0.26, ease: "sine.inOut", yoyo: true, repeat: 4 }, d)  // bobbing "steps"
+          .to(w, { opacity: 0, scale: 0.68, duration: 0.4, ease: "power1.in" }, d + 1.05);
+      }
+
+      /* --- End card (crossfade in, kinetic reveal, continuous CTA) --- */
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power2.inOut" }, 30.0)
+        .fromTo("#ec-bloom", { x: -20, scale: 1.0, opacity: .36 }, { x: 25, scale: 1.12, opacity: .46, duration: 5.6, ease: "sine.inOut" }, 30.0)
+        .from("#ec-logo", { opacity: 0, y: -24, duration: 0.6, ease: "power3.out" }, 30.1)
+        .fromTo("#ec-eyebrow", { clipPath: "inset(0 100% 0 0)", filter: "blur(2px)" }, { clipPath: "inset(0 0% 0 0)", filter: "blur(0px)", duration: 0.62, ease: "power2.out" }, 30.3)
+        .fromTo("#ec-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out" }, 30.42)
+        .from("#ec-cta-wrap", { opacity: 0, scale: .85, duration: 0.5, ease: "back.out(1.7)" }, 31.05)
+        .fromTo(".cta-shine", { x: "-220%" }, { x: "260%", duration: 0.85, ease: "power2.inOut", repeat: 2, repeatDelay: 1.35 }, 31.5)
+        .fromTo(".cta-glow", { opacity: .18 }, { opacity: .5, duration: 0.9, ease: "sine.inOut", yoyo: true, repeat: 4 }, 31.4)
+        .to("#ec-cta", { scale: 1.045, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 4 }, 32.0);
+
+      window.__timelines["ecomiq-profit-bootcamp-mg-4x5"] = tl;
+    </script>
+  </body>
+</html>

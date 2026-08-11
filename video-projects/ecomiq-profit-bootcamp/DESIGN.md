@@ -72,3 +72,12 @@ tweens — they reflow/snap; the clip-path wipe carries the reveal.)
 - No second emphasis word; flame orange is the only hot accent.
 - No captions / no b-roll (brief) — don't add scene overlays.
 - Don't animate the `<video>` element directly — animate `#face-wrapper`.
+
+## Motion-graphics variant (VO-driven, circular PiP)
+- `compositions/index-mg.html` (9:16) + `compositions/index-mg-4x5.html` (4:5) → `final-mg.mp4` /
+  `final-mg-4x5.mp4`. Fully animated brand scenes synced to the pulled VO (`assets/founder-vo.m4a`):
+  animated grid + drifting blooms + particles, kinetic type per point (hook uses a money-walking-
+  out-the-door graphic), Sean in a circular flame-ringed PiP top-right (in on the hook, out for the
+  "2 Quick Fixes" title, then in until the end card), EcomIQ logo top-left, animated end card.
+  Render: `npx hyperframes render -c compositions/index-mg.html --quality high`.
+- Talking-head versions remain `final.mp4` / `final-4x5.mp4`.
