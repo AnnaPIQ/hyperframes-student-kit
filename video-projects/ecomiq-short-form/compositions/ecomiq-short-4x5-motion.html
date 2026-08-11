@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>EcomIQ — Short-Form 4:5 (Motion)</title>
+    <script src="assets/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face {
+        font-family: "Rethink Sans";
+        font-weight: 400 800;
+        font-display: block;
+        src: url(assets/fonts/RethinkSans.woff2) format("woff2");
+      }
+      @font-face {
+        font-family: "Hedvig Letters Serif";
+        font-weight: 400;
+        font-display: block;
+        src: url(assets/fonts/HedvigLettersSerif.woff2) format("woff2");
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px;
+        height: 1350px;
+        overflow: hidden;
+        background: var(--brand-navy);
+        font-family: "Rethink Sans", system-ui, sans-serif;
+        color: var(--brand-white);
+      }
+
+      /* ===== Persistent motion-graphics world ===== */
+      #world { position: absolute; inset: 0; }
+      #world .w-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(92% 60% at 50% 32%, rgba(64, 132, 214, 0.20) 0%, rgba(6, 26, 52, 0) 60%),
+          linear-gradient(180deg, #0a2138 0%, #071627 100%);
+      }
+      #world .w-grid {
+        position: absolute; inset: 0;
+        background-image:
+          linear-gradient(rgba(120, 172, 232, 0.07) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(120, 172, 232, 0.07) 1px, transparent 1px);
+        background-size: 94px 94px;
+        -webkit-mask-image: radial-gradient(104% 86% at 50% 46%, #000 52%, transparent 100%);
+        mask-image: radial-gradient(104% 86% at 50% 46%, #000 52%, transparent 100%);
+      }
+      #world .w-vig {
+        position: absolute; inset: 0;
+        background: radial-gradient(122% 100% at 50% 42%, rgba(0, 0, 0, 0) 54%, rgba(2, 10, 22, 0.5) 100%);
+      }
+      #world .w-scan {
+        position: absolute; top: -20%; left: 0; width: 46%; height: 140%;
+        background: linear-gradient(90deg, rgba(120, 180, 255, 0) 0%, rgba(130, 190, 255, 0.07) 50%, rgba(120, 180, 255, 0) 100%);
+      }
+      #world .w-dot {
+        position: absolute; width: 9px; height: 9px; border-radius: 50%;
+        background: rgba(150, 196, 240, 0.45); box-shadow: 0 0 12px rgba(120, 180, 255, 0.6);
+      }
+
+      /* ===== Shared scene chrome ===== */
+      .scene { position: absolute; inset: 0; opacity: 0; }
+      .sc-center {
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        text-align: center; padding: 0 88px;
+      }
+      .sc-eyebrow {
+        font-family: "Rethink Sans", sans-serif;
+        font-weight: 700; font-size: 32px;
+        letter-spacing: 0.4em; text-transform: uppercase;
+        color: rgba(150, 196, 240, 0.8);
+      }
+
+      /* ---- MG1 ---- */
+      #mg1 .s1-eb { margin-bottom: 40px; }
+      #mg1 .s1-num {
+        font-family: "Rethink Sans", sans-serif;
+        font-weight: 800; font-size: 250px; line-height: 0.9;
+        letter-spacing: -0.03em; color: #c4e2ff;
+        text-shadow: 0 0 60px rgba(96, 172, 255, 0.45);
+      }
+      #mg1 .s1-arrow { font-size: 100px; color: #8fc4ff; vertical-align: middle; margin-right: 12px; }
+      #mg1 .s1-x { font-size: 146px; color: #7fb4f0; }
+      #mg1 .s1-sub {
+        margin-top: 8px; font-weight: 700; font-size: 36px;
+        letter-spacing: 0.18em; text-transform: uppercase;
+        color: rgba(150, 196, 240, 0.72);
+      }
+      #mg1 .s1-stamp {
+        position: relative; margin-top: 56px;
+        font-family: "Rethink Sans", sans-serif;
+        font-weight: 800; font-size: 84px; letter-spacing: -0.01em;
+        color: var(--brand-flame); transform: rotate(-7deg);
+        text-shadow: 0 6px 30px rgba(255, 80, 40, 0.4);
+      }
+      #mg1 .s1-strike {
+        position: absolute; left: -5%; top: 52%;
+        width: 110%; height: 9px; background: var(--brand-flame);
+        border-radius: 5px; transform: scaleX(0); transform-origin: 0 50%;
+        box-shadow: 0 0 22px rgba(255, 90, 50, 0.7);
+      }
+
+      /* ---- MG2 : product margin card ---- */
+      #mg2 .m2-eb { margin-bottom: 44px; }
+      #mg2 .card {
+        width: 812px; background: rgba(10, 32, 58, 0.66);
+        border: 1px solid rgba(120, 180, 255, 0.22); border-radius: 28px;
+        padding: 46px 50px 50px; box-shadow: 0 34px 90px -34px rgba(0, 0, 0, 0.7);
+      }
+      #mg2 .card-top { display: flex; justify-content: space-between; align-items: baseline; }
+      #mg2 .card-label { font-weight: 700; font-size: 34px; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(150, 196, 240, 0.8); }
+      #mg2 .card-price { font-weight: 800; font-size: 60px; color: #fff; }
+      #mg2 .bar {
+        position: relative; height: 60px; border-radius: 13px; overflow: hidden;
+        margin: 36px 0 22px; background: linear-gradient(90deg, #35608f, #4d86c8);
+        transform: scaleX(0); transform-origin: 0 50%;
+      }
+      #mg2 .bar-margin {
+        position: absolute; top: 0; right: 0; height: 100%; width: 6%;
+        background: var(--brand-flame); box-shadow: 0 0 26px rgba(255, 90, 50, 0.65);
+      }
+      #mg2 .bar-labels { display: flex; justify-content: space-between; font-weight: 800; font-size: 32px; }
+      #mg2 .bl-cost { color: #c4e2ff; }
+      #mg2 .bl-margin { color: var(--brand-flame); }
+      #mg2 .verdict {
+        margin-top: 44px; text-align: center;
+        font-family: "Rethink Sans", sans-serif; font-weight: 800; font-size: 82px;
+        letter-spacing: -0.02em; color: var(--brand-flame);
+        text-shadow: 0 6px 30px rgba(255, 80, 40, 0.42);
+      }
+
+      /* ---- MG3 : rising spend bars → $0 LEFT (1350) ---- */
+      #mg3 .s3-top {
+        position: absolute; top: 150px; left: 0; right: 0;
+        display: flex; flex-direction: column; align-items: center; gap: 26px;
+      }
+      #mg3 .s3-pills { display: flex; gap: 20px; }
+      #mg3 .s3-pill {
+        font-family: "Rethink Sans", sans-serif; font-weight: 800; font-size: 36px;
+        padding: 14px 30px; border-radius: 999px; border: 2px solid;
+      }
+      #mg3 .s3-pill.blue { color: #c4e2ff; border-color: rgba(120, 180, 255, 0.5); background: rgba(90, 150, 230, 0.12); }
+      #mg3 .s3-pill.flame { color: var(--brand-flame); border-color: rgba(255, 110, 60, 0.55); background: rgba(255, 90, 50, 0.1); }
+      #mg3 .s3-chart {
+        position: absolute; left: 108px; right: 108px; bottom: 430px; height: 470px;
+        display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+      }
+      #mg3 .s3-bar {
+        flex: 1; border-radius: 12px 12px 0 0;
+        background: linear-gradient(180deg, #c4e2ff 0%, #4d86c8 100%);
+        transform-origin: 50% 100%; box-shadow: 0 0 30px rgba(120, 180, 255, 0.22);
+      }
+      #mg3 .s3-baseline {
+        position: absolute; left: 108px; right: 108px; bottom: 430px; height: 3px;
+        background: rgba(150, 196, 240, 0.3); transform: scaleX(0); transform-origin: 0 50%;
+      }
+      #mg3 .s3-profit {
+        position: absolute; left: 108px; right: 108px; bottom: 472px; height: 7px;
+        background: var(--brand-flame); border-radius: 4px; transform: scaleX(0);
+        transform-origin: 0 50%; box-shadow: 0 0 20px rgba(255, 90, 50, 0.6);
+      }
+      #mg3 .s3-months {
+        position: absolute; left: 108px; right: 108px; bottom: 392px;
+        display: flex; justify-content: space-between;
+      }
+      #mg3 .s3-month { flex: 1; text-align: center; font-weight: 700; font-size: 28px; color: rgba(150, 196, 240, 0.7); }
+      #mg3 .s3-stamp {
+        position: absolute; left: 0; right: 0; bottom: 240px; text-align: center;
+        font-family: "Rethink Sans", sans-serif; font-weight: 800; font-size: 116px;
+        letter-spacing: -0.02em; color: var(--brand-flame); text-shadow: 0 8px 34px rgba(255, 80, 40, 0.45);
+      }
+
+      /* ---- MG4 : WHY? ---- */
+      #mg4 .m4-eb { margin-bottom: 28px; }
+      #mg4 .why {
+        font-family: "Rethink Sans", sans-serif; font-weight: 800; font-size: 280px;
+        line-height: 0.9; letter-spacing: -0.03em; color: #c4e2ff;
+        text-shadow: 0 0 74px rgba(96, 172, 255, 0.5);
+      }
+
+      /* ---- MG5 : THE SIMPLE ANSWER ---- */
+      #mg5 .sc-eyebrow { margin-bottom: 40px; }
+      #mg5 .s4-l1 {
+        font-family: "Rethink Sans", sans-serif; font-weight: 800; font-size: 108px;
+        line-height: 1.05; letter-spacing: -0.02em; color: #ffffff;
+      }
+      #mg5 .s4-l2 {
+        margin-top: 18px; font-family: "Rethink Sans", sans-serif; font-weight: 800;
+        font-size: 86px; line-height: 1.05; letter-spacing: -0.02em; color: #c4e2ff;
+        text-shadow: 0 0 40px rgba(96, 172, 255, 0.3);
+      }
+
+      /* ---- MG6 : bootcamp lead-in ---- */
+      #mg6 .sc-eyebrow { margin-bottom: 40px; }
+      #mg6 .m6-head {
+        font-family: "Rethink Sans", sans-serif; font-weight: 800; font-size: 106px;
+        line-height: 1.04; letter-spacing: -0.02em; color: #ffffff;
+      }
+      #mg6 .m6-head .w { display: inline-block; will-change: transform; }
+      #mg6 .m6-sub { margin-top: 30px; font-weight: 700; font-size: 44px; color: rgba(196, 226, 255, 0.85); }
+
+      /* ===== Sean — circular PIP ===== */
+      .pip {
+        position: absolute; top: 66px; right: 46px;
+        width: 358px; height: 358px; border-radius: 50%;
+        overflow: hidden; opacity: 0;
+        border: 5px solid rgba(255, 110, 60, 0.92);
+        box-shadow: 0 22px 54px -14px rgba(0, 0, 0, 0.72), 0 0 44px rgba(255, 90, 50, 0.32);
+        background: #0a2138;
+      }
+      .pip video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .pip .pv-blur {
+        object-position: 50% 40%;
+        transform: scale(1.3);
+        filter: blur(28px) brightness(0.45) saturate(1.05);
+      }
+      .pip .pv-main {
+        object-position: 50% 40%;
+        transform: scale(0.82);
+        border-radius: 50%;
+        filter: contrast(1.06) saturate(1.06);
+      }
+      .pip .pv-feather {
+        position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+        box-shadow: inset 0 0 40px 20px rgba(9, 28, 50, 0.9);
+      }
+
+      /* ===== Logo bug ===== */
+      #bug { position: absolute; top: 44px; left: 48px; --bug-w: 182px; }
+      #bug::before {
+        content: ""; position: absolute; left: -18px; top: -14px; right: -20px; bottom: -14px;
+        background: radial-gradient(120% 145% at 32% 42%, rgba(4, 20, 40, 0.5) 0%, rgba(4, 20, 40, 0) 72%);
+        border-radius: 28px;
+      }
+      #bug img { position: relative; display: block; width: var(--bug-w); height: auto; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.55)); }
+
+      /* ===== End card ===== */
+      #endcard { position: absolute; inset: 0; }
+      #endcard .ec-bg {
+        position: absolute; inset: 0;
+        background: radial-gradient(88% 54% at 50% 32%, rgba(156, 212, 255, 0.12) 0%, rgba(6, 40, 76, 0) 58%), var(--brand-navy);
+      }
+      #endcard .ec-bloom {
+        position: absolute; left: -12%; bottom: -22%; width: 124%; height: 60%;
+        background: var(--brand-gradient-2); filter: blur(92px); opacity: 0.36;
+      }
+      #endcard .ec-content {
+        position: absolute; left: 90px; right: 90px; top: 50%; transform: translateY(-50%);
+        display: flex; flex-direction: column; align-items: center; text-align: center;
+      }
+      #endcard .ec-logo { width: 440px; height: auto; margin-bottom: 50px; }
+      #endcard .ec-cta { display: flex; flex-direction: column; align-items: center; font-family: "Rethink Sans", sans-serif; color: var(--brand-white); max-width: 860px; }
+      #endcard .ec-cta-top { font-size: 42px; font-weight: 700; letter-spacing: -0.01em; color: rgba(255, 255, 255, 0.92); margin-bottom: 18px; }
+      #endcard .ec-offer-wrap { position: relative; display: inline-block; text-align: center; }
+      #endcard .ec-cta-glow {
+        position: absolute; left: 50%; top: 50%; width: 124%; height: 172%; transform: translate(-50%, -50%);
+        background: radial-gradient(60% 60% at 50% 50%, rgba(255, 96, 52, 0.74) 0%, rgba(255, 96, 52, 0) 70%);
+        filter: blur(38px); opacity: 0; pointer-events: none;
+      }
+      #endcard .ec-offer { position: relative; font-size: 72px; font-weight: 800; line-height: 1.03; letter-spacing: -0.02em; color: var(--brand-white); }
+      #endcard .ec-offer .w { display: inline-block; will-change: transform; }
+      #endcard .ec-pill-wrap { position: relative; display: inline-flex; margin-top: 44px; }
+      #endcard .ec-pill-ring { position: absolute; inset: -6px; border-radius: 999px; border: 3px solid rgba(255, 90, 50, 0.85); opacity: 0; pointer-events: none; }
+      #endcard .ec-pill {
+        display: inline-flex; align-items: center; gap: 16px; font-family: "Rethink Sans", sans-serif;
+        font-size: 40px; font-weight: 700; letter-spacing: -0.01em; color: var(--brand-white);
+        background: var(--brand-flame); padding: 26px 58px; border-radius: 999px;
+        box-shadow: 0 20px 60px -12px rgba(255, 76, 50, 0.65), 0 0 44px rgba(255, 76, 50, 0.35);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="ecomiq-short-4x5-motion"
+      data-start="0"
+      data-duration="48"
+      data-width="1080"
+      data-height="1350"
+      data-fps="30"
+    >
+      <div id="world" class="clip" data-start="0" data-duration="43.4" data-track-index="1">
+        <div class="w-bg"></div><div class="w-grid"></div>
+        <div class="w-scan"></div>
+        <div class="w-dot" style="top:12%; left:16%"></div>
+        <div class="w-dot" style="top:22%; left:82%"></div>
+        <div class="w-dot" style="top:40%; left:7%"></div>
+        <div class="w-dot" style="top:47%; left:92%"></div>
+        <div class="w-dot" style="top:66%; left:12%"></div>
+        <div class="w-dot" style="top:74%; left:86%"></div>
+        <div class="w-dot" style="top:85%; left:28%"></div>
+        <div class="w-dot" style="top:90%; left:66%"></div>
+        <div class="w-vig"></div>
+      </div>
+
+      <audio id="audA" data-start="0" data-duration="38" data-track-index="6" data-volume="1" src="assets/videoA-1080.mp4"></audio>
+      <audio id="audB" data-start="38" data-duration="8" data-track-index="7" data-volume="1" src="assets/videoB-1080.mp4"></audio>
+
+      <!-- MG1 -->
+      <div id="mg1" class="scene clip" data-start="0.6" data-duration="8.5" data-track-index="4">
+        <div class="sc-center">
+          <div class="sc-eyebrow s1-eb">Return on ad spend</div>
+          <div class="s1-num"><span class="s1-arrow">&#9650;</span><span class="s1-val">0.0</span><span class="s1-x">x</span></div>
+          <div class="s1-sub">Meta&nbsp;&nbsp;&middot;&nbsp;&nbsp;Google</div>
+          <div class="s1-stamp"><span>DOESN&rsquo;T MATTER</span><i class="s1-strike"></i></div>
+        </div>
+      </div>
+
+      <!-- MG2 -->
+      <div id="mg2" class="scene clip" data-start="9.1" data-duration="9.8" data-track-index="5">
+        <div class="sc-center">
+          <div class="sc-eyebrow m2-eb">The margin problem</div>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-label">Product price</div>
+              <div class="card-price">$<span class="cp-val">0</span></div>
+            </div>
+            <div class="bar"><div class="bar-margin"></div></div>
+            <div class="bar-labels"><span class="bl-cost">Costs 94%</span><span class="bl-margin">Margin 6%</span></div>
+          </div>
+          <div class="verdict">&asymp; $0 for you</div>
+        </div>
+      </div>
+
+      <!-- MG3 -->
+      <div id="mg3" class="scene clip" data-start="18.85" data-duration="10.45" data-track-index="4">
+        <div class="s3-top">
+          <div class="sc-eyebrow s3-eb">$10K&ndash;$50K / month in ad spend</div>
+          <div class="s3-pills">
+            <div class="s3-pill blue">SPEND &#9650;</div>
+            <div class="s3-pill flame">PROFIT &#9660;</div>
+          </div>
+        </div>
+        <div class="s3-chart">
+          <div class="s3-bar" style="height:104px"></div>
+          <div class="s3-bar" style="height:160px"></div>
+          <div class="s3-bar" style="height:222px"></div>
+          <div class="s3-bar" style="height:292px"></div>
+          <div class="s3-bar" style="height:360px"></div>
+          <div class="s3-bar" style="height:436px"></div>
+        </div>
+        <div class="s3-baseline"></div>
+        <div class="s3-profit"></div>
+        <div class="s3-months">
+          <div class="s3-month">Jan</div><div class="s3-month">Feb</div><div class="s3-month">Mar</div>
+          <div class="s3-month">Apr</div><div class="s3-month">May</div><div class="s3-month">Jun</div>
+        </div>
+        <div class="s3-stamp">$0 LEFT</div>
+      </div>
+
+      <!-- MG4 -->
+      <div id="mg4" class="scene clip" data-start="29.3" data-duration="3.7" data-track-index="5">
+        <div class="sc-center">
+          <div class="sc-eyebrow m4-eb">Stumped, every month</div>
+          <div class="why">WHY?</div>
+        </div>
+      </div>
+
+      <!-- MG5 -->
+      <div id="mg5" class="scene clip" data-start="32.85" data-duration="5.15" data-track-index="4">
+        <div class="sc-center">
+          <div class="sc-eyebrow">The simple answer</div>
+          <div class="s4-l1">Not enough profit</div>
+          <div class="s4-l2">built into the products.</div>
+        </div>
+      </div>
+
+      <!-- MG6 -->
+      <div id="mg6" class="scene clip" data-start="38.0" data-duration="5.4" data-track-index="5">
+        <div class="sc-center">
+          <div class="sc-eyebrow">We fix this inside</div>
+          <div class="m6-head"><span class="w">Free</span> <span class="w">Profitability</span> <span class="w">Bootcamp</span></div>
+          <div class="m6-sub">Click the link below to apply.</div>
+        </div>
+      </div>
+
+      <!-- Sean circular PIP -->
+      <div id="pipA" class="pip">
+        <video class="pv-blur" id="vidAb" data-start="0" data-duration="38.5" data-track-index="0" src="assets/videoA-1080.mp4" muted playsinline></video>
+        <video class="pv-main" id="vidA" data-start="0" data-duration="38.5" data-track-index="3" src="assets/videoA-1080.mp4" muted playsinline></video>
+        <div class="pv-feather"></div>
+      </div>
+      <div id="pipB" class="pip">
+        <video class="pv-blur" id="vidBb" data-start="38" data-duration="8" data-track-index="2" src="assets/videoB-1080.mp4" muted playsinline></video>
+        <video class="pv-main" id="vidB" data-start="38" data-duration="8" data-track-index="10" src="assets/videoB-1080.mp4" muted playsinline></video>
+        <div class="pv-feather"></div>
+      </div>
+
+      <!-- Logo bug -->
+      <div id="bug" class="clip" data-start="0" data-duration="43.4" data-track-index="8">
+        <img id="bug-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <!-- End card -->
+      <div id="endcard" class="clip" data-start="43.4" data-duration="4.6" data-track-index="9">
+        <div class="ec-bg"></div>
+        <div class="ec-bloom"></div>
+        <div class="ec-content">
+          <img class="ec-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+          <div class="ec-cta">
+            <div class="ec-cta-top">Join our</div>
+            <div class="ec-offer-wrap">
+              <div class="ec-cta-glow"></div>
+              <div class="ec-offer"><span class="w">Free</span> <span class="w">Profitability</span> <span class="w">Bootcamp</span></div>
+            </div>
+          </div>
+          <div class="ec-pill-wrap">
+            <div class="ec-pill-ring"></div>
+            <div class="ec-pill">Apply free</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      tl.from("#bug", { opacity: 0, y: -10, duration: 0.5, ease: "power2.out" }, 0.25);
+
+      // Constant background motion
+      tl.set("#world .w-scan", { rotation: 10 }, 0);
+      tl.fromTo("#world .w-scan", { xPercent: -180 }, { xPercent: 320, duration: 3.4, ease: "sine.inOut", repeat: 11, repeatDelay: 0.3 }, 0);
+      tl.to("#world .w-dot", { y: -34, duration: 3.0, ease: "sine.inOut", repeat: 13, yoyo: true, stagger: 0.35 }, 0);
+      tl.to("#world .w-dot", { opacity: 0.95, duration: 1.6, ease: "sine.inOut", repeat: 25, yoyo: true, stagger: 0.5 }, 0);
+
+      // Sean circular PIP in/out
+      function pipShow(sel, tIn, tOut) {
+        tl.fromTo(sel, { opacity: 0, scale: 0.5, y: -20 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.7)", transformOrigin: "50% 50%" }, tIn);
+        tl.to(sel, { opacity: 0, scale: 0.5, y: -20, duration: 0.38, ease: "power2.in", transformOrigin: "50% 50%" }, tOut);
+      }
+      pipShow("#pipA", 0.7, 7.4);
+      pipShow("#pipA", 16.8, 19.0);
+      pipShow("#pipA", 29.5, 33.1);
+      pipShow("#pipB", 38.3, 43.1);
+
+      // MG1
+      tl.fromTo("#mg1", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.6);
+      tl.from("#mg1 .s1-eb", { opacity: 0, y: 18, duration: 0.4, ease: "power3.out" }, 0.8);
+      tl.from("#mg1 .s1-num", { opacity: 0, scale: 1.4, duration: 0.55, ease: "back.out(1.7)", transformOrigin: "50% 50%" }, 1.0);
+      const roasCt = { v: 0 };
+      tl.to(roasCt, { v: 4.8, duration: 1.0, ease: "power1.out",
+        onUpdate() { const e = document.querySelector('#mg1 .s1-val'); if (e) e.textContent = roasCt.v.toFixed(1); },
+        onComplete() { const e = document.querySelector('#mg1 .s1-val'); if (e) e.textContent = '4.8'; } }, 1.05);
+      tl.to("#mg1 .s1-num", { scale: 1.035, duration: 0.6, ease: "sine.inOut", repeat: 7, yoyo: true, transformOrigin: "50% 50%" }, 2.5);
+      tl.from("#mg1 .s1-sub", { opacity: 0, y: 14, duration: 0.4, ease: "power2.out" }, 1.4);
+      tl.fromTo("#mg1 .s1-stamp", { opacity: 0, scale: 1.6, rotation: -15 }, { opacity: 1, scale: 1, rotation: -7, duration: 0.42, ease: "back.out(2.2)", transformOrigin: "50% 50%" }, 7.0);
+      tl.fromTo("#mg1 .s1-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.inOut" }, 7.35);
+      tl.to("#mg1", { opacity: 0, duration: 0.28, ease: "power2.in" }, 8.82);
+      tl.set("#mg1", { opacity: 0 }, 9.1);
+
+      // MG2
+      tl.fromTo("#mg2", { opacity: 0 }, { opacity: 1, duration: 0.32, ease: "power2.out" }, 9.1);
+      tl.from("#mg2 .m2-eb", { opacity: 0, y: 16, duration: 0.4, ease: "power3.out" }, 9.3);
+      tl.from("#mg2 .card", { opacity: 0, y: 40, duration: 0.5, ease: "power3.out" }, 9.6);
+      const priceCt = { v: 0 };
+      tl.to(priceCt, { v: 49, duration: 0.6, ease: "power1.out",
+        onUpdate() { const e = document.querySelector('#mg2 .cp-val'); if (e) e.textContent = Math.round(priceCt.v); },
+        onComplete() { const e = document.querySelector('#mg2 .cp-val'); if (e) e.textContent = '49'; } }, 9.75);
+      tl.fromTo("#mg2 .bar", { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power2.out" }, 10.3);
+      tl.from("#mg2 .bar-margin", { opacity: 0, duration: 0.3 }, 11.0);
+      tl.from("#mg2 .bar-labels", { opacity: 0, y: 12, duration: 0.4 }, 11.2);
+      tl.to("#mg2 .bar-margin", { opacity: 0.5, duration: 0.55, ease: "sine.inOut", repeat: 9, yoyo: true }, 11.5);
+      tl.from("#mg2 .verdict", { opacity: 0, scale: 1.3, duration: 0.5, ease: "back.out(1.9)", transformOrigin: "50% 50%" }, 15.0);
+      tl.to("#mg2", { opacity: 0, duration: 0.3, ease: "power2.in" }, 18.6);
+
+      // MG3
+      tl.fromTo("#mg3", { opacity: 0 }, { opacity: 1, duration: 0.32, ease: "power2.out" }, 18.85);
+      tl.from("#mg3 .s3-eb", { opacity: 0, y: 16, duration: 0.4, ease: "power3.out" }, 19.05);
+      tl.from("#mg3 .s3-pill", { opacity: 0, y: 18, scale: 0.8, duration: 0.4, ease: "back.out(2)", stagger: 0.12, transformOrigin: "50% 50%" }, 19.4);
+      tl.fromTo("#mg3 .s3-baseline", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, 19.7);
+      tl.from("#mg3 .s3-month", { opacity: 0, duration: 0.3, stagger: 0.06 }, 19.85);
+      tl.fromTo("#mg3 .s3-bar", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "power3.out", stagger: 0.16 }, 20.05);
+      tl.fromTo("#mg3 .s3-profit", { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: "power1.inOut" }, 21.3);
+      tl.to("#mg3 .s3-profit", { opacity: 0.5, duration: 0.7, ease: "sine.inOut", repeat: 6, yoyo: true }, 22.6);
+      tl.fromTo("#mg3 .s3-stamp", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2.2)", transformOrigin: "50% 50%" }, 26.9);
+      tl.to("#mg3 .s3-stamp", { scale: 1.05, duration: 0.45, ease: "sine.inOut", repeat: 2, yoyo: true, transformOrigin: "50% 50%" }, 27.6);
+      tl.to("#mg3", { opacity: 0, duration: 0.3, ease: "power2.in" }, 29.0);
+      tl.set("#mg3", { opacity: 0 }, 29.3);
+
+      // MG4
+      tl.fromTo("#mg4", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 29.3);
+      tl.from("#mg4 .m4-eb", { opacity: 0, y: 16, duration: 0.4, ease: "power3.out" }, 29.5);
+      tl.from("#mg4 .why", { opacity: 0, scale: 1.5, duration: 0.55, ease: "back.out(1.8)", transformOrigin: "50% 50%" }, 29.8);
+      tl.to("#mg4 .why", { scale: 1.05, duration: 0.5, ease: "sine.inOut", repeat: 2, yoyo: true, transformOrigin: "50% 50%" }, 30.7);
+      tl.to("#mg4", { opacity: 0, duration: 0.3, ease: "power2.in" }, 32.7);
+
+      // MG5
+      tl.fromTo("#mg5", { opacity: 0 }, { opacity: 1, duration: 0.32, ease: "power2.out" }, 32.85);
+      tl.from("#mg5 .sc-eyebrow", { opacity: 0, y: 16, duration: 0.5, ease: "power3.out" }, 33.1);
+      tl.from("#mg5 .s4-l1", { opacity: 0, y: 32, duration: 0.5, ease: "power3.out" }, 35.0);
+      tl.from("#mg5 .s4-l2", { opacity: 0, y: 32, duration: 0.5, ease: "power3.out" }, 35.85);
+      tl.to("#mg5", { opacity: 0, duration: 0.3, ease: "power2.in" }, 37.7);
+      tl.set("#mg5", { opacity: 0 }, 38.0);
+
+      // MG6
+      tl.fromTo("#mg6", { opacity: 0 }, { opacity: 1, duration: 0.32, ease: "power2.out" }, 38.0);
+      tl.from("#mg6 .sc-eyebrow", { opacity: 0, y: 16, duration: 0.4, ease: "power3.out" }, 38.25);
+      tl.from("#mg6 .m6-head .w", { opacity: 0, scale: 1.4, y: 8, duration: 0.5, ease: "back.out(2)", stagger: 0.12, transformOrigin: "50% 50%" }, 38.6);
+      tl.from("#mg6 .m6-sub", { opacity: 0, y: 16, duration: 0.4, ease: "power3.out" }, 42.4);
+      tl.to("#mg6", { opacity: 0, duration: 0.3, ease: "power2.in" }, 43.1);
+      tl.set("#mg6", { opacity: 0 }, 43.4);
+
+      // End card
+      const ec = 43.4;
+      tl.from("#endcard", { opacity: 0, duration: 0.45, ease: "power1.inOut" }, ec);
+      tl.from("#endcard .ec-bloom", { opacity: 0, scale: 0.9, duration: 0.9, ease: "power2.out" }, ec + 0.1);
+      tl.from("#endcard .ec-logo", { opacity: 0, y: -24, scale: 0.9, duration: 0.55, ease: "back.out(1.6)" }, ec + 0.15);
+      tl.from("#endcard .ec-cta-top", { opacity: 0, y: 20, duration: 0.4, ease: "power3.out" }, ec + 0.5);
+      tl.from("#endcard .ec-offer .w", { opacity: 0, scale: 1.6, y: 6, duration: 0.5, ease: "back.out(2.2)", stagger: 0.12, transformOrigin: "50% 50%" }, ec + 0.7);
+      tl.fromTo("#endcard .ec-cta-glow", { opacity: 0, scale: 0.7 }, { opacity: 0.72, scale: 1, duration: 0.4, ease: "power2.out" }, ec + 0.85);
+      tl.to("#endcard .ec-cta-glow", { opacity: 0.2, duration: 0.7, ease: "power2.inOut" }, ec + 1.4);
+      tl.from("#endcard .ec-pill", { opacity: 0, scale: 0.6, y: 12, duration: 0.5, ease: "back.out(2.4)", transformOrigin: "50% 50%" }, ec + 1.35);
+      tl.fromTo("#endcard .ec-pill-ring", { opacity: 0.85, scale: 0.92 }, { opacity: 0, scale: 1.5, duration: 0.8, ease: "power2.out", repeat: 1, immediateRender: false }, ec + 1.65);
+
+      tl.to({}, { duration: 48 }, 0);
+      window.__timelines["ecomiq-short-4x5-motion"] = tl;
+    </script>
+  </body>
+</html>
