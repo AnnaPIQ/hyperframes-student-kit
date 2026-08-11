@@ -11,6 +11,18 @@ message; branding is a persistent corner logo plus a branded end card.
 | `compositions/ecomiq-short-4x5.html`  | 4:5  | 1080×1350 @ 30fps | `renders/ecomiq-short-4x5.mp4` |
 | `compositions/ecomiq-short-9x16-overlays.html` | 9:16 | 1080×1920 @ 30fps | `renders/ecomiq-short-9x16-overlays.mp4` |
 | `compositions/ecomiq-short-4x5-overlays.html`  | 4:5  | 1080×1350 @ 30fps | `renders/ecomiq-short-4x5-overlays.mp4` |
+| `compositions/ecomiq-short-9x16-animated.html` | 9:16 | 1080×1920 @ 30fps | `renders/ecomiq-short-9x16-animated.mp4` |
+| `compositions/ecomiq-short-4x5-animated.html`  | 4:5  | 1080×1350 @ 30fps | `renders/ecomiq-short-4x5-animated.mp4` |
+
+`-animated` = **fully-animated, audio-driven** variant. No footage-forward canvas —
+the whole frame is EcomIQ motion graphics (animated navy bg with grid, drifting
+particles, breathing glow) driven by the pulled VO (`assets/script5-pricing.m4a`):
+kinetic type scenes synced to the voiceover (struck "Discount" → white "Prices up ↑"
++ rising bars → "Tested your highest price?" → … → white "Charging too little" →
+"Lift your profit"), the ceiling bar-chart, and the flame Bootcamp pill at its spoken
+moment. **Sean** appears in a circular talking-head **bubble top-right** (head-and-
+shoulders crop of the footage) that pops in/out. End card enters ~2s before he stops
+talking. Same design in both formats.
 
 `-overlays` = **motion-graphics (house style)** variant — **no captions**. The
 final, matched to the client reference ad. Cooled talking-head footage cuts away to

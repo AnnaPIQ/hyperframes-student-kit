@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>EcomIQ — Short-form 4:5 (animated)</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+
+      /* ---- Animated navy background ---- */
+      #bg { position: absolute; inset: 0; z-index: 0;
+        background: radial-gradient(96% 66% at 50% 20%, rgba(156,212,255,0.12) 0%, rgba(6,40,76,0) 58%),
+          linear-gradient(180deg, #0c3a68 0%, #082f57 46%, #06284c 100%); }
+      #grid { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.55;
+        -webkit-mask-image: radial-gradient(90% 74% at 50% 48%, #000 0%, transparent 82%);
+        mask-image: radial-gradient(90% 74% at 50% 48%, #000 0%, transparent 82%);
+        background-image:
+          repeating-linear-gradient(0deg, rgba(156,212,255,0.06) 0 1px, transparent 1px 72px),
+          repeating-linear-gradient(90deg, rgba(156,212,255,0.06) 0 1px, transparent 1px 72px); }
+      #glow { position: absolute; left: 50%; top: 42%; width: 820px; height: 820px; z-index: 0; transform: translate(-50%,-50%);
+        background: radial-gradient(circle, rgba(91,160,224,0.16) 0%, rgba(6,40,76,0) 62%); pointer-events: none; }
+      #particles { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+      #particles i { position: absolute; width: 6px; height: 6px; border-radius: 50%;
+        background: rgba(156,212,255,0.5); box-shadow: 0 0 10px rgba(156,212,255,0.5); }
+      #vignette { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+        background: radial-gradient(ellipse at center, transparent 50%, rgba(3,16,36,0.55) 100%); }
+
+      /* ---- Persistent logo ---- */
+      #logo { position: absolute; top: 60px; left: 60px; width: 292px; height: auto; z-index: 7;
+        filter: drop-shadow(0 3px 12px rgba(0,0,0,0.55)); }
+
+      /* ---- Sean talking-head bubble (top-right, in/out) ---- */
+      #sean-pip { position: absolute; top: 84px; right: 56px; width: 300px; height: 300px; z-index: 8;
+        border-radius: 50%; overflow: hidden; opacity: 0; transform-origin: center center;
+        border: 4px solid rgba(156,212,255,0.55);
+        box-shadow: 0 22px 60px -10px rgba(0,0,0,0.6), 0 0 0 8px rgba(6,40,76,0.55); }
+      /* Head-and-shoulders framing (room to spare): source region x[40..1040] y[500..1500] in the 300px circle */
+      #sean-pip video { position: absolute; width: 324px; height: 576px; left: -12px; top: -150px;
+        object-fit: cover; filter: contrast(1.05) saturate(1.05) brightness(1.0); }
+
+      /* ---- Kinetic scenes ---- */
+      .scene { position: absolute; inset: 0; z-index: 5; opacity: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        padding: 0 88px; text-align: center; }
+      .ln { position: relative; }
+      .kick { font-weight: 700; font-size: 28px; letter-spacing: 0.3em; text-transform: uppercase;
+        color: var(--brand-blue-tint); opacity: 0.9; margin-bottom: 28px; }
+      .big { font-weight: 800; font-size: 108px; line-height: 0.98; letter-spacing: -0.035em; color: var(--brand-white); }
+      .big.flame { color: var(--brand-flame); text-shadow: 0 4px 30px rgba(255,76,50,0.45); }
+      .big.blue { color: var(--brand-blue-tint); }
+      .big.mid { font-size: 88px; }
+      .big .arw { font-style: normal; }
+      .strike { position: absolute; left: -4%; top: 52%; width: 108%; height: 9px; border-radius: 5px;
+        background: var(--brand-flame); box-shadow: 0 0 18px rgba(255,76,50,0.7); transform: scaleX(0); transform-origin: left center; }
+      .bars { display: flex; align-items: flex-end; gap: 15px; height: 104px; margin-top: 26px; }
+      .bars i { display: block; width: 28px; border-radius: 7px 7px 2px 2px;
+        background: linear-gradient(180deg, #FF8A4C 0%, #FF4C32 100%); box-shadow: 0 0 18px rgba(255,76,50,0.5);
+        transform-origin: bottom center; transform: scaleY(0); }
+      .bars i:nth-child(1){height:36px;} .bars i:nth-child(2){height:58px;}
+      .bars i:nth-child(3){height:82px;} .bars i:nth-child(4){height:104px;}
+
+      /* Chart scene */
+      .ch-pills { display: flex; align-items: center; gap: 20px; margin-bottom: 34px; }
+      .ch-pill { font-weight: 800; font-size: 28px; letter-spacing: 0.02em; border-radius: 999px; padding: 12px 24px; }
+      .ch-pill.blue { color: var(--brand-blue-tint); border: 2px solid rgba(156,212,255,0.5); }
+      .ch-pill.flame { color: var(--brand-flame); border: 2px solid rgba(255,76,50,0.55); }
+      .ch-mid { font-weight: 700; font-size: 24px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--brand-text-dim); }
+      .ch-wrap { position: relative; width: 760px; height: 360px; }
+      .ch-bars { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: space-between; }
+      .ch-col { width: 100px; display: flex; flex-direction: column; align-items: center; }
+      .ch-bar { width: 100px; border-radius: 10px 10px 3px 3px; transform-origin: bottom center; transform: scaleY(0);
+        background: linear-gradient(180deg, rgba(207,230,255,0.95) 0%, rgba(120,175,235,0.35) 100%);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.35); }
+      .ch-col.you .ch-bar { background: linear-gradient(180deg, #FF8A4C 0%, #FF4C32 100%); box-shadow: 0 0 22px rgba(255,76,50,0.4); }
+      .ch-lab { margin-top: 14px; font-weight: 600; font-size: 24px; color: var(--brand-text-dim); }
+      .ch-col.you .ch-lab { color: var(--brand-flame); font-weight: 800; }
+      .ch-ceiling { position: absolute; left: 0; right: 0; top: 30px; height: 0;
+        border-top: 4px dashed var(--brand-flame); opacity: 0.9; transform-origin: left center; transform: scaleX(0); }
+      .ch-ceiling span { position: absolute; left: 0; top: -44px; font-weight: 800; font-size: 24px; color: var(--brand-flame);
+        letter-spacing: 0.04em; white-space: nowrap; text-shadow: 0 2px 8px rgba(3,16,36,0.8); }
+      .ch-note { font-weight: 600; font-size: 38px; color: var(--brand-white); margin-top: 34px; }
+
+      /* Flame pill (the offer, at its spoken moment) */
+      #bootcamp-pill { position: absolute; left: 0; right: 0; top: 50%; margin-inline: auto; width: fit-content;
+        max-width: 900px; z-index: 6; opacity: 0; white-space: nowrap; text-align: center; transform-origin: center center;
+        transform: translateY(-50%);
+        background: var(--brand-flame); color: var(--brand-white); font-weight: 800; font-size: 58px;
+        letter-spacing: 0.01em; line-height: 1.04; padding: 36px 60px; border-radius: 72px;
+        box-shadow: 0 22px 70px -8px rgba(255,76,50,0.6), inset 0 1px 0 rgba(255,255,255,0.22); pointer-events: none; }
+
+      /* ---- End card ---- */
+      #endcard { position: absolute; inset: 0; z-index: 9; opacity: 0;
+        background: radial-gradient(90% 56% at 50% 26%, rgba(156,212,255,0.12) 0%, rgba(6,40,76,0) 55%), var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
+      #endcard::before { content: ""; position: absolute; left: -12%; bottom: -22%; width: 124%; height: 60%;
+        background: var(--brand-gradient-2); filter: blur(92px); opacity: 0.34; pointer-events: none; }
+      #ec-logo { width: 480px; height: auto; position: relative; }
+      #ec-kicker { position: relative; font-weight: 700; font-size: 28px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--brand-blue-tint); }
+      #ec-cta { position: relative; font-weight: 700; font-size: 32px; letter-spacing: -0.01em; color: var(--brand-white);
+        background: var(--brand-flame); padding: 28px 52px; border-radius: 999px; white-space: nowrap;
+        box-shadow: 0 22px 70px -16px rgba(255,76,50,0.65); margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="ecomiq-short-4x5-animated" data-start="0" data-duration="49.6"
+         data-width="1080" data-height="1350">
+
+      <div id="bg"></div>
+      <div id="grid"></div>
+      <div id="glow"></div>
+      <div id="particles"></div>
+      <div id="vignette"></div>
+
+      <audio id="vo" data-start="0" data-duration="47.0" data-track-index="9" data-volume="1"
+             src="assets/script5-pricing.m4a"></audio>
+
+      <div id="sean-pip">
+        <video id="sean" data-start="0" data-duration="47.0" data-track-index="0"
+               src="assets/script5-pricing.mp4" muted playsinline></video>
+      </div>
+
+      <img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+
+      <div class="scene" id="s1">
+        <div class="ln kick">Every guru says</div>
+        <div class="ln big">Discount<span class="strike"></span></div>
+      </div>
+      <div class="scene" id="s2">
+        <div class="ln kick">Try the opposite</div>
+        <div class="ln big">Prices up <span class="arw">&#8593;</span></div>
+        <div class="ln bars"><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="scene" id="s3">
+        <div class="ln kick">Have you ever</div>
+        <div class="ln big mid">Tested your<br />highest price?</div>
+      </div>
+      <div class="scene" id="s4">
+        <div class="ln kick">The reality</div>
+        <div class="ln big mid">Most founders<br />haven't.</div>
+      </div>
+      <div class="scene" id="s5">
+        <div class="ln big mid">Priced on a guess.</div>
+        <div class="ln big mid blue">Never tested again.</div>
+      </div>
+      <div class="scene" id="s6">
+        <div class="ln kick">How you stack up</div>
+        <div class="ln big blue">vs competitors</div>
+      </div>
+
+      <div class="scene" id="s7">
+        <div class="ln kick">Test your ceiling</div>
+        <div class="ch-pills">
+          <span class="ch-pill flame">YOU &#9660;</span>
+          <span class="ch-mid">vs</span>
+          <span class="ch-pill blue">THE MARKET &#9650;</span>
+        </div>
+        <div class="ch-wrap">
+          <div class="ch-bars">
+            <div class="ch-col you"><div class="ch-bar" style="height:92px"></div><div class="ch-lab">You</div></div>
+            <div class="ch-col"><div class="ch-bar" style="height:160px"></div><div class="ch-lab">Rival A</div></div>
+            <div class="ch-col"><div class="ch-bar" style="height:222px"></div><div class="ch-lab">Rival B</div></div>
+            <div class="ch-col"><div class="ch-bar" style="height:276px"></div><div class="ch-lab">Rival C</div></div>
+            <div class="ch-col"><div class="ch-bar" style="height:330px"></div><div class="ch-lab">Ceiling</div></div>
+          </div>
+          <div class="ch-ceiling"><span>&#8593; headroom</span></div>
+        </div>
+        <div class="ch-note">You're probably charging less than you could.</div>
+      </div>
+
+      <div class="scene" id="s8">
+        <div class="ln kick">Right now</div>
+        <div class="ln big">Charging<br />too little.</div>
+      </div>
+      <div class="scene" id="s9">
+        <div class="ln kick">There's more</div>
+        <div class="ln big">Lift your profit.</div>
+      </div>
+
+      <div id="bootcamp-pill">Free Profitability<br />Bootcamp</div>
+
+      <div id="endcard">
+        <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="ec-kicker">Ready to lift your profit?</div>
+        <div id="ec-cta">Join our Free Profitability Bootcamp</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const FOOT = 47.0, TOTAL = 49.6, END_IN = 44.6;
+      const tl = gsap.timeline({ paused: true });
+
+      // ---- Particles ----
+      const pRoot = document.getElementById("particles");
+      const P = [];
+      for (let i = 0; i < 22; i++) {
+        const x = (i * 137.5) % 100, y = (i * 53.7 + 7) % 100;
+        const s = 0.5 + ((i * 7) % 5) / 5;
+        const d = document.createElement("i");
+        d.style.left = x.toFixed(2) + "%"; d.style.top = y.toFixed(2) + "%";
+        d.style.transform = `scale(${s.toFixed(2)})`; d.style.opacity = (0.25 + (i % 4) * 0.12).toFixed(2);
+        pRoot.appendChild(d); P.push(d);
+      }
+      P.forEach((d, i) => {
+        const dy = 18 + (i % 5) * 6, dur = 4 + (i % 4);
+        tl.to(d, { y: (i % 2 ? -dy : dy), duration: dur, ease: "sine.inOut", yoyo: true, repeat: Math.ceil(TOTAL / dur) }, 0);
+      });
+      tl.to("#glow", { scale: 1.12, opacity: 0.85, duration: 6, ease: "sine.inOut", yoyo: true, repeat: Math.ceil(TOTAL / 6) }, 0);
+      tl.fromTo("#grid", { backgroundPositionY: "0px" }, { backgroundPositionY: "72px", duration: TOTAL, ease: "none" }, 0);
+
+      // ---- Brand chrome + Sean bubble ----
+      tl.fromTo("#logo", { opacity: 0, y: -18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.2)
+        .to("#logo", { opacity: 0, duration: 0.35, ease: "power2.in" }, END_IN - 0.1);
+
+      function pipIn(t)  { tl.fromTo("#sean-pip", { opacity: 0, scale: 0.6, y: -20 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.6)" }, t); }
+      function pipOut(t) { tl.to("#sean-pip", { opacity: 0, scale: 0.6, y: -20, duration: 0.4, ease: "power2.in" }, t); }
+      pipIn(0.5);   pipOut(26.6);
+      pipIn(33.9);  pipOut(44.3);
+      tl.to("#sean-pip", { y: "+=12", duration: 3, ease: "sine.inOut", yoyo: true, repeat: Math.ceil(TOTAL / 3) }, 1.2);
+
+      // ---- Scene helper ----
+      function scene(sel, tIn, tOut) {
+        tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, tIn);
+        tl.fromTo(sel + " .ln", { opacity: 0, y: 44, scale: 0.9, filter: "blur(12px)" },
+          { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.55, ease: "power3.out", stagger: 0.13 }, tIn + 0.06);
+        tl.to(sel, { opacity: 0, y: -44, filter: "blur(14px)", duration: 0.34, ease: "power2.in" }, tOut);
+      }
+
+      scene("#s1", 0.3, 4.6);
+      tl.fromTo("#s1 .strike", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power3.inOut" }, 2.6);
+      scene("#s2", 4.85, 8.15);
+      tl.fromTo("#s2 .bars i", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "back.out(1.5)", stagger: 0.08 }, 6.4);
+      scene("#s3", 8.35, 11.95);
+      scene("#s4", 12.1, 14.9);
+      scene("#s5", 15.1, 19.4);
+      scene("#s6", 19.6, 26.6);
+
+      // Chart scene
+      tl.fromTo("#s7", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, 26.9);
+      tl.fromTo("#s7 .ln, #s7 .ch-pills, #s7 .ch-note", { opacity: 0, y: 34 },
+        { opacity: 1, y: 0, duration: 0.55, ease: "power3.out", stagger: 0.1 }, 27.05);
+      tl.fromTo("#s7 .ch-bar", { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: "power3.out", stagger: 0.09 }, 27.4);
+      tl.fromTo("#s7 .ch-lab", { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.09 }, 27.55);
+      tl.fromTo("#s7 .ch-ceiling", { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power2.inOut" }, 27.95);
+      tl.to("#s7", { opacity: 0, y: -40, filter: "blur(14px)", duration: 0.34, ease: "power2.in" }, 33.8);
+
+      scene("#s8", 34.0, 38.5);
+      scene("#s9", 38.7, 41.2);
+
+      tl.fromTo("#bootcamp-pill", { opacity: 0, scale: 0.86, y: "-=30" },
+        { opacity: 1, scale: 1, y: "-=0", duration: 0.45, ease: "back.out(1.6)" }, 41.35)
+        .to("#bootcamp-pill", { opacity: 0, scale: 0.97, duration: 0.3, ease: "power2.in" }, 44.1);
+
+      // ---- End card ----
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.inOut" }, END_IN)
+        .fromTo("#ec-logo", { opacity: 0, y: 24, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out" }, END_IN + 0.4)
+        .fromTo("#ec-kicker", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, END_IN + 0.9)
+        .fromTo("#ec-cta", { opacity: 0, scale: 0.85 },
+          { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)" }, END_IN + 1.15)
+        .to("#ec-cta", { scale: 1.035, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 2 }, END_IN + 1.9);
+
+      tl.set({}, {}, TOTAL);
+      window.__timelines["ecomiq-short-4x5-animated"] = tl;
+    </script>
+  </body>
+</html>
