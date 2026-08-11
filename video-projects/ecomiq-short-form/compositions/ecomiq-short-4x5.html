@@ -347,13 +347,7 @@
         align-items: center;
         text-align: center;
       }
-      #endcard .ec-logo { width: 440px; height: auto; }
-      #endcard .ec-rule {
-        width: 116px; height: 6px;
-        background: var(--brand-flame);
-        border-radius: 3px;
-        margin: 44px 0 36px;
-      }
+      #endcard .ec-logo { width: 440px; height: auto; margin-bottom: 50px; }
       #endcard .ec-cta {
         display: flex;
         flex-direction: column;
@@ -513,13 +507,11 @@
         <div class="ec-bloom"></div>
         <div class="ec-content">
           <img id="ec-logo-45" class="ec-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
-          <div class="ec-rule"></div>
           <div class="ec-cta">
             <div class="ec-cta-top">Join our</div>
             <div class="ec-offer-wrap">
               <div class="ec-cta-glow"></div>
               <div class="ec-offer"><span class="w">Free</span> <span class="w">Profitability</span> <span class="w">Bootcamp</span></div>
-              <div class="ec-offer-underline"></div>
             </div>
           </div>
           <div class="ec-pill-wrap">
@@ -577,12 +569,10 @@
       tl.from("#endcard", { opacity: 0, duration: 0.45, ease: "power1.inOut" }, ec);
       tl.from("#endcard .ec-bloom", { opacity: 0, scale: 0.9, duration: 0.9, ease: "power2.out" }, ec + 0.1);
       tl.from("#endcard .ec-logo", { opacity: 0, y: -24, scale: 0.9, duration: 0.55, ease: "back.out(1.6)" }, ec + 0.15);
-      tl.from("#endcard .ec-rule", { scaleX: 0, duration: 0.4, ease: "power3.inOut", transformOrigin: "50% 50%" }, ec + 0.4);
       tl.from("#endcard .ec-cta-top", { opacity: 0, y: 20, duration: 0.4, ease: "power3.out" }, ec + 0.5);
       tl.from("#endcard .ec-offer .w", { opacity: 0, scale: 1.6, y: 6, duration: 0.5, ease: "back.out(2.2)", stagger: 0.12, transformOrigin: "50% 50%" }, ec + 0.7);
       tl.fromTo("#endcard .ec-cta-glow", { opacity: 0, scale: 0.7 }, { opacity: 0.72, scale: 1, duration: 0.4, ease: "power2.out" }, ec + 0.85);
       tl.to("#endcard .ec-cta-glow", { opacity: 0.2, duration: 0.7, ease: "power2.inOut" }, ec + 1.4);
-      tl.fromTo("#endcard .ec-offer-underline", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.inOut" }, ec + 1.15);
       tl.from("#endcard .ec-pill", { opacity: 0, scale: 0.6, y: 12, duration: 0.5, ease: "back.out(2.4)", transformOrigin: "50% 50%" }, ec + 1.35);
       tl.fromTo("#endcard .ec-pill-ring", { opacity: 0.85, scale: 0.92 }, { opacity: 0, scale: 1.5, duration: 0.8, ease: "power2.out", repeat: 1, immediateRender: false }, ec + 1.65);
 
