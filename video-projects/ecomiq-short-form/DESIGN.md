@@ -9,14 +9,16 @@ message; branding is a persistent corner logo plus a branded end card.
 |---|---|---|---|
 | `compositions/ecomiq-short-9x16.html` | 9:16 | 1080×1920 @ 30fps | `renders/ecomiq-short-9x16.mp4` |
 | `compositions/ecomiq-short-4x5.html`  | 4:5  | 1080×1350 @ 30fps | `renders/ecomiq-short-4x5.mp4` |
-| `compositions/ecomiq-short-9x16-mg.html` | 9:16 | 1080×1920 @ 30fps | `renders/ecomiq-short-9x16-mg.mp4` |
+| `compositions/ecomiq-short-9x16-overlays.html` | 9:16 | 1080×1920 @ 30fps | `renders/ecomiq-short-9x16-overlays.mp4` |
 
-`-mg` = **motion-graphics** variant: word-synced karaoke captions (from
-`assets/transcript.json`), three flame kinetic callouts on the hero beats (PRICES
-UP / TEST YOUR *ceiling* / LIFT YOUR PROFIT) with a rising-bars motif that returns
-on the end card, animated brand chrome (logo + flame rule), and blur/whip
-transitions. Keeps EcomIQ palette + Rethink Sans / Hedvig. The other two are the
-footage-forward (no-caption) cut.
+`-overlays` = **motion-graphics (house style)** variant — **no captions**. Matches
+the EcomIQ reference ad: cooled talking-head footage cuts away to full-screen navy
+**cards** with sentence-case editorial type — tracked kicker → two-part headline
+split by a **↓** → outlined **✓/✗ chip** — over a subtle grid. Four cards
+(hook "prices up" · priced-on-a-*guess* · **ceiling bar-chart** with flame "YOU ▼" +
+blue market bars + dashed headroom line · lift-your-*profit*), then the house-style
+end card (logo + "Ready to lift your profit?" + flame Bootcamp pill). Blue = brand,
+flame = problem/CTA. The other two files are the footage-forward (plain) cut.
 
 `index.html` mirrors the 9:16 comp (root-relative asset paths) so the project has a
 default entry and `hyperframes lint` has an entry point. Render each variant with
