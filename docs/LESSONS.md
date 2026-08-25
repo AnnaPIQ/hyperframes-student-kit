@@ -116,6 +116,44 @@ efficient over time instead of relearning the same lessons.
   low. **Fix:** bias the crop window per clip — `crop=1080:1080:0:<y>` (y=420 is centre;
   larger moves it down). Pick `y` off a 3-up frame sweep rather than guessing.
 
+## SVG motion graphics
+
+- **An SVG shape animates but never appears.** Two separate traps, both silent:
+  1. `fill: var(--brand-flame)` in CSS doesn't resolve for SVG `fill` in the render
+     engine — the shape paints black and vanishes on dark footage. Use a literal hex.
+  2. A group rule like `.ring circle { fill: none; }` also matches your dots, and a
+     **CSS rule outranks the `fill=""` presentation attribute**, so the attribute you
+     "fixed" it with does nothing. **Fix:** `.ring circle:not(.dot)` for the group rule
+     plus `.ring circle.dot { fill: #FF4C32; }` to win on specificity.
+- **`drawSVG` is a GSAP *premium* plugin** and is absent from the vendored build; a tween
+  using it silently does nothing. **Fix:** animate `strokeDasharray` + `strokeDashoffset`
+  (set dasharray ≥ path length) — same line-draw effect, no plugin.
+- **Don't `scale` SVG children to animate them in.** GSAP's transform origin on SVG
+  collapses them unpredictably. **Fix:** tween the geometry instead —
+  `{ attr: { r: 0 } }` → `{ attr: { r: 26 } }` for circles. Robust and seekable.
+
+## Iterating without paying for renders
+
+- **A draft render of a 38s piece costs ~4.5 minutes** — far too slow to check whether one
+  graphic appears. **Fix:** drive the composition in Playwright and screenshot at exact
+  timeline seconds (`tl.time(t)` + seek each `<video>` by `data-start`/`data-media-start`).
+  See `video-projects/ecomiq-social-proof/scripts/scrub.mjs`. Playwright's own browser
+  download is missing in this container — pass `executablePath` pointing at the Chrome
+  that hyperframes already caches under `/root/.cache/hyperframes/chrome/...`.
+
+## Editing to a voiceover
+
+- **"Use the A-roll" means the picture, not just the audio.** A talking-head source is a
+  shot to cut to, not merely a voiceover — build the A-roll/B-roll intercut, don't bury
+  the presenter. Confirm which of the two is meant before designing the structure.
+- **Intercutting one take across several segments stays in sync for free**: trim the video
+  to the SAME window as the voiceover, then give each segment
+  `data-media-start` == its own `data-start`. Lip sync needs no per-cut nudging.
+- **Dark b-roll dies under a scrim.** Measure it (`mean_luma` over a decoded frame) before
+  layering: these shopfront clips sat at ~75-81 vs ~140 for interiors, and a full navy
+  scrim crushed them to black. **Fix:** lift the dark clips in prep
+  (`eq=brightness=0.07:contrast=1.08`) AND vary scrim opacity per segment.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

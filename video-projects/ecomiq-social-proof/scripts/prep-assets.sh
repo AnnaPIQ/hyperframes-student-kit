@@ -52,14 +52,36 @@ mkdir -p assets/broll/9x16 assets/broll/1x1
 VERT_916="scale=1080:1920"
 vert11() { echo "scale=1080:-2,crop=1080:1080:0:$1"; }
 
-norm walking    "$VERT_916" "$(vert11 420)"
-norm excited    "$VERT_916" "$(vert11 420)"
-norm storefront "$VERT_916" "$(vert11 620)"
-norm suppliers  "$VERT_916" "$(vert11 620)"
-norm shelf      "$VERT_916" "$(vert11 620)"
+# The three exterior/shopfront clips are shot into shade and sit ~75-81 mean luma
+# vs ~138-148 for the interior ones. Under a navy scrim they crush to near-black,
+# so lift them before the scrim ever touches them.
+LIFT="eq=brightness=0.07:contrast=1.08:saturation=1.06,"
+
+norm walking    "$VERT_916"        "$(vert11 420)"
+norm excited    "$VERT_916"        "$(vert11 420)"
+norm storefront "$LIFT$VERT_916"   "$LIFT$(vert11 620)"
+norm suppliers  "$LIFT$VERT_916"   "$LIFT$(vert11 620)"
+norm shelf      "$LIFT$VERT_916"   "$LIFT$(vert11 620)"
 
 # product is true 16:9 3840x2160 -> both ratios need a hard crop to fill.
 norm product "scale=-2:1920,crop=1080:1920" "scale=-2:1080,crop=1080:1080"
+
+# ---- A-roll: crop the 1920x1080 talking head to each delivery ratio ----------
+# Trimmed to the SAME 3.50-40.35 window as the VO, so lip sync is exact, and
+# MUTED — the mix takes its audio from the separate <audio> element.
+# Sean sits slightly left of centre: the subject centres on x=922 of 1920, so
+# 9:16 crops 608 wide from x=618 and 1:1 crops 1080 wide from x=382. Framing
+# was checked across the whole clip; a fixed window holds throughout.
+echo "▶ A-roll 9:16"
+ffmpeg -nostdin -y -hide_banner -loglevel error \
+  -ss "$TRIM_START" -to "$TRIM_END" -i assets/aroll-src.mp4 \
+  -an -vf "crop=608:1080:618:0,scale=1080:1920:flags=lanczos,setsar=1" \
+  -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p assets/broll/9x16/aroll.mp4
+echo "▶ A-roll 1:1"
+ffmpeg -nostdin -y -hide_banner -loglevel error \
+  -ss "$TRIM_START" -to "$TRIM_END" -i assets/aroll-src.mp4 \
+  -an -vf "crop=1080:1080:382:0,setsar=1" \
+  -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p assets/broll/1x1/aroll.mp4
 
 echo "✅ prepped"
 for d in 9x16 1x1; do

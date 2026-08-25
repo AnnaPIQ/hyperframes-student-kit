@@ -42,7 +42,7 @@
       }
       /* Extra local darkening under the copy block so text always clears AA. */
       #floor { position: absolute; inset: 0; z-index: 3;
-        background: radial-gradient(105% 62% at 34% 82%, rgba(3,20,40,0.80) 0%, rgba(3,20,40,0.34) 55%, rgba(3,20,40,0) 100%);
+        background: radial-gradient(105% 62% at 40% 48%, rgba(3,20,40,0.80) 0%, rgba(3,20,40,0.34) 55%, rgba(3,20,40,0) 100%);
       }
 
       /* ---------- persistent logo ---------------------------------------
@@ -53,46 +53,47 @@
         filter: drop-shadow(0 6px 18px rgba(0,0,0,0.45)); }
 
       /* ---------- graphic stages ----------------------------------------
-         Every stage fills the frame; padding positions the copy. Bottom-anchored
-         so each beat's block shares one baseline and the footage stays readable
-         in the upper half. */
+         Graphics sit in the UPPER-MIDDLE band. The bottom ~620px (9:16) is left
+         deliberately clear for subtitles that get added later — nothing but the
+         footage lives down there. */
       .stage { position: absolute; inset: 0; z-index: 20;
-        display: flex; flex-direction: column; justify-content: flex-end;
-        align-items: flex-start; padding: 0 72px 92px; }
+        display: flex; flex-direction: column; justify-content: center;
+        align-items: center; padding: 150px 72px 300px; }
+      .gwrap { display: flex; flex-direction: column; align-items: center; gap: 26px; }
 
-      .eyebrow { font-size: 26px; font-weight: 600; letter-spacing: 0.30em;
-        text-transform: uppercase; color: var(--brand-blue-tint); }
-      .label { font-size: 26px; font-weight: 600; letter-spacing: 0.24em;
-        text-transform: uppercase; color: var(--brand-blue-tint); }
-      .stat { font-size: 210px; font-weight: 800; line-height: 0.9;
+      /* Big numerals are data, not copy — no words anywhere in the graphics. */
+      .stat { font-size: 168px; font-weight: 800; line-height: 0.92;
         letter-spacing: -0.03em; font-variant-numeric: tabular-nums;
-        text-shadow: 0 10px 44px rgba(0,0,0,0.5); }
-      .headline { font-size: 82px; font-weight: 800; line-height: 1.0;
-        letter-spacing: -0.02em; text-shadow: 0 8px 34px rgba(0,0,0,0.5); }
+        text-shadow: 0 10px 44px rgba(0,0,0,0.55); }
+      .statrow { display: flex; align-items: center; gap: 26px; }
+      .statrow svg { display: block; }
 
-      /* Flame chip = the one hot accent. */
-      .chip { display: inline-flex; align-items: center; font-size: 30px; font-weight: 700;
-        letter-spacing: 0.02em; color: var(--brand-white); background: var(--brand-flame);
-        padding: 18px 36px; border-radius: 999px;
-        box-shadow: 0 18px 54px -14px rgba(255,76,50,0.7); }
-      .chip-ghost { display: inline-flex; align-items: center; font-size: 27px; font-weight: 700;
-        letter-spacing: 0.16em; text-transform: uppercase; color: var(--brand-blue-tint);
-        border: 3px solid var(--brand-border); background: rgba(6,40,76,0.55);
-        padding: 16px 30px; border-radius: 999px; }
+      /* --- vertical bar pair (growth) --- */
+      .bars { display: flex; align-items: flex-end; gap: 72px; height: 300px; }
+      .bar { width: 124px; border-radius: 16px 16px 0 0; transform-origin: bottom center; }
+      .bar.dim { background: rgba(156, 212, 255, 0.42); }
+      .bar.hot { background: var(--brand-flame);
+        box-shadow: 0 16px 52px -12px rgba(255, 76, 50, 0.75); }
+      .baseline { width: 430px; height: 6px; border-radius: 3px;
+        background: rgba(222, 238, 254, 0.55); transform-origin: left center; }
 
-      /* S2 — struck-through "new customers" */
-      #s2-strikewrap { position: relative; display: inline-block; }
-      #s2-strike { position: absolute; left: -8px; top: 52%; height: 10px; width: calc(100% + 16px);
-        background: var(--brand-flame); border-radius: 5px; transform-origin: left center; }
+      /* --- horizontal bar pair (multiple) --- */
+      .hbars { display: flex; flex-direction: column; gap: 26px; width: 560px; }
+      .hbar { height: 74px; border-radius: 16px; transform-origin: left center; }
+      .hbar.dim { width: 166px; background: rgba(156, 212, 255, 0.42); }
+      .hbar.hot { width: 498px; background: var(--brand-flame);
+        box-shadow: 0 16px 52px -12px rgba(255, 76, 50, 0.7); }
 
-      /* S3 — "again and again" repeat beats */
-      #s3-dots { display: flex; gap: 16px; margin-top: 20px; }
-      #s3-dots i { width: 26px; height: 26px; border-radius: 50%;
-        background: var(--brand-flame); display: block; }
+      /* --- rings / line charts --- */
+      .ring, .lines { display: block; overflow: visible; }
+      /* The ring's own circle/path are stroke-only, but this must NOT catch the
+         dots — a CSS rule outranks their fill="" attribute and would blank them. */
+      .ring circle:not(.dot), .ring path { fill: none; stroke-linecap: round; }
+      .ring circle.dot { fill: #FF4C32; }
 
       /* ---------- end card ---------------------------------------------- */
       #s7 { z-index: 30; justify-content: center; align-items: center;
-        text-align: center; padding: 0 90px; }
+        text-align: center; padding: 0 90px 210px; }
       #s7-cover { position: absolute; inset: 0; background: var(--brand-navy); z-index: 29; opacity: 0; }
       #s7-bloom { position: absolute; left: -12%; top: 46%; width: 124%; height: 58%;
         background: radial-gradient(60% 60% at 50% 50%, rgba(255,76,50,0.30) 0%, rgba(255,76,50,0) 70%);
@@ -127,88 +128,119 @@
     >
       <div id="bg" class="clip" data-start="0" data-duration="38.5" data-track-index="0"></div>
 
-      <!-- ===== B-roll bed. Windows overlap ~0.5s so the wrappers crossfade.
-           All muted; the VO is the only audio source for the mix. ===== -->
-      <div class="bwrap" id="bw-walking">
-        <video id="v-walking" data-start="0" data-duration="6.6" data-track-index="1"
-               src="assets/broll/1x1/walking.mp4" muted playsinline></video>
+      <!-- ===== The cut: A-roll (Sean to camera) intercut with b-roll. =====
+           Every A-roll segment is the SAME file trimmed to the same 3.50-40.35
+           window as the VO, so data-media-start == the segment's own start time
+           and lip sync is exact. All muted — the mix takes the separate <audio>.
+           Windows run ~0.25s past their out point so the wrappers can dissolve. -->
+      <div class="bwrap" id="w-a1">
+        <video id="v-a1" data-start="0" data-duration="2.55" data-media-start="0"
+               data-track-index="1" src="assets/broll/1x1/aroll.mp4" muted playsinline></video>
       </div>
-      <div class="bwrap" id="bw-storefront">
-        <video id="v-storefront" data-start="6.1" data-duration="3.6" data-track-index="2"
-               src="assets/broll/1x1/storefront.mp4" muted playsinline></video>
+      <div class="bwrap" id="w-b1">
+        <video id="v-b1" data-start="2.3" data-duration="4.07"
+               data-track-index="2" src="assets/broll/1x1/walking.mp4" muted playsinline></video>
       </div>
-      <div class="bwrap" id="bw-excited">
-        <video id="v-excited" data-start="9.2" data-duration="6.15" data-track-index="3"
-               src="assets/broll/1x1/excited.mp4" muted playsinline></video>
+      <div class="bwrap" id="w-a2">
+        <video id="v-a2" data-start="6.12" data-duration="3.33" data-media-start="6.12"
+               data-track-index="3" src="assets/broll/1x1/aroll.mp4" muted playsinline></video>
       </div>
-      <div class="bwrap" id="bw-product">
-        <video id="v-product" data-start="14.85" data-duration="5.0" data-track-index="4"
-               src="assets/broll/1x1/product.mp4" muted playsinline></video>
+      <div class="bwrap" id="w-b2">
+        <video id="v-b2" data-start="9.2" data-duration="5.9"
+               data-track-index="4" src="assets/broll/1x1/excited.mp4" muted playsinline></video>
       </div>
-      <div class="bwrap" id="bw-suppliers">
-        <video id="v-suppliers" data-start="19.35" data-duration="7.45" data-track-index="5"
-               src="assets/broll/1x1/suppliers.mp4" muted playsinline></video>
+      <div class="bwrap" id="w-a3">
+        <video id="v-a3" data-start="14.85" data-duration="1.7" data-media-start="14.85"
+               data-track-index="5" src="assets/broll/1x1/aroll.mp4" muted playsinline></video>
       </div>
-      <div class="bwrap" id="bw-shelf">
-        <video id="v-shelf" data-start="26.3" data-duration="7.3" data-track-index="6"
-               src="assets/broll/1x1/shelf.mp4" muted playsinline></video>
+      <div class="bwrap" id="w-b3">
+        <video id="v-b3" data-start="16.3" data-duration="3.3"
+               data-track-index="6" src="assets/broll/1x1/product.mp4" muted playsinline></video>
+      </div>
+      <div class="bwrap" id="w-a4">
+        <video id="v-a4" data-start="19.35" data-duration="4" data-media-start="19.35"
+               data-track-index="7" src="assets/broll/1x1/aroll.mp4" muted playsinline></video>
+      </div>
+      <div class="bwrap" id="w-b4">
+        <video id="v-b4" data-start="23.1" data-duration="3.45"
+               data-track-index="8" src="assets/broll/1x1/suppliers.mp4" muted playsinline></video>
+      </div>
+      <div class="bwrap" id="w-a5">
+        <video id="v-a5" data-start="26.3" data-duration="4.05" data-media-start="26.3"
+               data-track-index="9" src="assets/broll/1x1/aroll.mp4" muted playsinline></video>
+      </div>
+      <div class="bwrap" id="w-b5">
+        <video id="v-b5" data-start="30.1" data-duration="3.59"
+               data-track-index="10" src="assets/broll/1x1/shelf.mp4" muted playsinline></video>
       </div>
 
-      <div id="scrim" class="clip" data-start="0" data-duration="38.5" data-track-index="7"></div>
-      <div id="floor" class="clip" data-start="0" data-duration="38.5" data-track-index="8"></div>
+      <div id="scrim" class="clip" data-start="0" data-duration="38.5" data-track-index="11"></div>
+      <div id="floor" class="clip" data-start="0" data-duration="38.5" data-track-index="12"></div>
 
-      <!-- ===== Beat 1 (0.12–6.10) — the headline stat ===== -->
-      <div id="s1" class="stage clip" data-start="0" data-duration="38.5" data-track-index="9">
-        <div id="s1-eyebrow" class="eyebrow">Dryft Sleep</div>
-        <div id="s1-num" class="stat">0%</div>
-        <div id="s1-label" class="label">Returning customers</div>
-        <div id="s1-chip" class="chip" style="margin-top: 26px">$0 extra ad spend</div>
-      </div>
+      <!-- ===== Wordless data graphics. Numerals only — no copy — and all
+           held clear of the bottom subtitle zone. ===== -->
 
-      <!-- ===== Beat 2 (6.10–9.20) — what everyone else chases ===== -->
-      <div id="s2" class="stage clip" data-start="0" data-duration="38.5" data-track-index="10">
-        <div id="s2-kicker" class="eyebrow">Everyone chases</div>
-        <div id="s2-strikewrap" style="margin-top: 16px">
-          <div id="s2-text" class="headline">New customers</div>
-          <div id="s2-strike"></div>
+      <!-- G1 · returning-customer growth (over b-roll, 2.30–6.12) -->
+      <div id="g1" class="stage clip" data-start="0" data-duration="38.5" data-track-index="13">
+        <div class="gwrap">
+          <div class="statrow">
+            <svg id="g1-arrow" width="70" height="70" viewBox="0 0 86 86" aria-hidden="true">
+              <path d="M43 8 L78 50 H57 V78 H29 V50 H8 Z" fill="#FF4C32"/>
+            </svg>
+            <div id="g1-num" class="stat">+0%</div>
+          </div>
+          <div class="bars">
+            <div id="g1-b1" class="bar dim" style="height: 188px"></div>
+            <div id="g1-b2" class="bar hot" style="height: 300px"></div>
+          </div>
+          <div id="g1-base" class="baseline"></div>
         </div>
       </div>
 
-      <!-- ===== Beat 3 (9.20–14.85) — the ones they already had ===== -->
-      <div id="s3" class="stage clip" data-start="0" data-duration="38.5" data-track-index="11">
-        <div id="s3-l1" class="headline">The ones</div>
-        <div id="s3-l2" class="headline">they already</div>
-        <div id="s3-l3" class="headline">had</div>
-        <div id="s3-dots"><i id="s3-d1"></i><i id="s3-d2"></i><i id="s3-d3"></i></div>
+      <!-- G2 · they keep coming back — a return cycle (over b-roll, 9.20–14.85) -->
+      <div id="g2" class="stage clip" data-start="0" data-duration="38.5" data-track-index="14">
+        <div class="gwrap">
+          <svg class="ring" width="404" height="404" viewBox="0 0 400 400" aria-hidden="true">
+            <circle cx="200" cy="200" r="150" stroke="rgba(156,212,255,0.28)" stroke-width="21"/>
+            <path id="g2-arc" d="M200 50 A150 150 0 1 1 70 125"
+                  stroke="#FF4C32" stroke-width="21"/>
+            <polygon id="g2-head" points="181,24 221,50 181,76" fill="#FF4C32"/>
+            <circle id="g2-d1" class="dot" cx="350" cy="200" r="26" fill="#FF4C32"/>
+            <circle id="g2-d2" class="dot" cx="200" cy="350" r="26" fill="#FF4C32"/>
+            <circle id="g2-d3" class="dot" cx="50"  cy="200" r="26" fill="#FF4C32"/>
+          </svg>
+        </div>
       </div>
 
-      <!-- ===== Beat 4 (14.85–19.35) — subscription revenue ===== -->
-      <div id="s4" class="stage clip" data-start="0" data-duration="38.5" data-track-index="12">
-        <div id="s4-eyebrow" class="eyebrow">Subscription revenue</div>
-        <div id="s4-num" class="stat">0&#215;</div>
-        <div id="s4-label" class="label">the storefront</div>
+      <!-- G3 · subscription revenue vs the storefront (over b-roll, 16.30–19.35) -->
+      <div id="g3" class="stage clip" data-start="0" data-duration="38.5" data-track-index="15">
+        <div class="gwrap">
+          <div id="g3-num" class="stat">0&#215;</div>
+          <div class="hbars">
+            <div id="g3-h1" class="hbar dim"></div>
+            <div id="g3-h2" class="hbar hot"></div>
+          </div>
+        </div>
       </div>
 
-      <!-- ===== Beat 5 (19.35–26.30) — same inputs, more profit ===== -->
-      <div id="s5" class="stage clip" data-start="0" data-duration="38.5" data-track-index="13">
-        <div id="s5-c1" class="chip-ghost">Same brand</div>
-        <div id="s5-c2" class="chip-ghost" style="margin-top: 14px">Same ad budget</div>
-        <div id="s5-head" class="headline" style="margin-top: 22px; color: #FF4C32">Far more profit</div>
+      <!-- G4 · flat ad spend, rising profit (over b-roll, 23.10–26.30) -->
+      <div id="g4" class="stage clip" data-start="0" data-duration="38.5" data-track-index="16">
+        <div class="gwrap">
+          <svg class="lines" width="600" height="348" viewBox="0 0 720 420" aria-hidden="true">
+            <line x1="30" y1="360" x2="700" y2="360" stroke="rgba(222,238,254,0.45)" stroke-width="5"/>
+            <path id="g4-flat" d="M40 250 L660 250" stroke="#9CD4FF" stroke-width="14"
+                  fill="none" stroke-linecap="round"/>
+            <path id="g4-rise" d="M40 300 C 220 300, 300 250, 400 180 S 580 70, 660 40"
+                  stroke="#FF4C32" stroke-width="19" fill="none" stroke-linecap="round"/>
+            <circle id="g4-tip" cx="660" cy="40" r="22" fill="#FF4C32"/>
+          </svg>
+          <div id="g4-zero" class="stat" style="font-size: 112px">$0</div>
+        </div>
       </div>
 
-      <!-- ===== Beat 6 (26.30–33.44) — what EcomIQ does ===== -->
-      <div id="s6" class="stage clip" data-start="0" data-duration="38.5" data-track-index="14">
-        <div id="s6-eyebrow" class="eyebrow">What we do</div>
-        <div id="s6-l1" class="headline" style="margin-top: 12px">Keep more of</div>
-        <div id="s6-l2" class="headline">what you've</div>
-        <div id="s6-l3" class="headline">already got</div>
-        <div id="s6-chip" class="chip-ghost" style="margin-top: 22px">Without more ad spend</div>
-      </div>
-
-      <!-- ===== Beat 7 (33.44–38.50) — end card ===== -->
-      <div id="s7-cover" class="clip" data-start="0" data-duration="38.5" data-track-index="15"></div>
-      <div id="s7-bloom" class="clip" data-start="0" data-duration="38.5" data-track-index="16"></div>
-      <div id="s7" class="stage clip" data-start="0" data-duration="38.5" data-track-index="17">
+      <div id="s7-cover" class="clip" data-start="0" data-duration="38.5" data-track-index="19"></div>
+      <div id="s7-bloom" class="clip" data-start="0" data-duration="38.5" data-track-index="20"></div>
+      <div id="s7" class="stage clip" data-start="0" data-duration="38.5" data-track-index="21">
         <div id="s7-head">See if we can <span class="em">help</span> you</div>
         <div id="s7-pill">Find out more</div>
       </div>
@@ -220,14 +252,14 @@
 
       <!-- Voiceover: source trimmed 3.50–40.35s (record-press + throat clear off
            the head, room tone off the tail) and loudness-normalised. -->
-      <audio id="vo" data-start="0" data-duration="36.9" data-track-index="118"
+      <audio id="vo" data-start="0" data-duration="36.9" data-track-index="22"
              data-volume="1" src="assets/vo/vo-trimmed.m4a"></audio>
 
       <!-- MUSIC BED placeholder — currently 38.5s of silence, already wired and
            ducked under the VO at 0.18. Drop a real track in at
            assets/audio/music-bed.m4a (same path) and it plays with no HTML edit.
            Raise/lower the mix with data-volume. -->
-      <audio id="music" data-start="0" data-duration="38.5" data-track-index="119"
+      <audio id="music" data-start="0" data-duration="38.5" data-track-index="23"
              data-volume="0.18" src="assets/audio/music-bed.m4a"></audio>
     </div>
 
@@ -236,102 +268,100 @@
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
-      // Beat boundaries on the trimmed VO timeline (raw source time - 3.50s).
-      const XF = 0.42;                       // b-roll crossfade, medium energy
-      const BEATS = {
-        s1: [0.12, 6.10], s2: [6.10, 9.20], s3: [9.20, 14.85],
-        s4: [14.85, 19.35], s5: [19.35, 26.30], s6: [26.30, 33.44], s7: [33.44, 38.50]
-      };
-
-      /* ---- B-roll bed: blur crossfades. The crossfade IS the exit, so no
-              scene ever empties before its handoff. ---- */
-      const BED = [
-        ["#bw-walking",    0.00,  6.10],
-        ["#bw-storefront", 6.10,  9.20],
-        ["#bw-excited",    9.20, 14.85],
-        ["#bw-product",   14.85, 19.35],
-        ["#bw-suppliers", 19.35, 26.30],
-        ["#bw-shelf",     26.30, 33.44]
+      // The cut, on the trimmed VO timeline (raw source time - 3.50s).
+      // A = Sean to camera, B = b-roll. Fast 0.20s blur dissolves rather than
+      // hard cuts, per the framework's no-jump-cut rule, but short enough to
+      // still read as a cut at this pace.
+      const XF = 0.20;
+      // [wrapper, kind, in, out, scrim] — the scrim sits back over Sean so he
+      // stays vibrant, comes up where type needs contrast over b-roll, and stays
+      // low on the one clean b-roll beat that carries no graphics.
+      const SEGS = [
+        ["#w-a1", "A",  0.00,  2.30, 0.45],
+        ["#w-b1", "B",  2.30,  6.12, 0.80],
+        ["#w-a2", "A",  6.12,  9.20, 0.45],
+        ["#w-b2", "B",  9.20, 14.85, 0.80],
+        ["#w-a3", "A", 14.85, 16.30, 0.45],
+        ["#w-b3", "B", 16.30, 19.35, 0.80],
+        ["#w-a4", "A", 19.35, 23.10, 0.45],
+        ["#w-b4", "B", 23.10, 26.30, 0.45],
+        ["#w-a5", "A", 26.30, 30.10, 0.45],
+        ["#w-b5", "B", 30.10, 33.44, 0.80]
       ];
-      BED.forEach(([sel, inAt, outAt], i) => {
-        // fade up (first shot opens from black a touch slower)
-        tl.fromTo(sel, { opacity: 0, filter: "blur(14px)", scale: 1.06 },
-          { opacity: 1, filter: "blur(0px)", scale: 1,
-            duration: i === 0 ? 0.75 : XF, ease: "power2.out" }, inAt);
-        // slow push keeps the backdrop alive under the graphics
-        tl.to(sel + " video", { scale: 1.07, duration: (outAt - inAt) + XF,
-          ease: "none" }, inAt);
-        // hand off to the next shot
-        tl.to(sel, { opacity: 0, filter: "blur(12px)", duration: XF,
-          ease: "power2.inOut" }, outAt);
+      SEGS.forEach(([sel, kind, inAt, outAt, scrim], i) => {
+        tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" },
+          { opacity: 1, filter: "blur(0px)",
+            duration: i === 0 ? 0.55 : XF, ease: "power2.out" }, inAt);
+        // Slow push on b-roll keeps the backdrop alive; the talking head stays
+        // still so the cut back to Sean reads as a change of shot, not motion.
+        if (kind === "B") {
+          tl.to(sel + " video", { scale: 1.06, duration: (outAt - inAt) + XF, ease: "none" }, inAt);
+        }
+        tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: XF, ease: "power2.inOut" }, outAt);
+        tl.to("#scrim", { opacity: scrim, duration: XF, ease: "power1.inOut" }, inAt);
       });
 
-      /* ---- Graphic beats. Entrances only; each group's crossfade covers it. ---- */
-      // Groups start hidden, so fromTo (not from) — `from` on an already-hidden
-      // element computes its end state from the hidden state and stays invisible.
-      const GROUPS = ["#s1", "#s2", "#s3", "#s4", "#s5", "#s6"];
-      GROUPS.forEach((sel) => tl.set(sel, { opacity: 0 }, 0));
+      /* ---- Wordless graphic beats. Each sits over b-roll; the A-roll
+              segments stay clean so Sean carries those lines himself. ---- */
+      const BEATS = {
+        g1: [2.42,  6.12],   // returning-customer growth
+        g2: [9.36, 14.85],   // the return cycle
+        g3: [16.42, 19.35],  // subscription vs storefront
+        g4: [23.26, 26.30]   // flat ad spend, rising profit
+      };
+      ["#g1", "#g2", "#g3", "#g4"].forEach((sel) => tl.set(sel, { opacity: 0 }, 0));
       Object.entries(BEATS).forEach(([k, [a, b]]) => {
-        if (k === "s7") return;
-        tl.to("#" + k, { opacity: 1, duration: 0.28, ease: "power1.out" }, a);
-        tl.to("#" + k, { opacity: 0, duration: 0.30, ease: "power1.in" }, b - 0.06);
+        tl.to("#" + k, { opacity: 1, duration: 0.24, ease: "power1.out" }, a);
+        tl.to("#" + k, { opacity: 0, duration: 0.24, ease: "power1.in" }, b - 0.06);
       });
 
-      // Beat 1 — count 0 -> 59% landing on the spoken "59%" (raw 6.11 -> 2.61).
+      // G1 — bars grow, then count 0 -> 59% landing on the spoken "59%" (2.61).
       const n1 = { v: 0 };
-      tl.fromTo("#s1-eyebrow", { opacity: 0, y: 22 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.30);
-      tl.fromTo("#s1-num", { opacity: 0, y: 54, scale: 0.88 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.62, ease: "expo.out" }, 2.10);
-      tl.to(n1, { v: 59, duration: 0.80, ease: "power2.out", snap: { v: 1 },
-        onUpdate() { document.getElementById("s1-num").textContent = n1.v + "%"; } }, 2.16);
-      tl.fromTo("#s1-label", { opacity: 0, x: -28 },
-        { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 2.95);
-      tl.fromTo("#s1-chip", { opacity: 0, scale: 0.86 },
-        { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 3.52);
+      tl.fromTo("#g1-base", { scaleX: 0 },
+        { scaleX: 1, duration: 0.45, ease: "power3.out" }, 2.46);
+      tl.fromTo("#g1-b1", { scaleY: 0 },
+        { scaleY: 1, duration: 0.5, ease: "power3.out" }, 2.58);
+      tl.fromTo("#g1-b2", { scaleY: 0 },
+        { scaleY: 1, duration: 0.72, ease: "expo.out" }, 2.72);
+      tl.fromTo("#g1-arrow", { opacity: 0, y: 34, scale: 0.7 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(2)" }, 3.05);
+      tl.fromTo("#g1-num", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 2.90);
+      tl.to(n1, { v: 59, duration: 0.85, ease: "power2.out", snap: { v: 1 },
+        onUpdate() { document.getElementById("g1-num").textContent = "+" + n1.v + "%"; } }, 2.95);
 
-      // Beat 2 — "new customers", then struck through on the spoken word.
-      tl.fromTo("#s2-kicker", { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, duration: 0.42, ease: "power2.out" }, 6.30);
-      tl.fromTo("#s2-text", { opacity: 0, y: 34 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 6.48);
-      tl.fromTo("#s2-strike", { scaleX: 0 },
-        { scaleX: 1, duration: 0.42, ease: "power4.inOut" }, 7.84);
+      // G2 — the cycle draws in, then three beats land on "again and again" (12.61).
+      tl.fromTo("#g2-arc", { strokeDasharray: 880, strokeDashoffset: 880 },
+        { strokeDashoffset: 0, duration: 1.1, ease: "power2.inOut" }, 9.55);
+      tl.fromTo("#g2-head", { opacity: 0 },
+        { opacity: 1, duration: 0.4, ease: "power2.out" }, 10.45);
+      tl.fromTo(["#g2-d1", "#g2-d2", "#g2-d3"],
+        { opacity: 0, attr: { r: 0 } },
+        { opacity: 1, attr: { r: 26 }, duration: 0.36,
+          ease: "back.out(2.4)", stagger: 0.2 }, 12.55);
+      tl.to(["#g2-d1", "#g2-d2", "#g2-d3"], { attr: { r: 35 }, duration: 0.24,
+        ease: "sine.inOut", stagger: 0.14, yoyo: true, repeat: 3 }, 13.35);
 
-      // Beat 3 — staggered kinetic type; dots pulse on "again and again" (12.61).
-      tl.fromTo(["#s3-l1", "#s3-l2", "#s3-l3"], { opacity: 0, y: 46 },
-        { opacity: 1, y: 0, duration: 0.55, ease: "power3.out", stagger: 0.13 }, 9.34);
-      tl.fromTo("#s3-dots i", { opacity: 0, scale: 0 },
-        { opacity: 1, scale: 1, duration: 0.34, ease: "back.out(2)", stagger: 0.17 }, 12.55);
-      tl.to("#s3-dots i", { scale: 1.35, duration: 0.22, ease: "sine.inOut",
-        stagger: 0.13, yoyo: true, repeat: 3 }, 13.20);
-
-      // Beat 4 — count 0 -> 3x landing on the spoken "three times" (raw 20.08 -> 16.58).
+      // G3 — the two bars extend, count 0 -> 3x on the spoken "three times" (16.58).
       const n4 = { v: 0 };
-      tl.fromTo("#s4-eyebrow", { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.46, ease: "power2.out" }, 15.00);
-      tl.fromTo("#s4-num", { opacity: 0, scale: 0.8 },
-        { opacity: 1, scale: 1, duration: 0.6, ease: "expo.out" }, 16.14);
-      tl.to(n4, { v: 3, duration: 0.62, ease: "power2.out", snap: { v: 1 },
-        onUpdate() { document.getElementById("s4-num").textContent = n4.v + "×"; } }, 16.20);
-      tl.fromTo("#s4-label", { opacity: 0, x: -26 },
-        { opacity: 1, x: 0, duration: 0.46, ease: "power2.out" }, 17.05);
+      tl.fromTo("#g3-h1", { scaleX: 0 },
+        { scaleX: 1, duration: 0.45, ease: "power3.out" }, 16.48);
+      tl.fromTo("#g3-h2", { scaleX: 0 },
+        { scaleX: 1, duration: 0.8, ease: "expo.out" }, 16.62);
+      tl.fromTo("#g3-num", { opacity: 0, scale: 0.78 },
+        { opacity: 1, scale: 1, duration: 0.55, ease: "expo.out" }, 16.50);
+      tl.to(n4, { v: 3, duration: 0.66, ease: "power2.out", snap: { v: 1 },
+        onUpdate() { document.getElementById("g3-num").textContent = n4.v + "\u00D7"; } }, 16.56);
 
-      // Beat 5 — the two "same" chips, then the flame payoff.
-      tl.fromTo("#s5-c1", { opacity: 0, x: -34 },
-        { opacity: 1, x: 0, duration: 0.46, ease: "power3.out" }, 19.50);
-      tl.fromTo("#s5-c2", { opacity: 0, x: -34 },
-        { opacity: 1, x: 0, duration: 0.46, ease: "power3.out" }, 20.50);
-      tl.fromTo("#s5-head", { opacity: 0, y: 40, scale: 0.94 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.62, ease: "back.out(1.4)" }, 21.84);
-
-      // Beat 6 — the value prop.
-      tl.fromTo("#s6-eyebrow", { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, duration: 0.44, ease: "power2.out" }, 26.45);
-      tl.fromTo(["#s6-l1", "#s6-l2", "#s6-l3"], { opacity: 0, y: 42 },
-        { opacity: 1, y: 0, duration: 0.55, ease: "power3.out", stagger: 0.14 }, 27.48);
-      tl.fromTo("#s6-chip", { opacity: 0, scale: 0.9 },
-        { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 30.24);
+      // G4 — flat spend line vs rising profit line, on "same ad budget... far more profit".
+      tl.fromTo("#g4-flat", { strokeDasharray: 640, strokeDashoffset: 640 },
+        { strokeDashoffset: 0, duration: 0.7, ease: "power2.out" }, 23.34);
+      tl.fromTo("#g4-zero", { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 23.62);
+      tl.fromTo("#g4-rise", { strokeDasharray: 780, strokeDashoffset: 780 },
+        { strokeDashoffset: 0, duration: 1.0, ease: "power2.inOut" }, 24.00);
+      tl.fromTo("#g4-tip", { opacity: 0, attr: { r: 0 } },
+        { opacity: 1, attr: { r: 22 }, duration: 0.4, ease: "back.out(2.2)" }, 24.90);
 
       /* ---- Beat 7 — end card. Cuts on the spoken "If" (raw 36.94 -> 33.44).
               Final scene: the one place exit animation is allowed. ---- */

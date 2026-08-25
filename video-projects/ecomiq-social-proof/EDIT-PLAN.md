@@ -1,7 +1,8 @@
 # EcomIQ × Dryft Sleep — social-proof ad · EDIT PLAN
 
-**Status: APPROVED and built.** Decisions taken: head + tail trim, crop-to-fill, no logo
-wall, no star rating, no testimonial quote.
+**Status: built (v2).** Decisions taken: head + tail trim, crop-to-fill, no logo wall,
+no star rating, no testimonial quote, **A-roll intercut with b-roll**, **no words in the
+graphics**, **bottom of frame left clear for subtitles**.
 
 Format: 9:16 (1080×1920) + 1:1 (1080×1080) · 30fps · H.264/AAC, faststart.
 Audio-led, full length — no cutdown.
@@ -10,7 +11,7 @@ Audio-led, full length — no cutdown.
 
 | Role | Source | Notes |
 |---|---|---|
-| VO (A-roll) | Drive `1WyK-Gg6…` "Dryft Sleep - Without spending a dollar more on ads..mov" | 2.5 GB ProRes master. Source download is **quota-blocked** by Drive; full 43.0s audio recovered via the transcoded preview stream (128 kbps AAC / 44.1 kHz). Master audio is 24-bit/48 kHz LPCM (~12.35 MB of the 2.5 GB) — recoverable via `scripts/drive-*` once quota resets. |
+| A-roll | Drive `1WyK-Gg6…` "Dryft Sleep - Without spending a dollar more on ads..mov" | 2.5 GB ProRes master, **picture and sound**: Sean to camera, 1920×1080 @25fps, blue-lit studio. Source download is **quota-blocked** by Drive, so both come from the transcoded preview stream (video 1920×1080 ~1.4 Mbps, audio 128 kbps AAC / 44.1 kHz). Master is 24-bit/48 kHz LPCM + ProRes — re-pullable via `scripts/drive-*` once quota resets. |
 | B-roll | Drive folder `1XUyu60iAn7bPSd6JHlT_IBtBpyn_FDMt` | 4K 3840×2160 @ 23.976. Six wholesaler clips are phone-vertical stored **sideways** (no rotation metadata) → `transpose=1` makes them upright **and** native 2160×3840. `product` is true landscape 16:9. |
 
 Audio: 43.003s total. Speech 3.67 → 40.22s. Throat clear 0.11–0.75 then dead air to 3.67.
@@ -35,19 +36,32 @@ loudness-normalised (source averaged -38.4 dB, too quiet to ship). The end card 
 past the VO on silence so the outro breathes to ~5s. **Total runtime 38.5s.**
 All cues below shift 3.50s earlier on the delivered timeline.
 
-## Beat sheet (raw audio timestamps)
+## Cut sheet (delivered timeline; raw audio time − 3.50s)
 
-| # | Time | Graphic — lands on the word | B-roll |
+A = Sean to camera, B = b-roll. Every A-roll segment is the same take trimmed to the same
+window as the VO, with `data-media-start` == its own start, so lip sync is exact.
+Transitions are 0.20s blur dissolves — fast enough to read as cuts.
+
+| # | in–out | source | graphic |
 |---|---|---|---|
-| 1 | 3.6–9.6 | "DRYFT SLEEP" wipe-in · **count-up 0→59%** fires on "59%" **@6.11** · label `RETURNING CUSTOMERS` · flame chip **"$0 EXTRA AD SPEND"** @7.6 | walking |
-| 2 | 9.6–12.7 | `NEW CUSTOMERS` dim + struck through @11.3 | shelf / storefront |
-| 3 | 12.7–17.0 | Kinetic staggered type **"THE ONES THEY ALREADY HAD"** @12.9 · 3-beat repeat pulse on "again and again" @16.11 | excited |
-| 4 | 17.0–22.9 | **Count-up 0→3×** on "three times" **@20.08** · label `SUBSCRIPTION REVENUE — 3x THE STOREFRONT` | product |
-| 5 | 22.9–29.7 | Chips `SAME BRAND` @23.4 + `SAME AD BUDGET` @24.6 → flame **"FAR MORE PROFIT"** @25.6 | suppliers |
-| 6 | 29.7–36.9 | *(quote removed per direction)* Kinetic value prop instead: "WHAT WE DO" → staggered "Keep more of / what you've / already got" @30.98, then ghost chip "WITHOUT MORE AD SPEND" @33.74 | shelf |
-| 7 | **36.94**→40.35 (+1.6s silent hold) | **END CARD** cuts on "If": navy canvas, headline **"See if we can *help* you"** (Hedvig italic emphasis word), flame pill **"Find out more"** pops @39.19. Logo stays top-left. Audio continues, then holds to the last frame. | brand canvas |
+| A1 | 0.00–2.30 | **Sean** | clean — he opens the claim |
+| B1 | 2.30–6.12 | walking | **G1** growth bars + count-up to **+59%** on the spoken "59%" (2.61) |
+| A2 | 6.12–9.20 | **Sean** | clean |
+| B2 | 9.20–14.85 | excited | **G2** return-cycle ring draws in; 3 dots land on "again and again" (12.61) |
+| A3 | 14.85–16.30 | **Sean** | clean |
+| B3 | 16.30–19.35 | product | **G3** comparison bars (1× vs 3×) + count-up to **3×** on "three times" (16.58) |
+| A4 | 19.35–23.10 | **Sean** | clean |
+| B4 | 23.10–26.30 | suppliers | **G4** flat ad-spend line vs rising profit line, **$0** |
+| A5 | 26.30–30.10 | **Sean** | clean |
+| B5 | 30.10–33.44 | shelf | clean — breathe into the end card |
+| END | 33.44–38.50 | brand canvas | end card, cuts on the spoken "If" (33.44) |
 
-Persistent: `ecomiq-logo-white.png` top-left on every frame (incl. the end card), ~24% width, subtle shadow. **No captions.**
+Bars are proportional, not decorative: G1 is 314:500 (=1.59, the +59%) and G3 is 234:702 (=3.0×).
+
+**No words in any graphic** — numerals only (`+59%`, `3×`, `$0`). The **bottom 580px (9:16)
+/ 300px (1:1) is left clear** for subtitles to be added later; nothing but footage sits there.
+
+Persistent `ecomiq-logo-white.png` top-left on every frame, ~24% width.
 
 ## Verified proof inventory (real values only)
 
@@ -72,8 +86,12 @@ From the VO and the published case study
    clip is cropped, with the crop window biased **down** per clip (`walking`/`excited` y=420,
    `storefront`/`suppliers`/`shelf` y=620) because a plain centre crop decapitated subjects
    framed low in the vertical originals. No letterboxing anywhere.
-5. **Audio is preview-quality** (128 kbps AAC / 44.1 kHz), not the ProRes master's
-   24-bit/48 kHz LPCM — Drive quota. Fine for social; re-pullable for the final bake.
+5. **A-roll is preview-quality** — 1920×1080 at ~1.4 Mbps and 128 kbps AAC, not the ProRes
+   master. It holds up well in the 9:16 crop (verified at full res), but a re-pull of the
+   master once Drive's quota resets would sharpen it.
+5b. **The end card still carries words** ("See if we can *help* you" / "Find out more") —
+   the "no words" direction was applied to the motion graphics; the CTA was specified
+   verbatim in the brief. Say the word if you want that stripped back too.
 6. **Music bed:** duckable placeholder `<audio>` at low gain, commented, to drop a track into.
 7. VO says "three times their first customer revenue"; the case study words it
    "Subscription revenue 3x the storefront" — the graphic uses the case-study wording.
@@ -87,8 +105,10 @@ Both H.264 / AAC, 30fps, `+faststart`.
 
 ## Build notes
 
-- One standalone composition per ratio; the square is the same timeline with a layout
-  scaled for the shorter frame (stat 300→210px, headline 106→82px, tighter padding).
+- One standalone composition per ratio; the square is the same timeline with the graphics
+  and the subtitle-safe zone scaled for the shorter frame.
+- A-roll 9:16 crops 608px wide from x=618 of the 1920 frame (subject centres on x≈922);
+  1:1 crops 1080 wide from x=382. Framing was checked across the whole take.
 - The b-roll bed crossfades (blur, 0.42s) under GSAP-driven graphic groups; every graphic
   group spans the full piece so it is always mounted, and GSAP owns visibility.
 - Count-ups are GSAP tweens on a proxy object with `snap`, so they are fully seekable

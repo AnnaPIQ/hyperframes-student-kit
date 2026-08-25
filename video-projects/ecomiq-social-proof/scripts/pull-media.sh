@@ -30,11 +30,19 @@ dl() { echo "https://drive.usercontent.google.com/download?id=$1&export=download
 VO_ID=1WyK-Gg6_MWcsOny0abvOJx1niEvz6Ea7
 mkdir -p assets/vo assets/broll
 
-# ---- 1. Voiceover (full length, via transcoded preview stream) ---------------
+# ---- 1. A-roll: the talking-head VIDEO + its audio ---------------------------
+# The preview stream also carries picture: format 137 is 1920x1080 @25fps. The ad
+# cuts between this and the b-roll, so we need both.
 if [ ! -f assets/vo/dryft-social-proof-vo.m4a ]; then
-  echo "▶ VO via Drive preview stream (bypasses source-file quota)"
+  echo "▶ A-roll audio via Drive preview stream (bypasses source-file quota)"
   yt-dlp -f "ba/b" --no-playlist \
     -o "assets/vo/dryft-social-proof-vo.%(ext)s" \
+    "https://drive.google.com/file/d/$VO_ID/view"
+fi
+if [ ! -f assets/aroll-src.mp4 ]; then
+  echo "▶ A-roll video (1080p preview stream)"
+  yt-dlp -f "137+140/best" --no-playlist \
+    -o "assets/aroll-src.%(ext)s" \
     "https://drive.google.com/file/d/$VO_ID/view"
 fi
 
