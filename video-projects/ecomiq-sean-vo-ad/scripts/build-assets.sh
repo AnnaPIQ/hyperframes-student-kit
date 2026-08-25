@@ -40,6 +40,21 @@ ffmpeg -hide_banner -v error -y -ss "$VO_IN" -i "$SRC_VO" -t "$VO_DUR" \
   -af "afade=t=in:st=0:d=0.12,afade=t=out:st=36.02:d=0.18" \
   "$OUT/sean-vo.wav"
 
+# ---------------------------------------------------------------------------
+# 1b. A-roll PiP — Sean's head, square, ready for a CSS circle mask.
+#     Cut from the SAME in-point as the VO (3.100) so lips track his voice with
+#     no offset. Source is 25 fps; conformed to 30 to match the composition.
+#     Crop window 1300x1300 @ (1055, 43) frames head-and-shoulders tight enough to
+#     read at corner-PiP size, and holds him inside the inscribed circle for the
+#     whole take.
+# ---------------------------------------------------------------------------
+PIP_DUR=34.100
+echo "▶ PiP  ${VO_IN}s +${PIP_DUR}s"
+ffmpeg -hide_banner -v error -y -ss "$VO_IN" -i "$SRC_VO" -t "$PIP_DUR" \
+  -vf "crop=1300:1300:1055:43,scale=720:720:flags=lanczos,setsar=1,fps=30" \
+  -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p -an \
+  -movflags +faststart "$OUT/sean-pip.mp4"
+
 # Silent, duckable music-bed placeholder — swap in a real bed, keep the name.
 echo "▶ music bed placeholder (silent)"
 ffmpeg -hide_banner -v error -y -f lavfi -i anullsrc=r=48000:cl=stereo \
@@ -103,4 +118,4 @@ build_bed "$SRC_SQ"  "$OUT/bed-square.mp4" 1080 1080
 
 echo
 echo "✅ assets built:"
-ls -la "$OUT"/sean-vo.wav "$OUT"/music-bed.wav "$OUT"/bed-916.mp4 "$OUT"/bed-square.mp4
+ls -la "$OUT"/sean-vo.wav "$OUT"/sean-pip.mp4 "$OUT"/music-bed.wav "$OUT"/bed-916.mp4 "$OUT"/bed-square.mp4

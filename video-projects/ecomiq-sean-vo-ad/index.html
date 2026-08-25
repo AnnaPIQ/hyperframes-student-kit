@@ -26,6 +26,20 @@
          pre-cut by scripts/build-assets.sh. Muted — Sean's VO is the only voice. */
       #bed { position: absolute; inset: 0; width: 1080px; height: 1920px; z-index: 0; }
 
+
+      /* ---- A-ROLL PiP ------------------------------------------------------
+         Sean's head, circle-masked, top right over the montage. The wrapper is
+         what GSAP animates — never the <video> itself (render contract #9). */
+      #pip-wrap {
+        position: absolute; top: 150px; right: 58px;
+        width: 360px; height: 360px;
+        border-radius: 50%; overflow: hidden;
+        border: 6px solid var(--brand-blue-tint);
+        box-shadow: 0 20px 54px -12px rgba(0, 0, 0, 0.62);
+        z-index: 5;
+      }
+      #pip { display: block; width: 100%; height: 100%; object-fit: cover;
+        border-radius: 50%; }
       /* ---- END CARD -------------------------------------------------------
          Cross-dissolves in on the word "want" (t=33.70). Navy canvas + the
          house radial bloom, white logo lockup, flame pill. Brand tokens only. */
@@ -63,16 +77,11 @@
         box-shadow: 0 26px 80px -18px rgba(255, 76, 50, 0.7);
       }
       #cta .arrow { font-size: 54px; line-height: 1; }
-      #sub {
-        position: relative; z-index: 2;
-        margin-top: 40px;
-        font-size: 38px; font-weight: 500; letter-spacing: 0.02em;
-        color: var(--brand-blue-tint);
-      }
-      #sub .em {
+      /* The EcomIQ signature: italic serif on the emphasis word, inside the pill. */
+      #cta .em {
         font-family: 'Hedvig Letters Serif', Georgia, serif;
         font-style: italic; font-weight: 400;
-        color: var(--brand-blue-tint);
+        letter-spacing: -0.01em;
       }
     </style>
   </head>
@@ -98,13 +107,25 @@
         data-track-index="0"
       ></video>
 
+      <!-- A-roll — Sean's head over the montage, cut from the same in-point as
+           the VO so his lips track his voice. Covered by the end card. -->
+      <div id="pip-wrap">
+        <video
+          id="pip"
+          src="assets/sean-pip.mp4"
+          muted
+          data-start="0"
+          data-duration="34.066"
+          data-track-index="4"
+        ></video>
+      </div>
+
       <!-- End card — "want" lands at 33.70; holds to the end. -->
       <div id="card" class="clip" data-start="33.7" data-duration="3.9" data-track-index="1">
         <div id="card-bloom"></div>
         <div id="logo-wrap"><img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
         <div id="rule"></div>
-        <div id="cta">Tap the link <span class="arrow">&darr;</span></div>
-        <div id="sub">Find out <span class="em">more</span></div>
+        <div id="cta">Find out <span class="em">more</span> <span class="arrow">&rarr;</span></div>
       </div>
 
       <!-- Sean's voiceover — the spine. Source 3.100 -> 39.300. -->
@@ -140,7 +161,11 @@
 
       // fromTo throughout: these elements start hidden, and gsap.from() on a
       // hidden element resolves to invisible (LESSONS.md).
-      tl.fromTo("#card", { opacity: 0 }, { opacity: 1, duration: DISSOLVE, ease: "power1.inOut" }, CARD)
+      // A-roll pops in just after the first shot lands, then holds.
+      tl.fromTo("#pip-wrap",
+          { opacity: 0, scale: 0.72 },
+          { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 0.35)
+        .fromTo("#card", { opacity: 0 }, { opacity: 1, duration: DISSOLVE, ease: "power1.inOut" }, CARD)
         .fromTo("#logo-wrap",
           { opacity: 0, y: 30 },
           { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, CARD + 0.16)
@@ -150,12 +175,9 @@
         .fromTo("#cta",
           { opacity: 0, scale: 0.86 },
           { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, CARD + 0.6)
-        .fromTo("#sub",
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, CARD + 0.92)
         // The pill breathes so the card holds attention through the outro.
         .to("#cta", { scale: 1.035, duration: 0.75, ease: "sine.inOut", yoyo: true, repeat: 3 }, CARD + 1.3)
-        .fromTo("#cta .arrow", { y: -2 }, { y: 10, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 4 }, CARD + 1.3);
+        .fromTo("#cta .arrow", { x: 0 }, { x: 12, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 4 }, CARD + 1.3);
 
       // Composition duration == tl.duration() (Law #7). Pad to the root value.
       tl.to({}, { duration: 37.6 }, 0);

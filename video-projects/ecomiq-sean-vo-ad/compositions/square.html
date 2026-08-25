@@ -25,6 +25,20 @@
       /* Picture bed — the natively-square montage master, same cut list as 9:16. */
       #bed { position: absolute; inset: 0; width: 1080px; height: 1080px; z-index: 0; }
 
+
+      /* ---- A-ROLL PiP ------------------------------------------------------
+         Sean's head, circle-masked, top right over the montage. The wrapper is
+         what GSAP animates — never the <video> itself (render contract #9). */
+      #pip-wrap {
+        position: absolute; top: 58px; right: 58px;
+        width: 300px; height: 300px;
+        border-radius: 50%; overflow: hidden;
+        border: 5px solid var(--brand-blue-tint);
+        box-shadow: 0 18px 48px -12px rgba(0, 0, 0, 0.62);
+        z-index: 5;
+      }
+      #pip { display: block; width: 100%; height: 100%; object-fit: cover;
+        border-radius: 50%; }
       /* ---- END CARD — same beats as 9:16, scaled for the square frame ---- */
       #card {
         position: absolute; inset: 0; z-index: 10;
@@ -59,16 +73,11 @@
         box-shadow: 0 22px 70px -16px rgba(255, 76, 50, 0.7);
       }
       #cta .arrow { font-size: 46px; line-height: 1; }
-      #sub {
-        position: relative; z-index: 2;
-        margin-top: 32px;
-        font-size: 33px; font-weight: 500; letter-spacing: 0.02em;
-        color: var(--brand-blue-tint);
-      }
-      #sub .em {
+      /* The EcomIQ signature: italic serif on the emphasis word, inside the pill. */
+      #cta .em {
         font-family: 'Hedvig Letters Serif', Georgia, serif;
         font-style: italic; font-weight: 400;
-        color: var(--brand-blue-tint);
+        letter-spacing: -0.01em;
       }
     </style>
   </head>
@@ -90,12 +99,24 @@
         data-track-index="0"
       ></video>
 
+      <!-- A-roll — Sean's head over the montage, cut from the same in-point as
+           the VO so his lips track his voice. Covered by the end card. -->
+      <div id="pip-wrap">
+        <video
+          id="pip"
+          src="assets/sean-pip.mp4"
+          muted
+          data-start="0"
+          data-duration="34.066"
+          data-track-index="4"
+        ></video>
+      </div>
+
       <div id="card" class="clip" data-start="33.7" data-duration="3.9" data-track-index="1">
         <div id="card-bloom"></div>
         <div id="logo-wrap"><img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
         <div id="rule"></div>
-        <div id="cta">Tap the link <span class="arrow">&darr;</span></div>
-        <div id="sub">Find out <span class="em">more</span></div>
+        <div id="cta">Find out <span class="em">more</span> <span class="arrow">&rarr;</span></div>
       </div>
 
       <audio
@@ -127,7 +148,11 @@
       const CARD = 33.7;   // "want" — the end-card trigger
       const DISSOLVE = 0.35;
 
-      tl.fromTo("#card", { opacity: 0 }, { opacity: 1, duration: DISSOLVE, ease: "power1.inOut" }, CARD)
+      // A-roll pops in just after the first shot lands, then holds.
+      tl.fromTo("#pip-wrap",
+          { opacity: 0, scale: 0.72 },
+          { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 0.35)
+        .fromTo("#card", { opacity: 0 }, { opacity: 1, duration: DISSOLVE, ease: "power1.inOut" }, CARD)
         .fromTo("#logo-wrap",
           { opacity: 0, y: 26 },
           { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, CARD + 0.16)
@@ -137,11 +162,8 @@
         .fromTo("#cta",
           { opacity: 0, scale: 0.86 },
           { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, CARD + 0.6)
-        .fromTo("#sub",
-          { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, CARD + 0.92)
         .to("#cta", { scale: 1.035, duration: 0.75, ease: "sine.inOut", yoyo: true, repeat: 3 }, CARD + 1.3)
-        .fromTo("#cta .arrow", { y: -2 }, { y: 10, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 4 }, CARD + 1.3);
+        .fromTo("#cta .arrow", { x: 0 }, { x: 12, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 4 }, CARD + 1.3);
 
       tl.to({}, { duration: 37.6 }, 0);
       window.__timelines["ecomiq-sean-vo-ad-square"] = tl;
