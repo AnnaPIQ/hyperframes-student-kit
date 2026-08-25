@@ -40,3 +40,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Downloaded source footage scratch (fetched from Drive per-build; not a deliverable)
+.media/
