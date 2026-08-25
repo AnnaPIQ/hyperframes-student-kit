@@ -41,12 +41,12 @@ fi
 # ---- 2. B-roll (HTTP-range seek: only the seconds we need) -------------------
 # name|drive_id|in_point|duration|transpose(1=90CW, 0=none)
 CLIPS="
-walking|1jHsUTe013mdBLjB6VQvJmjzwj0r6cXzT|19|8|1
-product|1RapxMHiEtRmM6ig2GKFSSeCSHU4PA_U1|8|6|0
-shelf|1JI6nNrKKGFBaAx5yzkdsYctfHXuRO0sZ|2|5|1
-excited|1HLSp2jot_gQjx2xpl-xeM97bz6u8ihqC|3|8|1
-suppliers|1wMgbUuI5dVtGyVLryar5xL-fXg9ZnIQU|2|8|1
-storefront|1NgRACv6dGVzw0cay3767fp4kO4qwDTQQ|3|7|1
+walking|1jHsUTe013mdBLjB6VQvJmjzwj0r6cXzT|19|7.0|1
+storefront|1NgRACv6dGVzw0cay3767fp4kO4qwDTQQ|3|4.2|1
+excited|1HLSp2jot_gQjx2xpl-xeM97bz6u8ihqC|3|6.8|1
+product|1RapxMHiEtRmM6ig2GKFSSeCSHU4PA_U1|8|5.2|0
+suppliers|1wMgbUuI5dVtGyVLryar5xL-fXg9ZnIQU|2|8.0|1
+shelf|1Bhl0B7FWeJy_EmOmLMn06SC_B49ADkdr|0.8|7.6|1
 "
 echo "$CLIPS" | while IFS='|' read -r name id ss dur tp; do
   [ -z "${name:-}" ] && continue
@@ -54,7 +54,7 @@ echo "$CLIPS" | while IFS='|' read -r name id ss dur tp; do
   [ -f "$out" ] && { echo "  ✓ $name (cached)"; continue; }
   vf="null"; [ "$tp" = "1" ] && vf="transpose=1"
   echo "▶ $name  (${ss}s +${dur}s, transpose=$tp)"
-  ffmpeg -y -hide_banner -loglevel error -user_agent "$UA" \
+  ffmpeg -nostdin -y -hide_banner -loglevel error -user_agent "$UA" \
     -ss "$ss" -i "$(dl "$id")" -t "$dur" \
     -an -vf "$vf" -c:v libx264 -preset veryfast -crf 18 -pix_fmt yuv420p "$out"
 done
