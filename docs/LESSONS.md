@@ -231,6 +231,27 @@ efficient over time instead of relearning the same lessons.
   cannot overlap. **Fix:** `grep -o 'data-track-index="[0-9]*"' | sort -n | uniq -c` and pick
   a genuinely free index; a duplicate count is the bug.
 
+## Sync / re-sourcing footage
+
+- **Re-check a quota-blocked source before the final bake.** Drive's "too many downloads"
+  limit resets; a source that was unusable during the build may come through at the end. Here
+  the 2.5 GB ProRes master turned out to be **3840x2160**, not the 1920x1080 its preview
+  implied — which meant the 9:16 crop had been *upscaling* a 608px window to 1080 the whole
+  time. A cheap `curl -r 0-2047` probe answers it in a second.
+- **Never trust an RMS/`silencedetect` onset to align two versions of a take.** It put the
+  offset at 0.12s; the truth was 0.0363s. A one-off "absolute" FFT correlation was also wrong
+  (buggy energy normalisation) at 0.112s.
+- **The reliable method: trim a candidate, then measure the RESULT against the approved
+  render's audio** with normalised FFT cross-correlation at 48 kHz over several windows.
+  Candidates respond perfectly linearly (here 3.3880 -> -75.71ms, 3.4260 -> -37.71ms,
+  3.4637 -> 0.00ms, 3.5000 -> +36.29ms), so two probes give you the exact answer, and an
+  identical offset at every window is what tells you the reading is real rather than noise.
+- **A transcoded preview can carry leading padding the master doesn't have.** Shift every
+  master trim by that amount and the delivered timeline is unchanged — no cue moves.
+- **A trim can't land on a frame boundary of a 25fps source at an arbitrary time**, so
+  picture may sit up to half a frame from the previous build even when audio is sample-exact.
+  Under ~30ms this is sub-frame at 30fps output and imperceptible; measure it, don't guess.
+
 ## Assets
 
 - **An image pasted into chat may not exist on disk.** A client-supplied logo was visible in

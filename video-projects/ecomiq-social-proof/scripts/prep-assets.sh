@@ -15,18 +15,64 @@
 #         9:16, so they only scale -- no crop at all. `product` is true 16:9 and
 #         IS cropped hard (keeps the middle ~32% of frame width).
 #   1:1   every clip is cropped.
+#
+# A-roll: prefers the 4K ProRes master (see the source-selection block below); the
+# preview stream is only a fallback.
 # =============================================================================
 set -euo pipefail
 cd "$(dirname "$0")/.."
+SCRATCH="${SCRATCH:-/tmp/claude-0/-home-user-hyperframes-student-kit/c3f63d15-29e1-5c18-be4c-357fef94fbef/scratchpad}"
 
-VO_IN=assets/vo/dryft-social-proof-vo.m4a
+# ---- source selection: ProRes master if we have it, else the preview stream ----
+# The 2.5 GB master ("Dryft Sleep - Without spending a dollar more on ads..mov") is
+# 3840x2160 ProRes 10-bit + 24-bit/48kHz LPCM. Drive rate-limits its download, so the
+# build fell back to the transcoded preview (1920x1080 @ 1.4 Mbps, 128 kbps AAC) for a
+# long while. When the quota lets the master through, PULL IT: at 1920 the 9:16 crop is
+# only 608px wide and gets UPSCALED to 1080, which is the single biggest softness in the
+# piece. At 3840 the same crop is 1216px and downsamples instead.
+#
+# The preview transcode carries 0.0363s of extra leading padding, so every master trim is
+# shifted that much earlier and the DELIVERED TIMELINE IS UNCHANGED — every approved cue
+# (the +59% count-up landing on the spoken figure, every whip, the end-card cut) still
+# lands on the same word.
+#
+# How that number was arrived at, because two cheaper methods both got it wrong:
+#   - an RMS/silencedetect onset comparison said 0.12s  -> WRONG by ~84ms
+#   - a one-off absolute FFT correlation said 0.112s    -> WRONG (buggy normalisation)
+# What worked: trim a candidate, then measure the produced file against the APPROVED
+# render's audio with normalised FFT cross-correlation at 48kHz over several windows.
+# Candidates responded perfectly linearly (3.3880 -> -75.71ms, 3.4260 -> -37.71ms,
+# 3.4637 -> +0.00ms, 3.5000 -> +36.29ms; r=0.98-0.99, identical at every window), so
+# 3.4637 is exact. Verify a re-prep the same way rather than trusting an onset estimate.
+MASTER="${AROLL_MASTER:-$SCRATCH/aroll-master.mov}"
+PREVIEW_LEAD=0.0363
+
 TRIM_START=3.50
 TRIM_END=40.35
 
-echo "▶ VO trim ${TRIM_START}s -> ${TRIM_END}s + loudness normalize"
+if [ -f "$MASTER" ]; then
+  echo "▶ using ProRes master: $MASTER"
+  AROLL_IN="$MASTER"
+  VO_IN="$MASTER"
+  A_SS=$(echo "$TRIM_START - $PREVIEW_LEAD" | bc)
+  A_TO=$(echo "$TRIM_END - $PREVIEW_LEAD" | bc)
+  # 3840x2160: every offset is exactly double the 1920x1080 numbers below.
+  CROP_916="crop=1216:2160:1236:0"
+  CROP_11="crop=2160:2160:764:0"
+else
+  echo "▶ master not present — falling back to the preview stream (softer 9:16)"
+  AROLL_IN=assets/aroll-src.mp4
+  VO_IN=assets/vo/dryft-social-proof-vo.m4a
+  A_SS="$TRIM_START"
+  A_TO="$TRIM_END"
+  CROP_916="crop=608:1080:618:0"
+  CROP_11="crop=1080:1080:382:0"
+fi
+
+echo "▶ VO trim ${A_SS}s -> ${A_TO}s + loudness normalize"
 ffmpeg -nostdin -y -hide_banner -loglevel error \
-  -ss "$TRIM_START" -to "$TRIM_END" -i "$VO_IN" \
-  -af "loudnorm=I=-16:TP=-1.5:LRA=11,afade=t=in:st=0:d=0.06" \
+  -ss "$A_SS" -to "$A_TO" -i "$VO_IN" \
+  -map a:0 -af "loudnorm=I=-16:TP=-1.5:LRA=11,afade=t=in:st=0:d=0.06" \
   -ac 2 -ar 48000 -c:a aac -b:a 192k assets/vo/vo-trimmed.m4a
 ffprobe -v error -show_entries format=duration -of csv=p=0 assets/vo/vo-trimmed.m4a
 
@@ -72,16 +118,19 @@ norm product    "$VERT_916"        "$(vert11 420)"
 # Sean sits slightly left of centre: the subject centres on x=922 of 1920, so
 # 9:16 crops 608 wide from x=618 and 1:1 crops 1080 wide from x=382. Framing
 # was checked across the whole clip; a fixed window holds throughout.
+# CRF 18 (~11 Mbps at 1080x1920), not 16: the intermediate only has to stay comfortably
+# above the ~8.4 Mbps delivery bitrate, and the 4K-sourced detail makes CRF 16 cost 96 MB
+# — twice the size for headroom the final encode never uses.
 echo "▶ A-roll 9:16"
 ffmpeg -nostdin -y -hide_banner -loglevel error \
-  -ss "$TRIM_START" -to "$TRIM_END" -i assets/aroll-src.mp4 \
-  -an -vf "crop=608:1080:618:0,scale=1080:1920:flags=lanczos,setsar=1" \
-  -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p assets/broll/9x16/aroll.mp4
+  -ss "$A_SS" -to "$A_TO" -i "$AROLL_IN" \
+  -map v:0 -an -vf "$CROP_916,scale=1080:1920:flags=lanczos,setsar=1" \
+  -c:v libx264 -preset slow -crf 18 -pix_fmt yuv420p assets/broll/9x16/aroll.mp4
 echo "▶ A-roll 1:1"
 ffmpeg -nostdin -y -hide_banner -loglevel error \
-  -ss "$TRIM_START" -to "$TRIM_END" -i assets/aroll-src.mp4 \
-  -an -vf "crop=1080:1080:382:0,setsar=1" \
-  -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p assets/broll/1x1/aroll.mp4
+  -ss "$A_SS" -to "$A_TO" -i "$AROLL_IN" \
+  -map v:0 -an -vf "$CROP_11,scale=1080:1080:flags=lanczos,setsar=1" \
+  -c:v libx264 -preset slow -crf 18 -pix_fmt yuv420p assets/broll/1x1/aroll.mp4
 
 echo "✅ prepped"
 for d in 9x16 1x1; do

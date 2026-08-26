@@ -1,6 +1,6 @@
 # EcomIQ × Dryft Sleep — social-proof ad · EDIT PLAN
 
-**Status: built (v12).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
+**Status: FINAL (v13) — high-quality bake off the 4K ProRes master.** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
 **wordless numerals** (one deliberate full-bleed message card carries copy) ·
 **bottom of frame clear for subtitles** · no logo wall ·
 no star rating · no testimonial quote · **a graphic only where a real figure is spoken** ·
@@ -14,7 +14,7 @@ Audio-led, full length — no cutdown.
 
 | Role | Source | Notes |
 |---|---|---|
-| A-roll | Drive `1WyK-Gg6…` "Dryft Sleep - Without spending a dollar more on ads..mov" | 2.5 GB ProRes master, **picture and sound**: Sean to camera, 1920×1080 @25fps, blue-lit studio. Source download is **quota-blocked** by Drive, so both come from the transcoded preview stream (video 1920×1080 ~1.4 Mbps, audio 128 kbps AAC / 44.1 kHz). Master is 24-bit/48 kHz LPCM + ProRes — re-pullable via `scripts/drive-*` once quota resets. |
+| A-roll | Drive `1WyK-Gg6…` "Dryft Sleep - Without spending a dollar more on ads..mov" | **v13 uses the 2.5 GB ProRes master** — Drive's download quota reset and the whole file came through. It is **3840×2160 ProRes 10-bit @25fps + 24-bit/48 kHz LPCM**, not the 1920×1080 the preview implied. Earlier builds fell back to the transcoded preview (1.4 Mbps, 128 kbps AAC). |
 | B-roll | Drive folder `1XUyu60iAn7bPSd6JHlT_IBtBpyn_FDMt` | 4K 3840×2160 @ 23.976. Six wholesaler clips are phone-vertical stored **sideways** (no rotation metadata) → `transpose=1` makes them upright **and** native 2160×3840. `product` is true landscape 16:9. |
 
 Audio: 43.003s total. Speech 3.67 → 40.22s. Throat clear 0.11–0.75 then dead air to 3.67.
@@ -151,9 +151,20 @@ From the VO and the published case study
    shipped rotated in v2 — corrected.) 1:1 crops every clip, with the window biased **down**
    per clip (`walking`/`excited`/`product` y=420, `storefront`/`suppliers`/`shelf` y=620)
    because a plain centre crop decapitated subjects framed low. No letterboxing anywhere.
-5. **A-roll is preview-quality** — 1920×1080 at ~1.4 Mbps and 128 kbps AAC, not the ProRes
-   master. It holds up well in the 9:16 crop (verified at full res), but a re-pull of the
-   master once Drive's quota resets would sharpen it.
+5. **A-roll — RESOLVED in v13.** The master is now the source. This was the single biggest
+   softness in the piece and it was worse than it looked: at 1920 wide the 9:16 window is only
+   608px and was being **upscaled 1.78× to 1080**. The master is 3840 wide, so the same window
+   is 1216px and **downsamples** instead. Encoded at CRF 16 `-preset slow` (was CRF 19
+   `medium`), and the VO now comes off 24-bit/48 kHz LPCM rather than 128 kbps AAC.
+   The prepped intermediate is CRF 18 (~11 Mbps), not CRF 16: it only has to stay comfortably
+   above the ~8.4 Mbps delivery bitrate, and CRF 16 cost 96 MB — twice the size for headroom
+   the final encode never uses.
+   **Timeline is unchanged.** The preview transcode carried 0.0363s of extra leading padding,
+   so master trims are shifted by that much: 3.4637 → 40.3137. Verified by normalised FFT
+   cross-correlation of the new VO against the approved v12 audio: **0.00 ms at all seven
+   probe windows** (r = 0.978–0.997), so every cue still lands on the same word. Picture sits
+   within ~22 ms of the approved build (sub-frame at 30fps; the 25fps source trim cannot land
+   on an exact frame boundary).
 5b. **The end card carries words** ("See if we can help you" / "Find out more") — the
    "no words" direction was applied to the motion graphics; the CTA was specified verbatim
    in the brief. The headline is now all white and non-italic, so **Hedvig Letters Serif is
@@ -187,10 +198,14 @@ From the VO and the published case study
 
 ## Delivery
 
-- `renders/ecomiq-social-proof-9x16.mp4` — 1080×1920, from `index.html`
-- `renders/ecomiq-social-proof-1x1.mp4` — 1080×1080, from `compositions/square.html`
+- `renders/ecomiq-social-proof-9x16.mp4` — 1080×1920, from `index.html` — **38.7 MB, 8.4 Mbps**
+- `renders/ecomiq-social-proof-1x1.mp4` — 1080×1080, from `compositions/square.html` — **21.6 MB, 4.7 Mbps**
+- `renders/ecomiq-social-proof-9x16-compressed.mp4` — CRF 26 copy for chat/email (5.9 MB)
 
-Both H.264 / AAC, 30fps, `+faststart`.
+Both masters are `--quality high` (CRF 15), H.264 High profile / AAC-LC 48 kHz stereo,
+1080p, 30fps, `yuv420p`, `+faststart` — verified with ffprobe. Delivery dimensions stay
+1080×1920 and 1080×1080: that is the Meta/IG spec, and the gain in v13 is real detail from
+the 4K source rather than a bigger frame.
 
 ## Build notes
 
