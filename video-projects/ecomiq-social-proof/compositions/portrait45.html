@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>EcomIQ — Dryft Sleep social proof (4:5)</title>
+    <!-- GSAP vendored locally: a CDN <script> cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* Local brand fonts — no network at render time. Families are named
+         literally below (not via var()) because the linter doesn't resolve
+         CSS variables and would false-warn on font_family_without_font_face. */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-white);
+      }
+
+      /* ---------- backdrop ---------------------------------------------- */
+      #bg { position: absolute; inset: 0; background: var(--brand-navy); z-index: 0; }
+
+      /* Each b-roll <video> lives in a NON-timed wrapper so the crossfade
+         animates the wrapper, never the video element itself (animating a
+         video's own box freezes frames). */
+      .bwrap { position: absolute; inset: 0; z-index: 1; opacity: 0; }
+      .bwrap video { width: 1080px; height: 1350px; object-fit: cover; display: block; }
+
+      /* Navy scrim keeps type legible over footage. Flat rgba fill + radial
+         vignette — no full-screen linear gradient (H.264 banding). */
+      /* Unifying texture, on every frame: a navy vignette so nothing ships
+         flat-lit, and a deterministic CSS grain (three radial tiles, no PNG,
+         headless-safe). These tie A-roll, b-roll and end card into one piece. */
+      #vignette { position: absolute; inset: 0; z-index: 8; pointer-events: none;
+        background: radial-gradient(ellipse 78% 62% at 50% 46%,
+          rgba(6,40,76,0) 0%, rgba(6,40,76,0.28) 62%, rgba(3,18,36,0.72) 100%); }
+      #grain { position: absolute; inset: 0; z-index: 9; pointer-events: none; opacity: 0.55;
+        background-image:
+          radial-gradient(rgba(255,255,255,.030) 1px, transparent 1px),
+          radial-gradient(rgba(255,255,255,.020) 1px, transparent 1px),
+          radial-gradient(rgba(0,0,0,.015) 1px, transparent 1px);
+        background-size: 3px 3px, 5px 5px, 7px 7px;
+        background-position: 0 0, 1px 2px, 3px 1px; }
+
+      #scrim { position: absolute; inset: 0; z-index: 2; opacity: 0;
+        background:
+          radial-gradient(120% 70% at 50% 22%, rgba(6,40,76,0.30) 0%, rgba(6,40,76,0.66) 60%, rgba(6,40,76,0.86) 100%),
+          rgba(6,40,76,0.42);
+      }
+
+      /* ---------- persistent logo ---------------------------------------
+         Wrapped in a positioned, NON-clip div: the render engine repositions
+         elements marked class="clip", which makes a bare logo drift. */
+      #logo-hold { position: absolute; top: 62px; left: 88px; width: 244px; z-index: 40; }
+      #logo-hold img { width: 100%; height: auto; display: block;
+        filter: drop-shadow(0 6px 18px rgba(0,0,0,0.45)); }
+
+      /* ---------- full-bleed stat card (+59%) ----------------------------
+         Built to the supplied reference: eyebrow, an oversized figure with a
+         flame "+" and a smaller "%", a flame rule that draws under it, then the
+         qualifier in bold caps. Left-aligned, held clear of the subtitle zone. */
+      #s59 { position: absolute; inset: 0; z-index: 27; opacity: 0;
+        display: flex; flex-direction: column; justify-content: center;
+        align-items: flex-start; padding: 0 88px 120px;
+        background:
+          radial-gradient(72% 44% at 50% 34%, rgba(24,86,150,0.55) 0%, rgba(6,40,76,0) 70%),
+          var(--brand-navy); }
+      /* Dryft's own white wordmark (dryftsleep.com), so the brand being credited
+         reads on the card instead of being spelled out in the eyebrow. Grows from
+         the left so it sits on the card's left-aligned axis. */
+      #s59-logo { width: 275px; height: auto; display: block; margin-bottom: 36px;
+        transform-origin: left center;
+        filter: drop-shadow(0 6px 22px rgba(0,0,0,0.40)); }
+      #s59-eyebrow { font-size: 25px; font-weight: 700; letter-spacing: 0.20em;
+        text-transform: uppercase; color: var(--brand-white); margin-bottom: 22px; }
+      #s59-num { font-size: 240px; font-weight: 800; line-height: 0.92;
+        letter-spacing: -0.035em; color: var(--brand-white);
+        font-variant-numeric: tabular-nums; display: flex; align-items: baseline; }
+      #s59-num .plus { color: var(--brand-flame); }
+      #s59-num .pct { font-size: 0.55em; letter-spacing: -0.02em; }
+      #s59-rule { width: 640px; height: 7px; border-radius: 4px;
+        background: var(--brand-flame); transform-origin: left center; margin: 22px 0 28px; }
+      #s59-sub { font-size: 56px; font-weight: 800; line-height: 1.06;
+        letter-spacing: -0.01em; text-transform: uppercase;
+        color: var(--brand-white); max-width: 570px; }
+
+      /* ---------- full-bleed graph card ----------------------------------
+         Emphasises "subscription revenue is now three times their first
+         customer revenue". A card CAN carry labels, which is what the earlier
+         bare bars lacked — so the comparison finally says what it compares.
+         Bar widths are the real ratio: 250 : 750 is exactly 3x. */
+      #gcard { position: absolute; inset: 0; z-index: 27; opacity: 0;
+        display: flex; flex-direction: column; justify-content: center;
+        align-items: flex-start; padding: 0 88px 90px;
+        background:
+          radial-gradient(72% 44% at 50% 34%, rgba(24,86,150,0.55) 0%, rgba(6,40,76,0) 70%),
+          var(--brand-navy); }
+      #gcard-eyebrow { font-size: 24px; font-weight: 700; letter-spacing: 0.20em;
+        text-transform: uppercase; color: var(--brand-white);
+        white-space: nowrap; margin-bottom: 42px; }
+      .grow { margin-bottom: 42px; }
+      .glabel { font-size: 28px; font-weight: 600; color: var(--brand-white);
+        margin-bottom: 18px; }
+      .gbar { height: 74px; border-radius: 12px; overflow: hidden;
+        background: rgba(156, 212, 255, 0.12); }
+      .gbar i { display: block; width: 100%; height: 100%; transform-origin: left center; }
+      .gbar-dim { width: 220px; }
+      .gbar-dim i { background: rgba(156, 212, 255, 0.55); }
+      .gbar-hot { width: 660px; }
+      .gbar-hot i { background: var(--brand-flame);
+        box-shadow: 0 14px 46px -12px rgba(255, 76, 50, 0.7); }
+      /* 3x lockup: the figure with its qualifier stacked alongside, per reference */
+      #gcard-lock { display: flex; align-items: center; gap: 18px; margin-top: 12px; }
+      #gcard-mult { font-size: 168px; font-weight: 800; line-height: 0.86;
+        letter-spacing: -0.04em; color: var(--brand-white);
+        font-variant-numeric: tabular-nums; }
+      #gcard-vs { font-size: 43px; font-weight: 800; line-height: 1.04;
+        letter-spacing: -0.01em; text-transform: uppercase; color: var(--brand-white); }
+
+      /* ---------- full-bleed message card --------------------------------
+         Covers the frame entirely on the "what we do" lines. Layout mirrors the
+         reference: eyebrow, white statement, a downward arrow, then the payoff
+         line in blue tint, and an outlined pill. */
+      #card { position: absolute; inset: 0; z-index: 26; opacity: 0;
+        display: flex; flex-direction: column; justify-content: center;
+        align-items: center; text-align: center; padding: 0 96px 90px;
+        background:
+          radial-gradient(72% 44% at 50% 34%, rgba(24,86,150,0.55) 0%, rgba(6,40,76,0) 70%),
+          var(--brand-navy); }
+      #card-eyebrow { font-size: 27px; font-weight: 600; letter-spacing: 0.34em;
+        text-transform: uppercase; color: var(--brand-white); margin-bottom: 32px; }
+      .card-line { font-size: 64px; font-weight: 800; line-height: 1.06;
+        letter-spacing: -0.02em; max-width: 720px; }
+      #card-l1 { color: var(--brand-white); }
+      #card-l2 { color: var(--brand-white); }   /* all card text is white */
+      #card-arrow { margin: 27px 0; }
+      #card-pill { margin-top: 44px; display: inline-flex; align-items: center; gap: 16px;
+        font-size: 30px; font-weight: 700; color: var(--brand-white);
+        border: 3px solid var(--brand-border); background: rgba(6,40,76,0.6);
+        padding: 19px 39px; border-radius: 999px; }
+      #card-pill .x { color: var(--brand-flame); font-size: 32px; line-height: 1; }
+
+      /* ---------- end card ---------------------------------------------- */
+      /* Built to the client's end-card reference: centred oversized lockup, one
+         wide-tracked uppercase line beneath it, then the flame CTA pill. */
+      /* Must be absolute + opacity:0 in CSS like the other cards. Without
+         `position` the z-index is inert and the card drops into normal flow —
+         it then stacks under the scenes and jams against the top of frame. */
+      #s7 { position: absolute; inset: 0; z-index: 30; opacity: 0;
+        display: flex; flex-direction: column; justify-content: center;
+        align-items: center; text-align: center; padding: 0 86px 130px; }
+      #s7-cover { position: absolute; inset: 0; background: var(--brand-navy); z-index: 29; opacity: 0; }
+      #s7-bloom { position: absolute; left: -12%; top: 40%; width: 124%; height: 64%;
+        background: radial-gradient(60% 60% at 50% 50%, rgba(255,76,50,0.30) 0%, rgba(255,76,50,0) 70%);
+        z-index: 29; opacity: 0; }
+      #s7-glow { position: absolute; left: -20%; top: 4%; width: 140%; height: 70%;
+        background: radial-gradient(52% 46% at 50% 50%, rgba(37,120,196,0.52) 0%, rgba(6,40,76,0) 72%);
+        z-index: 29; opacity: 0; }
+      #s7-logo { width: 660px; height: auto; display: block; margin-bottom: 66px;
+        filter: drop-shadow(0 10px 34px rgba(0,0,0,0.55)); }
+      /* Same treatment as the other caps lines in the piece (#s59-sub, #gcard-vs):
+         Rethink Sans 800, uppercase. Only a hair of positive tracking, so it reads
+         as a CTA label without dropping to a lighter cut that looks like another
+         typeface next to the 800 headlines. */
+      #s7-head { font-size: 52px; font-weight: 800; line-height: 1.14;
+        letter-spacing: 0.04em; text-transform: uppercase; text-indent: 0.04em;
+        /* 560 forces the break after "CAN": measured 474px for "SEE IF WE CAN"
+           and 656px for "SEE IF WE CAN HELP", so the line splits 474/324 instead
+           of orphaning "YOU". The full string is 814px — it fits on one line, but
+           only 37px from each edge. */
+        max-width: 520px; color: var(--brand-white); }
+      #s7-head span { display: inline-block; }
+      #s7-pill { margin-top: 62px; font-size: 44px; font-weight: 800;
+        letter-spacing: -0.005em; color: var(--brand-white);
+        background: var(--brand-flame);
+        padding: 32px 76px; border-radius: 999px;
+        box-shadow: 0 26px 84px -12px rgba(255,76,50,0.78); }
+    </style>
+  </head>
+  <body>
+    <!-- Render contract: root carries id, data-composition-id, data-start,
+         data-duration, data-width, data-height. Timed visible children need
+         class="clip" + data-start/data-duration/data-track-index — except
+         <video>/<audio>, which are timed but never get class="clip".
+         Graphic groups span the full piece so they are always mounted; GSAP
+         owns their visibility. Track indices are unique, so nothing collides. -->
+    <div
+      id="root"
+      data-composition-id="ecomiq-social-proof-4x5"
+      data-start="0"
+      data-duration="38.5"
+      data-width="1080"
+      data-height="1350"
+      data-fps="30"
+    >
+      <div id="bg" class="clip" data-start="0" data-duration="38.5" data-track-index="0"></div>
+
+      <!-- ===== The cut: A-roll (Sean to camera) intercut with b-roll. =====
+           Every A-roll segment is the SAME file trimmed to the same 3.50-40.35
+           window as the VO, so data-media-start == the segment's own start time
+           and lip sync is exact. All muted — the mix takes the separate <audio>.
+           Windows run ~0.25s past their out point so the wrappers can dissolve. -->
+      <div class="bwrap" id="w-a1">
+        <video id="v-a1" data-start="0" data-duration="1.95" data-media-start="0"
+               data-track-index="1" src="assets/broll/4x5/aroll.mp4" muted playsinline></video>
+      </div>
+      <div class="bwrap" id="w-a2">
+        <video id="v-a2" data-start="6.12" data-duration="3.33" data-media-start="6.12"
+               data-track-index="3" src="assets/broll/4x5/aroll.mp4" muted playsinline></video>
+      </div>
+      <div class="bwrap" id="w-b2">
+        <video id="v-b2" data-start="9.2" data-duration="3.65" data-media-start="0"
+               data-track-index="4" src="assets/broll/4x5/walking-late.mp4" muted playsinline></video>
+      </div>
+      <div class="bwrap" id="w-a3">
+        <video id="v-a3" data-start="12.6" data-duration="2.65" data-media-start="12.6"
+               data-track-index="5" src="assets/broll/4x5/aroll.mp4" muted playsinline></video>
+      </div>
+      <div class="bwrap" id="w-a4">
+        <video id="v-a4" data-start="19.9" data-duration="3.45" data-media-start="19.9"
+               data-track-index="7" src="assets/broll/4x5/aroll.mp4" muted playsinline></video>
+      </div>
+      <div class="bwrap" id="w-b4">
+        <video id="v-b4" data-start="23.1" data-duration="3.45" data-media-start="1.3"
+               data-track-index="8" src="assets/broll/4x5/product.mp4" muted playsinline></video>
+      </div>
+
+      <div id="scrim" class="clip" data-start="0" data-duration="38.5" data-track-index="12"></div>
+      <div id="vignette" class="clip" data-start="0" data-duration="38.5" data-track-index="13"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="38.5" data-track-index="14"></div>
+
+      <!-- ===== Wordless data graphics. Numerals only — no copy — and all
+           held clear of the bottom subtitle zone. ===== -->
+
+      <!-- Full-bleed stat card, over "…returning customers by 59% without
+           spending a dollar more on ads". -->
+      <div id="s59" class="clip" data-start="0" data-duration="38.5" data-track-index="15">
+        <img id="s59-logo" src="assets/dryft-sleep-logo-white.png" alt="Dryft Sleep" />
+        <div id="s59-eyebrow">Returning customers</div>
+        <div id="s59-num"><span class="plus">+</span><span id="s59-val">0</span><span class="pct">%</span></div>
+        <div id="s59-rule"></div>
+        <div id="s59-sub">Without a dollar more on ads</div>
+      </div>
+
+      <!-- Full-bleed graph card, over "…subscription revenue is now three times
+           their first customer revenue". -->
+      <div id="gcard" class="clip" data-start="0" data-duration="38.5" data-track-index="16">
+        <div id="gcard-eyebrow">Where the revenue comes from now</div>
+        <div class="grow">
+          <div id="g-l1" class="glabel">First order revenue</div>
+          <div class="gbar gbar-dim"><i id="g-b1"></i></div>
+        </div>
+        <div class="grow">
+          <div id="g-l2" class="glabel">Subscription revenue</div>
+          <div class="gbar gbar-hot"><i id="g-b2"></i></div>
+        </div>
+        <div id="gcard-lock">
+          <div id="gcard-mult">3x</div>
+          <div id="gcard-vs">Bigger than<br />first orders</div>
+        </div>
+      </div>
+
+      <!-- Full-bleed message card, over "that's what we do…" / "stop spending
+           money on ads…". Words are wanted HERE specifically (the graphics
+           elsewhere stay wordless). -->
+      <div id="card" class="clip" data-start="0" data-duration="38.5" data-track-index="17">
+        <div id="card-eyebrow">What we do</div>
+        <div id="card-l1" class="card-line">Keep more of what you&rsquo;ve already got.</div>
+        <svg id="card-arrow" width="48" height="74" viewBox="0 0 56 86" aria-hidden="true">
+          <path d="M28 4 V70 M8 52 L28 74 L48 52" fill="none" stroke="#9CD4FF"
+                stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div id="card-l2" class="card-line">Without spending more on ads.</div>
+        <div id="card-pill"><span class="x">&#10007;</span>No extra ad spend</div>
+      </div>
+
+      <div id="s7-cover" class="clip" data-start="0" data-duration="38.5" data-track-index="18"></div>
+      <div id="s7-bloom" class="clip" data-start="0" data-duration="38.5" data-track-index="19"></div>
+      <div id="s7-glow" class="clip" data-start="0" data-duration="38.5" data-track-index="23"></div>
+      <div id="s7" class="stage clip" data-start="0" data-duration="38.5" data-track-index="20">
+        <img id="s7-logo" src="assets/ecomiq-logo-white-lockup.png" alt="EcomIQ" />
+        <div id="s7-head"><span>See</span> <span>if</span> <span>we</span> <span>can</span> <span>help</span> <span>you</span></div>
+        <div id="s7-pill">Find out more</div>
+      </div>
+
+      <!-- Persistent logo, on every frame. Non-timed wrapper keeps it put. -->
+      <div id="logo-hold">
+        <img id="logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+      </div>
+
+      <!-- Voiceover: source trimmed 3.50–40.35s (record-press + throat clear off
+           the head, room tone off the tail) and loudness-normalised. -->
+      <audio id="vo" data-start="0" data-duration="36.9" data-track-index="21"
+             data-volume="1" src="assets/vo/vo-trimmed.m4a"></audio>
+
+      <!-- MUSIC BED placeholder — currently 38.5s of silence, already wired and
+           ducked under the VO at 0.18. Drop a real track in at
+           assets/audio/music-bed.m4a (same path) and it plays with no HTML edit.
+           Raise/lower the mix with data-volume. -->
+      <audio id="music" data-start="0" data-duration="38.5" data-track-index="22"
+             data-volume="0.18" src="assets/audio/music-bed.m4a"></audio>
+    </div>
+
+    <script>
+      // Exactly one paused timeline, keyed to data-composition-id.
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // The cut, on the trimmed VO timeline (raw source time - 3.50s).
+      // A = Sean to camera, B = b-roll.
+      //
+      // Transitions are the "cut-the-curve" vertical whip from MOTION_PHILOSOPHY:
+      // the outgoing frame rides UP with blur on a power2.in, the incoming rises
+      // from below with matching blur on a power2.out — same direction, velocity
+      // matched at the cut. Motion blur masks the join; a plain fade would not.
+      // Durations are multiples of 1/30s so the steep eases don't alias.
+      const OUT_D = 0.333, IN_D = 0.667, WHIP_Y = 63;
+      const SEGS = [
+        ["#w-a1",  "A",  0.00,  1.70, 0.00],
+        ["#w-a2",  "A",  6.12,  9.20, 0.00],
+        ["#w-b2",  "B",  9.20, 12.60, 0.00],
+        ["#w-a3",  "A", 12.60, 15.00, 0.00],
+        ["#w-a4",  "A", 19.90, 23.10, 0.00],
+        ["#w-b4",  "B", 23.10, 26.40, 0.00]
+      ];
+      SEGS.forEach(([sel, kind, inAt, outAt, scrim], i) => {
+        if (i === 0) {
+          tl.fromTo(sel, { opacity: 0, filter: "blur(26px)" },
+            { opacity: 1, filter: "blur(0px)", duration: 0.667, ease: "power2.out" }, inAt);
+        } else {
+          tl.fromTo(sel, { opacity: 1, y: WHIP_Y, filter: "blur(26px)" },
+            { y: 0, filter: "blur(0px)", duration: IN_D, ease: "power2.out" }, inAt);
+        }
+        // The camera never sleeps: b-roll pushes, and even the talking head keeps
+        // a slow drift so no beat sits perfectly still. The 1.12 base scale is
+        // headroom so the whip's +/-90px travel never exposes a frame edge.
+        tl.fromTo(sel + " video", { scale: 1.12 },
+          { scale: kind === "B" ? 1.19 : 1.155,
+            duration: (outAt - inAt) + IN_D, ease: "none" }, inAt);
+        tl.to(sel, { y: -WHIP_Y, filter: "blur(26px)",
+          duration: OUT_D, ease: "power2.in" }, outAt);
+        tl.set(sel, { opacity: 0 }, outAt + OUT_D);
+        // The scrim exists only to keep a numeral legible. Segments carrying no
+        // graphic get none of it, so the footage plays clean.
+        tl.to("#scrim", { opacity: scrim, duration: OUT_D, ease: "power1.inOut" }, inAt);
+      });
+
+      // Vignette breathes so "still" frames stay alive (finite repeats — an
+      // infinite one breaks the capture engine).
+      tl.to("#vignette", { opacity: 0.82, duration: 4, ease: "sine.inOut",
+        yoyo: true, repeat: Math.max(0, Math.floor(38.5 / 8) - 1) }, 0);
+
+      /* ---- The stat card. Rises in like a cut, then builds to the reference:
+              figure counts up onto the spoken "59%" (2.61), a flame rule draws
+              under it, then the qualifier lands on "without spending a dollar
+              more" (3.52). ---- */
+      const n1 = { v: 0 };
+      tl.fromTo("#s59", { opacity: 0, y: 90, filter: "blur(26px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.667, ease: "power2.out" }, 1.70);
+      // The wordmark scales in ahead of everything else — the VO has just said
+      // "Dryft Sleep", so the mark is the first thing the card states.
+      tl.fromTo("#s59-logo", { opacity: 0, scale: 0.86, filter: "blur(18px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)",
+          duration: 0.567, ease: "back.out(1.6)" }, 1.78);
+      tl.fromTo("#s59-eyebrow", { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.95);
+      tl.fromTo("#s59-num", { opacity: 0, scale: 0.7, filter: "blur(24px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)",
+          duration: 0.5, ease: "back.out(2)" }, 2.10);
+      tl.to(n1, { v: 59, duration: 0.9, ease: "power2.out", snap: { v: 1 },
+        onUpdate() { document.getElementById("s59-val").textContent = n1.v; } }, 2.15);
+      tl.fromTo("#s59-rule", { scaleX: 0 },
+        { scaleX: 1, duration: 0.567, ease: "power3.out" }, 3.10);
+      tl.fromTo("#s59-sub", { opacity: 0, y: 34 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 3.55);
+      tl.to("#s59", { opacity: 0, y: -90, filter: "blur(26px)",
+        duration: 0.333, ease: "power2.in" }, 6.12);
+
+      /* ---- The graph card. Builds through the line it emphasises: the
+              baseline bar, then the subscription bar extending to exactly 3x it,
+              then the multiple stamping on. ---- */
+      tl.fromTo("#gcard", { opacity: 0, y: 90, filter: "blur(26px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.667, ease: "power2.out" }, 15.00);
+      tl.fromTo("#gcard-eyebrow", { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 15.15);
+      // baseline: "their first customer revenue"
+      tl.fromTo("#g-l1", { opacity: 0, x: -26 },
+        { opacity: 1, x: 0, duration: 0.433, ease: "power2.out" }, 15.55);
+      tl.fromTo("#g-b1", { scaleX: 0 },
+        { scaleX: 1, duration: 0.5, ease: "power3.out" }, 15.70);
+      tl.fromTo("#g-l2", { opacity: 0, x: -26 },
+        { opacity: 1, x: 0, duration: 0.433, ease: "power2.out" }, 16.20);
+      // the payoff bar extends on the spoken "three times" (16.58)
+      tl.fromTo("#g-b2", { scaleX: 0 },
+        { scaleX: 1, duration: 0.867, ease: "expo.out" }, 16.55);
+      tl.fromTo("#gcard-mult", { opacity: 0, scale: 0.34, filter: "blur(30px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)",
+          duration: 0.5, ease: "back.out(2.4)" }, 17.10);
+      tl.fromTo("#gcard-vs", { opacity: 0, x: -22 },
+        { opacity: 1, x: 0, duration: 0.433, ease: "power2.out" }, 17.35);
+      // rides out like any other cut, handing back to Sean
+      tl.to("#gcard", { opacity: 0, y: -90, filter: "blur(26px)",
+        duration: 0.333, ease: "power2.in" }, 19.90);
+
+      /* ---- The message card. Rises in with the same blur as a cut, then
+              reveals in step with the two lines Sean speaks over it. ---- */
+      tl.fromTo("#card", { opacity: 0, y: 90, filter: "blur(26px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.667, ease: "power2.out" }, 26.40);
+      tl.fromTo("#card-eyebrow", { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 26.60);
+      // "keep more of what they've already got" (27.48)
+      tl.fromTo("#card-l1", { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 27.40);
+      tl.fromTo("#card-arrow", { opacity: 0, y: -18 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 29.90);
+      // "stop spending money on ads" (30.24)
+      tl.fromTo("#card-l2", { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 30.24);
+      // "without needing to" (31.94)
+      tl.fromTo("#card-pill", { opacity: 0, scale: 0.86 },
+        { opacity: 1, scale: 1, duration: 0.533, ease: "back.out(1.8)" }, 31.90);
+
+      /* ---- Beat 7 — end card. Cuts on the spoken "If" (raw 36.94 -> 33.44).
+              Final scene: the one place exit animation is allowed. ---- */
+      tl.to("#s7-cover", { opacity: 1, duration: 0.46, ease: "power2.inOut" }, 33.44);
+      // The corner logo steps aside — the end card carries the lockup centred.
+      tl.to("#logo-hold", { opacity: 0, duration: 0.3, ease: "power1.inOut" }, 33.44);
+      tl.to("#s7-bloom", { opacity: 1, duration: 0.9, ease: "sine.out" }, 33.60);
+      tl.to("#s7-glow", { opacity: 1, duration: 1.0, ease: "sine.out" }, 33.50);
+      tl.to("#s7", { opacity: 1, duration: 0.30, ease: "power1.out" }, 33.62);
+      tl.fromTo("#s7-logo", { opacity: 0, y: 38, scale: 0.90 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.70, ease: "power3.out" }, 33.66);
+      // The tracked line arrives word by word rather than as one sliding block —
+      // transforms only, so nothing reflows under the frame-seek engine.
+      tl.set("#s7-head", { opacity: 1 }, 33.92);
+      tl.fromTo("#s7-head span", { opacity: 0, y: 28 },
+        { opacity: 1, y: 0, duration: 0.50, ease: "power3.out", stagger: 0.055 }, 33.92);
+      // Pill lands on "find out more" (raw 39.19 -> 35.69).
+      tl.fromTo("#s7-pill", { opacity: 0, scale: 0.82 },
+        { opacity: 1, scale: 1, duration: 0.54, ease: "back.out(1.8)" }, 35.50);
+      tl.to("#s7-pill", { scale: 1.045, duration: 0.62, ease: "sine.inOut",
+        yoyo: true, repeat: 3 }, 36.30);
+      // Slow bloom drift carries the hold to the last frame (real motion, so the
+      // timeline reaches 38.5s without an empty padding tween).
+      tl.to("#s7-bloom", { scale: 1.12, opacity: 0.72, duration: 3.6, ease: "sine.inOut" }, 34.90);
+      tl.to("#s7-glow", { scale: 1.09, duration: 3.6, ease: "sine.inOut" }, 34.90);
+
+      window.__timelines["ecomiq-social-proof-4x5"] = tl;
+    </script>
+  </body>
+</html>

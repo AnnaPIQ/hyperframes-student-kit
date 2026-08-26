@@ -57,7 +57,10 @@ if [ -f "$MASTER" ]; then
   A_SS=$(echo "$TRIM_START - $PREVIEW_LEAD" | bc)
   A_TO=$(echo "$TRIM_END - $PREVIEW_LEAD" | bc)
   # 3840x2160: every offset is exactly double the 1920x1080 numbers below.
+  # Sean's centre sits at x=1844 of 3840. Each window is centred on him:
+  #   9:16 -> 1216 wide, 4:5 -> 1728 wide (2160*0.8), 1:1 -> 2160 wide.
   CROP_916="crop=1216:2160:1236:0"
+  CROP_45="crop=1728:2160:980:0"
   CROP_11="crop=2160:2160:764:0"
 else
   echo "▶ master not present — falling back to the preview stream (softer 9:16)"
@@ -66,6 +69,7 @@ else
   A_SS="$TRIM_START"
   A_TO="$TRIM_END"
   CROP_916="crop=608:1080:618:0"
+  CROP_45="crop=864:1080:490:0"
   CROP_11="crop=1080:1080:382:0"
 fi
 
@@ -76,18 +80,21 @@ ffmpeg -nostdin -y -hide_banner -loglevel error \
   -ac 2 -ar 48000 -c:a aac -b:a 192k assets/vo/vo-trimmed.m4a
 ffprobe -v error -show_entries format=duration -of csv=p=0 assets/vo/vo-trimmed.m4a
 
-# norm <name> <9:16 filter> <1:1 filter>
+# norm <name> <9:16 filter> <4:5 filter> <1:1 filter>
 norm() {
-  local name=$1 v916=$2 v11=$3
+  local name=$1 v916=$2 v45=$3 v11=$4
   echo "▶ $name"
   ffmpeg -nostdin -y -hide_banner -loglevel error -i "assets/broll/${name}-src.mp4" \
     -vf "$v916,setsar=1" -an -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p \
     "assets/broll/9x16/${name}.mp4"
   ffmpeg -nostdin -y -hide_banner -loglevel error -i "assets/broll/${name}-src.mp4" \
+    -vf "$v45,setsar=1" -an -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p \
+    "assets/broll/4x5/${name}.mp4"
+  ffmpeg -nostdin -y -hide_banner -loglevel error -i "assets/broll/${name}-src.mp4" \
     -vf "$v11,setsar=1" -an -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p \
     "assets/broll/1x1/${name}.mp4"
 }
-mkdir -p assets/broll/9x16 assets/broll/1x1
+mkdir -p assets/broll/9x16 assets/broll/4x5 assets/broll/1x1
 
 # The five transposed clips are already 2160x3840, so 9:16 is a pure scale.
 # For 1:1 the crop window is biased DOWN per clip: these were shot with the
@@ -95,22 +102,27 @@ mkdir -p assets/broll/9x16 assets/broll/1x1
 # Offsets picked by eye off the frame sweep (420 = centre, larger = lower).
 #   walking / excited  -> 420  (faces sit high; lower crops cut them)
 #   storefront / suppliers / shelf -> 620  (subject sits low)
+# Every clip scales to 1080 wide (=1920 tall) first, then the shorter frames crop
+# from that. y is the TOP of the window, so the same subject centre is a different
+# y per ratio: 1:1 keeps 1080 of 1920 (centre = y+540), 4:5 keeps 1350 (centre =
+# y+675). The two centres in use are 960 (frame centre) and 1160 (200px lower).
 VERT_916="scale=1080:1920"
-vert11() { echo "scale=1080:-2,crop=1080:1080:0:$1"; }
+vert45() { echo "scale=1080:-2,crop=1080:1350:0:$1"; }   # 285 -> centre 960, 485 -> 1160
+vert11() { echo "scale=1080:-2,crop=1080:1080:0:$1"; }   # 420 -> centre 960, 620 -> 1160
 
 # The three exterior/shopfront clips are shot into shade and sit ~75-81 mean luma
 # vs ~138-148 for the interior ones. Under a navy scrim they crush to near-black,
 # so lift them before the scrim ever touches them.
 LIFT="eq=brightness=0.07:contrast=1.08:saturation=1.06,"
 
-norm walking      "$VERT_916"      "$(vert11 420)"
-norm walking-late "$VERT_916"      "$(vert11 420)"   # in the cut at 9.2s
-norm excited    "$VERT_916"        "$(vert11 420)"
-norm storefront "$LIFT$VERT_916"   "$LIFT$(vert11 620)"
-norm suppliers  "$LIFT$VERT_916"   "$LIFT$(vert11 620)"
-norm shelf      "$LIFT$VERT_916"   "$LIFT$(vert11 620)"
+norm walking      "$VERT_916"      "$(vert45 285)"        "$(vert11 420)"
+norm walking-late "$VERT_916"      "$(vert45 285)"        "$(vert11 420)"   # in the cut at 9.2s
+norm excited    "$VERT_916"        "$(vert45 285)"        "$(vert11 420)"
+norm storefront "$LIFT$VERT_916"   "$LIFT$(vert45 485)"   "$LIFT$(vert11 620)"
+norm suppliers  "$LIFT$VERT_916"   "$LIFT$(vert45 485)"   "$LIFT$(vert11 620)"
+norm shelf      "$LIFT$VERT_916"   "$LIFT$(vert45 485)"   "$LIFT$(vert11 620)"
 
-norm product    "$VERT_916"        "$(vert11 420)"
+norm product    "$VERT_916"        "$(vert45 285)"        "$(vert11 420)"
 
 # ---- A-roll: crop the 1920x1080 talking head to each delivery ratio ----------
 # Trimmed to the SAME 3.50-40.35 window as the VO, so lip sync is exact, and
@@ -126,6 +138,11 @@ ffmpeg -nostdin -y -hide_banner -loglevel error \
   -ss "$A_SS" -to "$A_TO" -i "$AROLL_IN" \
   -map v:0 -an -vf "$CROP_916,scale=1080:1920:flags=lanczos,setsar=1" \
   -c:v libx264 -preset slow -crf 18 -pix_fmt yuv420p assets/broll/9x16/aroll.mp4
+echo "▶ A-roll 4:5"
+ffmpeg -nostdin -y -hide_banner -loglevel error \
+  -ss "$A_SS" -to "$A_TO" -i "$AROLL_IN" \
+  -map v:0 -an -vf "$CROP_45,scale=1080:1350:flags=lanczos,setsar=1" \
+  -c:v libx264 -preset slow -crf 18 -pix_fmt yuv420p assets/broll/4x5/aroll.mp4
 echo "▶ A-roll 1:1"
 ffmpeg -nostdin -y -hide_banner -loglevel error \
   -ss "$A_SS" -to "$A_TO" -i "$AROLL_IN" \
@@ -133,7 +150,7 @@ ffmpeg -nostdin -y -hide_banner -loglevel error \
   -c:v libx264 -preset slow -crf 18 -pix_fmt yuv420p assets/broll/1x1/aroll.mp4
 
 echo "✅ prepped"
-for d in 9x16 1x1; do
+for d in 9x16 4x5 1x1; do
   echo "--- $d ---"
   for f in assets/broll/$d/*.mp4; do
     printf '%-34s %s\n' "$f" "$(ffprobe -v error -select_streams v:0 \

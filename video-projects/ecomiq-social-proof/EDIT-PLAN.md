@@ -1,13 +1,14 @@
 # EcomIQ × Dryft Sleep — social-proof ad · EDIT PLAN
 
-**Status: FINAL (v13) — high-quality bake off the 4K ProRes master.** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
+**Status: FINAL (v14) — high-quality bake off the 4K ProRes master, delivered 9:16 + 4:5.** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
 **wordless numerals** (one deliberate full-bleed message card carries copy) ·
 **bottom of frame clear for subtitles** · no logo wall ·
 no star rating · no testimonial quote · **a graphic only where a real figure is spoken** ·
 **no scrim on any segment without a graphic** · motion pass against
 `MOTION_PHILOSOPHY.md`.
 
-Format: 9:16 (1080×1920) + 1:1 (1080×1080) · 30fps · H.264/AAC, faststart.
+Format: **9:16 (1080×1920) + 4:5 (1080×1350)** · 30fps · H.264/AAC, faststart.
+(1:1 is still generated on demand — one command — but is not a delivered file.)
 Audio-led, full length — no cutdown.
 
 ## Source media
@@ -199,8 +200,10 @@ From the VO and the published case study
 ## Delivery
 
 - `renders/ecomiq-social-proof-9x16.mp4` — 1080×1920, from `index.html` — **38.7 MB, 8.4 Mbps**
-- `renders/ecomiq-social-proof-1x1.mp4` — 1080×1080, from `compositions/square.html` — **21.6 MB, 4.7 Mbps**
+- `renders/ecomiq-social-proof-4x5.mp4` — 1080×1350, from `compositions/portrait45.html` — **26.9 MB, 5.9 Mbps**
 - `renders/ecomiq-social-proof-9x16-compressed.mp4` — CRF 26 copy for chat/email (5.9 MB)
+
+`compositions/square.html` (1:1) still generates and lints, but isn't a delivered file.
 
 Both masters are `--quality high` (CRF 15), H.264 High profile / AAC-LC 48 kHz stereo,
 1080p, 30fps, `yuv420p`, `+faststart` — verified with ffprobe. Delivery dimensions stay
@@ -209,11 +212,20 @@ the 4K source rather than a bigger frame.
 
 ## Build notes
 
-- One standalone composition per ratio. `compositions/square.html` is **generated** from
-  `index.html` by `scripts/make-square.py` — same cut sheet and timeline, with the frame
+- One standalone composition per ratio. The shorter frames are **generated** from
+  `index.html` by `scripts/make-ratios.py` — same cut sheet and timeline, with the frame
   height, b-roll variant folder, subtitle-safe zone and type scale swapped. Every rule is
-  asserted present, so a change to the 9:16 master cannot silently miss the square. Run it
-  after any edit to `index.html`.
+  asserted present, so a change to the 9:16 master cannot silently miss a ratio. Run it
+  after any edit to `index.html` (`python3 scripts/make-ratios.py [4x5|1x1]`). Adding a
+  ratio means adding one `SPEC` entry — the substitution templates are shared.
+- **4:5 is not simply "9:16 with smaller type".** It is short relative to the card content,
+  so centring already leaves ~33% of the frame clear for subtitles. Carrying the taller
+  frames' bottom padding across pushed every card into the top half and opened a dead band
+  underneath; the 4:5 paddings are therefore much smaller (90–130px, vs 300–470 on 9:16).
+- A-roll crops are all centred on the subject at x=1844 of the 3840-wide master: 1216 wide
+  for 9:16, **1728 for 4:5** (2160×0.8), 2160 for 1:1. B-roll scales to 1080 wide (=1920
+  tall) then crops with a per-clip y-bias — 285/485 for 4:5, 420/620 for 1:1, both landing
+  the same two subject centres (960 and 1160).
 - A-roll 9:16 crops 608px wide from x=618 of the 1920 frame (subject centres on x≈922);
   1:1 crops 1080 wide from x=382. Framing was checked across the whole take.
 - The b-roll bed crossfades (blur, 0.42s) under GSAP-driven graphic groups; every graphic
