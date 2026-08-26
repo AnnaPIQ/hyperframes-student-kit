@@ -80,7 +80,7 @@ not estimated). Speech runs 3.717→34.172s in the source; the clip is trimmed f
 | 14.73–22.00 | "…we're doing it right now." | `#g4` "right now." in Hedvig italic, scale-in |
 | 22.49–23.66 | "No gurus." | `#g5` full-frame type + strike, over a navy scrim |
 | 23.84–24.66 | "No theory." | `#g6` same layout, whip-cut (rule of threes, beat 2) |
-| 24.80–26.81 | "Just what actually grows a profitable brand." | `#g7` "*profitable*" in flame italic + rising rule |
+| 24.80–26.81 | "Just what actually grows a profitable brand." | `#g7` full-frame type, all white; flame rising rule carries the accent |
 | 27.82–30.72 | "Want to see if we're a good fit? Tap the link…" | clean; logo begins its flight |
 | 30.87–36.00 | — | End card: logo centre, "Advice from people *doing it*", flame "Learn More →" pill, 5.1s hold |
 
