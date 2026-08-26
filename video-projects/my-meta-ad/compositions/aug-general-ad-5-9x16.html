@@ -127,6 +127,34 @@
         color: var(--brand-white);
       }
 
+      /* ---- Logo wall · "dozens of real brands" ----------------------------
+         Client marks knocked out to white (scripts/prep-logo-wall.sh) drifting
+         up a heavy navy scrim, with the Shopify Premier Partner badge landing
+         centre as the hero. */
+      #wall { position: absolute; inset: 0; overflow: hidden; }
+      #wall-scrim { position: absolute; inset: 0; background: rgba(6,40,76,.90); }
+      #wall-track {
+        position: absolute; left: 0; top: 0; width: 1080px;
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 200px; align-items: center; justify-items: center;
+      }
+      #wall-track img {
+        max-width: 314px; max-height: 104px; width: auto; height: auto;
+        opacity: .30; filter: drop-shadow(0 0 18px rgba(6,40,76,.9));
+      }
+      #wall-fade {
+        position: absolute; inset: 0; pointer-events: none;
+        background:
+          linear-gradient(180deg, rgba(6,40,76,.92) 0%, rgba(6,40,76,0) 13%),
+          linear-gradient(0deg,  rgba(6,40,76,.92) 0%, rgba(6,40,76,0) 13%);
+      }
+      #wall-hero {
+        position: absolute; left: 50%; top: 50%; width: 480px;
+        margin-left: -240px; height: auto; display: block;
+        border-radius: 10px;
+        box-shadow: 0 30px 90px -20px rgba(0,0,0,.75);
+      }
+
       /* Beat 3 — "THEORY" struck through */
       #b2 { top: 1180px; }
       #b2 .word { position: relative; display: inline-block; font-size: 132px; font-weight: 800; letter-spacing: -.035em; }
@@ -155,15 +183,6 @@
       #b4 .bar.rev { height: 150px; background: linear-gradient(180deg, var(--brand-blue-tint), #3f7fb8); }
       #b4 .bar.pro { height: 210px; background: linear-gradient(180deg, #ffa63d, var(--brand-flame)); }
       #b4 .lbl { font-size: 32px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
-
-      /* Beat 6 — receipt ticks */
-      #b5 { top: 1130px; }
-      #b5 .tick { display: flex; align-items: center; gap: 24px; margin-bottom: 22px; font-size: 54px; font-weight: 700; letter-spacing: -.02em; }
-      #b5 .mark {
-        width: 52px; height: 52px; border-radius: 12px; background: var(--brand-flame);
-        display: flex; align-items: center; justify-content: center;
-        font-size: 32px; font-weight: 800; color: var(--brand-white);
-      }
 
       /* Beat 7 — hero stamp */
       #b6 { top: 1150px; }
@@ -237,34 +256,87 @@
       <div id="scrim-top"    class="clip" data-start="0" data-duration="37.5" data-track-index="2"></div>
       <div id="scrim-bottom" class="clip" data-start="0" data-duration="37.5" data-track-index="3"></div>
 
-      <!-- ---- B-roll · real portfolio brands, over "already working right now
-           across dozens of real brands / nothing we coach is theory" ---- -->
+      <!-- ---- B-roll · real portfolio brands, over "tested on real stores
+           with real money on the line" ---- -->
       <div id="br1-wrap" class="br-wrap">
         <video id="br1" src="assets/aug5-broll-sweetes-9x16.mp4"
-               data-start="2.50" data-duration="3.50" data-track-index="4" muted></video>
+               data-start="17.85" data-duration="1.90" data-track-index="4" muted></video>
       </div>
-      <div id="br1-scrim" class="br-scrim clip" data-start="2.50" data-duration="3.50" data-track-index="6">
+      <div id="br1-scrim" class="br-scrim clip" data-start="17.85" data-duration="1.90" data-track-index="6">
         <div class="in"></div>
       </div>
-      <div id="br1-chip" class="gfx br-chip clip" data-start="2.50" data-duration="3.50" data-track-index="8">
+      <div id="br1-chip" class="gfx br-chip clip" data-start="17.85" data-duration="1.90" data-track-index="12">
         <div class="in"><span class="name">Sweet E&rsquo;s</span></div>
       </div>
 
       <div id="br2-wrap" class="br-wrap">
         <video id="br2" src="assets/aug5-broll-dryft-9x16.mp4"
-               data-start="6.00" data-duration="2.36" data-track-index="5" muted></video>
+               data-start="19.75" data-duration="1.70" data-track-index="5" muted></video>
       </div>
-      <div id="br2-scrim" class="br-scrim clip" data-start="6.00" data-duration="2.36" data-track-index="7">
+      <div id="br2-scrim" class="br-scrim clip" data-start="19.75" data-duration="1.70" data-track-index="7">
         <div class="in"></div>
       </div>
-      <div id="br2-chip" class="gfx br-chip clip" data-start="6.00" data-duration="2.36" data-track-index="16">
+      <div id="br2-chip" class="gfx br-chip clip" data-start="19.75" data-duration="1.70" data-track-index="16">
         <div class="in"><span class="name">Dryft</span></div>
       </div>
 
       <!-- ---- beat graphics ---- -->
 
 
-      <div id="b2" class="gfx clip" data-start="8.36" data-duration="2.20" data-track-index="9">
+
+      <div id="wall" class="clip" data-start="4.00" data-duration="4.36" data-track-index="8">
+        <div class="in">
+          <div id="wall-scrim"></div>
+          <div id="wall-track">
+            <img src="assets/logos/harmless-harvest-logo-webp.png" alt="" />
+            <img src="assets/logos/images-10-png.png" alt="" />
+            <img src="assets/logos/images-11-png.png" alt="" />
+            <img src="assets/logos/images-12-png.png" alt="" />
+            <img src="assets/logos/images-13-png.png" alt="" />
+            <img src="assets/logos/images-14-png.png" alt="" />
+            <img src="assets/logos/images-2-png.png" alt="" />
+            <img src="assets/logos/images-3-png.png" alt="" />
+            <img src="assets/logos/images-4-jpeg.png" alt="" />
+            <img src="assets/logos/images-4-png.png" alt="" />
+            <img src="assets/logos/images-5-jpeg.png" alt="" />
+            <img src="assets/logos/images-5-png.png" alt="" />
+            <img src="assets/logos/images-7-jpeg.png" alt="" />
+            <img src="assets/logos/images-7-png.png" alt="" />
+            <img src="assets/logos/images-8-jpeg.png" alt="" />
+            <img src="assets/logos/images-9-png.png" alt="" />
+            <img src="assets/logos/sotheby-s-logo-wine-svg.png" alt="" />
+            <img src="assets/logos/unnamed-jpg.png" alt="" />
+            <img src="assets/logos/harmless-harvest-logo-webp.png" alt="" />
+            <img src="assets/logos/images-10-png.png" alt="" />
+            <img src="assets/logos/images-11-png.png" alt="" />
+            <img src="assets/logos/images-12-png.png" alt="" />
+            <img src="assets/logos/images-13-png.png" alt="" />
+            <img src="assets/logos/images-14-png.png" alt="" />
+            <img src="assets/logos/images-2-png.png" alt="" />
+            <img src="assets/logos/images-3-png.png" alt="" />
+            <img src="assets/logos/images-4-jpeg.png" alt="" />
+            <img src="assets/logos/images-4-png.png" alt="" />
+            <img src="assets/logos/images-5-jpeg.png" alt="" />
+            <img src="assets/logos/images-5-png.png" alt="" />
+            <img src="assets/logos/images-7-jpeg.png" alt="" />
+            <img src="assets/logos/images-7-png.png" alt="" />
+            <img src="assets/logos/images-8-jpeg.png" alt="" />
+            <img src="assets/logos/images-9-png.png" alt="" />
+            <img src="assets/logos/sotheby-s-logo-wine-svg.png" alt="" />
+            <img src="assets/logos/unnamed-jpg.png" alt="" />
+            <img src="assets/logos/harmless-harvest-logo-webp.png" alt="" />
+            <img src="assets/logos/images-10-png.png" alt="" />
+            <img src="assets/logos/images-11-png.png" alt="" />
+            <img src="assets/logos/images-12-png.png" alt="" />
+            <img src="assets/logos/images-13-png.png" alt="" />
+            <img src="assets/logos/images-14-png.png" alt="" />
+          </div>
+          <div id="wall-fade"></div>
+          <img id="wall-hero" src="assets/shopify-premier-partner.png" alt="Shopify Premier Partner" />
+        </div>
+      </div>
+
+      <div id="b2" class="gfx clip data-start="8.36" data-duration="2.20" data-track-index="9">
         <div class="in">
           <div class="word">THEORY<span class="strike"></span></div>
           <div class="sub">Not what we learned ten years ago.</div>
@@ -288,13 +360,6 @@
         </div>
       </div>
 
-      <div id="b5" class="gfx clip" data-start="17.85" data-duration="2.83" data-track-index="12">
-        <div class="in">
-          <div class="tick"><span class="mark">&#10003;</span>Real stores</div>
-          <div class="tick"><span class="mark">&#10003;</span>Real money</div>
-          <div class="tick"><span class="mark">&#10003;</span>On the line</div>
-        </div>
-      </div>
 
       <div id="b6" class="gfx clip" data-start="23.80" data-duration="2.60" data-track-index="13">
         <div class="in">
@@ -373,6 +438,7 @@
         gsap.set('#film-wrap', { scale: 1.10, x: 0, y: 0, transformOrigin: '50% 34%' });
         reframe(1.35, 1.00,   0,   0, 0.9);   // release out of the cold open
         tl.to('#film-wrap', { scale: 1.04, duration: 1.9, ease: 'none' }, 2.0); // slow drift
+        reframe(4.00,  1.09,  26, -18);
         reframe(8.36,  1.02, -14,   0);
         reframe(11.50, 1.12,  34, -26);
         reframe(15.65, 1.01,   0,   0);
@@ -387,8 +453,8 @@
 
         /* ---- Whip-streaks: fire AT each reframe ---------------------------- */
         const WHIPS = [
-          ['#whip-a', 2.50], ['#whip-c', 6.00], ['#whip-b', 8.36], ['#whip-c', 11.50],
-          ['#whip-a', 15.65], ['#whip-b', 17.85], ['#whip-c', 21.45],
+          ['#whip-a', 4.00], ['#whip-b', 8.36], ['#whip-c', 11.50],
+          ['#whip-a', 15.65], ['#whip-b', 17.85], ['#whip-a', 19.75], ['#whip-c', 21.45],
           ['#whip-a', 24.75], ['#whip-b', 30.04], ['#whip-c', 33.60],
         ];
         WHIPS.forEach(([sel, t]) => {
@@ -398,7 +464,7 @@
             .to(sel, { opacity: 0, duration: 0.16, ease: 'power2.out' }, t + 0.06);
         });
 
-        /* ---- B-roll · Sweet E's (2.50 -> 6.00) and Dryft (6.00 -> 8.36) ----
+        /* ---- B-roll · Sweet E's (17.85 -> 19.75) and Dryft (19.75 -> 21.45)
            Visibility is driven explicitly rather than left to the clip window,
            so the untimed wrappers can never leak a frame outside their slot.
            Each clip drifts slightly so neither reads as a freeze. */
@@ -416,8 +482,21 @@
             .to(chip, { opacity: 0, duration: 0.20, ease: 'power2.in' }, tOut - 0.24)
             .set(chip, { opacity: 0 }, tOut);
         };
-        broll('#br1-wrap', '#br1-chip .in', 2.50, 6.00, 1.06, 1.00);
-        broll('#br2-wrap', '#br2-chip .in', 6.00, 8.36, 1.08, 1.02);
+        broll('#br1-wrap', '#br1-chip .in', 17.85, 19.75, 1.06, 1.00);
+        broll('#br2-wrap', '#br2-chip .in', 19.75, 21.45, 1.08, 1.02);
+
+        /* ---- Logo wall (4.00 -> 8.36) --------------------------------------
+           The wall drifts up continuously so it never reads as a static plate;
+           marks stagger in behind, then the Premier Partner badge lands centre. */
+        tl.fromTo('#wall-scrim', { opacity: 0 }, { opacity: 1, duration: 0.30, ease: 'power2.out' }, 4.00)
+          .fromTo('#wall-track', { y: 0 }, { y: -480, duration: 4.30, ease: 'none' }, 4.02)
+          .fromTo('#wall-track img', { opacity: 0, y: 26 },
+                  { opacity: .30, y: 0, duration: 0.42, ease: 'power2.out', stagger: 0.012 }, 4.06)
+          .fromTo('#wall-hero', { opacity: 0, scale: 1.34, y: -18, filter: 'blur(16px)' },
+                  { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: 0.44, ease: 'back.out(1.6)' }, 5.70)
+          .to('#wall-hero', { scale: 1.025, duration: 0.9, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 6.30)
+          .to('#wall .in', { y: -130, filter: 'blur(24px)', opacity: 0, duration: 0.28, ease: 'power2.in' }, 8.08)
+          .set('#wall .in', { opacity: 0 }, 8.36);
 
         /* ---- Beat 3 · "THEORY" struck through (8.36 -> 10.56) ------------- */
         tl.fromTo('#b2 .word', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.30, ease: 'expo.out' }, 8.42)
@@ -441,12 +520,6 @@
           .fromTo('#b4 .lbl', { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.28, ease: 'expo.out' }, 16.10)
           .to('#b4 .in', { y: -120, filter: 'blur(20px)', opacity: 0, duration: 0.26, ease: 'power2.in' }, 17.29)
           .set('#b4 .in', { opacity: 0 }, 17.55);
-
-        /* ---- Beat 6 · receipt ticks (17.85 -> 20.68) ---------------------- */
-        tl.fromTo('#b5 .tick', { opacity: 0, x: -46 },
-              { opacity: 1, x: 0, duration: 0.30, ease: 'expo.out', stagger: 0.22 }, 17.92)
-          .to('#b5 .in', { y: -130, filter: 'blur(22px)', opacity: 0, duration: 0.28, ease: 'power2.in' }, 20.40)
-          .set('#b5 .in', { opacity: 0 }, 20.68);
 
         /* ---- Beat 7 · hero stamp (23.80 -> 26.40) — hardest hit ---------- */
         tl.fromTo('#b6 .big', { opacity: 0, scale: 1.32, filter: 'blur(20px)' },

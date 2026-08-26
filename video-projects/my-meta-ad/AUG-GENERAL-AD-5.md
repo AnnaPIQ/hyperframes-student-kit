@@ -30,12 +30,12 @@ rather than after it. Total 40.6s.
 
 | t | Beat | Graphic |
 |---|---|---|
-| 2.50 | **B-roll · Sweet E's** | full-bleed rotated phone footage, "SWEET E'S" chip |
-| 6.00 | **B-roll · Dryft** | full-bleed, "DRYFT" chip — Sean himself is in the shot |
+| 4.00 | **logo wall** | 18 client marks drifting up a navy scrim, Shopify Premier Partner badge lands centre |
 | 8.36 | not theory | "THEORY" struck through in flame |
 | 11.50 | premier partner | pulsing flame dot + "LIVE · EVERY SINGLE DAY" |
 | 15.65 | revenue/profit | two risers, blue-tint → flame |
-| 17.85 | real money | three receipt ticks |
+| 17.85 | **B-roll · Sweet E's** | full-bleed rotated phone footage, "SWEET E'S" chip |
+| 19.75 | **B-roll · Dryft** | full-bleed, "DRYFT" chip — the speaker himself is in the shot |
 | 23.80 | **hero stamp** | "NOT A GUESS." + 6px shake on the footage |
 | 26.60 | pattern | node lattice with a flame pulse |
 | 30.04 | should → already | "Not what should work. What already does." all white |
@@ -43,10 +43,9 @@ rather than after it. Total 40.6s.
 
 ## B-roll
 
-Two real portfolio brands run full-bleed over "already working right now across
-dozens of real brands / nothing we coach is theory" — the claim is proved by
-showing the brands rather than by a graphic. The tile-grid graphic that used to
-sit here is gone.
+Two real portfolio brands run full-bleed over "tested on real stores with real
+money on the line", replacing a receipt-tick graphic that only repeated the VO.
+The cut lands on the pause before "So when we tell you to do something".
 
 Both sources are phone footage stored landscape with **no rotation metadata**, so
 prep applies an explicit `transpose=1` (90° clockwise). After the rotate a
@@ -58,6 +57,27 @@ product in frame. Audio is stripped; the VO keeps running underneath.
 **Seams are hard cuts, never fades.** Fading a B-roll clip out revealed the A-roll
 underneath for a couple of frames and ghosted a visible double exposure. Each cut
 lands on a whip-streak instead.
+
+## Logo wall (4.00 → 8.36)
+
+Built to the supplied reference: client marks knocked out to low-opacity white,
+drifting upward over a heavy navy scrim with the speaker faintly visible behind,
+and the **Shopify Premier Partner** badge landing centre as the hero.
+
+`scripts/prep-logo-wall.sh` turns the mixed logo drop (white cards, black cards,
+coloured cards, transparent PNGs) into uniform white silhouettes. Polarity is
+decided per file by sampling the border — a light border means a dark mark, so
+invert; a dark border means the mark is already light. Four sources needed
+handling by name:
+
+| Source | Why |
+|---|---|
+| Dryft | light card, light mark — heuristic misread it |
+| Mob Armor, Sweet E's, Naturally Linda | two-tone marks that cannot survive being reduced to one silhouette — **excluded** |
+
+18 of the 22 supplied logos are in the wall. Mob Armor, Sweet E's and Naturally
+Linda would each need a hand-made mono version to be included; Sweet E's and
+Dryft already appear as B-roll anyway.
 
 ## Captions
 

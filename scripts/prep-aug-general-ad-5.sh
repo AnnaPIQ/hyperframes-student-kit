@@ -77,8 +77,8 @@ prep_broll() {   # <src> <in> <dur> <slug> <square-y>
 }
 
 BROLL_DIR="${BROLL_DIR:-.media}"
-prep_broll "$BROLL_DIR/broll-sweetes.mp4" 87.4 3.60 sweetes 290
-prep_broll "$BROLL_DIR/broll-dryft.mp4"   21.0 2.45 dryft   250
+prep_broll "$BROLL_DIR/broll-sweetes.mp4" 88.5 2.05 sweetes 290
+prep_broll "$BROLL_DIR/broll-dryft.mp4"   21.2 1.85 dryft   250
 
 for f in "$DEST"/aug5-broll-*.mp4; do
   [ -e "$f" ] || continue
