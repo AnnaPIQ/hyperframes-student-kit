@@ -106,6 +106,7 @@
       .kicker {
         font-size: 28px; font-weight: 700; letter-spacing: .26em;
         text-transform: uppercase; color: var(--brand-blue-tint);
+        text-shadow: 0 0 20px rgba(6,40,76,.9), 0 3px 14px rgba(0,0,0,.75);
       }
       .big {
         font-size: 96px; font-weight: 800; line-height: .96; letter-spacing: -.03em;
@@ -118,15 +119,17 @@
 
       /* Beat 0 — cold-open stamp */
       #b0 { top: 300px; }
-      #b0 .l1 { font-size: 76px; font-weight: 800; letter-spacing: -.03em; line-height: .95; color: var(--brand-white); }
+      #b0 .l1 { font-size: 76px; font-weight: 800; letter-spacing: -.03em; line-height: .95; color: var(--brand-white);
+        text-shadow: 0 0 24px rgba(255,255,255,.35), 0 6px 28px rgba(0,0,0,.65); }
       #b0 .l2 {
         font-size: 104px; font-weight: 800; letter-spacing: -.035em; line-height: .95;
-        background: linear-gradient(180deg, #ffffff 0%, var(--brand-blue-tint) 62%, #6fa8d8 100%);
+        background: linear-gradient(180deg, #ffffff 0%, #e4f2ff 46%, var(--brand-blue-tint) 100%);
         -webkit-background-clip: text; background-clip: text; color: transparent;
+        filter: drop-shadow(0 0 26px rgba(156,212,255,.45)) drop-shadow(0 6px 30px rgba(0,0,0,.6));
       }
       #b0 .rule { width: 240px; margin-top: 26px; }
       #b0-scrim { position: absolute; inset: 0; }
-      #b0-scrim .in { position: absolute; inset: 0; background: rgba(6,40,76,.56); }
+      #b0-scrim .in { position: absolute; inset: 0; background: rgba(6,40,76,.46); }
 
       /* Beat 2 — brand-count tile grid */
       #b1 { top: 560px; }
@@ -183,8 +186,8 @@
       /* Beat 8 — pattern lattice (callback to beat 2) */
       #b7 { top: 566px; }
       #b7 svg { width: 660px; height: 190px; display: block; margin-bottom: 26px; }
-      #b7 .edge { stroke: rgba(156,212,255,.66); stroke-width: 3; fill: none; }
-      #b7 .node { fill: var(--brand-blue-tint); }
+      #b7 .edge { stroke: rgba(156,212,255,.82); stroke-width: 3; fill: none; }
+      #b7 .node { fill: var(--brand-blue-tint); filter: drop-shadow(0 0 12px rgba(156,212,255,.8)); }
       #b7 .pulse { stroke: var(--brand-flame); stroke-width: 6; fill: none; filter: drop-shadow(0 0 10px rgba(255,76,50,.9)); }
 
       /* Beat 9 — the recolor beat (one CSS-var tween, no cut) */
@@ -195,13 +198,13 @@
       #b8 .em {
         font-family: 'Hedvig Letters Serif', Georgia, serif;
         font-style: italic; font-weight: 400; letter-spacing: -.01em;
-        display: inline-block;
+        display: inline-block; margin-right: .14em;
       }
 
       /* Beat 10 — CTA chevrons */
       #b9 { top: 660px; }
       #b9 .chev { display: flex; gap: 16px; margin-bottom: 24px; }
-      #b9 .chev span { font-size: 54px; font-weight: 800; color: var(--brand-flame); line-height: 1; }
+      #b9 .chev span { filter: drop-shadow(0 0 18px rgba(255,76,50,.75)); font-size: 54px; font-weight: 800; color: var(--brand-flame); line-height: 1; }
 
       /* ---- End card ---------------------------------------------------------- */
       #card { position: absolute; inset: 0; }
@@ -218,6 +221,7 @@
       #card-head .em {
         font-family: 'Hedvig Letters Serif', Georgia, serif;
         font-style: italic; font-weight: 400; letter-spacing: -.01em; color: var(--brand-blue-tint);
+        display: inline-block; margin-right: .16em;
       }
       #card-cta {
         position: absolute; top: 660px; left: 50%;
@@ -271,15 +275,15 @@
       <div id="crosshairs" class="clip" data-start="0" data-duration="37.5" data-track-index="5"></div>
 
       <!-- ---- beat graphics ---- -->
+      <div id="b0-scrim" class="clip" data-start="0" data-duration="1.35" data-track-index="6">
+        <div class="in"></div>
+      </div>
       <div id="b0" class="gfx clip" data-start="0" data-duration="1.35" data-track-index="7">
         <div class="in">
           <div class="l1">NOT THEORY.</div>
           <div class="l2">ALREADY WORKING.</div>
           <div class="rule flame-rule"></div>
         </div>
-      </div>
-      <div id="b0-scrim" class="clip" data-start="0" data-duration="1.35" data-track-index="6">
-        <div class="in"></div>
       </div>
 
       <div id="b1" class="gfx clip" data-start="6.38" data-duration="1.98" data-track-index="8">

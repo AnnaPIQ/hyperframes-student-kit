@@ -193,12 +193,12 @@
       /* Beat 9 — the recolor beat (one CSS-var tween, no cut) */
       #b8 { top: 1120px; }
       #b8 .in { --swap: #9fb6d4; }
-      #b8 .line { font-size: 96px; font-weight: 800; letter-spacing: -.03em; line-height: 1.0; }
+      #b8 .line { font-size: 82px; font-weight: 800; letter-spacing: -.03em; line-height: 1.08; white-space: nowrap; }
       #b8 .swap { color: var(--swap); }
       #b8 .em {
         font-family: 'Hedvig Letters Serif', Georgia, serif;
         font-style: italic; font-weight: 400; letter-spacing: -.01em;
-        display: inline-block;
+        display: inline-block; margin-right: .14em;
       }
 
       /* Beat 10 — CTA chevrons */
@@ -221,6 +221,7 @@
       #card-head .em {
         font-family: 'Hedvig Letters Serif', Georgia, serif;
         font-style: italic; font-weight: 400; letter-spacing: -.01em; color: var(--brand-blue-tint);
+        display: inline-block; margin-right: .16em;
       }
       #card-cta {
         position: absolute; top: 1215px; left: 50%;
@@ -274,15 +275,15 @@
       <div id="crosshairs" class="clip" data-start="0" data-duration="37.5" data-track-index="5"></div>
 
       <!-- ---- beat graphics ---- -->
+      <div id="b0-scrim" class="clip" data-start="0" data-duration="1.35" data-track-index="6">
+        <div class="in"></div>
+      </div>
       <div id="b0" class="gfx clip" data-start="0" data-duration="1.35" data-track-index="7">
         <div class="in">
           <div class="l1">NOT THEORY.</div>
           <div class="l2">ALREADY WORKING.</div>
           <div class="rule flame-rule"></div>
         </div>
-      </div>
-      <div id="b0-scrim" class="clip" data-start="0" data-duration="1.35" data-track-index="6">
-        <div class="in"></div>
       </div>
 
       <div id="b1" class="gfx clip" data-start="6.38" data-duration="1.98" data-track-index="8">

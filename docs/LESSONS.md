@@ -77,6 +77,26 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+- **A scrim/overlay dims the very text it should sit behind, even with a lower
+  `data-track-index`.** Layer order is **DOM order**, not track index —
+  `data-track-index` assigns timeline lanes (and same-track overlap rules), it does
+  NOT set z-order. **Fix:** put the element you want *behind* EARLIER in the DOM.
+  Cost a full re-render to spot, because it looks like a colour bug, not a
+  stacking bug. *(Aug-General ad 5.)*
+- **The EcomIQ logo SVGs use `mask-type: luminance` and render inverted in the
+  headless Chrome shell** — the icon comes out as a solid white square. **Fix:**
+  reference `ecomiq-logo-white.png` instead of the `.svg` for anything that has to
+  survive a render. (Also note the real lockup *is* a filled badge + wordmark;
+  `ecomiq-icon-white.svg` alone is just the badge — don't use it as the corner logo.)
+- **Trim head/tail silence off talking-head A-roll before timing anything.**
+  `ffmpeg -af silencedetect=noise=-34dB:d=0.28` gives the speech boundaries and the
+  inter-sentence gaps for free; anchor every cut/reframe to those gaps and the edit
+  lands on the beat without a word-level transcript. A raw take can easily carry
+  ~2s of dead air at each end, which is fatal in the first second of a social ad.
+- **Reframe instead of splicing on a single continuous take.** Keep the VO one
+  unbroken clip and animate a wrapper's `scale`/`x`/`y` over a full-bleed crop, with
+  a whip-streak on the cut. Lip sync cannot drift because nothing was ever cut.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
