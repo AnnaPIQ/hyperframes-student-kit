@@ -1,6 +1,6 @@
 # EcomIQ × Dryft Sleep — social-proof ad · EDIT PLAN
 
-**Status: built (v8).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
+**Status: built (v9).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
 **wordless numerals** (one deliberate full-bleed message card carries copy) ·
 **bottom of frame clear for subtitles** · no logo wall ·
 no star rating · no testimonial quote · **a graphic only where a real figure is spoken** ·
@@ -50,11 +50,11 @@ Transitions are 0.20s blur dissolves — fast enough to read as cuts.
 | A1 | 0.00–1.70 | **Sean** | — |
 | STAT | 1.70–6.12 | full-bleed navy | **+59% stat card**, built to the supplied reference |
 | A2 | 6.12–9.20 | **Sean** | — |
-| B2 | 9.20–12.60 | product *(starts 1.3s in)* | — |
+| B2 | 9.20–12.60 | **hand-off** *(new pull: 21.9s window of the walking source)* | — |
 | A3 | 12.60–15.00 | **Sean** | — |
 | GRAPH | 15.00–19.90 | full-bleed navy | **3× graph card**, built to the supplied reference |
 | A4 | 19.90–23.10 | **Sean** | — |
-| B4 | 23.10–26.40 | suppliers | — |
+| B4 | 23.10–26.40 | product *(starts 1.3s in)* | — |
 | CARD | 26.40–33.44 | full-bleed navy | message card, revealed line by line |
 | END | 33.44–38.50 | brand canvas | end card, cuts on the spoken "If" (33.44) |
 
@@ -78,8 +78,10 @@ covering "that's what we do… keep more of what they've already got" and "stop 
 on ads without needing to": eyebrow → white statement → down-arrow → payoff line in blue tint
 → outlined pill, each beat revealed on the words that state it.
 
-**End card:** the corner logo steps aside and the lockup appears centred and large above
-an all-white, non-italic "See if we can help you", with the flame "Find out more" pill.
+**End card:** rebuilt to the client's supplied end-card reference — the corner logo steps
+aside, the lockup appears centred and oversized (800px), then one wide-tracked uppercase
+line in blue tint ("SEE IF WE CAN HELP YOU") arrives word by word, and the flame
+"Find out more" pill lands beneath it over a soft blue bloom.
 
 ## Motion pass (against `MOTION_PHILOSOPHY.md`)
 
@@ -144,9 +146,19 @@ From the VO and the published case study
    in the brief. The headline is now all white and non-italic, so **Hedvig Letters Serif is
    no longer used anywhere** in the piece.
 6. **Music bed:** duckable placeholder `<audio>` at low gain, commented, to drop a track into.
-7c. **v8:** both stats became full-bleed cards to match the reference clips. That retires the
-   `walking` b-roll (it held the old +59%-over-footage slot); with `excited` already unused
-   from v7, the only b-roll left in the cut is `product` and `suppliers`.
+7d. **v9 — b-roll re-cut and end card rebuilt.** The 9.2s beat is a **new pull** from the
+   walking source (`1jHsUTe0...`), taking its **21.9s window** rather than the 19s one: an
+   Erewhon hand-off with the Dryft pouch face-on and readable, `transpose=1`, natively
+   2160x3840. `product` moved from 9.2s to **23.1s**, and `suppliers` was **dropped**. So the
+   b-roll in the cut is now `walking-late` + `product`; `walking`, `excited`, `storefront`
+   and `shelf` are unused.
+   The end card was rebuilt to the client's reference layout (centred oversized lockup ->
+   wide-tracked uppercase line -> flame pill). **That fixed a real latent bug:** `#s7` had
+   `z-index: 30` but no `position`, so the z-index was inert, the card fell into normal flow
+   and the shipped v8 end card was jammed against the top of frame with the logo cropped by
+   the frame edge. It is now `position: absolute; inset: 0` with `opacity: 0` authored in CSS.
+7c. **v8:** both stats became full-bleed cards to match the reference clips. That retired the
+   `walking` b-roll from the old +59%-over-footage slot.
 7b. **v6:** the 9s and 19s b-roll are swapped (product now opens the retention beat, the
    aisle shot carries the 3×). Both are trimmed past their own opening handheld move via
    `data-media-start` — the product clip reframes for ~1.3s, the aisle clip tracks left
@@ -169,8 +181,11 @@ Both H.264 / AAC, 30fps, `+faststart`.
 
 ## Build notes
 
-- One standalone composition per ratio; the square is the same timeline with the graphics
-  and the subtitle-safe zone scaled for the shorter frame.
+- One standalone composition per ratio. `compositions/square.html` is **generated** from
+  `index.html` by `scripts/make-square.py` — same cut sheet and timeline, with the frame
+  height, b-roll variant folder, subtitle-safe zone and type scale swapped. Every rule is
+  asserted present, so a change to the 9:16 master cannot silently miss the square. Run it
+  after any edit to `index.html`.
 - A-roll 9:16 crops 608px wide from x=618 of the 1920 frame (subject centres on x≈922);
   1:1 crops 1080 wide from x=382. Framing was checked across the whole take.
 - The b-roll bed crossfades (blur, 0.42s) under GSAP-driven graphic groups; every graphic

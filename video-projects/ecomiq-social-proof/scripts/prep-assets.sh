@@ -57,7 +57,8 @@ vert11() { echo "scale=1080:-2,crop=1080:1080:0:$1"; }
 # so lift them before the scrim ever touches them.
 LIFT="eq=brightness=0.07:contrast=1.08:saturation=1.06,"
 
-norm walking    "$VERT_916"        "$(vert11 420)"
+norm walking      "$VERT_916"      "$(vert11 420)"
+norm walking-late "$VERT_916"      "$(vert11 420)"   # in the cut at 9.2s
 norm excited    "$VERT_916"        "$(vert11 420)"
 norm storefront "$LIFT$VERT_916"   "$LIFT$(vert11 620)"
 norm suppliers  "$LIFT$VERT_916"   "$LIFT$(vert11 620)"

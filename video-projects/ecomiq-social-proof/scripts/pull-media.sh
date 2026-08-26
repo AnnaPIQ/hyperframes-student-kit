@@ -48,8 +48,13 @@ fi
 
 # ---- 2. B-roll (HTTP-range seek: only the seconds we need) -------------------
 # name|drive_id|in_point|duration|transpose(1=90CW, 0=none)
+# walking-late is the SAME source as `walking`, pulled from its 21.9s window instead
+# of 19s: the earlier window opens on a camera wobble, the later one is the Erewhon
+# hand-off with the Dryft pouch face-on. Re-pulling a later in-point is one range
+# request, so prefer it over hunting for a different clip.
 CLIPS="
 walking|1jHsUTe013mdBLjB6VQvJmjzwj0r6cXzT|19|7.0|1
+walking-late|1jHsUTe013mdBLjB6VQvJmjzwj0r6cXzT|21.9|4.4|1
 storefront|1NgRACv6dGVzw0cay3767fp4kO4qwDTQQ|3|4.2|1
 excited|1HLSp2jot_gQjx2xpl-xeM97bz6u8ihqC|3|6.8|1
 product|1RapxMHiEtRmM6ig2GKFSSeCSHU4PA_U1|8|5.2|1
