@@ -2,7 +2,7 @@
 
 Short-form EcomIQ ad cut from the "what's working" A-roll. Two deliveries from
 one spine: **9:16** (1080×1920, Reels/Stories/TikTok) and **1:1** (1080×1080,
-square feed). Both 30fps, **43.6s**.
+square feed). Both 30fps, **40.6s**.
 
 | | |
 |---|---|
@@ -20,28 +20,39 @@ under a whip-streak. Lip sync cannot drift because nothing was ever cut.
 Every reframe is anchored to a real silence boundary from
 `ffmpeg -af silencedetect=noise=-34dB:d=0.28`. Speech runs **1.892s → 38.087s** in
 the source, so prep trims 1.75s of head air and holds 1.16s past the last word →
-**37.5s of film + 6.1s end card**.
+**37.5s of film**, with the end card taking over at **33.75s** — it lands on
+"wanna see if it'll work for you", so the spoken CTA plays over the branded card
+rather than after it. Total 40.6s.
 
 ## Beat map (composition seconds)
 
 | t | Beat | Graphic |
 |---|---|---|
-| 0.00 | cold open | "NOT THEORY. / ALREADY WORKING." chrome type + flame rule |
-| 6.38 | dozens of brands | 24-tile stagger grid |
+| 4.00 | dozens of brands | 24-tile stagger grid, holds to the THEORY beat |
 | 8.36 | not theory | "THEORY" struck through in flame |
-| 11.50 | live agency | pulsing flame dot + "LIVE · EVERY SINGLE DAY" |
+| 11.50 | premier partner | pulsing flame dot + "LIVE · EVERY SINGLE DAY" |
 | 15.65 | revenue/profit | two risers, blue-tint → flame |
 | 17.85 | real money | three receipt ticks |
 | 23.80 | **hero stamp** | "NOT A GUESS." + 6px shake on the footage |
-| 26.60 | pattern | node lattice with a flame pulse — **callback** to the 6.38 tiles |
-| 30.04 | **recolor beat** | "should" → "already" recolours in place, no cut |
-| 33.75 | CTA pre-roll | flame chevrons |
-| 37.50 | **end card** | lockup + "Built for *Shopify* founders." + "Learn More" pill |
+| 26.60 | pattern | node lattice with a flame pulse — **callback** to the 4.00 tiles |
+| 30.04 | should → already | "Not what should work. What already does." all white |
+| 33.75 | **end card** | film cross-dissolves out; lockup + "Built for Shopify founders." + "Learn More" pill, 6.85s |
 
 ## Captions
 
 **None baked in.** The bottom **300px** (9:16) / **190px** (1:1) is kept clear of
 all graphics so captions can be added later without a relayout.
+
+## Deliberate deviations from the EcomIQ house style
+
+Both were requested directly and are intentional, not oversights:
+
+- **No italic-serif emphasis word.** The brand signature (one Hedvig Letters Serif
+  italic word per headline) is not used — "Shopify" on the end card and
+  "should"/"already" in the closing beat are all white upright Rethink Sans. The
+  Hedvig `@font-face` is still declared but currently unused.
+- **No grid/crosshair texture over the footage.** It read as dirt on the speaker's
+  face, so it survives on the end card only. Vignette and grain remain global.
 
 ## Known limitation — the 9:16 is soft
 
