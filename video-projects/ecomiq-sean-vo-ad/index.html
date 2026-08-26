@@ -22,8 +22,8 @@
         color: var(--brand-text);
       }
 
-      /* The picture bed: Block A (reel straight) + Block B (authority reprise),
-         pre-cut by scripts/build-assets.sh. Muted — Sean's VO is the only voice. */
+      /* The picture bed: the reel played once at 0.813x, pre-cut by
+         scripts/build-assets.sh. Muted — Sean's VO is the only voice. */
       #bed { position: absolute; inset: 0; width: 1080px; height: 1920px; z-index: 0; }
 
 
@@ -40,6 +40,18 @@
       }
       #pip { display: block; width: 100%; height: 100%; object-fit: cover;
         border-radius: 50%; }
+
+      /* ---- BRAND BUG -------------------------------------------------------
+         Small white lockup, top left, mirroring the PiP's top offset. Wrapped
+         in a positioned, non-clip div so the render engine can't move it
+         (LESSONS.md — "logo drifts"). Drop shadow keeps it legible over the
+         reel's bright shots. */
+      #bug-wrap {
+        position: absolute; top: 150px; left: 58px;
+        z-index: 5;
+        filter: drop-shadow(0 6px 20px rgba(0,0,0,0.55));
+      }
+      #bug { display: block; width: 240px; height: auto; }
       /* ---- END CARD -------------------------------------------------------
          Cross-dissolves in on the word "want" (t=33.70). Navy canvas + the
          house radial bloom, white logo lockup, flame pill. Brand tokens only. */
@@ -91,7 +103,7 @@
       data-width="1080"
       data-height="1920"
     >
-      <!-- Picture bed — 34.067s, runs under the dissolve. Montage audio dropped. -->
+      <!-- Picture bed — 34.03s, runs under the dissolve. Montage audio dropped. -->
       <video
         id="bed"
         src="assets/bed-916.mp4"
@@ -100,6 +112,10 @@
         data-duration="34.03"
         data-track-index="0"
       ></video>
+
+      <!-- Brand bug — small white lockup, top left, over the montage.
+           Covered by the end card, which carries the full-size lockup. -->
+      <div id="bug-wrap"><img id="bug" src="assets/ecomiq-logo-white.png" alt="EcomIQ" /></div>
 
       <!-- A-roll — Sean's head over the montage, cut from the same in-point as
            the VO so his lips track his voice. Covered by the end card. -->
@@ -156,7 +172,10 @@
       // fromTo throughout: these elements start hidden, and gsap.from() on a
       // hidden element resolves to invisible (LESSONS.md).
       // A-roll pops in just after the first shot lands, then holds.
-      tl.fromTo("#pip-wrap",
+      tl.fromTo("#bug-wrap",
+          { opacity: 0, y: -14 },
+          { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.25)
+        .fromTo("#pip-wrap",
           { opacity: 0, scale: 0.72 },
           { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 0.35)
         .fromTo("#card", { opacity: 0 }, { opacity: 1, duration: DISSOLVE, ease: "power1.inOut" }, CARD)

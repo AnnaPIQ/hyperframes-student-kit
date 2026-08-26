@@ -30,6 +30,7 @@ Nothing here invents a colour or a font — the end card is built entirely from 
 | Rule + CTA pill | `--brand-flame` |
 | CTA label | `--brand-white`, Rethink Sans 700, −2% tracking |
 | PiP ring | `--brand-blue-tint`, 5–6px |
+| Brand bug | `assets/ecomiq-logo-white.png`, top left |
 
 The Hedvig italic is deliberately absent from the card — the CTA reads as one uniform
 label. The serif stays in the brand kit for headline work elsewhere.
@@ -42,6 +43,24 @@ label. The serif stays in the brand kit for headline work elsewhere.
 ```
 One line, one action. The pill is the only copy on the card, set in a single face and
 weight — Rethink Sans 700, no italics, no mixed type.
+
+## Brand bug
+A small white EcomIQ lockup sits top left over the montage, fading in at t = 0.25 just
+ahead of the PiP and running until the end card covers it.
+
+| | 9:16 | 1:1 |
+|---|---|---|
+| Width | 240 px | 200 px |
+| Offset | top 150, left 58 | top 58, left 58 |
+
+Top offsets match the PiP's, so the bug and Sean's circle sit on the same line and read as
+a deliberate pair rather than two separate overlays. Wrapped in a positioned, non-`clip`
+div and carrying a drop shadow so it stays legible over the reel's bright shots (the
+bakery and street exteriors are near-white).
+
+It points at the **PNG** lockup, not the SVG: two `<img>` elements sharing one source with
+the same implicit timing trips the linter's `duplicate_media_discovery_risk`, since the
+card carries the full-size lockup too. At 1671 px scaled to 240 there is no quality cost.
 
 ## A-roll PiP
 Sean's head, circle-masked, top right, riding over the montage from t = 0.35 until the end

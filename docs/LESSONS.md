@@ -105,6 +105,18 @@ efficient over time instead of relearning the same lessons.
 - **Supplied montages often carry their own end card.** Scene-detect the tail and trim it
   before building your own, or you get two cards back to back.
 
+## Overlays & branding
+
+- **Lint warning `duplicate_media_discovery_risk`**: two `<img>` (or media) nodes pointing
+  at the same source with the same start/duration can be discovered twice at compile time.
+  Common when a brand bug and an end-card lockup use the same file. **Fix:** point one at a
+  different encoding of the same art (PNG vs SVG), or give them distinct timing.
+- **Give a corner bug a `drop-shadow`.** Over a montage it will land on near-white shots
+  (bright interiors, exteriors) where a white lockup disappears entirely.
+- **Match a bug's top offset to whatever else is in the top band** (a PiP, a caption bar).
+  Two overlays on the same line read as one deliberate system; two on different lines read
+  as an accident.
+
 ## Circular PiP / avatar framing
 
 - **Centre a circular PiP on the subject's FACE, not the head's bounding box.** Long hair
