@@ -81,6 +81,10 @@ the clip — not a wider crop.
 not estimated). Speech runs 3.717→34.172s in the source; the clip is trimmed from
 3.45s so VO starts at t≈0.27.
 
+**Total runtime is 32.0s.** The A-roll and its overlay layers stop at 28.4s —
+the end card is fully opaque by 28.0, so there is nothing to see under it — but
+the VO track runs its full 31.1s so the closing lines are still heard.
+
 | t | VO | On screen |
 |---|---|---|
 | 0.27–5.02 | "Most ecommerce advice…not working inside brands." | `#g1` "Most advice" + flame strike-through wipe |
@@ -90,8 +94,8 @@ not estimated). Speech runs 3.717→34.172s in the source; the clip is trimmed f
 | 22.49–23.66 | "No gurus." | `#g5` full-frame type + strike, over a navy scrim |
 | 23.84–24.66 | "No theory." | `#g6` same layout, whip-cut (rule of threes, beat 2) |
 | 24.80–26.81 | "Just what actually grows a profitable brand." | `#g7` full-frame type, all white; flame rising rule carries the accent |
-| 27.82–30.72 | "Want to see if we're a good fit? Tap the link…" | clean; logo begins its flight |
-| 30.87–36.00 | — | End card: logo centre, "Advice from people doing it" (all white, upright), flame "Learn More →" pill, 5.1s hold |
+| 27.82–30.72 | "Want to see if we're a good fit? Tap the link…" | End card comes **up over this line**, not after it — logo starts flying at 27.2, card opaque by 28.0 |
+| 27.60–32.00 | — | End card: logo centre, "Advice from people doing it" (all white, upright), flame "Learn More →" pill. The VO plays on underneath to 30.72, then ~1.3s of held silence to the cut |
 
 ### Beat 3 — the credibility beat
 
@@ -114,6 +118,11 @@ centre as hero.
 - **The badge lands at 8.4s on "Shopify agency"**, not at the top of the beat.
   Its source art is only 338×149, so it ships pre-upscaled 3× rather than
   letting the browser stretch it at render time.
+- **`#wall-hero` is a white CARD, not a bare image.** Prep trims the source
+  flush to the artwork, so the white margin around the mark is added as CSS
+  padding where it can be tuned — 90px on 9:16 (660px card around 480px of
+  artwork), 78px on 1:1. Don't go back to a bare `<img>`; the mark ends up
+  touching the card edge.
 - **Drift is scaled to this ad's longer beat**: 6.4s here vs 4.36s in ad-5, so
   the track travels −700px (9:16) / −470px (1:1) instead of −480/−320.
 - `#wall-hero` is centred with `margin-top`, not `translateY` — GSAP animates
@@ -132,9 +141,14 @@ centre as hero.
   vignette (slow breath) → deterministic CSS grain. No PNG, no PRNG.
 - **Transitions are motion, never slow fades:** blur-whip in/out on every band, a
   motion-blurred light streak masking each of the three type cuts.
-- Flame orange stays the only hot accent. Per Anna's direction the serif-italic
-  emphasis is used **only** on "right now." (17.4s) — the g7 line and the end-card
-  headline are both plain white upright sans.
+- Flame orange stays the only hot accent. Per Anna's direction there is **no
+  serif-italic emphasis anywhere in this cut** — "right now." (17.4s), the g7
+  line and the end-card headline are all plain white upright Rethink Sans. The
+  Hedvig `@font-face` is left declared but unused, so the treatment can be
+  brought back without re-adding the font.
+- **End-card lockup sits at ~45% of frame height**, not centred: the logo flies
+  to `y: 520` (9:16) / `y: 291` (1:1) and the copy block starts at 840 / 495.
+  Centring the group reads as sitting low once the CTA pill is counted.
 
 **Logo sizing note.** The lockup is 1671×286 (5.84:1), so the "8–10% of width"
 watermark spec would render it ~18px tall and unreadable. It ships at 216px (20%)

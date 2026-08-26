@@ -97,10 +97,12 @@
         font-size: 88px; font-weight: 800; line-height: .98; letter-spacing: -.03em;
         color: var(--brand-white); text-shadow: 0 8px 40px rgba(0,0,0,.55);
       }
+      /* "right now." reads as part of the line — same sans, same weight, same
+         white. Per Anna, no serif-italic emphasis anywhere in this cut. */
       .line .em {
-        font-family: 'Hedvig Letters Serif', Georgia, serif;
-        font-style: italic; font-weight: 400; letter-spacing: -.01em;
-        color: var(--brand-blue-tint);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        font-style: normal; font-weight: 800; letter-spacing: -.03em;
+        color: var(--brand-white);
       }
       /* Flame strike-through that wipes across (scaleX 0 -> 1). */
       .strike {
@@ -140,16 +142,23 @@
           linear-gradient(180deg, var(--brand-navy) 0%, rgba(6,40,76,0) 12%),
           linear-gradient(0deg,  var(--brand-navy) 0%, rgba(6,40,76,0) 12%);
       }
+      /* The badge is a white CARD, not a bare image: prep trims the source flush
+         to the artwork, so the white margin around the mark is added here where
+         it can be tuned. box-sizing is border-box globally, so `width` is the
+         card and the padding insets the artwork. */
       #wall-hero {
-        position: absolute; left: 50%; top: 50%; width: 480px;
+        position: absolute; left: 50%; top: 50%; width: 660px;
         /* margin-top, not translateY: GSAP animates `y` on this element and a
-           CSS transform would be clobbered. Centres the badge and lifts it off
-           dead centre. The source art is 338x149, so it ships pre-upscaled 3x
-           rather than letting the browser stretch it at render time. */
-        margin-left: -240px; margin-top: -164px; height: auto; display: block;
-        border-radius: 10px;
+           CSS transform would be clobbered. Centres the card and lifts it off
+           dead centre. */
+        margin-left: -330px; margin-top: -254px;
+        background: var(--brand-white); border-radius: 12px;
+        padding: 90px;
         box-shadow: 0 30px 90px -20px rgba(0,0,0,.75);
       }
+      /* Source art is 338x149; it ships pre-upscaled 3x rather than letting the
+         browser stretch it at render time. */
+      #wall-hero img { display: block; width: 100%; height: auto; }
       /* Beat 4 — "right now." */
       #g4 .line { font-size: 96px; }
 
@@ -201,7 +210,7 @@
         background: var(--brand-gradient-2); filter: blur(96px); opacity: .40;
       }
       #ec-copy {
-        position: absolute; left: 96px; right: 96px; top: 1010px; text-align: center;
+        position: absolute; left: 96px; right: 96px; top: 840px; text-align: center;
       }
       #ec-head {
         font-size: 84px; font-weight: 800; line-height: 1.0; letter-spacing: -.03em;
@@ -231,20 +240,20 @@
       id="root"
       data-composition-id="aug-general-ad-4-vertical"
       data-start="0"
-      data-duration="36"
+      data-duration="32"
       data-width="1080"
       data-height="1920"
       data-fps="30"
     >
       <!-- A-roll: 9:16 centre-punch, silent. VO rides as a sibling <audio>. -->
       <video id="video" src="assets/aroll-vertical.mp4"
-             data-start="0" data-duration="31.1" data-track-index="0" muted></video>
+             data-start="0" data-duration="28.4" data-track-index="0" muted></video>
       <audio id="vo" src="assets/aroll-vo.m4a"
              data-start="0" data-duration="31.1" data-track-index="1" data-volume="1"></audio>
 
-      <div id="grade" class="clip" data-start="0" data-duration="31.1" data-track-index="2"></div>
+      <div id="grade" class="clip" data-start="0" data-duration="28.4" data-track-index="2"></div>
 
-      <svg id="marks" class="clip" data-start="0" data-duration="31.1" data-track-index="3"
+      <svg id="marks" class="clip" data-start="0" data-duration="28.4" data-track-index="3"
            width="1080" height="1920" viewBox="0 0 1080 1920" fill="none">
         <g stroke="#9CD4FF" stroke-width="2" opacity=".34">
           <path d="M56 300h34M73 283v34" /><path d="M990 300h34M1007 283v34" />
@@ -252,7 +261,7 @@
         </g>
       </svg>
 
-      <div id="vignette" class="clip" data-start="0" data-duration="31.1" data-track-index="4"></div>
+      <div id="vignette" class="clip" data-start="0" data-duration="28.4" data-track-index="4"></div>
 
       <!-- Beat 1 · "Most ecommerce advice…" (VO 0.27–5.02) -->
       <div id="g1" class="band clip" data-start="1.0333" data-duration="3.4" data-track-index="5">
@@ -309,7 +318,7 @@
             <img src="assets/logos/unnamed-jpg.png" alt="" />
           </div>
           <div id="wall-fade"></div>
-          <img id="wall-hero" src="assets/shopify-premier-partner.png" alt="Shopify Premier Partner" />
+          <div id="wall-hero"><img src="assets/shopify-premier-partner.png" alt="Shopify Premier Partner" /></div>
         </div>
       </div>
 
@@ -336,7 +345,7 @@
       <div id="streak" class="clip" data-start="22.2" data-duration="9" data-track-index="12"></div>
 
       <!-- End card · holds 5.13s after the VO ends -->
-      <div id="endcard" class="clip" data-start="30.8667" data-duration="5.1333" data-track-index="13">
+      <div id="endcard" class="clip" data-start="27.6" data-duration="4.4" data-track-index="13">
         <div id="ec-bloom"></div>
         <div id="ec-copy">
           <div id="ec-head">Advice from people<br /><span class="em">doing it</span></div>
@@ -351,7 +360,7 @@
         <img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
       </div>
 
-      <div id="grain" class="clip" data-start="0" data-duration="36" data-track-index="14"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="32" data-track-index="14"></div>
     </div>
 
     <script>
@@ -360,7 +369,7 @@
       (() => {
         window.__timelines = window.__timelines || {};
         const tl = gsap.timeline({ paused: true });
-        const SLOT = 36;
+        const SLOT = 32;
 
         /* ---- Beat 1 · "Most advice" + flame strike ---- */
         tl.fromTo("#g1", { opacity: 0, y: 46, filter: "blur(18px)" },
@@ -423,16 +432,16 @@
         whip(22.3333); whip(23.7); whip(24.6667);
 
         /* ---- End card · logo flies from top-left to centre (the callback) ---- */
-        tl.to("#logo-wrap", { x: 360, y: 690, scale: 2.3, duration: 0.7667,
-              ease: "power3.inOut", transformOrigin: "center center" }, 30.5333)
-          .fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 30.8667)
+        tl.to("#logo-wrap", { x: 360, y: 520, scale: 2.3, duration: 0.7667,
+              ease: "power3.inOut", transformOrigin: "center center" }, 27.2)
+          .fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 27.6)
           .fromTo("#ec-head", { opacity: 0, y: 34 },
-            { opacity: 1, y: 0, duration: 0.5667, ease: "power3.out" }, 31.5333)
+            { opacity: 1, y: 0, duration: 0.5667, ease: "power3.out" }, 28.35)
           .fromTo("#ec-cta", { opacity: 0, scale: 0.86 },
-            { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 31.9333)
+            { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 28.75)
           // Keeps the 5s hold alive rather than freezing (Law #4: camera never sleeps).
-          .to("#ec-cta", { scale: 1.035, duration: 0.7667, ease: "sine.inOut", yoyo: true, repeat: 3 }, 32.6)
-          .to("#ec-bloom", { opacity: 0.52, duration: 2.3333, ease: "sine.inOut", yoyo: true, repeat: 1 }, 31.0667)
+          .to("#ec-cta", { scale: 1.035, duration: 0.7667, ease: "sine.inOut", yoyo: true, repeat: 3 }, 29.3)
+          .to("#ec-bloom", { opacity: 0.52, duration: 2.3333, ease: "sine.inOut", yoyo: true, repeat: 1 }, 27.8)
           .to("#vignette", { opacity: 0.86, duration: 3.6667, ease: "sine.inOut", yoyo: true, repeat: 3 }, 0);
 
         // Law #11 — no-op anchor so timeline.duration() fills the whole slot and
