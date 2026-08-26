@@ -95,27 +95,29 @@ not estimated). Speech runs 3.717→34.172s in the source; the clip is trimmed f
 
 ### Beat 3 — the credibility beat
 
-Modelled on `Shopify_Partner_Hero_v2.mp4` (Anna's reference): real client marks
-as low-opacity **white silhouettes** drifting on navy, with the Shopify Premier
-Partner badge landing centre as hero. It replaces an earlier abstract row of
-blue tiles, which said "dozens of brands" without showing any.
+The logo wall is **ported from `claude/aug-general-ad-5-shortform-59z10c`** at
+Anna's request, so both ads share one treatment. It is a FULL opaque navy
+takeover — the footage is completely covered for this beat — with all 21 client
+marks drifting up a tidy grid and the Shopify Premier Partner badge landing
+centre as hero.
 
-- **Assets:** `assets/brands/` — 21 client marks + `shopify-premier-partner.png`.
-  Built by `scripts/prep-brand-logos.sh` from the raw logo pack.
-- **Silhouetting:** polarity is decided per file from mean luminance (dark mark
-  on light ground → invert; light mark on dark ground → straight). Marks on a
-  solid colour (Ozium, Flaming Estate, Naturally Linda, dryft, Sweet E) can't
-  use either rule — the ground survives as a grey box — so those are colour-keyed
-  out instead, everywhere rather than flood-filled from the edges, which would
-  leave letter counters (Ozium's O) filled.
-- **The badge is not silhouetted** — it ships as the original black-on-white
-  card, upscaled 3× at prep time because the source is only 338×149.
-- **Two parallax layers** (`.a` at 13% opacity drifting −150px, `.b` at 22%
-  drifting −280px) so the wall never reads as one flat sheet sliding past.
-- **The badge lands on the word**, at 8.4s — "Shopify agency" — not at the top
-  of the beat. The copy lands at 10.4s on "dozens of live brands".
-- Every logo appears exactly once; duplicates trip the linter's
-  `duplicate_media_discovery_risk`.
+- **Assets:** `assets/logos/` (21 white knockouts, built by the shared
+  `scripts/prep-logo-wall.sh`) + `assets/shopify-premier-partner.png`.
+- **Grid:** 3 columns / 200px rows on 9:16, 4 columns / 170px rows on 1:1. Marks
+  at 34% opacity. The 21 logos are listed **twice** so the track is taller than
+  the frame and can scroll — that duplication is what raises lint's
+  `duplicate_media_discovery_risk` warning. It is benign here: these are
+  decorative `<img>`s with no `data-start`, not timed media. Do not "fix" it by
+  deleting the repeat, or the wall runs out of rows mid-drift.
+- **`#wall .in` clips the track**, so the exit slides the whole opaque panel off
+  as one piece instead of leaving stray logos behind.
+- **The badge lands at 8.4s on "Shopify agency"**, not at the top of the beat.
+  Its source art is only 338×149, so it ships pre-upscaled 3× rather than
+  letting the browser stretch it at render time.
+- **Drift is scaled to this ad's longer beat**: 6.4s here vs 4.36s in ad-5, so
+  the track travels −700px (9:16) / −470px (1:1) instead of −480/−320.
+- `#wall-hero` is centred with `margin-top`, not `translateY` — GSAP animates
+  `y` on it and a CSS transform would be clobbered.
 
 **Design rules this cut follows**
 - **No captions** — the band sits at y 1080–1400 (9:16) / 640–860 (1:1), and the

@@ -84,8 +84,12 @@ efficient over time instead of relearning the same lessons.
   keeps interior detail — the brighter the mark, the more opaque — instead of
   flattening each logo to a solid blob.
 - **Repeating the same logo in a wall trips lint's `duplicate_media_discovery_risk`**
-  ("2 matching img entries with the same source/start/duration"). Use each mark
-  once; if the wall needs more density, add more marks, not copies.
+  ("2 matching img entries with the same source/start/duration"). For a *scattered*
+  wall, use each mark once. But a **scrolling grid** genuinely needs the repeat —
+  21 marks at 3 columns is only 1400px of track, and a 1920 frame drifting 700px
+  needs ~2600px — so there the warning is expected and benign: decorative `<img>`s
+  with no `data-start` are not timed media. Deleting the repeat to silence it just
+  makes the wall run out of rows mid-drift.
 - **`identify -format` prints no trailing newline**, so `read -r w h < <(identify …)`
   returns non-zero and `set -e` kills the script mid-run with no error. Use an MPR
   round-trip (or command substitution) instead of reading dimensions back out.
