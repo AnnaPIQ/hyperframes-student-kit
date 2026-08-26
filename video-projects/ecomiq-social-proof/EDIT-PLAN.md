@@ -1,6 +1,6 @@
 # EcomIQ × Dryft Sleep — social-proof ad · EDIT PLAN
 
-**Status: built (v7).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
+**Status: built (v8).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
 **wordless numerals** (one deliberate full-bleed message card carries copy) ·
 **bottom of frame clear for subtitles** · no logo wall ·
 no star rating · no testimonial quote · **a graphic only where a real figure is spoken** ·
@@ -45,30 +45,33 @@ A = Sean to camera, B = b-roll. Every A-roll segment is the same take trimmed to
 window as the VO, with `data-media-start` == its own start, so lip sync is exact.
 Transitions are 0.20s blur dissolves — fast enough to read as cuts.
 
-| # | in–out | source | graphic | scrim |
-|---|---|---|---|---|
-| A1 | 0.00–2.30 | **Sean** | — | none |
-| B1 | 2.30–6.12 | walking | **+59%** counts up onto the spoken "59%" (2.61) | 0.62 |
-| A2 | 6.12–9.20 | **Sean** | — | none |
-| B2 | 9.20–12.60 | product *(starts 1.3s in)* | — | none |
-| A3 | 12.60–15.00 | **Sean** | — | none |
-| GRAPH | 15.00–19.90 | full-bleed navy | **motion graph** — baseline bar, subscription bar to 3×, then the multiple | — |
-| A4 | 19.90–23.10 | **Sean** | — | none |
-| B4 | 23.10–26.40 | suppliers | — | none |
-| CARD | 26.40–33.44 | full-bleed navy | message card, revealed line by line | — |
-| END | 33.44–38.50 | brand canvas | end card, cuts on the spoken "If" (33.44) | — |
+| # | in–out | source | graphic |
+|---|---|---|---|
+| A1 | 0.00–1.70 | **Sean** | — |
+| STAT | 1.70–6.12 | full-bleed navy | **+59% stat card**, built to the supplied reference |
+| A2 | 6.12–9.20 | **Sean** | — |
+| B2 | 9.20–12.60 | product *(starts 1.3s in)* | — |
+| A3 | 12.60–15.00 | **Sean** | — |
+| GRAPH | 15.00–19.90 | full-bleed navy | **3× graph card**, built to the supplied reference |
+| A4 | 19.90–23.10 | **Sean** | — |
+| B4 | 23.10–26.40 | suppliers | — |
+| CARD | 26.40–33.44 | full-bleed navy | message card, revealed line by line |
+| END | 33.44–38.50 | brand canvas | end card, cuts on the spoken "If" (33.44) |
 
-**One numeral over footage** (+59%), landing on the word that states it with a blur +
-scale-overshoot punch and a flame bloom. It stays wordless, and the graphics band sits low
-enough that it never lands across a face.
+**Both stats are full-bleed navy cards, built to the reference clips supplied**
+(kept in `assets/reference/`), left-aligned and sharing one type system:
 
-**The graph card** carries the 3× instead of a bare numeral: eyebrow, a labelled baseline bar
-("First customer revenue"), then the subscription bar extending to exactly 3× it on the spoken
-"three times" (16.58), then the multiple stamping on. Bar widths are the real ratio —
-250 : 750. Labels are what the earlier bare bars lacked; a card can carry them, so the
-comparison finally says what it compares.
+- **+59% stat card** (1.70–6.12) — eyebrow "DRYFT SLEEP, RETURNING CUSTOMERS"; an oversized
+  figure with a flame `+` and a smaller `%`, counting up onto the spoken "59%" (2.61); a flame
+  rule drawing beneath it; then "WITHOUT A DOLLAR MORE ON ADS" landing on "without spending a
+  dollar more" (3.52).
+- **3× graph card** (15.00–19.90) — eyebrow "WHERE THE REVENUE COMES FROM NOW"; a labelled
+  baseline bar ("First order revenue"), then the subscription bar extending to exactly 3× it on
+  the spoken "three times" (16.58); then the `3x BIGGER THAN FIRST ORDERS` lockup. Bar widths
+  are the real ratio, 250 : 750.
 
-The **bottom 580px (9:16) / 300px (1:1) is left clear** for subtitles.
+Both cards rise in and ride out on the same blur-whip as a cut. The **bottom 580px (9:16) /
+300px (1:1) is left clear** for subtitles.
 
 **The message card is the one place words are wanted** (requested with a reference frame),
 covering "that's what we do… keep more of what they've already got" and "stop spending money
@@ -141,6 +144,9 @@ From the VO and the published case study
    in the brief. The headline is now all white and non-italic, so **Hedvig Letters Serif is
    no longer used anywhere** in the piece.
 6. **Music bed:** duckable placeholder `<audio>` at low gain, commented, to drop a track into.
+7c. **v8:** both stats became full-bleed cards to match the reference clips. That retires the
+   `walking` b-roll (it held the old +59%-over-footage slot); with `excited` already unused
+   from v7, the only b-roll left in the cut is `product` and `suppliers`.
 7b. **v6:** the 9s and 19s b-roll are swapped (product now opens the retention beat, the
    aisle shot carries the 3×). Both are trimmed past their own opening handheld move via
    `data-media-start` — the product clip reframes for ~1.3s, the aisle clip tracks left

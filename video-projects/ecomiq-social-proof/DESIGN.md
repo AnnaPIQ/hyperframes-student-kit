@@ -18,17 +18,21 @@ The voiceover drives everything. The ad **cuts between Sean to camera (A-roll) a
 of Dryft in-store at Erewhon; each proof graphic sits over b-roll and is timed to the word
 that states it (word-level timings in `assets/vo/dryft-social-proof-vo.words.json`).
 
-**A graphic appears only where a real figure is spoken over it.** Over footage that means one
-wordless numeral (`+59%`); beats with no figure carry no graphic and no scrim, so the footage
-plays clean. Never prop up a claim with a metaphor — if there isn't a graphic, don't use one.
+**A graphic appears only where a real figure is spoken over it**, and every one is now a
+**full-bleed navy card** — never a numeral floating over footage. Beats with no figure carry
+no graphic at all, so the footage plays clean. Never prop up a claim with a metaphor.
 
-**Two full-bleed navy cards** carry the rest, and they *can* use copy:
-- the **graph card** (3× subscription vs first-customer revenue) — a labelled bar comparison
-  at the real 250 : 750 ratio, built through the line it emphasises. Labels are the whole
-  point: an unlabelled bar can't say what it compares, which is why the earlier bare bars
-  were cut.
-- the **message card** over the "what we do" lines — eyebrow → white statement → down-arrow →
+Three cards, one type system, all left-aligned except the message card:
+- **+59% stat card** — eyebrow, oversized figure with a flame `+` and smaller `%`, a flame
+  rule drawing beneath, then the qualifier in bold caps.
+- **3× graph card** — eyebrow, labelled baseline bar, subscription bar extending to exactly
+  3× it, then the `3x BIGGER THAN FIRST ORDERS` lockup. Labels are the whole point: an
+  unlabelled bar can't say what it compares.
+- **message card** over the "what we do" lines — eyebrow → white statement → down-arrow →
   payoff line in blue tint → outlined pill.
+
+The two stat cards are built to reference clips supplied by the client, kept in
+`assets/reference/`. Match them when adding another stat.
 
 The **bottom of frame is left clear** (580px on 9:16, 300px on 1:1) for subtitles added
 later, and the graphics band sits low enough that a numeral never lands across a face.

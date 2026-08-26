@@ -62,30 +62,28 @@
       #logo-hold img { width: 100%; height: auto; display: block;
         filter: drop-shadow(0 6px 18px rgba(0,0,0,0.45)); }
 
-      /* ---------- graphic stages ----------------------------------------
-         Graphics sit in the UPPER-MIDDLE band. The bottom ~620px (9:16) is left
-         deliberately clear for subtitles that get added later — nothing but the
-         footage lives down there. */
-      /* Graphic groups start hidden in CSS (a tl.set at position 0 would not
-         render on frame 0); GSAP fades them up on their beat. */
-      .stage { position: absolute; inset: 0; z-index: 20; opacity: 0;
+      /* ---------- full-bleed stat card (+59%) ----------------------------
+         Built to the supplied reference: eyebrow, an oversized figure with a
+         flame "+" and a smaller "%", a flame rule that draws under it, then the
+         qualifier in bold caps. Left-aligned, held clear of the subtitle zone. */
+      #s59 { position: absolute; inset: 0; z-index: 27; opacity: 0;
         display: flex; flex-direction: column; justify-content: center;
-        align-items: center; padding: 340px 72px 300px; }
-      .gwrap { position: relative; display: flex; flex-direction: column;
-        align-items: center; gap: 42px; }
-      /* Flame bloom that punches once as the numeral lands — the emphasis comes
-         from the hit, not from decoration around it. */
-      .glow { position: absolute; inset: -55% -45%; opacity: 0; pointer-events: none;
-        background: radial-gradient(50% 50% at 50% 50%,
-          rgba(255,76,50,0.60) 0%, rgba(255,76,50,0.18) 45%, rgba(255,76,50,0) 72%); }
-
-      /* Big numerals are data, not copy — no words anywhere in the graphics. */
-      .stat { font-size: 168px; font-weight: 800; line-height: 0.92;
-        letter-spacing: -0.03em; font-variant-numeric: tabular-nums;
-        text-shadow: 0 10px 44px rgba(0,0,0,0.55); }
-      .statrow { display: flex; align-items: center; gap: 18px; }
-      .statrow svg { display: block; }
-
+        align-items: flex-start; padding: 0 76px 210px;
+        background:
+          radial-gradient(72% 44% at 50% 34%, rgba(24,86,150,0.55) 0%, rgba(6,40,76,0) 70%),
+          var(--brand-navy); }
+      #s59-eyebrow { font-size: 22px; font-weight: 700; letter-spacing: 0.20em;
+        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 18px; }
+      #s59-num { font-size: 196px; font-weight: 800; line-height: 0.92;
+        letter-spacing: -0.035em; color: var(--brand-white);
+        font-variant-numeric: tabular-nums; display: flex; align-items: baseline; }
+      #s59-num .plus { color: var(--brand-flame); }
+      #s59-num .pct { font-size: 0.55em; letter-spacing: -0.02em; }
+      #s59-rule { width: 540px; height: 6px; border-radius: 4px;
+        background: var(--brand-flame); transform-origin: left center; margin: 18px 0 24px; }
+      #s59-sub { font-size: 46px; font-weight: 800; line-height: 1.06;
+        letter-spacing: -0.01em; text-transform: uppercase;
+        color: var(--brand-white); max-width: 480px; }
 
       /* ---------- full-bleed graph card ----------------------------------
          Emphasises "subscription revenue is now three times their first
@@ -94,14 +92,15 @@
          Bar widths are the real ratio: 250 : 750 is exactly 3x. */
       #gcard { position: absolute; inset: 0; z-index: 27; opacity: 0;
         display: flex; flex-direction: column; justify-content: center;
-        align-items: flex-start; padding: 0 84px 150px;
+        align-items: flex-start; padding: 0 76px 150px;
         background:
           radial-gradient(72% 44% at 50% 34%, rgba(24,86,150,0.55) 0%, rgba(6,40,76,0) 70%),
           var(--brand-navy); }
-      #gcard-eyebrow { font-size: 24px; font-weight: 600; letter-spacing: 0.34em;
-        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 38px; }
-      .grow { margin-bottom: 34px; }
-      .glabel { font-size: 25px; font-weight: 600; color: var(--brand-white);
+      #gcard-eyebrow { font-size: 21px; font-weight: 700; letter-spacing: 0.20em;
+        text-transform: uppercase; color: var(--brand-blue-tint);
+        white-space: nowrap; margin-bottom: 34px; }
+      .grow { margin-bottom: 32px; }
+      .glabel { font-size: 24px; font-weight: 600; color: var(--brand-white);
         margin-bottom: 18px; }
       .gbar { height: 60px; border-radius: 12px; overflow: hidden;
         background: rgba(156, 212, 255, 0.12); }
@@ -111,9 +110,13 @@
       .gbar-hot { width: 600px; }
       .gbar-hot i { background: var(--brand-flame);
         box-shadow: 0 14px 46px -12px rgba(255, 76, 50, 0.7); }
-      #gcard-mult { align-self: flex-end; font-size: 132px; font-weight: 800;
-        line-height: 0.95; letter-spacing: -0.03em; color: var(--brand-white);
-        font-variant-numeric: tabular-nums; text-shadow: 0 10px 44px rgba(0,0,0,0.5); }
+      /* 3x lockup: the figure with its qualifier stacked alongside, per reference */
+      #gcard-lock { display: flex; align-items: center; gap: 16px; margin-top: 10px; }
+      #gcard-mult { font-size: 140px; font-weight: 800; line-height: 0.86;
+        letter-spacing: -0.04em; color: var(--brand-white);
+        font-variant-numeric: tabular-nums; }
+      #gcard-vs { font-size: 36px; font-weight: 800; line-height: 1.04;
+        letter-spacing: -0.01em; text-transform: uppercase; color: var(--brand-white); }
 
       /* ---------- full-bleed message card --------------------------------
          Covers the frame entirely on the "what we do" lines. Layout mirrors the
@@ -179,12 +182,8 @@
            and lip sync is exact. All muted — the mix takes the separate <audio>.
            Windows run ~0.25s past their out point so the wrappers can dissolve. -->
       <div class="bwrap" id="w-a1">
-        <video id="v-a1" data-start="0" data-duration="2.55" data-media-start="0"
+        <video id="v-a1" data-start="0" data-duration="1.95" data-media-start="0"
                data-track-index="1" src="assets/broll/1x1/aroll.mp4" muted playsinline></video>
-      </div>
-      <div class="bwrap" id="w-b1">
-        <video id="v-b1" data-start="2.3" data-duration="4.07"
-               data-track-index="2" src="assets/broll/1x1/walking.mp4" muted playsinline></video>
       </div>
       <div class="bwrap" id="w-a2">
         <video id="v-a2" data-start="6.12" data-duration="3.33" data-media-start="6.12"
@@ -214,32 +213,31 @@
       <!-- ===== Wordless data graphics. Numerals only — no copy — and all
            held clear of the bottom subtitle zone. ===== -->
 
-      <!-- G1 · returning-customer growth (over b-roll, 2.30–6.12) -->
-      <div id="g1" class="stage clip" data-start="0" data-duration="38.5" data-track-index="15">
-        <div class="gwrap">
-          <div class="glow" id="g1-glow"></div>
-          <div class="statrow">
-            <svg id="g1-arrow" width="88" height="88" viewBox="0 0 86 86" aria-hidden="true">
-              <path d="M43 8 L78 50 H57 V78 H29 V50 H8 Z" fill="#FF4C32"/>
-            </svg>
-            <div id="g1-num" class="stat">+0%</div>
-          </div>
-        </div>
+      <!-- Full-bleed stat card, over "…returning customers by 59% without
+           spending a dollar more on ads". -->
+      <div id="s59" class="clip" data-start="0" data-duration="38.5" data-track-index="15">
+        <div id="s59-eyebrow">Dryft Sleep, returning customers</div>
+        <div id="s59-num"><span class="plus">+</span><span id="s59-val">0</span><span class="pct">%</span></div>
+        <div id="s59-rule"></div>
+        <div id="s59-sub">Without a dollar more on ads</div>
       </div>
 
       <!-- Full-bleed graph card, over "…subscription revenue is now three times
            their first customer revenue". -->
       <div id="gcard" class="clip" data-start="0" data-duration="38.5" data-track-index="16">
-        <div id="gcard-eyebrow">Subscription revenue</div>
+        <div id="gcard-eyebrow">Where the revenue comes from now</div>
         <div class="grow">
-          <div id="g-l1" class="glabel">First customer revenue</div>
+          <div id="g-l1" class="glabel">First order revenue</div>
           <div class="gbar gbar-dim"><i id="g-b1"></i></div>
         </div>
         <div class="grow">
           <div id="g-l2" class="glabel">Subscription revenue</div>
           <div class="gbar gbar-hot"><i id="g-b2"></i></div>
         </div>
-        <div id="gcard-mult">3&#215;</div>
+        <div id="gcard-lock">
+          <div id="gcard-mult">3x</div>
+          <div id="gcard-vs">Bigger than<br />first orders</div>
+        </div>
       </div>
 
       <!-- Full-bleed message card, over "that's what we do…" / "stop spending
@@ -297,8 +295,7 @@
       // Durations are multiples of 1/30s so the steep eases don't alias.
       const OUT_D = 0.333, IN_D = 0.667, WHIP_Y = 52;
       const SEGS = [
-        ["#w-a1",  "A",  0.00,  2.30, 0.00],
-        ["#w-b1",  "B",  2.30,  6.12, 0.62],
+        ["#w-a1",  "A",  0.00,  1.70, 0.00],
         ["#w-a2",  "A",  6.12,  9.20, 0.00],
         ["#w-b2",  "B",  9.20, 12.60, 0.00],
         ["#w-a3",  "A", 12.60, 15.00, 0.00],
@@ -332,39 +329,26 @@
       tl.to("#vignette", { opacity: 0.82, duration: 4, ease: "sine.inOut",
         yoyo: true, repeat: Math.max(0, Math.floor(38.5 / 8) - 1) }, 0);
 
-      /* ---- Wordless graphic beats. Each sits over b-roll; the A-roll
-              segments stay clean so Sean carries those lines himself. ---- */
-      // Only three graphics, and each one exists because a real figure is spoken
-      // over it. Beats with no figure behind them (B2, B4) carry no graphic at
-      // all — the b-roll plays clean rather than propping up a metaphor.
-      const BEATS = {
-        g1: [2.42, 6.12]     // +59% · "...by 59%" (2.61)
-      };
-      Object.entries(BEATS).forEach(([k, [a, b]]) => {
-        tl.to("#" + k, { opacity: 1, duration: 0.24, ease: "power1.out" }, a);
-        tl.to("#" + k, { opacity: 0, duration: 0.24, ease: "power1.in" }, b - 0.06);
-      });
-
-      // Each numeral punches in on the word that states it: blur + scale
-      // overshoot, with a single flame bloom behind it on the landing frame.
-      function punch(sel, glow, at) {
-        // Type is a character: it arrives at a third of its size and slams to
-        // full, not a fade. Durations snap to 1/30s so back.out doesn't alias.
-        tl.fromTo(sel, { opacity: 0, scale: 0.34, filter: "blur(30px)" },
-          { opacity: 1, scale: 1, filter: "blur(0px)",
-            duration: 0.5, ease: "back.out(2.4)" }, at);
-        tl.fromTo(glow, { opacity: 0, scale: 0.4 },
-          { opacity: 1, scale: 1.15, duration: 0.333, ease: "power2.out" }, at + 0.067);
-        tl.to(glow, { opacity: 0, scale: 1.6, duration: 0.833, ease: "power2.out" }, at + 0.433);
-      }
-
-      // G1 — +59%, counting up onto the spoken "59%" (2.61).
+      /* ---- The stat card. Rises in like a cut, then builds to the reference:
+              figure counts up onto the spoken "59%" (2.61), a flame rule draws
+              under it, then the qualifier lands on "without spending a dollar
+              more" (3.52). ---- */
       const n1 = { v: 0 };
-      punch("#g1-num", "#g1-glow", 2.50);
-      tl.fromTo("#g1-arrow", { opacity: 0, y: 46, scale: 0.5 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(2.4)" }, 2.62);
-      tl.to(n1, { v: 59, duration: 0.85, ease: "power2.out", snap: { v: 1 },
-        onUpdate() { document.getElementById("g1-num").textContent = "+" + n1.v + "%"; } }, 2.56);
+      tl.fromTo("#s59", { opacity: 0, y: 90, filter: "blur(26px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.667, ease: "power2.out" }, 1.70);
+      tl.fromTo("#s59-eyebrow", { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.85);
+      tl.fromTo("#s59-num", { opacity: 0, scale: 0.7, filter: "blur(24px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)",
+          duration: 0.5, ease: "back.out(2)" }, 2.10);
+      tl.to(n1, { v: 59, duration: 0.9, ease: "power2.out", snap: { v: 1 },
+        onUpdate() { document.getElementById("s59-val").textContent = n1.v; } }, 2.15);
+      tl.fromTo("#s59-rule", { scaleX: 0 },
+        { scaleX: 1, duration: 0.567, ease: "power3.out" }, 3.10);
+      tl.fromTo("#s59-sub", { opacity: 0, y: 34 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 3.55);
+      tl.to("#s59", { opacity: 0, y: -90, filter: "blur(26px)",
+        duration: 0.333, ease: "power2.in" }, 6.12);
 
       /* ---- The graph card. Builds through the line it emphasises: the
               baseline bar, then the subscription bar extending to exactly 3x it,
@@ -386,6 +370,8 @@
       tl.fromTo("#gcard-mult", { opacity: 0, scale: 0.34, filter: "blur(30px)" },
         { opacity: 1, scale: 1, filter: "blur(0px)",
           duration: 0.5, ease: "back.out(2.4)" }, 17.10);
+      tl.fromTo("#gcard-vs", { opacity: 0, x: -22 },
+        { opacity: 1, x: 0, duration: 0.433, ease: "power2.out" }, 17.35);
       // rides out like any other cut, handing back to Sean
       tl.to("#gcard", { opacity: 0, y: -90, filter: "blur(26px)",
         duration: 0.333, ease: "power2.in" }, 19.90);
