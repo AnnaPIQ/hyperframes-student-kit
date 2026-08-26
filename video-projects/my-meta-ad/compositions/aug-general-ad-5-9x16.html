@@ -54,14 +54,8 @@
         background: linear-gradient(0deg, rgba(6,40,76,.58) 0%, rgba(6,40,76,.48) 26%, rgba(6,40,76,.24) 62%, rgba(6,40,76,0) 100%);
       }
 
-      /* ---- Texture. The grid lives on the END CARD only — over footage it
-         reads as dirt on the speaker's face. Vignette + grain stay global. */
-      #card-grid {
-        position: absolute; inset: 0;
-        background:
-          repeating-linear-gradient(0deg,  rgba(156,212,255,.10) 0 1px, transparent 1px 90px),
-          repeating-linear-gradient(90deg, rgba(156,212,255,.10) 0 1px, transparent 1px 90px);
-      }
+      /* Texture: vignette + grain only. No grid anywhere — over footage it read
+         as dirt on the speaker's face, and the end card is cleaner without it. */
       #vignette {
         position: absolute; inset: 0; pointer-events: none;
         background: radial-gradient(ellipse 88% 74% at 50% 42%, transparent 26%, rgba(2,14,28,.60) 100%);
@@ -112,14 +106,26 @@
         transform-origin: left center; box-shadow: 0 0 34px rgba(255,76,50,.65);
       }
 
-      /* Beat 2 — brand-count tile grid */
-      #b1 { top: 1140px; }
-      #b1-tiles { display: grid; grid-template-columns: repeat(8, 1fr); gap: 12px; width: 660px; margin-bottom: 30px; }
-      #b1-tiles i {
-        display: block; height: 34px; border-radius: 5px;
-        background: rgba(156,212,255,.20); border: 1px solid rgba(156,212,255,.44);
+      /* ---- B-roll · two real portfolio brands -----------------------------
+         Sources are phone footage rotated 90° CW in prep, so after the rotate
+         they are natively 1080x1920 — no crop needed for the vertical cut.
+         Only the <video> is timed; the wrapper is untimed and carries the drift
+         (render contract #9), with its visibility driven from the timeline. */
+      .br-wrap { position: absolute; inset: 0; overflow: hidden; opacity: 0; }
+      .br-wrap video { width: 1080px; height: 1920px; object-fit: cover; display: block; }
+      .br-scrim .in {
+        position: absolute; inset: 0;
+        background:
+          linear-gradient(180deg, rgba(6,40,76,.72) 0%, rgba(6,40,76,0) 26%),
+          linear-gradient(0deg,  rgba(6,40,76,.66) 0%, rgba(6,40,76,0) 30%);
       }
-      #b1-tiles i.on { background: var(--brand-blue-tint); border-color: var(--brand-blue-tint); }
+      .br-chip { top: 1520px; }
+      .br-chip .name {
+        display: inline-block; padding: 14px 30px; border-radius: 999px;
+        background: rgba(6,40,76,.72); border: 1.5px solid rgba(156,212,255,.5);
+        font-size: 31px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+        color: var(--brand-white);
+      }
 
       /* Beat 3 — "THEORY" struck through */
       #b2 { top: 1180px; }
@@ -183,13 +189,13 @@
         position: absolute; left: -12%; bottom: -18%; width: 124%; height: 56%;
         background: var(--brand-gradient-2); filter: blur(110px); opacity: .34;
       }
-      #card-logo { position: absolute; top: 820px; left: 50%; width: 560px; height: auto; margin-left: -280px; }
+      #card-logo { position: absolute; top: 640px; left: 50%; width: 560px; height: auto; margin-left: -280px; }
       #card-head {
-        position: absolute; top: 1070px; left: 90px; width: 900px; text-align: center;
+        position: absolute; top: 890px; left: 90px; width: 900px; text-align: center;
         font-size: 92px; font-weight: 800; line-height: 1.02; letter-spacing: -.03em;
       }
       #card-cta {
-        position: absolute; top: 1335px; left: 50%;
+        position: absolute; top: 1150px; left: 50%;
         display: inline-flex; align-items: center; gap: 20px;
         font-size: 44px; font-weight: 700; color: var(--brand-white);
         background: var(--brand-flame); padding: 34px 74px; border-radius: 999px;
@@ -197,7 +203,7 @@
       }
       /* Chrome glint that sweeps the card once during the hold. */
       #card-shimmer {
-        position: absolute; top: 780px; left: -40%; width: 40%; height: 300px;
+        position: absolute; top: 600px; left: -40%; width: 40%; height: 300px;
         background: linear-gradient(105deg, transparent, rgba(255,255,255,.16), transparent);
         filter: blur(14px);
       }
@@ -231,18 +237,32 @@
       <div id="scrim-top"    class="clip" data-start="0" data-duration="37.5" data-track-index="2"></div>
       <div id="scrim-bottom" class="clip" data-start="0" data-duration="37.5" data-track-index="3"></div>
 
+      <!-- ---- B-roll · real portfolio brands, over "already working right now
+           across dozens of real brands / nothing we coach is theory" ---- -->
+      <div id="br1-wrap" class="br-wrap">
+        <video id="br1" src="assets/aug5-broll-sweetes-9x16.mp4"
+               data-start="2.50" data-duration="3.50" data-track-index="4" muted></video>
+      </div>
+      <div id="br1-scrim" class="br-scrim clip" data-start="2.50" data-duration="3.50" data-track-index="6">
+        <div class="in"></div>
+      </div>
+      <div id="br1-chip" class="gfx br-chip clip" data-start="2.50" data-duration="3.50" data-track-index="8">
+        <div class="in"><span class="name">Sweet E&rsquo;s</span></div>
+      </div>
+
+      <div id="br2-wrap" class="br-wrap">
+        <video id="br2" src="assets/aug5-broll-dryft-9x16.mp4"
+               data-start="6.00" data-duration="2.36" data-track-index="5" muted></video>
+      </div>
+      <div id="br2-scrim" class="br-scrim clip" data-start="6.00" data-duration="2.36" data-track-index="7">
+        <div class="in"></div>
+      </div>
+      <div id="br2-chip" class="gfx br-chip clip" data-start="6.00" data-duration="2.36" data-track-index="16">
+        <div class="in"><span class="name">Dryft</span></div>
+      </div>
+
       <!-- ---- beat graphics ---- -->
 
-      <div id="b1" class="gfx clip" data-start="4.00" data-duration="4.36" data-track-index="8">
-        <div class="in">
-          <div id="b1-tiles">
-            <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
-            <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i>
-            <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i>
-          </div>
-          <div class="kicker">Dozens of real brands</div>
-        </div>
-      </div>
 
       <div id="b2" class="gfx clip" data-start="8.36" data-duration="2.20" data-track-index="9">
         <div class="in">
@@ -315,7 +335,6 @@
       <!-- ---- end card ---- -->
       <div id="card" class="clip" data-start="33.75" data-duration="6.85" data-track-index="20">
         <div class="in">
-          <div id="card-grid"></div>
           <div id="card-bloom"></div>
           <img id="card-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
           <div id="card-head">Built for Shopify founders.</div>
@@ -354,7 +373,6 @@
         gsap.set('#film-wrap', { scale: 1.10, x: 0, y: 0, transformOrigin: '50% 34%' });
         reframe(1.35, 1.00,   0,   0, 0.9);   // release out of the cold open
         tl.to('#film-wrap', { scale: 1.04, duration: 1.9, ease: 'none' }, 2.0); // slow drift
-        reframe(4.00,  1.09,  26, -18);
         reframe(8.36,  1.02, -14,   0);
         reframe(11.50, 1.12,  34, -26);
         reframe(15.65, 1.01,   0,   0);
@@ -369,7 +387,7 @@
 
         /* ---- Whip-streaks: fire AT each reframe ---------------------------- */
         const WHIPS = [
-          ['#whip-a', 4.00], ['#whip-b', 8.36], ['#whip-c', 11.50],
+          ['#whip-a', 2.50], ['#whip-c', 6.00], ['#whip-b', 8.36], ['#whip-c', 11.50],
           ['#whip-a', 15.65], ['#whip-b', 17.85], ['#whip-c', 21.45],
           ['#whip-a', 24.75], ['#whip-b', 30.04], ['#whip-c', 33.60],
         ];
@@ -380,13 +398,26 @@
             .to(sel, { opacity: 0, duration: 0.16, ease: 'power2.out' }, t + 0.06);
         });
 
-        /* ---- Beat 2 · brand-count tiles (6.38 -> 8.36) -------------------- */
-        tl.fromTo('#b1 #b1-tiles i', { opacity: 0, scale: .4 },
-              { opacity: 1, scale: 1, duration: 0.26, ease: 'back.out(2)', stagger: { each: 0.018, from: 'start' } }, 4.04)
-          .fromTo('#b1 .kicker', { opacity: 0, x: -28 }, { opacity: 1, x: 0, duration: 0.30, ease: 'expo.out' }, 4.32)
-          // EXIT — matches the 8.36 reframe's -14px drift back to base.
-          .to('#b1 .in', { y: -120, filter: 'blur(22px)', opacity: 0, duration: 0.26, ease: 'power2.in' }, 8.10)
-          .set('#b1 .in', { opacity: 0 }, 8.36);
+        /* ---- B-roll · Sweet E's (2.50 -> 6.00) and Dryft (6.00 -> 8.36) ----
+           Visibility is driven explicitly rather than left to the clip window,
+           so the untimed wrappers can never leak a frame outside their slot.
+           Each clip drifts slightly so neither reads as a freeze. */
+        const broll = (wrap, chip, tIn, tOut, from, to) => {
+          tl.set(wrap, { opacity: 1 }, tIn)
+            .fromTo(wrap, { scale: from, filter: 'blur(14px)' },
+                          { scale: to, filter: 'blur(0px)', duration: 0.34, ease: 'power3.out' }, tIn)
+            .to(wrap, { scale: to + 0.05, duration: tOut - tIn - 0.34, ease: 'none' }, tIn + 0.34)
+            // Hard cut out, never a fade: fading revealed the A-roll underneath
+            // for a couple of frames and ghosted a double exposure at the seam.
+            // The whip-streak firing on the same frame carries the cut.
+            .set(wrap, { opacity: 0 }, tOut)
+            .fromTo(chip, { opacity: 0, y: 22 },
+                          { opacity: 1, y: 0, duration: 0.30, ease: 'expo.out' }, tIn + 0.16)
+            .to(chip, { opacity: 0, duration: 0.20, ease: 'power2.in' }, tOut - 0.24)
+            .set(chip, { opacity: 0 }, tOut);
+        };
+        broll('#br1-wrap', '#br1-chip .in', 2.50, 6.00, 1.06, 1.00);
+        broll('#br2-wrap', '#br2-chip .in', 6.00, 8.36, 1.08, 1.02);
 
         /* ---- Beat 3 · "THEORY" struck through (8.36 -> 10.56) ------------- */
         tl.fromTo('#b2 .word', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.30, ease: 'expo.out' }, 8.42)

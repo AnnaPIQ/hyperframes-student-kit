@@ -9,7 +9,9 @@ square feed). Both 30fps, **40.6s**.
 | Compositions | `compositions/aug-general-ad-5-9x16.html`, `compositions/aug-general-ad-5-1x1.html` |
 | Renders | `renders/aug-general-ad-5-9x16.mp4`, `renders/aug-general-ad-5-1x1.mp4` |
 | Footage prep | `scripts/prep-aug-general-ad-5.sh` (repo root) |
-| Source | Drive `1PrOe05PfJ1yxNLV7abFliy16ygbYtM-F` — *whats working.mov*, 2.41 GB ProRes |
+| A-roll | Drive `1PrOe05PfJ1yxNLV7abFliy16ygbYtM-F` — *whats working.mov*, 2.41 GB ProRes |
+| B-roll | Drive `1cF3UR7rqtK27rx9HUh5H7Wt_yipf8fhp` — *Sweet E's Owner Erica - Packing cake*, from 1:27.4 (+3.6s) |
+| B-roll | Drive `1jHsUTe013mdBLjB6VQvJmjzwj0r6cXzT` — *Dryft - Walking in wholesaler*, from 0:21.0 (+2.45s) |
 
 ## The one structural idea
 
@@ -28,15 +30,34 @@ rather than after it. Total 40.6s.
 
 | t | Beat | Graphic |
 |---|---|---|
-| 4.00 | dozens of brands | 24-tile stagger grid, holds to the THEORY beat |
+| 2.50 | **B-roll · Sweet E's** | full-bleed rotated phone footage, "SWEET E'S" chip |
+| 6.00 | **B-roll · Dryft** | full-bleed, "DRYFT" chip — Sean himself is in the shot |
 | 8.36 | not theory | "THEORY" struck through in flame |
 | 11.50 | premier partner | pulsing flame dot + "LIVE · EVERY SINGLE DAY" |
 | 15.65 | revenue/profit | two risers, blue-tint → flame |
 | 17.85 | real money | three receipt ticks |
 | 23.80 | **hero stamp** | "NOT A GUESS." + 6px shake on the footage |
-| 26.60 | pattern | node lattice with a flame pulse — **callback** to the 4.00 tiles |
+| 26.60 | pattern | node lattice with a flame pulse |
 | 30.04 | should → already | "Not what should work. What already does." all white |
 | 33.75 | **end card** | film cross-dissolves out; lockup + "Built for Shopify founders." + "Learn More" pill, 6.85s |
+
+## B-roll
+
+Two real portfolio brands run full-bleed over "already working right now across
+dozens of real brands / nothing we coach is theory" — the claim is proved by
+showing the brands rather than by a graphic. The tile-grid graphic that used to
+sit here is gone.
+
+Both sources are phone footage stored landscape with **no rotation metadata**, so
+prep applies an explicit `transpose=1` (90° clockwise). After the rotate a
+1920×1080 source is exactly **1080×1920** — a native fit for the vertical cut with
+no crop at all, which makes the B-roll noticeably sharper than the A-roll. The 1:1
+takes a 1080×1080 window pulled up from centre (y=290 / y=250) to keep faces and
+product in frame. Audio is stripped; the VO keeps running underneath.
+
+**Seams are hard cuts, never fades.** Fading a B-roll clip out revealed the A-roll
+underneath for a couple of frames and ghosted a visible double exposure. Each cut
+lands on a whip-streak instead.
 
 ## Captions
 
