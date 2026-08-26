@@ -18,14 +18,17 @@ The voiceover drives everything. The ad **cuts between Sean to camera (A-roll) a
 of Dryft in-store at Erewhon; each proof graphic sits over b-roll and is timed to the word
 that states it (word-level timings in `assets/vo/dryft-social-proof-vo.words.json`).
 
-**A numeral appears only where a real figure is spoken over it** — two in the piece
-(`+59%`, `3×`). Beats with no figure behind them carry no graphic, and no scrim either: the
-footage plays clean. Never prop up a claim with a metaphor or an unlabelled chart — if there
-isn't a graphic, don't use one.
+**A graphic appears only where a real figure is spoken over it.** Over footage that means one
+wordless numeral (`+59%`); beats with no figure carry no graphic and no scrim, so the footage
+plays clean. Never prop up a claim with a metaphor — if there isn't a graphic, don't use one.
 
-**The numerals are wordless.** The one exception is the **full-bleed message card** over the
-"what we do" lines, which is copy-led by design: eyebrow → white statement → down-arrow →
-payoff line in blue tint → outlined pill.
+**Two full-bleed navy cards** carry the rest, and they *can* use copy:
+- the **graph card** (3× subscription vs first-customer revenue) — a labelled bar comparison
+  at the real 250 : 750 ratio, built through the line it emphasises. Labels are the whole
+  point: an unlabelled bar can't say what it compares, which is why the earlier bare bars
+  were cut.
+- the **message card** over the "what we do" lines — eyebrow → white statement → down-arrow →
+  payoff line in blue tint → outlined pill.
 
 The **bottom of frame is left clear** (580px on 9:16, 300px on 1:1) for subtitles added
 later, and the graphics band sits low enough that a numeral never lands across a face.
@@ -66,9 +69,8 @@ Flame orange is the only hot accent. No other accent colors.
 - Numerals scale, they don't fade — in at 0.34 under 30px blur, slamming to full on
   `back.out(2.4)`, with one flame bloom behind the landing frame. That bloom is the
   callback: it returns behind the end-card pill.
-- The **3× steps** 1→2→3 with a hard stamp and an escalating bloom per step, so the multiple
-  is watched rather than read. Driven by a proxy tween with explicit thresholds, **not
-  `tl.call()`** — GSAP suppresses callbacks on a seek, and the engine renders by seeking.
+- Cards rise in and ride out on the same blur-whip as a cut, so a full-bleed overlay reads as
+  another shot rather than a slide.
 - Tween durations are multiples of 1/30s so steep eases don't alias at sub-frame boundaries.
 - No `repeat: -1` anywhere — infinite repeats break the capture engine; cycle counts are
   computed and clamped.
@@ -93,8 +95,9 @@ Flame orange is the only hot accent. No other accent colors.
   `data-media-start` trims past it without a re-pull.
 - Don't add a graphic to a beat that has no figure behind it, and don't lay a scrim over a
   segment that carries no graphic.
-- Don't draw an unlabelled chart. Without labels (which aren't allowed) bars and lines can't
-  say what they compare, and invented curve shapes are fabricated data-viz.
+- Don't draw an **unlabelled** chart over footage — bars and lines can't say what they compare
+  without labels, and invented curve shapes are fabricated data-viz. A chart belongs on a card
+  where it can be labelled, and its proportions must be the real ratio.
 - Don't use `fill: var(--...)` on SVG (it doesn't resolve at render time) and don't let a
   group rule like `.ring circle { fill: none }` catch your dots — see `docs/LESSONS.md`.
 - Don't reset big-headline tracking to 0, and never a second serif-italic emphasis word.

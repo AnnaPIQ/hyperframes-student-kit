@@ -1,6 +1,6 @@
 # EcomIQ × Dryft Sleep — social-proof ad · EDIT PLAN
 
-**Status: built (v5).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
+**Status: built (v7).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
 **wordless numerals** (one deliberate full-bleed message card carries copy) ·
 **bottom of frame clear for subtitles** · no logo wall ·
 no star rating · no testimonial quote · **a graphic only where a real figure is spoken** ·
@@ -50,20 +50,25 @@ Transitions are 0.20s blur dissolves — fast enough to read as cuts.
 | A1 | 0.00–2.30 | **Sean** | — | none |
 | B1 | 2.30–6.12 | walking | **+59%** counts up onto the spoken "59%" (2.61) | 0.62 |
 | A2 | 6.12–9.20 | **Sean** | — | none |
-| B2 | 9.20–12.60 | excited | — | none |
-| A3 | 12.60–16.30 | **Sean** | — | none |
-| B3 | 16.30–19.35 | product *(starts 1.3s in)* | **3×** steps 1→2→3 onto "three times" (16.58) | 0.62 |
-| A4 | 19.35–23.10 | **Sean** | — | none |
+| B2 | 9.20–12.60 | product *(starts 1.3s in)* | — | none |
+| A3 | 12.60–15.00 | **Sean** | — | none |
+| GRAPH | 15.00–19.90 | full-bleed navy | **motion graph** — baseline bar, subscription bar to 3×, then the multiple | — |
+| A4 | 19.90–23.10 | **Sean** | — | none |
 | B4 | 23.10–26.40 | suppliers | — | none |
 | CARD | 26.40–33.44 | full-bleed navy | message card, revealed line by line | — |
 | END | 33.44–38.50 | brand canvas | end card, cuts on the spoken "If" (33.44) | — |
 
-**Two numerals, two real figures**, each on the word that states it, each landing with a
-blur + scale-overshoot punch and a flame bloom. The **3×** steps 1→2→3 with a hard stamp per
-step, so the multiple is something you watch happen rather than a number that appears.
+**One numeral over footage** (+59%), landing on the word that states it with a blur +
+scale-overshoot punch and a flame bloom. It stays wordless, and the graphics band sits low
+enough that it never lands across a face.
 
-**The numerals stay wordless**, and the graphics band sits lower than in v4 so a numeral never
-lands across a face. The **bottom 580px (9:16) / 300px (1:1) is left clear** for subtitles.
+**The graph card** carries the 3× instead of a bare numeral: eyebrow, a labelled baseline bar
+("First customer revenue"), then the subscription bar extending to exactly 3× it on the spoken
+"three times" (16.58), then the multiple stamping on. Bar widths are the real ratio —
+250 : 750. Labels are what the earlier bare bars lacked; a card can carry them, so the
+comparison finally says what it compares.
+
+The **bottom 580px (9:16) / 300px (1:1) is left clear** for subtitles.
 
 **The message card is the one place words are wanted** (requested with a reference frame),
 covering "that's what we do… keep more of what they've already got" and "stop spending money
@@ -136,6 +141,10 @@ From the VO and the published case study
    in the brief. The headline is now all white and non-italic, so **Hedvig Letters Serif is
    no longer used anywhere** in the piece.
 6. **Music bed:** duckable placeholder `<audio>` at low gain, commented, to drop a track into.
+7b. **v6:** the 9s and 19s b-roll are swapped (product now opens the retention beat, the
+   aisle shot carries the 3×). Both are trimmed past their own opening handheld move via
+   `data-media-start` — the product clip reframes for ~1.3s, the aisle clip tracks left
+   until ~2.1s before settling.
 7a. **Dropped in v5, and why:** the `storefront` cut at 12s (read as a duplicate of the later
    Erewhon exteriors — the A-roll covers 12.60–16.30 instead); the standalone `$0` numeral
    (replaced by the message card); `shelf` and the fifth A-roll segment (the card owns that
