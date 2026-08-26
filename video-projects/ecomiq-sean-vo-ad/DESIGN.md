@@ -109,8 +109,8 @@ Built by **`scripts/build-assets.sh`** from the raw Drive masters in
 
 | File | What |
 |---|---|
-| `assets/bed-916.mp4` | 1080×1920 picture bed, 34.10 s, muted |
-| `assets/bed-square.mp4` | 1080×1080 picture bed, 34.10 s, muted |
+| `assets/bed-916.mp4` | 1080×1920 picture bed, 34.03 s, muted |
+| `assets/bed-square.mp4` | 1440×1440 picture bed, 34.03 s, muted |
 | `assets/sean-vo.wav` | Sean's VO, 48 kHz stereo, source 3.100 → 39.300 |
 | `assets/sean-pip.mp4` | A-roll PiP, 720×720, 34.10 s, muted, source 3.100 |
 | `assets/music-bed.wav` | **silent placeholder** — see below |
@@ -136,13 +136,36 @@ same path/name and set:
   finished talking
 
 ## Delivery
-H.264 / yuv420p, AAC 48 kHz, `+faststart`, 30 fps CFR — `--quality standard` is visually
-lossless at 1080p.
+H.264 High / yuv420p, AAC 48 kHz stereo, `+faststart`, 30 fps CFR.
+Finals ship at `--quality high` (CRF 15), each ratio at native size and at 2×.
+
+| File | Size | Notes |
+|---|---|---|
+| `ecomiq-sean-vo-916-1080.mp4` | 1080×1920 | native — the 9:16 master's true ceiling |
+| `ecomiq-sean-vo-916-2160.mp4` | 2160×3840 | 2× — graphics and PiP gain, footage is upscaled |
+| `ecomiq-sean-vo-square-1080.mp4` | 1080×1080 | native |
+| `ecomiq-sean-vo-square-2160.mp4` | 2160×2160 | 2× — real detail, bed is built at 1440 |
 
 ```bash
-npx hyperframes render --quality standard --output renders/ecomiq-sean-vo-916.mp4
-npx hyperframes render --composition compositions/square.html \
-  --quality standard --output renders/ecomiq-sean-vo-square.mp4
+npx hyperframes render --quality high --output renders/ecomiq-sean-vo-916-1080.mp4
+npx hyperframes render --quality high --resolution portrait-4k \
+  --output renders/ecomiq-sean-vo-916-2160.mp4
+npx hyperframes render --composition compositions/square.html --quality high \
+  --output renders/ecomiq-sean-vo-square-1080.mp4
+npx hyperframes render --composition compositions/square.html --quality high \
+  --resolution square-4k --output renders/ecomiq-sean-vo-square-2160.mp4
 ```
+
+### What 2× actually buys
+`--resolution` re-renders the page at a higher device pixel ratio; it does not invent
+detail in the footage.
+
+- **Genuinely sharper at 2×:** everything drawn in the composition — end card, logo
+  lockup, flame pill, brand bug — plus Sean's PiP, which is cut from the 4K camera file
+  and only displayed at 348 CSS px.
+- **9:16 footage:** the Showcase Reel master is natively 1080×1920, so a 2160 export
+  upscales it. Ship the 1080 file unless a placement specifically wants the larger asset.
+- **1:1 footage:** the square master is 1440×1440, so its bed is built at 1440 and the 2×
+  export carries real extra detail.
 
 No captions, by request.

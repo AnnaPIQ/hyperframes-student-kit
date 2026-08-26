@@ -79,6 +79,10 @@ ffmpeg -hide_banner -v error -y -f lavfi -i anullsrc=r=48000:cl=stereo \
 #    reel's 37 hard cuts cleanly — verified frame-by-frame across a cut, with no
 #    smearing between shots.
 #
+#    Beds are encoded at CRF 14 — they are an intermediate, and any compression
+#    here gets magnified by the 2x deliverables. The square bed is built at its
+#    master's native 1440, not 1080, so the 2x square export carries real detail.
+#
 #    This is the slow step in the build (~10 min per ratio). Worth it.
 # ---------------------------------------------------------------------------
 REEL_END=27.733333          # where the reel's own end card begins
@@ -92,14 +96,14 @@ build_bed() {
   # silently truncates the slowed bed back to the source length.
   ffmpeg -hide_banner -v error -y -t "$REEL_END" -i "$src" \
     -vf "scale=${w}:${h}:flags=lanczos,setsar=1,setpts=${PTS}*PTS,minterpolate=fps=30:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1" \
-    -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -an \
+    -c:v libx264 -preset slow -crf 14 -pix_fmt yuv420p -an \
     -movflags +faststart "$out"
   printf '  ✓ %s  %ss\n' "$out" \
     "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$out")"
 }
 
 build_bed "$SRC_916" "$OUT/bed-916.mp4"    1080 1920
-build_bed "$SRC_SQ"  "$OUT/bed-square.mp4" 1080 1080
+build_bed "$SRC_SQ"  "$OUT/bed-square.mp4" 1440 1440   # native master res — feeds the 2x square export
 
 echo
 echo "✅ assets built:"
