@@ -199,9 +199,17 @@ From the VO and the published case study
 
 ## Delivery
 
-- `renders/ecomiq-social-proof-9x16.mp4` — 1080×1920, from `index.html` — **38.7 MB, 8.4 Mbps**
-- `renders/ecomiq-social-proof-4x5.mp4` — 1080×1350, from `compositions/portrait45.html` — **26.9 MB, 5.9 Mbps**
-- `renders/ecomiq-social-proof-9x16-compressed.mp4` — CRF 26 copy for chat/email (5.9 MB)
+**`renders/` is gitignored and this project builds in an ephemeral container, so nothing
+in it is reachable by anyone else.** The deliverables are the `final-*.mp4` at the PROJECT
+ROOT, which are committed — that is the workspace convention (see `.gitignore`: "final.mp4
+at each project root ships instead"). **Copy every new render up to the root and commit it,
+or the shipped file silently stays at whatever version last did.**
+
+- `final-9x16.mp4` — 1080×1920, from `index.html` — **38.7 MB, 8.4 Mbps**
+- `final-4x5.mp4` — 1080×1350, from `compositions/portrait45.html` — **26.9 MB, 5.9 Mbps**
+- `final-9x16-compressed.mp4` / `final-4x5-compressed.mp4` — CRF 26 copies for chat/email
+
+`renders/` holds the working copies of the same files.
 
 `compositions/square.html` (1:1) still generates and lints, but isn't a delivered file.
 

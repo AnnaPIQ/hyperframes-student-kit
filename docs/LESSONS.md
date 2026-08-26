@@ -231,6 +231,19 @@ efficient over time instead of relearning the same lessons.
   cannot overlap. **Fix:** `grep -o 'data-track-index="[0-9]*"' | sort -n | uniq -c` and pick
   a genuinely free index; a duplicate count is the bug.
 
+## Delivery
+
+- **`renders/` is gitignored — a file left there is not delivered.** These projects build in
+  an ephemeral cloud container, so "it's in `renders/`" points the client at a directory that
+  does not exist for them and vanishes with the container. The workspace convention is the
+  committed `final*.mp4` at the PROJECT ROOT (see `.gitignore`: "final.mp4 at each project
+  root ships instead"). **Copy up to the root and commit on every version bump**, or the
+  shipped file silently stays at whatever version last did — here the root finals sat at v8
+  while v9-v14 shipped only into `renders/`, so every "final" handed over was three versions
+  stale and the new ratio wasn't there at all.
+- **Check what the client can actually reach before saying a file is ready.** `git
+  check-ignore -v <path>` and `git ls-files` answer it in one command.
+
 ## Sync / re-sourcing footage
 
 - **Re-check a quota-blocked source before the final bake.** Drive's "too many downloads"
