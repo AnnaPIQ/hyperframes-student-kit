@@ -44,14 +44,20 @@ ffmpeg -hide_banner -v error -y -ss "$VO_IN" -i "$SRC_VO" -t "$VO_DUR" \
 # 1b. A-roll PiP — Sean's head, square, ready for a CSS circle mask.
 #     Cut from the SAME in-point as the VO (3.100) so lips track his voice with
 #     no offset. Source is 25 fps; conformed to 30 to match the composition.
-#     Crop window 1300x1300 @ (1055, 43) frames head-and-shoulders tight enough to
-#     read at corner-PiP size, and holds him inside the inscribed circle for the
-#     whole take.
+#     Crop window 1550x1550 @ (1090, 36) is centred on his FACE, not the head's
+#     visual mass — his long hair pulls the bounding box right, so centring on
+#     that leaves him visibly off-centre once masked. The origin comes from a
+#     skin-tone centroid measured over 68 frames spanning the whole take:
+#     median face centre (1865, 734), drift sd 43px. Eyeballing single frames
+#     got this wrong twice; measure it.
+#     Width is deliberate too — a tighter crop lands entirely on the brightest
+#     patch of his blue set wall and reads as a flat disc, where 1550 keeps
+#     enough of the room for the blue to fall off.
 # ---------------------------------------------------------------------------
 PIP_DUR=34.100
 echo "▶ PiP  ${VO_IN}s +${PIP_DUR}s"
 ffmpeg -hide_banner -v error -y -ss "$VO_IN" -i "$SRC_VO" -t "$PIP_DUR" \
-  -vf "crop=1300:1300:1055:43,scale=720:720:flags=lanczos,setsar=1,fps=30" \
+  -vf "crop=1550:1550:1090:36,scale=720:720:flags=lanczos,setsar=1,fps=30" \
   -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p -an \
   -movflags +faststart "$OUT/sean-pip.mp4"
 

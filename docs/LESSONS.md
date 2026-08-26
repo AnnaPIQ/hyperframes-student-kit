@@ -105,6 +105,25 @@ efficient over time instead of relearning the same lessons.
 - **Supplied montages often carry their own end card.** Scene-detect the tail and trim it
   before building your own, or you get two cards back to back.
 
+## Circular PiP / avatar framing
+
+- **Centre a circular PiP on the subject's FACE, not the head's bounding box.** Long hair
+  (or a hat, or a turned head) pulls the bounding box to one side, so box-centring leaves
+  the face visibly off-centre once the mask is on. Viewers read the face position, not the
+  pixel mass.
+- **Judge the framing through the actual circle mask at final display size, never the
+  square crop.** The inscribed circle throws away the corners, so a square that looks
+  balanced often isn't. Quick harness: build a one-off alpha mask with
+  `geq=lum='if(lte(hypot(X-r,Y-r),r),255,0)'`, then
+  `[v][m]alphamerge` over a flat brand-coloured background and tile a few timestamps.
+- **Too tight a crop on a coloured-backdrop talking head turns the background into a flat
+  disc of colour.** A studio wall usually has a gradient and darker surroundings; crop them
+  out and the remaining patch reads as solid, which looks like a grade the shooter never
+  applied. Leave enough room for the falloff, and size the circle up to keep the face
+  legible.
+- **Sample the crop across the whole take before committing** — presenters drift. Check
+  head position at 5–7 points, not one hero frame.
+
 ## Aspect variants
 
 - **Ask for a natively-framed master per ratio before reaching for crop/pad.** 9:16 → 1:1

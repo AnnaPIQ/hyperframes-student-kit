@@ -53,9 +53,17 @@ card covers it.
 | Ring | 6 px `--brand-blue-tint` | 5 px `--brand-blue-tint` |
 
 Cut from the **same in-point as the VO (3.100)**, so his lips track his own voice with no
-offset to tune. Source is 25 fps, conformed to 30 to match the composition. The crop
-(1300×1300 @ 1055, 43 on the 4K master) is tight enough to read at corner size and holds
-him inside the inscribed circle for the whole take.
+offset to tune. Source is 25 fps, conformed to 30 to match the composition.
+
+The crop is **1550×1550 @ (1090, 36)** on the 4K master, centred on his **face**, not the
+head's bounding box — his long hair pulls that box right, so centring on it leaves him
+visibly off-centre once the circle mask is on. The origin comes from a skin-tone centroid
+measured over 68 frames spanning the whole take (median face centre 1865, 734; drift sd
+43 px), not from eyeballing hero frames. Judge this through the mask, never the square. The width also matters: a tighter crop lands entirely on the brightest patch of his
+blue set wall and reads as a flat disc, where 1550 keeps enough of the room for the blue to
+fall off naturally.
+
+The blue is the original set lighting in his recording, not a grade applied here.
 
 The `<video>` sits inside a positioned `#pip-wrap` that owns the circle mask, ring and
 shadow — GSAP only ever animates the wrapper, never the video (render contract #9).
