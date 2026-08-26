@@ -1,6 +1,6 @@
 # EcomIQ × Dryft Sleep — social-proof ad · EDIT PLAN
 
-**Status: built (v9).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
+**Status: built (v10).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
 **wordless numerals** (one deliberate full-bleed message card carries copy) ·
 **bottom of frame clear for subtitles** · no logo wall ·
 no star rating · no testimonial quote · **a graphic only where a real figure is spoken** ·
@@ -78,10 +78,14 @@ covering "that's what we do… keep more of what they've already got" and "stop 
 on ads without needing to": eyebrow → white statement → down-arrow → payoff line in blue tint
 → outlined pill, each beat revealed on the words that state it.
 
+**v10: all text is white.** Every eyebrow, statement, qualifier, end-card line and pill
+label is now `--brand-white`; blue tint is left only on the two non-text graphics (the
+message card's down-arrow and the graph card's baseline bar).
+
 **End card:** rebuilt to the client's supplied end-card reference — the corner logo steps
 aside, the lockup appears centred and oversized (800px), then one wide-tracked uppercase
-line in blue tint ("SEE IF WE CAN HELP YOU") arrives word by word, and the flame
-"Find out more" pill lands beneath it over a soft blue bloom.
+line ("SEE IF WE CAN HELP YOU") arrives word by word, and the flame "Find out more"
+pill lands beneath it over a soft blue bloom.
 
 ## Motion pass (against `MOTION_PHILOSOPHY.md`)
 

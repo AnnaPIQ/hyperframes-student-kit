@@ -42,9 +42,9 @@ RULES = [
     ('align-items: flex-start; padding: 0 108px 470px;',
      'align-items: flex-start; padding: 0 76px 210px;'),
     ('#s59-eyebrow { font-size: 28px; font-weight: 700; letter-spacing: 0.20em;\n'
-     '        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 26px; }',
+     '        text-transform: uppercase; color: var(--brand-white); margin-bottom: 26px; }',
      '#s59-eyebrow { font-size: 22px; font-weight: 700; letter-spacing: 0.20em;\n'
-     '        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 18px; }'),
+     '        text-transform: uppercase; color: var(--brand-white); margin-bottom: 18px; }'),
     ('#s59-num { font-size: 300px;', '#s59-num { font-size: 196px;'),
     ('#s59-rule { width: 790px; height: 7px; border-radius: 4px;\n'
      '        background: var(--brand-flame); transform-origin: left center; margin: 26px 0 34px; }',
@@ -71,9 +71,9 @@ RULES = [
     ('align-items: center; text-align: center; padding: 0 116px 300px;',
      'align-items: center; text-align: center; padding: 0 84px 150px;'),
     ('#card-eyebrow { font-size: 30px; font-weight: 600; letter-spacing: 0.34em;\n'
-     '        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 40px; }',
+     '        text-transform: uppercase; color: var(--brand-white); margin-bottom: 40px; }',
      '#card-eyebrow { font-size: 24px; font-weight: 600; letter-spacing: 0.34em;\n'
-     '        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 26px; }'),
+     '        text-transform: uppercase; color: var(--brand-white); margin-bottom: 26px; }'),
     ('.card-line { font-size: 78px; font-weight: 800; line-height: 1.06;\n'
      '        letter-spacing: -0.02em; max-width: 830px; }',
      '.card-line { font-size: 54px; font-weight: 800; line-height: 1.06;\n'
@@ -94,8 +94,8 @@ RULES = [
     ('#s7-logo { width: 800px; height: auto; display: block; margin-bottom: 84px;',
      '#s7-logo { width: 540px; height: auto; display: block; margin-bottom: 54px;'),
     ('#s7-head { font-size: 60px;', '#s7-head { font-size: 42px;'),
-    ('max-width: 640px; color: var(--brand-blue-tint); }',
-     'max-width: 450px; color: var(--brand-blue-tint); }'),
+    ('max-width: 640px; color: var(--brand-white); }',
+     'max-width: 450px; color: var(--brand-white); }'),
     ('#s7-pill { margin-top: 76px; font-size: 52px;', '#s7-pill { margin-top: 50px; font-size: 36px;'),
     ('padding: 38px 90px; border-radius: 999px;', 'padding: 26px 62px; border-radius: 999px;'),
 ]
