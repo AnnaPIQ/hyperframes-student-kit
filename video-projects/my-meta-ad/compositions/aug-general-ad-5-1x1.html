@@ -231,7 +231,7 @@
          real silence boundary found by ffmpeg silencedetect on the source. -->
     <div id="root"
          data-composition-id="aug-general-ad-5-1x1"
-         data-start="0" data-duration="40.6"
+         data-start="0" data-duration="37.0"
          data-width="1080" data-height="1080" data-fps="30">
 
       <!-- ---- footage + its voice track (siblings, per contract #5) ---- -->
@@ -375,7 +375,7 @@
       <div id="whip-c" class="whip clip" data-start="0" data-duration="37.5" data-track-index="19"></div>
 
       <!-- ---- end card ---- -->
-      <div id="card" class="clip" data-start="33.75" data-duration="6.85" data-track-index="20">
+      <div id="card" class="clip" data-start="33.75" data-duration="3.25" data-track-index="20">
         <div class="in">
           <div id="card-bloom"></div>
           <img id="card-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
@@ -386,8 +386,8 @@
       </div>
 
       <!-- ---- texture above everything, whole piece ---- -->
-      <div id="vignette" class="clip" data-start="0" data-duration="40.6" data-track-index="21"></div>
-      <div id="grain"    class="clip" data-start="0" data-duration="40.6" data-track-index="22"></div>
+      <div id="vignette" class="clip" data-start="0" data-duration="37.0" data-track-index="21"></div>
+      <div id="grain"    class="clip" data-start="0" data-duration="37.0" data-track-index="22"></div>
 
       <!-- Logo sits in a positioned NON-clip wrapper (LESSONS.md) so the engine
            never repositions it. Rides the film section; the end card carries
@@ -400,7 +400,7 @@
     <script>
       window.__timelines = window.__timelines || {};
       (() => {
-        const SLOT = 40.6;
+        const SLOT = 37.0;
         const tl = gsap.timeline({ paused: true });
 
         /* ---- Reframes ------------------------------------------------------
@@ -521,7 +521,7 @@
           .to('#logo-slot', { opacity: 0, duration: 0.30, ease: 'power2.in' }, 33.50)
           .set('#logo-slot', { opacity: 0 }, 33.75);
 
-        /* ---- End card · 6.1s hold (37.5 -> 43.6) ------------------------- */
+        /* ---- End card (33.75 -> 37.0) ------------------------------------ */
         tl.fromTo('#card .in', { opacity: 0, y: 90, filter: 'blur(12px)' },
                                 { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.42, ease: 'power3.out' }, 33.75)
           .fromTo('#card-logo', { opacity: 0, y: 34, scale: .94 },
@@ -531,9 +531,9 @@
           .fromTo('#card-cta', { opacity: 0, scale: .86, xPercent: -50 },
                                { opacity: 1, scale: 1, xPercent: -50, duration: 0.52, ease: 'back.out(1.7)' }, 34.71)
           .fromTo('#card-bloom', { opacity: 0 }, { opacity: .34, duration: 1.2, ease: 'sine.out' }, 33.85)
-          .to('#card-cta', { scale: 1.035, duration: 0.78, ease: 'sine.inOut', yoyo: true, repeat: 3 }, 35.65)
+          .to('#card-cta', { scale: 1.035, duration: 0.60, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 35.55)
           // single chrome glint across the lockup during the hold
-          .fromTo('#card-shimmer', { xPercent: 0 }, { xPercent: 460, duration: 1.5, ease: 'power2.inOut' }, 36.45);
+          .fromTo('#card-shimmer', { xPercent: 0 }, { xPercent: 460, duration: 1.25, ease: 'power2.inOut' }, 35.30);
 
         /* Vignette breathes so no held frame is ever dead. Finite repeat: the
            composition window is finite, so the loop must be too. */

@@ -2,7 +2,7 @@
 
 Short-form EcomIQ ad cut from the "what's working" A-roll. Two deliveries from
 one spine: **9:16** (1080×1920, Reels/Stories/TikTok) and **1:1** (1080×1080,
-square feed). Both 30fps, **40.6s**.
+square feed). Both 30fps, **37.0s**.
 
 | | |
 |---|---|
@@ -24,7 +24,12 @@ Every reframe is anchored to a real silence boundary from
 the source, so prep trims 1.75s of head air and holds 1.16s past the last word →
 **37.5s of film**, with the end card taking over at **33.75s** — it lands on
 "wanna see if it'll work for you", so the spoken CTA plays over the branded card
-rather than after it. Total 40.6s.
+rather than after it.
+
+The piece ends at **37.0s** (1110 frames). The last word lands at 36.34, so the
+card rings out for 0.66s and stops — everything past that was a static card over
+silence. The CTA pulse and the shimmer glint were both retimed to finish before
+the new out-point, so the final frame is the fully-formed card.
 
 ## Beat map (composition seconds)
 
@@ -37,7 +42,7 @@ rather than after it. Total 40.6s.
 | 19.75 | **B-roll · Dryft Sleep** | full-bleed, "DRYFT SLEEP" chip — the speaker himself is in the shot |
 | 23.80 | **hero stamp** | "NOT A GUESS." + 6px shake on the footage |
 | 26.60 | pattern | node lattice with a flame pulse |
-| 33.75 | **end card** | film cross-dissolves out; lockup + "See if it will work for you." + "Learn More" pill, 6.85s |
+| 33.75 | **end card** | film cross-dissolves out; lockup + "See if it will work for you." + "Learn More" pill, 3.25s |
 
 ## B-roll
 
