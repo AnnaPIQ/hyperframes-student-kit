@@ -70,6 +70,26 @@ efficient over time instead of relearning the same lessons.
   timestamps in seconds. It also finds the true speech in/out points so you trim dead
   pre-roll/post-roll instead of eyeballing it.
 
+## Turning a client-logo pack into a logo wall
+
+- **A mixed logo pack won't silhouette with one rule.** Deciding polarity from
+  mean luminance (dark-on-light → invert, light-on-dark → straight) handles most
+  marks, but any logo sitting on a **solid colour** keeps its ground as a visible
+  grey box on navy. **Fix:** colour-key those out — sample the top-left pixel and
+  `-fuzz N% -transparent "$bg"`.
+- **Flood-filling the ground from the edges leaves letter counters filled** (the
+  hole in Ozium's O, Flamingo's O), because they aren't connected to the border.
+  **Fix:** key the colour out *everywhere*, not `-floodfill +0+0`.
+- **Compositing the keyed result onto black and taking greyscale as the alpha**
+  keeps interior detail — the brighter the mark, the more opaque — instead of
+  flattening each logo to a solid blob.
+- **Repeating the same logo in a wall trips lint's `duplicate_media_discovery_risk`**
+  ("2 matching img entries with the same source/start/duration"). Use each mark
+  once; if the wall needs more density, add more marks, not copies.
+- **`identify -format` prints no trailing newline**, so `read -r w h < <(identify …)`
+  returns non-zero and `set -e` kills the script mid-run with no error. Use an MPR
+  round-trip (or command substitution) instead of reading dimensions back out.
+
 ## Editing technique (talking-head cutdowns)
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +

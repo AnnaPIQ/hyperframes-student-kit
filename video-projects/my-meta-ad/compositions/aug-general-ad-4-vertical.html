@@ -115,10 +115,47 @@
       #g1 .strike { top: 52px; width: 100%; }
 
       /* Beat 3 — "DOZENS OF LIVE BRANDS" + store-tile grid */
-      #g3 .tiles { display: flex; gap: 12px; margin-bottom: 26px; }
-      #g3 .t {
-        width: 62px; height: 44px; border-radius: 8px;
-        background: var(--brand-surface); border: 1px solid var(--brand-border);
+      /* ---- Beat 3 · client-logo wall + Shopify Premier Partner badge ----
+         Mirrors Shopify_Partner_Hero_v2.mp4: real client marks as low-opacity
+         white silhouettes drifting on navy, hero badge landing centre. Two
+         layers drift at different speeds for parallax. */
+      #g3-scrim {
+        position: absolute; inset: 0; z-index: 5; opacity: 0; pointer-events: none;
+        background:
+          radial-gradient(ellipse 82% 56% at 50% 44%, rgba(6,40,76,.80) 0%, rgba(4,24,48,.95) 100%);
+      }
+      #g3-wall {
+        position: absolute; left: 0; top: -220px; width: 1080px; height: 2500px;
+        z-index: 6; opacity: 0; pointer-events: none; overflow: hidden;
+        /* The wall drifts upward, so without this any logo eventually lands
+           behind the persistent EcomIQ lockup. The mask sits on the wrapper
+           (which does NOT move — only .lyr children do), so it stays pinned to
+           the frame: fully clear over the logo zone, ramping in by frame y 300. */
+        -webkit-mask-image: linear-gradient(180deg,
+          transparent 0px, transparent 300px, #000 520px, #000 100%);
+        mask-image: linear-gradient(180deg,
+          transparent 0px, transparent 300px, #000 520px, #000 100%);
+      }
+      #g3-wall .lyr { position: absolute; inset: 0; }
+      #g3-wall img {
+        position: absolute; display: block; height: auto;
+        filter: brightness(0) invert(1);   /* belt-and-braces: force pure white */
+      }
+      #g3-wall .a img { opacity: .13; }
+      #g3-wall .b img { opacity: .22; }
+      #g3-badge {
+        position: absolute; left: 0; right: 0; top: 820px; z-index: 7;
+        text-align: center; opacity: 0;
+      }
+      #g3-badge img {
+        width: 560px; height: auto; border-radius: 14px;
+        box-shadow: 0 30px 90px -20px rgba(0,0,0,.75);
+      }
+      #g3-eyebrow {
+        position: absolute; left: 96px; right: 96px; top: 1030px; z-index: 7;
+        text-align: center; opacity: 0;
+        font-size: 26px; font-weight: 600; letter-spacing: .34em;
+        text-transform: uppercase; color: var(--brand-blue-tint);
       }
       /* Beat 4 — "right now." */
       #g4 .line { font-size: 96px; }
@@ -231,14 +268,39 @@
       </div>
 
       <!-- Beat 3 · "…coaching side of a Shopify agency…" (VO 6.72–13.46) -->
-      <div id="g3" class="band clip" data-start="7.2" data-duration="5.6" data-track-index="6">
-        <div class="tiles">
-          <div class="t"></div><div class="t"></div><div class="t"></div><div class="t"></div>
-          <div class="t"></div><div class="t"></div><div class="t"></div><div class="t"></div>
-          <div class="t"></div><div class="t"></div><div class="t"></div><div class="t"></div>
+      <div id="g3-scrim" class="clip" data-start="6.9333" data-duration="6.4" data-track-index="6"></div>
+      <div id="g3-wall" class="clip" data-start="6.9333" data-duration="6.4" data-track-index="15">
+        <div class="lyr a">
+          <img src="assets/brands/allstora.png" alt="" style="left:40px; top:60px; width:190px" />
+          <img src="assets/brands/kos.png" alt="" style="left:770px; top:30px; width:130px" />
+          <img src="assets/brands/duckhorn.png" alt="" style="left:400px; top:310px; width:165px" />
+          <img src="assets/brands/sonoma-cutrer.png" alt="" style="left:60px; top:600px; width:200px" />
+          <img src="assets/brands/skinny-mixes.png" alt="" style="left:700px; top:540px; width:185px" />
+          <img src="assets/brands/far-niente.png" alt="" style="left:330px; top:860px; width:150px" />
+          <img src="assets/brands/bricoleur.png" alt="" style="left:860px; top:920px; width:120px" />
+          <img src="assets/brands/mp.png" alt="" style="left:110px; top:1180px; width:160px" />
+          <img src="assets/brands/cats-pajamas.png" alt="" style="left:570px; top:1240px; width:175px" />
+          <img src="assets/brands/trew.png" alt="" style="left:850px; top:1480px; width:165px" />
+          <img src="assets/brands/biosyntropy.png" alt="" style="left:150px; top:1760px; width:200px" />
         </div>
-        <div class="eyebrow">Working inside</div>
-        <div class="line">Dozens of<br />live brands</div>
+        <div class="lyr b">
+          <img src="assets/brands/ozium.png" alt="" style="left:30px; top:470px; width:235px" />
+          <img src="assets/brands/flaming-estate.png" alt="" style="left:610px; top:180px; width:190px" />
+          <img src="assets/brands/folk-potions.png" alt="" style="left:890px; top:440px; width:140px" />
+          <img src="assets/brands/mob-armor.png" alt="" style="left:250px; top:680px; width:150px" />
+          <img src="assets/brands/dryft.png" alt="" style="left:70px; top:980px; width:215px" />
+          <img src="assets/brands/naturally-linda.png" alt="" style="left:640px; top:1060px; width:205px" />
+          <img src="assets/brands/sweet-e.png" alt="" style="left:890px; top:1280px; width:145px" />
+          <img src="assets/brands/bedrock.png" alt="" style="left:220px; top:1520px; width:220px" />
+          <img src="assets/brands/sothebys.png" alt="" style="left:620px; top:1700px; width:185px" />
+          <img src="assets/brands/harmless-harvest.png" alt="" style="left:100px; top:2080px; width:210px" />
+        </div>
+      </div>
+      <div id="g3-badge" class="clip" data-start="6.9333" data-duration="6.4" data-track-index="16">
+        <img src="assets/brands/shopify-premier-partner.png" alt="Shopify Premier Partner" />
+      </div>
+      <div id="g3-eyebrow" class="clip" data-start="6.9333" data-duration="6.4" data-track-index="17">
+        Inside dozens of live brands
       </div>
 
       <!-- Beat 4 · "…we're doing it right now." (VO 14.73–22.00) -->
@@ -297,14 +359,29 @@
             { scaleX: 1, duration: 0.4667, ease: "power3.inOut" }, 2.6)
           .to("#g1", { opacity: 0, y: -60, filter: "blur(22px)", duration: 0.3, ease: "power2.in" }, 4.1333);
 
-        /* ---- Beat 3 · store tiles light up, then the line ---- */
-        tl.fromTo("#g3", { opacity: 0, y: 46, filter: "blur(18px)" },
-          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, 7.2)
-          .fromTo("#g3 .t",
-            { backgroundColor: "#0a325f", borderColor: "#1d4a7a", scale: 0.86 },
-            { backgroundColor: "#9CD4FF", borderColor: "#9CD4FF", scale: 1,
-              duration: 0.3, ease: "power2.out", stagger: 0.075 }, 7.6)
-          .to("#g3", { opacity: 0, y: -60, filter: "blur(22px)", duration: 0.3, ease: "power2.in" }, 12.5);
+        /* ---- Beat 3 · client-logo wall, then the Shopify Premier Partner badge ----
+           VO: "EcomIQ is the coaching side of a Shopify agency, working inside
+           dozens of live brands every single day." (6.72–13.46)
+           The wall answers "dozens of live brands", the badge answers "Shopify
+           agency" — so the badge lands on the word, not at the top of the beat. */
+        tl.fromTo("#g3-scrim", { opacity: 0 },
+            { opacity: 1, duration: 0.3667, ease: "power2.out" }, 6.9333)
+          .fromTo("#g3-wall", { opacity: 0 },
+            { opacity: 1, duration: 0.5333, ease: "power2.out" }, 7.0333)
+          // Parallax: the two layers drift at different rates, so the wall never
+          // reads as one flat sheet sliding past.
+          .fromTo("#g3-wall .a", { y: 0 }, { y: -150, duration: 6.4, ease: "none" }, 6.9333)
+          .fromTo("#g3-wall .b", { y: 0 }, { y: -280, duration: 6.4, ease: "none" }, 6.9333)
+          // Hero badge lands on "Shopify agency".
+          .fromTo("#g3-badge", { opacity: 0, scale: 0.82, filter: "blur(14px)" },
+            { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.5333, ease: "back.out(1.5)" }, 8.4)
+          // Copy lands on "dozens of live brands".
+          .fromTo("#g3-eyebrow", { opacity: 0, y: 18 },
+            { opacity: 1, y: 0, duration: 0.4333, ease: "power2.out" }, 10.4)
+          .to("#g3-badge",   { opacity: 0, scale: 0.94, filter: "blur(16px)", duration: 0.3, ease: "power2.in" }, 12.9333)
+          .to("#g3-eyebrow", { opacity: 0, y: -20, duration: 0.2667, ease: "power2.in" }, 12.9333)
+          .to("#g3-wall",    { opacity: 0, duration: 0.3333, ease: "power2.in" }, 12.9333)
+          .to("#g3-scrim",   { opacity: 0, duration: 0.3667, ease: "power2.in" }, 12.9667);
 
         /* ---- Beat 4 · "right now." scales as the line lands ---- */
         tl.fromTo("#g4", { opacity: 0, y: 46, filter: "blur(18px)" },

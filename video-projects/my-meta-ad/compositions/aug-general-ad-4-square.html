@@ -102,10 +102,44 @@
       #g1 .line { position: relative; display: inline-block; }
       #g1 .strike { top: 38px; width: 100%; }
 
-      #g3 .tiles { display: flex; gap: 10px; margin-bottom: 20px; }
-      #g3 .t {
-        width: 48px; height: 34px; border-radius: 7px;
-        background: var(--brand-surface); border: 1px solid var(--brand-border);
+      /* ---- Beat 3 · client-logo wall + Shopify Premier Partner badge ----
+         Same construction as the 9:16 cut, re-laid-out for the square: shorter
+         drift, denser wall, smaller badge. */
+      #g3-scrim {
+        position: absolute; inset: 0; z-index: 5; opacity: 0; pointer-events: none;
+        background:
+          radial-gradient(ellipse 82% 60% at 50% 44%, rgba(6,40,76,.80) 0%, rgba(4,24,48,.95) 100%);
+      }
+      #g3-wall {
+        position: absolute; left: 0; top: -160px; width: 1080px; height: 1560px;
+        z-index: 6; opacity: 0; pointer-events: none; overflow: hidden;
+        /* Keeps the drifting wall out from behind the persistent lockup — see
+           the 9:16 cut for the reasoning. */
+        -webkit-mask-image: linear-gradient(180deg,
+          transparent 0px, transparent 220px, #000 400px, #000 100%);
+        mask-image: linear-gradient(180deg,
+          transparent 0px, transparent 220px, #000 400px, #000 100%);
+      }
+      #g3-wall .lyr { position: absolute; inset: 0; }
+      #g3-wall img {
+        position: absolute; display: block; height: auto;
+        filter: brightness(0) invert(1);
+      }
+      #g3-wall .a img { opacity: .13; }
+      #g3-wall .b img { opacity: .22; }
+      #g3-badge {
+        position: absolute; left: 0; right: 0; top: 420px; z-index: 7;
+        text-align: center; opacity: 0;
+      }
+      #g3-badge img {
+        width: 500px; height: auto; border-radius: 12px;
+        box-shadow: 0 26px 76px -18px rgba(0,0,0,.75);
+      }
+      #g3-eyebrow {
+        position: absolute; left: 80px; right: 80px; top: 610px; z-index: 7;
+        text-align: center; opacity: 0;
+        font-size: 22px; font-weight: 600; letter-spacing: .34em;
+        text-transform: uppercase; color: var(--brand-blue-tint);
       }
       #g4 .line { font-size: 70px; }
 
@@ -212,14 +246,39 @@
       </div>
 
       <!-- Beat 3 · "…coaching side of a Shopify agency…" (VO 6.72–13.46) -->
-      <div id="g3" class="band clip" data-start="7.2" data-duration="5.6" data-track-index="6">
-        <div class="tiles">
-          <div class="t"></div><div class="t"></div><div class="t"></div><div class="t"></div>
-          <div class="t"></div><div class="t"></div><div class="t"></div><div class="t"></div>
-          <div class="t"></div><div class="t"></div><div class="t"></div><div class="t"></div>
+      <div id="g3-scrim" class="clip" data-start="6.9333" data-duration="6.4" data-track-index="6"></div>
+      <div id="g3-wall" class="clip" data-start="6.9333" data-duration="6.4" data-track-index="15">
+        <div class="lyr a">
+          <img src="assets/brands/allstora.png" alt="" style="left:40px; top:40px; width:160px" />
+          <img src="assets/brands/kos.png" alt="" style="left:790px; top:20px; width:110px" />
+          <img src="assets/brands/duckhorn.png" alt="" style="left:410px; top:200px; width:140px" />
+          <img src="assets/brands/sonoma-cutrer.png" alt="" style="left:50px; top:380px; width:170px" />
+          <img src="assets/brands/skinny-mixes.png" alt="" style="left:720px; top:340px; width:155px" />
+          <img src="assets/brands/far-niente.png" alt="" style="left:330px; top:550px; width:125px" />
+          <img src="assets/brands/bricoleur.png" alt="" style="left:880px; top:580px; width:100px" />
+          <img src="assets/brands/mp.png" alt="" style="left:100px; top:740px; width:135px" />
+          <img src="assets/brands/cats-pajamas.png" alt="" style="left:560px; top:780px; width:148px" />
+          <img src="assets/brands/trew.png" alt="" style="left:860px; top:930px; width:140px" />
+          <img src="assets/brands/biosyntropy.png" alt="" style="left:130px; top:1100px; width:170px" />
         </div>
-        <div class="eyebrow">Working inside</div>
-        <div class="line">Dozens of live brands</div>
+        <div class="lyr b">
+          <img src="assets/brands/ozium.png" alt="" style="left:20px; top:300px; width:200px" />
+          <img src="assets/brands/flaming-estate.png" alt="" style="left:620px; top:120px; width:160px" />
+          <img src="assets/brands/folk-potions.png" alt="" style="left:900px; top:270px; width:118px" />
+          <img src="assets/brands/mob-armor.png" alt="" style="left:250px; top:430px; width:126px" />
+          <img src="assets/brands/dryft.png" alt="" style="left:60px; top:610px; width:182px" />
+          <img src="assets/brands/naturally-linda.png" alt="" style="left:640px; top:660px; width:172px" />
+          <img src="assets/brands/sweet-e.png" alt="" style="left:900px; top:800px; width:122px" />
+          <img src="assets/brands/bedrock.png" alt="" style="left:230px; top:950px; width:186px" />
+          <img src="assets/brands/sothebys.png" alt="" style="left:630px; top:1060px; width:156px" />
+          <img src="assets/brands/harmless-harvest.png" alt="" style="left:90px; top:1300px; width:178px" />
+        </div>
+      </div>
+      <div id="g3-badge" class="clip" data-start="6.9333" data-duration="6.4" data-track-index="16">
+        <img src="assets/brands/shopify-premier-partner.png" alt="Shopify Premier Partner" />
+      </div>
+      <div id="g3-eyebrow" class="clip" data-start="6.9333" data-duration="6.4" data-track-index="17">
+        Inside dozens of live brands
       </div>
 
       <!-- Beat 4 · "…we're doing it right now." (VO 14.73–22.00) -->
@@ -278,14 +337,25 @@
             { scaleX: 1, duration: 0.4667, ease: "power3.inOut" }, 2.6)
           .to("#g1", { opacity: 0, y: -50, filter: "blur(22px)", duration: 0.3, ease: "power2.in" }, 4.1333);
 
-        /* ---- Beat 3 · store tiles light up, then the line ---- */
-        tl.fromTo("#g3", { opacity: 0, y: 40, filter: "blur(18px)" },
-          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, 7.2)
-          .fromTo("#g3 .t",
-            { backgroundColor: "#0a325f", borderColor: "#1d4a7a", scale: 0.86 },
-            { backgroundColor: "#9CD4FF", borderColor: "#9CD4FF", scale: 1,
-              duration: 0.3, ease: "power2.out", stagger: 0.075 }, 7.6)
-          .to("#g3", { opacity: 0, y: -50, filter: "blur(22px)", duration: 0.3, ease: "power2.in" }, 12.5);
+        /* ---- Beat 3 · client-logo wall, then the Shopify Premier Partner badge ----
+           VO: "EcomIQ is the coaching side of a Shopify agency, working inside
+           dozens of live brands every single day." (6.72–13.46)
+           Wall answers "dozens of live brands"; badge answers "Shopify agency"
+           and lands on the word. */
+        tl.fromTo("#g3-scrim", { opacity: 0 },
+            { opacity: 1, duration: 0.3667, ease: "power2.out" }, 6.9333)
+          .fromTo("#g3-wall", { opacity: 0 },
+            { opacity: 1, duration: 0.5333, ease: "power2.out" }, 7.0333)
+          .fromTo("#g3-wall .a", { y: 0 }, { y: -95, duration: 6.4, ease: "none" }, 6.9333)
+          .fromTo("#g3-wall .b", { y: 0 }, { y: -180, duration: 6.4, ease: "none" }, 6.9333)
+          .fromTo("#g3-badge", { opacity: 0, scale: 0.82, filter: "blur(14px)" },
+            { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.5333, ease: "back.out(1.5)" }, 8.4)
+          .fromTo("#g3-eyebrow", { opacity: 0, y: 16 },
+            { opacity: 1, y: 0, duration: 0.4333, ease: "power2.out" }, 10.4)
+          .to("#g3-badge",   { opacity: 0, scale: 0.94, filter: "blur(16px)", duration: 0.3, ease: "power2.in" }, 12.9333)
+          .to("#g3-eyebrow", { opacity: 0, y: -18, duration: 0.2667, ease: "power2.in" }, 12.9333)
+          .to("#g3-wall",    { opacity: 0, duration: 0.3333, ease: "power2.in" }, 12.9333)
+          .to("#g3-scrim",   { opacity: 0, duration: 0.3667, ease: "power2.in" }, 12.9667);
 
         /* ---- Beat 4 · "right now." scales as the line lands ---- */
         tl.fromTo("#g4", { opacity: 0, y: 40, filter: "blur(18px)" },

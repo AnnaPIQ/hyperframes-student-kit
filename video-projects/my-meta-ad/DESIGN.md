@@ -85,13 +85,37 @@ not estimated). Speech runs 3.717→34.172s in the source; the clip is trimmed f
 |---|---|---|
 | 0.27–5.02 | "Most ecommerce advice…not working inside brands." | `#g1` "Most advice" + flame strike-through wipe |
 | 5.58–6.41 | "We're not those people." | clean — the line lands on the face |
-| 6.72–13.46 | "…coaching side of a Shopify agency…" | `#g3` 12 store tiles light to blue-tint + "Dozens of live brands" |
+| 6.72–13.46 | "…coaching side of a Shopify agency, working inside dozens of live brands…" | `#g3` full-frame: drifting wall of 21 real client logos + **Shopify Premier Partner** badge landing centre on "Shopify agency", then "Inside dozens of live brands" |
 | 14.73–22.00 | "…we're doing it right now." | `#g4` "right now." in Hedvig italic, scale-in |
 | 22.49–23.66 | "No gurus." | `#g5` full-frame type + strike, over a navy scrim |
 | 23.84–24.66 | "No theory." | `#g6` same layout, whip-cut (rule of threes, beat 2) |
 | 24.80–26.81 | "Just what actually grows a profitable brand." | `#g7` full-frame type, all white; flame rising rule carries the accent |
 | 27.82–30.72 | "Want to see if we're a good fit? Tap the link…" | clean; logo begins its flight |
 | 30.87–36.00 | — | End card: logo centre, "Advice from people doing it" (all white, upright), flame "Learn More →" pill, 5.1s hold |
+
+### Beat 3 — the credibility beat
+
+Modelled on `Shopify_Partner_Hero_v2.mp4` (Anna's reference): real client marks
+as low-opacity **white silhouettes** drifting on navy, with the Shopify Premier
+Partner badge landing centre as hero. It replaces an earlier abstract row of
+blue tiles, which said "dozens of brands" without showing any.
+
+- **Assets:** `assets/brands/` — 21 client marks + `shopify-premier-partner.png`.
+  Built by `scripts/prep-brand-logos.sh` from the raw logo pack.
+- **Silhouetting:** polarity is decided per file from mean luminance (dark mark
+  on light ground → invert; light mark on dark ground → straight). Marks on a
+  solid colour (Ozium, Flaming Estate, Naturally Linda, dryft, Sweet E) can't
+  use either rule — the ground survives as a grey box — so those are colour-keyed
+  out instead, everywhere rather than flood-filled from the edges, which would
+  leave letter counters (Ozium's O) filled.
+- **The badge is not silhouetted** — it ships as the original black-on-white
+  card, upscaled 3× at prep time because the source is only 338×149.
+- **Two parallax layers** (`.a` at 13% opacity drifting −150px, `.b` at 22%
+  drifting −280px) so the wall never reads as one flat sheet sliding past.
+- **The badge lands on the word**, at 8.4s — "Shopify agency" — not at the top
+  of the beat. The copy lands at 10.4s on "dozens of live brands".
+- Every logo appears exactly once; duplicates trip the linter's
+  `duplicate_media_discovery_risk`.
 
 **Design rules this cut follows**
 - **No captions** — the band sits at y 1080–1400 (9:16) / 640–860 (1:1), and the
