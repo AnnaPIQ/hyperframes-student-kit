@@ -74,49 +74,42 @@ resolves across "…see if we can help you." His voice keeps running over the ca
 Total composition: **37.60 s** @ 30 fps.
 
 ```
- t=0                                                     27.73        33.70   37.60
- |───────────── BLOCK A · reel plays straight ────────────|── BLOCK B ──|── CARD ──|
- |            beats 1–5 · 37 hard cuts, untouched         | authority   | VO runs  |
-                                                          | reprise     | over it  |
-                                                            beat 6        3.90 s
+ t=0                                                              33.70      37.60
+ |──────── the reel, ONCE, at 0.813x ────────────────────────────|── CARD ──|
+ |         beats 1–6 · its own 37 hard cuts, nothing reprised    | VO runs  |
+                                                                 | over it  |
+                                                                   3.90 s
 ```
 
-### Block A — 0 → 27.733 (27.733 s)
-Showcase Reel `0 → 27.733`, played straight at native speed, audio muted.
-Its own 37 hard cuts carry beats 1–5. Nothing reordered — it is already a
-tightly-cut reel and it tracks the VO's build well.
+### Picture — 0 → 34.100 · the reel once, retimed
+Usable reel picture is `0 → 27.733` (its own built-in end card starts there). Picture is
+needed out to 34.100 — the card at 33.700 plus the 0.35 s dissolve plus a handle — so the
+**whole reel is slowed to 0.813× speed** (`setpts ×1.22957`) and plays through exactly
+once. No shot is reprised.
 
-### Block B — 27.733 → 33.700 (5.967 s) · "authority reprise"
-The VO's sixth beat is the credibility line, and the reel runs out 6 s early. Rather than
-slow-mo (judder at 30 fps) or a loop, this is a deliberate **reprise of seven hero shots**
-at native speed and native cadence, cut to the credibility line. Seam at 27.733 is a
-**hard cut** landing exactly on a sentence boundary.
+An earlier version filled the gap by reprising eight hero shots after 27.733. It read as a
+repeat, so it's gone.
 
-| # | Source in → out | Dur | Shot | Why here |
-|---|---|---|---|---|
-| 1 | 7.033 → 7.600 | 0.567 | "SHOPIFY PREMIER PARTNER" card | "…backed by…" |
-| 2 | 9.067 → 9.967 | 0.900 | Sean presenting charts on screen | "…an agency…" |
-| 3 | 15.600 → 16.433 | 0.833 | Product / search UI with Sean inset | the actual work |
-| 4 | 18.033 → 19.033 | 1.000 | Stage: *2.3+ Billion requests daily · 99.9% uptime* | "…done this for a living…" |
-| 5 | 16.433 → 17.067 | 0.633 | Coaching call grid (two-up) | "…coaching…" |
-| 6 | 22.833 → 23.633 | 0.800 | Hands on laptop | craft |
-| 7 | 26.867 → 27.733 | 0.867 **+0.367 hold** | Sean, warm half-smile | "…for over 10 years." → human beat into the card |
+**Slowed with motion interpolation, not frame duplication.** A 22.8% stretch at 30 fps
+would otherwise double roughly every 4th frame and judder on the camera moves.
+`minterpolate=mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1` synthesises true
+intermediate frames; its scene-change detection handles the reel's 37 hard cuts cleanly —
+checked frame-by-frame across a cut, no smearing between shots, and a mid-motion frame
+matches the original. It is the slow step in the build, ~10 min per ratio.
 
-Shot 7 is held an extra 0.367 s so Block B lands exactly on 33.700 and the dissolve
-begins on a settled frame rather than mid-motion.
+At 0.813× the reel's average shot goes from ~0.75 s to ~0.92 s. Still quick, but the piece
+reads a little calmer than the source reel — the cost of covering the VO in one pass.
 
 ### Block C — 33.700 → 37.600 (3.900 s) · END CARD
-Navy canvas (`--brand-navy`) + the starter's radial bloom, EcomIQ white logo lockup,
-flame-orange **"Find out more"** pill. Built from `assets/brand-tokens.css` +
-local `RethinkSans.woff2` — no new colours, no new fonts.
+Navy canvas (`--brand-navy`) + the house radial bloom, EcomIQ white logo lockup, flame
+**"Find out more"** pill — one typeface, one weight, no italics. Built from
+`assets/brand-tokens.css` + local `RethinkSans.woff2`.
 VO continues over the card and ends at t = 36.04; card holds 1.56 s of silence after.
 
 ## Transitions
 Snappy, per brief.
-- Inside Block A — the reel's own hard cuts, untouched.
-- Block A → B — hard cut (sentence boundary, invisible).
-- Inside Block B — hard cuts at native cadence.
-- Block B → card — **0.35 s cross-dissolve**, the only dissolve in the piece, on "want".
+- Through the reel — its own 37 hard cuts, untouched (just slower).
+- Reel → card — **0.35 s cross-dissolve**, the only dissolve in the piece, on "want".
 - Card elements — logo and pill land on a short GSAP stagger inside the first 0.6 s.
 
 ## Audio

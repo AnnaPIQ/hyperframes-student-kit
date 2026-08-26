@@ -31,8 +31,8 @@ Nothing here invents a colour or a font — the end card is built entirely from 
 | CTA label | `--brand-white`, Rethink Sans 700, −2% tracking |
 | PiP ring | `--brand-blue-tint`, 5–6px |
 
-The italic-serif emphasis word ("*more*") is the EcomIQ headline signature, set inside the
-pill so the CTA carries the brand voice without a second line competing with it.
+The Hedvig italic is deliberately absent from the card — the CTA reads as one uniform
+label. The serif stays in the brand kit for headline work elsewhere.
 
 ### End card copy
 ```
@@ -40,7 +40,8 @@ pill so the CTA carries the brand voice without a second line competing with it.
          ▔▔▔▔ (flame rule)
      ( Find out more → )
 ```
-One line, one action. The pill is the only copy on the card.
+One line, one action. The pill is the only copy on the card, set in a single face and
+weight — Rethink Sans 700, no italics, no mixed type.
 
 ## A-roll PiP
 Sean's head, circle-masked, top right, riding over the montage from t = 0.35 until the end
@@ -89,15 +90,19 @@ Built by **`scripts/build-assets.sh`** from the raw Drive masters in
 
 | File | What |
 |---|---|
-| `assets/bed-916.mp4` | 1080×1920 picture bed, 34.07 s, muted |
-| `assets/bed-square.mp4` | 1080×1080 picture bed, 34.07 s, muted |
+| `assets/bed-916.mp4` | 1080×1920 picture bed, 34.10 s, muted |
+| `assets/bed-square.mp4` | 1080×1080 picture bed, 34.10 s, muted |
 | `assets/sean-vo.wav` | Sean's VO, 48 kHz stereo, source 3.100 → 39.300 |
 | `assets/sean-pip.mp4` | A-roll PiP, 720×720, 34.10 s, muted, source 3.100 |
 | `assets/music-bed.wav` | **silent placeholder** — see below |
 
-The beds are pre-cut with ffmpeg rather than assembled as 45 `<video>` clips in HTML: one
-video element per ratio keeps the composition readable and the render fast, and puts the
-frame-accurate cutting in a script that can be re-run.
+Each bed is the reel played **once**, slowed to 0.813× with motion interpolation so it
+covers the voiceover without any shot repeating. Pre-cut with ffmpeg rather than assembled
+as `<video>` clips in HTML: one video element per ratio keeps the composition readable and
+the render fast, and puts the retime in a script that can be re-run. See `EDIT-PLAN.md`.
+
+The bed rebuild takes ~10 min per ratio — motion interpolation is the cost of a
+judder-free slowdown.
 
 To rebuild after changing a timestamp:
 ```bash

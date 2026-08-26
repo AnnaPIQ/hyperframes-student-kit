@@ -67,54 +67,33 @@ ffmpeg -hide_banner -v error -y -f lavfi -i anullsrc=r=48000:cl=stereo \
   -t 37.600 -c:a pcm_s16le "$OUT/music-bed.wav"
 
 # ---------------------------------------------------------------------------
-# 2. Picture bed.
-#    Block A  0.000 -> 27.733   the reel, straight, untouched
-#    Block B  27.733 -> 34.050  authority reprise, 8 hero shots, native speed
-#    Bed runs to 34.050 so the 0.35s dissolve into the end card (33.700 ->
-#    34.050) always has picture underneath it.
+# 2. Picture bed — the reel ONCE, retimed to fill the voiceover.
 #
-#    Block B shots: "in duration" against the montage master. The cut list is
-#    identical in both the 9:16 and 1:1 masters, so these apply to each.
+#    Usable reel picture is 0 -> 27.733 (its own built-in end card starts there).
+#    Picture is needed to 34.100, so the whole reel is slowed to 0.813x speed
+#    (setpts x1.22957). It plays through exactly once — no shot is reprised.
+#
+#    Slowing is done with MOTION INTERPOLATION, not frame duplication: a 22.8%
+#    stretch at 30 fps would otherwise double roughly every 4th frame and judder
+#    on the camera moves. minterpolate's scene-change detection handles the
+#    reel's 37 hard cuts cleanly — verified frame-by-frame across a cut, with no
+#    smearing between shots.
+#
+#    This is the slow step in the build (~10 min per ratio). Worth it.
 # ---------------------------------------------------------------------------
-BLOCK_B=(
-  "7.033  0.567"   # Shopify Premier Partner card   -> "backed by"
-  "9.067  0.900"   # Sean presenting charts         -> "an agency"
-  "13.867 0.717"   # store aisle with a client      -> real brands
-  "15.600 0.833"   # product / search UI            -> the work
-  "18.033 1.000"   # stage: 1.3B requests / 99.9%   -> "done this for a living"
-  "16.433 0.633"   # coaching call                  -> "coaching"
-  "22.833 0.800"   # hands on laptop                -> craft
-  "26.867 0.867"   # Sean, warm half-smile          -> "for over 10 years"
-)
+REEL_END=27.733333          # where the reel's own end card begins
+BED_DUR=34.100              # picture needed: card at 33.700 + 0.35s dissolve + handle
+PTS=1.22957                 # BED_DUR / REEL_END
 
 build_bed() {
   local src="$1" out="$2" w="$3" h="$4"
-  local vf="scale=${w}:${h}:flags=lanczos,setsar=1"
-  local enc=(-c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -r 30 -an)
-  local list="$WORK/list.txt"; : > "$list"
-
-  echo "▶ bed ${w}x${h}  ->  $out"
-
-  # Block A — the reel up to its own built-in end card at 27.733
-  ffmpeg -hide_banner -v error -y -i "$src" -t 27.733 -vf "$vf" "${enc[@]}" \
-    "$WORK/a.mp4"
-  echo "file '$WORK/a.mp4'" >> "$list"
-
-  # Block B — the reprise
-  local i=0
-  for shot in "${BLOCK_B[@]}"; do
-    read -r ss dur <<< "$shot"
-    i=$((i + 1))
-    local seg
-    seg="$WORK/b$(printf %02d "$i").mp4"
-    ffmpeg -hide_banner -v error -y -ss "$ss" -i "$src" -t "$dur" -vf "$vf" \
-      "${enc[@]}" "$seg"
-    echo "file '$seg'" >> "$list"
-  done
-
-  ffmpeg -hide_banner -v error -y -f concat -safe 0 -i "$list" \
-    -c copy -movflags +faststart "$out"
-
+  echo "▶ bed ${w}x${h} (reel once, ${PTS}x slower)  ->  $out"
+  # -t BEFORE -i limits the INPUT read. After -i it would cap the OUTPUT, which
+  # silently truncates the slowed bed back to the source length.
+  ffmpeg -hide_banner -v error -y -t "$REEL_END" -i "$src" \
+    -vf "scale=${w}:${h}:flags=lanczos,setsar=1,setpts=${PTS}*PTS,minterpolate=fps=30:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1" \
+    -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -an \
+    -movflags +faststart "$out"
   printf '  ✓ %s  %ss\n' "$out" \
     "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$out")"
 }
