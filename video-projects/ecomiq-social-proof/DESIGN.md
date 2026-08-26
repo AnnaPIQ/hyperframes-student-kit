@@ -18,13 +18,17 @@ The voiceover drives everything. The ad **cuts between Sean to camera (A-roll) a
 of Dryft in-store at Erewhon; each proof graphic sits over b-roll and is timed to the word
 that states it (word-level timings in `assets/vo/dryft-social-proof-vo.words.json`).
 
-**A graphic exists only where a real figure is spoken over it** — three in the whole piece
-(`+59%`, `3×`, `$0`). Beats with no figure behind them carry no graphic, and no scrim
-either: the footage plays clean. Never prop up a claim with a metaphor or an unlabelled
-chart — if there isn't a graphic, don't use one.
+**A numeral appears only where a real figure is spoken over it** — two in the piece
+(`+59%`, `3×`). Beats with no figure behind them carry no graphic, and no scrim either: the
+footage plays clean. Never prop up a claim with a metaphor or an unlabelled chart — if there
+isn't a graphic, don't use one.
 
-**No words in the graphics** — numerals only. The **bottom of frame is left clear**
-(580px on 9:16, 300px on 1:1) for subtitles added later.
+**The numerals are wordless.** The one exception is the **full-bleed message card** over the
+"what we do" lines, which is copy-led by design: eyebrow → white statement → down-arrow →
+payoff line in blue tint → outlined pill.
+
+The **bottom of frame is left clear** (580px on 9:16, 300px on 1:1) for subtitles added
+later, and the graphics band sits low enough that a numeral never lands across a face.
 
 ## Colors — from `assets/brand-tokens.css`
 
@@ -39,9 +43,9 @@ Flame orange is the only hot accent. No other accent colors.
 
 ## Typography
 
-- **Rethink Sans** — numerals in the graphics (`+59%`, `3×`, `$0`) at 268px (9:16) /
-  168px (1:1), weight 800, **−3% tracking**, `tabular-nums` so count-ups don't jitter.
-  The end-card headline is Rethink Sans too, all white, weight 800.
+- **Rethink Sans** — numerals (`+59%`, `3×`) at 268px (9:16) / 168px (1:1), weight 800,
+  **−3% tracking**, `tabular-nums` so count-ups don't jitter. Message-card and end-card
+  headlines are Rethink Sans too, weight 800.
 - **Hedvig Letters Serif is not used** in the current cut — the end-card emphasis word was
   set back to white roman. The `@font-face` stays in place for future variants.
 
@@ -62,6 +66,9 @@ Flame orange is the only hot accent. No other accent colors.
 - Numerals scale, they don't fade — in at 0.34 under 30px blur, slamming to full on
   `back.out(2.4)`, with one flame bloom behind the landing frame. That bloom is the
   callback: it returns behind the end-card pill.
+- The **3× steps** 1→2→3 with a hard stamp and an escalating bloom per step, so the multiple
+  is watched rather than read. Driven by a proxy tween with explicit thresholds, **not
+  `tl.call()`** — GSAP suppresses callbacks on a seek, and the engine renders by seeking.
 - Tween durations are multiples of 1/30s so steep eases don't alias at sub-frame boundaries.
 - No `repeat: -1` anywhere — infinite repeats break the capture engine; cycle counts are
   computed and clamped.
@@ -78,8 +85,12 @@ Flame orange is the only hot accent. No other accent colors.
   not to be recreated.
 - Don't use `ecomiq-logo-white.svg` in a composition — its luminance mask renders broken.
   Use the **PNG**.
-- Don't add captions or any on-screen copy in the graphics — numerals only, and keep the
-  bottom of frame clear for subtitles.
+- Don't add captions, and keep numerals wordless — copy belongs on the message card only.
+  Keep the bottom of frame clear for subtitles.
+- Don't reuse two b-roll clips that read alike (the Erewhon exteriors); cut back to Sean
+  instead of running a near-duplicate shot.
+- Check a b-roll clip's opening second for a handheld reframe before using it —
+  `data-media-start` trims past it without a re-pull.
 - Don't add a graphic to a beat that has no figure behind it, and don't lay a scrim over a
   segment that carries no graphic.
 - Don't draw an unlabelled chart. Without labels (which aren't allowed) bars and lines can't

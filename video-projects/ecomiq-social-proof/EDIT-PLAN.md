@@ -1,7 +1,8 @@
 # EcomIQ × Dryft Sleep — social-proof ad · EDIT PLAN
 
-**Status: built (v4).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
-**no words in the graphics** · **bottom of frame clear for subtitles** · no logo wall ·
+**Status: built (v5).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
+**wordless numerals** (one deliberate full-bleed message card carries copy) ·
+**bottom of frame clear for subtitles** · no logo wall ·
 no star rating · no testimonial quote · **a graphic only where a real figure is spoken** ·
 **no scrim on any segment without a graphic** · motion pass against
 `MOTION_PHILOSOPHY.md`.
@@ -49,23 +50,25 @@ Transitions are 0.20s blur dissolves — fast enough to read as cuts.
 | A1 | 0.00–2.30 | **Sean** | — | none |
 | B1 | 2.30–6.12 | walking | **+59%** counts up onto the spoken "59%" (2.61) | 0.62 |
 | A2 | 6.12–9.20 | **Sean** | — | none |
-| B2 | 9.20–12.10 | excited | — | none |
-| B2b | 12.10–14.85 | storefront | — | none |
-| A3 | 14.85–16.30 | **Sean** | — | none |
-| B3 | 16.30–19.35 | product | **3×** counts up onto "three times" (16.58) | 0.62 |
+| B2 | 9.20–12.60 | excited | — | none |
+| A3 | 12.60–16.30 | **Sean** | — | none |
+| B3 | 16.30–19.35 | product *(starts 1.3s in)* | **3×** steps 1→2→3 onto "three times" (16.58) | 0.62 |
 | A4 | 19.35–23.10 | **Sean** | — | none |
-| B4 | 23.10–26.30 | suppliers | — | none |
-| A5 | 26.30–30.10 | **Sean** | — | none |
-| B5 | 30.10–33.44 | shelf | **$0** on "stop spending money on ads" (30.24) | 0.62 |
+| B4 | 23.10–26.40 | suppliers | — | none |
+| CARD | 26.40–33.44 | full-bleed navy | message card, revealed line by line | — |
 | END | 33.44–38.50 | brand canvas | end card, cuts on the spoken "If" (33.44) | — |
 
-**Three graphics, three real figures.** A graphic exists only where a number is actually
-spoken over it. Beats that carry no figure carry no graphic — and no scrim either, so the
-footage plays clean. Each numeral lands with a blur + scale-overshoot punch and a single
-flame bloom on the landing frame; the emphasis comes from the hit, not from decoration.
+**Two numerals, two real figures**, each on the word that states it, each landing with a
+blur + scale-overshoot punch and a flame bloom. The **3×** steps 1→2→3 with a hard stamp per
+step, so the multiple is something you watch happen rather than a number that appears.
 
-**No words in any graphic** — numerals only. The **bottom 580px (9:16) / 300px (1:1) is
-left clear** for subtitles; nothing but footage sits there.
+**The numerals stay wordless**, and the graphics band sits lower than in v4 so a numeral never
+lands across a face. The **bottom 580px (9:16) / 300px (1:1) is left clear** for subtitles.
+
+**The message card is the one place words are wanted** (requested with a reference frame),
+covering "that's what we do… keep more of what they've already got" and "stop spending money
+on ads without needing to": eyebrow → white statement → down-arrow → payoff line in blue tint
+→ outlined pill, each beat revealed on the words that state it.
 
 **End card:** the corner logo steps aside and the lockup appears centred and large above
 an all-white, non-italic "See if we can help you", with the flame "Find out more" pill.
@@ -109,7 +112,7 @@ From the VO and the published case study
 
 - **+59%** returning customers ("Returning customers up 59%") — *used*
 - **3x** subscription revenue vs. the storefront ("Subscription revenue 3x the storefront") — *used*
-- **$0** extra ad spend (from the VO) — *used*
+- **$0** extra ad spend (from the VO) — *now carried by the message card's pill, not a numeral*
 - Quote: **removed per direction** (no testimonial card in the build)
 - Available, unused (one idea per beat): +158% total sales YOY · +34% AOV YOY · +565% social as acquisition · +881% wholesale growth
 
@@ -133,6 +136,10 @@ From the VO and the published case study
    in the brief. The headline is now all white and non-italic, so **Hedvig Letters Serif is
    no longer used anywhere** in the piece.
 6. **Music bed:** duckable placeholder `<audio>` at low gain, commented, to drop a track into.
+7a. **Dropped in v5, and why:** the `storefront` cut at 12s (read as a duplicate of the later
+   Erewhon exteriors — the A-roll covers 12.60–16.30 instead); the standalone `$0` numeral
+   (replaced by the message card); `shelf` and the fifth A-roll segment (the card owns that
+   stretch). The `product` clip now starts 1.3s in, past a handheld reframe.
 7. **Dropped in v3, and why:** the return-cycle ring (no figure behind it — a metaphor, not
    a graphic); the comparison bars under +59% and 3× (unlabelled bars can't say what they
    compare, and labels aren't allowed); the flat/rising line chart under $0 (its curves were

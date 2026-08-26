@@ -193,6 +193,28 @@ efficient over time instead of relearning the same lessons.
   fixed settle wait plus an explicit `Object.keys(window.__timelines)` check; and `goto` with
   `waitUntil: 'domcontentloaded'`, since `load` never fires.
 
+## GSAP under a seek-based renderer
+
+- **`tl.call()` never fires in a render.** The engine renders by seeking (`tl.time(t)`), and
+  GSAP suppresses callbacks on a seek — so anything that sets text or state via `tl.call()`
+  silently does nothing. **Fix:** drive it from a tween's `onUpdate` on a proxy object; that
+  renders with the tween's value and stays fully seekable. (The count-ups here prove it works.)
+- **`ease: "steps(n)"` doesn't split the range where you expect.** Stamping 1→2→3 with
+  `steps(2)` landed on 3 well before the third stamp time. **Fix:** tween a linear 0→1 proxy
+  and pick the value from explicit thresholds in `onUpdate` — predictable, and the stamp
+  times then line up with the value changes.
+
+## Editing judgement
+
+- **Two clips that "read alike" are one clip.** Three of these b-roll shots were the same
+  Erewhon exterior from slightly different angles; using two of them made the piece feel like
+  it was repeating. **Fix:** cut back to the talking head rather than run a near-duplicate.
+- **Check the first second of every b-roll clip for a handheld reframe** before using it.
+  **Fix:** `data-media-start="1.3"` on the `<video>` skips past it — no re-pull, no re-prep.
+- **Keep big numerals out of the face zone.** A stat centred in the frame lands across the
+  subjects' faces on a mid-shot. **Fix:** bias the graphics band down (padding-top) while
+  keeping the bottom subtitle zone clear.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

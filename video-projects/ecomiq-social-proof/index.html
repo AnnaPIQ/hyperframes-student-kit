@@ -70,7 +70,7 @@
          render on frame 0); GSAP fades them up on their beat. */
       .stage { position: absolute; inset: 0; z-index: 20; opacity: 0;
         display: flex; flex-direction: column; justify-content: center;
-        align-items: center; padding: 230px 108px 580px; }
+        align-items: center; padding: 560px 108px 580px; }
       .gwrap { position: relative; display: flex; flex-direction: column;
         align-items: center; gap: 42px; }
       /* Flame bloom that punches once as the numeral lands — the emphasis comes
@@ -86,6 +86,29 @@
       .statrow { display: flex; align-items: center; gap: 26px; }
       .statrow svg { display: block; }
 
+
+      /* ---------- full-bleed message card --------------------------------
+         Covers the frame entirely on the "what we do" lines. Layout mirrors the
+         reference: eyebrow, white statement, a downward arrow, then the payoff
+         line in blue tint, and an outlined pill. */
+      #card { position: absolute; inset: 0; z-index: 26; opacity: 0;
+        display: flex; flex-direction: column; justify-content: center;
+        align-items: center; text-align: center; padding: 0 116px 300px;
+        background:
+          radial-gradient(72% 44% at 50% 34%, rgba(24,86,150,0.55) 0%, rgba(6,40,76,0) 70%),
+          var(--brand-navy); }
+      #card-eyebrow { font-size: 30px; font-weight: 600; letter-spacing: 0.34em;
+        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 40px; }
+      .card-line { font-size: 78px; font-weight: 800; line-height: 1.06;
+        letter-spacing: -0.02em; max-width: 830px; }
+      #card-l1 { color: var(--brand-white); }
+      #card-l2 { color: var(--brand-blue-tint); }
+      #card-arrow { margin: 34px 0; }
+      #card-pill { margin-top: 54px; display: inline-flex; align-items: center; gap: 18px;
+        font-size: 34px; font-weight: 700; color: var(--brand-white);
+        border: 3px solid var(--brand-border); background: rgba(6,40,76,0.6);
+        padding: 22px 44px; border-radius: 999px; }
+      #card-pill .x { color: var(--brand-flame); font-size: 36px; line-height: 1; }
 
       /* ---------- end card ---------------------------------------------- */
       #s7 { z-index: 30; justify-content: center; align-items: center;
@@ -140,19 +163,15 @@
                data-track-index="3" src="assets/broll/9x16/aroll.mp4" muted playsinline></video>
       </div>
       <div class="bwrap" id="w-b2">
-        <video id="v-b2" data-start="9.2" data-duration="3.15"
+        <video id="v-b2" data-start="9.2" data-duration="3.65"
                data-track-index="4" src="assets/broll/9x16/excited.mp4" muted playsinline></video>
       </div>
-      <div class="bwrap" id="w-b2b">
-        <video id="v-b2b" data-start="12.1" data-duration="3.0"
-               data-track-index="11" src="assets/broll/9x16/storefront.mp4" muted playsinline></video>
-      </div>
       <div class="bwrap" id="w-a3">
-        <video id="v-a3" data-start="14.85" data-duration="1.7" data-media-start="14.85"
+        <video id="v-a3" data-start="12.6" data-duration="3.95" data-media-start="12.6"
                data-track-index="5" src="assets/broll/9x16/aroll.mp4" muted playsinline></video>
       </div>
       <div class="bwrap" id="w-b3">
-        <video id="v-b3" data-start="16.3" data-duration="3.3"
+        <video id="v-b3" data-start="16.3" data-duration="3.3" data-media-start="1.3"
                data-track-index="6" src="assets/broll/9x16/product.mp4" muted playsinline></video>
       </div>
       <div class="bwrap" id="w-a4">
@@ -162,14 +181,6 @@
       <div class="bwrap" id="w-b4">
         <video id="v-b4" data-start="23.1" data-duration="3.45"
                data-track-index="8" src="assets/broll/9x16/suppliers.mp4" muted playsinline></video>
-      </div>
-      <div class="bwrap" id="w-a5">
-        <video id="v-a5" data-start="26.3" data-duration="4.05" data-media-start="26.3"
-               data-track-index="9" src="assets/broll/9x16/aroll.mp4" muted playsinline></video>
-      </div>
-      <div class="bwrap" id="w-b5">
-        <video id="v-b5" data-start="30.1" data-duration="3.59"
-               data-track-index="10" src="assets/broll/9x16/shelf.mp4" muted playsinline></video>
       </div>
 
       <div id="scrim" class="clip" data-start="0" data-duration="38.5" data-track-index="12"></div>
@@ -200,12 +211,18 @@
         </div>
       </div>
 
-      <!-- G4 · $0 — lands on "stop spending money on ads" (30.24) -->
-      <div id="g4" class="stage clip" data-start="0" data-duration="38.5" data-track-index="17">
-        <div class="gwrap">
-          <div class="glow" id="g4-glow"></div>
-          <div id="g4-zero" class="stat">$0</div>
-        </div>
+      <!-- Full-bleed message card, over "that's what we do…" / "stop spending
+           money on ads…". Words are wanted HERE specifically (the graphics
+           elsewhere stay wordless). -->
+      <div id="card" class="clip" data-start="0" data-duration="38.5" data-track-index="17">
+        <div id="card-eyebrow">What we do</div>
+        <div id="card-l1" class="card-line">Keep more of what you&rsquo;ve already got.</div>
+        <svg id="card-arrow" width="56" height="86" viewBox="0 0 56 86" aria-hidden="true">
+          <path d="M28 4 V70 M8 52 L28 74 L48 52" fill="none" stroke="#9CD4FF"
+                stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div id="card-l2" class="card-line">Without spending more on ads.</div>
+        <div id="card-pill"><span class="x">&#10007;</span>No extra ad spend</div>
       </div>
 
       <div id="s7-cover" class="clip" data-start="0" data-duration="38.5" data-track-index="18"></div>
@@ -252,14 +269,11 @@
         ["#w-a1",  "A",  0.00,  2.30, 0.00],
         ["#w-b1",  "B",  2.30,  6.12, 0.62],
         ["#w-a2",  "A",  6.12,  9.20, 0.00],
-        ["#w-b2",  "B",  9.20, 12.10, 0.00],
-        ["#w-b2b", "B", 12.10, 14.85, 0.00],
-        ["#w-a3",  "A", 14.85, 16.30, 0.00],
+        ["#w-b2",  "B",  9.20, 12.60, 0.00],
+        ["#w-a3",  "A", 12.60, 16.30, 0.00],
         ["#w-b3",  "B", 16.30, 19.35, 0.62],
         ["#w-a4",  "A", 19.35, 23.10, 0.00],
-        ["#w-b4",  "B", 23.10, 26.30, 0.00],
-        ["#w-a5",  "A", 26.30, 30.10, 0.00],
-        ["#w-b5",  "B", 30.10, 33.44, 0.62]
+        ["#w-b4",  "B", 23.10, 26.40, 0.00]
       ];
       SEGS.forEach(([sel, kind, inAt, outAt, scrim], i) => {
         if (i === 0) {
@@ -294,9 +308,8 @@
       // over it. Beats with no figure behind them (B2, B4) carry no graphic at
       // all — the b-roll plays clean rather than propping up a metaphor.
       const BEATS = {
-        g1: [2.42,  6.12],   // +59%  · "...by 59%"        (2.61)
-        g3: [16.42, 19.35],  // 3x    · "three times"      (16.58)
-        g4: [30.20, 33.44]   // $0    · "stop spending..." (30.24)
+        g1: [2.42,  6.12],   // +59%  · "...by 59%"   (2.61)
+        g3: [16.42, 19.35]   // 3x    · "three times" (16.58)
       };
       Object.entries(BEATS).forEach(([k, [a, b]]) => {
         tl.to("#" + k, { opacity: 1, duration: 0.24, ease: "power1.out" }, a);
@@ -324,14 +337,57 @@
       tl.to(n1, { v: 59, duration: 0.85, ease: "power2.out", snap: { v: 1 },
         onUpdate() { document.getElementById("g1-num").textContent = "+" + n1.v + "%"; } }, 2.56);
 
-      // G3 — 3x, counting up onto "three times" (16.58).
+      // G3 — the multiple STEPS: 1x, 2x, 3x, each a discrete stamp with its own
+      // bloom pulse, so you watch the tripling happen instead of reading a
+      // number that just appeared. Lands on the spoken "three times" (16.58).
+      //
+      // Driven by a proxy tween with a stepped ease, NOT tl.call(): the engine
+      // seeks frame-to-frame and GSAP suppresses callbacks on a seek, but a
+      // tween's onUpdate renders with the value, so this stays seekable.
       const n4 = { v: 0 };
-      punch("#g3-num", "#g3-glow", 16.50);
-      tl.to(n4, { v: 3, duration: 0.66, ease: "power2.out", snap: { v: 1 },
-        onUpdate() { document.getElementById("g3-num").textContent = n4.v + "\u00D7"; } }, 16.56);
+      const G3_AT = 16.50, G3_STEP = 0.167;   // 5 frames per step
+      tl.fromTo("#g3-num", { opacity: 0, scale: 0.34, filter: "blur(30px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)",
+          duration: 0.4, ease: "back.out(2.4)" }, G3_AT);
+      // A linear 0->1 proxy with explicit thresholds, rather than a stepped ease:
+      // GSAP's steps() doesn't split the range the way the stamp times need.
+      tl.fromTo(n4, { v: 0 }, { v: 1, duration: G3_STEP * 3, ease: "none",
+        onUpdate() {
+          const p = n4.v;
+          const step = p < 1 / 3 ? 1 : p < 2 / 3 ? 2 : 3;
+          document.getElementById("g3-num").textContent = step + "\u00D7";
+        } }, G3_AT);
+      // one hard stamp + bloom pulse per step
+      [0, 1, 2].forEach((i) => {
+        const at = G3_AT + i * G3_STEP;
+        if (i > 0) {
+          tl.fromTo("#g3-num", { scale: 1.3 },
+            { scale: 1, duration: 0.2, ease: "back.out(3)" }, at);
+        }
+        tl.fromTo("#g3-glow", { opacity: 0, scale: 0.5 },
+          { opacity: i === 2 ? 1 : 0.55, scale: 0.9 + i * 0.15,
+            duration: 0.133, ease: "power2.out" }, at);
+        tl.to("#g3-glow", { opacity: 0, scale: 1.3 + i * 0.2,
+          duration: i === 2 ? 0.833 : 0.167, ease: "power2.out" }, at + 0.167);
+      });
 
-      // G4 — $0, on "stop spending money on ads" (30.24).
-      punch("#g4-zero", "#g4-glow", 30.26);
+      /* ---- The message card. Rises in with the same blur as a cut, then
+              reveals in step with the two lines Sean speaks over it. ---- */
+      tl.fromTo("#card", { opacity: 0, y: 90, filter: "blur(26px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.667, ease: "power2.out" }, 26.40);
+      tl.fromTo("#card-eyebrow", { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 26.60);
+      // "keep more of what they've already got" (27.48)
+      tl.fromTo("#card-l1", { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 27.40);
+      tl.fromTo("#card-arrow", { opacity: 0, y: -18 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 29.90);
+      // "stop spending money on ads" (30.24)
+      tl.fromTo("#card-l2", { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 30.24);
+      // "without needing to" (31.94)
+      tl.fromTo("#card-pill", { opacity: 0, scale: 0.86 },
+        { opacity: 1, scale: 1, duration: 0.533, ease: "back.out(1.8)" }, 31.90);
 
       /* ---- Beat 7 — end card. Cuts on the spoken "If" (raw 36.94 -> 33.44).
               Final scene: the one place exit animation is allowed. ---- */
