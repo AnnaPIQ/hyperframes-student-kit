@@ -159,9 +159,17 @@
         z-index: 29; opacity: 0; }
       #s7-logo { width: 800px; height: auto; display: block; margin-bottom: 84px;
         filter: drop-shadow(0 10px 34px rgba(0,0,0,0.55)); }
-      #s7-head { font-size: 60px; font-weight: 700; line-height: 1.22;
-        letter-spacing: 0.16em; text-transform: uppercase; text-indent: 0.16em;
-        max-width: 640px; color: var(--brand-white); }
+      /* Same treatment as the other caps lines in the piece (#s59-sub, #gcard-vs):
+         Rethink Sans 800, uppercase. Only a hair of positive tracking, so it reads
+         as a CTA label without dropping to a lighter cut that looks like another
+         typeface next to the 800 headlines. */
+      #s7-head { font-size: 66px; font-weight: 800; line-height: 1.14;
+        letter-spacing: 0.04em; text-transform: uppercase; text-indent: 0.04em;
+        /* 560 forces the break after "CAN": measured 474px for "SEE IF WE CAN"
+           and 656px for "SEE IF WE CAN HELP", so the line splits 474/324 instead
+           of orphaning "YOU". The full string is 814px — it fits on one line, but
+           only 37px from each edge. */
+        max-width: 560px; color: var(--brand-white); }
       #s7-head span { display: inline-block; }
       #s7-pill { margin-top: 76px; font-size: 52px; font-weight: 800;
         letter-spacing: -0.005em; color: var(--brand-white);

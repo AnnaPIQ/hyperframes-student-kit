@@ -231,6 +231,21 @@ efficient over time instead of relearning the same lessons.
   cannot overlap. **Fix:** `grep -o 'data-track-index="[0-9]*"' | sort -n | uniq -c` and pick
   a genuinely free index; a duplicate count is the bug.
 
+## Type
+
+- **A variable font makes a weight mismatch look like a font mismatch.** Rethink Sans is
+  declared `font-weight: 400 800`, so a `700` display line loads happily and lints clean —
+  it just sits next to `800` headlines looking like a different typeface entirely. The client
+  reported it as "the font isn't the same". **Fix:** check computed `fontWeight` before
+  suspecting the family; keep display type at one weight and let only small tracked eyebrows
+  go lighter. `document.fonts.check('700 60px "X"')` confirms the family really did load.
+- **Heavy tracking compounds it.** Wide `letter-spacing` on caps at display size thins the
+  apparent weight further, so 700 + 0.16em reads lighter again than the number suggests.
+- **Measure the line before picking `max-width`.** Guessing orphaned "YOU" onto its own line
+  twice. **Fix:** measure candidate substrings with a hidden nowrap probe that copies the
+  element's computed font, then set `max-width` between the two widths that give the break
+  you want.
+
 ## Editing judgement
 
 - **Two clips that "read alike" are one clip.** Three of these b-roll shots were the same

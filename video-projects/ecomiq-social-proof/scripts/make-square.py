@@ -93,9 +93,9 @@ RULES = [
      'align-items: center; text-align: center; padding: 0 76px 170px; }'),
     ('#s7-logo { width: 800px; height: auto; display: block; margin-bottom: 84px;',
      '#s7-logo { width: 540px; height: auto; display: block; margin-bottom: 54px;'),
-    ('#s7-head { font-size: 60px;', '#s7-head { font-size: 42px;'),
-    ('max-width: 640px; color: var(--brand-white); }',
-     'max-width: 450px; color: var(--brand-white); }'),
+    ('#s7-head { font-size: 66px;', '#s7-head { font-size: 46px;'),
+    ('max-width: 560px; color: var(--brand-white); }',
+     'max-width: 390px; color: var(--brand-white); }'),
     ('#s7-pill { margin-top: 76px; font-size: 52px;', '#s7-pill { margin-top: 50px; font-size: 36px;'),
     ('padding: 38px 90px; border-radius: 999px;', 'padding: 26px 62px; border-radius: 999px;'),
 ]

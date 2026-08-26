@@ -1,6 +1,6 @@
 # EcomIQ × Dryft Sleep — social-proof ad · EDIT PLAN
 
-**Status: built (v10).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
+**Status: built (v11).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
 **wordless numerals** (one deliberate full-bleed message card carries copy) ·
 **bottom of frame clear for subtitles** · no logo wall ·
 no star rating · no testimonial quote · **a graphic only where a real figure is spoken** ·
@@ -85,7 +85,9 @@ message card's down-arrow and the graph card's baseline bar).
 **End card:** rebuilt to the client's supplied end-card reference — the corner logo steps
 aside, the lockup appears centred and oversized (800px), then one wide-tracked uppercase
 line ("SEE IF WE CAN HELP YOU") arrives word by word, and the flame "Find out more"
-pill lands beneath it over a soft blue bloom.
+pill lands beneath it over a soft blue bloom. The line is Rethink Sans **800** — matching
+every other headline; at 700 it read as a different typeface. `max-width: 560px` forces the
+break after "CAN" (measured: 474px vs 656px), so "YOU" is never orphaned.
 
 ## Motion pass (against `MOTION_PHILOSOPHY.md`)
 
