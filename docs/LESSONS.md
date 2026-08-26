@@ -154,6 +154,45 @@ efficient over time instead of relearning the same lessons.
   scrim crushed them to black. **Fix:** lift the dark clips in prep
   (`eq=brightness=0.07:contrast=1.08`) AND vary scrim opacity per segment.
 
+## Motion graphics that actually earn their place
+
+- **A graphic with no figure behind it reads as filler.** A "returning customers" cycle ring
+  and a rising-curve chart both got cut for this: one was a metaphor, the other had invented
+  curve shapes with no data. **Rule:** put a graphic on a beat only when a real number is
+  spoken over it; otherwise let the footage play. Corollary — an invented chart shape is
+  fabricated data-viz even when the headline number next to it is real.
+- **Unlabelled bars communicate nothing.** Two rectangles at a 1:3 ratio don't say *what* is
+  being compared, and if the brief bans words you can't label them. **Fix:** drop the chart
+  and let the numeral carry it — emphasis comes from the motion (blur + scale overshoot +
+  a single colour bloom on the landing frame), not from shapes around the number.
+- **A scrim is for legibility, nothing else.** Laying a navy wash over every b-roll segment
+  dulled shots that carried no type at all. **Fix:** scrim only the segments with a graphic;
+  zero elsewhere.
+
+## Render-engine gotchas
+
+- **`tl.set(el, {opacity: 0}, 0)` does not render on frame 0** — a zero-duration set at
+  position 0 is skipped while the playhead sits exactly at 0, so frame 0 shows the element
+  un-hidden. **Fix:** author the hidden state in CSS. `hyperframes lint` flags this as
+  `gsap_timeline_set_initial_hide`.
+- **Two `<img>` with the same src/start/duration trip `duplicate_media_discovery_risk`.** A
+  persistent corner logo plus a centred end-card logo is exactly this. **Fix:** give the
+  second one its own copy of the file.
+- **Always eyeball footage orientation per clip, not per folder.** One clip in a batch of
+  otherwise-identical phone verticals was mis-read as true landscape and shipped rotated;
+  its subject just happened to look plausible in the first frame sampled.
+
+## Scrubbing a composition without rendering
+
+- **A sub-directory composition won't open off disk.** Compositions use paths relative to the
+  PROJECT ROOT (what the renderer serves them against), so `compositions/foo.html` opened via
+  `file://` 404s on gsap/fonts/media and no timeline ever registers. **Fix:** run a temporary
+  copy from the project root.
+- **`waitForFunction` times out on such a page even though the timeline registered.** Pending
+  file:// media requests starve both rAF and interval polling inside the page. **Fix:** a
+  fixed settle wait plus an explicit `Object.keys(window.__timelines)` check; and `goto` with
+  `waitUntil: 'domcontentloaded'`, since `load` never fires.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

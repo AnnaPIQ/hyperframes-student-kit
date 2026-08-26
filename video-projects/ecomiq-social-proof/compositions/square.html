@@ -35,14 +35,24 @@
 
       /* Navy scrim keeps type legible over footage. Flat rgba fill + radial
          vignette — no full-screen linear gradient (H.264 banding). */
-      #scrim { position: absolute; inset: 0; z-index: 2;
+      /* Unifying texture, on every frame: a navy vignette so nothing ships
+         flat-lit, and a deterministic CSS grain (three radial tiles, no PNG,
+         headless-safe). These tie A-roll, b-roll and end card into one piece. */
+      #vignette { position: absolute; inset: 0; z-index: 8; pointer-events: none;
+        background: radial-gradient(ellipse 78% 62% at 50% 46%,
+          rgba(6,40,76,0) 0%, rgba(6,40,76,0.28) 62%, rgba(3,18,36,0.72) 100%); }
+      #grain { position: absolute; inset: 0; z-index: 9; pointer-events: none; opacity: 0.55;
+        background-image:
+          radial-gradient(rgba(255,255,255,.030) 1px, transparent 1px),
+          radial-gradient(rgba(255,255,255,.020) 1px, transparent 1px),
+          radial-gradient(rgba(0,0,0,.015) 1px, transparent 1px);
+        background-size: 3px 3px, 5px 5px, 7px 7px;
+        background-position: 0 0, 1px 2px, 3px 1px; }
+
+      #scrim { position: absolute; inset: 0; z-index: 2; opacity: 0;
         background:
           radial-gradient(120% 70% at 50% 22%, rgba(6,40,76,0.30) 0%, rgba(6,40,76,0.66) 60%, rgba(6,40,76,0.86) 100%),
           rgba(6,40,76,0.42);
-      }
-      /* Extra local darkening under the copy block so text always clears AA. */
-      #floor { position: absolute; inset: 0; z-index: 3;
-        background: radial-gradient(105% 62% at 40% 48%, rgba(3,20,40,0.80) 0%, rgba(3,20,40,0.34) 55%, rgba(3,20,40,0) 100%);
       }
 
       /* ---------- persistent logo ---------------------------------------
@@ -56,57 +66,41 @@
          Graphics sit in the UPPER-MIDDLE band. The bottom ~620px (9:16) is left
          deliberately clear for subtitles that get added later — nothing but the
          footage lives down there. */
-      .stage { position: absolute; inset: 0; z-index: 20;
+      /* Graphic groups start hidden in CSS (a tl.set at position 0 would not
+         render on frame 0); GSAP fades them up on their beat. */
+      .stage { position: absolute; inset: 0; z-index: 20; opacity: 0;
         display: flex; flex-direction: column; justify-content: center;
         align-items: center; padding: 150px 72px 300px; }
-      .gwrap { display: flex; flex-direction: column; align-items: center; gap: 26px; }
+      .gwrap { position: relative; display: flex; flex-direction: column;
+        align-items: center; gap: 42px; }
+      /* Flame bloom that punches once as the numeral lands — the emphasis comes
+         from the hit, not from decoration around it. */
+      .glow { position: absolute; inset: -55% -45%; opacity: 0; pointer-events: none;
+        background: radial-gradient(50% 50% at 50% 50%,
+          rgba(255,76,50,0.60) 0%, rgba(255,76,50,0.18) 45%, rgba(255,76,50,0) 72%); }
 
       /* Big numerals are data, not copy — no words anywhere in the graphics. */
       .stat { font-size: 168px; font-weight: 800; line-height: 0.92;
         letter-spacing: -0.03em; font-variant-numeric: tabular-nums;
         text-shadow: 0 10px 44px rgba(0,0,0,0.55); }
-      .statrow { display: flex; align-items: center; gap: 26px; }
+      .statrow { display: flex; align-items: center; gap: 18px; }
       .statrow svg { display: block; }
 
-      /* --- vertical bar pair (growth) --- */
-      .bars { display: flex; align-items: flex-end; gap: 72px; height: 300px; }
-      .bar { width: 124px; border-radius: 16px 16px 0 0; transform-origin: bottom center; }
-      .bar.dim { background: rgba(156, 212, 255, 0.42); }
-      .bar.hot { background: var(--brand-flame);
-        box-shadow: 0 16px 52px -12px rgba(255, 76, 50, 0.75); }
-      .baseline { width: 430px; height: 6px; border-radius: 3px;
-        background: rgba(222, 238, 254, 0.55); transform-origin: left center; }
-
-      /* --- horizontal bar pair (multiple) --- */
-      .hbars { display: flex; flex-direction: column; gap: 26px; width: 560px; }
-      .hbar { height: 74px; border-radius: 16px; transform-origin: left center; }
-      .hbar.dim { width: 166px; background: rgba(156, 212, 255, 0.42); }
-      .hbar.hot { width: 498px; background: var(--brand-flame);
-        box-shadow: 0 16px 52px -12px rgba(255, 76, 50, 0.7); }
-
-      /* --- rings / line charts --- */
-      .ring, .lines { display: block; overflow: visible; }
-      /* The ring's own circle/path are stroke-only, but this must NOT catch the
-         dots — a CSS rule outranks their fill="" attribute and would blank them. */
-      .ring circle:not(.dot), .ring path { fill: none; stroke-linecap: round; }
-      .ring circle.dot { fill: #FF4C32; }
 
       /* ---------- end card ---------------------------------------------- */
       #s7 { z-index: 30; justify-content: center; align-items: center;
-        text-align: center; padding: 0 90px 210px; }
+        text-align: center; padding: 0 90px 170px; }
       #s7-cover { position: absolute; inset: 0; background: var(--brand-navy); z-index: 29; opacity: 0; }
       #s7-bloom { position: absolute; left: -12%; top: 46%; width: 124%; height: 58%;
         background: radial-gradient(60% 60% at 50% 50%, rgba(255,76,50,0.30) 0%, rgba(255,76,50,0) 70%);
         z-index: 29; opacity: 0; }
-      #s7-head { font-size: 72px; font-weight: 800; line-height: 1.04;
-        letter-spacing: -0.02em; max-width: 520px; }
-      /* The EcomIQ signature: exactly ONE serif-italic emphasis word. */
-      #s7-head .em { font-family: 'Hedvig Letters Serif', Georgia, serif;
-        font-style: italic; font-weight: 400; letter-spacing: -0.01em;
-        color: var(--brand-blue-tint); }
-      #s7-pill { margin-top: 40px; font-size: 36px; font-weight: 700;
+      #s7-logo { width: 430px; height: auto; display: block; margin-bottom: 38px;
+        filter: drop-shadow(0 8px 26px rgba(0,0,0,0.5)); }
+      #s7-head { font-size: 66px; font-weight: 800; line-height: 1.04;
+        letter-spacing: -0.02em; max-width: 470px; color: var(--brand-white); }
+      #s7-pill { margin-top: 36px; font-size: 34px; font-weight: 700;
         color: var(--brand-white); background: var(--brand-flame);
-        padding: 24px 54px; border-radius: 999px;
+        padding: 22px 50px; border-radius: 999px;
         box-shadow: 0 22px 68px -14px rgba(255,76,50,0.72); }
     </style>
   </head>
@@ -146,8 +140,12 @@
                data-track-index="3" src="assets/broll/1x1/aroll.mp4" muted playsinline></video>
       </div>
       <div class="bwrap" id="w-b2">
-        <video id="v-b2" data-start="9.2" data-duration="5.9"
+        <video id="v-b2" data-start="9.2" data-duration="3.15"
                data-track-index="4" src="assets/broll/1x1/excited.mp4" muted playsinline></video>
+      </div>
+      <div class="bwrap" id="w-b2b">
+        <video id="v-b2b" data-start="12.1" data-duration="3.0"
+               data-track-index="11" src="assets/broll/1x1/storefront.mp4" muted playsinline></video>
       </div>
       <div class="bwrap" id="w-a3">
         <video id="v-a3" data-start="14.85" data-duration="1.7" data-media-start="14.85"
@@ -174,74 +172,47 @@
                data-track-index="10" src="assets/broll/1x1/shelf.mp4" muted playsinline></video>
       </div>
 
-      <div id="scrim" class="clip" data-start="0" data-duration="38.5" data-track-index="11"></div>
-      <div id="floor" class="clip" data-start="0" data-duration="38.5" data-track-index="12"></div>
+      <div id="scrim" class="clip" data-start="0" data-duration="38.5" data-track-index="12"></div>
+      <div id="vignette" class="clip" data-start="0" data-duration="38.5" data-track-index="13"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="38.5" data-track-index="14"></div>
 
       <!-- ===== Wordless data graphics. Numerals only — no copy — and all
            held clear of the bottom subtitle zone. ===== -->
 
       <!-- G1 · returning-customer growth (over b-roll, 2.30–6.12) -->
-      <div id="g1" class="stage clip" data-start="0" data-duration="38.5" data-track-index="13">
+      <div id="g1" class="stage clip" data-start="0" data-duration="38.5" data-track-index="15">
         <div class="gwrap">
+          <div class="glow" id="g1-glow"></div>
           <div class="statrow">
-            <svg id="g1-arrow" width="70" height="70" viewBox="0 0 86 86" aria-hidden="true">
+            <svg id="g1-arrow" width="88" height="88" viewBox="0 0 86 86" aria-hidden="true">
               <path d="M43 8 L78 50 H57 V78 H29 V50 H8 Z" fill="#FF4C32"/>
             </svg>
             <div id="g1-num" class="stat">+0%</div>
           </div>
-          <div class="bars">
-            <div id="g1-b1" class="bar dim" style="height: 188px"></div>
-            <div id="g1-b2" class="bar hot" style="height: 300px"></div>
-          </div>
-          <div id="g1-base" class="baseline"></div>
-        </div>
-      </div>
-
-      <!-- G2 · they keep coming back — a return cycle (over b-roll, 9.20–14.85) -->
-      <div id="g2" class="stage clip" data-start="0" data-duration="38.5" data-track-index="14">
-        <div class="gwrap">
-          <svg class="ring" width="404" height="404" viewBox="0 0 400 400" aria-hidden="true">
-            <circle cx="200" cy="200" r="150" stroke="rgba(156,212,255,0.28)" stroke-width="21"/>
-            <path id="g2-arc" d="M200 50 A150 150 0 1 1 70 125"
-                  stroke="#FF4C32" stroke-width="21"/>
-            <polygon id="g2-head" points="181,24 221,50 181,76" fill="#FF4C32"/>
-            <circle id="g2-d1" class="dot" cx="350" cy="200" r="26" fill="#FF4C32"/>
-            <circle id="g2-d2" class="dot" cx="200" cy="350" r="26" fill="#FF4C32"/>
-            <circle id="g2-d3" class="dot" cx="50"  cy="200" r="26" fill="#FF4C32"/>
-          </svg>
         </div>
       </div>
 
       <!-- G3 · subscription revenue vs the storefront (over b-roll, 16.30–19.35) -->
-      <div id="g3" class="stage clip" data-start="0" data-duration="38.5" data-track-index="15">
+      <div id="g3" class="stage clip" data-start="0" data-duration="38.5" data-track-index="16">
         <div class="gwrap">
+          <div class="glow" id="g3-glow"></div>
           <div id="g3-num" class="stat">0&#215;</div>
-          <div class="hbars">
-            <div id="g3-h1" class="hbar dim"></div>
-            <div id="g3-h2" class="hbar hot"></div>
-          </div>
         </div>
       </div>
 
-      <!-- G4 · flat ad spend, rising profit (over b-roll, 23.10–26.30) -->
-      <div id="g4" class="stage clip" data-start="0" data-duration="38.5" data-track-index="16">
+      <!-- G4 · $0 — lands on "stop spending money on ads" (30.24) -->
+      <div id="g4" class="stage clip" data-start="0" data-duration="38.5" data-track-index="17">
         <div class="gwrap">
-          <svg class="lines" width="600" height="348" viewBox="0 0 720 420" aria-hidden="true">
-            <line x1="30" y1="360" x2="700" y2="360" stroke="rgba(222,238,254,0.45)" stroke-width="5"/>
-            <path id="g4-flat" d="M40 250 L660 250" stroke="#9CD4FF" stroke-width="14"
-                  fill="none" stroke-linecap="round"/>
-            <path id="g4-rise" d="M40 300 C 220 300, 300 250, 400 180 S 580 70, 660 40"
-                  stroke="#FF4C32" stroke-width="19" fill="none" stroke-linecap="round"/>
-            <circle id="g4-tip" cx="660" cy="40" r="22" fill="#FF4C32"/>
-          </svg>
-          <div id="g4-zero" class="stat" style="font-size: 112px">$0</div>
+          <div class="glow" id="g4-glow"></div>
+          <div id="g4-zero" class="stat">$0</div>
         </div>
       </div>
 
-      <div id="s7-cover" class="clip" data-start="0" data-duration="38.5" data-track-index="19"></div>
-      <div id="s7-bloom" class="clip" data-start="0" data-duration="38.5" data-track-index="20"></div>
-      <div id="s7" class="stage clip" data-start="0" data-duration="38.5" data-track-index="21">
-        <div id="s7-head">See if we can <span class="em">help</span> you</div>
+      <div id="s7-cover" class="clip" data-start="0" data-duration="38.5" data-track-index="18"></div>
+      <div id="s7-bloom" class="clip" data-start="0" data-duration="38.5" data-track-index="19"></div>
+      <div id="s7" class="stage clip" data-start="0" data-duration="38.5" data-track-index="20">
+        <img id="s7-logo" src="assets/ecomiq-logo-white-lockup.png" alt="EcomIQ" />
+        <div id="s7-head">See if we can help you</div>
         <div id="s7-pill">Find out more</div>
       </div>
 
@@ -252,14 +223,14 @@
 
       <!-- Voiceover: source trimmed 3.50–40.35s (record-press + throat clear off
            the head, room tone off the tail) and loudness-normalised. -->
-      <audio id="vo" data-start="0" data-duration="36.9" data-track-index="22"
+      <audio id="vo" data-start="0" data-duration="36.9" data-track-index="21"
              data-volume="1" src="assets/vo/vo-trimmed.m4a"></audio>
 
       <!-- MUSIC BED placeholder — currently 38.5s of silence, already wired and
            ducked under the VO at 0.18. Drop a real track in at
            assets/audio/music-bed.m4a (same path) and it plays with no HTML edit.
            Raise/lower the mix with data-volume. -->
-      <audio id="music" data-start="0" data-duration="38.5" data-track-index="23"
+      <audio id="music" data-start="0" data-duration="38.5" data-track-index="22"
              data-volume="0.18" src="assets/audio/music-bed.m4a"></audio>
     </div>
 
@@ -269,108 +240,110 @@
       const tl = gsap.timeline({ paused: true });
 
       // The cut, on the trimmed VO timeline (raw source time - 3.50s).
-      // A = Sean to camera, B = b-roll. Fast 0.20s blur dissolves rather than
-      // hard cuts, per the framework's no-jump-cut rule, but short enough to
-      // still read as a cut at this pace.
-      const XF = 0.20;
-      // [wrapper, kind, in, out, scrim] — the scrim sits back over Sean so he
-      // stays vibrant, comes up where type needs contrast over b-roll, and stays
-      // low on the one clean b-roll beat that carries no graphics.
+      // A = Sean to camera, B = b-roll.
+      //
+      // Transitions are the "cut-the-curve" vertical whip from MOTION_PHILOSOPHY:
+      // the outgoing frame rides UP with blur on a power2.in, the incoming rises
+      // from below with matching blur on a power2.out — same direction, velocity
+      // matched at the cut. Motion blur masks the join; a plain fade would not.
+      // Durations are multiples of 1/30s so the steep eases don't alias.
+      const OUT_D = 0.333, IN_D = 0.667, WHIP_Y = 52;
       const SEGS = [
-        ["#w-a1", "A",  0.00,  2.30, 0.45],
-        ["#w-b1", "B",  2.30,  6.12, 0.80],
-        ["#w-a2", "A",  6.12,  9.20, 0.45],
-        ["#w-b2", "B",  9.20, 14.85, 0.80],
-        ["#w-a3", "A", 14.85, 16.30, 0.45],
-        ["#w-b3", "B", 16.30, 19.35, 0.80],
-        ["#w-a4", "A", 19.35, 23.10, 0.45],
-        ["#w-b4", "B", 23.10, 26.30, 0.45],
-        ["#w-a5", "A", 26.30, 30.10, 0.45],
-        ["#w-b5", "B", 30.10, 33.44, 0.80]
+        ["#w-a1",  "A",  0.00,  2.30, 0.00],
+        ["#w-b1",  "B",  2.30,  6.12, 0.62],
+        ["#w-a2",  "A",  6.12,  9.20, 0.00],
+        ["#w-b2",  "B",  9.20, 12.10, 0.00],
+        ["#w-b2b", "B", 12.10, 14.85, 0.00],
+        ["#w-a3",  "A", 14.85, 16.30, 0.00],
+        ["#w-b3",  "B", 16.30, 19.35, 0.62],
+        ["#w-a4",  "A", 19.35, 23.10, 0.00],
+        ["#w-b4",  "B", 23.10, 26.30, 0.00],
+        ["#w-a5",  "A", 26.30, 30.10, 0.00],
+        ["#w-b5",  "B", 30.10, 33.44, 0.62]
       ];
       SEGS.forEach(([sel, kind, inAt, outAt, scrim], i) => {
-        tl.fromTo(sel, { opacity: 0, filter: "blur(10px)" },
-          { opacity: 1, filter: "blur(0px)",
-            duration: i === 0 ? 0.55 : XF, ease: "power2.out" }, inAt);
-        // Slow push on b-roll keeps the backdrop alive; the talking head stays
-        // still so the cut back to Sean reads as a change of shot, not motion.
-        if (kind === "B") {
-          tl.to(sel + " video", { scale: 1.06, duration: (outAt - inAt) + XF, ease: "none" }, inAt);
+        if (i === 0) {
+          tl.fromTo(sel, { opacity: 0, filter: "blur(26px)" },
+            { opacity: 1, filter: "blur(0px)", duration: 0.667, ease: "power2.out" }, inAt);
+        } else {
+          tl.fromTo(sel, { opacity: 1, y: WHIP_Y, filter: "blur(26px)" },
+            { y: 0, filter: "blur(0px)", duration: IN_D, ease: "power2.out" }, inAt);
         }
-        tl.to(sel, { opacity: 0, filter: "blur(8px)", duration: XF, ease: "power2.inOut" }, outAt);
-        tl.to("#scrim", { opacity: scrim, duration: XF, ease: "power1.inOut" }, inAt);
+        // The camera never sleeps: b-roll pushes, and even the talking head keeps
+        // a slow drift so no beat sits perfectly still. The 1.12 base scale is
+        // headroom so the whip's +/-90px travel never exposes a frame edge.
+        tl.fromTo(sel + " video", { scale: 1.12 },
+          { scale: kind === "B" ? 1.19 : 1.155,
+            duration: (outAt - inAt) + IN_D, ease: "none" }, inAt);
+        tl.to(sel, { y: -WHIP_Y, filter: "blur(26px)",
+          duration: OUT_D, ease: "power2.in" }, outAt);
+        tl.set(sel, { opacity: 0 }, outAt + OUT_D);
+        // The scrim exists only to keep a numeral legible. Segments carrying no
+        // graphic get none of it, so the footage plays clean.
+        tl.to("#scrim", { opacity: scrim, duration: OUT_D, ease: "power1.inOut" }, inAt);
       });
+
+      // Vignette breathes so "still" frames stay alive (finite repeats — an
+      // infinite one breaks the capture engine).
+      tl.to("#vignette", { opacity: 0.82, duration: 4, ease: "sine.inOut",
+        yoyo: true, repeat: Math.max(0, Math.floor(38.5 / 8) - 1) }, 0);
 
       /* ---- Wordless graphic beats. Each sits over b-roll; the A-roll
               segments stay clean so Sean carries those lines himself. ---- */
+      // Only three graphics, and each one exists because a real figure is spoken
+      // over it. Beats with no figure behind them (B2, B4) carry no graphic at
+      // all — the b-roll plays clean rather than propping up a metaphor.
       const BEATS = {
-        g1: [2.42,  6.12],   // returning-customer growth
-        g2: [9.36, 14.85],   // the return cycle
-        g3: [16.42, 19.35],  // subscription vs storefront
-        g4: [23.26, 26.30]   // flat ad spend, rising profit
+        g1: [2.42,  6.12],   // +59%  · "...by 59%"        (2.61)
+        g3: [16.42, 19.35],  // 3x    · "three times"      (16.58)
+        g4: [30.20, 33.44]   // $0    · "stop spending..." (30.24)
       };
-      ["#g1", "#g2", "#g3", "#g4"].forEach((sel) => tl.set(sel, { opacity: 0 }, 0));
       Object.entries(BEATS).forEach(([k, [a, b]]) => {
         tl.to("#" + k, { opacity: 1, duration: 0.24, ease: "power1.out" }, a);
         tl.to("#" + k, { opacity: 0, duration: 0.24, ease: "power1.in" }, b - 0.06);
       });
 
-      // G1 — bars grow, then count 0 -> 59% landing on the spoken "59%" (2.61).
+      // Each numeral punches in on the word that states it: blur + scale
+      // overshoot, with a single flame bloom behind it on the landing frame.
+      function punch(sel, glow, at) {
+        // Type is a character: it arrives at a third of its size and slams to
+        // full, not a fade. Durations snap to 1/30s so back.out doesn't alias.
+        tl.fromTo(sel, { opacity: 0, scale: 0.34, filter: "blur(30px)" },
+          { opacity: 1, scale: 1, filter: "blur(0px)",
+            duration: 0.5, ease: "back.out(2.4)" }, at);
+        tl.fromTo(glow, { opacity: 0, scale: 0.4 },
+          { opacity: 1, scale: 1.15, duration: 0.333, ease: "power2.out" }, at + 0.067);
+        tl.to(glow, { opacity: 0, scale: 1.6, duration: 0.833, ease: "power2.out" }, at + 0.433);
+      }
+
+      // G1 — +59%, counting up onto the spoken "59%" (2.61).
       const n1 = { v: 0 };
-      tl.fromTo("#g1-base", { scaleX: 0 },
-        { scaleX: 1, duration: 0.45, ease: "power3.out" }, 2.46);
-      tl.fromTo("#g1-b1", { scaleY: 0 },
-        { scaleY: 1, duration: 0.5, ease: "power3.out" }, 2.58);
-      tl.fromTo("#g1-b2", { scaleY: 0 },
-        { scaleY: 1, duration: 0.72, ease: "expo.out" }, 2.72);
-      tl.fromTo("#g1-arrow", { opacity: 0, y: 34, scale: 0.7 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(2)" }, 3.05);
-      tl.fromTo("#g1-num", { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 2.90);
+      punch("#g1-num", "#g1-glow", 2.50);
+      tl.fromTo("#g1-arrow", { opacity: 0, y: 46, scale: 0.5 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(2.4)" }, 2.62);
       tl.to(n1, { v: 59, duration: 0.85, ease: "power2.out", snap: { v: 1 },
-        onUpdate() { document.getElementById("g1-num").textContent = "+" + n1.v + "%"; } }, 2.95);
+        onUpdate() { document.getElementById("g1-num").textContent = "+" + n1.v + "%"; } }, 2.56);
 
-      // G2 — the cycle draws in, then three beats land on "again and again" (12.61).
-      tl.fromTo("#g2-arc", { strokeDasharray: 880, strokeDashoffset: 880 },
-        { strokeDashoffset: 0, duration: 1.1, ease: "power2.inOut" }, 9.55);
-      tl.fromTo("#g2-head", { opacity: 0 },
-        { opacity: 1, duration: 0.4, ease: "power2.out" }, 10.45);
-      tl.fromTo(["#g2-d1", "#g2-d2", "#g2-d3"],
-        { opacity: 0, attr: { r: 0 } },
-        { opacity: 1, attr: { r: 26 }, duration: 0.36,
-          ease: "back.out(2.4)", stagger: 0.2 }, 12.55);
-      tl.to(["#g2-d1", "#g2-d2", "#g2-d3"], { attr: { r: 35 }, duration: 0.24,
-        ease: "sine.inOut", stagger: 0.14, yoyo: true, repeat: 3 }, 13.35);
-
-      // G3 — the two bars extend, count 0 -> 3x on the spoken "three times" (16.58).
+      // G3 — 3x, counting up onto "three times" (16.58).
       const n4 = { v: 0 };
-      tl.fromTo("#g3-h1", { scaleX: 0 },
-        { scaleX: 1, duration: 0.45, ease: "power3.out" }, 16.48);
-      tl.fromTo("#g3-h2", { scaleX: 0 },
-        { scaleX: 1, duration: 0.8, ease: "expo.out" }, 16.62);
-      tl.fromTo("#g3-num", { opacity: 0, scale: 0.78 },
-        { opacity: 1, scale: 1, duration: 0.55, ease: "expo.out" }, 16.50);
+      punch("#g3-num", "#g3-glow", 16.50);
       tl.to(n4, { v: 3, duration: 0.66, ease: "power2.out", snap: { v: 1 },
         onUpdate() { document.getElementById("g3-num").textContent = n4.v + "\u00D7"; } }, 16.56);
 
-      // G4 — flat spend line vs rising profit line, on "same ad budget... far more profit".
-      tl.fromTo("#g4-flat", { strokeDasharray: 640, strokeDashoffset: 640 },
-        { strokeDashoffset: 0, duration: 0.7, ease: "power2.out" }, 23.34);
-      tl.fromTo("#g4-zero", { opacity: 0, y: 22 },
-        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 23.62);
-      tl.fromTo("#g4-rise", { strokeDasharray: 780, strokeDashoffset: 780 },
-        { strokeDashoffset: 0, duration: 1.0, ease: "power2.inOut" }, 24.00);
-      tl.fromTo("#g4-tip", { opacity: 0, attr: { r: 0 } },
-        { opacity: 1, attr: { r: 22 }, duration: 0.4, ease: "back.out(2.2)" }, 24.90);
+      // G4 — $0, on "stop spending money on ads" (30.24).
+      punch("#g4-zero", "#g4-glow", 30.26);
 
       /* ---- Beat 7 — end card. Cuts on the spoken "If" (raw 36.94 -> 33.44).
               Final scene: the one place exit animation is allowed. ---- */
-      tl.set("#s7", { opacity: 0 }, 0);
       tl.to("#s7-cover", { opacity: 1, duration: 0.46, ease: "power2.inOut" }, 33.44);
+      // The corner logo steps aside — the end card carries the lockup centred.
+      tl.to("#logo-hold", { opacity: 0, duration: 0.3, ease: "power1.inOut" }, 33.44);
       tl.to("#s7-bloom", { opacity: 1, duration: 0.9, ease: "sine.out" }, 33.60);
       tl.to("#s7", { opacity: 1, duration: 0.30, ease: "power1.out" }, 33.62);
+      tl.fromTo("#s7-logo", { opacity: 0, y: 30, scale: 0.92 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.66, ease: "power3.out" }, 33.66);
       tl.fromTo("#s7-head", { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.66, ease: "power3.out" }, 33.72);
+        { opacity: 1, y: 0, duration: 0.66, ease: "power3.out" }, 33.92);
       // Pill lands on "find out more" (raw 39.19 -> 35.69).
       tl.fromTo("#s7-pill", { opacity: 0, scale: 0.82 },
         { opacity: 1, scale: 1, duration: 0.54, ease: "back.out(1.8)" }, 35.50);

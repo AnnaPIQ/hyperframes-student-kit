@@ -1,8 +1,10 @@
 # EcomIQ × Dryft Sleep — social-proof ad · EDIT PLAN
 
-**Status: built (v2).** Decisions taken: head + tail trim, crop-to-fill, no logo wall,
-no star rating, no testimonial quote, **A-roll intercut with b-roll**, **no words in the
-graphics**, **bottom of frame left clear for subtitles**.
+**Status: built (v4).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
+**no words in the graphics** · **bottom of frame clear for subtitles** · no logo wall ·
+no star rating · no testimonial quote · **a graphic only where a real figure is spoken** ·
+**no scrim on any segment without a graphic** · motion pass against
+`MOTION_PHILOSOPHY.md`.
 
 Format: 9:16 (1080×1920) + 1:1 (1080×1080) · 30fps · H.264/AAC, faststart.
 Audio-led, full length — no cutdown.
@@ -42,26 +44,63 @@ A = Sean to camera, B = b-roll. Every A-roll segment is the same take trimmed to
 window as the VO, with `data-media-start` == its own start, so lip sync is exact.
 Transitions are 0.20s blur dissolves — fast enough to read as cuts.
 
-| # | in–out | source | graphic |
-|---|---|---|---|
-| A1 | 0.00–2.30 | **Sean** | clean — he opens the claim |
-| B1 | 2.30–6.12 | walking | **G1** growth bars + count-up to **+59%** on the spoken "59%" (2.61) |
-| A2 | 6.12–9.20 | **Sean** | clean |
-| B2 | 9.20–14.85 | excited | **G2** return-cycle ring draws in; 3 dots land on "again and again" (12.61) |
-| A3 | 14.85–16.30 | **Sean** | clean |
-| B3 | 16.30–19.35 | product | **G3** comparison bars (1× vs 3×) + count-up to **3×** on "three times" (16.58) |
-| A4 | 19.35–23.10 | **Sean** | clean |
-| B4 | 23.10–26.30 | suppliers | **G4** flat ad-spend line vs rising profit line, **$0** |
-| A5 | 26.30–30.10 | **Sean** | clean |
-| B5 | 30.10–33.44 | shelf | clean — breathe into the end card |
-| END | 33.44–38.50 | brand canvas | end card, cuts on the spoken "If" (33.44) |
+| # | in–out | source | graphic | scrim |
+|---|---|---|---|---|
+| A1 | 0.00–2.30 | **Sean** | — | none |
+| B1 | 2.30–6.12 | walking | **+59%** counts up onto the spoken "59%" (2.61) | 0.62 |
+| A2 | 6.12–9.20 | **Sean** | — | none |
+| B2 | 9.20–12.10 | excited | — | none |
+| B2b | 12.10–14.85 | storefront | — | none |
+| A3 | 14.85–16.30 | **Sean** | — | none |
+| B3 | 16.30–19.35 | product | **3×** counts up onto "three times" (16.58) | 0.62 |
+| A4 | 19.35–23.10 | **Sean** | — | none |
+| B4 | 23.10–26.30 | suppliers | — | none |
+| A5 | 26.30–30.10 | **Sean** | — | none |
+| B5 | 30.10–33.44 | shelf | **$0** on "stop spending money on ads" (30.24) | 0.62 |
+| END | 33.44–38.50 | brand canvas | end card, cuts on the spoken "If" (33.44) | — |
 
-Bars are proportional, not decorative: G1 is 314:500 (=1.59, the +59%) and G3 is 234:702 (=3.0×).
+**Three graphics, three real figures.** A graphic exists only where a number is actually
+spoken over it. Beats that carry no figure carry no graphic — and no scrim either, so the
+footage plays clean. Each numeral lands with a blur + scale-overshoot punch and a single
+flame bloom on the landing frame; the emphasis comes from the hit, not from decoration.
 
-**No words in any graphic** — numerals only (`+59%`, `3×`, `$0`). The **bottom 580px (9:16)
-/ 300px (1:1) is left clear** for subtitles to be added later; nothing but footage sits there.
+**No words in any graphic** — numerals only. The **bottom 580px (9:16) / 300px (1:1) is
+left clear** for subtitles; nothing but footage sits there.
 
-Persistent `ecomiq-logo-white.png` top-left on every frame, ~24% width.
+**End card:** the corner logo steps aside and the lockup appears centred and large above
+an all-white, non-italic "See if we can help you", with the flame "Find out more" pill.
+
+## Motion pass (against `MOTION_PHILOSOPHY.md`)
+
+The Infinite spot's *palette* doesn't apply here — EcomIQ is navy and flame, not black and
+chrome — but its **discipline** does, so:
+
+- **Every transition uses motion.** A↔B cuts are the doc's "cut-the-curve" vertical whip:
+  the outgoing frame rides up with blur (`power2.in`, 0.333s), the incoming rises from below
+  with matching blur (`power2.out`, 0.667s). Same direction, velocity matched at the cut.
+  A 1.12 base scale on every clip is headroom so the ±90px travel never exposes a frame edge.
+- **The camera never sleeps.** B-roll pushes 1.12→1.19 across its segment; the talking head
+  still drifts 1.12→1.155, so no beat sits perfectly still. The vignette breathes on a
+  4s `sine.inOut` yoyo.
+- **One unifying texture.** A navy vignette and a deterministic CSS grain (three radial
+  tiles, no PNG, headless-safe) sit on **every** frame — A-roll, b-roll and end card — so
+  the piece reads as one thing rather than as clips.
+- **Type scales, it doesn't fade.** Numerals arrive at 0.34 scale under 30px of blur and
+  slam to full on `back.out(2.4)`, with one flame bloom behind the landing frame. That bloom
+  is the piece's callback — it returns behind the end-card pill.
+- **Cut faster.** The 5.65s b-roll beat was split in two (excited → storefront) so no
+  mid-section shot outstays ~3s.
+- **Hold the outro.** 5.06s on the end card.
+- Tween durations are multiples of 1/30s so the steep eases don't alias at sub-frame
+  boundaries.
+
+**Deliberate deviations:** the reference's black canvas, chrome-gradient type and perspective
+grid are Infinite's brand, not EcomIQ's — CLAUDE.md says keep the discipline and adapt the
+palette, so the texture here is a navy vignette + grain instead. Scene lengths are set by the
+voiceover rather than a ~1.5s target: this is an audio-led piece and cutting against the
+narration would fight the words.
+
+Persistent `ecomiq-logo-white.png` top-left on every frame up to the end card.
 
 ## Verified proof inventory (real values only)
 
@@ -80,21 +119,24 @@ From the VO and the published case study
 2. **Logo wall — REMOVED per direction.** No third-party logo assets existed and none were
    recreated. (The Erewhon storefront appears incidentally in the footage itself.)
 3. **Testimonial quote — REMOVED per direction.**
-4. **Crop-to-fill (approved).** 9:16: the five transposed wholesaler clips are natively
-   2160×3840, so they only scale — **no crop at all**; only `product` (true 16:9) is cropped,
-   keeping the middle ~32% of frame width (the pouches stay centred — verified). 1:1: every
-   clip is cropped, with the crop window biased **down** per clip (`walking`/`excited` y=420,
-   `storefront`/`suppliers`/`shelf` y=620) because a plain centre crop decapitated subjects
-   framed low in the vertical originals. No letterboxing anywhere.
+4. **Crop-to-fill.** **All six** wholesaler clips — `product` included — are phone-vertical
+   stored sideways and need `transpose=1`; that makes each natively 2160×3840, an exact 9:16
+   fill with **no crop at all**. (`product` was initially mis-read as true landscape and
+   shipped rotated in v2 — corrected.) 1:1 crops every clip, with the window biased **down**
+   per clip (`walking`/`excited`/`product` y=420, `storefront`/`suppliers`/`shelf` y=620)
+   because a plain centre crop decapitated subjects framed low. No letterboxing anywhere.
 5. **A-roll is preview-quality** — 1920×1080 at ~1.4 Mbps and 128 kbps AAC, not the ProRes
    master. It holds up well in the 9:16 crop (verified at full res), but a re-pull of the
    master once Drive's quota resets would sharpen it.
-5b. **The end card still carries words** ("See if we can *help* you" / "Find out more") —
-   the "no words" direction was applied to the motion graphics; the CTA was specified
-   verbatim in the brief. Say the word if you want that stripped back too.
+5b. **The end card carries words** ("See if we can help you" / "Find out more") — the
+   "no words" direction was applied to the motion graphics; the CTA was specified verbatim
+   in the brief. The headline is now all white and non-italic, so **Hedvig Letters Serif is
+   no longer used anywhere** in the piece.
 6. **Music bed:** duckable placeholder `<audio>` at low gain, commented, to drop a track into.
-7. VO says "three times their first customer revenue"; the case study words it
-   "Subscription revenue 3x the storefront" — the graphic uses the case-study wording.
+7. **Dropped in v3, and why:** the return-cycle ring (no figure behind it — a metaphor, not
+   a graphic); the comparison bars under +59% and 3× (unlabelled bars can't say what they
+   compare, and labels aren't allowed); the flat/rising line chart under $0 (its curves were
+   invented shapes with no data behind them — fabricated data-viz).
 
 ## Delivery
 

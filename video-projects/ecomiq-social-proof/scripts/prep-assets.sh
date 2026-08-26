@@ -63,8 +63,7 @@ norm storefront "$LIFT$VERT_916"   "$LIFT$(vert11 620)"
 norm suppliers  "$LIFT$VERT_916"   "$LIFT$(vert11 620)"
 norm shelf      "$LIFT$VERT_916"   "$LIFT$(vert11 620)"
 
-# product is true 16:9 3840x2160 -> both ratios need a hard crop to fill.
-norm product "scale=-2:1920,crop=1080:1920" "scale=-2:1080,crop=1080:1080"
+norm product    "$VERT_916"        "$(vert11 420)"
 
 # ---- A-roll: crop the 1920x1080 talking head to each delivery ratio ----------
 # Trimmed to the SAME 3.50-40.35 window as the VO, so lip sync is exact, and

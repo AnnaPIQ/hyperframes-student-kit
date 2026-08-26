@@ -52,7 +52,7 @@ CLIPS="
 walking|1jHsUTe013mdBLjB6VQvJmjzwj0r6cXzT|19|7.0|1
 storefront|1NgRACv6dGVzw0cay3767fp4kO4qwDTQQ|3|4.2|1
 excited|1HLSp2jot_gQjx2xpl-xeM97bz6u8ihqC|3|6.8|1
-product|1RapxMHiEtRmM6ig2GKFSSeCSHU4PA_U1|8|5.2|0
+product|1RapxMHiEtRmM6ig2GKFSSeCSHU4PA_U1|8|5.2|1
 suppliers|1wMgbUuI5dVtGyVLryar5xL-fXg9ZnIQU|2|8.0|1
 shelf|1Bhl0B7FWeJy_EmOmLMn06SC_B49ADkdr|0.8|7.6|1
 "
