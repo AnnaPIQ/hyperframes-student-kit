@@ -1,6 +1,6 @@
 # EcomIQ × Dryft Sleep — social-proof ad · EDIT PLAN
 
-**Status: built (v11).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
+**Status: built (v12).** Head + tail trim · crop-to-fill · A-roll intercut with b-roll ·
 **wordless numerals** (one deliberate full-bleed message card carries copy) ·
 **bottom of frame clear for subtitles** · no logo wall ·
 no star rating · no testimonial quote · **a graphic only where a real figure is spoken** ·
@@ -61,7 +61,10 @@ Transitions are 0.20s blur dissolves — fast enough to read as cuts.
 **Both stats are full-bleed navy cards, built to the reference clips supplied**
 (kept in `assets/reference/`), left-aligned and sharing one type system:
 
-- **+59% stat card** (1.70–6.12) — eyebrow "DRYFT SLEEP, RETURNING CUSTOMERS"; an oversized
+- **+59% stat card** (1.70–6.12) — **Dryft's white wordmark** scales in first at 1.78 (the VO
+  has just said "Dryft Sleep", so the mark is the card's opening statement), then the eyebrow
+  "RETURNING CUSTOMERS" at 1.95 — "Dryft Sleep," left the eyebrow because the logo now says
+  it. Then an oversized
   figure with a flame `+` and a smaller `%`, counting up onto the spoken "59%" (2.61); a flame
   rule drawing beneath it; then "WITHOUT A DOLLAR MORE ON ADS" landing on "without spending a
   dollar more" (3.52).
@@ -135,8 +138,12 @@ From the VO and the published case study
 ## Open flags — nothing invented
 
 1. **Star rating — REMOVED per direction.** None existed in the source material anyway.
-2. **Logo wall — REMOVED per direction.** No third-party logo assets existed and none were
-   recreated. (The Erewhon storefront appears incidentally in the footage itself.)
+2. **Logo wall — REMOVED per direction.** No wall was built and no mark was recreated. **v12
+   adds one real third-party mark**: Dryft's own white wordmark on the +59% card. The client
+   supplied it, but the image never reached the container, so it was taken from Dryft's own
+   site (`dryftsleep.com/cdn/shop/files/dryft-sleep-logo-2023-white.png`) — the official white
+   lockup, 753x316, already tight-cropped with real alpha, so no crop or keying was needed and
+   nothing was redrawn. (The Erewhon storefront appears incidentally in the footage itself.)
 3. **Testimonial quote — REMOVED per direction.**
 4. **Crop-to-fill.** **All six** wholesaler clips — `product` included — are phone-vertical
    stored sideways and need `transpose=1`; that makes each natively 2160×3840, an exact 9:16

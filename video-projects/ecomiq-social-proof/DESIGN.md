@@ -23,8 +23,9 @@ that states it (word-level timings in `assets/vo/dryft-social-proof-vo.words.jso
 no graphic at all, so the footage plays clean. Never prop up a claim with a metaphor.
 
 Three cards, one type system, all left-aligned except the message card:
-- **+59% stat card** — eyebrow, oversized figure with a flame `+` and smaller `%`, a flame
-  rule drawing beneath, then the qualifier in bold caps.
+- **+59% stat card** — **Dryft's own white wordmark** leads (the brand being credited reads
+  as a mark, not spelled out in copy), then the eyebrow, an oversized figure with a flame `+`
+  and smaller `%`, a flame rule drawing beneath, then the qualifier in bold caps.
 - **3× graph card** — eyebrow, labelled baseline bar, subscription bar extending to exactly
   3× it, then the `3x BIGGER THAN FIRST ORDERS` lockup. Labels are the whole point: an
   unlabelled bar can't say what it compares.
@@ -96,8 +97,10 @@ card's down-arrow, the graph card's baseline bar). Don't tint a word.
 
 - Don't invent proof. Every number on screen traces to the VO or the published case study.
   There is **no star rating** and **no testimonial quote** in the source — don't add either.
-- Don't build a third-party logo wall; no logo assets exist for those brands and they are
-  not to be recreated.
+- Don't build a third-party logo wall. The **one** third-party mark in the piece is Dryft's
+  own white wordmark on the +59% card — `assets/dryft-sleep-logo-white.png`, taken from
+  dryftsleep.com's official white lockup (753x316, already tight-cropped, real alpha).
+  Never redraw a brand's mark; use the brand's own file or don't use one.
 - Don't use `ecomiq-logo-white.svg` in a composition — its luminance mask renders broken.
   Use the **PNG**.
 - Don't add captions, and keep numerals wordless — copy belongs on the message card only.

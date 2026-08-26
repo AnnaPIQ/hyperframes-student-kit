@@ -72,6 +72,12 @@
         background:
           radial-gradient(72% 44% at 50% 34%, rgba(24,86,150,0.55) 0%, rgba(6,40,76,0) 70%),
           var(--brand-navy); }
+      /* Dryft's own white wordmark (dryftsleep.com), so the brand being credited
+         reads on the card instead of being spelled out in the eyebrow. Grows from
+         the left so it sits on the card's left-aligned axis. */
+      #s59-logo { width: 340px; height: auto; display: block; margin-bottom: 46px;
+        transform-origin: left center;
+        filter: drop-shadow(0 6px 22px rgba(0,0,0,0.40)); }
       #s59-eyebrow { font-size: 28px; font-weight: 700; letter-spacing: 0.20em;
         text-transform: uppercase; color: var(--brand-white); margin-bottom: 26px; }
       #s59-num { font-size: 300px; font-weight: 800; line-height: 0.92;
@@ -236,7 +242,8 @@
       <!-- Full-bleed stat card, over "…returning customers by 59% without
            spending a dollar more on ads". -->
       <div id="s59" class="clip" data-start="0" data-duration="38.5" data-track-index="15">
-        <div id="s59-eyebrow">Dryft Sleep, returning customers</div>
+        <img id="s59-logo" src="assets/dryft-sleep-logo-white.png" alt="Dryft Sleep" />
+        <div id="s59-eyebrow">Returning customers</div>
         <div id="s59-num"><span class="plus">+</span><span id="s59-val">0</span><span class="pct">%</span></div>
         <div id="s59-rule"></div>
         <div id="s59-sub">Without a dollar more on ads</div>
@@ -357,8 +364,13 @@
       const n1 = { v: 0 };
       tl.fromTo("#s59", { opacity: 0, y: 90, filter: "blur(26px)" },
         { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.667, ease: "power2.out" }, 1.70);
+      // The wordmark scales in ahead of everything else — the VO has just said
+      // "Dryft Sleep", so the mark is the first thing the card states.
+      tl.fromTo("#s59-logo", { opacity: 0, scale: 0.86, filter: "blur(18px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)",
+          duration: 0.567, ease: "back.out(1.6)" }, 1.78);
       tl.fromTo("#s59-eyebrow", { opacity: 0, y: 22 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.85);
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.95);
       tl.fromTo("#s59-num", { opacity: 0, scale: 0.7, filter: "blur(24px)" },
         { opacity: 1, scale: 1, filter: "blur(0px)",
           duration: 0.5, ease: "back.out(2)" }, 2.10);

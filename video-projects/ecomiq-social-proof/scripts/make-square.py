@@ -41,6 +41,8 @@ RULES = [
     # ---- +59% stat card ----
     ('align-items: flex-start; padding: 0 108px 470px;',
      'align-items: flex-start; padding: 0 76px 210px;'),
+    ('#s59-logo { width: 340px; height: auto; display: block; margin-bottom: 46px;',
+     '#s59-logo { width: 225px; height: auto; display: block; margin-bottom: 30px;'),
     ('#s59-eyebrow { font-size: 28px; font-weight: 700; letter-spacing: 0.20em;\n'
      '        text-transform: uppercase; color: var(--brand-white); margin-bottom: 26px; }',
      '#s59-eyebrow { font-size: 22px; font-weight: 700; letter-spacing: 0.20em;\n'

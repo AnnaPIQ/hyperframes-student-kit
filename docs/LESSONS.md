@@ -231,6 +231,21 @@ efficient over time instead of relearning the same lessons.
   cannot overlap. **Fix:** `grep -o 'data-track-index="[0-9]*"' | sort -n | uniq -c` and pick
   a genuinely free index; a duplicate count is the bug.
 
+## Assets
+
+- **An image pasted into chat may not exist on disk.** A client-supplied logo was visible in
+  the message but absent from `~/.claude/uploads/<session>/` — the container had restarted, so
+  only older attachments survived. **Fix:** check the uploads dir before planning around a
+  pasted asset, and don't hand-redraw a brand mark to work around it.
+- **Get a brand's logo from the brand.** Rather than blocking on a re-upload, fetch the
+  official file from the company's own site — Shopify stores expose it at
+  `/cdn/shop/files/<name>.png` and usually ship a **white** variant for dark backgrounds,
+  which is exactly what a dark card needs: real alpha, tight crop, no colour-keying, and no
+  risk of an approximated mark. `WebFetch` the homepage and ask for the raw logo `src` values.
+- **Check the trim box before writing CSS.** `convert x.png -trim` reporting the full size
+  means the artwork already touches all four edges, so a descender sits flush to the bottom
+  and the optical gap below it reads smaller than the CSS margin. **Fix:** add margin.
+
 ## Type
 
 - **A variable font makes a weight mismatch look like a font mismatch.** Rethink Sans is
