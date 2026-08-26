@@ -31,15 +31,13 @@ rather than after it. Total 40.6s.
 | t | Beat | Graphic |
 |---|---|---|
 | 4.00 | **logo wall** | full navy takeover, all 21 client marks drifting up, Shopify Premier Partner badge lands centre |
-| 8.36 | not theory | "THEORY" struck through in flame |
 | 11.50 | premier partner | pulsing flame dot + "LIVE · EVERY SINGLE DAY" |
 | 15.65 | revenue/profit | two risers, blue-tint → flame |
 | 17.85 | **B-roll · Sweet E's** | full-bleed rotated phone footage, "SWEET E'S" chip |
-| 19.75 | **B-roll · Dryft** | full-bleed, "DRYFT" chip — the speaker himself is in the shot |
+| 19.75 | **B-roll · Dryft Sleep** | full-bleed, "DRYFT SLEEP" chip — the speaker himself is in the shot |
 | 23.80 | **hero stamp** | "NOT A GUESS." + 6px shake on the footage |
 | 26.60 | pattern | node lattice with a flame pulse |
-| 30.04 | should → already | "Not what should work. What already does." all white |
-| 33.75 | **end card** | film cross-dissolves out; lockup + "Built for Shopify founders." + "Learn More" pill, 6.85s |
+| 33.75 | **end card** | film cross-dissolves out; lockup + "See if it will work for you." + "Learn More" pill, 6.85s |
 
 ## B-roll
 
@@ -96,9 +94,11 @@ all graphics so captions can be added later without a relayout.
 Both were requested directly and are intentional, not oversights:
 
 - **No italic-serif emphasis word.** The brand signature (one Hedvig Letters Serif
-  italic word per headline) is not used — "Shopify" on the end card and
-  "should"/"already" in the closing beat are all white upright Rethink Sans. The
-  Hedvig `@font-face` is still declared but currently unused.
+  italic word per headline) is not used anywhere — the end card headline is plain
+  white upright Rethink Sans. The Hedvig `@font-face` is still declared but unused.
+- **Two graphics were cut on review** — the "THEORY" strike-through (8.36) and the
+  "Not what should work / What already does" closing beat (30.04). Both stretches
+  now play as plain A-roll, which gives the piece two deliberate breathing gaps.
 - **No grid/crosshair texture over the footage.** It read as dirt on the speaker's
   face, so it survives on the end card only. Vignette and grain remain global.
 

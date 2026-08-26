@@ -161,16 +161,6 @@
         box-shadow: 0 30px 90px -20px rgba(0,0,0,.75);
       }
 
-      /* Beat 3 — "THEORY" struck through */
-      #b2 { top: 590px; }
-      #b2 .word { position: relative; display: inline-block; font-size: 112px; font-weight: 800; letter-spacing: -.035em; }
-      #b2 .strike {
-        position: absolute; top: 52%; left: -14px; width: calc(100% + 28px); height: 12px;
-        background: var(--brand-flame); border-radius: 6px; transform-origin: left center;
-        box-shadow: 0 0 30px rgba(255,76,50,.7);
-      }
-      #b2 .sub { margin-top: 14px; font-size: 34px; font-weight: 600; color: var(--brand-text-dim); }
-
       /* Beat 4 — live badge */
       #b3 { top: 620px; }
       #b3 .chip {
@@ -202,11 +192,6 @@
       #b7 .node { fill: var(--brand-blue-tint); filter: drop-shadow(0 0 12px rgba(156,212,255,.8)); }
       #b7 .pulse { stroke: var(--brand-flame); stroke-width: 6; fill: none; filter: drop-shadow(0 0 10px rgba(255,76,50,.9)); }
 
-      /* Beat 9 — the recolor beat (one CSS-var tween, no cut) */
-      #b8 { top: 590px; }
-      #b8 .line { font-size: 78px; font-weight: 800; letter-spacing: -.03em; line-height: 1.0; }
-      #b8 .swap { color: var(--brand-white); }
-
       /* ---- End card ---------------------------------------------------------- */
       #card { position: absolute; inset: 0; }
       #card .in { position: absolute; inset: 0; background: var(--brand-navy); }
@@ -221,7 +206,7 @@
       }
       #card-cta {
         position: absolute; top: 675px; left: 50%;
-        display: inline-flex; align-items: center; gap: 20px;
+        display: inline-flex; align-items: center;
         font-size: 44px; font-weight: 700; color: var(--brand-white);
         background: var(--brand-flame); padding: 34px 74px; border-radius: 999px;
         white-space: nowrap; box-shadow: 0 26px 80px -18px rgba(255,76,50,.72);
@@ -283,7 +268,7 @@
         <div class="in"></div>
       </div>
       <div id="br2-chip" class="gfx br-chip clip" data-start="19.75" data-duration="1.70" data-track-index="16">
-        <div class="in"><span class="name">Dryft</span></div>
+        <div class="in"><span class="name">Dryft Sleep</span></div>
       </div>
 
       <!-- ---- beat graphics ---- -->
@@ -340,12 +325,6 @@
         </div>
       </div>
 
-      <div id="b2" class="gfx clip data-start="8.36" data-duration="2.20" data-track-index="9">
-        <div class="in">
-          <div class="word">THEORY<span class="strike"></span></div>
-          <div class="sub">Not what we learned ten years ago.</div>
-        </div>
-      </div>
 
       <div id="b3" class="gfx clip" data-start="11.50" data-duration="2.40" data-track-index="10">
         <div class="in">
@@ -388,12 +367,6 @@
         </div>
       </div>
 
-      <div id="b8" class="gfx clip" data-start="30.04" data-duration="3.09" data-track-index="15">
-        <div class="in">
-          <div class="line">Not what <span class="swap" id="b8-w1">should</span> work.</div>
-          <div class="line">What <span class="swap" id="b8-w2">already</span> does.</div>
-        </div>
-      </div>
 
 
       <!-- ---- whip-streaks that hide the reframes ---- -->
@@ -406,8 +379,8 @@
         <div class="in">
           <div id="card-bloom"></div>
           <img id="card-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
-          <div id="card-head">Built for Shopify founders.</div>
-          <div id="card-cta">Learn More <span>&rarr;</span></div>
+          <div id="card-head">See if it will work for you.</div>
+          <div id="card-cta">Learn More</div>
           <div id="card-shimmer"></div>
         </div>
       </div>
@@ -504,14 +477,6 @@
           .to('#wall .in', { y: -1080, duration: 0.26, ease: 'power3.in' }, 8.10)
           .set('#wall .in', { opacity: 0 }, 8.36);
 
-        /* ---- Beat 3 · "THEORY" struck through (8.36 -> 10.56) ------------- */
-        tl.fromTo('#b2 .word', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.30, ease: 'expo.out' }, 8.42)
-          .fromTo('#b2 .strike', { scaleX: 0 }, { scaleX: 1, duration: 0.28, ease: 'power4.in' }, 9.02)
-          .fromTo('#b2 .sub', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.28, ease: 'power2.out' }, 9.30)
-          // EXIT — shatters upward into the 11.50 whip.
-          .to('#b2 .in', { y: -150, opacity: 0, filter: 'blur(24px)', duration: 0.30, ease: 'power2.in' }, 10.26)
-          .set('#b2 .in', { opacity: 0 }, 10.56);
-
         /* ---- Beat 4 · live badge (11.50 -> 13.90) ------------------------- */
         tl.fromTo('#b3 .chip', { opacity: 0, y: 30, scale: .92 },
                                { opacity: 1, y: 0, scale: 1, duration: 0.32, ease: 'back.out(1.5)' }, 11.56)
@@ -548,14 +513,6 @@
           .fromTo('#b7 .kicker', { opacity: 0, x: -28 }, { opacity: 1, x: 0, duration: 0.30, ease: 'expo.out' }, 27.06)
           .to('#b7 .in', { y: -130, filter: 'blur(22px)', opacity: 0, duration: 0.28, ease: 'power2.in' }, 29.01)
           .set('#b7 .in', { opacity: 0 }, 29.29);
-
-        /* ---- Beat 9 · the recolor beat (30.04 -> 33.13) — one var tween,
-               no cut: the same DOM changes meaning as the colour shifts. ---- */
-        tl.fromTo('#b8 .line', { opacity: 0, y: 34 },
-              { opacity: 1, y: 0, duration: 0.32, ease: 'expo.out', stagger: 0.16 }, 30.10)
-          .to('#b8-w2', { scale: 1.07, duration: 0.40, ease: 'back.out(2)' }, 31.66)
-          .to('#b8 .in', { y: -140, filter: 'blur(24px)', opacity: 0, duration: 0.28, ease: 'power2.in' }, 32.85)
-          .set('#b8 .in', { opacity: 0 }, 33.13);
 
         /* ---- Logo: rides every frame of the film section, then hands the
                stage to the end card's centred lockup. --------------------- */
