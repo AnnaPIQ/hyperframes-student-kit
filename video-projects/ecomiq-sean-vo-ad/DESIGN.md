@@ -150,7 +150,8 @@ Finals ship at `--quality high` (CRF 15), each ratio at native size and at 2×.
 | `ecomiq-sean-vo-916-2160.mp4` | 2160×3840 | 2× — graphics and PiP gain, footage is upscaled |
 | `ecomiq-sean-vo-square-1080.mp4` | 1080×1080 | native |
 | `ecomiq-sean-vo-square-2160.mp4` | 2160×2160 | 2× — real detail, bed is built at 1440 |
-| `ecomiq-sean-vo-45-1080.mp4` | 1080×1350 | Meta feed · `--quality standard` |
+| `ecomiq-sean-vo-45-1080.mp4` | 1080×1350 | Meta feed |
+| `ecomiq-sean-vo-45-2160.mp4` | 2160×2700 | 2× — via `meta45-2x.html`, see below |
 
 ```bash
 npx hyperframes render --quality high --output renders/ecomiq-sean-vo-916-1080.mp4
@@ -160,7 +161,22 @@ npx hyperframes render --composition compositions/square.html --quality high \
   --output renders/ecomiq-sean-vo-square-1080.mp4
 npx hyperframes render --composition compositions/square.html --quality high \
   --resolution square-4k --output renders/ecomiq-sean-vo-square-2160.mp4
+npx hyperframes render --composition compositions/meta45.html --quality high \
+  --output renders/ecomiq-sean-vo-45-1080.mp4
+npx hyperframes render --composition compositions/meta45-2x.html --quality high \
+  --output renders/ecomiq-sean-vo-45-2160.mp4
 ```
+
+### 4:5 at 2× needs its own composition
+`--resolution` only offers landscape / portrait / square presets and their 4k variants —
+there is no 4:5. So the 2× 4:5 comes from **`compositions/meta45-2x.html`**: `meta45.html`
+with every px doubled, so Chrome lays the page out at 2160×2700 and rasterises type, SVG
+and CSS at true 2× instead of upscaling a 1080 raster. GSAP's px offsets are doubled to
+match.
+
+It is generated from `meta45.html`, not hand-tuned — **keep the two in step**. Verified by
+downscaling the 2× render and difference-blending it against the native: pure black, so
+the layouts are identical.
 
 ### 4:5 has no native master
 The 9:16 and 1:1 montages were both supplied natively framed. 4:5 was not, so its bed is
