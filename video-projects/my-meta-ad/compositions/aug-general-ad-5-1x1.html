@@ -153,7 +153,10 @@
       }
       #wall-hero {
         position: absolute; left: 50%; top: 50%; width: 420px;
-        margin-left: -210px; height: auto; display: block;
+        /* margin-top, not translateY: GSAP animates `y` on this element
+           and a CSS transform would be clobbered. Centres the badge and
+           lifts it to ~47% of frame height. */
+        margin-left: -210px; margin-top: -125px; height: auto; display: block;
         border-radius: 10px;
         box-shadow: 0 30px 90px -20px rgba(0,0,0,.75);
       }
