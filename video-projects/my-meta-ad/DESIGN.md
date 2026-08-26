@@ -65,17 +65,17 @@ PCM 24-bit. Normalized by `scripts/prep-aroll.sh` into `assets/aroll-vertical.mp
 30fps CFR · faststart · AAC 192k).
 
 **Both targets are crops, centre-punched on the speaker at ~47% of frame width:**
-9:16 crops `1512×2160 @ x=1049` → `1080×1542`; 1:1 crops `2700×2160 @ x=455` →
-`1080×864`.
+9:16 crops `1215×2160 @ x=1198` → `1080×1920`; 1:1 crops `2160×2160 @ x=725` →
+`1080×1080`. Both are **full bleed** — the clip fills the canvas edge to edge.
 
-**The clip does not fill the canvas — that is deliberate.** A full-bleed 9:16 crop
-already consumed the source's entire 2160 height, so it was the widest field of
-view full-bleed allows. Pulling back ~25% to get more of Sean in frame therefore
-means the clip stops short, and brand navy fills the strip below it (y 1542–1920
-on 9:16, y 864–1080 on 1:1). That strip is where captions now live, so they no
-longer sit on his chest. The grade scrim is clipped to the video so it doesn't
-muddy the navy; the vignette and grain still run edge to edge as the unifying
-texture.
+**Don't try to "zoom out" by widening these crops.** They already use the source's
+entire 2160-pixel height, so this is the widest field of view a full-bleed frame
+can have. The source is a mid-shot: Sean is framed from about the waist up and
+his legs are not in the footage at all. A wider window shrinks the clip below the
+canvas and leaves a navy strip along the bottom — tried in rev 2, and it reads as
+an overlay sitting on the speaker rather than as a design choice. If more of him
+is ever genuinely needed, that's a re-shoot, or a blurred self-fill layered behind
+the clip — not a wider crop.
 
 **Beat map** (composition time; anchored to `silencedetect` on the real waveform,
 not estimated). Speech runs 3.717→34.172s in the source; the clip is trimmed from
