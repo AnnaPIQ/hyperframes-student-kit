@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1080" />
+    <title>Aug-General ad 4 — 1:1</title>
+
+    <!-- LESSONS.md: GSAP is vendored locally. A CDN <script> cert-fails in the
+         render env and freezes the render. Never swap this for a CDN URL. -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+
+    <style>
+      /* Local .woff2 — no render-time network fetch (render contract rule 11).
+         Families are named literally, not via var(), because the linter does not
+         resolve custom properties and would false-warn on a missing font. */
+      @font-face {
+        font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2');
+      }
+      @font-face {
+        font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2');
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1080px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-text);
+      }
+
+      /* ---------------------------------------------------------------------
+         SQUARE LAYOUT MAP (1080x1080)
+           y    0 –  180   logo zone (top-left lockup)
+           y  130 –  620   speaker's face — never covered
+           y  640 –  860   motion-graphics band
+           y  880 – 1010   CAPTION SAFE ZONE — deliberately left empty
+           y 1010 – 1080   bottom margin — left empty
+         ------------------------------------------------------------------ */
+
+      #video {
+        position: absolute; inset: 0;
+        width: 1080px; height: 1080px; object-fit: cover;
+      }
+
+      #grade {
+        position: absolute; inset: 0; z-index: 2; pointer-events: none;
+        background:
+          linear-gradient(180deg,
+            rgba(6,40,76,.60) 0%, rgba(6,40,76,.14) 20%,
+            rgba(6,40,76,.04) 46%, rgba(6,40,76,.44) 76%, rgba(6,40,76,.74) 100%);
+      }
+      #marks { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: .5; }
+      #vignette {
+        position: absolute; inset: 0; z-index: 4; pointer-events: none;
+        background: radial-gradient(ellipse 76% 62% at 50% 40%, rgba(0,0,0,0) 40%, rgba(3,18,36,.78) 100%);
+      }
+      #grain {
+        position: absolute; inset: 0; z-index: 9; pointer-events: none; opacity: .055;
+        background-image:
+          radial-gradient(rgba(255,255,255,.9) .5px, transparent .6px),
+          radial-gradient(rgba(255,255,255,.7) .5px, transparent .6px),
+          radial-gradient(rgba(0,0,0,.8) .5px, transparent .6px);
+        background-size: 3px 3px, 5px 5px, 7px 7px;
+        background-position: 0 0, 1px 2px, 3px 1px;
+      }
+
+      /* Persistent logo in a positioned NON-clip wrapper (LESSONS.md). */
+      #logo-wrap { position: absolute; left: 60px; top: 60px; z-index: 8; width: 194px; }
+      #logo { display: block; width: 100%; height: auto;
+              filter: drop-shadow(0 6px 22px rgba(0,0,0,.72)); }
+
+      /* ---- Motion-graphics band ---- */
+      .band {
+        position: absolute; left: 60px; right: 60px; top: 640px; z-index: 5;
+        opacity: 0; will-change: transform, opacity, filter;
+      }
+      .eyebrow {
+        font-size: 22px; font-weight: 600; letter-spacing: .34em;
+        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 16px;
+      }
+      .line {
+        font-size: 64px; font-weight: 800; line-height: .98; letter-spacing: -.03em;
+        color: var(--brand-white); text-shadow: 0 8px 40px rgba(0,0,0,.55);
+      }
+      .line .em {
+        font-family: 'Hedvig Letters Serif', Georgia, serif;
+        font-style: italic; font-weight: 400; letter-spacing: -.01em;
+        color: var(--brand-blue-tint);
+      }
+      .strike {
+        position: absolute; left: 0; height: 7px; border-radius: 4px;
+        background: var(--brand-flame); transform-origin: left center;
+        box-shadow: 0 0 22px rgba(255,76,50,.75);
+      }
+
+      #g1 .line { position: relative; display: inline-block; }
+      #g1 .strike { top: 38px; width: 100%; }
+
+      #g3 .tiles { display: flex; gap: 10px; margin-bottom: 20px; }
+      #g3 .t {
+        width: 48px; height: 34px; border-radius: 7px;
+        background: var(--brand-surface); border: 1px solid var(--brand-border);
+      }
+      #g4 .line { font-size: 70px; }
+
+      /* ---- Full-frame type beats ---- */
+      #scrim {
+        position: absolute; inset: 0; z-index: 5; opacity: 0; pointer-events: none;
+        background:
+          radial-gradient(ellipse 70% 54% at 50% 46%, rgba(6,40,76,.72) 0%, rgba(4,24,48,.93) 100%);
+      }
+      .hero {
+        position: absolute; left: 80px; right: 80px; top: 400px; z-index: 6;
+        text-align: center; opacity: 0; will-change: transform, opacity, filter;
+      }
+      .hero .big {
+        position: relative; display: inline-block;
+        font-size: 96px; font-weight: 800; line-height: .96; letter-spacing: -.035em;
+        color: var(--brand-white); text-shadow: 0 0 60px rgba(0,0,0,.6);
+      }
+      .hero .strike { top: 58px; width: 100%; }
+      #g7 .big { font-size: 76px; }
+      #g7 .em {
+        font-family: 'Hedvig Letters Serif', Georgia, serif;
+        font-style: italic; font-weight: 400; color: var(--brand-flame);
+        padding-right: .1em;
+      }
+      #g7 .rule {
+        width: 140px; height: 7px; border-radius: 4px; margin: 32px auto 0;
+        background: var(--brand-flame); transform-origin: center;
+        box-shadow: 0 0 26px rgba(255,76,50,.7);
+      }
+
+      #streak {
+        position: absolute; left: 0; top: 50%; z-index: 7; width: 46%; height: 9px;
+        margin-top: -4px; opacity: 0; pointer-events: none; filter: blur(7px);
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,.95), transparent);
+      }
+
+      /* ---- End card ---- */
+      #endcard {
+        position: absolute; inset: 0; z-index: 7; opacity: 0;
+        background:
+          radial-gradient(88% 56% at 50% 20%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 58%),
+          var(--brand-navy);
+      }
+      #ec-bloom {
+        position: absolute; left: -12%; bottom: -22%; width: 124%; height: 62%;
+        background: var(--brand-gradient-2); filter: blur(88px); opacity: .40;
+      }
+      #ec-copy {
+        position: absolute; left: 80px; right: 80px; top: 590px; text-align: center;
+      }
+      #ec-head {
+        font-size: 62px; font-weight: 800; line-height: 1.02; letter-spacing: -.03em;
+        color: var(--brand-white); opacity: 0;
+      }
+      #ec-head .em {
+        font-family: 'Hedvig Letters Serif', Georgia, serif;
+        font-style: italic; font-weight: 400; color: var(--brand-blue-tint);
+      }
+      #ec-cta {
+        display: inline-flex; align-items: center; gap: 14px; margin-top: 40px;
+        font-size: 32px; font-weight: 700; color: var(--brand-white);
+        background: var(--brand-flame); padding: 24px 50px; border-radius: 999px;
+        box-shadow: 0 20px 60px -16px rgba(255,76,50,.68); opacity: 0;
+      }
+      #ec-cta .arrow { font-size: 34px; line-height: 1; transform: translateY(-2px); }
+    </style>
+  </head>
+
+  <body>
+    <div
+      id="root"
+      data-composition-id="aug-general-ad-4-square"
+      data-start="0"
+      data-duration="36"
+      data-width="1080"
+      data-height="1080"
+      data-fps="30"
+    >
+      <!-- A-roll: 1:1 centre-punch, silent. VO rides as a sibling <audio>. -->
+      <video id="video" src="assets/aroll-square.mp4"
+             data-start="0" data-duration="31.1" data-track-index="0" muted></video>
+      <audio id="vo" src="assets/aroll-vo.m4a"
+             data-start="0" data-duration="31.1" data-track-index="1" data-volume="1"></audio>
+
+      <div id="grade" class="clip" data-start="0" data-duration="31.1" data-track-index="2"></div>
+
+      <svg id="marks" class="clip" data-start="0" data-duration="31.1" data-track-index="3"
+           width="1080" height="1080" viewBox="0 0 1080 1080" fill="none">
+        <g stroke="#9CD4FF" stroke-width="2" opacity=".34">
+          <path d="M44 200h30M59 185v30" /><path d="M1006 200h30M1021 185v30" />
+          <path d="M44 880h30M59 865v30" /><path d="M1006 880h30M1021 865v30" />
+        </g>
+      </svg>
+
+      <div id="vignette" class="clip" data-start="0" data-duration="31.1" data-track-index="4"></div>
+
+      <!-- Beat 1 · "Most ecommerce advice…" (VO 0.27–5.02) -->
+      <div id="g1" class="band clip" data-start="1.0333" data-duration="3.4" data-track-index="5">
+        <div class="eyebrow">The problem</div>
+        <div class="line">Most advice<span class="strike"></span></div>
+      </div>
+
+      <!-- Beat 3 · "…coaching side of a Shopify agency…" (VO 6.72–13.46) -->
+      <div id="g3" class="band clip" data-start="7.2" data-duration="5.6" data-track-index="6">
+        <div class="tiles">
+          <div class="t"></div><div class="t"></div><div class="t"></div><div class="t"></div>
+          <div class="t"></div><div class="t"></div><div class="t"></div><div class="t"></div>
+          <div class="t"></div><div class="t"></div><div class="t"></div><div class="t"></div>
+        </div>
+        <div class="eyebrow">Working inside</div>
+        <div class="line">Dozens of live brands</div>
+      </div>
+
+      <!-- Beat 4 · "…we're doing it right now." (VO 14.73–22.00) -->
+      <div id="g4" class="band clip" data-start="17.4" data-duration="4.5" data-track-index="7">
+        <div class="eyebrow">Not theory — practice</div>
+        <div class="line">We're doing it<br /><span class="em">right now.</span></div>
+      </div>
+
+      <!-- Rule-of-threes act (VO 22.49–26.81) -->
+      <div id="scrim" class="clip" data-start="22.4667" data-duration="4.9333" data-track-index="8"></div>
+
+      <div id="g5" class="hero clip" data-start="22.4667" data-duration="1.3333" data-track-index="9">
+        <div class="big">No gurus.<span class="strike"></span></div>
+      </div>
+      <div id="g6" class="hero clip" data-start="23.8" data-duration="0.9667" data-track-index="10">
+        <div class="big">No theory.<span class="strike"></span></div>
+      </div>
+      <div id="g7" class="hero clip" data-start="24.7667" data-duration="2.6333" data-track-index="11">
+        <div class="big">Just what grows a<br /><span class="em">profitable</span> brand.</div>
+        <div class="rule"></div>
+      </div>
+
+      <div id="streak" class="clip" data-start="22.2" data-duration="9" data-track-index="12"></div>
+
+      <!-- End card · holds 5.13s after the VO ends -->
+      <div id="endcard" class="clip" data-start="30.8667" data-duration="5.1333" data-track-index="13">
+        <div id="ec-bloom"></div>
+        <div id="ec-copy">
+          <div id="ec-head">Advice from people <span class="em">doing it</span></div>
+          <div id="ec-cta">Learn More <span class="arrow">&rarr;</span></div>
+        </div>
+      </div>
+
+      <!-- Persistent lockup, top-left on every frame; flies to centre for the
+           end card — the piece's one callback. -->
+      <div id="logo-wrap">
+        <img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <div id="grain" class="clip" data-start="0" data-duration="36" data-track-index="14"></div>
+    </div>
+
+    <script>
+      // Render contract: exactly one paused GSAP timeline, keyed to
+      // data-composition-id. Deterministic — no Date.now(), no Math.random().
+      // Beat timings are identical to the 9:16 cut; only the layout re-flows.
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+        const SLOT = 36;
+
+        /* ---- Beat 1 · "Most advice" + flame strike ---- */
+        tl.fromTo("#g1", { opacity: 0, y: 40, filter: "blur(18px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, 1.0333)
+          .fromTo("#g1 .strike", { scaleX: 0 },
+            { scaleX: 1, duration: 0.4667, ease: "power3.inOut" }, 2.6)
+          .to("#g1", { opacity: 0, y: -50, filter: "blur(22px)", duration: 0.3, ease: "power2.in" }, 4.1333);
+
+        /* ---- Beat 3 · store tiles light up, then the line ---- */
+        tl.fromTo("#g3", { opacity: 0, y: 40, filter: "blur(18px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, 7.2)
+          .fromTo("#g3 .t",
+            { backgroundColor: "#0a325f", borderColor: "#1d4a7a", scale: 0.86 },
+            { backgroundColor: "#9CD4FF", borderColor: "#9CD4FF", scale: 1,
+              duration: 0.3, ease: "power2.out", stagger: 0.075 }, 7.6)
+          .to("#g3", { opacity: 0, y: -50, filter: "blur(22px)", duration: 0.3, ease: "power2.in" }, 12.5);
+
+        /* ---- Beat 4 · "right now." scales as the line lands ---- */
+        tl.fromTo("#g4", { opacity: 0, y: 40, filter: "blur(18px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, 17.4)
+          .fromTo("#g4 .em", { scale: 0.86, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.4333, ease: "back.out(1.5)" }, 17.7333)
+          .to("#g4", { opacity: 0, y: -50, filter: "blur(22px)", duration: 0.3, ease: "power2.in" }, 21.6);
+
+        /* ---- Rule-of-threes act ---- */
+        tl.fromTo("#scrim", { opacity: 0 }, { opacity: 1, duration: 0.2667, ease: "power2.out" }, 22.4667)
+          .to("#scrim", { opacity: 0, duration: 0.3333, ease: "power2.in" }, 27.0667);
+
+        const hit = (sel, tIn, tOut) => {
+          tl.fromTo(sel, { opacity: 0, y: 110, filter: "blur(26px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.3667, ease: "expo.out" }, tIn)
+            .to(sel, { opacity: 0, y: -100, filter: "blur(26px)", duration: 0.2333, ease: "power2.in" }, tOut);
+        };
+        hit("#g5", 22.4667, 23.6667);
+        hit("#g6", 23.8, 24.6333);
+        tl.fromTo("#g7", { opacity: 0, y: 110, filter: "blur(26px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4333, ease: "expo.out" }, 24.7667)
+          .to("#g7", { opacity: 0, y: -100, filter: "blur(26px)", duration: 0.2667, ease: "power2.in" }, 27.1333);
+
+        tl.fromTo("#g5 .strike", { scaleX: 0 }, { scaleX: 1, duration: 0.2667, ease: "power3.inOut" }, 22.8)
+          .fromTo("#g6 .strike", { scaleX: 0 }, { scaleX: 1, duration: 0.2333, ease: "power3.inOut" }, 24.0667)
+          .fromTo("#g7 .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power3.out" }, 25.3333);
+
+        /* ---- Whip streaks masking the three cuts ---- */
+        const whip = (t) => {
+          tl.fromTo("#streak", { xPercent: -120, opacity: 0, scaleX: 0.6 },
+            { xPercent: 250, opacity: 1, scaleX: 1.5, duration: 0.3333, ease: "power3.in" }, t)
+            .to("#streak", { opacity: 0, duration: 0.1333, ease: "power2.out" }, t + 0.2333);
+        };
+        whip(22.3333); whip(23.7); whip(24.6667);
+
+        /* ---- End card · logo flies from top-left to centre (the callback) ---- */
+        tl.to("#logo-wrap", { x: 383, y: 386, scale: 2.1, duration: 0.7667,
+              ease: "power3.inOut", transformOrigin: "center center" }, 30.5333)
+          .fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 30.8667)
+          .fromTo("#ec-head", { opacity: 0, y: 28 },
+            { opacity: 1, y: 0, duration: 0.5667, ease: "power3.out" }, 31.5333)
+          .fromTo("#ec-cta", { opacity: 0, scale: 0.86 },
+            { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 31.9333)
+          .to("#ec-cta", { scale: 1.035, duration: 0.7667, ease: "sine.inOut", yoyo: true, repeat: 3 }, 32.6)
+          .to("#ec-bloom", { opacity: 0.52, duration: 2.3333, ease: "sine.inOut", yoyo: true, repeat: 1 }, 31.0667)
+          .to("#vignette", { opacity: 0.86, duration: 3.6667, ease: "sine.inOut", yoyo: true, repeat: 3 }, 0);
+
+        // Law #11 — no-op anchor so timeline.duration() fills the whole slot.
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines["aug-general-ad-4-square"] = tl;
+      })();
+    </script>
+  </body>
+</html>

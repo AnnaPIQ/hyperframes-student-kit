@@ -30,6 +30,10 @@ efficient over time instead of relearning the same lessons.
   for every registered timeline). It only means Studio can't drag-edit GSAP-controlled
   elements — which is correct for code-authored compositions. Survivable; don't contort
   the comp to silence it.
+- **`<audio>` without an `id` renders SILENT.** The renderer discovers media elements by
+  `id`, so a perfectly-wired `<audio data-start=… data-volume=…>` produces a mute video.
+  Lint catches it as `media_missing_id` — it's an error, not a warning, so don't render
+  past it. Same applies to `<video>`.
 
 ## Layout
 
@@ -49,6 +53,22 @@ efficient over time instead of relearning the same lessons.
 - **Offline transcriber can't run (model download egress-blocked).** Some environments
   block the Whisper model download. **Fix:** caption from the known script text and
   anchor timing via silence analysis instead of word-level timestamps.
+- **Google Drive serves a 2 KB "Quota exceeded" HTML page instead of the file.** Big,
+  widely-viewed public files hit an *anonymous* download cap ("Too many users have
+  viewed or downloaded this file recently" — Google says up to 24h). The MCP
+  connector's `download_file_content` is NOT the fallback: it returns base64 into the
+  conversation, so anything over a few MB is unusable. **Fix:** `copy_file` the Drive
+  file — the copy inherits the folder's `anyone: reader` and gets a *fresh* quota
+  bucket — then parse the `uuid` confirm token out of the virus-scan interstitial at
+  `drive.google.com/uc?export=download&id=<ID>&confirm=t` and GET
+  `drive.usercontent.google.com/download?id=<ID>&export=download&confirm=t&uuid=<UUID>`.
+  Pulled 2.05 GB in 45s. Always `file` the result — an HTML error page happily saves
+  itself as `.mov`.
+- **Anchoring beats without a transcriber: `silencedetect` is enough.** Two passes —
+  `silencedetect=noise=-34dB:d=0.30` for sentence boundaries, then
+  `noise=-32dB:d=0.12` for phrase boundaries — maps a known script onto real
+  timestamps in seconds. It also finds the true speech in/out points so you trim dead
+  pre-roll/post-roll instead of eyeballing it.
 
 ## Editing technique (talking-head cutdowns)
 

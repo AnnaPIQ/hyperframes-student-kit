@@ -34,8 +34,16 @@ for new EcomIQ ads (see the `/ecomiq-ad` skill).
   hot accent.
 - `preview` localhost isn't reachable on the web — verify via rendered frames.
 
+## Aug-General ad 4 (2026-08-26)
+Short-form talking-head cut in **9:16 and 1:1**, built from the "What We Do Version 1"
+A-roll. Compositions live in `compositions/aug-general-ad-4-{vertical,square}.html`;
+footage prep is `scripts/prep-aroll.sh`. Full beat map, crop maths and the layout /
+caption-safe-zone spec are in `DESIGN.md`. No captions by design — the space is
+reserved so they can be added later without recomposing.
+
 ## Open / next ideas
 - Light-background A/B variant.
-- 1:1 (1080×1080) and 9:16 (1080×1920) cuts from the same tokens.
+- ~~1:1 (1080×1080) and 9:16 (1080×1920) cuts from the same tokens.~~ Done — see
+  Aug-General ad 4 above. A 4:5 cut of the same edit is the obvious next one.
 - 15s multi-scene with a product reveal + `data-chart` metric and whip transitions.
 - Product photography from the Drive folders (not yet pulled in — upload here to use).
