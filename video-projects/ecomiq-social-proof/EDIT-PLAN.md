@@ -207,7 +207,10 @@ or the shipped file silently stays at whatever version last did.**
 
 - `final-9x16.mp4` — 1080×1920, from `index.html` — **38.7 MB, 8.4 Mbps**
 - `final-4x5.mp4` — 1080×1350, from `compositions/portrait45.html` — **26.9 MB, 5.9 Mbps**
-- `final-9x16-compressed.mp4` / `final-4x5-compressed.mp4` — CRF 26 copies for chat/email
+- `final-9x16-deliverable.mp4` — 1080×1920, **27.9 MB, 6.1 Mbps** — the 9:16 master is
+  38.7 MB and the chat upload limit is 30 MiB, so this CRF-16 copy is the one that can be
+  handed over directly. 4:5 needs no such copy (26.9 MB fits).
+- `final-9x16-compressed.mp4` / `final-4x5-compressed.mp4` — CRF 26 copies for quick preview
 
 `renders/` holds the working copies of the same files.
 
