@@ -122,8 +122,9 @@ Snappy, per brief.
 ## Deliverables
 | Ratio | Composition | Montage master | Output |
 |---|---|---|---|
-| 9:16 | 1080×1920 | `Showcase Reel.mp4` (1080×1920, native) | `renders/ecomiq-sean-vo-916.mp4` |
-| 1:1 | 1080×1080 | `Showcase ad-1-1.mp4` (1440×1440 → 1080×1080) | `renders/ecomiq-sean-vo-square.mp4` |
+| 9:16 | 1080×1920 | `Showcase Reel.mp4` (1080×1920, native) | `renders/ecomiq-sean-vo-916-*.mp4` |
+| 1:1 | 1080×1080 | `Showcase ad-1-1.mp4` (1440×1440, bed built at 1440) | `renders/ecomiq-sean-vo-square-*.mp4` |
+| 4:5 | 1080×1350 | `Showcase Reel.mp4` centre-cropped at y=240 | `renders/ecomiq-sean-vo-45-1080.mp4` |
 
 H.264 High / yuv420p, AAC 192 kbps, `+faststart`, 30 fps CFR.
 

@@ -5,8 +5,9 @@ picture.** He rides along in a circular a-roll PiP top right while the montage p
 frame, then the brand end card cross-dissolves in on the words *"want to see if we can
 help you."*
 
-Two deliverables from one project: **9:16** (`index.html`) and **1:1**
-(`compositions/square.html`). Same timeline, same card, natively-framed montage per ratio.
+Three ratios from one project: **9:16** (`index.html`), **1:1**
+(`compositions/square.html`) and **4:5** (`compositions/meta45.html`). Same timeline, same
+card; 9:16 and 1:1 use natively-framed montage masters, 4:5 is cropped (see below).
 
 The cut itself — every timestamp, the transcript, why each shot sits where it does — is in
 **`EDIT-PLAN.md`**. This file covers the look.
@@ -14,6 +15,7 @@ The cut itself — every timestamp, the transcript, why each shot sits where it 
 ## Format
 - **9:16** — 1080×1920 @ 30 fps · `index.html` · comp id `ecomiq-sean-vo-ad`
 - **1:1** — 1080×1080 @ 30 fps · `compositions/square.html` · comp id `ecomiq-sean-vo-ad-square`
+- **4:5** — 1080×1350 @ 30 fps · `compositions/meta45.html` · comp id `ecomiq-sean-vo-ad-45`
 - **Duration** — 37.60 s. VO runs 0 → 36.04; end card 33.70 → 37.60.
 
 ## Brand
@@ -48,10 +50,10 @@ weight — Rethink Sans 700, no italics, no mixed type.
 A small white EcomIQ lockup sits top left over the montage, fading in at t = 0.25 just
 ahead of the PiP and running until the end card covers it.
 
-| | 9:16 | 1:1 |
-|---|---|---|
-| Width | 240 px | 200 px |
-| Offset | top 150, left 58 | top 58, left 58 |
+| | 9:16 | 1:1 | 4:5 |
+|---|---|---|---|
+| Width | 240 px | 200 px | 220 px |
+| Offset | top 150, left 58 | top 58, left 58 | top 92, left 58 |
 
 Top offsets match the PiP's, so the bug and Sean's circle sit on the same line and read as
 a deliberate pair rather than two separate overlays. Wrapped in a positioned, non-`clip`
@@ -66,11 +68,13 @@ card carries the full-size lockup too. At 1671 px scaled to 240 there is no qual
 Sean's head, circle-masked, top right, riding over the montage from t = 0.35 until the end
 card covers it.
 
-| | 9:16 | 1:1 |
-|---|---|---|
-| Diameter | 360 px | 300 px |
-| Offset | top 150, right 58 | top 58, right 58 |
-| Ring | 6 px `--brand-blue-tint` | 5 px `--brand-blue-tint` |
+| | 9:16 | 1:1 | 4:5 |
+|---|---|---|---|
+| Diameter | 360 px | 300 px | 330 px |
+| Offset | top 150, right 58 | top 58, right 58 | top 92, right 58 |
+| Ring | 6 px | 5 px | 6 px |
+
+All in `--brand-blue-tint`. Bug and PiP share a top offset in every ratio.
 
 Cut from the **same in-point as the VO (3.100)**, so his lips track his own voice with no
 offset to tune. Source is 25 fps, conformed to 30 to match the composition.
@@ -111,6 +115,7 @@ Built by **`scripts/build-assets.sh`** from the raw Drive masters in
 |---|---|
 | `assets/bed-916.mp4` | 1080×1920 picture bed, 34.03 s, muted |
 | `assets/bed-square.mp4` | 1440×1440 picture bed, 34.03 s, muted |
+| `assets/bed-45.mp4` | 1080×1350 picture bed, 34.03 s, muted |
 | `assets/sean-vo.wav` | Sean's VO, 48 kHz stereo, source 3.100 → 39.300 |
 | `assets/sean-pip.mp4` | A-roll PiP, 720×720, 34.10 s, muted, source 3.100 |
 | `assets/music-bed.wav` | **silent placeholder** — see below |
@@ -145,6 +150,7 @@ Finals ship at `--quality high` (CRF 15), each ratio at native size and at 2×.
 | `ecomiq-sean-vo-916-2160.mp4` | 2160×3840 | 2× — graphics and PiP gain, footage is upscaled |
 | `ecomiq-sean-vo-square-1080.mp4` | 1080×1080 | native |
 | `ecomiq-sean-vo-square-2160.mp4` | 2160×2160 | 2× — real detail, bed is built at 1440 |
+| `ecomiq-sean-vo-45-1080.mp4` | 1080×1350 | Meta feed · `--quality standard` |
 
 ```bash
 npx hyperframes render --quality high --output renders/ecomiq-sean-vo-916-1080.mp4
@@ -155,6 +161,20 @@ npx hyperframes render --composition compositions/square.html --quality high \
 npx hyperframes render --composition compositions/square.html --quality high \
   --resolution square-4k --output renders/ecomiq-sean-vo-square-2160.mp4
 ```
+
+### 4:5 has no native master
+The 9:16 and 1:1 montages were both supplied natively framed. 4:5 was not, so its bed is
+**centre-cropped out of the 9:16 master at y = 240** (1080×1350 from 1080×1920) — no
+scaling, 1:1 pixels.
+
+The 1:1 master was the other candidate (a 20% side crop rather than a 30% height crop) and
+it reads the on-stage stat graphic better, but it slices a person in half at the frame edge
+in the bakery two-shot. The height crop costs ceiling and floor instead, which no shot in
+this reel depends on. y = 240 rather than a dead-centre 285 keeps the *1.3+ Billion* line
+in frame without cutting feet on the full-body shots.
+
+A natively recomposed 4:5 master would beat either crop — drop it in
+`assets/incoming/` and point the bed at it, the cut list is the same.
 
 ### What 2× actually buys
 `--resolution` re-renders the page at a higher device pixel ratio; it does not invent

@@ -105,6 +105,16 @@ build_bed() {
 build_bed "$SRC_916" "$OUT/bed-916.mp4"    1080 1920
 build_bed "$SRC_SQ"  "$OUT/bed-square.mp4" 1440 1440   # native master res — feeds the 2x square export
 
+# 4:5 (1080x1350) has no native master. It is centre-cropped out of the 9:16
+# master at y=240 — see EDIT-PLAN.md for why that source and that offset.
+echo "▶ bed 1080x1350 (4:5, cropped from the 9:16 master)  ->  $OUT/bed-45.mp4"
+ffmpeg -hide_banner -v error -y -t "$REEL_END" -i "$SRC_916" \
+  -vf "crop=1080:1350:0:240,setsar=1,setpts=${PTS}*PTS,minterpolate=fps=30:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1" \
+  -c:v libx264 -preset slow -crf 14 -pix_fmt yuv420p -an \
+  -movflags +faststart "$OUT/bed-45.mp4"
+printf '  ✓ %s  %ss\n' "$OUT/bed-45.mp4" \
+  "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$OUT/bed-45.mp4")"
+
 echo
 echo "✅ assets built:"
-ls -la "$OUT"/sean-vo.wav "$OUT"/sean-pip.mp4 "$OUT"/music-bed.wav "$OUT"/bed-916.mp4 "$OUT"/bed-square.mp4
+ls -la "$OUT"/sean-vo.wav "$OUT"/sean-pip.mp4 "$OUT"/music-bed.wav "$OUT"/bed-916.mp4 "$OUT"/bed-square.mp4 "$OUT"/bed-45.mp4
