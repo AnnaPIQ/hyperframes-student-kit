@@ -32,13 +32,14 @@ for f in "$SRC"/*; do
              -gravity North -crop 120x3+0+0 +repage -format '%[fx:mean]' info: 2>/dev/null || echo 1)
   polarity=$(python3 -c "print('dark-mark' if float('$edge') > 0.5 else 'light-mark')")
 
-  # The border heuristic misreads a few sources — coloured cards whose mark is
-  # already light. Override those by slug, and skip the two-tone marks that
-  # cannot survive being reduced to a single silhouette.
+  # The border heuristic misreads a few sources. Two-tone marks (a light mark
+  # sitting inside a dark badge on a coloured card) also need a tighter
+  # threshold so only the mark itself survives instead of the whole badge.
+  LEVEL="12%,88%"
   case "$slug" in
-    images-7-png) polarity="light-mark" ;;                # Dryft
-    images-8-png|images-6-png|images-6-jpeg)              # Mob Armor, Sweet E's, Naturally Linda
-      echo "  - skipped (two-tone mark): $slug"; continue ;;
+    images-7-png) polarity="light-mark" ;;                     # Dryft
+    images-6-png) polarity="light-mark"; LEVEL="60%,96%" ;;     # Sweet E's
+    images-6-jpeg) polarity="light-mark"; LEVEL="52%,92%" ;;    # Naturally Linda
   esac
 
   if [ "$polarity" = "dark-mark" ]; then NEG="-negate"; else NEG=""; fi
@@ -46,7 +47,7 @@ for f in "$SRC"/*; do
   # Grayscale + threshold gives the mark as a mask; clone it white and copy the
   # mask into that clone's alpha, so every brand ends up as one white silhouette.
   convert "$f" -background white -alpha remove -alpha off \
-      -colorspace Gray $NEG -normalize -level 12%,88% \
+      -colorspace Gray $NEG -normalize -level "$LEVEL" \
       \( +clone -fill white -colorize 100 \) +swap \
       -alpha off -compose CopyOpacity -composite \
       -trim +repage -resize 420x210\> \

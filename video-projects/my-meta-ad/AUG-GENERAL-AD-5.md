@@ -30,7 +30,7 @@ rather than after it. Total 40.6s.
 
 | t | Beat | Graphic |
 |---|---|---|
-| 4.00 | **logo wall** | 18 client marks drifting up a navy scrim, Shopify Premier Partner badge lands centre |
+| 4.00 | **logo wall** | full navy takeover, all 21 client marks drifting up, Shopify Premier Partner badge lands centre |
 | 8.36 | not theory | "THEORY" struck through in flame |
 | 11.50 | premier partner | pulsing flame dot + "LIVE · EVERY SINGLE DAY" |
 | 15.65 | revenue/profit | two risers, blue-tint → flame |
@@ -61,23 +61,30 @@ lands on a whip-streak instead.
 ## Logo wall (4.00 → 8.36)
 
 Built to the supplied reference: client marks knocked out to low-opacity white,
-drifting upward over a heavy navy scrim with the speaker faintly visible behind,
-and the **Shopify Premier Partner** badge landing centre as the hero.
+drifting upward over a **full opaque navy takeover** — the footage is completely
+covered for this beat — with the **Shopify Premier Partner** badge landing centre
+as the hero.
 
-`scripts/prep-logo-wall.sh` turns the mixed logo drop (white cards, black cards,
+All 22 supplied assets are used: 21 brand marks in the wall, plus the Premier
+Partner badge as the hero.
+
+`scripts/prep-logo-wall.sh` turns the mixed drop (white cards, black cards,
 coloured cards, transparent PNGs) into uniform white silhouettes. Polarity is
 decided per file by sampling the border — a light border means a dark mark, so
-invert; a dark border means the mark is already light. Four sources needed
-handling by name:
+invert. Three sources need an override:
 
-| Source | Why |
-|---|---|
-| Dryft | light card, light mark — heuristic misread it |
-| Mob Armor, Sweet E's, Naturally Linda | two-tone marks that cannot survive being reduced to one silhouette — **excluded** |
+| Source | Override | Why |
+|---|---|---|
+| Dryft | force light-mark | light mark on a light card; the border heuristic misread it |
+| Sweet E's | light-mark + level `60%,96%` | white script inside a pink circle on black — only the brightest pixels are the mark |
+| Naturally Linda | light-mark + level `52%,92%` | white type on a rust card that otherwise normalises to a grey block |
 
-18 of the 22 supplied logos are in the wall. Mob Armor, Sweet E's and Naturally
-Linda would each need a hand-made mono version to be included; Sweet E's and
-Dryft already appear as B-roll anyway.
+**Entry and exit are both hard.** The scrim snaps opaque on the whip rather than
+fading up (a fade showed the speaker through a half-opaque wall). The exit slides
+the whole panel off the top, so the footage is revealed cleanly from beneath
+instead of showing through the logos — which needs `#wall .in` to carry
+`overflow: hidden`, because the drifting track is much taller than the frame and
+would otherwise leave stray logos behind after the scrim had gone.
 
 ## Captions
 

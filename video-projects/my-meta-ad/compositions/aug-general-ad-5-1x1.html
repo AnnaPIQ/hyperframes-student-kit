@@ -128,11 +128,14 @@
       }
 
       /* ---- Logo wall · "dozens of real brands" ----------------------------
-         Client marks knocked out to white (scripts/prep-logo-wall.sh) drifting
-         up a heavy navy scrim, with the Shopify Premier Partner badge landing
-         centre as the hero. */
+         All 21 client marks knocked out to white (scripts/prep-logo-wall.sh)
+         drifting up a FULL navy takeover — the footage is fully covered here —
+         with the Shopify Premier Partner badge landing centre as the hero. */
       #wall { position: absolute; inset: 0; overflow: hidden; }
-      #wall-scrim { position: absolute; inset: 0; background: rgba(6,40,76,.90); }
+      /* .in clips the (much taller) drifting track, so the exit can slide the
+         whole opaque panel off as one piece instead of leaving stray logos. */
+      #wall .in { position: absolute; inset: 0; overflow: hidden; }
+      #wall-scrim { position: absolute; inset: 0; background: var(--brand-navy); }
       #wall-track {
         position: absolute; left: 0; top: 0; width: 1080px;
         display: grid; grid-template-columns: repeat(4, 1fr);
@@ -140,13 +143,13 @@
       }
       #wall-track img {
         max-width: 224px; max-height: 86px; width: auto; height: auto;
-        opacity: .30; filter: drop-shadow(0 0 18px rgba(6,40,76,.9));
+        opacity: .34; filter: drop-shadow(0 0 18px rgba(6,40,76,.9));
       }
       #wall-fade {
         position: absolute; inset: 0; pointer-events: none;
         background:
-          linear-gradient(180deg, rgba(6,40,76,.92) 0%, rgba(6,40,76,0) 13%),
-          linear-gradient(0deg,  rgba(6,40,76,.92) 0%, rgba(6,40,76,0) 13%);
+          linear-gradient(180deg, var(--brand-navy) 0%, rgba(6,40,76,0) 12%),
+          linear-gradient(0deg,  var(--brand-navy) 0%, rgba(6,40,76,0) 12%);
       }
       #wall-hero {
         position: absolute; left: 50%; top: 50%; width: 420px;
@@ -300,9 +303,12 @@
             <img src="assets/logos/images-4-png.png" alt="" />
             <img src="assets/logos/images-5-jpeg.png" alt="" />
             <img src="assets/logos/images-5-png.png" alt="" />
+            <img src="assets/logos/images-6-jpeg.png" alt="" />
+            <img src="assets/logos/images-6-png.png" alt="" />
             <img src="assets/logos/images-7-jpeg.png" alt="" />
             <img src="assets/logos/images-7-png.png" alt="" />
             <img src="assets/logos/images-8-jpeg.png" alt="" />
+            <img src="assets/logos/images-8-png.png" alt="" />
             <img src="assets/logos/images-9-png.png" alt="" />
             <img src="assets/logos/sotheby-s-logo-wine-svg.png" alt="" />
             <img src="assets/logos/unnamed-jpg.png" alt="" />
@@ -318,16 +324,13 @@
             <img src="assets/logos/images-4-png.png" alt="" />
             <img src="assets/logos/images-5-jpeg.png" alt="" />
             <img src="assets/logos/images-5-png.png" alt="" />
+            <img src="assets/logos/images-6-jpeg.png" alt="" />
+            <img src="assets/logos/images-6-png.png" alt="" />
             <img src="assets/logos/images-7-jpeg.png" alt="" />
             <img src="assets/logos/images-7-png.png" alt="" />
             <img src="assets/logos/images-8-jpeg.png" alt="" />
+            <img src="assets/logos/images-8-png.png" alt="" />
             <img src="assets/logos/images-9-png.png" alt="" />
-            <img src="assets/logos/sotheby-s-logo-wine-svg.png" alt="" />
-            <img src="assets/logos/unnamed-jpg.png" alt="" />
-            <img src="assets/logos/harmless-harvest-logo-webp.png" alt="" />
-            <img src="assets/logos/images-10-png.png" alt="" />
-            <img src="assets/logos/images-11-png.png" alt="" />
-            <img src="assets/logos/images-12-png.png" alt="" />
           </div>
           <div id="wall-fade"></div>
           <img id="wall-hero" src="assets/shopify-premier-partner.png" alt="Shopify Premier Partner" />
@@ -486,14 +489,16 @@
         /* ---- Logo wall (4.00 -> 8.36) --------------------------------------
            The wall drifts up continuously so it never reads as a static plate;
            marks stagger in behind, then the Premier Partner badge lands centre. */
-        tl.fromTo('#wall-scrim', { opacity: 0 }, { opacity: 1, duration: 0.30, ease: 'power2.out' }, 4.00)
+        tl.set('#wall-scrim', { opacity: 1 }, 4.00)
           .fromTo('#wall-track', { y: 0 }, { y: -320, duration: 4.30, ease: 'none' }, 4.02)
           .fromTo('#wall-track img', { opacity: 0, y: 26 },
-                  { opacity: .30, y: 0, duration: 0.42, ease: 'power2.out', stagger: 0.012 }, 4.06)
+                  { opacity: .34, y: 0, duration: 0.42, ease: 'power2.out', stagger: 0.012 }, 4.06)
           .fromTo('#wall-hero', { opacity: 0, scale: 1.34, y: -18, filter: 'blur(16px)' },
                   { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: 0.44, ease: 'back.out(1.6)' }, 5.70)
           .to('#wall-hero', { scale: 1.025, duration: 0.9, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 6.30)
-          .to('#wall .in', { y: -130, filter: 'blur(24px)', opacity: 0, duration: 0.28, ease: 'power2.in' }, 8.08)
+          // EXIT — the whole opaque panel wipes up and off, so the footage is
+          // revealed cleanly from beneath instead of showing through the wall.
+          .to('#wall .in', { y: -1080, duration: 0.26, ease: 'power3.in' }, 8.10)
           .set('#wall .in', { opacity: 0 }, 8.36);
 
         /* ---- Beat 3 · "THEORY" struck through (8.36 -> 10.56) ------------- */
