@@ -33,20 +33,30 @@
 
       /* ---------------------------------------------------------------------
          SQUARE LAYOUT MAP (1080x1080)
+           y    0 –  932   A-roll, top-aligned (1080x932 — pulled back so more
+                           of Sean is in frame; a full-bleed crop already used
+                           the source's whole 2160 height. The crop window sits
+                           left of the speaker to keep the set's unlit doorway
+                           out of the right edge, so Sean reads ~57% across)
            y    0 –  180   logo zone (top-left lockup)
-           y  130 –  620   speaker's face — never covered
-           y  640 –  860   motion-graphics band
-           y  880 – 1010   CAPTION SAFE ZONE — deliberately left empty
-           y 1010 – 1080   bottom margin — left empty
+           y  130 –  600   speaker's face — never covered
+           y  610 –  830   motion-graphics band (over the video)
+           y  932 – 1080   brand-navy strip below the clip:
+             y  850 – 1000   CAPTION SAFE ZONE — deliberately left empty
+             y 1000 – 1080   bottom margin — left empty
          ------------------------------------------------------------------ */
 
+      /* Top-aligned, NOT full-bleed — brand navy fills y 932–1080 beneath it.
+         Never animate width/height/top/left on a <video> (render contract #9);
+         these are static. */
       #video {
-        position: absolute; inset: 0;
-        width: 1080px; height: 1080px; object-fit: cover;
+        position: absolute; left: 0; top: 0;
+        width: 1080px; height: 932px; object-fit: cover;
       }
 
       #grade {
-        position: absolute; inset: 0; z-index: 2; pointer-events: none;
+        position: absolute; left: 0; top: 0; width: 1080px; height: 932px;
+        z-index: 2; pointer-events: none;
         background:
           linear-gradient(180deg,
             rgba(6,40,76,.60) 0%, rgba(6,40,76,.14) 20%,
@@ -74,7 +84,7 @@
 
       /* ---- Motion-graphics band ---- */
       .band {
-        position: absolute; left: 60px; right: 60px; top: 640px; z-index: 5;
+        position: absolute; left: 60px; right: 60px; top: 610px; z-index: 5;
         opacity: 0; will-change: transform, opacity, filter;
       }
       .eyebrow {
@@ -159,9 +169,10 @@
         font-size: 62px; font-weight: 800; line-height: 1.02; letter-spacing: -.03em;
         color: var(--brand-white); opacity: 0;
       }
+      /* End-card headline reads as one white line — no italic, no tint. */
       #ec-head .em {
-        font-family: 'Hedvig Letters Serif', Georgia, serif;
-        font-style: italic; font-weight: 400; color: var(--brand-blue-tint);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        font-style: normal; font-weight: 800; color: var(--brand-white);
       }
       #ec-cta {
         display: inline-flex; align-items: center; gap: 14px; margin-top: 40px;
@@ -195,7 +206,7 @@
            width="1080" height="1080" viewBox="0 0 1080 1080" fill="none">
         <g stroke="#9CD4FF" stroke-width="2" opacity=".34">
           <path d="M44 200h30M59 185v30" /><path d="M1006 200h30M1021 185v30" />
-          <path d="M44 880h30M59 865v30" /><path d="M1006 880h30M1021 865v30" />
+          <path d="M44 830h30M59 815v30" /><path d="M1006 830h30M1021 815v30" />
         </g>
       </svg>
 

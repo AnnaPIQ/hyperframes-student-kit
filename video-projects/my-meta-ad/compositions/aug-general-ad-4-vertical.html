@@ -33,22 +33,31 @@
 
       /* ---------------------------------------------------------------------
          VERTICAL LAYOUT MAP (1080x1920)
+           y    0 – 1542   A-roll, top-aligned (1080x1542 — pulled back ~25% so
+                           more of Sean is in frame; a full-bleed crop already
+                           used the source's whole 2160 height, so wider FOV
+                           means the clip stops short of the canvas)
            y    0 –  300   logo zone (top-left lockup)
-           y  300 – 1050   speaker's face — never covered
-           y 1080 – 1400   motion-graphics band
-           y 1420 – 1700   CAPTION SAFE ZONE — deliberately left empty
-           y 1700 – 1920   platform-UI margin (Reels/TikTok chrome) — left empty
+           y  300 – 1150   speaker's face — never covered
+           y 1150 – 1470   motion-graphics band (over the video)
+           y 1542 – 1920   brand-navy strip below the clip:
+             y 1580 – 1790   CAPTION SAFE ZONE — deliberately left empty
+             y 1790 – 1920   platform-UI margin (Reels/TikTok chrome) — empty
          ------------------------------------------------------------------ */
 
+      /* Top-aligned, NOT full-bleed — brand navy fills y 1542–1920 beneath it.
+         Never animate width/height/top/left on a <video> (render contract #9);
+         these are static. */
       #video {
-        position: absolute; inset: 0;
-        width: 1080px; height: 1920px; object-fit: cover;
+        position: absolute; left: 0; top: 0;
+        width: 1080px; height: 1542px; object-fit: cover;
       }
 
       /* Grade scrim: pulls the blue-lit studio toward the EcomIQ navy and darkens
          top + bottom so the logo and the (later) captions always have contrast. */
       #grade {
-        position: absolute; inset: 0; z-index: 2; pointer-events: none;
+        position: absolute; left: 0; top: 0; width: 1080px; height: 1542px;
+        z-index: 2; pointer-events: none;
         background:
           linear-gradient(180deg,
             rgba(6,40,76,.62) 0%, rgba(6,40,76,.16) 18%,
@@ -80,7 +89,7 @@
 
       /* ---- Motion-graphics band ---- */
       .band {
-        position: absolute; left: 72px; right: 72px; top: 1080px; z-index: 5;
+        position: absolute; left: 72px; right: 72px; top: 1150px; z-index: 5;
         opacity: 0; will-change: transform, opacity, filter;
       }
       .eyebrow {
@@ -171,9 +180,10 @@
         font-size: 84px; font-weight: 800; line-height: 1.0; letter-spacing: -.03em;
         color: var(--brand-white); opacity: 0;
       }
+      /* End-card headline reads as one white line — no italic, no tint. */
       #ec-head .em {
-        font-family: 'Hedvig Letters Serif', Georgia, serif;
-        font-style: italic; font-weight: 400; color: var(--brand-blue-tint);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        font-style: normal; font-weight: 800; color: var(--brand-white);
       }
       #ec-cta {
         display: inline-flex; align-items: center; gap: 18px; margin-top: 56px;
@@ -211,7 +221,7 @@
            width="1080" height="1920" viewBox="0 0 1080 1920" fill="none">
         <g stroke="#9CD4FF" stroke-width="2" opacity=".34">
           <path d="M56 300h34M73 283v34" /><path d="M990 300h34M1007 283v34" />
-          <path d="M56 1400h34M73 1383v34" /><path d="M990 1400h34M1007 1383v34" />
+          <path d="M56 1470h34M73 1453v34" /><path d="M990 1470h34M1007 1453v34" />
         </g>
       </svg>
 

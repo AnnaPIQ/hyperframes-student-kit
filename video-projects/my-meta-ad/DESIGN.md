@@ -64,9 +64,18 @@ PCM 24-bit. Normalized by `scripts/prep-aroll.sh` into `assets/aroll-vertical.mp
 `assets/aroll-square.mp4` and `assets/aroll-vo.m4a` (H.264 · yuv420p · CRF 20 ·
 30fps CFR · faststart · AAC 192k).
 
-**Both targets are crops, not scale+pad.** The source is landscape 16:9, so padding
-would leave a letterboxed strip. Centre-punch is on the speaker at ~47% of frame
-width: 9:16 crops `1215×2160 @ x=1198`, 1:1 crops `2160×2160 @ x=725`.
+**Both targets are crops, centre-punched on the speaker at ~47% of frame width:**
+9:16 crops `1512×2160 @ x=1049` → `1080×1542`; 1:1 crops `2700×2160 @ x=455` →
+`1080×864`.
+
+**The clip does not fill the canvas — that is deliberate.** A full-bleed 9:16 crop
+already consumed the source's entire 2160 height, so it was the widest field of
+view full-bleed allows. Pulling back ~25% to get more of Sean in frame therefore
+means the clip stops short, and brand navy fills the strip below it (y 1542–1920
+on 9:16, y 864–1080 on 1:1). That strip is where captions now live, so they no
+longer sit on his chest. The grade scrim is clipped to the video so it doesn't
+muddy the navy; the vignette and grain still run edge to edge as the unifying
+texture.
 
 **Beat map** (composition time; anchored to `silencedetect` on the real waveform,
 not estimated). Speech runs 3.717→34.172s in the source; the clip is trimmed from
@@ -82,7 +91,7 @@ not estimated). Speech runs 3.717→34.172s in the source; the clip is trimmed f
 | 23.84–24.66 | "No theory." | `#g6` same layout, whip-cut (rule of threes, beat 2) |
 | 24.80–26.81 | "Just what actually grows a profitable brand." | `#g7` full-frame type, all white; flame rising rule carries the accent |
 | 27.82–30.72 | "Want to see if we're a good fit? Tap the link…" | clean; logo begins its flight |
-| 30.87–36.00 | — | End card: logo centre, "Advice from people *doing it*", flame "Learn More →" pill, 5.1s hold |
+| 30.87–36.00 | — | End card: logo centre, "Advice from people doing it" (all white, upright), flame "Learn More →" pill, 5.1s hold |
 
 **Design rules this cut follows**
 - **No captions** — the band sits at y 1080–1400 (9:16) / 640–860 (1:1), and the
@@ -97,8 +106,9 @@ not estimated). Speech runs 3.717→34.172s in the source; the clip is trimmed f
   vignette (slow breath) → deterministic CSS grain. No PNG, no PRNG.
 - **Transitions are motion, never slow fades:** blur-whip in/out on every band, a
   motion-blurred light streak masking each of the three type cuts.
-- Flame orange stays the only hot accent; exactly one serif-italic emphasis per
-  headline.
+- Flame orange stays the only hot accent. Per Anna's direction the serif-italic
+  emphasis is used **only** on "right now." (17.4s) — the g7 line and the end-card
+  headline are both plain white upright sans.
 
 **Logo sizing note.** The lockup is 1671×286 (5.84:1), so the "8–10% of width"
 watermark spec would render it ~18px tall and unreadable. It ships at 216px (20%)
