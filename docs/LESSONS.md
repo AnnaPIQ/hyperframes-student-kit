@@ -131,6 +131,48 @@ efficient over time instead of relearning the same lessons.
   (`|sin(i·a+b)·cos(i·1.3+0.7)|`) and stagger along that order — random-looking, identical
   every render.
 
+## A/V sync — the container offset that silently desyncs lips
+
+- **Lips out of sync even though picture and sound came from the SAME file.** QuickTime
+  recordings routinely carry a non-zero audio `start_time` (an edit-list offset) while
+  video starts at 0 — check with
+  `ffprobe -show_entries stream=codec_type,start_time,start_pts`. Extracting audio with
+  `-i in.mov -vn out.wav` makes WAV sample 0 = source moment `start_time`, but seeking
+  the video with `-ss T -i in.mov` lands on source moment `T`. Trimming both at the same
+  T then leaves audio ahead of picture by exactly that offset. One real case: audio
+  `start_time=0.078958` → a 79 ms lead, ~2.4 frames at 30fps, clearly visible (audio
+  leading picture is the more noticeable direction; tolerance is roughly ±45 ms).
+  **Fix:** seek the video to `T + audio_start_time`, not `T`. Snap to a source-frame
+  boundary while you're there.
+- **Measure the offset, never guess it.** Transcribe two 12s probes — one cut the way the
+  VIDEO is cut (`-ss T -i file.mov -vn`), one cut the way the AUDIO is cut (trim the
+  extracted WAV at T) — and diff the word onsets. A consistent delta across 4–5 words is
+  the offset; after the fix the same diff should sit inside Whisper's ±20 ms granularity.
+  Ignore word #1, whose start Whisper clamps to 0.
+- **Scene timing is unaffected by this fix** when cuts are anchored to word onsets
+  measured in the same WAV the VO track uses — only the picture moves. Re-check that
+  before re-timing anything.
+
+## Logo walls
+
+- **A drifting logo wall needs the track ~2x the viewport, and density comes from row
+  height.** Working values: 3 columns, `grid-auto-rows: 200px`, marks at
+  `max-width:314px; max-height:104px; opacity:.34` plus
+  `drop-shadow(0 0 18px rgba(6,40,76,.9))`. Stretching rows to fit fewer marks reads as
+  sparse and empty — add marks instead.
+- **Repeat the set in the SAME order, never shuffled.** With N marks listed twice, each
+  mark's two copies sit exactly N tiles apart — the maximum possible separation, so no
+  mark can appear twice inside one viewport. A "smarter" shuffle destroys that guarantee
+  and visibly repeats marks a row or two apart.
+- **Duplicating an `<img src>` trips `duplicate_media_discovery_risk`.** If you want the
+  density without the warning, keep a second physical copy of each file under a distinct
+  name (`foo-b.png`).
+- **Hold the top/bottom fades solid past the first/last row**, not just a soft 12% ramp,
+  or the edge row renders as a mark sliced in half. Solid to ~19% of frame height at the
+  top clears both the clipped row and a pinned logo lockup.
+- **Type over a logo wall needs its own scrim** — a localised radial band centred on the
+  text block (not a full-frame wash, which flattens the whole wall into murk).
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

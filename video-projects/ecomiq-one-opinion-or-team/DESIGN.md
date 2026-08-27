@@ -20,10 +20,19 @@ Partner, so you get a whole team working inside dozens of live brands every day.
 |---|---|
 | A-roll | `how we work with you.mov` — 3840×2160 ProRes, 25fps, 77.6s, single take |
 | VO | **the A-roll's own audio** — trimmed at 6.12s, high-passed at 80Hz, loudness-normalised to −16 LUFS / −1.5 dBTP, padded to 73.3s |
+| A/V sync | the source's audio stream starts at **0.078958s** while its video starts at 0, so the picture is cut at **6.20s** to line up with audio cut at 6.12s |
 | Word timings | `faster-whisper small.en`, word-level. **Every scene cut is anchored to a real word onset.** |
 
 `t_timeline = t_source − 6.12`. Speech runs t=0.40 → 67.92; the CTA card then
 holds 5.4s in silence.
+
+**The 79 ms sync offset matters.** The `.mov`'s audio stream carries an edit-list
+offset (`start_time = 0.078958`, video `start_time = 0`). Extracting audio to WAV
+makes sample 0 = source moment 0.079, while seeking the video lands on the literal
+timestamp — so trimming both at 6.12 left audio leading picture by 79 ms (~2.4
+frames), which reads as bad lip sync. The A-roll is therefore cut at **6.20s**
+(source frame 155 @ 25fps) against an audio cut of 6.12s. Scene cuts are unaffected:
+they're anchored to word onsets measured in the same WAV the VO track uses.
 
 The founder's delivery is looser than the written script (he ad-libs "five or ten
 years ago", names "Pacific IQ", says "keep you accountable"). The spoken audio is
@@ -92,9 +101,12 @@ strike-through motif runs S02 → S04 → S10; the 01/02/03 spine ties S06–S08
 
 The **S05 logo wall** reuses the prepped client marks from the `aug-general-ad-5`
 branch (`assets/logos/`, 21 white knockouts produced by `scripts/prep-logo-wall.sh`
-on that branch). They drift up a full navy takeover at ~30% opacity, lifting to 44%
-as "DOZENS" lands, with a radial scrim keeping the headline legible and the top edge
-held solid so the marks never collide with the pinned lockup. **The Shopify Premier
+on that branch). Geometry is ported from that original: 3 columns, 200px rows, marks at
+314×104 max and `.34` opacity, lifting to `.48` as "DOZENS" lands. The 21 marks are
+listed **twice in the same order** (second set as `-b.png` copies) so each mark's two
+occurrences sit exactly 21 tiles apart and none can repeat inside one viewport. Top
+and bottom fades are held solid past the edge rows so no mark renders sliced, and a
+localised radial band keeps the headline clear of the marks behind it. **The Shopify Premier
 Partner badge is deliberately excluded** from this wall.
 
 ## Motion grammar
