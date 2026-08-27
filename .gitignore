@@ -46,3 +46,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Generated alternate-ratio build dirs (make-ratios.py output)
+**/build/

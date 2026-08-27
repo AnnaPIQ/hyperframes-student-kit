@@ -179,12 +179,33 @@ last word, all content above the subtitle zone.
 
 ---
 
-## Status
+## Status — delivered
 
-Done: media pulled (all 5 masters, full size) · A-roll transcribed word-level ·
-14 clips + `vo.m4a` prepped for both ratios · logo pulled · `pull-media.sh` and
-`prep-assets.sh` written with the measured numbers.
+| File (project root) | Size | Spec |
+|---|---|---|
+| `final-9x16.mp4` | 72.5 MiB | 1080×1920 · 30fps · H.264/AAC · +faststart · 46.60s |
+| `final-9x16-small.mp4` | 17.0 MiB | same, CRF 22 (the sub-30 MiB copy) |
+| `final-4x5.mp4` | 51.6 MiB | 1080×1350 · 30fps · H.264/AAC · +faststart · 46.60s |
+| `final-4x5-small.mp4` | 12.7 MiB | same, CRF 22 |
 
-Next, on your approval: build `index.html`, `make-ratios.py`, `scrub.mjs` →
-lint → scrub → draft render → frame-by-frame verification → `--quality high`
-bakes → commit `final-9x16.mp4` / `final-4x5.mp4` at the project root.
+Both masters rendered `--quality high`. Lint: 0 errors, 0 warnings on the 9:16
+master and on the generated 4:5.
+
+**Verified by looking, not by lint:**
+
+- Every scene's hero frame plus every one of the 18 transitions read from the
+  final render. No cropped faces, no overflow, no blank frames.
+- Whip transitions confirmed present in the render (streak sweeping, incoming
+  scene resolving 16px → 0.14px of blur). They were silently missing at first —
+  see the heredoc entry in `docs/LESSONS.md`.
+- Card E's bars measured at exactly **3.000** — flexbox had been shrinking the
+  long bar to ~2.5× while the label still said 3×.
+- Every on-screen figure sampled every 0.10s across all cards: no frame ever
+  shows a value other than the real one. (Card D's count-up was displaying
+  "+110% TOTAL SALES" mid-tween; figures now land whole.)
+- Every card's deepest content clears the subtitle zone in both ratios
+  (9:16 y<1344, 4:5 y<945).
+- Audio sits at exactly **0 ms** against the source VO in both ratios (FFT
+  cross-correlation; normalised peak 1.000 on the 9:16). Video and VO share one
+  trim point, so lip sync holds by construction.
+- `+faststart` confirmed on both masters (moov before mdat).

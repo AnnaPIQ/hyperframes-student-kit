@@ -120,6 +120,25 @@ if (process.argv.includes('--probe')) {
   }
 }
 
+if (process.argv.includes('--figures')) {
+  /* Every on-screen figure must read its real value at EVERY frame — a
+     counter that passes through "+110%" is a factual error on screen. */
+  console.log('  on-screen figures across each card:');
+  let bad = 0;
+  for (let t = 7.40; t <= 35.0; t += 0.10) {
+    await page.evaluate(([i, tt]) => { window.__timelines[i].time(tt, false); }, [compId, +t.toFixed(2)]);
+    const vals = await page.evaluate(() => ({
+      a: (document.querySelector('#aFig').textContent || '').trim(),
+      d: ['#dV1','#dV2','#dV3'].map(s => (document.querySelector(s).textContent || '').trim()).join(' '),
+    }));
+    const okA = ['10,000', '20,000'].includes(vals.a);
+    const okD = vals.d === '7× +115% +15%';
+    if (!okA || !okD) { bad++; console.log(`    ✗ t=${t.toFixed(2)} aFig="${vals.a}" d="${vals.d}"`); }
+  }
+  console.log(bad === 0 ? '    ✓ no frame shows a value other than the real figures'
+                        : `    ✗ ${bad} sample(s) showed a wrong figure`);
+}
+
 if (MEASURE) {
   /* offsetWidth is the layout width, unaffected by GSAP's scaleX. */
   await page.evaluate(id => { window.__timelines[id].time(34.2, false); }, compId);

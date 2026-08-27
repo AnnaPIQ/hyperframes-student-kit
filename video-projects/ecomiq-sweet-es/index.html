@@ -191,9 +191,9 @@
           <div class="inner">
             <div class="eyebrow" id="dEye">Four years with EcomIQ</div>
             <div class="hair" id="dHair"></div>
-            <div class="row" id="dR1"><b id="dV1">0&times;</b><span>Sessions</span></div>
-            <div class="row" id="dR2"><b id="dV2">0%</b><span>Total sales</span></div>
-            <div class="row" id="dR3"><b id="dV3">0%</b><span>Avg order value</span></div>
+            <div class="row" id="dR1"><b id="dV1">7&times;</b><span>Sessions</span></div>
+            <div class="row" id="dR2"><b id="dV2">+115%</b><span>Total sales</span></div>
+            <div class="row" id="dR3"><b id="dV3">+15%</b><span>Avg order value</span></div>
           </div>
         </div>
       </div>
@@ -241,14 +241,12 @@
       const DUR = 46.6;
       const tl = gsap.timeline({ paused: true });
 
-      /* Count a figure up on a proxy tween's onUpdate. tl.call() never fires
-         under render, so it is used nowhere in this composition. */
-      function countUp(sel, from, to, at, dur, fmt) {
-        const el = document.querySelector(sel), o = { v: from };
-        tl.to(o, { v: to, duration: dur, ease: 'power2.out',
-          onUpdate() { el.textContent = fmt(o.v); } }, at);
-      }
-      const int = v => Math.round(v).toLocaleString('en-US');
+      /* No figure is ever counted up from 0: a counter puts values on screen
+         that are not the real number (a 0->115 tween reads "+110% TOTAL SALES"
+         for several frames). Figures land whole, on the spoken word. The one
+         text change in the piece (10,000 -> 20,000) is driven by an onUpdate
+         that is a pure function of card-local time, so every seek is correct.
+         tl.call() never fires under render and is used nowhere. */
 
       /* Entrance: rises into place. Never a fade-only, never letterSpacing
          (lint rejects it) — tracking is static in CSS. */
@@ -342,12 +340,11 @@
       const D = 25.95;
       rise('#dEye', D + 0.02, 16, 0.24);
       hair('#dHair', D + 0.18);
-      rise('#dR1', D + 0.30, 34, 0.46);
-      rise('#dR2', D + 0.58, 34, 0.46);
-      rise('#dR3', D + 0.86, 34, 0.46);
-      countUp('#dV1', 0, 7,   D + 0.30, 0.66, v => Math.round(v) + '×');
-      countUp('#dV2', 0, 115, D + 0.58, 0.72, v => '+' + Math.round(v) + '%');
-      countUp('#dV3', 0, 15,  D + 0.86, 0.62, v => '+' + Math.round(v) + '%');
+      /* Whole values, punched in on a stagger — never counted up. */
+      [['#dR1', 0.30], ['#dR2', 0.58], ['#dR3', 0.86]].forEach(([sel, off]) => {
+        tl.fromTo(sel, { opacity: 0, y: 30, scale: .92 },
+          { opacity: 1, y: 0, scale: 1, duration: .42, ease: 'back.out(1.5)' }, D + off);
+      });
 
       /* ================= CARD E · 3x the size ================= */
       const E = 31.70;
