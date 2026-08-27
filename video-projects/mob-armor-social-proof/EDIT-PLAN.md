@@ -53,14 +53,14 @@ surfaced:
 them — the shot list was filled before that step became necessary.
 
 **The landscape-crop softness problem is avoided entirely.** I'm not using the
-`MP4 Product Videos` folder at all. Every product-beauty shot I need already exists in
-the Social Cuts at native 1080×1920 on plain brand colour (orange `Mobnetic Stix`
-14.9–19.0, red `Tab Mount Maxx Direct` 22.9–31.7). No 608 px crop, no upscale, no inset
-window needed.
+`MP4 Product Videos` folder at all. Every product shot the edit needs already exists in
+the Social Cuts at native 1080×1920. No 608 px crop, no upscale, no inset window.
 
 **Watch-out I hit:** most Social Cuts carry burned-in text ("90 LB PULL FORCE MAGNET",
 "MADE OF BILLET ALUMINUM", "STRONGEST MAGSAFE MOUNT", dimension callouts). Every in/out
-below is chosen to sit **inside a clean, text-free run** so it never fights our graphics.
+below sits **inside a clean, text-free run** so it never fights our graphics. This cost
+three clips between plan and build — see §4.1. The full list of rejected ranges is in
+`assets/broll/CREDITS.md`.
 
 **Excluded on rights grounds:** the mobarmor.com product-page video (Okendo review UGC,
 576×1024, on-store licence only) — per the brief. Full log in
@@ -73,7 +73,7 @@ below is chosen to sit **inside a clean, text-free run** so it never fights our 
 Every Social Cut is 1080×1920, **24 fps**, with an audio track and a stray data stream.
 
 ```bash
-ffmpeg -y -ss <in> -to <out> -i <src>.mp4 \
+ffmpeg -y -ss <in> -t <dur> -i <src>.mp4 \
   -map 0:v:0 -an -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p \
   -vsync cfr -r 30 -movflags +faststart assets/broll/<name>.mp4
 ```
@@ -90,7 +90,7 @@ Brief rule: *a beat with no real number gets no graphic.* Applied strictly, this
 
 | Card | Figure | Spoken at | Source |
 |---|---|---|---|
-| **A** | `500%` | 1.90 | EcomIQ case study — **needs your confirmation** |
+| **A** | `500%` | 1.90 | EcomIQ case study — spoken in your own VO |
 | **B** | `1` channel | 14.96 | spoken |
 | **C** | `+3` channels | 17.69 | spoken |
 | **D** | `500%` (callback) | 24.08 | same as A |
@@ -106,34 +106,62 @@ VO. I verified them live today anyway, and they're in §7 if you want one used.
 
 ## 4 · Beat sheet — 17 beats, 38.60 s
 
-Mid-section average shot length **2.06 s**. Every cut is a blur-whip (exit `y:-150`,
-`blur(30px)`, `power2.in` 0.33 s → entry `y:150`, `blur(30px)`→0, `power2.out` 1.0 s),
-velocity-matched at the seam. Cards A and D additionally get a flame light-streak fired
-at the cut. Vignette + grain + receding perspective grid on every beat. EcomIQ white
-logo pinned top-left (72, 96) for the whole runtime, inside a positioned non-`clip` div.
+Mid-section average shot length **2.06 s**. Every cut is a blur-whip (exit `y:-140`,
+`blur(24px)`, `power2.in` 0.30 s starting 0.10 s early → entry `y:140`, `blur(24px)`→0,
+`power2.out` 0.45 s), same direction on both sides so the two blurs overlap and the cut
+hides inside the motion. Cards A and D additionally get a flame light-streak fired on
+the cut. Grid + crosshairs + vignette + grain on every beat. EcomIQ white logo pinned
+top-left (72, 96) for the whole runtime, in a positioned non-`clip` div.
 
 | # | in → out | VO | On screen | Clip (Drive source, in–out) |
 |---|---|---|---|---|
-| 00 | 0.000 → 1.700 | *(silence)* | Cold open. Navy stage, grid recedes, crosshairs, EcomIQ logo fades up. | — |
-| 01 | 1.700 → 4.400 | "Up over 500% in a single year." | **CARD A — 500%.** Numerals snap at 1.70 (0.2 s ahead of the word), flame rule wipes under, eyebrow "IN A SINGLE YEAR" lands 3.21. Mob Armor wordmark on a black chip at card foot. | — |
-| 02 | 4.400 → 6.033 | "That's what happened to Mob Armor's…" | Phone on dash mount, in-cab | `Mobnetic Stix` **2.8–4.6** |
-| 03 | 6.033 → 8.100 | "…total sales after they started" | Product beauty on red, native vertical | `Tab Mount Maxx Direct` **22.9–25.0** |
-| 04 | 8.100 → 10.267 | "working with us. And it wasn't a lucky viral moment." | **Hero:** drone, buggy across sand dunes | `Tab Mount Maxx Tube` **31.9–35.0** |
-| 05 | 10.267 → 11.733 | "It wasn't a magic ad." | Race UTV at an event | `Tab Mount Maxx Direct` **9.6–12.0** |
-| 06a | 11.733 → 13.200 | "When they came to us," | Real people in a vehicle | `Mobnetic Maxx Water balloon` **1.3–2.8** |
-| 06b | 13.200 → 14.700 | "almost everything ran through Facebook." | Product on orange — reads as the paid-social ad unit | `Mobnetic Stix` **16.9–18.4** |
-| 07 | 14.700 → 17.267 | "There was one channel doing all of the work." | **CARD B — 1.** One flame dot, four inbound paths all routed into it, load pulsing. "ONE CHANNEL / DOING ALL THE WORK". | — |
-| 08 | 17.267 → 19.400 | "We found three more that fit the brand" | **CARD C — +3.** Three blue-tint dots ignite around the flame one. | — |
-| 09 | 19.400 → 21.733 | "and got them working in the right order." | Same card, **no cut** — recolour + a sequenced energy pulse runs the four dots in order (MOTION_PHILOSOPHY §3.5 / §2.4). | — |
-| 10 | 21.733 → 23.867 | "A year later, sales are up over" | Warehouse floor, worker fitting a mount | `Tabnetic Direct` **30.0–32.1** |
-| 11 | 23.867 → 25.233 | **"500%"** | **CARD D — 500% callback.** Card A returns, Mob Armor chip present. Snaps 23.87, word 24.08. | — |
-| 12 | 25.233 → 27.500 | "across four channels instead of just one." | **CARD E — 4.** The four dots from C resolve into a `4`. "FOUR CHANNELS · NOT ONE". | — |
-| 13 | 27.500 → 29.567 | "And that's what the right plan does." | Driving, mount + road ahead | `Mobnetic Stix` **29.2–30.0** → `Tab Mount Maxx Direct` **39.4–41.6** |
-| 14 | 29.567 → 31.833 | "This is a real brand with real numbers." | Real customer outdoors w/ radio → resolves to Mob Armor wordmark on black chip | `Rad Mount` **28.1–30.4** |
-| 15 | 31.833 → 38.600 | "If you wanna see what's possible for yours, tap the link to find out more." | **EcomIQ end card.** Logo, headline with the single serif-italic emphasis word, flame CTA pill "See what's possible →". Holds **6.77 s** (3.47 s of it in silence). | — |
+| 00 | 0.000 → 0.900 | *(silence)* | Cold open. Navy stage, grid, crosshairs, EcomIQ logo fades up. | — |
+| 01 | 0.900 → 4.400 | "Up over 500% in a single year." | **CARD A — 500%.** Eyebrow "Total sales" at 1.06; numerals snap at 1.700, 0.20 s ahead of the spoken word; flame rule wipes 2.10; "In a single year" 3.10; Mob Armor wordmark on a black chip 3.45. | — |
+| 02 | 4.400 → 6.033 | "That's what happened to Mob Armor's…" | Phone on dash mount, in-cab | `Mobnetic Stix` **2.85–4.75** |
+| 03 | 6.033 → 8.100 | "…total sales after they started" | CNC cutting head, sparks — the product being made | `Tabnetic Discs` **5.95–8.35** |
+| 04 | 8.100 → 10.267 | "working with us. And it wasn't a lucky viral moment." | **Hero:** drone, buggy across sand dunes, slow 1.08× push | `Tab Mount Maxx Tube` **32.00–34.45** |
+| 05 | 10.267 → 11.733 | "It wasn't a magic ad." | Tablet going onto a wall mount, loading bay | `Tabnetic Direct` **20.55–22.35** |
+| 06a | 11.733 → 12.733 | "When they came to us," | Real vehicle interior — hand, phone, keys in the ignition | `Water balloon` **2.55–3.80** |
+| 06b | 12.733 → 14.700 | "almost everything ran through Facebook." | Load test — a man hanging his full weight off two mounts on a press rig | `Tabnetic Direct` **14.90–17.20** |
+| 07 | 14.700 → 17.267 | "There was one channel doing all of the work." | **CARD B — 1.** One flame dot lit, three dark, the lit one visibly overloading on a 4-beat pulse. | — |
+| 08 | 17.267 → 19.400 | "We found three more that fit the brand" | **CARD C — +3.** Numeral swaps in place; three blue-tint dots ignite on "three more" and the two beats after. | — |
+| 09 | 19.400 → 21.733 | "and got them working in the right order." | Same card, **no cut** — copy recolours and a flame pulse runs the wire left→right, popping each dot in sequence. | — |
+| 10 | 21.733 → 23.867 | "A year later, sales are up over" | Facility floor, mount in foreground, 1.06× push | `Tab Mount Maxx Direct` **12.70–15.10** |
+| 11 | 23.867 → 25.233 | **"500%"** | **CARD D — the callback.** Card A returns, faster (0.34 s vs 0.42 s), with the Mob Armor shield instead of the wordmark. | — |
+| 12 | 25.233 → 27.500 | "across four channels instead of just one." | **CARD E — 4.** All four dots lit, staggered. "Channels — not one." | — |
+| 13 | 27.500 → 29.567 | "And that's what the right plan does." | Rugged tablet locked into its mount — everything in its place | `Tabnetic Direct` **41.10–43.45** |
+| 14 | 29.567 → 31.833 | "This is a real brand with real numbers." | A real customer, face to camera, in his truck with the radio on the mount | `Rad Mount` **28.20–30.75** |
+| 15 | 31.833 → 38.600 | "If you wanna see what's possible for yours, tap the link to find out more." | **EcomIQ end card.** Centred logo, "See what's *possible* for yours." with the single serif-italic word, flame CTA on "tap the link" at 33.40. Holds **6.77 s**, the last 3.47 s in silence. Entry only — no exit tween, so the final frame never blurs away. | — |
 
-**Unused but held in reserve:** `Tabnetic Discs` 5.9–9.9 (CNC sparks) — cut for pace;
-it's the swap-in if you want beat 10 to read "manufacturing" rather than "operations".
+## 4.1 · What changed between the approved plan and the build
+
+Three clips in the approved sheet did not survive contact with the footage, and the
+first draft render exposed a grade problem. All fixed:
+
+| Beat | Approved | Shipped | Why |
+|---|---|---|---|
+| 03 | `Tab Mount Maxx Direct` 22.9–25.0, product on red | `Tabnetic Discs` 5.95–8.35, CNC sparks | The **entire** 22.9–31.7 red-product scene is covered in burned-in dimension callouts. Not a trim I could work around — the whole scene is out. |
+| 05 | `Tab Mount Maxx Tube` 5.6–7.2 | `Tabnetic Direct` 20.55–22.35 | Coarse sampling made 5.6–7.2 look like hands-on-a-UTV; at frame level it's a tight, fiddly macro of fingers and a screwdriver. Reads as assembly, not proof. |
+| 06b | `Mobnetic Stix` 16.9–18.4, product on orange | `Tabnetic Direct` 14.90–17.20, load test | The clean orange run is only ~0.7 s before the "90 lb pull force magnet" caption lands. The load-test shot is longer, brighter, has a person in it, and is a better proof image. |
+| 06a | `Water balloon` 1.3–2.8 | `Water balloon` 2.55–3.80 | The original range straddled two cuts — that clip runs at ~0.7 s per shot. |
+| 10 | `Tabnetic Direct` 30.0–32.1 | `Tab Mount Maxx Direct` 12.70–15.10 | Brighter, wider read on the same idea. |
+
+**Grade.** The first draft crushed the b-roll — the navy scrim, vignette and grain
+stacked up and several shots read as murk. Scrim went 0.50/0.28/0.44 → 0.34/0.12/0.30,
+vignette 0.62 → 0.44, grain 0.50 → 0.34. Grid and crosshairs went the other way
+(0.045 → 0.062 alpha) because the unifying texture was invisible in the render.
+
+**Cold open.** The plan opened on 1.70 s of empty navy — dead air at the top of a paid
+ad. Card A now arrives at 0.900 with its eyebrow, and the numeral still snaps at 1.700,
+0.20 s ahead of the spoken word.
+
+**Vertical balance.** Reserving the bottom 30 % pushed everything into the top third.
+The card band now centres on y = 820 (43 % of frame) instead of y = 672, which is as low
+as it goes while keeping every glyph clear of the subtitle line.
+
+**Unused but held in reserve:** `Tab Mount Maxx Tube` 26.2–28.4 — Mob Armor product on
+red with a wrench, clean and punchy. Left out because that red sits close to the flame
+accent and would read as a second hot colour.
 
 ---
 

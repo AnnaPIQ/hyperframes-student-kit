@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1080, height=1920" />
-    <title>mob-armor-social-proof</title>
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>mob-armor-social-proof-4x5</title>
     <!-- GSAP vendored locally — a CDN <script> cert-fails in the render env and freezes renders -->
     <script src="assets/vendor/gsap.min.js"></script>
     <link rel="stylesheet" href="assets/brand-tokens.css" />
@@ -16,7 +16,7 @@
 
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body {
-        width: 1080px; height: 1920px; overflow: hidden;
+        width: 1080px; height: 1350px; overflow: hidden;
         background: var(--brand-navy);
         font-family: 'Rethink Sans', system-ui, sans-serif;
         color: var(--brand-white);
@@ -36,8 +36,8 @@
          window disagree, which shows the wrong source frames. Transform/filter
          on a <video> is fine; width/height/top/left is what freezes it. */
       .shot {
-        position: absolute; inset: 0; width: 1080px; height: 1920px;
-        object-fit: cover; z-index: 1; will-change: transform, filter;
+        position: absolute; inset: 0; width: 1080px; height: 1350px;
+        object-fit: cover; object-position: 50% 42%; z-index: 1; will-change: transform, filter;
       }
       /* One navy scrim for the whole runtime, stacked above the footage and below
          the type — holds nine cuts together as one piece instead of a reel. */
@@ -48,89 +48,89 @@
 
       /* ── cards: content lives in the top 1344px, bottom 30% stays clear ── */
       .card {
-        position: absolute; left: 0; right: 0; top: 300px; height: 1040px; z-index: 6;
+        position: absolute; left: 0; right: 0; top: 190px; height: 770px; z-index: 6;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
-        gap: 30px; padding: 0 96px; text-align: center; will-change: transform, filter;
+        gap: 25px; padding: 0 78px; text-align: center; will-change: transform, filter;
       }
       .eyebrow {
-        font-weight: 800; font-size: 30px; letter-spacing: .30em; text-transform: uppercase;
+        font-weight: 800; font-size: 25px; letter-spacing: .30em; text-transform: uppercase;
         color: var(--brand-blue-tint);
       }
       .stat {
         font-weight: 800; letter-spacing: -.045em; line-height: .86;
         color: var(--brand-white); position: relative;
       }
-      .stat.xl  { font-size: 330px; }
-      .stat.lg  { font-size: 260px; }
+      .stat.xl  { font-size: 268px; }
+      .stat.lg  { font-size: 212px; }
       .bloom {                            /* flame heat behind the numeral — light, not colour */
-        position: absolute; left: 50%; top: 50%; width: 900px; height: 620px;
+        position: absolute; left: 50%; top: 50%; width: 736px; height: 506px;
         transform: translate(-50%,-50%); pointer-events: none; z-index: -1;
         background: radial-gradient(50% 50% at 50% 50%, rgba(255,76,50,.42) 0%, rgba(255,76,50,0) 70%);
         filter: blur(28px);
       }
-      .rule { width: 420px; height: 8px; background: var(--brand-flame); transform-origin: 50% 50%; }
+      .rule { width: 344px; height: 7px; background: var(--brand-flame); transform-origin: 50% 50%; }
       .sub {
-        font-weight: 800; font-size: 46px; line-height: 1.14; letter-spacing: -.02em;
+        font-weight: 800; font-size: 39px; line-height: 1.14; letter-spacing: -.02em;
         text-transform: uppercase; color: var(--brand-white); max-width: 780px;
       }
 
       /* Mob Armor wordmark — their guide allows white-on-black only, so it sits on a black chip */
       .ma-chip {
-        display: flex; align-items: center; gap: 22px;
-        background: #101820; padding: 22px 38px; border-radius: 10px;
+        display: flex; align-items: center; gap: 18px;
+        background: #101820; padding: 18px 30px; border-radius: 9px;
       }
-      .ma-chip img { width: 300px; height: auto; display: block; }
-      .ma-chip.shield img { width: 74px; }
+      .ma-chip img { width: 248px; height: auto; display: block; }
+      .ma-chip.shield img { width: 62px; }
       .ma-chip .lbl {
-        font-weight: 800; font-size: 19px; letter-spacing: .22em; text-transform: uppercase;
-        color: #7f8b99; border-left: 2px solid #2a3644; padding-left: 22px;
+        font-weight: 800; font-size: 16px; letter-spacing: .22em; text-transform: uppercase;
+        color: #7f8b99; border-left: 2px solid #2a3644; padding-left: 18px;
       }
 
       /* ── channel diagram ─────────────────────────────────────── */
-      .dots { display: flex; align-items: center; justify-content: center; gap: 42px; height: 132px; }
+      .dots { display: flex; align-items: center; justify-content: center; gap: 34px; height: 108px; }
       .dot {
-        width: 96px; height: 96px; border-radius: 50%; position: relative;
+        width: 78px; height: 78px; border-radius: 50%; position: relative;
         border: 4px solid #2f588a; background: rgba(156,212,255,.05);
       }
       .dot .core {
-        position: absolute; inset: 16px; border-radius: 50%; background: var(--brand-blue-tint);
+        position: absolute; inset: 13px; border-radius: 50%; background: var(--brand-blue-tint);
         opacity: 0; transform: scale(.4);
       }
       .dot.hot { border-color: var(--brand-flame); }
       .dot.hot .core { background: var(--brand-flame); }
       .dot .halo {
-        position: absolute; inset: -30px; border-radius: 50%; pointer-events: none; opacity: 0;
+        position: absolute; inset: -24px; border-radius: 50%; pointer-events: none; opacity: 0;
         background: radial-gradient(50% 50% at 50% 50%, rgba(156,212,255,.55) 0%, rgba(156,212,255,0) 70%);
       }
       .dot.hot .halo {
         background: radial-gradient(50% 50% at 50% 50%, rgba(255,76,50,.65) 0%, rgba(255,76,50,0) 70%);
       }
       .wire {
-        width: 510px; height: 4px; background: #3f6fa8; position: relative; overflow: hidden;
+        width: 414px; height: 4px; background: #3f6fa8; position: relative; overflow: hidden;
       }
       .wire .pulse {
-        position: absolute; top: 0; left: 0; width: 150px; height: 4px;
+        position: absolute; top: 0; left: 0; width: 122px; height: 4px;
         background: linear-gradient(90deg, rgba(255,76,50,0), var(--brand-flame), rgba(255,76,50,0));
       }
 
       /* ── end card ────────────────────────────────────────────── */
-      #endcard img.logo { width: 560px; height: auto; }
+      #endcard img.logo { width: 458px; height: auto; }
       #endcard .head {
-        font-weight: 800; font-size: 92px; line-height: .98; letter-spacing: -.032em;
-        max-width: 830px;
+        font-weight: 800; font-size: 75px; line-height: .98; letter-spacing: -.032em;
+        max-width: 690px;
       }
       #endcard .head .em {
         font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400;
         color: var(--brand-blue-tint);
       }
       #endcard .cta {
-        font-weight: 800; font-size: 40px; letter-spacing: -.01em; color: var(--brand-white);
-        background: var(--brand-flame); padding: 30px 62px; border-radius: 999px;
+        font-weight: 800; font-size: 33px; letter-spacing: -.01em; color: var(--brand-white);
+        background: var(--brand-flame); padding: 25px 52px; border-radius: 999px;
         box-shadow: 0 26px 78px -20px rgba(255,76,50,.72);
       }
 
       /* ── persistent logo — positioned, NOT a clip (render engine repositions clips) ── */
-      #logo-slot { position: absolute; top: 96px; left: 72px; width: 320px; z-index: 7; }
+      #logo-slot { position: absolute; top: 68px; left: 58px; width: 262px; z-index: 7; }
       #logo-slot img { width: 100%; height: auto; display: block; }
 
       /* ── unifying texture ────────────────────────────────────── */
@@ -151,7 +151,7 @@
       #crosshairs i::after  { top: 50%; left: 0; height: 1px; width: 100%; }
       #vignette {
         position: absolute; inset: 0; pointer-events: none; z-index: 8;
-        background: radial-gradient(ellipse 82% 66% at 50% 44%, rgba(0,0,0,0) 34%, rgba(0,0,0,.44) 100%);
+        background: radial-gradient(ellipse 88% 74% at 50% 46%, rgba(0,0,0,0) 34%, rgba(0,0,0,.44) 100%);
       }
       #grain {                          /* deterministic CSS grain — no PNG, no randomness */
         position: absolute; inset: 0; pointer-events: none; opacity: .34; mix-blend-mode: overlay; z-index: 9;
@@ -173,8 +173,8 @@
   </head>
 
   <body>
-    <div id="root" data-composition-id="mob-armor-social-proof"
-         data-start="0" data-duration="38.6" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="mob-armor-social-proof-4x5"
+         data-start="0" data-duration="38.6" data-width="1080" data-height="1350">
 
       <div id="bg" class="clip" data-start="0" data-duration="38.6" data-track-index="0"></div>
 
@@ -211,9 +211,9 @@
       <!-- ══ TEXTURE (over footage, under type) ══════════════════ -->
       <div id="grid" class="clip" data-start="0" data-duration="38.6" data-track-index="12"></div>
       <div id="crosshairs" class="clip" data-start="0" data-duration="38.6" data-track-index="13">
-        <i style="left:264px;  top:474px"></i><i style="left:804px;  top:474px"></i>
-        <i style="left:264px;  top:1014px"></i><i style="left:804px; top:1014px"></i>
-        <i style="left:534px;  top:744px"></i>
+        <i style="left:264px;  top:333px"></i><i style="left:804px;  top:333px"></i>
+        <i style="left:264px;  top:713px"></i><i style="left:804px; top:713px"></i>
+        <i style="left:534px;  top:523px"></i>
       </div>
 
       <!-- ══ STAT CARDS ══════════════════════════════════════════ -->
@@ -391,7 +391,7 @@
         }, null, 19.560);
         tl.fromTo("#chSub", { opacity: 0.15 }, { opacity: 1, duration: 0.30, ease: "power2.out" }, 19.560);
         tl.fromTo("#chPulse", { x: -130, opacity: 0 },
-          { x: 510, opacity: 1, duration: 1.30, ease: "power1.inOut" }, 19.700);
+          { x: 414, opacity: 1, duration: 1.30, ease: "power1.inOut" }, 19.700);
         tl.to("#chPulse", { opacity: 0, duration: 0.24, ease: "power2.in" }, 21.000);
         [0, 1, 2, 3].forEach((i) => {
           tl.to("#d" + i, { scale: 1.14, duration: 0.18, ease: "power2.out" }, 19.860 + i * 0.320)
@@ -451,7 +451,7 @@
 
         // Law 11 — anchor the timeline to the full slot so no tail frame goes black.
         tl.to({}, { duration: DUR }, 0);
-        window.__timelines["mob-armor-social-proof"] = tl;
+        window.__timelines["mob-armor-social-proof-4x5"] = tl;
       })();
     </script>
   </body>
