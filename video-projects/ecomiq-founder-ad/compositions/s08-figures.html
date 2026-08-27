@@ -12,9 +12,17 @@
       background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
       background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
     [data-composition-id="s08-figures"] .body { position: absolute; inset: 0; }
+    /* Light streak riding the wiping edge of the plate — turns the panel slide into a
+       whip. Held at opacity 0 so it is invisible while the beat is at rest. */
+    [data-composition-id="s08-figures"] .edge { position: absolute; left: -40px; right: -40px; height: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(156,212,255,0));
+      filter: blur(7px); opacity: 0; pointer-events: none; }
+    [data-composition-id="s08-figures"] .edge-t { top: 0; }
+    [data-composition-id="s08-figures"] .edge-b { bottom: 0; transform: scaleY(-1); }
     /* shared scene furniture */
     [data-composition-id="s08-figures"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
-      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF; }
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF;
+      text-shadow: 0 3px 20px rgba(2,14,30,.9); }
     [data-composition-id="s08-figures"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
       font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
     [data-composition-id="s08-figures"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
@@ -44,6 +52,8 @@
         <div class="under">FIGURE BRANDS</div>
         <div class="chip">for their entire career</div>
       </div>
+      <div class="edge edge-t"></div>
+      <div class="edge edge-b"></div>
     </div>
   </div>
 
@@ -51,11 +61,14 @@
     (function(){
       const SLOT = 3.3, S = '[data-composition-id="s08-figures"] ';
       const tl = gsap.timeline({ paused: true });
-      // ENTRY — previous beat is also a graphic, so its navy plate already covers the
-      // frame: only the content cross-whips. Moving both plates would flash the root bg.
+      // ENTRY — the opaque plate wipes up over the outgoing frame with a light streak
+      // on its leading edge; the content rides in behind it under matching blur.
+      tl.fromTo(S+'.plate', { y: 1350 }, { y: 0, duration: 0.24, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.edge-t', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, 0);
+      tl.to(S+'.edge-t', { opacity: 0, duration: 0.15, ease: 'sine.in' }, 0.09);
       tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
-        { y: 0, filter: 'blur(0px)', duration: 0.55, ease: 'power2.out' }, 0);
-      tl.fromTo(S+'.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .38, ease: 'power2.out' }, 0.02);
+        { y: 0, filter: 'blur(0px)', duration: 0.52, ease: 'power2.out' }, 0);
+      tl.fromTo(S+'.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .38, ease: 'power2.out' }, 0);
       // the two figures slam on their own VO words: "eight" 0.10, "nine" 0.65
       tl.fromTo(S+'#f8', { opacity: 0, scale: 1.9, y: 20 },
         { opacity: 1, scale: 1, y: 0, duration: .42, ease: 'power4.out' }, 0.10);
@@ -73,6 +86,8 @@
       // plate wipes off as one opaque piece, revealing the footage cleanly beneath.
       tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
       tl.to(S+'.plate', { y: -1350, duration: 0.26, ease: 'power3.in' }, SLOT - 0.26);
+      tl.fromTo(S+'.edge-b', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, SLOT - 0.26);
+      tl.to(S+'.edge-b', { opacity: 0, duration: 0.13, ease: 'sine.in' }, SLOT - 0.17);
       tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
       window.__timelines = window.__timelines || {};
       window.__timelines['s08-figures'] = tl;

@@ -12,9 +12,17 @@
       background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
       background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
     [data-composition-id="s07-team"] .body { position: absolute; inset: 0; }
+    /* Light streak riding the wiping edge of the plate — turns the panel slide into a
+       whip. Held at opacity 0 so it is invisible while the beat is at rest. */
+    [data-composition-id="s07-team"] .edge { position: absolute; left: -40px; right: -40px; height: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(156,212,255,0));
+      filter: blur(7px); opacity: 0; pointer-events: none; }
+    [data-composition-id="s07-team"] .edge-t { top: 0; }
+    [data-composition-id="s07-team"] .edge-b { bottom: 0; transform: scaleY(-1); }
     /* shared scene furniture */
     [data-composition-id="s07-team"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
-      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF; }
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF;
+      text-shadow: 0 3px 20px rgba(2,14,30,.9); }
     [data-composition-id="s07-team"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
       font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
     [data-composition-id="s07-team"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
@@ -40,8 +48,10 @@
       font-weight: 800; font-size: 40px; letter-spacing: -.02em; }
     [data-composition-id="s07-team"] #pL .plab { color: #6f8db3; }
     [data-composition-id="s07-team"] #pR .plab { color: #FFFFFF; }
-    [data-composition-id="s07-team"] .vs { position: absolute; left: 50%; top: 646px; margin-left: -32px;
-      width: 64px; text-align: center; font-weight: 800; font-size: 34px; color: #FF8A4C; }
+    [data-composition-id="s07-team"] .vs { position: absolute; left: 50%; top: 638px; margin-left: -37px;
+      width: 74px; height: 74px; line-height: 74px; text-align: center; font-weight: 800; font-size: 30px;
+      color: #FF8A4C; border-radius: 50%; background: #06284C; border: 2px solid rgba(255,76,50,.55);
+      box-shadow: 0 0 26px rgba(2,14,30,.9); }
     [data-composition-id="s07-team"] .chips { position: absolute; left: 0; right: 0; top: 1012px;
       display: flex; justify-content: center; gap: 22px; }
     [data-composition-id="s07-team"] .chips .c { background: #0d3768; border: 1px solid #1d4a7a; border-radius: 999px;
@@ -65,7 +75,6 @@
             <div class="hub"></div>
             <div class="plab">One coach</div>
         </div>
-        <div class="vs">vs</div>
         <div class="pan" id="pR">
             <div class="tm rn" style="margin:-159px 0 0 -27px"></div>
             <div class="tm rn" style="margin:-93px 0 0 87px"></div>
@@ -76,11 +85,14 @@
             <div class="hub"></div>
             <div class="plab">An entire team</div>
         </div>
+        <div class="vs">vs</div>
         <div class="chips">
           <div class="c"><i></i>Knowledge</div>
           <div class="c"><i></i>Experience</div>
         </div>
       </div>
+      <div class="edge edge-t"></div>
+      <div class="edge edge-b"></div>
     </div>
   </div>
 
@@ -88,14 +100,16 @@
     (function(){
       const SLOT = 3.6, S = '[data-composition-id="s07-team"] ';
       const tl = gsap.timeline({ paused: true });
-      // ENTRY — the opaque plate wipes up over the outgoing founder frame; the
-      // content rides in behind it with matching blur so the cut never reads hard.
-      tl.fromTo(S+'.plate', { y: 1350 }, { y: 0, duration: 0.28, ease: 'power3.out' }, 0);
-      tl.fromTo(S+'.body', { y: 170, filter: 'blur(26px)' },
-        { y: 0, filter: 'blur(0px)', duration: 0.62, ease: 'power2.out' }, 0);
-      tl.fromTo(S+'.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .40, ease: 'power2.out' }, 0.05);
+      // ENTRY — the opaque plate wipes up over the outgoing frame with a light streak
+      // on its leading edge; the content rides in behind it under matching blur.
+      tl.fromTo(S+'.plate', { y: 1350 }, { y: 0, duration: 0.24, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.edge-t', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, 0);
+      tl.to(S+'.edge-t', { opacity: 0, duration: 0.15, ease: 'sine.in' }, 0.09);
+      tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
+        { y: 0, filter: 'blur(0px)', duration: 0.52, ease: 'power2.out' }, 0);
+      tl.fromTo(S+'.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .40, ease: 'power2.out' }, 0);
       // CALLBACK — the hook's lone node and its six empty seats return on the left
-      tl.fromTo(S+'#pL', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .50, ease: 'power3.out' }, 0.05);
+      tl.fromTo(S+'#pL', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .50, ease: 'power3.out' }, 0);
       tl.fromTo(S+'#pR', { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: .50, ease: 'power3.out' }, 0.14);
       tl.fromTo(S+'.vs', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .34, ease: 'back.out(2)' }, 0.42);
       tl.fromTo(S+'#pL .st', { opacity: 0, scale: .7 },
@@ -111,9 +125,8 @@
       tl.fromTo(S+'.chips .c:nth-child(2)', { opacity: 0, y: 24, scale: .92 },
         { opacity: 1, y: 0, scale: 1, duration: .44, ease: 'back.out(1.6)' }, 1.83);
       tl.to(S+'#pR .hub', { scale: 1.06, duration: 1.1, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.30);
-      // EXIT — hands off to another graphic beat: content lifts and blurs, plate holds
-      // so the navy canvas is continuous across the seam.
-      tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
+      // EXIT — hands off to another graphic beat: hold the content in place and let the
+      // incoming beat's plate wipe over it. Lifting it here emptied the frame first.
       tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
       window.__timelines = window.__timelines || {};
       window.__timelines['s07-team'] = tl;

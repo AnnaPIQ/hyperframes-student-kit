@@ -13,9 +13,17 @@
       background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
       background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
     [data-composition-id="s18-payoff"] .body { position: absolute; inset: 0; }
+    /* Light streak riding the wiping edge of the plate — turns the panel slide into a
+       whip. Held at opacity 0 so it is invisible while the beat is at rest. */
+    [data-composition-id="s18-payoff"] .edge { position: absolute; left: -40px; right: -40px; height: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(156,212,255,0));
+      filter: blur(7px); opacity: 0; pointer-events: none; }
+    [data-composition-id="s18-payoff"] .edge-t { top: 0; }
+    [data-composition-id="s18-payoff"] .edge-b { bottom: 0; transform: scaleY(-1); }
     /* shared scene furniture */
     [data-composition-id="s18-payoff"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
-      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF; }
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF;
+      text-shadow: 0 3px 20px rgba(2,14,30,.9); }
     [data-composition-id="s18-payoff"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
       font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
     [data-composition-id="s18-payoff"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
@@ -40,7 +48,8 @@
       letter-spacing: -.035em; position: relative; }
     [data-composition-id="s18-payoff"] #labA { color: #6f8db3; }
     [data-composition-id="s18-payoff"] #labB { color: #FFFFFF; }
-    [data-composition-id="s18-payoff"] #strike { position: absolute; left: -6px; width: 100%; top: 50%; height: 8px;
+    [data-composition-id="s18-payoff"] .lab .w { position: relative; display: inline-block; }
+    [data-composition-id="s18-payoff"] #strike { position: absolute; left: -8px; right: -8px; top: 50%; height: 8px;
       margin-top: -4px; background: #FF4C32; border-radius: 4px; transform-origin: left center;
       box-shadow: 0 0 20px rgba(255,76,50,.65); }
     [data-composition-id="s18-payoff"] #tag { position: absolute; left: 50%; top: 1092px; margin-left: -274px;
@@ -54,7 +63,7 @@
       <div class="body">
         <div class="row" id="rowA">
           <div class="viz"><div class="solo"></div></div>
-          <div class="lab" id="labA">One opinion.<span id="strike"></span></div>
+          <div class="lab" id="labA"><span class="w">One opinion.<i id="strike"></i></span></div>
         </div>
         <div class="row" id="rowB">
           <div class="viz">
@@ -70,6 +79,8 @@
         </div>
         <div id="tag">&#9650;&nbsp; a proven track record</div>
       </div>
+      <div class="edge edge-t"></div>
+      <div class="edge edge-b"></div>
     </div>
   </div>
 
@@ -77,13 +88,15 @@
     (function(){
       const SLOT = 3.65, S = '[data-composition-id="s18-payoff"] ';
       const tl = gsap.timeline({ paused: true });
-      // ENTRY — the opaque plate wipes up over the outgoing founder frame; the
-      // content rides in behind it with matching blur so the cut never reads hard.
-      tl.fromTo(S+'.plate', { y: 1350 }, { y: 0, duration: 0.28, ease: 'power3.out' }, 0);
-      tl.fromTo(S+'.body', { y: 170, filter: 'blur(26px)' },
-        { y: 0, filter: 'blur(0px)', duration: 0.62, ease: 'power2.out' }, 0);
+      // ENTRY — the opaque plate wipes up over the outgoing frame with a light streak
+      // on its leading edge; the content rides in behind it under matching blur.
+      tl.fromTo(S+'.plate', { y: 1350 }, { y: 0, duration: 0.24, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.edge-t', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, 0);
+      tl.to(S+'.edge-t', { opacity: 0, duration: 0.15, ease: 'sine.in' }, 0.09);
+      tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
+        { y: 0, filter: 'blur(0px)', duration: 0.52, ease: 'power2.out' }, 0);
       // CALLBACK, final form — the hook's lone node, struck out; the full cluster beneath it
-      tl.fromTo(S+'#rowA', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .48, ease: 'power3.out' }, 0.08);
+      tl.fromTo(S+'#rowA', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .48, ease: 'power3.out' }, 0);
       tl.fromTo(S+'#strike', { scaleX: 0 }, { scaleX: 1, duration: .42, ease: 'power2.inOut' }, 0.55);
       tl.fromTo(S+'#rowB', { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: .52, ease: 'power3.out' }, 0.76);
       tl.fromTo(S+'#rowB .hub', { opacity: 0, scale: .4 },
@@ -93,9 +106,8 @@
       tl.fromTo(S+'#tag', { opacity: 0, y: 22, scale: .92 },
         { opacity: 1, y: 0, scale: 1, duration: .48, ease: 'back.out(1.7)' }, 2.05);
       tl.to(S+'#rowB .hub', { scale: 1.07, duration: 1.0, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.50);
-      // EXIT — hands off to another graphic beat: content lifts and blurs, plate holds
-      // so the navy canvas is continuous across the seam.
-      tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
+      // EXIT — hands off to another graphic beat: hold the content in place and let the
+      // incoming beat's plate wipe over it. Lifting it here emptied the frame first.
       tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
       window.__timelines = window.__timelines || {};
       window.__timelines['s18-payoff'] = tl;
