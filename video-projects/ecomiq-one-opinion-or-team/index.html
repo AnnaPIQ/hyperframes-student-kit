@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>EcomIQ — One opinion, or a whole team? (4:5 Meta feed)</title>
+    <!-- GSAP vendored locally — a CDN script cert-fails in the render env -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL font — no network at render time (a CDN fetch is non-deterministic) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: #FFFFFF; }
+
+      /* --- founder A-roll ------------------------------------------------ */
+      /* Non-timed wrapper: NEVER animate the <video> itself (frames freeze). */
+      #founder-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 1;
+        will-change: transform; }
+      #founder { position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; display: block; }
+      /* navy scrim so the white lockup always separates from the lit backdrop */
+      #scrim { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+        background:
+          linear-gradient(160deg, rgba(6,40,76,.80) 0%, rgba(6,40,76,.30) 26%, rgba(6,40,76,0) 46%),
+          radial-gradient(ellipse 86% 62% at 50% 46%, rgba(2,14,30,0) 46%, rgba(2,14,30,.5) 100%); }
+
+      /* Graphic cards stack ABOVE the A-roll. Without an explicit z-index they
+         paint behind #founder-wrap (z-index:1) and never appear. */
+      .scene-slot { position: absolute; inset: 0; }
+
+      /* --- persistent brand lockup (rides above every scene) -------------- */
+      #logo-pin { position: absolute; top: 56px; left: 60px;
+        z-index: 60; width: 292px; }
+      #logo-pin img { width: 100%; height: auto; display: block;
+        filter: drop-shadow(0 6px 22px rgba(0,0,0,.55)); }
+
+      /* --- act-break light streaks --------------------------------------- */
+      .seam { position: absolute; left: -30%; width: 60%; height: 7px; z-index: 70;
+        background: linear-gradient(90deg, transparent, #FFFFFF, rgba(255,76,50,.9), transparent);
+        filter: blur(9px); top: 46%; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="ecomiq-one-opinion-or-team" data-start="0"
+         data-duration="73.3000" data-width="1080" data-height="1350">
+
+      <!-- A-roll runs continuously underneath so lips never drift from the VO.
+           Graphic scenes sit on top and reveal it at each seam. -->
+      <div id="founder-wrap">
+        <video id="founder" src="assets/founder.mp4" data-start="0" data-duration="66.5000"
+               data-track-index="0" muted playsinline></video>
+      </div>
+      <div id="scrim" class="clip" data-start="0" data-duration="73.3000" data-track-index="1"></div>
+
+      <!-- VO: the founder's own audio, trimmed at 6.12s and loudness-normalised -->
+      <audio id="vo" src="assets/vo-founder.m4a" data-start="0"
+             data-duration="73.3000" data-track-index="2" data-volume="1"></audio>
+
+      <!-- graphic beats -->
+      <div id="clip-s01-hook-one-person" class="scene-slot" data-composition-id="s01-hook-one-person"
+           data-composition-src="compositions/s01-hook-one-person.html"
+           data-start="0.0000" data-duration="4.8667"
+           data-track-index="10" data-width="1080" data-height="1350"
+           style="z-index:10"></div>
+      <div id="clip-s02-hook-one-brand" class="scene-slot" data-composition-id="s02-hook-one-brand"
+           data-composition-src="compositions/s02-hook-one-brand.html"
+           data-start="4.8667" data-duration="4.1000"
+           data-track-index="11" data-width="1080" data-height="1350"
+           style="z-index:11"></div>
+      <div id="clip-s03-partner-reveal" class="scene-slot" data-composition-id="s03-partner-reveal"
+           data-composition-src="compositions/s03-partner-reveal.html"
+           data-start="12.3000" data-duration="4.0667"
+           data-track-index="12" data-width="1080" data-height="1350"
+           style="z-index:12"></div>
+      <div id="clip-s04-one-vs-team" class="scene-slot" data-composition-id="s04-one-vs-team"
+           data-composition-src="compositions/s04-one-vs-team.html"
+           data-start="16.3667" data-duration="4.3333"
+           data-track-index="13" data-width="1080" data-height="1350"
+           style="z-index:13"></div>
+      <div id="clip-s05-live-brands" class="scene-slot" data-composition-id="s05-live-brands"
+           data-composition-src="compositions/s05-live-brands.html"
+           data-start="20.7000" data-duration="3.9333"
+           data-track-index="14" data-width="1080" data-height="1350"
+           style="z-index:14"></div>
+      <div id="clip-s06-step-strategy" class="scene-slot" data-composition-id="s06-step-strategy"
+           data-composition-src="compositions/s06-step-strategy.html"
+           data-start="28.6667" data-duration="5.7667"
+           data-track-index="15" data-width="1080" data-height="1350"
+           style="z-index:15"></div>
+      <div id="clip-s07-step-calls" class="scene-slot" data-composition-id="s07-step-calls"
+           data-composition-src="compositions/s07-step-calls.html"
+           data-start="36.4333" data-duration="5.7667"
+           data-track-index="16" data-width="1080" data-height="1350"
+           style="z-index:16"></div>
+      <div id="clip-s08-step-community" class="scene-slot" data-composition-id="s08-step-community"
+           data-composition-src="compositions/s08-step-community.html"
+           data-start="45.0667" data-duration="6.5333"
+           data-track-index="17" data-width="1080" data-height="1350"
+           style="z-index:17"></div>
+      <div id="clip-s09-provenance" class="scene-slot" data-composition-id="s09-provenance"
+           data-composition-src="compositions/s09-provenance.html"
+           data-start="54.5333" data-duration="4.8667"
+           data-track-index="18" data-width="1080" data-height="1350"
+           style="z-index:18"></div>
+      <div id="clip-s10-payoff" class="scene-slot" data-composition-id="s10-payoff"
+           data-composition-src="compositions/s10-payoff.html"
+           data-start="61.4333" data-duration="3.9000"
+           data-track-index="19" data-width="1080" data-height="1350"
+           style="z-index:19"></div>
+      <div id="clip-s11-cta" class="scene-slot" data-composition-id="s11-cta"
+           data-composition-src="compositions/s11-cta.html"
+           data-start="65.3333" data-duration="7.9667"
+           data-track-index="20" data-width="1080" data-height="1350"
+           style="z-index:20"></div>
+
+      <!-- act-break streaks -->
+      <div id="seam0" class="clip seam" data-start="8.8000" data-duration="0.5000" data-track-index="40"></div>
+      <div id="seam1" class="clip seam" data-start="28.5000" data-duration="0.5000" data-track-index="41"></div>
+      <div id="seam2" class="clip seam" data-start="54.3667" data-duration="0.5000" data-track-index="42"></div>
+      <div id="seam3" class="clip seam" data-start="65.1667" data-duration="0.5000" data-track-index="43"></div>
+
+      <!-- persistent lockup, above everything -->
+      <div id="logo-pin">
+        <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+
+        // lockup settles in over the cold open, then holds for the whole piece
+        tl.fromTo("#logo-pin", { opacity: 0, y: -18 },
+          { opacity: 1, y: 0, duration: .6, ease: "power3.out" }, .25);
+
+        // slow push on the A-roll for each founder segment (camera never sleeps).
+        // Resets between segments are hidden under whichever card is covering.
+        tl.fromTo("#founder-wrap", { scale: 1.000 },
+          { scale: 1.030, duration: 3.3333, ease: "none", transformOrigin: "50% 42%" }, 8.9667);
+        tl.fromTo("#founder-wrap", { scale: 1.030 },
+          { scale: 1.000, duration: 4.0333, ease: "none", transformOrigin: "50% 42%" }, 24.6333);
+        tl.fromTo("#founder-wrap", { scale: 1.000 },
+          { scale: 1.030, duration: 2.0000, ease: "none", transformOrigin: "50% 42%" }, 34.4333);
+        tl.fromTo("#founder-wrap", { scale: 1.030 },
+          { scale: 1.000, duration: 2.8667, ease: "none", transformOrigin: "50% 42%" }, 42.2000);
+        tl.fromTo("#founder-wrap", { scale: 1.000 },
+          { scale: 1.030, duration: 2.9333, ease: "none", transformOrigin: "50% 42%" }, 51.6000);
+        tl.fromTo("#founder-wrap", { scale: 1.030 },
+          { scale: 1.000, duration: 2.0333, ease: "none", transformOrigin: "50% 42%" }, 59.4000);
+
+        // act-break light streaks
+        tl.fromTo("#seam0", { xPercent: -70, opacity: 0, scaleX: .6 },
+          { xPercent: 260, opacity: 1, scaleX: 1.5, duration: .34, ease: "power3.in" }, 8.8000);
+        tl.to("#seam0", { opacity: 0, duration: .14 }, 9.2000);
+        tl.fromTo("#seam1", { xPercent: -70, opacity: 0, scaleX: .6 },
+          { xPercent: 260, opacity: 1, scaleX: 1.5, duration: .34, ease: "power3.in" }, 28.5000);
+        tl.to("#seam1", { opacity: 0, duration: .14 }, 28.9000);
+        tl.fromTo("#seam2", { xPercent: -70, opacity: 0, scaleX: .6 },
+          { xPercent: 260, opacity: 1, scaleX: 1.5, duration: .34, ease: "power3.in" }, 54.3667);
+        tl.to("#seam2", { opacity: 0, duration: .14 }, 54.7667);
+        tl.fromTo("#seam3", { xPercent: -70, opacity: 0, scaleX: .6 },
+          { xPercent: 260, opacity: 1, scaleX: 1.5, duration: .34, ease: "power3.in" }, 65.1667);
+        tl.to("#seam3", { opacity: 0, duration: .14 }, 65.5667);
+
+        // Law #11 anchor — keep the root alive for its full slot
+        tl.to({}, { duration: 73.3000 }, 0);
+        window.__timelines['ecomiq-one-opinion-or-team'] = tl;
+      })();
+    </script>
+  </body>
+</html>

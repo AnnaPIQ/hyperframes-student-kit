@@ -77,6 +77,60 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## Talking-head + motion-graphics architecture
+
+- **Cutting the A-roll into segments risks lip-sync drift on every splice.** If the VO
+  and the picture come from the *same* take, don't cut the video at all. **Fix:** put
+  ONE continuous muted `<video>` on track 0 for the whole runtime and layer full-frame
+  graphic cards *above* it, revealing the founder at each seam. Picture is never
+  re-cut against the audio, so sync cannot drift — and the "cut back to founder" is
+  free (it's just the card exiting).
+- **Revealing the A-roll under a card needs an exit tween, which the `/hyperframes`
+  skill nominally bans.** Use MOTION_PHILOSOPHY's *cut-the-curve vertical whip*
+  instead — matched exit/entry blur rides are the documented workspace transition and
+  the only way to hand the frame back. Alternate the axis (y / x) per seam so the move
+  doesn't repeat back to back.
+
+## Transcription & VO prep
+
+- **`whisper-cpp` missing and the GitHub clone is proxy-blocked (403).** **Fix:**
+  `pip3 install faster-whisper` — pure-Python, pulls its model from Hugging Face
+  (reachable), and emits word-level timestamps. Beats building whisper.cpp from source.
+- **Whisper clamps the FIRST word's start time to 0 on a trimmed clip.** Don't validate
+  a trim offset against word #1. **Fix:** check words 2–5 instead; if `e-commerce`,
+  `coaching`, `is` all land at `expected − offset`, the offset is right.
+- **A "verbatim" transcript from the client usually isn't what's on the tape.** The
+  spoken take ad-libs, renames things, and runs longer. **Fix:** transcribe the real
+  audio, then map the written lines onto the spoken sentences in order — the *audio* is
+  the timing ground truth, the written script is only the message spine.
+- **Trim leading silence before timing anything.** Compute one offset
+  (`t_timeline = t_source − offset`) and derive every cue from it; re-deriving per scene
+  is how off-by-a-beat errors creep in.
+
+## Lint gotchas (hyperframes 0.8.x)
+
+- **`gsap_non_transform_motion` on `"__unresolved__"`** just means *some* tween in that
+  file animates `top`/`left`/`width`/`height`. The selector is unhelpful — grep the file
+  for the property named in the message. **Fix:** move the static value into CSS and
+  animate `x`/`y`/`xPercent` instead. Note it fires even when the property appears only
+  in the `from` vars and never actually changes.
+- **`overlapping_gsap_tweens` can be a 0.01s frame-rounding artifact.** A ride tween
+  ending at `t+0.18` and a fade starting at `snap(t+0.18)` can overlap by one frame.
+  **Fix:** leave a 2-frame gap (`t+0.22`) rather than reaching for `overwrite: "auto"`.
+- **`hyperframes doctor` reports FFmpeg as failed while FFmpeg works fine.** The check
+  is a false negative in this container — verify with `ffmpeg -version` before chasing it.
+
+## Determinism
+
+- **`drawSVG` is a paid GSAP plugin and silently does nothing.** **Fix:** set
+  `stroke-dasharray`/`stroke-dashoffset` in CSS and tween `strokeDashoffset` to 0.
+- **Prefer tweening properties over swapping classes for state changes.** `attr: {class}`
+  at `duration: 0` is not reliably reversible under seek-by-frame capture; tweening
+  `borderColor`/`backgroundColor`/`boxShadow` directly is fully seekable.
+- **Deterministic "scatter" without `Math.random()`:** sort indices by a harmonic hash
+  (`|sin(i·a+b)·cos(i·1.3+0.7)|`) and stagger along that order — random-looking, identical
+  every render.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

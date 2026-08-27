@@ -1,0 +1,185 @@
+<template id="s06-step-strategy-template">
+  <div data-composition-id="s06-step-strategy" data-start="0" data-duration="5.7667"
+       data-width="1080" data-height="1350">
+    <div class="wrap">
+      <div class="bg"></div>
+      <div class="grid"></div>
+      <div class="marks"><i style="left:40.27%;top:60.22%"></i><i style="left:81.96%;top:45.23%"></i><i style="left:59.84%;top:91.99%"></i><i style="left:68.09%;top:42.44%"></i><i style="left:75.84%;top:62.60%"></i><i style="left:50.09%;top:89.03%"></i><i style="left:87.20%;top:22.54%"></i><i style="left:29.16%;top:76.62%"></i><i style="left:93.17%;top:81.10%"></i><i style="left:6.70%;top:14.25%"></i><i style="left:93.35%;top:86.43%"></i><i style="left:27.81%;top:68.68%"></i></div>
+      <div class="vig"></div>
+      <div class="grain"></div>
+      <div class="content">
+        <div class="stephead">
+          <div class="num stepnum" id="s6-n">01</div>
+          <div class="steptxt">
+            <div class="h2" id="s6-t">Strategy session</div>
+            <div class="body" id="s6-s">with your lead coach</div>
+          </div>
+        </div>
+        <div class="spine" id="s6-spine"><i class="on"></i><i></i><i></i></div>
+        <div class="rows">
+          <div class="row panel" id="s6-r1">
+            <span class="rmark cool">&#10003;</span>
+            <span class="h3">Map your <span class="cool">whole business</span></span>
+          </div>
+          <div class="row panel" id="s6-r2">
+            <span class="rmark hot" id="s6-glyph">&#9678;</span>
+            <span class="h3">Find what&rsquo;s <span class="hot">holding growth back</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="streak" id="s06-step-strategy-streak"></div>
+    </div>
+
+    <style>
+      /* LOCAL font — no network at render time (a CDN fetch is non-deterministic) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+
+    [data-composition-id="s06-step-strategy"] { position: absolute; inset: 0; overflow: hidden;
+      font-family: 'Rethink Sans', system-ui, sans-serif;
+      color: #FFFFFF; -webkit-font-smoothing: antialiased; }
+    [data-composition-id="s06-step-strategy"] * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* the animated card — rides in/out on a blurred whip, revealing the A-roll */
+    [data-composition-id="s06-step-strategy"] .wrap { position: absolute; inset: 0; will-change: transform, filter, opacity; }
+
+    [data-composition-id="s06-step-strategy"] .bg { position: absolute; inset: 0; background:
+        radial-gradient(64% 44% at 16% 12%, rgba(156,212,255,.15) 0%, rgba(6,40,76,0) 62%),
+        radial-gradient(58% 40% at 88% 86%, rgba(255,76,50,.11) 0%, rgba(6,40,76,0) 60%),
+        #06284C; }
+
+    [data-composition-id="s06-step-strategy"] .grid { position: absolute; inset: -12%; opacity: .5; background-repeat: repeat;
+      background-image:
+        repeating-linear-gradient(0deg,  rgba(156,212,255,.070) 0 1px, transparent 1px 90px),
+        repeating-linear-gradient(90deg, rgba(156,212,255,.070) 0 1px, transparent 1px 90px); }
+
+    /* registration crosshairs — the spine under everything */
+    [data-composition-id="s06-step-strategy"] .marks { position: absolute; inset: 0; opacity: .34; }
+    [data-composition-id="s06-step-strategy"] .marks i { position: absolute; width: 15px; height: 15px; }
+    [data-composition-id="s06-step-strategy"] .marks i::before, [data-composition-id="s06-step-strategy"] .marks i::after { content: ''; position: absolute;
+      background: rgba(156,212,255,.5); }
+    [data-composition-id="s06-step-strategy"] .marks i::before { left: 7px; top: 0; width: 1px; height: 15px; }
+    [data-composition-id="s06-step-strategy"] .marks i::after  { top: 7px; left: 0; height: 1px; width: 15px; }
+
+    [data-composition-id="s06-step-strategy"] .vig { position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 82% 66% at 50% 44%, rgba(2,14,30,0) 34%, rgba(2,14,30,.9) 100%); }
+
+    /* deterministic CSS grain — no PNG, no randomness */
+    [data-composition-id="s06-step-strategy"] .grain { position: absolute; inset: 0; pointer-events: none; opacity: .5; mix-blend-mode: overlay;
+      background-image:
+        radial-gradient(rgba(255,255,255,.030) .5px, transparent .5px),
+        radial-gradient(rgba(255,255,255,.022) .5px, transparent .5px),
+        radial-gradient(rgba(0,0,0,.020) .5px, transparent .5px);
+      background-size: 3px 3px, 5px 5px, 7px 7px;
+      background-position: 0 0, 1px 2px, 3px 1px; }
+
+    /* content plate */
+    [data-composition-id="s06-step-strategy"] .content { position: absolute; inset: 0; display: flex; flex-direction: column;
+      justify-content: center; padding: 232px 96px 120px; }
+
+    /* --- shared type ------------------------------------------------------ */
+    [data-composition-id="s06-step-strategy"] .eyebrow { font-weight: 600; font-size: 25px; letter-spacing: .3em;
+      text-transform: uppercase; color: #6F8DB3; }
+    [data-composition-id="s06-step-strategy"] .h1 { font-weight: 800; font-size: 90px; line-height: .95; letter-spacing: -.03em; }
+    [data-composition-id="s06-step-strategy"] .h2 { font-weight: 800; font-size: 62px; line-height: 1.0;  letter-spacing: -.025em; }
+    [data-composition-id="s06-step-strategy"] .h3 { font-weight: 700; font-size: 44px; line-height: 1.08; letter-spacing: -.02em; }
+    [data-composition-id="s06-step-strategy"] .body { font-weight: 500; font-size: 31px; line-height: 1.32; color: #C7DAF0; }
+    [data-composition-id="s06-step-strategy"] .hot   { color: #FF4C32; }
+    [data-composition-id="s06-step-strategy"] .cool  { color: #9CD4FF; }
+    [data-composition-id="s06-step-strategy"] .dim   { color: #6F8DB3; }
+    [data-composition-id="s06-step-strategy"] .num { font-weight: 800; letter-spacing: -.045em; font-variant-numeric: tabular-nums;
+      line-height: .84; }
+
+    /* tags / chips */
+    [data-composition-id="s06-step-strategy"] .tag { display: inline-flex; align-items: center; gap: 10px; font-weight: 700;
+      font-size: 24px; letter-spacing: .085em; text-transform: uppercase;
+      padding: 11px 20px; border-radius: 999px; border: 1px solid #1D4A7A;
+      background: rgba(13,58,107,.62); color: #9CD4FF; }
+    [data-composition-id="s06-step-strategy"] .tag.hotTag { color: #FF4C32; border-color: rgba(255,76,50,.5);
+      background: rgba(255,76,50,.11); }
+    [data-composition-id="s06-step-strategy"] .tag.dimTag { color: #6F8DB3; border-color: rgba(111,141,179,.4);
+      background: rgba(111,141,179,.09); }
+    [data-composition-id="s06-step-strategy"] .dot { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+
+    /* panels */
+    [data-composition-id="s06-step-strategy"] .panel { border: 1px solid #1D4A7A; border-radius: 26px;
+      background: linear-gradient(160deg, rgba(16,61,111,.9) 0%, rgba(8,44,84,.86) 100%);
+      box-shadow: 0 30px 80px -34px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.09); }
+
+    /* light streak used for in-scene whips */
+    [data-composition-id="s06-step-strategy"] .streak { position: absolute; left: -40%; width: 60%; height: 5px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.92), transparent);
+      filter: blur(7px); opacity: 0; }
+    [data-composition-id="s06-step-strategy"] .streak { top: 62%; }
+
+    [data-composition-id="s06-step-strategy"] .content { gap: 30.6px; }
+    [data-composition-id="s06-step-strategy"] .stephead { display: flex; align-items: center; gap: 27.200000000000003px; }
+    [data-composition-id="s06-step-strategy"] .stepnum { font-size: 117.8px; color: transparent;
+      -webkit-text-stroke: 3px rgba(156,212,255,.55); }
+    [data-composition-id="s06-step-strategy"] .steptxt { display: flex; flex-direction: column; gap: 8px; }
+    [data-composition-id="s06-step-strategy"] .spine { display: flex; gap: 12px; }
+    [data-composition-id="s06-step-strategy"] .spine i { height: 5px; flex: 1; border-radius: 3px; background: rgba(111,141,179,.28); }
+    [data-composition-id="s06-step-strategy"] .spine i.on { background: #FF4C32; box-shadow: 0 0 20px rgba(255,76,50,.6); }
+    [data-composition-id="s06-step-strategy"] .rows { display: flex; flex-direction: column; gap: 20.4px; }
+    [data-composition-id="s06-step-strategy"] .row { display: flex; align-items: center; gap: 22px; padding: 24.48px 27.200000000000003px; }
+    [data-composition-id="s06-step-strategy"] .rmark { font-size: 44px; line-height: 1; flex: none; }
+    [data-composition-id="s06-step-strategy"] .row .h3 { font-weight: 700; }
+    </style>
+
+    <!-- GSAP vendored locally — a CDN script cert-fails in the render env -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const root = '[data-composition-id="s06-step-strategy"]';
+        const tl = gsap.timeline({ paused: true });
+
+      // --- ambient: grid parallax + vignette breath (camera never sleeps) ---
+      tl.fromTo(root + " .grid", { backgroundPositionY: 0, backgroundPositionX: 0 },
+        { backgroundPositionY: -28, backgroundPositionX: 16,
+          duration: 5.7667, ease: "none" }, 0);
+      tl.fromTo(root + " .vig", { opacity: .82 }, { opacity: 1, duration: 2.8833,
+        ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+      tl.fromTo(root + " .marks", { opacity: .2 }, { opacity: .40,
+        duration: 2.8833, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+
+      // ENTRY — rises in from the left under blur; matches the
+      // previous beat's exit velocity. Opacity snaps early so the A-roll never ghosts through.
+      gsap.set(root + " .wrap", { opacity: 0, x: -190, filter: "blur(30px)" });
+      tl.to(root + " .wrap", { opacity: 1, duration: .12, ease: "none" }, 0);
+      tl.to(root + " .wrap", { x: 0, filter: "blur(0px)", duration: .46, ease: "power2.out" }, 0);
+
+      tl.fromTo(root + " #s6-n", { opacity: 0, x: -46 },
+        { opacity: 1, x: 0, duration: .56, ease: "expo.out" }, 0.06666666666666667);
+      tl.fromTo(root + " #s6-t", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: .48, ease: "power3.out" }, 0.16666666666666669);
+      tl.fromTo(root + " #s6-s", { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: .42, ease: "power2.out" }, 0.2866666666666667);
+      tl.fromTo(root + " #s6-spine i", { scaleX: 0 },
+        { scaleX: 1, duration: .4, ease: "power2.out", stagger: .07 }, 0.36666666666666664);
+      tl.fromTo(root + " #s6-r1", { opacity: 0, x: 56 },
+        { opacity: 1, x: 0, duration: .52, ease: "back.out(1.15)" }, 1.5);
+      // the target glyph spins up before the pain row lands
+      tl.fromTo(root + " #s6-glyph", { opacity: 0, scale: 0, rotate: -90 },
+        { opacity: 1, scale: 1, rotate: 0, duration: .5, ease: "back.out(2)" }, 3);
+      tl.fromTo(root + " #s6-r2", { opacity: 0, x: 56 },
+        { opacity: 1, x: 0, duration: .52, ease: "back.out(1.15)" }, 4.366666666666666);
+
+      // in-scene light streak — motion blur across the seam, never a hard cut
+      tl.fromTo(root + " #s06-step-strategy-streak", { xPercent: -60, opacity: 0, scaleX: .6 },
+        { xPercent: 260, opacity: .9, scaleX: 1.4, duration: .34, ease: "power3.in" }, 0.06);
+      tl.to(root + " #s06-step-strategy-streak", { opacity: 0, duration: .16 }, 0.4000);
+
+      // EXIT (local 5.4067) — rides right under blur, handing the
+      // frame back to the founder A-roll. Matches the next beat's entry blur.
+      tl.to(root + " .wrap", { x: 190, filter: "blur(30px)", duration: .36, ease: "power2.in" }, 5.4067);
+      tl.to(root + " .wrap", { opacity: 0, duration: .18, ease: "power1.in" }, 5.5867);
+
+        // Law #11 — anchor the timeline to the full slot or HyperFrames hides
+        // the composition early and you get a black-frame flash at the tail.
+        tl.to({}, { duration: 5.7667 }, 0);
+        window.__timelines['s06-step-strategy'] = tl;
+      })();
+    </script>
+  </div>
+</template>

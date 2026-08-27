@@ -25,6 +25,9 @@ renders/
 # Local-only media stash (large raw recordings, source music)
 raw-media/
 
+# Raw source-footage working dir (multi-GB masters + probe stills — never commit)
+assets/raw/
+
 # Raw asset drop zone — stage media here; don't commit the big raw/prepped files
 assets/incoming/*
 !assets/incoming/README.md

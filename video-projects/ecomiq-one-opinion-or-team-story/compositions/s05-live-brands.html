@@ -1,0 +1,207 @@
+<template id="s05-live-brands-template">
+  <div data-composition-id="s05-live-brands" data-start="0" data-duration="3.9333"
+       data-width="1080" data-height="1920">
+    <div class="wrap">
+      <div class="bg"></div>
+      <div class="grid"></div>
+      <div class="marks"><i style="left:40.27%;top:60.22%"></i><i style="left:81.96%;top:45.23%"></i><i style="left:59.84%;top:91.99%"></i><i style="left:68.09%;top:42.44%"></i><i style="left:75.84%;top:62.60%"></i><i style="left:50.09%;top:89.03%"></i><i style="left:87.20%;top:22.54%"></i><i style="left:29.16%;top:76.62%"></i><i style="left:93.17%;top:81.10%"></i><i style="left:6.70%;top:14.25%"></i><i style="left:93.35%;top:86.43%"></i><i style="left:27.81%;top:68.68%"></i></div>
+      <div class="vig"></div>
+      <div class="grain"></div>
+      <div class="wall" aria-hidden="true">
+        <div class="wall-track" id="s5-track">
+          <img src="assets/logos/harmless-harvest-logo-webp.png" alt="" />
+          <img src="assets/logos/images-10-png.png" alt="" />
+          <img src="assets/logos/images-11-png.png" alt="" />
+          <img src="assets/logos/images-12-png.png" alt="" />
+          <img src="assets/logos/images-13-png.png" alt="" />
+          <img src="assets/logos/images-14-png.png" alt="" />
+          <img src="assets/logos/images-2-png.png" alt="" />
+          <img src="assets/logos/images-3-png.png" alt="" />
+          <img src="assets/logos/images-4-jpeg.png" alt="" />
+          <img src="assets/logos/images-4-png.png" alt="" />
+          <img src="assets/logos/images-5-jpeg.png" alt="" />
+          <img src="assets/logos/images-5-png.png" alt="" />
+          <img src="assets/logos/images-6-jpeg.png" alt="" />
+          <img src="assets/logos/images-6-png.png" alt="" />
+          <img src="assets/logos/images-7-jpeg.png" alt="" />
+          <img src="assets/logos/images-7-png.png" alt="" />
+          <img src="assets/logos/images-8-jpeg.png" alt="" />
+          <img src="assets/logos/images-8-png.png" alt="" />
+          <img src="assets/logos/images-9-png.png" alt="" />
+          <img src="assets/logos/sotheby-s-logo-wine-svg.png" alt="" />
+          <img src="assets/logos/unnamed-jpg.png" alt="" />
+        </div>
+        <div class="wall-fade"></div>
+        <div class="wall-scrim"></div>
+      </div>
+      <div class="content">
+        <div class="eyebrow" id="s5-eb">Working inside</div>
+        <div class="h1" id="s5-slam">DOZENS</div>
+        <div class="h3 cool" id="s5-sub">of live brands</div>
+        <div class="tagrow" id="s5-live"><span class="tag" id="s5-livetag"><span class="dot" id="s5-pulse"></span>live &middot; every single day</span></div>
+      </div>
+      <div class="streak" id="s05-live-brands-streak"></div>
+    </div>
+
+    <style>
+      /* LOCAL font — no network at render time (a CDN fetch is non-deterministic) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+
+    [data-composition-id="s05-live-brands"] { position: absolute; inset: 0; overflow: hidden;
+      font-family: 'Rethink Sans', system-ui, sans-serif;
+      color: #FFFFFF; -webkit-font-smoothing: antialiased; }
+    [data-composition-id="s05-live-brands"] * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* the animated card — rides in/out on a blurred whip, revealing the A-roll */
+    [data-composition-id="s05-live-brands"] .wrap { position: absolute; inset: 0; will-change: transform, filter, opacity; }
+
+    [data-composition-id="s05-live-brands"] .bg { position: absolute; inset: 0; background:
+        radial-gradient(64% 44% at 16% 12%, rgba(156,212,255,.15) 0%, rgba(6,40,76,0) 62%),
+        radial-gradient(58% 40% at 88% 86%, rgba(255,76,50,.11) 0%, rgba(6,40,76,0) 60%),
+        #06284C; }
+
+    [data-composition-id="s05-live-brands"] .grid { position: absolute; inset: -12%; opacity: .5; background-repeat: repeat;
+      background-image:
+        repeating-linear-gradient(0deg,  rgba(156,212,255,.070) 0 1px, transparent 1px 96px),
+        repeating-linear-gradient(90deg, rgba(156,212,255,.070) 0 1px, transparent 1px 96px); }
+
+    /* registration crosshairs — the spine under everything */
+    [data-composition-id="s05-live-brands"] .marks { position: absolute; inset: 0; opacity: .34; }
+    [data-composition-id="s05-live-brands"] .marks i { position: absolute; width: 15px; height: 15px; }
+    [data-composition-id="s05-live-brands"] .marks i::before, [data-composition-id="s05-live-brands"] .marks i::after { content: ''; position: absolute;
+      background: rgba(156,212,255,.5); }
+    [data-composition-id="s05-live-brands"] .marks i::before { left: 7px; top: 0; width: 1px; height: 15px; }
+    [data-composition-id="s05-live-brands"] .marks i::after  { top: 7px; left: 0; height: 1px; width: 15px; }
+
+    [data-composition-id="s05-live-brands"] .vig { position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 82% 66% at 50% 44%, rgba(2,14,30,0) 34%, rgba(2,14,30,.9) 100%); }
+
+    /* deterministic CSS grain — no PNG, no randomness */
+    [data-composition-id="s05-live-brands"] .grain { position: absolute; inset: 0; pointer-events: none; opacity: .5; mix-blend-mode: overlay;
+      background-image:
+        radial-gradient(rgba(255,255,255,.030) .5px, transparent .5px),
+        radial-gradient(rgba(255,255,255,.022) .5px, transparent .5px),
+        radial-gradient(rgba(0,0,0,.020) .5px, transparent .5px);
+      background-size: 3px 3px, 5px 5px, 7px 7px;
+      background-position: 0 0, 1px 2px, 3px 1px; }
+
+    /* content plate */
+    [data-composition-id="s05-live-brands"] .content { position: absolute; inset: 0; display: flex; flex-direction: column;
+      justify-content: center; padding: 380px 96px 330px; }
+
+    /* --- shared type ------------------------------------------------------ */
+    [data-composition-id="s05-live-brands"] .eyebrow { font-weight: 600; font-size: 27px; letter-spacing: .3em;
+      text-transform: uppercase; color: #6F8DB3; }
+    [data-composition-id="s05-live-brands"] .h1 { font-weight: 800; font-size: 96px; line-height: .95; letter-spacing: -.03em; }
+    [data-composition-id="s05-live-brands"] .h2 { font-weight: 800; font-size: 68px; line-height: 1.0;  letter-spacing: -.025em; }
+    [data-composition-id="s05-live-brands"] .h3 { font-weight: 700; font-size: 48px; line-height: 1.08; letter-spacing: -.02em; }
+    [data-composition-id="s05-live-brands"] .body { font-weight: 500; font-size: 34px; line-height: 1.32; color: #C7DAF0; }
+    [data-composition-id="s05-live-brands"] .hot   { color: #FF4C32; }
+    [data-composition-id="s05-live-brands"] .cool  { color: #9CD4FF; }
+    [data-composition-id="s05-live-brands"] .dim   { color: #6F8DB3; }
+    [data-composition-id="s05-live-brands"] .num { font-weight: 800; letter-spacing: -.045em; font-variant-numeric: tabular-nums;
+      line-height: .84; }
+
+    /* tags / chips */
+    [data-composition-id="s05-live-brands"] .tag { display: inline-flex; align-items: center; gap: 10px; font-weight: 700;
+      font-size: 26px; letter-spacing: .085em; text-transform: uppercase;
+      padding: 11px 20px; border-radius: 999px; border: 1px solid #1D4A7A;
+      background: rgba(13,58,107,.62); color: #9CD4FF; }
+    [data-composition-id="s05-live-brands"] .tag.hotTag { color: #FF4C32; border-color: rgba(255,76,50,.5);
+      background: rgba(255,76,50,.11); }
+    [data-composition-id="s05-live-brands"] .tag.dimTag { color: #6F8DB3; border-color: rgba(111,141,179,.4);
+      background: rgba(111,141,179,.09); }
+    [data-composition-id="s05-live-brands"] .dot { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+
+    /* panels */
+    [data-composition-id="s05-live-brands"] .panel { border: 1px solid #1D4A7A; border-radius: 26px;
+      background: linear-gradient(160deg, rgba(16,61,111,.9) 0%, rgba(8,44,84,.86) 100%);
+      box-shadow: 0 30px 80px -34px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.09); }
+
+    /* light streak used for in-scene whips */
+    [data-composition-id="s05-live-brands"] .streak { position: absolute; left: -40%; width: 60%; height: 5px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.92), transparent);
+      filter: blur(7px); opacity: 0; }
+    [data-composition-id="s05-live-brands"] .streak { top: 38%; }
+
+    [data-composition-id="s05-live-brands"] .content { gap: 23px; justify-content: center; }
+    [data-composition-id="s05-live-brands"] .wall { position: absolute; inset: 0; overflow: hidden; }
+    [data-composition-id="s05-live-brands"] .wall-track { position: absolute; left: 0; top: -60px; width: 1080px;
+      display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 360px;
+      align-items: center; justify-items: center; }
+    [data-composition-id="s05-live-brands"] .wall-track img { max-width: 300px; max-height: 99px;
+      width: auto; height: auto; opacity: .30;
+      filter: drop-shadow(0 0 18px rgba(6,40,76,.9)); }
+    /* soften the top/bottom edges so marks don't get guillotined by the frame */
+    [data-composition-id="s05-live-brands"] .wall-fade { position: absolute; inset: 0; pointer-events: none; background:
+        linear-gradient(180deg, #06284C 0%, #06284C 11%, rgba(6,40,76,0) 24%),
+        linear-gradient(0deg,  #06284C 0%, #06284C 6%, rgba(6,40,76,0) 17%); }
+    /* keeps the headline legible over the marks */
+    [data-composition-id="s05-live-brands"] .wall-scrim { position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 78% 42% at 42% 50%,
+        rgba(6,40,76,.985) 0%, rgba(6,40,76,.9) 42%, rgba(6,40,76,.5) 66%, rgba(6,40,76,0) 82%); }
+    [data-composition-id="s05-live-brands"] .tagrow { display: flex; margin-top: 23px; }
+    [data-composition-id="s05-live-brands"] #s5-pulse { color: #FF4C32; }
+    </style>
+
+    <!-- GSAP vendored locally — a CDN script cert-fails in the render env -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const root = '[data-composition-id="s05-live-brands"]';
+        const tl = gsap.timeline({ paused: true });
+
+      // --- ambient: grid parallax + vignette breath (camera never sleeps) ---
+      tl.fromTo(root + " .grid", { backgroundPositionY: 0, backgroundPositionX: 0 },
+        { backgroundPositionY: 28, backgroundPositionX: -16,
+          duration: 3.9333, ease: "none" }, 0);
+      tl.fromTo(root + " .vig", { opacity: .82 }, { opacity: 1, duration: 1.9667,
+        ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+      tl.fromTo(root + " .marks", { opacity: .2 }, { opacity: .40,
+        duration: 1.9667, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+
+      // ENTRY — rises from below under blur; matches the
+      // previous beat's exit velocity. Opacity snaps early so the A-roll never ghosts through.
+      gsap.set(root + " .wrap", { opacity: 0, y: 170, filter: "blur(30px)" });
+      tl.to(root + " .wrap", { opacity: 1, duration: .12, ease: "none" }, 0);
+      tl.to(root + " .wrap", { y: 0, filter: "blur(0px)", duration: .46, ease: "power2.out" }, 0);
+
+      // the wall drifts up for the whole beat — dozens of real brands, always moving
+      tl.fromTo(root + " #s5-track", { y: 0 },
+        { y: -470, duration: 3.9333, ease: "none" }, 0);
+      tl.fromTo(root + " #s5-track img", { opacity: 0, y: 24 },
+        { opacity: .30, y: 0, duration: .42, ease: "power2.out", stagger: .011 }, 0.06666666666666667);
+      tl.fromTo(root + " #s5-eb", { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: .42, ease: "power2.out" }, 0.06666666666666667);
+      // HERO — "dozens"
+      tl.fromTo(root + " #s5-slam", { opacity: 0, scale: .74, y: 30 },
+        { opacity: 1, scale: 1, y: 0, duration: .46, ease: "expo.out" }, 1.1);
+      tl.fromTo(root + " #s5-sub", { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: .4, ease: "power3.out" }, 1.2400000000000002);
+      // the marks lift as the number lands
+      tl.to(root + " #s5-track img", { opacity: .44, duration: .5, ease: "power2.out" }, 1.1);
+      tl.fromTo(root + " #s5-live", { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: .42, ease: "power2.out" }, 2.566666666666667);
+      tl.fromTo(root + " #s5-pulse", { scale: .6 }, { scale: 1.35, duration: .42,
+        ease: "sine.inOut", yoyo: true, repeat: 3 }, 2.666666666666667);
+
+      // in-scene light streak — motion blur across the seam, never a hard cut
+      tl.fromTo(root + " #s05-live-brands-streak", { xPercent: -60, opacity: 0, scaleX: .6 },
+        { xPercent: 260, opacity: .9, scaleX: 1.4, duration: .34, ease: "power3.in" }, 0.06);
+      tl.to(root + " #s05-live-brands-streak", { opacity: 0, duration: .16 }, 0.4000);
+
+      // EXIT (local 3.5733) — rides up under blur, handing the
+      // frame back to the founder A-roll. Matches the next beat's entry blur.
+      tl.to(root + " .wrap", { y: -170, filter: "blur(30px)", duration: .36, ease: "power2.in" }, 3.5733);
+      tl.to(root + " .wrap", { opacity: 0, duration: .18, ease: "power1.in" }, 3.7533);
+
+        // Law #11 — anchor the timeline to the full slot or HyperFrames hides
+        // the composition early and you get a black-frame flash at the tail.
+        tl.to({}, { duration: 3.9333 }, 0);
+        window.__timelines['s05-live-brands'] = tl;
+      })();
+    </script>
+  </div>
+</template>

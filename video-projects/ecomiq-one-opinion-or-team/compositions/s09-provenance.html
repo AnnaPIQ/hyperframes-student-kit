@@ -1,0 +1,197 @@
+<template id="s09-provenance-template">
+  <div data-composition-id="s09-provenance" data-start="0" data-duration="4.8667"
+       data-width="1080" data-height="1350">
+    <div class="wrap">
+      <div class="bg"></div>
+      <div class="grid"></div>
+      <div class="marks"><i style="left:40.27%;top:60.22%"></i><i style="left:81.96%;top:45.23%"></i><i style="left:59.84%;top:91.99%"></i><i style="left:68.09%;top:42.44%"></i><i style="left:75.84%;top:62.60%"></i><i style="left:50.09%;top:89.03%"></i><i style="left:87.20%;top:22.54%"></i><i style="left:29.16%;top:76.62%"></i><i style="left:93.17%;top:81.10%"></i><i style="left:6.70%;top:14.25%"></i><i style="left:93.35%;top:86.43%"></i><i style="left:27.81%;top:68.68%"></i></div>
+      <div class="vig"></div>
+      <div class="grain"></div>
+      <div class="content">
+        <div class="eyebrow" id="s9-eb">Every strategy you get is</div>
+        <div class="flow">
+          <div class="fnode panel" id="s9-n1">
+            <div class="fk">Source</div>
+            <div class="h3">Real <span class="cool">client work</span></div>
+          </div>
+          <div class="conn" id="s9-c1"><span class="pulse" id="s9-p1"></span></div>
+          <div class="fnode panel lit" id="s9-n2">
+            <div class="fk">Proven on</div>
+            <div class="figrow"><span class="num fig" id="s9-fig">8 &amp; 9</span>
+              <span class="h3">figure<br />brands</span></div>
+          </div>
+          <div class="conn" id="s9-c2"><span class="pulse" id="s9-p2"></span></div>
+          <div class="fnode ghost" id="s9-n3">
+            <div class="h3 dim">&hellip;then it reaches you</div>
+          </div>
+        </div>
+      </div>
+      <div class="streak" id="s09-provenance-streak"></div>
+    </div>
+
+    <style>
+      /* LOCAL font — no network at render time (a CDN fetch is non-deterministic) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+
+    [data-composition-id="s09-provenance"] { position: absolute; inset: 0; overflow: hidden;
+      font-family: 'Rethink Sans', system-ui, sans-serif;
+      color: #FFFFFF; -webkit-font-smoothing: antialiased; }
+    [data-composition-id="s09-provenance"] * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* the animated card — rides in/out on a blurred whip, revealing the A-roll */
+    [data-composition-id="s09-provenance"] .wrap { position: absolute; inset: 0; will-change: transform, filter, opacity; }
+
+    [data-composition-id="s09-provenance"] .bg { position: absolute; inset: 0; background:
+        radial-gradient(64% 44% at 16% 12%, rgba(156,212,255,.15) 0%, rgba(6,40,76,0) 62%),
+        radial-gradient(58% 40% at 88% 86%, rgba(255,76,50,.11) 0%, rgba(6,40,76,0) 60%),
+        #06284C; }
+
+    [data-composition-id="s09-provenance"] .grid { position: absolute; inset: -12%; opacity: .5; background-repeat: repeat;
+      background-image:
+        repeating-linear-gradient(0deg,  rgba(156,212,255,.070) 0 1px, transparent 1px 90px),
+        repeating-linear-gradient(90deg, rgba(156,212,255,.070) 0 1px, transparent 1px 90px); }
+
+    /* registration crosshairs — the spine under everything */
+    [data-composition-id="s09-provenance"] .marks { position: absolute; inset: 0; opacity: .34; }
+    [data-composition-id="s09-provenance"] .marks i { position: absolute; width: 15px; height: 15px; }
+    [data-composition-id="s09-provenance"] .marks i::before, [data-composition-id="s09-provenance"] .marks i::after { content: ''; position: absolute;
+      background: rgba(156,212,255,.5); }
+    [data-composition-id="s09-provenance"] .marks i::before { left: 7px; top: 0; width: 1px; height: 15px; }
+    [data-composition-id="s09-provenance"] .marks i::after  { top: 7px; left: 0; height: 1px; width: 15px; }
+
+    [data-composition-id="s09-provenance"] .vig { position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 82% 66% at 50% 44%, rgba(2,14,30,0) 34%, rgba(2,14,30,.9) 100%); }
+
+    /* deterministic CSS grain — no PNG, no randomness */
+    [data-composition-id="s09-provenance"] .grain { position: absolute; inset: 0; pointer-events: none; opacity: .5; mix-blend-mode: overlay;
+      background-image:
+        radial-gradient(rgba(255,255,255,.030) .5px, transparent .5px),
+        radial-gradient(rgba(255,255,255,.022) .5px, transparent .5px),
+        radial-gradient(rgba(0,0,0,.020) .5px, transparent .5px);
+      background-size: 3px 3px, 5px 5px, 7px 7px;
+      background-position: 0 0, 1px 2px, 3px 1px; }
+
+    /* content plate */
+    [data-composition-id="s09-provenance"] .content { position: absolute; inset: 0; display: flex; flex-direction: column;
+      justify-content: center; padding: 232px 96px 120px; }
+
+    /* --- shared type ------------------------------------------------------ */
+    [data-composition-id="s09-provenance"] .eyebrow { font-weight: 600; font-size: 25px; letter-spacing: .3em;
+      text-transform: uppercase; color: #6F8DB3; }
+    [data-composition-id="s09-provenance"] .h1 { font-weight: 800; font-size: 90px; line-height: .95; letter-spacing: -.03em; }
+    [data-composition-id="s09-provenance"] .h2 { font-weight: 800; font-size: 62px; line-height: 1.0;  letter-spacing: -.025em; }
+    [data-composition-id="s09-provenance"] .h3 { font-weight: 700; font-size: 44px; line-height: 1.08; letter-spacing: -.02em; }
+    [data-composition-id="s09-provenance"] .body { font-weight: 500; font-size: 31px; line-height: 1.32; color: #C7DAF0; }
+    [data-composition-id="s09-provenance"] .hot   { color: #FF4C32; }
+    [data-composition-id="s09-provenance"] .cool  { color: #9CD4FF; }
+    [data-composition-id="s09-provenance"] .dim   { color: #6F8DB3; }
+    [data-composition-id="s09-provenance"] .num { font-weight: 800; letter-spacing: -.045em; font-variant-numeric: tabular-nums;
+      line-height: .84; }
+
+    /* tags / chips */
+    [data-composition-id="s09-provenance"] .tag { display: inline-flex; align-items: center; gap: 10px; font-weight: 700;
+      font-size: 24px; letter-spacing: .085em; text-transform: uppercase;
+      padding: 11px 20px; border-radius: 999px; border: 1px solid #1D4A7A;
+      background: rgba(13,58,107,.62); color: #9CD4FF; }
+    [data-composition-id="s09-provenance"] .tag.hotTag { color: #FF4C32; border-color: rgba(255,76,50,.5);
+      background: rgba(255,76,50,.11); }
+    [data-composition-id="s09-provenance"] .tag.dimTag { color: #6F8DB3; border-color: rgba(111,141,179,.4);
+      background: rgba(111,141,179,.09); }
+    [data-composition-id="s09-provenance"] .dot { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+
+    /* panels */
+    [data-composition-id="s09-provenance"] .panel { border: 1px solid #1D4A7A; border-radius: 26px;
+      background: linear-gradient(160deg, rgba(16,61,111,.9) 0%, rgba(8,44,84,.86) 100%);
+      box-shadow: 0 30px 80px -34px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.09); }
+
+    /* light streak used for in-scene whips */
+    [data-composition-id="s09-provenance"] .streak { position: absolute; left: -40%; width: 60%; height: 5px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.92), transparent);
+      filter: blur(7px); opacity: 0; }
+    [data-composition-id="s09-provenance"] .streak { top: 38%; }
+
+    [data-composition-id="s09-provenance"] .content { gap: 23.799999999999997px; }
+    [data-composition-id="s09-provenance"] .flow { display: flex; flex-direction: column; align-items: stretch; }
+    [data-composition-id="s09-provenance"] .fnode { padding: 26.52px 28.9px; display: flex;
+      flex-direction: column; gap: 10px; }
+    [data-composition-id="s09-provenance"] .fnode.lit { border-color: rgba(156,212,255,.5);
+      box-shadow: 0 0 70px -20px rgba(156,212,255,.5), inset 0 1px 0 rgba(255,255,255,.12); }
+    [data-composition-id="s09-provenance"] .fnode.ghost { border: 1px dashed rgba(111,141,179,.45); border-radius: 26px;
+      background: rgba(111,141,179,.05); box-shadow: none; }
+    [data-composition-id="s09-provenance"] .fk { font-weight: 700; font-size: 25px; letter-spacing: .22em;
+      text-transform: uppercase; color: #6F8DB3; }
+    [data-composition-id="s09-provenance"] .figrow { display: flex; align-items: center; gap: 20px; }
+    [data-composition-id="s09-provenance"] .fig { font-size: 98.8px; color: #FFFFFF;
+      text-shadow: 0 0 54px rgba(156,212,255,.5); }
+    [data-composition-id="s09-provenance"] .figrow .h3 { line-height: 1.02; }
+    [data-composition-id="s09-provenance"] .conn { height: 39.099999999999994px; margin-left: 32.3px; width: 4px;
+      background: rgba(156,212,255,.55); position: relative; border-radius: 2px; }
+    [data-composition-id="s09-provenance"] .pulse { position: absolute; left: -3px; top: 0; width: 9px; height: 34px; border-radius: 5px;
+      background: linear-gradient(180deg, transparent, #9CD4FF, transparent);
+      filter: blur(1px); opacity: 0; }
+    </style>
+
+    <!-- GSAP vendored locally — a CDN script cert-fails in the render env -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const root = '[data-composition-id="s09-provenance"]';
+        const tl = gsap.timeline({ paused: true });
+
+      // --- ambient: grid parallax + vignette breath (camera never sleeps) ---
+      tl.fromTo(root + " .grid", { backgroundPositionY: 0, backgroundPositionX: 0 },
+        { backgroundPositionY: 28, backgroundPositionX: -16,
+          duration: 4.8667, ease: "none" }, 0);
+      tl.fromTo(root + " .vig", { opacity: .82 }, { opacity: 1, duration: 2.4333,
+        ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+      tl.fromTo(root + " .marks", { opacity: .2 }, { opacity: .40,
+        duration: 2.4333, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+
+      // ENTRY — rises from below under blur; matches the
+      // previous beat's exit velocity. Opacity snaps early so the A-roll never ghosts through.
+      gsap.set(root + " .wrap", { opacity: 0, y: 170, filter: "blur(30px)" });
+      tl.to(root + " .wrap", { opacity: 1, duration: .12, ease: "none" }, 0);
+      tl.to(root + " .wrap", { y: 0, filter: "blur(0px)", duration: .46, ease: "power2.out" }, 0);
+
+      tl.fromTo(root + " #s9-eb", { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: .44, ease: "power2.out" }, 0.03333333333333333);
+      tl.fromTo(root + " #s9-n1", { opacity: 0, y: 38 },
+        { opacity: 1, y: 0, duration: .52, ease: "back.out(1.15)" }, 0.7);
+      tl.fromTo(root + " #s9-c1", { scaleY: 0 }, { scaleY: 1, duration: .3,
+        ease: "power2.out", transformOrigin: "50% 0%" }, 2.4);
+      // energy travels down the chain
+      tl.fromTo(root + " #s9-p1", { y: -34, opacity: 0 },
+        { y: 39.1, opacity: 1, duration: .34, ease: "power1.in" }, 2.5);
+      tl.fromTo(root + " #s9-n2", { opacity: 0, y: 38 },
+        { opacity: 1, y: 0, duration: .52, ease: "back.out(1.15)" }, 2.6399999999999997);
+      // HERO — the proof number
+      tl.fromTo(root + " #s9-fig", { opacity: 0, scale: .7 },
+        { opacity: 1, scale: 1, duration: .5, ease: "back.out(1.8)" }, 3.1333333333333333);
+      tl.fromTo(root + " #s9-c2", { scaleY: 0 }, { scaleY: 1, duration: .3,
+        ease: "power2.out", transformOrigin: "50% 0%" }, 3.433333333333333);
+      tl.fromTo(root + " #s9-p2", { y: -34, opacity: 0 },
+        { y: 39.1, opacity: 1, duration: .34, ease: "power1.in" }, 3.533333333333333);
+      // the third node stays dashed and unlit — it only lights up for YOU, later
+      tl.fromTo(root + " #s9-n3", { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: .46, ease: "power2.out" }, 3.6733333333333333);
+
+      // in-scene light streak — motion blur across the seam, never a hard cut
+      tl.fromTo(root + " #s09-provenance-streak", { xPercent: -60, opacity: 0, scaleX: .6 },
+        { xPercent: 260, opacity: .9, scaleX: 1.4, duration: .34, ease: "power3.in" }, 0.06);
+      tl.to(root + " #s09-provenance-streak", { opacity: 0, duration: .16 }, 0.4000);
+
+      // EXIT (local 4.5067) — rides up under blur, handing the
+      // frame back to the founder A-roll. Matches the next beat's entry blur.
+      tl.to(root + " .wrap", { y: -170, filter: "blur(30px)", duration: .36, ease: "power2.in" }, 4.5067);
+      tl.to(root + " .wrap", { opacity: 0, duration: .18, ease: "power1.in" }, 4.6867);
+
+        // Law #11 — anchor the timeline to the full slot or HyperFrames hides
+        // the composition early and you get a black-frame flash at the tail.
+        tl.to({}, { duration: 4.8667 }, 0);
+        window.__timelines['s09-provenance'] = tl;
+      })();
+    </script>
+  </div>
+</template>

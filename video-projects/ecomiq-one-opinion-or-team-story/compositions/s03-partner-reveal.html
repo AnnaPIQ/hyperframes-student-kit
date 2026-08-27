@@ -1,0 +1,184 @@
+<template id="s03-partner-reveal-template">
+  <div data-composition-id="s03-partner-reveal" data-start="0" data-duration="4.0667"
+       data-width="1080" data-height="1920">
+    <div class="wrap">
+      <div class="bg"></div>
+      <div class="grid"></div>
+      <div class="marks"><i style="left:40.27%;top:60.22%"></i><i style="left:81.96%;top:45.23%"></i><i style="left:59.84%;top:91.99%"></i><i style="left:68.09%;top:42.44%"></i><i style="left:75.84%;top:62.60%"></i><i style="left:50.09%;top:89.03%"></i><i style="left:87.20%;top:22.54%"></i><i style="left:29.16%;top:76.62%"></i><i style="left:93.17%;top:81.10%"></i><i style="left:6.70%;top:14.25%"></i><i style="left:93.35%;top:86.43%"></i><i style="left:27.81%;top:68.68%"></i></div>
+      <div class="vig"></div>
+      <div class="grain"></div>
+      <div class="content">
+        <div class="eyebrow" id="s3-eb">It&rsquo;s the coaching arm of a</div>
+        <div class="badge panel" id="s3-badge">
+          <div class="bd-check" id="s3-check">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 17l6 6 12-13" fill="none"
+              stroke="#9CD4FF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="bd-txt">
+            <div class="h3" id="s3-l1">Shopify</div>
+            <div class="h2" id="s3-l2">Premier Partner</div>
+          </div>
+        </div>
+        <div class="chiprow" id="s3-chips">
+          <span class="tag" id="s3-chip1"><span class="dot"></span>Pacific IQ</span>
+          <span class="tag dimTag" id="s3-chip2">the coaching arm</span>
+        </div>
+        <div class="rule" id="s3-rule"></div>
+      </div>
+      <div class="streak" id="s03-partner-reveal-streak"></div>
+    </div>
+
+    <style>
+      /* LOCAL font — no network at render time (a CDN fetch is non-deterministic) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+
+    [data-composition-id="s03-partner-reveal"] { position: absolute; inset: 0; overflow: hidden;
+      font-family: 'Rethink Sans', system-ui, sans-serif;
+      color: #FFFFFF; -webkit-font-smoothing: antialiased; }
+    [data-composition-id="s03-partner-reveal"] * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* the animated card — rides in/out on a blurred whip, revealing the A-roll */
+    [data-composition-id="s03-partner-reveal"] .wrap { position: absolute; inset: 0; will-change: transform, filter, opacity; }
+
+    [data-composition-id="s03-partner-reveal"] .bg { position: absolute; inset: 0; background:
+        radial-gradient(64% 44% at 16% 12%, rgba(156,212,255,.15) 0%, rgba(6,40,76,0) 62%),
+        radial-gradient(58% 40% at 88% 86%, rgba(255,76,50,.11) 0%, rgba(6,40,76,0) 60%),
+        #06284C; }
+
+    [data-composition-id="s03-partner-reveal"] .grid { position: absolute; inset: -12%; opacity: .5; background-repeat: repeat;
+      background-image:
+        repeating-linear-gradient(0deg,  rgba(156,212,255,.070) 0 1px, transparent 1px 96px),
+        repeating-linear-gradient(90deg, rgba(156,212,255,.070) 0 1px, transparent 1px 96px); }
+
+    /* registration crosshairs — the spine under everything */
+    [data-composition-id="s03-partner-reveal"] .marks { position: absolute; inset: 0; opacity: .34; }
+    [data-composition-id="s03-partner-reveal"] .marks i { position: absolute; width: 15px; height: 15px; }
+    [data-composition-id="s03-partner-reveal"] .marks i::before, [data-composition-id="s03-partner-reveal"] .marks i::after { content: ''; position: absolute;
+      background: rgba(156,212,255,.5); }
+    [data-composition-id="s03-partner-reveal"] .marks i::before { left: 7px; top: 0; width: 1px; height: 15px; }
+    [data-composition-id="s03-partner-reveal"] .marks i::after  { top: 7px; left: 0; height: 1px; width: 15px; }
+
+    [data-composition-id="s03-partner-reveal"] .vig { position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 82% 66% at 50% 44%, rgba(2,14,30,0) 34%, rgba(2,14,30,.9) 100%); }
+
+    /* deterministic CSS grain — no PNG, no randomness */
+    [data-composition-id="s03-partner-reveal"] .grain { position: absolute; inset: 0; pointer-events: none; opacity: .5; mix-blend-mode: overlay;
+      background-image:
+        radial-gradient(rgba(255,255,255,.030) .5px, transparent .5px),
+        radial-gradient(rgba(255,255,255,.022) .5px, transparent .5px),
+        radial-gradient(rgba(0,0,0,.020) .5px, transparent .5px);
+      background-size: 3px 3px, 5px 5px, 7px 7px;
+      background-position: 0 0, 1px 2px, 3px 1px; }
+
+    /* content plate */
+    [data-composition-id="s03-partner-reveal"] .content { position: absolute; inset: 0; display: flex; flex-direction: column;
+      justify-content: center; padding: 380px 96px 330px; }
+
+    /* --- shared type ------------------------------------------------------ */
+    [data-composition-id="s03-partner-reveal"] .eyebrow { font-weight: 600; font-size: 27px; letter-spacing: .3em;
+      text-transform: uppercase; color: #6F8DB3; }
+    [data-composition-id="s03-partner-reveal"] .h1 { font-weight: 800; font-size: 96px; line-height: .95; letter-spacing: -.03em; }
+    [data-composition-id="s03-partner-reveal"] .h2 { font-weight: 800; font-size: 68px; line-height: 1.0;  letter-spacing: -.025em; }
+    [data-composition-id="s03-partner-reveal"] .h3 { font-weight: 700; font-size: 48px; line-height: 1.08; letter-spacing: -.02em; }
+    [data-composition-id="s03-partner-reveal"] .body { font-weight: 500; font-size: 34px; line-height: 1.32; color: #C7DAF0; }
+    [data-composition-id="s03-partner-reveal"] .hot   { color: #FF4C32; }
+    [data-composition-id="s03-partner-reveal"] .cool  { color: #9CD4FF; }
+    [data-composition-id="s03-partner-reveal"] .dim   { color: #6F8DB3; }
+    [data-composition-id="s03-partner-reveal"] .num { font-weight: 800; letter-spacing: -.045em; font-variant-numeric: tabular-nums;
+      line-height: .84; }
+
+    /* tags / chips */
+    [data-composition-id="s03-partner-reveal"] .tag { display: inline-flex; align-items: center; gap: 10px; font-weight: 700;
+      font-size: 26px; letter-spacing: .085em; text-transform: uppercase;
+      padding: 11px 20px; border-radius: 999px; border: 1px solid #1D4A7A;
+      background: rgba(13,58,107,.62); color: #9CD4FF; }
+    [data-composition-id="s03-partner-reveal"] .tag.hotTag { color: #FF4C32; border-color: rgba(255,76,50,.5);
+      background: rgba(255,76,50,.11); }
+    [data-composition-id="s03-partner-reveal"] .tag.dimTag { color: #6F8DB3; border-color: rgba(111,141,179,.4);
+      background: rgba(111,141,179,.09); }
+    [data-composition-id="s03-partner-reveal"] .dot { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+
+    /* panels */
+    [data-composition-id="s03-partner-reveal"] .panel { border: 1px solid #1D4A7A; border-radius: 26px;
+      background: linear-gradient(160deg, rgba(16,61,111,.9) 0%, rgba(8,44,84,.86) 100%);
+      box-shadow: 0 30px 80px -34px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.09); }
+
+    /* light streak used for in-scene whips */
+    [data-composition-id="s03-partner-reveal"] .streak { position: absolute; left: -40%; width: 60%; height: 5px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.92), transparent);
+      filter: blur(7px); opacity: 0; }
+    [data-composition-id="s03-partner-reveal"] .streak { top: 38%; }
+
+    [data-composition-id="s03-partner-reveal"] .content { gap: 46px; }
+    [data-composition-id="s03-partner-reveal"] .badge { display: flex; align-items: center; gap: 36.800000000000004px; padding: 46px;
+      border-color: rgba(156,212,255,.34); }
+    [data-composition-id="s03-partner-reveal"] .bd-check { width: 104px; height: 104px; flex: none; border-radius: 50%;
+      display: grid; place-items: center; background: rgba(156,212,255,.13);
+      border: 1px solid rgba(156,212,255,.4); box-shadow: 0 0 44px -6px rgba(156,212,255,.45); }
+    [data-composition-id="s03-partner-reveal"] .bd-check svg { width: 56%; height: 56%; }
+    [data-composition-id="s03-partner-reveal"] .bd-txt { display: flex; flex-direction: column; gap: 6px; }
+    [data-composition-id="s03-partner-reveal"] .bd-txt .h3 { color: #9CD4FF; letter-spacing: .01em; }
+    [data-composition-id="s03-partner-reveal"] .chiprow { display: flex; flex-wrap: wrap; gap: 16px; }
+    [data-composition-id="s03-partner-reveal"] .rule { height: 4px; border-radius: 3px; width: 46%; transform-origin: 0% 50%;
+      background: linear-gradient(90deg, #FF4C32, rgba(255,76,50,0)); }
+    </style>
+
+    <!-- GSAP vendored locally — a CDN script cert-fails in the render env -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const root = '[data-composition-id="s03-partner-reveal"]';
+        const tl = gsap.timeline({ paused: true });
+
+      // --- ambient: grid parallax + vignette breath (camera never sleeps) ---
+      tl.fromTo(root + " .grid", { backgroundPositionY: 0, backgroundPositionX: 0 },
+        { backgroundPositionY: 28, backgroundPositionX: -16,
+          duration: 4.0667, ease: "none" }, 0);
+      tl.fromTo(root + " .vig", { opacity: .82 }, { opacity: 1, duration: 2.0333,
+        ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+      tl.fromTo(root + " .marks", { opacity: .2 }, { opacity: .40,
+        duration: 2.0333, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+
+      // ENTRY — rises from below under blur; matches the
+      // previous beat's exit velocity. Opacity snaps early so the A-roll never ghosts through.
+      gsap.set(root + " .wrap", { opacity: 0, y: 170, filter: "blur(30px)" });
+      tl.to(root + " .wrap", { opacity: 1, duration: .12, ease: "none" }, 0);
+      tl.to(root + " .wrap", { y: 0, filter: "blur(0px)", duration: .46, ease: "power2.out" }, 0);
+
+      tl.fromTo(root + " #s3-eb", { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: .46, ease: "power2.out" }, 0.03333333333333333);
+      tl.fromTo(root + " #s3-rule", { scaleX: 0 }, { scaleX: 1, duration: .5, ease: "expo.out" }, 0.17333333333333334);
+      // the credential lands with weight
+      tl.fromTo(root + " #s3-badge", { opacity: 0, y: 52, scale: .94 },
+        { opacity: 1, y: 0, scale: 1, duration: .6, ease: "back.out(1.2)" }, 1.3);
+      tl.fromTo(root + " #s3-check", { scale: 0, rotate: -40 },
+        { scale: 1, rotate: 0, duration: .5, ease: "back.out(2)" }, 1.44);
+      tl.fromTo(root + " #s3-l1", { opacity: 0, x: -26 },
+        { opacity: 1, x: 0, duration: .42, ease: "power3.out" }, 1.5);
+      tl.fromTo(root + " #s3-l2", { opacity: 0, x: -34 },
+        { opacity: 1, x: 0, duration: .48, ease: "expo.out" }, 1.6);
+      tl.fromTo(root + " #s3-chip1", { opacity: 0, y: 24, scale: .9 },
+        { opacity: 1, y: 0, scale: 1, duration: .44, ease: "back.out(1.6)" }, 2.6333333333333333);
+      tl.fromTo(root + " #s3-chip2", { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: .42, ease: "power2.out" }, 2.7733333333333334);
+
+      // in-scene light streak — motion blur across the seam, never a hard cut
+      tl.fromTo(root + " #s03-partner-reveal-streak", { xPercent: -60, opacity: 0, scaleX: .6 },
+        { xPercent: 260, opacity: .9, scaleX: 1.4, duration: .34, ease: "power3.in" }, 0.06);
+      tl.to(root + " #s03-partner-reveal-streak", { opacity: 0, duration: .16 }, 0.4000);
+
+      // EXIT (local 3.7067) — rides up under blur, handing the
+      // frame back to the founder A-roll. Matches the next beat's entry blur.
+      tl.to(root + " .wrap", { y: -170, filter: "blur(30px)", duration: .36, ease: "power2.in" }, 3.7067);
+      tl.to(root + " .wrap", { opacity: 0, duration: .18, ease: "power1.in" }, 3.8867);
+
+        // Law #11 — anchor the timeline to the full slot or HyperFrames hides
+        // the composition early and you get a black-frame flash at the tail.
+        tl.to({}, { duration: 4.0667 }, 0);
+        window.__timelines['s03-partner-reveal'] = tl;
+      })();
+    </script>
+  </div>
+</template>

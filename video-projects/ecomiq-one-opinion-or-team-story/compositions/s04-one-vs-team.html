@@ -1,0 +1,199 @@
+<template id="s04-one-vs-team-template">
+  <div data-composition-id="s04-one-vs-team" data-start="0" data-duration="4.3333"
+       data-width="1080" data-height="1920">
+    <div class="wrap">
+      <div class="bg"></div>
+      <div class="grid"></div>
+      <div class="marks"><i style="left:40.27%;top:60.22%"></i><i style="left:81.96%;top:45.23%"></i><i style="left:59.84%;top:91.99%"></i><i style="left:68.09%;top:42.44%"></i><i style="left:75.84%;top:62.60%"></i><i style="left:50.09%;top:89.03%"></i><i style="left:87.20%;top:22.54%"></i><i style="left:29.16%;top:76.62%"></i><i style="left:93.17%;top:81.10%"></i><i style="left:6.70%;top:14.25%"></i><i style="left:93.35%;top:86.43%"></i><i style="left:27.81%;top:68.68%"></i></div>
+      <div class="vig"></div>
+      <div class="grain"></div>
+      <div class="content">
+        <div class="h2" id="s4-h"><span class="dim">Not one take.</span><br /><span id="s4-h2">A whole team.</span></div>
+        <div class="vs" id="s4-vs">
+          <div class="side" id="s4-left">
+            <div class="col-wrap">
+              <div class="cbar dimBar" id="s4-lb"></div>
+              <div class="strike" id="s4-strike"></div>
+            </div>
+            <div class="lbl dim">one person&rsquo;s take</div>
+          </div>
+          <div class="side" id="s4-right">
+            <div class="col-wrap">
+              <div class="cbar hotBar" id="s4-rb">
+                <div class="avs" id="s4-avs">
+                  <span class="av"></span>
+                  <span class="av"></span>
+                  <span class="av"></span>
+                  <span class="av"></span>
+                  <span class="av"></span>
+                  <span class="av"></span>
+                </div>
+              </div>
+            </div>
+            <div class="lbl cool">a whole team</div>
+          </div>
+        </div>
+      </div>
+      <div class="streak" id="s04-one-vs-team-streak"></div>
+    </div>
+
+    <style>
+      /* LOCAL font — no network at render time (a CDN fetch is non-deterministic) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+
+    [data-composition-id="s04-one-vs-team"] { position: absolute; inset: 0; overflow: hidden;
+      font-family: 'Rethink Sans', system-ui, sans-serif;
+      color: #FFFFFF; -webkit-font-smoothing: antialiased; }
+    [data-composition-id="s04-one-vs-team"] * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* the animated card — rides in/out on a blurred whip, revealing the A-roll */
+    [data-composition-id="s04-one-vs-team"] .wrap { position: absolute; inset: 0; will-change: transform, filter, opacity; }
+
+    [data-composition-id="s04-one-vs-team"] .bg { position: absolute; inset: 0; background:
+        radial-gradient(64% 44% at 16% 12%, rgba(156,212,255,.15) 0%, rgba(6,40,76,0) 62%),
+        radial-gradient(58% 40% at 88% 86%, rgba(255,76,50,.11) 0%, rgba(6,40,76,0) 60%),
+        #06284C; }
+
+    [data-composition-id="s04-one-vs-team"] .grid { position: absolute; inset: -12%; opacity: .5; background-repeat: repeat;
+      background-image:
+        repeating-linear-gradient(0deg,  rgba(156,212,255,.070) 0 1px, transparent 1px 96px),
+        repeating-linear-gradient(90deg, rgba(156,212,255,.070) 0 1px, transparent 1px 96px); }
+
+    /* registration crosshairs — the spine under everything */
+    [data-composition-id="s04-one-vs-team"] .marks { position: absolute; inset: 0; opacity: .34; }
+    [data-composition-id="s04-one-vs-team"] .marks i { position: absolute; width: 15px; height: 15px; }
+    [data-composition-id="s04-one-vs-team"] .marks i::before, [data-composition-id="s04-one-vs-team"] .marks i::after { content: ''; position: absolute;
+      background: rgba(156,212,255,.5); }
+    [data-composition-id="s04-one-vs-team"] .marks i::before { left: 7px; top: 0; width: 1px; height: 15px; }
+    [data-composition-id="s04-one-vs-team"] .marks i::after  { top: 7px; left: 0; height: 1px; width: 15px; }
+
+    [data-composition-id="s04-one-vs-team"] .vig { position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 82% 66% at 50% 44%, rgba(2,14,30,0) 34%, rgba(2,14,30,.9) 100%); }
+
+    /* deterministic CSS grain — no PNG, no randomness */
+    [data-composition-id="s04-one-vs-team"] .grain { position: absolute; inset: 0; pointer-events: none; opacity: .5; mix-blend-mode: overlay;
+      background-image:
+        radial-gradient(rgba(255,255,255,.030) .5px, transparent .5px),
+        radial-gradient(rgba(255,255,255,.022) .5px, transparent .5px),
+        radial-gradient(rgba(0,0,0,.020) .5px, transparent .5px);
+      background-size: 3px 3px, 5px 5px, 7px 7px;
+      background-position: 0 0, 1px 2px, 3px 1px; }
+
+    /* content plate */
+    [data-composition-id="s04-one-vs-team"] .content { position: absolute; inset: 0; display: flex; flex-direction: column;
+      justify-content: center; padding: 380px 96px 330px; }
+
+    /* --- shared type ------------------------------------------------------ */
+    [data-composition-id="s04-one-vs-team"] .eyebrow { font-weight: 600; font-size: 27px; letter-spacing: .3em;
+      text-transform: uppercase; color: #6F8DB3; }
+    [data-composition-id="s04-one-vs-team"] .h1 { font-weight: 800; font-size: 96px; line-height: .95; letter-spacing: -.03em; }
+    [data-composition-id="s04-one-vs-team"] .h2 { font-weight: 800; font-size: 68px; line-height: 1.0;  letter-spacing: -.025em; }
+    [data-composition-id="s04-one-vs-team"] .h3 { font-weight: 700; font-size: 48px; line-height: 1.08; letter-spacing: -.02em; }
+    [data-composition-id="s04-one-vs-team"] .body { font-weight: 500; font-size: 34px; line-height: 1.32; color: #C7DAF0; }
+    [data-composition-id="s04-one-vs-team"] .hot   { color: #FF4C32; }
+    [data-composition-id="s04-one-vs-team"] .cool  { color: #9CD4FF; }
+    [data-composition-id="s04-one-vs-team"] .dim   { color: #6F8DB3; }
+    [data-composition-id="s04-one-vs-team"] .num { font-weight: 800; letter-spacing: -.045em; font-variant-numeric: tabular-nums;
+      line-height: .84; }
+
+    /* tags / chips */
+    [data-composition-id="s04-one-vs-team"] .tag { display: inline-flex; align-items: center; gap: 10px; font-weight: 700;
+      font-size: 26px; letter-spacing: .085em; text-transform: uppercase;
+      padding: 11px 20px; border-radius: 999px; border: 1px solid #1D4A7A;
+      background: rgba(13,58,107,.62); color: #9CD4FF; }
+    [data-composition-id="s04-one-vs-team"] .tag.hotTag { color: #FF4C32; border-color: rgba(255,76,50,.5);
+      background: rgba(255,76,50,.11); }
+    [data-composition-id="s04-one-vs-team"] .tag.dimTag { color: #6F8DB3; border-color: rgba(111,141,179,.4);
+      background: rgba(111,141,179,.09); }
+    [data-composition-id="s04-one-vs-team"] .dot { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+
+    /* panels */
+    [data-composition-id="s04-one-vs-team"] .panel { border: 1px solid #1D4A7A; border-radius: 26px;
+      background: linear-gradient(160deg, rgba(16,61,111,.9) 0%, rgba(8,44,84,.86) 100%);
+      box-shadow: 0 30px 80px -34px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.09); }
+
+    /* light streak used for in-scene whips */
+    [data-composition-id="s04-one-vs-team"] .streak { position: absolute; left: -40%; width: 60%; height: 5px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.92), transparent);
+      filter: blur(7px); opacity: 0; }
+    [data-composition-id="s04-one-vs-team"] .streak { top: 62%; }
+
+    [data-composition-id="s04-one-vs-team"] .content { gap: 50.6px; }
+    [data-composition-id="s04-one-vs-team"] .vs { display: flex; gap: 46px; height: 493.5px; }
+    [data-composition-id="s04-one-vs-team"] .side { flex: 1; display: flex; flex-direction: column; gap: 18px; }
+    [data-composition-id="s04-one-vs-team"] .col-wrap { flex: 1; display: flex; align-items: flex-end; position: relative; }
+    [data-composition-id="s04-one-vs-team"] .cbar { width: 100%; border-radius: 20px 20px 6px 6px; transform-origin: 50% 100%; }
+    [data-composition-id="s04-one-vs-team"] .dimBar { height: 26%; background: linear-gradient(180deg, #6F8DB3 0%, #3B5A81 100%); }
+    [data-composition-id="s04-one-vs-team"] .hotBar { height: 100%; background: linear-gradient(180deg, #9CD4FF 0%, #3E86C8 100%);
+      box-shadow: 0 0 70px -10px rgba(156,212,255,.6); display: flex; align-items: flex-start;
+      justify-content: center; padding-top: 26px; }
+    [data-composition-id="s04-one-vs-team"] .avs { display: flex; flex-wrap: wrap; gap: 10px; width: 74%; justify-content: center; }
+    [data-composition-id="s04-one-vs-team"] .av { width: 30px; height: 30px; border-radius: 50%; background: rgba(6,40,76,.72);
+      border: 1px solid rgba(255,255,255,.5); }
+    [data-composition-id="s04-one-vs-team"] .strike { position: absolute; left: 0; right: 0; bottom: 13%; height: 5px;
+      background: #FF4C32; transform-origin: 0% 50%; border-radius: 4px;
+      box-shadow: 0 0 24px rgba(255,76,50,.75); }
+    [data-composition-id="s04-one-vs-team"] .lbl { font-weight: 700; font-size: 26px; letter-spacing: .1em;
+      text-transform: uppercase; text-align: center; }
+    </style>
+
+    <!-- GSAP vendored locally — a CDN script cert-fails in the render env -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const root = '[data-composition-id="s04-one-vs-team"]';
+        const tl = gsap.timeline({ paused: true });
+
+      // --- ambient: grid parallax + vignette breath (camera never sleeps) ---
+      tl.fromTo(root + " .grid", { backgroundPositionY: 0, backgroundPositionX: 0 },
+        { backgroundPositionY: -28, backgroundPositionX: 16,
+          duration: 4.3333, ease: "none" }, 0);
+      tl.fromTo(root + " .vig", { opacity: .82 }, { opacity: 1, duration: 2.1667,
+        ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+      tl.fromTo(root + " .marks", { opacity: .2 }, { opacity: .40,
+        duration: 2.1667, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+
+      // ENTRY — rises in from the left under blur; matches the
+      // previous beat's exit velocity. Opacity snaps early so the A-roll never ghosts through.
+      gsap.set(root + " .wrap", { opacity: 0, x: -190, filter: "blur(30px)" });
+      tl.to(root + " .wrap", { opacity: 1, duration: .12, ease: "none" }, 0);
+      tl.to(root + " .wrap", { x: 0, filter: "blur(0px)", duration: .46, ease: "power2.out" }, 0);
+
+      tl.fromTo(root + " #s4-h", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: .5, ease: "power3.out" }, 0.06666666666666667);
+      // the small bar: one person
+      tl.fromTo(root + " #s4-left", { opacity: 0, y: 34 },
+        { opacity: 1, y: 0, duration: .5, ease: "power2.out" }, 0.20666666666666667);
+      tl.fromTo(root + " #s4-lb", { scaleY: 0 }, { scaleY: 1, duration: .5, ease: "power3.out" }, 0.26666666666666666);
+      gsap.set(root + " #s4-strike", { scaleX: 0 });
+      tl.to(root + " #s4-strike", { scaleX: 1, duration: .3, ease: "expo.out" }, 1.6666666666666667);
+      tl.to(root + " #s4-lb", { filter: "saturate(.4) brightness(.8)", duration: .34 }, 1.6666666666666667);
+      // HERO — the team bar shoots up on "an entire team"
+      tl.fromTo(root + " #s4-right", { opacity: 0 }, { opacity: 1, duration: .16 }, 2.6333333333333333);
+      tl.fromTo(root + " #s4-rb", { scaleY: .06 },
+        { scaleY: 1, duration: .78, ease: "back.out(1.3)" }, 2.6333333333333333);
+      tl.fromTo(root + " #s4-h2", { color: "#6F8DB3" },
+        { color: "#FFFFFF", duration: .4, ease: "power2.out" }, 2.6333333333333333);
+      tl.fromTo(root + " #s4-avs .av", { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: .38, ease: "back.out(2.4)", stagger: .045 }, 3.2333333333333334);
+
+      // in-scene light streak — motion blur across the seam, never a hard cut
+      tl.fromTo(root + " #s04-one-vs-team-streak", { xPercent: -60, opacity: 0, scaleX: .6 },
+        { xPercent: 260, opacity: .9, scaleX: 1.4, duration: .34, ease: "power3.in" }, 0.06);
+      tl.to(root + " #s04-one-vs-team-streak", { opacity: 0, duration: .16 }, 0.4000);
+
+      // EXIT (local 3.9733) — rides right under blur, handing the
+      // frame back to the founder A-roll. Matches the next beat's entry blur.
+      tl.to(root + " .wrap", { x: 190, filter: "blur(30px)", duration: .36, ease: "power2.in" }, 3.9733);
+      tl.to(root + " .wrap", { opacity: 0, duration: .18, ease: "power1.in" }, 4.1533);
+
+        // Law #11 — anchor the timeline to the full slot or HyperFrames hides
+        // the composition early and you get a black-frame flash at the tail.
+        tl.to({}, { duration: 4.3333 }, 0);
+        window.__timelines['s04-one-vs-team'] = tl;
+      })();
+    </script>
+  </div>
+</template>
