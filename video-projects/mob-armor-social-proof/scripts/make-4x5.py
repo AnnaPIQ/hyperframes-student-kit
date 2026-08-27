@@ -83,6 +83,19 @@ SUBS = [
      "position: absolute; top: 0; left: 0; width: 122px; height: 4px;"),
     ("{ x: 510, opacity: 1, duration: 1.30", "{ x: 414, opacity: 1, duration: 1.30"),
 
+    # ── Mob Armor first screen + summary card ───────────────────────────────
+    ("        position: absolute; inset: 300px 0 576px;",
+     "        position: absolute; inset: 190px 0 405px;"),
+    (".ma-stage img { width: 640px; height: auto; display: block; }",
+     ".ma-stage img { width: 520px; height: auto; display: block; }"),
+    (".stat.md { font-size: 190px; }", ".stat.md { font-size: 154px; }"),
+    (".duo { display: flex; align-items: center; justify-content: center; gap: 56px; }",
+     ".duo { display: flex; align-items: center; justify-content: center; gap: 45px; }"),
+    (".duo-rule { width: 3px; height: 150px; background: #2f588a; }",
+     ".duo-rule { width: 3px; height: 122px; background: #2f588a; }"),
+    ("        font-weight: 800; font-size: 26px; letter-spacing: .22em; text-transform: uppercase;\n        color: var(--brand-blue-tint);",
+     "        font-weight: 800; font-size: 22px; letter-spacing: .22em; text-transform: uppercase;\n        color: var(--brand-blue-tint);"),
+
     # ── end card ────────────────────────────────────────────────────────────
     ("#endcard img.logo { width: 560px; height: auto; }",
      "#endcard img.logo { width: 458px; height: auto; }"),
@@ -124,8 +137,8 @@ def main():
     # A-roll is re-cropped from the 4K master for 4:5 (1728x2160 -> 1080x1350) rather than
     # letterbox-cropped from the 9:16 cut, which would cut Sean's head or torso.
     n_aroll = out.count('assets/aroll/')
-    if n_aroll != 4:
-        print(f"make-4x5: expected 4 A-roll references, found {n_aroll}")
+    if n_aroll != 6:
+        print(f"make-4x5: expected 6 A-roll references, found {n_aroll}")
         return 1
     out = out.replace('assets/aroll/', 'assets/aroll45/')
 
