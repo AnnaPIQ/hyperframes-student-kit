@@ -20,12 +20,17 @@ ffmpeg -y -ss <in> -t <dur> -i <src>.mp4 \
 
 | Local file | Beat | Source clip (Drive) | Drive file id | In–out | Pulled |
 |---|---|---|---|---|---|
-| `dunes-drone.mp4` | 03 | Tab Mount Maxx Tube Mount.mp4 | `1a8KoxoKVBnCt7oyuspILNfhsW7Mx7r0E` | 31.95–34.75 | 2026-08-27 |
+| `dunes-drone.mp4` | **00** | Tab Mount Maxx Tube Mount.mp4 | `1a8KoxoKVBnCt7oyuspILNfhsW7Mx7r0E` | 31.95–34.75 | 2026-08-27 |
+| `tablet-wall.mp4` | 03 | Tabnetic Direct.mp4 | `1BqMYocdVmTMAGKIrBiitTGrgpG9kzbL2` | 20.50–23.00 | 2026-08-27 |
 | `incab-dash.mp4` | 05 | Mobnetic Stix.mp4 | `1BDmv8-GU7194MJedTT_Ewje4m1N2y0NF` | 2.85–4.75 | 2026-08-27 |
 | `load-test.mp4` | 06 | Tabnetic Direct.mp4 | `1BqMYocdVmTMAGKIrBiitTGrgpG9kzbL2` | 14.90–17.20 | 2026-08-27 |
 | `facility-floor.mp4` | 10a | Tab Mount Maxx Direct.mp4 | `1ud577NtpMV6BpnnCF260IGagWDuocPLJ` | 12.70–15.10 | 2026-08-27 |
-| `cnc-sparks.mp4` | 10b | Tabnetic Discs.mp4 | `1sQIRGCsAxMEFB3J7w-BFFTjR-xF7ctJc` | 5.95–8.35 | 2026-08-27 |
+| `cnc-sparks.mp4` | 10b | Tabnetic Discs.mp4 | `1sQIRGCsAxMEFB3J7w-BFFTjR-xF7ctJc` | 5.95–7.55 | 2026-08-27 |
 | `radio-guy.mp4` | 14 | Rad Mount.mp4 | `1tDsY1YT6wk4z4xHC7Etaln2_8-qSmivU` | 28.20–30.75 | 2026-08-27 |
+
+> `cnc-sparks` must stay inside **5.92–7.79**. Scene detection at the 0.35 threshold
+> reports 5.9–9.9 as one scene, but there is a real cut at 7.79 — a longer trim jumps
+> from the CNC head to a hand holding a disc mid-shot.
 
 ### A-roll — Sean to camera (`assets/aroll/`, `assets/aroll45/`)
 
@@ -35,11 +40,13 @@ at that same timecode, so the lips stay locked to the continuous VO track with n
 
 | Local file | Beat | Source in–out | Line |
 |---|---|---|---|
-| `a00.mp4` | 00 | 0.000–1.950 | cold open, into "Up over…" |
-| `a02.mp4` | 02 | 4.400–6.283 | "That's what happened to Mob Armor's…" |
-| `a04.mp4` | 04 | 8.520–11.983 | "And it wasn't a lucky viral moment. It wasn't a magic ad." |
-| `a13.mp4` | 13 | 27.500–29.817 | "And that's what the right plan does." |
-| `a15.mp4` | 15 | 31.833–33.750 | "If you wanna see what's possible for yours," |
+| `a02.mp4` | 02 | 4.280–6.280 | "That's what happened to Mob Armor's…" (first word 4.44) |
+| `a04.mp4` | 04 | 8.220–11.990 | "And it wasn't a lucky viral moment. It wasn't a magic ad." (8.52) |
+| `a13.mp4` | 13 | 27.200–29.820 | "And that's what the right plan does." (27.43) |
+| `a15.mp4` | 15 | 31.650–33.750 | "If you wanna see what's possible for yours," (31.83) |
+
+Each starts ~0.2 s **before** its first word, so Sean is settled and readable before he
+speaks. The first ~1.05 s of the take is him setting up at the recorder and is never used.
 
 Two crops from the 4K master rather than one crop re-cropped — a 9:16 letterbox of the
 4:5 cut would cut his head or torso:
@@ -55,9 +62,9 @@ The grade eases the electric-cyan backdrop toward the EcomIQ navy world. Sean is
 **above** the b-roll scrim, so his face is never dimmed by it.
 
 ### Cut but kept in the shot list
-`tablet-wall` (Tabnetic Direct 20.55–22.35), `tablet-locked` (Tabnetic Direct 41.10–43.45)
-and `phone-dash` (Water balloon 2.55–3.80) were in the graphics-only cut and lost their
-slots to the A-roll. Files removed; the ranges above regenerate them in one ffmpeg line.
+`tablet-locked` (Tabnetic Direct 41.10–43.45) and `phone-dash` (Water balloon 2.55–3.80)
+lost their slots to the A-roll. Files removed; those ranges regenerate them in one
+ffmpeg line.
 
 **Logos** (client-supplied white versions — not redrawn, not recoloured):
 `Logos/logo-white@2x.png` (`1yMyyTH9kNmlSJ2Il2mFY_JqEvvQcmKWZ`, 2800×481 RGBA) and

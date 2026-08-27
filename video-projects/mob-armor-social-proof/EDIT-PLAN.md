@@ -117,44 +117,70 @@ top-left (72, 96) for the whole runtime, in a positioned non-`clip` div.
 
 | # | in → out | VO | On screen | Source |
 |---|---|---|---|---|
-| 00 | 0.000 → 1.700 | *(silence)* → "Up over…" | **A-ROLL.** Cold open on Sean. The ad opens on a face, not a card — it's a case study, and a person saying it is the proof. Slow 1.03× push. | `a00` 0.000–1.950 |
-| 01 | 1.700 → 4.400 | "…500% in a single year." | **CARD A — 500%.** Numeral snaps at 1.700, 0.20 s ahead of the spoken word, inside a flame streak. Rule wipes 2.10; "In a single year" 3.10; Mob Armor wordmark on a black chip 3.45. | — |
-| 02 | 4.400 → 6.033 | "That's what happened to Mob Armor's…" | **A-ROLL.** Back to Sean for the attribution. | `a02` 4.400–6.283 |
-| 03 | 6.033 → 8.520 | "…total sales after they started working with us." | **Hero b-roll:** drone, buggy across sand dunes, 1.08× push. | `Tab Mount Maxx Tube` 31.95–34.75 |
-| 04 | 8.520 → 11.733 | "And it wasn't a lucky viral moment. It wasn't a magic ad." | **A-ROLL.** Sean's direct-address block — opinion belongs on a face. **Punch-in at 10.160** on the sentence boundary: a deliberate jump hidden in a 3-frame blur, so 3.2 s never goes static without needing a second angle. | `a04` 8.520–11.983 |
+| 00 | 0.000 → 1.700 | *(silence)* → "Up over…" | **B-roll cold open.** Drone, buggy across sand dunes, 1.07× push. Sean's take opens with him setting up at the recorder, so the silent lead goes to the strongest shot instead. | `Tab Mount Maxx Tube` 31.95–34.75 |
+| 01 | 1.700 → 4.280 | "…500% in a single year." | **CARD A — 500%.** Numeral snaps at 1.700, 0.20 s ahead of the spoken word, inside a flame streak. Rule 2.10; "In a single year" 3.10; Mob Armor wordmark on a black chip 3.45. | — |
+| 02 | 4.280 → 6.033 | "That's what happened to Mob Armor's…" | **A-ROLL.** Sean's entrance, introducing his own client. Readable 0.16 s before his first word. | `a02` 4.280–6.280 |
+| 03 | 6.033 → 8.220 | "…total sales after they started working with us." | B-roll: tablet going onto a wall mount, loading bay. 1.06× push. | `Tabnetic Direct` 20.50–23.00 |
+| 04 | 8.220 → 11.733 | "And it wasn't a lucky viral moment. It wasn't a magic ad." | **A-ROLL.** The direct-address block — opinion belongs on a face. Readable 0.30 s before his first word. **Punch-in at 10.160** on the sentence boundary: 1.045× → 1.16× inside a three-frame blur. | `a04` 8.220–11.990 |
 | 05 | 11.733 → 13.200 | "When they came to us," | B-roll: phone on dash mount, in-cab. | `Mobnetic Stix` 2.85–4.75 |
 | 06 | 13.200 → 14.700 | "almost everything ran through Facebook." | B-roll: load test — a man hanging his full weight off two mounts. | `Tabnetic Direct` 14.90–17.20 |
-| 07 | 14.700 → 17.267 | "There was one channel doing all of the work." | **CARD B — 1.** One flame dot lit, three dark, the lit one visibly overloading on a 4-beat pulse. | — |
+| 07 | 14.700 → 17.267 | "There was one channel doing all of the work." | **CARD B — 1.** One flame dot lit, three dark, the lit one visibly overloading on a four-beat pulse. | — |
 | 08 | 17.267 → 19.400 | "We found three more that fit the brand" | **CARD C — +3.** Numeral swaps in place; three blue-tint dots ignite on "three more" and the two beats after. | — |
 | 09 | 19.400 → 21.733 | "and got them working in the right order." | Same card, **no cut** — copy recolours and a flame pulse runs the wire left→right, popping each dot in sequence. | — |
 | 10a | 21.733 → 22.800 | "A year later," | B-roll: facility floor, 1.05× push. | `Tab Mount Maxx Direct` 12.70–15.10 |
-| 10b | 22.800 → 23.867 | "sales are up over" | B-roll: CNC cutting head, sparks. Two 1.07 s shots accelerating into the callback. | `Tabnetic Discs` 5.95–8.35 |
+| 10b | 22.800 → 23.867 | "sales are up over" | B-roll: CNC cutting head, sparks. Two 1.07 s shots accelerating into the callback. | `Tabnetic Discs` 5.95–7.55 |
 | 11 | 23.867 → 25.233 | **"500%"** | **CARD D — the callback.** Card A returns, faster (0.34 s vs 0.42 s), carrying the Mob Armor shield rather than the wordmark. | — |
-| 12 | 25.233 → 27.500 | "across four channels instead of just one." | **CARD E — 4.** All four dots lit, staggered. "Channels — not one." | — |
-| 13 | 27.500 → 29.567 | "And that's what the right plan does." | **A-ROLL.** Sean draws the conclusion. | `a13` 27.500–29.817 |
-| 14 | 29.567 → 31.833 | "This is a real brand with real numbers." | B-roll: a real customer, face to camera, radio on the mount in his truck. | `Rad Mount` 28.20–30.75 |
-| 15 | 31.833 → 33.500 | "If you wanna see what's possible for yours," | **A-ROLL.** Sean hands off to the CTA. | `a15` 31.833–33.750 |
-| 16 | 33.500 → 38.600 | "tap the link to find out more." + 3.47 s silence | **EcomIQ end card.** Centred logo, "See what's *possible* for yours." with the single serif-italic word, flame CTA at 34.20. Holds **5.10 s**. Entry only — no exit tween, so the final frame never blurs away. | — |
+| 12 | 25.233 → 27.200 | "across four channels instead of just one." | **CARD E — 4.** All four dots lit, staggered. "Channels — not one." | — |
+| 13 | 27.200 → 29.567 | "And that's what the right plan does." | **A-ROLL.** Sean draws the conclusion. Readable 0.23 s before his first word. | `a13` 27.200–29.820 |
+| 14 | 29.567 → 31.650 | "This is a real brand with real numbers." | B-roll: a real customer, face to camera, radio on the mount in his truck. | `Rad Mount` 28.20–30.75 |
+| 15 | 31.650 → 33.500 | "If you wanna see what's possible for yours," | **A-ROLL.** Sean hands off to the CTA. Readable 0.18 s before his first word. | `a15` 31.650–33.750 |
+| 16 | 33.500 → 38.600 | "tap the link to find out more." + 3.47 s silence | **EcomIQ end card.** Centred logo, "See what's *possible* for yours." with the single serif-italic word, flame CTA at 34.20. Holds **5.10 s**. Entry only — no exit tween. | — |
 
 ### How the three registers alternate
 
 | Register | Share | Job |
 |---|---|---|
-| **A-roll (Sean)** | 10.3 s · 27% | Opens the ad, carries every line of opinion or conclusion, hands off to the CTA |
-| **Motion graphics** | 18.5 s · 48% | Only where a real figure is spoken — five cards, no more |
-| **Client b-roll** | 9.9 s · 25% | Proof texture under the narrative beats |
+| **A-roll (Sean)** | 9.5 s · 25% | Carries every line of opinion or conclusion, and hands off to the CTA |
+| **Motion graphics** | 18.0 s · 47% | Only where a real figure is spoken — five cards, no more |
+| **Client b-roll** | 11.1 s · 29% | Opens the ad, then proof texture under the setup and payoff lines |
 
-Sean appears five times. The pattern is deliberate: **face → number → face → proof → face**.
-He states the claim, the graphic evidences it, he interprets it. The b-roll never carries
-a claim on its own — it sits under lines that are setting up or paying off a figure.
+Sean appears four times. He states the claim, the graphic evidences it, he interprets it.
+The b-roll never carries a claim on its own — it opens the ad and then sits under lines
+that are setting up or paying off a figure.
+
+**Every A-roll beat starts ~0.2 s before its first word**, and A-roll uses a different
+transition from everything else (see §4.1) — both so his lips are readable the moment
+he speaks.
 
 ## 4.1 · The A-roll pass
 
 The first build was audio-led only — Sean's voice, no picture of him. Bringing him on
 screen changed the structure, not the timings: every card and every VO anchor sits where
-it did, and the b-roll gave up five slots.
+it did, and the b-roll gave up four slots.
 
-- **Five A-roll segments**, each cut at its own source timecode and placed in the
+**Two things had to be fixed after the first A-roll cut:**
+
+**The opening.** Sean's take begins with him setting up at the recorder — head down, mic
+not yet raised, until ~1.05 s. Because the A-roll is time-locked to the audio (below),
+there is no trim that fixes this: showing him at all in the first second means showing
+the fumble. The silent 1.7 s lead went to the dune-drone hero shot instead.
+
+**The face cuts read as bad lip sync — but the A/V was frame-accurate.** Measured before
+changing anything: across the 7.80→8.66 silence gap his mouth closes at ~7.78 and reopens
+at ~8.59; across 10.01→10.37 it closes ~10.15 and reopens ~10.40. Errors in opposite
+directions, so no systematic offset. Rendered audio starts within 12 ms of source with no
+drift by 29 s. The real cause was the **transition**: the 0.45 s blur-whip fired on every
+A-roll entry, and Sean starts speaking the instant he cuts in, so his first words played
+over a blurred, sliding face — at beat 04 he began "And it wasn't…" at 8.52 but was not
+readable until 8.97. Two fixes, both in the shipped cut:
+
+- **`beatFace()`** — a 4-frame blur kiss with no slide, for A-roll only. The whip stays on
+  graphics and b-roll, where nothing is speaking.
+- **Every A-roll beat starts ~0.2 s before its first word**, so he is settled and readable
+  before he speaks rather than arriving mid-syllable. He is now readable at 8.30 against a
+  first word at 8.52.
+
+- **Four A-roll segments**, each cut at its own source timecode and placed in the
   composition at that same timecode. The VO is one continuous track from the same file,
   so the lips lock with no offset. Re-trimming a segment to a different start would break
   that — the constraint is written into `index.html` above the A-roll block.
@@ -169,8 +195,12 @@ it did, and the b-roll gave up five slots.
   A talking head under a navy scrim reads as an error, not a grade.
 - **A punch-in instead of a second angle.** Beat 04 runs 3.2 s, well over this cut rate.
   At the sentence boundary (10.160) the shot jumps 1.045× → 1.16× inside a 3-frame blur.
-- **Three b-roll clips lost their slots** — `tablet-wall`, `tablet-locked`, `phone-dash`.
-  Ranges are still logged in `assets/broll/CREDITS.md` if you want them back.
+- **Two b-roll clips lost their slots** — `tablet-locked` and `phone-dash`. Ranges are
+  still logged in `assets/broll/CREDITS.md` if you want them back.
+- **A trap worth remembering:** re-trimming `cnc-sparks` longer to fill beat 03 pushed it
+  across a cut at 7.79 in the source, so the beat jumped from the CNC head to a hand
+  holding a disc mid-shot. Scene detection at the 0.35 threshold had reported 5.9–9.9 as
+  one scene; the cut only shows at 0.12. Verify the *trimmed file*, not the scene list.
 
 ## 4.2 · What changed between the approved plan and the build
 
