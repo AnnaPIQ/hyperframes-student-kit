@@ -1,0 +1,73 @@
+<template id="s19-cta-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s19-cta" data-start="0" data-duration="5.85" data-width="1080" data-height="1350">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s19-cta"] { position: absolute; inset: 0; overflow: hidden; background: transparent;
+      font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+    [data-composition-id="s19-cta"] .plate { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(92% 50% at 50% 106%, rgba(255,76,50,.20) 0%, rgba(6,40,76,0) 60%),
+        radial-gradient(72% 40% at 50% 20%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 60%), #06284C; }
+    [data-composition-id="s19-cta"] .grid { position: absolute; inset: 0; opacity: .13;
+      background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
+      background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
+    [data-composition-id="s19-cta"] .body { position: absolute; inset: 0; }
+    /* shared scene furniture */
+    [data-composition-id="s19-cta"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF; }
+    [data-composition-id="s19-cta"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
+      font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
+    [data-composition-id="s19-cta"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; }
+
+    [data-composition-id="s19-cta"] .endlogo { position: absolute; top: 384px; left: 50%; margin-left: -210px;
+      width: 420px; height: auto; filter: drop-shadow(0 8px 24px rgba(0,0,0,.5)); }
+    [data-composition-id="s19-cta"] .head { position: absolute; top: 556px; left: 88px; right: 88px; text-align: center;
+      font-weight: 800; font-size: 88px; line-height: 1.05; letter-spacing: -.03em; color: #FFFFFF; }
+    [data-composition-id="s19-cta"] .head em { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; color: #9CD4FF; }
+    [data-composition-id="s19-cta"] .cta { position: absolute; top: 878px; left: 50%; margin-left: -228px;
+      width: 456px; display: flex; align-items: center; justify-content: center; gap: 18px;
+      font-weight: 800; font-size: 46px; color: #FFFFFF;
+      background: linear-gradient(120deg, #FF4C32, #f09025); padding: 32px 0; border-radius: 999px;
+      box-shadow: 0 24px 70px -16px rgba(255,76,50,.7); }
+    [data-composition-id="s19-cta"] .cta svg { width: 38px; height: 38px; }
+  </style>
+
+  <div class="slot clip" id="s19-cta-slot" data-start="0" data-duration="5.85" data-track-index="0">
+    <div class="plate">
+      <div class="grid"></div>
+      <div class="body">
+        <img class="endlogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div class="head">Get an <em>entire team</em> behind your brand.</div>
+        <div class="cta">Learn More
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 5.85, S = '[data-composition-id="s19-cta"] ';
+      const tl = gsap.timeline({ paused: true });
+      // ENTRY — previous beat is also a graphic, so its navy plate already covers the
+      // frame: only the content cross-whips. Moving both plates would flash the root bg.
+      tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
+        { y: 0, filter: 'blur(0px)', duration: 0.55, ease: 'power2.out' }, 0);
+      tl.fromTo(S+'.endlogo', { opacity: 0, y: -20, scale: .92 },
+        { opacity: 1, y: 0, scale: 1, duration: .60, ease: 'back.out(1.5)' }, 0.10);
+      tl.fromTo(S+'.head', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .60, ease: 'power3.out' }, 0.35);
+      // pill lands under "tap the link below" and then breathes through the hold
+      tl.fromTo(S+'.cta', { opacity: 0, scale: .85 },
+        { opacity: 1, scale: 1, duration: .55, ease: 'back.out(1.7)' }, 0.70);
+      tl.to(S+'.cta', { scale: 1.045, duration: .70, ease: 'sine.inOut', yoyo: true, repeat: 5 }, 1.60);
+      // EXIT — final beat of the video; it holds to the last frame.
+      tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s19-cta'] = tl;
+    })();
+  </script>
+  </div>
+</template>

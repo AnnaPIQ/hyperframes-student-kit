@@ -1,0 +1,117 @@
+<template id="s05-logo-wall-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s05-logo-wall" data-start="0" data-duration="7.1" data-width="1080" data-height="1350">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s05-logo-wall"] { position: absolute; inset: 0; overflow: hidden; background: transparent;
+      font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+    [data-composition-id="s05-logo-wall"] .plate { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(64% 46% at 50% 42%, rgba(156,212,255,.11) 0%, rgba(6,40,76,0) 64%), #06284C; }
+    [data-composition-id="s05-logo-wall"] .grid { position: absolute; inset: 0; opacity: .13;
+      background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
+      background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
+    [data-composition-id="s05-logo-wall"] .body { position: absolute; inset: 0; }
+    /* shared scene furniture */
+    [data-composition-id="s05-logo-wall"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF; }
+    [data-composition-id="s05-logo-wall"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
+      font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
+    [data-composition-id="s05-logo-wall"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; }
+
+    [data-composition-id="s05-logo-wall"] #wall-track { position: absolute; left: 0; top: 0; width: 1080px;
+      display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 230px;
+      align-items: center; justify-items: center; }
+    [data-composition-id="s05-logo-wall"] #wall-track img { max-width: 400px; max-height: 128px;
+      width: auto; height: auto; opacity: .34; filter: drop-shadow(0 0 18px rgba(6,40,76,.9)); }
+    [data-composition-id="s05-logo-wall"] #wall-fade { position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(180deg, #06284C 0%, rgba(6,40,76,0) 15%),
+                  linear-gradient(0deg,  #06284C 0%, rgba(6,40,76,0) 15%); }
+    [data-composition-id="s05-logo-wall"] .eyebrow { top: 430px; }
+    /* margin-top, not translateY: GSAP animates y here and a CSS transform would be clobbered */
+    [data-composition-id="s05-logo-wall"] #wall-hero { position: absolute; left: 50%; top: 50%;
+      width: 500px; margin-left: -250px; margin-top: -196px; height: auto; display: block;
+      border-radius: 12px; box-shadow: 0 30px 90px -20px rgba(0,0,0,.75); }
+    [data-composition-id="s05-logo-wall"] .chip { position: absolute; left: 50%; margin-left: -186px;
+      width: 372px; text-align: center; font-weight: 700; font-size: 32px; letter-spacing: .02em;
+      padding: 18px 0; border-radius: 999px; background: rgba(156,212,255,.14);
+      border: 1px solid rgba(156,212,255,.5); color: #9CD4FF; }
+    [data-composition-id="s05-logo-wall"] #yrs { top: 828px; }
+    [data-composition-id="s05-logo-wall"] .rail { position: absolute; left: 90px; right: 90px; top: 992px;
+      text-align: center; font-weight: 800; font-size: 56px; line-height: 1.1; letter-spacing: -.02em;
+      color: #FFFFFF; }
+    [data-composition-id="s05-logo-wall"] .rail em { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; color: #9CD4FF; }
+  </style>
+
+  <div class="slot clip" id="s05-logo-wall-slot" data-start="0" data-duration="7.1" data-track-index="0">
+    <div class="plate">
+      <div class="grid"></div>
+      <div class="body">
+        <div id="wall-track">
+          <img src="assets/logos/harmless-harvest-logo-webp.png" alt="" />
+          <img src="assets/logos/images-10-png.png" alt="" />
+          <img src="assets/logos/images-11-png.png" alt="" />
+          <img src="assets/logos/images-12-png.png" alt="" />
+          <img src="assets/logos/images-13-png.png" alt="" />
+          <img src="assets/logos/images-14-png.png" alt="" />
+          <img src="assets/logos/images-2-png.png" alt="" />
+          <img src="assets/logos/images-3-png.png" alt="" />
+          <img src="assets/logos/images-4-jpeg.png" alt="" />
+          <img src="assets/logos/images-4-png.png" alt="" />
+          <img src="assets/logos/images-5-jpeg.png" alt="" />
+          <img src="assets/logos/images-5-png.png" alt="" />
+          <img src="assets/logos/images-6-jpeg.png" alt="" />
+          <img src="assets/logos/images-6-png.png" alt="" />
+          <img src="assets/logos/images-7-jpeg.png" alt="" />
+          <img src="assets/logos/images-7-png.png" alt="" />
+          <img src="assets/logos/images-8-jpeg.png" alt="" />
+          <img src="assets/logos/images-8-png.png" alt="" />
+          <img src="assets/logos/images-9-png.png" alt="" />
+          <img src="assets/logos/sotheby-s-logo-wine-svg.png" alt="" />
+          <img src="assets/logos/unnamed-jpg.png" alt="" />
+        </div>
+        <div id="wall-fade"></div>
+        <div class="eyebrow">The coach arm of a</div>
+        <img id="wall-hero" src="assets/shopify-premier-partner.png" alt="Shopify Premier Partner" />
+        <div class="chip" id="yrs">10+ years in</div>
+        <div class="rail">Some of the <em>biggest</em> brands in the world.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 7.1, S = '[data-composition-id="s05-logo-wall"] ';
+      const tl = gsap.timeline({ paused: true });
+      // ENTRY — the opaque plate wipes up over the outgoing founder frame; the
+      // content rides in behind it with matching blur so the cut never reads hard.
+      tl.fromTo(S+'.plate', { y: 1350 }, { y: 0, duration: 0.28, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.body', { y: 170, filter: 'blur(26px)' },
+        { y: 0, filter: 'blur(0px)', duration: 0.62, ease: 'power2.out' }, 0);
+      // the wall drifts continuously so it never reads as a static plate
+      tl.fromTo(S+'#wall-track', { y: 0 }, { y: -430, duration: 7.10, ease: 'none' }, 0);
+      tl.fromTo(S+'#wall-track img', { opacity: 0, y: 26 },
+        { opacity: .34, y: 0, duration: .42, stagger: .011, ease: 'power2.out' }, 0.10);
+      tl.fromTo(S+'.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .42, ease: 'power2.out' }, 0.62);
+      // badge lands centre on the VO word "Shopify" (project 14.78 = local 0.98)
+      tl.fromTo(S+'#wall-hero', { opacity: 0, scale: 1.34, y: -18, filter: 'blur(16px)' },
+        { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: .46, ease: 'back.out(1.6)' }, 0.98);
+      tl.to(S+'#wall-hero', { scale: 1.025, duration: .90, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.70);
+      // "over 10 years" -> project 17.64 = local 3.84
+      tl.fromTo(S+'#yrs', { opacity: 0, y: 20, scale: .9 },
+        { opacity: 1, y: 0, scale: 1, duration: .48, ease: 'back.out(1.7)' }, 3.84);
+      // "biggest brands in the world" -> project 19.48 = local 5.68
+      tl.fromTo(S+'.rail', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .55, ease: 'power3.out' }, 5.68);
+      // EXIT — matches the incoming founder cut: body lifts with 30px blur while the
+      // plate wipes off as one opaque piece, revealing the footage cleanly beneath.
+      tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
+      tl.to(S+'.plate', { y: -1350, duration: 0.26, ease: 'power3.in' }, SLOT - 0.26);
+      tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s05-logo-wall'] = tl;
+    })();
+  </script>
+  </div>
+</template>

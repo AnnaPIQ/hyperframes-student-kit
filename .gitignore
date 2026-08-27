@@ -40,3 +40,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Session scratch (raw 4K source, prep encodes) — never committed
+.work/

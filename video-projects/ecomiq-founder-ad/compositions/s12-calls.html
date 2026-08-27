@@ -1,0 +1,99 @@
+<template id="s12-calls-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s12-calls" data-start="0" data-duration="3.5" data-width="1080" data-height="1350">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s12-calls"] { position: absolute; inset: 0; overflow: hidden; background: transparent;
+      font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+    [data-composition-id="s12-calls"] .plate { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(64% 46% at 50% 42%, rgba(156,212,255,.11) 0%, rgba(6,40,76,0) 64%), #06284C; }
+    [data-composition-id="s12-calls"] .grid { position: absolute; inset: 0; opacity: .13;
+      background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
+      background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
+    [data-composition-id="s12-calls"] .body { position: absolute; inset: 0; }
+    /* shared scene furniture */
+    [data-composition-id="s12-calls"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF; }
+    [data-composition-id="s12-calls"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
+      font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
+    [data-composition-id="s12-calls"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; }
+
+    [data-composition-id="s12-calls"] .step { position: absolute; left: 100px; width: 880px;
+      background: linear-gradient(180deg, #0d3768 0%, #0a325f 100%); border: 1px solid #1d4a7a;
+      border-radius: 26px; box-shadow: 0 24px 60px -22px rgba(0,0,0,.6);
+      display: flex; align-items: center; padding: 0 44px; gap: 32px; }
+    [data-composition-id="s12-calls"] .step .no { flex: none; width: 96px; height: 96px; border-radius: 22px;
+      background: rgba(156,212,255,.14); border: 1px solid rgba(156,212,255,.45); color: #9CD4FF;
+      display: grid; place-items: center; font-weight: 800; font-size: 42px; font-variant-numeric: tabular-nums; }
+    [data-composition-id="s12-calls"] .step .txt b { display: block; font-weight: 800; font-size: 50px;
+      line-height: 1.08; letter-spacing: -.025em; color: #FFFFFF; }
+    [data-composition-id="s12-calls"] .step .txt span { display: block; margin-top: 10px; font-weight: 600;
+      font-size: 27px; letter-spacing: .05em; text-transform: uppercase; color: #9fb6d4; }
+
+    [data-composition-id="s12-calls"] .eyebrow { top: 282px; }
+    [data-composition-id="s12-calls"] #st3 { top: 344px; height: 232px; }
+    [data-composition-id="s12-calls"] .big { position: absolute; left: 0; right: 0; top: 618px; text-align: center;
+      font-weight: 800; font-size: 168px; line-height: .9; letter-spacing: -.05em; color: #FFFFFF;
+      font-variant-numeric: tabular-nums; text-shadow: 0 0 70px rgba(156,212,255,.4); }
+    [data-composition-id="s12-calls"] .bigsub { position: absolute; left: 0; right: 0; top: 806px; text-align: center;
+      font-weight: 700; font-size: 34px; letter-spacing: .22em; color: #9CD4FF; }
+    [data-composition-id="s12-calls"] .prom { position: absolute; left: 50%; margin-left: -340px; width: 680px;
+      text-align: center; font-weight: 700; font-size: 36px; padding: 22px 0; border-radius: 999px; }
+    [data-composition-id="s12-calls"] #p1 { top: 900px; background: rgba(156,212,255,.14);
+      border: 1px solid rgba(156,212,255,.5); color: #9CD4FF; }
+    [data-composition-id="s12-calls"] #p2 { top: 1010px; background: rgba(255,76,50,.13);
+      border: 1px solid rgba(255,76,50,.55); color: #FF8A4C; }
+  </style>
+
+  <div class="slot clip" id="s12-calls-slot" data-start="0" data-duration="3.5" data-track-index="0">
+    <div class="plate">
+      <div class="grid"></div>
+      <div class="body">
+        <div class="eyebrow">Every single month</div>
+        <div class="step" id="st3">
+          <div class="no">03</div>
+          <div class="txt"><b>Specialist 1-on-1 calls</b><span>with the right expert</span></div>
+        </div>
+        <div class="big">&times;2</div>
+        <div class="bigsub">PER MONTH</div>
+        <div class="prom" id="p1">Teaches you the right move</div>
+        <div class="prom" id="p2">Holds you to actually doing it</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 3.5, S = '[data-composition-id="s12-calls"] ';
+      const tl = gsap.timeline({ paused: true });
+      // ENTRY — the opaque plate wipes up over the outgoing founder frame; the
+      // content rides in behind it with matching blur so the cut never reads hard.
+      tl.fromTo(S+'.plate', { y: 1350 }, { y: 0, duration: 0.28, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.body', { y: 170, filter: 'blur(26px)' },
+        { y: 0, filter: 'blur(0px)', duration: 0.62, ease: 'power2.out' }, 0);
+      tl.fromTo(S+'.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .38, ease: 'power2.out' }, 0.02);
+      tl.fromTo(S+'#st3', { opacity: 0, y: 38, scale: .96 },
+        { opacity: 1, y: 0, scale: 1, duration: .52, ease: 'back.out(1.5)' }, 0.04);
+      tl.fromTo(S+'#st3 .no', { opacity: 0, scale: .5, rotation: -14 },
+        { opacity: 1, scale: 1, rotation: 0, duration: .42, ease: 'back.out(2)' }, 0.26);
+      // "each month" -> local 0.24
+      tl.fromTo(S+'.big', { opacity: 0, scale: 1.7 },
+        { opacity: 1, scale: 1, duration: .44, ease: 'power4.out' }, 0.24);
+      tl.fromTo(S+'.bigsub', { opacity: 0, y: 18, scaleX: 1.22 },
+        { opacity: 1, y: 0, scaleX: 1, duration: .50, ease: 'expo.out' }, 0.44);
+      // the two halves of the promise, each on its own VO phrase
+      tl.fromTo(S+'#p1', { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: .48, ease: 'power3.out' }, 0.79);
+      tl.fromTo(S+'#p2', { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: .48, ease: 'power3.out' }, 2.31);
+      // EXIT — matches the incoming founder cut: body lifts with 30px blur while the
+      // plate wipes off as one opaque piece, revealing the footage cleanly beneath.
+      tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
+      tl.to(S+'.plate', { y: -1350, duration: 0.26, ease: 'power3.in' }, SLOT - 0.26);
+      tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s12-calls'] = tl;
+    })();
+  </script>
+  </div>
+</template>

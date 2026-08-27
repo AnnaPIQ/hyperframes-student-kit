@@ -1,0 +1,123 @@
+<template id="s07-team-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s07-team" data-start="0" data-duration="3.6" data-width="1080" data-height="1350">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s07-team"] { position: absolute; inset: 0; overflow: hidden; background: transparent;
+      font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+    [data-composition-id="s07-team"] .plate { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(64% 46% at 50% 42%, rgba(156,212,255,.11) 0%, rgba(6,40,76,0) 64%), #06284C; }
+    [data-composition-id="s07-team"] .grid { position: absolute; inset: 0; opacity: .13;
+      background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
+      background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
+    [data-composition-id="s07-team"] .body { position: absolute; inset: 0; }
+    /* shared scene furniture */
+    [data-composition-id="s07-team"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF; }
+    [data-composition-id="s07-team"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
+      font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
+    [data-composition-id="s07-team"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; }
+
+    [data-composition-id="s07-team"] .eyebrow { top: 320px; }
+    [data-composition-id="s07-team"] .pan { position: absolute; top: 396px; width: 418px; height: 560px;
+      border-radius: 30px; }
+    [data-composition-id="s07-team"] #pL { left: 100px; background: rgba(13,55,104,.45); border: 2px dashed #2b5d92; }
+    [data-composition-id="s07-team"] #pR { left: 562px; background: linear-gradient(180deg,#0d3768,#0a325f);
+      border: 1px solid #1d4a7a; box-shadow: 0 24px 64px -24px rgba(0,0,0,.65); }
+    [data-composition-id="s07-team"] .hub { position: absolute; left: 50%; top: 46%; width: 92px; height: 92px;
+      margin: -46px 0 0 -46px; border-radius: 50%; }
+    [data-composition-id="s07-team"] #pL .hub { background: radial-gradient(circle at 36% 30%, #8fa8c4, #6f8db3 60%, #4c6b90 100%); }
+    [data-composition-id="s07-team"] #pR .hub { background: radial-gradient(circle at 36% 30%, #DEEEFE, #9CD4FF 52%, #4b8fce 100%);
+      box-shadow: 0 0 50px rgba(156,212,255,.6); }
+    [data-composition-id="s07-team"] .st, [data-composition-id="s07-team"] .tm {
+      position: absolute; left: 50%; top: 46%; width: 54px; height: 54px; border-radius: 50%; }
+    [data-composition-id="s07-team"] .st { border: 3px dashed rgba(156,212,255,.26); }
+    [data-composition-id="s07-team"] .tm { background: radial-gradient(circle at 36% 30%, #cfe6ff, #9CD4FF 60%, #4b8fce 100%);
+      box-shadow: 0 0 22px rgba(156,212,255,.55); }
+    [data-composition-id="s07-team"] .plab { position: absolute; left: 0; right: 0; bottom: 44px; text-align: center;
+      font-weight: 800; font-size: 40px; letter-spacing: -.02em; }
+    [data-composition-id="s07-team"] #pL .plab { color: #6f8db3; }
+    [data-composition-id="s07-team"] #pR .plab { color: #FFFFFF; }
+    [data-composition-id="s07-team"] .vs { position: absolute; left: 50%; top: 646px; margin-left: -32px;
+      width: 64px; text-align: center; font-weight: 800; font-size: 34px; color: #FF8A4C; }
+    [data-composition-id="s07-team"] .chips { position: absolute; left: 0; right: 0; top: 1012px;
+      display: flex; justify-content: center; gap: 22px; }
+    [data-composition-id="s07-team"] .chips .c { background: #0d3768; border: 1px solid #1d4a7a; border-radius: 999px;
+      padding: 20px 36px; font-weight: 700; font-size: 34px; color: #FFFFFF; display: flex; align-items: center; gap: 14px; }
+    [data-composition-id="s07-team"] .chips .c i { width: 12px; height: 12px; border-radius: 50%; background: #9CD4FF;
+      box-shadow: 0 0 14px rgba(156,212,255,.85); display: inline-block; }
+  </style>
+
+  <div class="slot clip" id="s07-team-slot" data-start="0" data-duration="3.6" data-track-index="0">
+    <div class="plate">
+      <div class="grid"></div>
+      <div class="body">
+        <div class="eyebrow">What you actually get</div>
+        <div class="pan" id="pL">
+            <div class="st ln" style="margin:-159px 0 0 -27px"></div>
+            <div class="st ln" style="margin:-93px 0 0 87px"></div>
+            <div class="st ln" style="margin:39px 0 0 87px"></div>
+            <div class="st ln" style="margin:105px 0 0 -27px"></div>
+            <div class="st ln" style="margin:39px 0 0 -141px"></div>
+            <div class="st ln" style="margin:-93px 0 0 -141px"></div>
+            <div class="hub"></div>
+            <div class="plab">One coach</div>
+        </div>
+        <div class="vs">vs</div>
+        <div class="pan" id="pR">
+            <div class="tm rn" style="margin:-159px 0 0 -27px"></div>
+            <div class="tm rn" style="margin:-93px 0 0 87px"></div>
+            <div class="tm rn" style="margin:39px 0 0 87px"></div>
+            <div class="tm rn" style="margin:105px 0 0 -27px"></div>
+            <div class="tm rn" style="margin:39px 0 0 -141px"></div>
+            <div class="tm rn" style="margin:-93px 0 0 -141px"></div>
+            <div class="hub"></div>
+            <div class="plab">An entire team</div>
+        </div>
+        <div class="chips">
+          <div class="c"><i></i>Knowledge</div>
+          <div class="c"><i></i>Experience</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 3.6, S = '[data-composition-id="s07-team"] ';
+      const tl = gsap.timeline({ paused: true });
+      // ENTRY — the opaque plate wipes up over the outgoing founder frame; the
+      // content rides in behind it with matching blur so the cut never reads hard.
+      tl.fromTo(S+'.plate', { y: 1350 }, { y: 0, duration: 0.28, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.body', { y: 170, filter: 'blur(26px)' },
+        { y: 0, filter: 'blur(0px)', duration: 0.62, ease: 'power2.out' }, 0);
+      tl.fromTo(S+'.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .40, ease: 'power2.out' }, 0.05);
+      // CALLBACK — the hook's lone node and its six empty seats return on the left
+      tl.fromTo(S+'#pL', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .50, ease: 'power3.out' }, 0.05);
+      tl.fromTo(S+'#pR', { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: .50, ease: 'power3.out' }, 0.14);
+      tl.fromTo(S+'.vs', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .34, ease: 'back.out(2)' }, 0.42);
+      tl.fromTo(S+'#pL .st', { opacity: 0, scale: .7 },
+        { opacity: 1, scale: 1, duration: .34, stagger: .04, ease: 'power2.out' }, 0.28);
+      // ...and on the right the same six seats FILL, landing on "an entire team's" (local 0.17-0.53)
+      tl.fromTo(S+'#pR .tm', { opacity: 0, scale: .3 },
+        { opacity: 1, scale: 1, duration: .40, stagger: .075, ease: 'back.out(2.2)' }, 0.20);
+      tl.fromTo(S+'.plab', { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: .45, stagger: .10, ease: 'power2.out' }, 0.62);
+      // chips land on the VO words "knowledge" (1.03) and "experience" (1.83)
+      tl.fromTo(S+'.chips .c:nth-child(1)', { opacity: 0, y: 24, scale: .92 },
+        { opacity: 1, y: 0, scale: 1, duration: .44, ease: 'back.out(1.6)' }, 1.03);
+      tl.fromTo(S+'.chips .c:nth-child(2)', { opacity: 0, y: 24, scale: .92 },
+        { opacity: 1, y: 0, scale: 1, duration: .44, ease: 'back.out(1.6)' }, 1.83);
+      tl.to(S+'#pR .hub', { scale: 1.06, duration: 1.1, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.30);
+      // EXIT — hands off to another graphic beat: content lifts and blurs, plate holds
+      // so the navy canvas is continuous across the seam.
+      tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
+      tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s07-team'] = tl;
+    })();
+  </script>
+  </div>
+</template>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>ecomiq-founder-ad</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time (latin subset) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden;
+        background: #06284C; font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+
+      /* Navy canvas with a soft brand bloom top + bottom, under every beat. */
+      #bg { position: absolute; inset: 0;
+        background:
+          radial-gradient(80% 42% at 50% 12%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 60%),
+          radial-gradient(95% 45% at 50% 100%, rgba(255,76,50,.10) 0%, rgba(6,40,76,0) 62%),
+          #06284C; }
+      /* Cinematic edge vignette for depth on every scene. */
+      #vignette { position: absolute; inset: 0; pointer-events: none;
+        box-shadow: inset 0 0 240px 60px rgba(2,14,30,.7); }
+
+      /* Founder A-roll: full-frame, cover-cropped to 4:5 at prep time, never letterboxed. */
+      .th { position: absolute; inset: 0; width: 1080px; height: 1350px; object-fit: cover; background: #06284C; }
+      /* Top scrim keeps the white logo legible over the brighter footage frames. */
+      #topscrim { position: absolute; top: 0; left: 0; right: 0; height: 280px; pointer-events: none;
+        background: linear-gradient(180deg, rgba(2,14,30,.62) 0%, rgba(2,14,30,0) 100%); }
+
+      /* Persistent EcomIQ logo, top-left, above every scene.
+         LESSONS.md: the engine repositions class="clip" elements, so the logo lives
+         inside a positioned non-clip wrapper. */
+      #brandmark { position: absolute; top: 60px; left: 64px; z-index: 50; }
+      #brandmark img { width: 264px; height: auto; display: block;
+        filter: drop-shadow(0 6px 18px rgba(0,0,0,.55)); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="ecomiq-founder-ad" data-start="0"
+         data-duration="77.6" data-width="1080" data-height="1350">
+
+      <div id="bg" class="clip" data-start="0" data-duration="77.6" data-track-index="0"></div>
+
+      <!-- ===== Founder cuts (framework owns video playback — no class="clip") =====
+           Each clip carries 0.30s of pre-roll and 0.35s of post-roll beyond its beat so
+           the adjoining graphic plates have live footage to whip over. -->
+      <video id="th-1" class="th" muted playsinline src="assets/th1.mp4" data-start="3.30"  data-duration="4.03" data-track-index="5"></video>
+      <video id="th-2" class="th" muted playsinline src="assets/th2.mp4" data-start="9.25"  data-duration="4.90" data-track-index="5"></video>
+      <video id="th-3" class="th" muted playsinline src="assets/th3.mp4" data-start="20.60" data-duration="3.76" data-track-index="5"></video>
+      <video id="th-4" class="th" muted playsinline src="assets/th4.mp4" data-start="30.65" data-duration="2.80" data-track-index="5"></video>
+      <video id="th-5" class="th" muted playsinline src="assets/th5.mp4" data-start="41.65" data-duration="2.96" data-track-index="5"></video>
+      <video id="th-6" class="th" muted playsinline src="assets/th6.mp4" data-start="47.45" data-duration="3.20" data-track-index="5"></video>
+      <video id="th-7" class="th" muted playsinline src="assets/th7.mp4" data-start="54.90" data-duration="4.33" data-track-index="5"></video>
+      <video id="th-8" class="th" muted playsinline src="assets/th8.mp4" data-start="63.85" data-duration="4.60" data-track-index="5"></video>
+
+      <!-- ===== Full-frame brand motion-graphics beats ===== -->
+      <div class="gfx" id="beat-s01-hook" data-composition-id="s01-hook"      data-composition-src="compositions/s01-hook.html"      data-start="0"     data-duration="3.60" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" id="beat-s03-stale" data-composition-id="s03-stale"     data-composition-src="compositions/s03-stale.html"     data-start="7.00"  data-duration="2.55" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" id="beat-s05-logo-wall" data-composition-id="s05-logo-wall" data-composition-src="compositions/s05-logo-wall.html" data-start="13.80" data-duration="7.10" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" id="beat-s07-team" data-composition-id="s07-team"      data-composition-src="compositions/s07-team.html"      data-start="24.05" data-duration="3.60" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" id="beat-s08-figures" data-composition-id="s08-figures"   data-composition-src="compositions/s08-figures.html"   data-start="27.65" data-duration="3.30" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" id="beat-s10-system" data-composition-id="s10-system"    data-composition-src="compositions/s10-system.html"    data-start="33.10" data-duration="8.85" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" id="beat-s12-calls" data-composition-id="s12-calls"     data-composition-src="compositions/s12-calls.html"     data-start="44.25" data-duration="3.50" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" id="beat-s14-community" data-composition-id="s14-community" data-composition-src="compositions/s14-community.html" data-start="50.30" data-duration="4.90" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" id="beat-s16-realwork" data-composition-id="s16-realwork"  data-composition-src="compositions/s16-realwork.html"  data-start="58.90" data-duration="5.25" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" id="beat-s18-payoff" data-composition-id="s18-payoff"    data-composition-src="compositions/s18-payoff.html"    data-start="68.10" data-duration="3.65" data-track-index="6" data-width="1080" data-height="1350"></div>
+      <div class="gfx" id="beat-s19-cta" data-composition-id="s19-cta"       data-composition-src="compositions/s19-cta.html"       data-start="71.75" data-duration="5.85" data-track-index="6" data-width="1080" data-height="1350"></div>
+
+      <!-- ===== Persistent brand chrome ===== -->
+      <div id="vignette" class="clip" data-start="0" data-duration="77.6" data-track-index="40"></div>
+      <div id="topscrim" class="clip" data-start="0" data-duration="77.6" data-track-index="41"></div>
+      <!-- drops out for the CTA card, which carries its own centred lockup -->
+      <div id="brandmark" class="clip" data-start="0" data-duration="71.75" data-track-index="50">
+        <img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <!-- ===== Voiceover (continuous; trimmed 1.68s off the head of the source) ===== -->
+      <audio id="vo" src="assets/vo.m4a" data-start="0" data-duration="77.27" data-track-index="7" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#brandmark", { opacity: 0, x: -26 },
+        { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.15);
+      tl.fromTo("#vignette", { opacity: 0 },
+        { opacity: 1, duration: 1.0, ease: "sine.out" }, 0);
+      tl.to({}, { duration: 77.6 }, 0); // pad to data-duration
+      window.__timelines["ecomiq-founder-ad"] = tl;
+    </script>
+  </body>
+</html>

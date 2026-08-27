@@ -1,0 +1,105 @@
+<template id="s18-payoff-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s18-payoff" data-start="0" data-duration="3.65" data-width="1080" data-height="1350">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s18-payoff"] { position: absolute; inset: 0; overflow: hidden; background: transparent;
+      font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+    [data-composition-id="s18-payoff"] .plate { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(72% 40% at 50% 20%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 60%),
+        radial-gradient(90% 42% at 50% 100%, rgba(255,76,50,.10) 0%, rgba(6,40,76,0) 62%), #06284C; }
+    [data-composition-id="s18-payoff"] .grid { position: absolute; inset: 0; opacity: .13;
+      background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
+      background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
+    [data-composition-id="s18-payoff"] .body { position: absolute; inset: 0; }
+    /* shared scene furniture */
+    [data-composition-id="s18-payoff"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF; }
+    [data-composition-id="s18-payoff"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
+      font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
+    [data-composition-id="s18-payoff"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; }
+
+    [data-composition-id="s18-payoff"] .row { position: absolute; left: 96px; right: 96px; height: 300px;
+      display: flex; align-items: center; gap: 40px; }
+    [data-composition-id="s18-payoff"] #rowA { top: 330px; }
+    [data-composition-id="s18-payoff"] #rowB { top: 706px; }
+    [data-composition-id="s18-payoff"] .viz { position: relative; flex: none; width: 300px; height: 300px; }
+    [data-composition-id="s18-payoff"] .solo { position: absolute; left: 50%; top: 50%; width: 96px; height: 96px;
+      margin: -48px 0 0 -48px; border-radius: 50%;
+      background: radial-gradient(circle at 36% 30%, #8fa8c4, #6f8db3 60%, #4c6b90 100%); }
+    [data-composition-id="s18-payoff"] .hub { position: absolute; left: 50%; top: 50%; width: 96px; height: 96px;
+      margin: -48px 0 0 -48px; border-radius: 50%;
+      background: radial-gradient(circle at 36% 30%, #DEEEFE, #9CD4FF 52%, #4b8fce 100%);
+      box-shadow: 0 0 54px rgba(156,212,255,.62); }
+    [data-composition-id="s18-payoff"] .tm { position: absolute; left: 50%; top: 50%; width: 52px; height: 52px;
+      border-radius: 50%; background: radial-gradient(circle at 36% 30%, #cfe6ff, #9CD4FF 58%, #4b8fce 100%);
+      box-shadow: 0 0 20px rgba(156,212,255,.6); }
+    [data-composition-id="s18-payoff"] .lab { flex: 1; font-weight: 800; font-size: 82px; line-height: 1.04;
+      letter-spacing: -.035em; position: relative; }
+    [data-composition-id="s18-payoff"] #labA { color: #6f8db3; }
+    [data-composition-id="s18-payoff"] #labB { color: #FFFFFF; }
+    [data-composition-id="s18-payoff"] #strike { position: absolute; left: -6px; width: 100%; top: 50%; height: 8px;
+      margin-top: -4px; background: #FF4C32; border-radius: 4px; transform-origin: left center;
+      box-shadow: 0 0 20px rgba(255,76,50,.65); }
+    [data-composition-id="s18-payoff"] #tag { position: absolute; left: 50%; top: 1092px; margin-left: -274px;
+      width: 548px; text-align: center; font-weight: 700; font-size: 36px; padding: 20px 0; border-radius: 999px;
+      background: rgba(156,212,255,.14); border: 1px solid rgba(156,212,255,.5); color: #9CD4FF; }
+  </style>
+
+  <div class="slot clip" id="s18-payoff-slot" data-start="0" data-duration="3.65" data-track-index="0">
+    <div class="plate">
+      <div class="grid"></div>
+      <div class="body">
+        <div class="row" id="rowA">
+          <div class="viz"><div class="solo"></div></div>
+          <div class="lab" id="labA">One opinion.<span id="strike"></span></div>
+        </div>
+        <div class="row" id="rowB">
+          <div class="viz">
+          <div class="tm" style="margin:-130px 0 0 -26px"></div>
+          <div class="tm" style="margin:-78px 0 0 64px"></div>
+          <div class="tm" style="margin:26px 0 0 64px"></div>
+          <div class="tm" style="margin:78px 0 0 -26px"></div>
+          <div class="tm" style="margin:26px 0 0 -116px"></div>
+          <div class="tm" style="margin:-78px 0 0 -116px"></div>
+            <div class="hub"></div>
+          </div>
+          <div class="lab" id="labB">An entire team.</div>
+        </div>
+        <div id="tag">&#9650;&nbsp; a proven track record</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 3.65, S = '[data-composition-id="s18-payoff"] ';
+      const tl = gsap.timeline({ paused: true });
+      // ENTRY — the opaque plate wipes up over the outgoing founder frame; the
+      // content rides in behind it with matching blur so the cut never reads hard.
+      tl.fromTo(S+'.plate', { y: 1350 }, { y: 0, duration: 0.28, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.body', { y: 170, filter: 'blur(26px)' },
+        { y: 0, filter: 'blur(0px)', duration: 0.62, ease: 'power2.out' }, 0);
+      // CALLBACK, final form — the hook's lone node, struck out; the full cluster beneath it
+      tl.fromTo(S+'#rowA', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .48, ease: 'power3.out' }, 0.08);
+      tl.fromTo(S+'#strike', { scaleX: 0 }, { scaleX: 1, duration: .42, ease: 'power2.inOut' }, 0.55);
+      tl.fromTo(S+'#rowB', { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: .52, ease: 'power3.out' }, 0.76);
+      tl.fromTo(S+'#rowB .hub', { opacity: 0, scale: .4 },
+        { opacity: 1, scale: 1, duration: .44, ease: 'back.out(2)' }, 0.82);
+      tl.fromTo(S+'.tm', { opacity: 0, scale: .25 },
+        { opacity: 1, scale: 1, duration: .38, stagger: .065, ease: 'back.out(2.2)' }, 0.89);
+      tl.fromTo(S+'#tag', { opacity: 0, y: 22, scale: .92 },
+        { opacity: 1, y: 0, scale: 1, duration: .48, ease: 'back.out(1.7)' }, 2.05);
+      tl.to(S+'#rowB .hub', { scale: 1.07, duration: 1.0, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.50);
+      // EXIT — hands off to another graphic beat: content lifts and blurs, plate holds
+      // so the navy canvas is continuous across the seam.
+      tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
+      tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s18-payoff'] = tl;
+    })();
+  </script>
+  </div>
+</template>
