@@ -1,6 +1,9 @@
 # EcomIQ — "One opinion, or a whole team?" (founder ad)
 
 Format: **4:5 Meta feed · 1080×1350 @ 30fps** · runtime **73.3s** · safe area ~96px.
+**Subtitle band:** the bottom ~22% (300px on 4:5, 450px on 9:16) is deliberately kept
+clear of graphics so subtitles can be added by hand afterwards. `botGuard` in the
+format config enforces it for every card; the b-roll chips sit above it too.
 Sister cut: `video-projects/ecomiq-one-opinion-or-team-story/` (9:16, 1080×1920) —
 identical beat sheet, re-laid-out.
 
@@ -45,7 +48,7 @@ the ground truth for timing; the written transcript maps to it line-for-line, in
 |---|---|---|
 | Navy | `#06284C` | the canvas. Every graphic scene. |
 | White | `#FFFFFF` | neutral headline words + emphasis keywords (**non-italic**) |
-| Flame | `#FF4C32` | pain / the turn / the CTA (pill = `#FF4C32`→`#F09025`) |
+| Flame | `#FF4C32` | the CTA pill, the strike-through kill-marks, the "accountable" chip |
 | Muted blue-grey | `#6F8DB3` | "before", struck-through, the thing you're not getting |
 | Soft blue | `#9CD4FF` | positive tags, the team, what you do get |
 
@@ -86,13 +89,13 @@ never drift, because the picture is never re-cut against the audio.
 | S04 | Comparison bars — one person's take (struck) vs a whole team | 16.37–20.70 | "an entire team" |
 | S05 | **Logo wall** — 21 real client marks drifting up, no type at all | 20.70–24.63 | "dozens" |
 | — | **Founder** | 24.63–28.67 | "now here is how it works" |
-| S06 | Step 01 — strategy session; flame row "holding growth back" | 28.67–34.43 | "map out your business" |
+| S06 | Step 01 — strategy session; both rows white, blue step spine | 28.67–34.43 | "map out your business" |
 | — | **Founder** | 34.43–36.43 | "two specialist…" |
-| S07 | Step 02 — big **2** counts up, two coach avatars, flame "accountable" | 36.43–42.20 | "one-on-one calls a month" |
+| S07 | Step 02 — big **2** counts up, coach avatars, flame "accountable" chip | 36.43–42.20 | "one-on-one calls a month" |
 | — | **Founder** | 42.20–45.07 | "full Slack support" |
 | S08 | Step 03 — 7-node founder network, links draw between them | 45.07–51.60 | "a community of founders" |
 | — | **Founder** | 51.60–54.53 | "every single strategy" |
-| — | **Client b-roll** — Sweet E's then Dryft, real footage with brand chips | 54.53–59.40 | "pulled from real client work… eight and nine figure brands" |
+| — | **Client b-roll** — Sweet E's then Dryft Sleep, real footage with brand chips | 54.53–59.40 | "pulled from real client work…" |
 | — | **Founder** | 59.40–61.43 | "before it comes anywhere near you" |
 | S10 | Payoff — a lone struck bar vs the lit team cluster | 61.43–65.33 | "a whole team's opinion" |
 | S11 | CTA end card — icon, "Book a call.", flame pill; **holds 5.4s** | 65.33–73.30 | "tap the link… book a call" |
@@ -143,9 +146,12 @@ brand count appears anywhere.
 
 ## What NOT to do
 
-- No second hot accent — flame is the only one, and only for pain or the CTA. (Note:
-  the S02 headline is white on direction, not flame, so flame now appears only as the
-  strike-through marks, the step spine, and the CTA.)
+- No second hot accent — flame is the only one. On direction it has been pulled back
+  further: the S02 headline, the step-card emphasis words ("whole business", "holding
+  growth back", "next right move") and the active step spine are all now white or soft
+  blue, so flame survives only on the strike-through kill-marks, the "accountable" chip
+  and the CTA pill.
+- Keep the bottom band clear — see the subtitle note at the top.
 - No italic serif emphasis (see the type note above).
 - Never animate the `<video>`; the wrapper `#founder-wrap` takes the push.
 - No CDN GSAP, no Google-Fonts link, no render-time fetch of any kind.

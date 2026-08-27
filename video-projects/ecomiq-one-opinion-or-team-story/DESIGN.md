@@ -17,14 +17,15 @@ every word anchor, every transition — is identical. Only the layout differs.
 | Canvas | 1080×1350 | 1080×1920 |
 | A-roll crop | `1728×2160 @ x=966` | `1215×2160 @ x=1223` (both face-centred, cover, never letterboxed) |
 | Top guard | 250px | **380px** — more headroom, clears the platform UI |
-| Bottom guard | 120px | **330px** — keeps the CTA pill above the Reels chrome |
+| Bottom guard | 300px | **450px** — Reels chrome plus the hand-subtitle band |
 | Logo lockup | 292px @ top 56 | 300px @ top 96 |
 | Type scale | h1 90 / h2 62 / numeral 190 | h1 96 / h2 68 / numeral 220 |
 | Scene gap | 34px | 46px |
 | Grid pitch | 90px | 96px |
 
-Timing, palette, motion grammar, callbacks and the render contract are unchanged —
-see the sister spec.
+Both cuts keep the bottom ~22% clear of graphics so subtitles can be added by hand
+afterwards. Timing, palette, motion grammar, callbacks and the render contract are
+otherwise unchanged — see the sister spec.
 
 ```bash
 cd video-projects/ecomiq-one-opinion-or-team-story
