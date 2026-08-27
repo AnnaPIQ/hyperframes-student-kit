@@ -332,3 +332,28 @@ attach, rather than quietly sending a squashed copy.
 4. Draft render → frame-grab across the whole timeline → `Read` every frame
 5. `--quality high` × 3
 6. Commit compositions + scripts + docs; append lessons to `docs/LESSONS.md`
+
+---
+
+## 12. Delivered
+
+Rendered `--quality high`, native size, and frame-verified across the whole
+timeline (22 frames per ratio, every one inspected).
+
+| Ratio | File | Size |
+|---|---|--:|
+| 9:16 | `renders/ecomiq-how-it-works-916.mp4` | 80 MB |
+| 1:1 | `renders/ecomiq-how-it-works-1x1.mp4` | 50 MB |
+| 4:5 | `renders/ecomiq-how-it-works-4x5.mp4` | 58 MB |
+
+Verified identical on all three:
+
+- H.264 **High** profile, **yuv420p**, native size
+- **30/30 fps CFR** — one distinct frame duration across all 2293 frames
+- **AAC 48 kHz**, `+faststart` (moov before mdat)
+- **76.433333 s**, 2293 frames
+- Trigger line **"Tap the link below and book a call." at exactly 71.4333 s**,
+  measured by silence analysis of the delivered audio — the card resolves out of
+  the dissolve one frame earlier, at 71.400 s
+
+2× exports (2160×3840 / 2160×2160 / 2160×2700) not built — say the word.
