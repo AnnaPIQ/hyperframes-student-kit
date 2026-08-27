@@ -20,51 +20,51 @@ ffmpeg -y -ss <in> -t <dur> -i <src>.mp4 \
 
 | Local file | Beat | Source clip (Drive) | Drive file id | In–out | Pulled |
 |---|---|---|---|---|---|
-| `dunes-drone.mp4` | **00** | Tab Mount Maxx Tube Mount.mp4 | `1a8KoxoKVBnCt7oyuspILNfhsW7Mx7r0E` | 31.95–34.75 | 2026-08-27 |
-| `tablet-wall.mp4` | 03 | Tabnetic Direct.mp4 | `1BqMYocdVmTMAGKIrBiitTGrgpG9kzbL2` | 20.50–23.00 | 2026-08-27 |
-| `incab-dash.mp4` | 05 | Mobnetic Stix.mp4 | `1BDmv8-GU7194MJedTT_Ewje4m1N2y0NF` | 2.85–4.75 | 2026-08-27 |
-| `load-test.mp4` | 06 | Tabnetic Direct.mp4 | `1BqMYocdVmTMAGKIrBiitTGrgpG9kzbL2` | 14.90–17.20 | 2026-08-27 |
-| `facility-floor.mp4` | 10a | Tab Mount Maxx Direct.mp4 | `1ud577NtpMV6BpnnCF260IGagWDuocPLJ` | 12.70–15.10 | 2026-08-27 |
-| `cnc-sparks.mp4` | 10b | Tabnetic Discs.mp4 | `1sQIRGCsAxMEFB3J7w-BFFTjR-xF7ctJc` | 5.95–7.55 | 2026-08-27 |
-| `radio-guy.mp4` | 14 | Rad Mount.mp4 | `1tDsY1YT6wk4z4xHC7Etaln2_8-qSmivU` | 28.20–30.75 | 2026-08-27 |
+| `dunes-drone.mp4` | 03 | Tab Mount Maxx Tube Mount.mp4 | `1a8KoxoKVBnCt7oyuspILNfhsW7Mx7r0E` | 31.95–34.75 | 2026-08-27 |
 
-> `cnc-sparks` must stay inside **5.92–7.79**. Scene detection at the 0.35 threshold
-> reports 5.9–9.9 as one scene, but there is a real cut at 7.79 — a longer trim jumps
-> from the CNC head to a hand holding a disc mid-shot.
+This is the only b-roll shot in the cut. Sean carries the rest.
 
 ### A-roll — Sean to camera (`assets/aroll/`, `assets/aroll45/`)
 
-Source: `Mob Armor Ad.mov` (`1f2kXr2Ng227CLaBd5OH9d_EzX2d7TniS`), ProRes 3840×2160
-25 fps. Five segments, each cut at its **source timecode** and placed in the composition
-at that same timecode, so the lips stay locked to the continuous VO track with no offset.
+Source: `Mob Armor Ad.mov` (`1f2kXr2Ng227CLaBd5OH9d_EzX2d7TniS`), ProRes 3840×2160 25 fps.
 
-| Local file | Beat | Source in–out | Line |
-|---|---|---|---|
-| `a02.mp4` | 02 | 4.280–6.280 | "That's what happened to Mob Armor's…" (first word 4.44) |
-| `a04.mp4` | 04 | 8.220–11.990 | "And it wasn't a lucky viral moment. It wasn't a magic ad." (8.52) |
-| `a13.mp4` | 13 | 27.200–29.820 | "And that's what the right plan does." (27.43) |
-| `a15.mp4` | 15 | 31.650–33.750 | "If you wanna see what's possible for yours," (31.83) |
+> **MEASURED OFFSET — 0.167 s.** In this recording the picture lags the sound by five
+> frames. Every segment is cut from source at **composition-time + 0.167** and placed at
+> composition-time, which advances the picture by exactly that much. Verified by
+> cross-correlating mouth-opening contrast against the audio envelope: the peak sits at
+> −5 frames before the shift and at 0 after it. **Do not re-cut these without
+> re-applying the offset.**
 
-Each starts ~0.2 s **before** its first word, so Sean is settled and readable before he
-speaks. The first ~1.05 s of the take is him setting up at the recorder and is never used.
+| File | Beat | Composition in | Source in | Dur | Line |
+|---|---|---|---|---|---|
+| `a02.mp4` | 02 | 4.280 | 4.447 | 2.65 | "That's what happened to Mob Armor's total sales" |
+| `a04.mp4` | 04 | 8.220 | 8.387 | 3.77 | "And it wasn't a lucky viral moment. It wasn't a magic ad." |
+| `a05.mp4` | 05 | 11.733 | 11.900 | 3.22 | "When they came to us, almost everything ran through Facebook." |
+| `a10.mp4` | 10 | 21.733 | 21.900 | 2.39 | "A year later, sales are up over" |
+| `a13.mp4` | 13 | 27.200 | 27.367 | 2.62 | "And that's what the right plan does." |
+| `a15.mp4` | 15 | 31.650 | 31.817 | 2.10 | "If you wanna see what's possible for yours," |
 
-Two crops from the 4K master rather than one crop re-cropped — a 9:16 letterbox of the
-4:5 cut would cut his head or torso:
+Two crops from the 4K master rather than one re-cropped — a 9:16 letterbox of the 4:5 cut
+would cut his head or torso:
 
 ```bash
 # 9:16  crop=1215:2160:1200:0,scale=1080:1920   -> assets/aroll/
 # 4:5   crop=1728:2160:940:0,scale=1080:1350    -> assets/aroll45/
 # both  eq=saturation=0.86:contrast=1.05:brightness=-0.015,colorbalance=rs=-0.02:bs=0.03
-#       -r 30 -vsync cfr -crf 19 -an
+#       -ss <composition-time + 0.167> -r 30 -vsync cfr -crf 19 -an
 ```
 
 The grade eases the electric-cyan backdrop toward the EcomIQ navy world. Sean is layered
 **above** the b-roll scrim, so his face is never dimmed by it.
 
 ### Cut but kept in the shot list
-`tablet-locked` (Tabnetic Direct 41.10–43.45) and `phone-dash` (Water balloon 2.55–3.80)
-lost their slots to the A-roll. Files removed; those ranges regenerate them in one
-ffmpeg line.
+`incab-dash` (Mobnetic Stix 2.85–4.75), `load-test` (Tabnetic Direct 14.90–17.20),
+`facility-floor` (Tab Mount Maxx Direct 12.70–15.10), `cnc-sparks` (Tabnetic Discs
+5.95–7.55 — **must stay inside 5.92–7.79**, there is a real cut at 7.79 that scene
+detection at the 0.35 threshold misses), `radio-guy` (Rad Mount 28.20–30.75),
+`tablet-wall` (Tabnetic Direct 20.50–23.00), `tablet-locked` (Tabnetic Direct
+41.10–43.45), `phone-dash` (Water balloon 2.55–3.80). All were in earlier cuts and lost
+their slots when the edit moved to Sean. Files removed; each range is one ffmpeg line.
 
 **Logos** (client-supplied white versions — not redrawn, not recoloured):
 `Logos/logo-white@2x.png` (`1yMyyTH9kNmlSJ2Il2mFY_JqEvvQcmKWZ`, 2800×481 RGBA) and
