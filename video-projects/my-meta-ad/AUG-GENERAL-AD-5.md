@@ -1,12 +1,17 @@
 # Aug-General ad 5 — build notes
 
 Short-form EcomIQ ad cut from the "what's working" A-roll. Two deliveries from
-one spine: **9:16** (1080×1920, Reels/Stories/TikTok) and **1:1** (1080×1080,
-square feed). Both 30fps, **37.0s**.
+one spine, all 30fps and **37.0s**:
+
+| Cut | Size | Use |
+|---|---|---|
+| **9:16** | 1080×1920 | Reels / Stories / TikTok |
+| **4:5** | 1080×1350 | Meta feed — this project's native format |
+| **1:1** | 1080×1080 | square feed |
 
 | | |
 |---|---|
-| Compositions | `compositions/aug-general-ad-5-9x16.html`, `compositions/aug-general-ad-5-1x1.html` |
+| Compositions | `compositions/aug-general-ad-5-{9x16,4x5,1x1}.html` |
 | Renders | `renders/aug-general-ad-5-{9x16,1x1}.mp4` (1080, `--quality high`) + `…-4k.mp4` 2× exports |
 | Footage prep | `scripts/prep-aug-general-ad-5.sh` (repo root) |
 | A-roll | Drive `1PrOe05PfJ1yxNLV7abFliy16ygbYtM-F` — *whats working.mov*, 2.41 GB **3840×2160 ProRes 422 10-bit** |
@@ -116,11 +121,13 @@ renderer rather than baked in:
 | Asset | Crop | Result |
 |---|---|---|
 | A-roll 9:16 | `crop=1216:2160:1266:0` | 1216 px is *all* the horizontal detail a 9:16 window of a 16:9 frame can hold |
+| A-roll 4:5 | `crop=1728:2160:1010:0` | full-height 4:5 |
 | A-roll 1:1 | `crop=2160:2160:794:0` | full-height square — true 4K |
 | B-roll 9:16 | `transpose=1` only | lands natively at 2160×3840 |
+| B-roll 4:5 | `transpose=1` + `crop=2160:2700` | true 4K |
 | B-roll 1:1 | `transpose=1` + `crop=2160:2160` | true 4K |
 
-**Shipping files** — `--quality high` (CRF 15) at native 1080×1920 / 1080×1080.
+**Shipping files** — `--quality high` (CRF 15) at native 1080×1920 / 1080×1350 / 1080×1080.
 This is the right size for Meta feed and Reels, and the footage is now a *down*scale
 rather than the 1.78× upscale of the earlier proxy build.
 
@@ -134,7 +141,7 @@ rather than the 1.78× upscale of the earlier proxy build.
 
 ### The prepped A-roll crops are gitignored
 
-At 143 MB and 250 MB they exceed GitHub's 100 MB per-file hard limit. They are
+At 143 MB, 202 MB and 250 MB they exceed GitHub's 100 MB per-file hard limit. They are
 fully reproducible:
 
 ```bash

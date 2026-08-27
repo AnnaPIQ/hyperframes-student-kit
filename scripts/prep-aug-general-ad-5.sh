@@ -21,6 +21,7 @@
 #   9:16  1216x2160 @ x=1266   (1216px is ALL the horizontal detail a 9:16
 #                              window of a 16:9 frame can contain)
 #   1:1   2160x2160 @ x=794    full-height square, true 4K
+#   4:5   1728x2160 @ x=1010   full-height 4:5 (the project's native format)
 # =============================================================================
 set -euo pipefail
 cd "$(dirname "$0")/.." || exit 1
@@ -45,13 +46,19 @@ ffmpeg -nostdin -y -v error -ss "$IN" -t "$DUR" -i "$SRC" \
   -r 30 -c:v libx264 -preset slow -crf 16 -movflags +faststart \
   "$DEST/aug5-aroll-1x1.mp4"
 
+echo "▶ 4:5   crop 1728x2160 @1010 out of the 4K master (pure crop, no resample)"
+ffmpeg -nostdin -y -v error -ss "$IN" -t "$DUR" -i "$SRC" \
+  -an -vf "crop=1728:2160:1010:0,format=yuv420p" \
+  -r 30 -c:v libx264 -preset slow -crf 16 -movflags +faststart \
+  "$DEST/aug5-aroll-4x5.mp4"
+
 echo "▶ VO    stereo AAC (from the master's 24-bit PCM)"
 ffmpeg -nostdin -y -v error -ss "$IN" -t "$DUR" -i "$SRC" \
   -vn -c:a aac -b:a 192k -movflags +faststart \
   "$DEST/aug5-vo.m4a"
 
 echo
-for f in aug5-aroll-9x16.mp4 aug5-aroll-1x1.mp4 aug5-vo.m4a; do
+for f in aug5-aroll-9x16.mp4 aug5-aroll-1x1.mp4 aug5-aroll-4x5.mp4 aug5-vo.m4a; do
   printf '  %-22s %s\n' "$f" \
     "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$DEST/$f")s  $(du -h "$DEST/$f" | cut -f1)"
 done
@@ -66,10 +73,10 @@ done
 # takes a 2160x2160 window pulled up from centre to keep faces and product in.
 # Audio is stripped: the A-roll VO keeps running underneath.
 # -----------------------------------------------------------------------------
-prep_broll() {   # <src> <in> <dur> <slug> <square-y>
-  local src="$1" tin="$2" tdur="$3" slug="$4" sqy="$5"
+prep_broll() {   # <src> <in> <dur> <slug> <square-y> <fourfive-y>
+  local src="$1" tin="$2" tdur="$3" slug="$4" sqy="$5" ffy="$6"
   [ -f "$src" ] || { echo "  ! b-roll source missing: $src (skipping $slug)"; return 0; }
-  echo "▶ b-roll $slug  9:16 + 1:1  (rotate 90° CW, from ${tin}s +${tdur}s)"
+  echo "▶ b-roll $slug  9:16 + 1:1 + 4:5  (rotate 90° CW, from ${tin}s +${tdur}s)"
   ffmpeg -nostdin -y -v error -ss "$tin" -t "$tdur" -i "$src" \
     -an -vf "transpose=1,format=yuv420p" -r 30 \
     -c:v libx264 -preset slow -crf 16 -movflags +faststart \
@@ -78,11 +85,15 @@ prep_broll() {   # <src> <in> <dur> <slug> <square-y>
     -an -vf "transpose=1,crop=2160:2160:0:${sqy},format=yuv420p" -r 30 \
     -c:v libx264 -preset slow -crf 16 -movflags +faststart \
     "$DEST/aug5-broll-${slug}-1x1.mp4"
+  ffmpeg -nostdin -y -v error -ss "$tin" -t "$tdur" -i "$src" \
+    -an -vf "transpose=1,crop=2160:2700:0:${ffy},format=yuv420p" -r 30 \
+    -c:v libx264 -preset slow -crf 16 -movflags +faststart \
+    "$DEST/aug5-broll-${slug}-4x5.mp4"
 }
 
 BROLL_DIR="${BROLL_DIR:-.media}"
-prep_broll "$BROLL_DIR/broll-sweetes-master.mp4" 88.5 2.05 sweetes 580
-prep_broll "$BROLL_DIR/broll-dryft-master.mp4"   21.2 1.85 dryft   500
+prep_broll "$BROLL_DIR/broll-sweetes-master.mp4" 88.5 2.05 sweetes 580 560
+prep_broll "$BROLL_DIR/broll-dryft-master.mp4"   21.2 1.85 dryft   500 230
 
 for f in "$DEST"/aug5-broll-*.mp4; do
   [ -e "$f" ] || continue
