@@ -77,6 +77,71 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## Media elements (render-breaking)
+
+- **A timed wrapper `<div>` around a timed `<video>` shows the wrong source frames.** If
+  both carry `data-start`, the frame extractor resolves the video's start from its own
+  attribute while visibility uses the wrapper's window — they disagree and the clip plays
+  the wrong footage, then vanishes partway through its slot. Lint calls it
+  `video_nested_in_timed_element`. **Fix:** make each `<video>` a direct child of the
+  stage and animate the video element itself. Transform/opacity/filter on a `<video>` is
+  fine — it's `width/height/top/left` that freezes the frame (contract rule 9). If you
+  needed the wrapper for a scrim, use one scrim layer for the whole runtime, z-ordered
+  above the footage tracks and below the type.
+- **`<video>`/`<audio>` with `data-start` but no `id` renders FROZEN / SILENT.** The
+  renderer discovers media by id. Lint: `media_missing_id`. Always give them one.
+- **Two `<img>` with the same `src` and no `data-start` trip `duplicate_media_discovery_risk`.**
+  A logo used both as a persistent mark and inside a card counts. **Fix:** point the second
+  instance at a different asset (a `.png` next to the `.svg`, or a different lockup).
+- **Don't `clearProps: "filter"` if you tween `filter` again later.** GSAP can't
+  interpolate from a computed `none` back into `blur(24px)`. Leave `blur(0px)` in place.
+- **`repeat: -1` on a finite composition is a lint warning, and a real one** — the export
+  clips to `data-duration`. Compute a finite repeat count that covers the slot.
+
+## Working with client b-roll
+
+- **Client "social cut" b-roll is usually full of burned-in marketing text** ("90 lb pull
+  force magnet", dimension callouts, product name cards). It fights your own graphics.
+  Run `ffmpeg -filter:v "select='gt(scene,0.18)',showinfo"` per clip to get the real cut
+  list, then pull a frame from the *middle of each scene* and actually look at it.
+- **Coarse contact sheets lie when the source cuts fast.** Sampling at 6 evenly-spaced
+  points across a 40s clip that cuts every 0.7s shows you shots that aren't at those
+  timestamps once you re-sample. Three clips got as far as a draft render on the strength
+  of coarse samples and all three had to be replaced. Verify at scene midpoints, and
+  verify the *trimmed* file before wiring it in.
+- **Check the tail of a clip before using it** — client cuts usually end on their own
+  logo card. A range that looked like in-cab driving was the end card.
+- **Big Google Drive files:** the Drive MCP `download_file_content` returns base64, which
+  is impractical past a few MB. For a link-shared file, GET
+  `https://drive.usercontent.google.com/download?id=<id>&export=download`, parse the
+  virus-scan form for its `confirm`/`uuid`, and re-request with those — a 2.3 GB ProRes
+  pulled fine that way.
+
+## Transcription & timing
+
+- **Whisper's first few word timings are unreliable.** On a 39s VO the head words were
+  crammed into one 2.1s "word" and started 1.4s before the actual speech onset.
+  **Fix:** find real speech bounds with `silencedetect=noise=-32dB:d=0.35`, re-transcribe
+  the head (and any hero block) as a *trimmed* segment, and add the offset back. Interior
+  timings from the full pass are usually within ~0.15s — cross-check them against the
+  silence boundaries rather than trusting them blind.
+
+## Grade
+
+- **Navy scrim + vignette + grain stack multiplicatively and will crush your footage.**
+  What looks like a tasteful 0.5 scrim in CSS reads as murk in the render. Draft, pull
+  frames, *look*, then tune. This build ended at scrim 0.34/0.12/0.30, vignette 0.44,
+  grain 0.34 — and had to push grid/crosshairs *up* to 0.062 alpha because the unifying
+  texture was invisible at 0.045.
+- **Reserving the bottom 30% for subtitles pushes everything into the top third.** Content
+  centred in the remaining band sits at 35% of frame and reads unbalanced. Centre the card
+  band at ~43% instead — as low as it goes while keeping glyphs clear of the subtitle line.
+
+## Diagnostics
+
+- **`hyperframes doctor` reporting `FFmpeg  Failed to run` can be a false negative.**
+  `ffmpeg -version` worked fine and every render succeeded. Check directly before chasing it.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
