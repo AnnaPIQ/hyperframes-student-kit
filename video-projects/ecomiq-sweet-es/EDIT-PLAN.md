@@ -31,44 +31,57 @@ from the pasted script — see "Discrepancies" at the end.
 | 38.12–39.62 | If you want us in your corner, |
 | 39.74–41.20 | tap the link and find out more. |
 
+Note: with the reuse removed, S9 absorbs what used to be a second cookie-rack
+beat. Both halves are A-roll and contiguous in the master, so they play as one
+continuous take — no flash fires mid-sentence.
+
 Figure onsets that drive the cards: **`10,000` 7.46** · `Nordstrom` 12.06 ·
 `Tory Burch` 12.78 · `Beyond Yoga` 13.86 · `The Lakers` 14.70 ·
 **`hours` 22.62** · **`four years` 26.00** · **`three times` 31.84**
 
 ---
 
-## Beat sheet — 19 scenes
+## Beat sheet — 18 scenes
 
-Every cut is a 0.22s motion-blurred vertical whip. "Clean" = footage with **no
-scrim, no graphic**. Card scenes are full-bleed navy; footage is not visible under
-them.
+Every cut is a **hard white horizontal line** swept through frame with a blurred
+glow wake, plus a short full-frame flash on the cut itself. Never a fade.
+**Each b-roll clip is used exactly once**; where a beat has no fresh b-roll it
+plays Sean to camera. "Clean" = footage with no scrim, no graphic.
 
 | # | In | Out | Dur | Source | Content |
 |---|---|---|---|---|---|
 | S1 | 0.00 | 2.20 | 2.20 | **A-roll** | Sean opens to camera — "You probably know Sweet E's Bake Shop…" |
 | S2 | 2.20 | 3.30 | 1.10 | b1-cake | clean — the ruffle cake, landing on "…for cakes" |
 | S3 | 3.30 | 5.10 | 1.80 | **A-roll** | "but here's what you don't know about them" |
-| S4 | 5.10 | 7.40 | 2.30 | b2-cookies `@0.0` | clean — trays of logo-printed cookies, under "your logo or your photo" |
-| S5 | 7.40 | 10.85 | 3.45 | **CARD A** | **10,000** — lands on the spoken figure at 7.46 |
+| S4 | 5.10 | 7.40 | 2.30 | b2-cookies | clean — trays of logo-printed cookies, under "your logo or your photo" |
+| S5 | 7.40 | 10.85 | 3.45 | **CARD A** | **10,000 → 20,000** — lands on the spoken figures at 7.46 and 8.48 |
 | S6 | 10.85 | 12.05 | 1.20 | **A-roll** | "absolutely no problem" |
 | S7 | 12.05 | 15.25 | 3.20 | **CARD B** | client roster, each name on its own spoken onset |
 | S8 | 15.25 | 16.20 | 0.95 | b3-sprinkle | clean — sprinkles falling; the breath before the scale claim |
-| S9 | 16.20 | 18.10 | 1.90 | **A-roll** | "custom work at scale…" |
-| S10 | 18.10 | 20.55 | 2.45 | b2-cookies `@2.60` | clean — the racks keep going, under "nobody else can touch" |
-| S11 | 20.55 | 22.30 | 1.75 | b4-box `@0.0` | clean — cake boxed, under "made in LA" |
-| S12 | 22.30 | 24.15 | 1.85 | **CARD C** | **MIDNIGHT → 8AM** — lands on "hours" at 22.62 |
-| S13 | 24.15 | 25.95 | 1.80 | b6-sean-laptop | clean — EcomIQ at work, under "a brand we've worked with for…" |
-| S14 | 25.95 | 29.15 | 3.20 | **CARD D** | **hero results card** — lands on "four years" at 26.00, holds over "they have been so successful" |
-| S15 | 29.15 | 31.70 | 2.55 | b4-box `@3.00` | clean — the box closing, under "moved into a bigger facility" |
-| S16 | 31.70 | 34.90 | 3.20 | **CARD E** | **3× THE SIZE** + labelled 1:3 bars — lands on "three times" at 31.84 |
-| S17 | 34.90 | 37.70 | 2.80 | b5-erica-box | clean — Erica to camera with the cake box (the warmest frame in the piece) |
-| S18 | 37.70 | 39.70 | 2.00 | **A-roll** | "if you want us in your corner" — direct address |
-| S19 | 39.70 | 46.60 | 6.90 | **END CARD** | comes up under "tap the link and find out more", then holds 4.70s in silence |
+| S9 | 16.20 | 20.55 | 4.35 | **A-roll** | "custom work at scale… almost nobody else can touch" — the longest on-camera hold, and the argument's centre |
+| S10 | 20.55 | 22.30 | 1.75 | b4-box | clean — cake boxed, under "made in LA" |
+| S11 | 22.30 | 24.15 | 1.85 | **CARD C** | **MIDNIGHT → 8AM** — lands on "hours" at 22.62 |
+| S12 | 24.15 | 25.95 | 1.80 | b6-sean-laptop | clean — EcomIQ at work, under "a brand we've worked with for…" |
+| S13 | 25.95 | 29.15 | 3.20 | **CARD D** | **hero results card** — lands on "four years" at 26.00 |
+| S14 | 29.15 | 31.70 | 2.55 | **A-roll** | "they recently had to move into a bigger facility" |
+| S15 | 31.70 | 34.90 | 3.20 | **CARD E** | **3× THE SIZE** + labelled 1:3 bars — lands on "three times" at 31.84 |
+| S16 | 34.90 | 37.70 | 2.80 | b5-erica-box | clean — Erica to camera with the cake box (the warmest frame in the piece) |
+| S17 | 37.70 | 39.70 | 2.00 | **A-roll** | "if you want us in your corner" — direct address |
+| S18 | 39.70 | 46.60 | 6.90 | **END CARD** | comes up under "tap the link and find out more", then holds 4.70s in silence |
 
-Balance: A-roll 9.20s · b-roll 13.85s · figure cards 13.85s · end card 6.90s.
-Average scene 2.45s; no scene under 0.95s.
+Balance: A-roll 14.10s over six appearances · b-roll 10.70s over six clips, one
+use each · figure cards 14.90s · end card 6.90s. 17 cuts.
 
----
+### The transition (one assembly, reused at all 17 cuts)
+- A 6px pure-white line, full frame width, with a 24px/90px white-and-blue-tint
+  halo, swept from above frame to below it over 0.22s — crossing centre exactly
+  on the cut.
+- A blurred glow wake travelling with it (300px band, 30px blur).
+- A full-frame white flash to 0.30 opacity for ~0.045s on the cut, decaying over
+  0.12s — a snap, not a blowout.
+- The incoming scene arrives from +15% Y at scale 1.07 under 24px of blur,
+  resolving over 0.32s. Its slow push-in (1.00 → 1.05) runs on a separate inner
+  element so the two never fight over one transform.
 
 ## The five figure cards — every value sourced
 
@@ -179,33 +192,39 @@ last word, all content above the subtitle zone.
 
 ---
 
-## Status — delivered
+## Status — awaiting your sign-off on the cut
+
+Rendered `--quality standard` only, per your instruction. Nothing is baked at
+`high` until you confirm the cut.
 
 | File (project root) | Size | Spec |
 |---|---|---|
-| `final-9x16.mp4` | 72.5 MiB | 1080×1920 · 30fps · H.264/AAC · +faststart · 46.60s |
-| `final-9x16-small.mp4` | 17.0 MiB | same, CRF 22 (the sub-30 MiB copy) |
-| `final-4x5.mp4` | 51.6 MiB | 1080×1350 · 30fps · H.264/AAC · +faststart · 46.60s |
-| `final-4x5-small.mp4` | 12.7 MiB | same, CRF 22 |
+| `preview-9x16.mp4` | 46.6 MiB | 1080×1920 · 30fps · H.264/AAC · +faststart · 46.60s |
+| `preview-9x16-small.mp4` | 13.4 MiB | same, CRF 24, for playback in chat |
+| `preview-4x5.mp4` | 32.3 MiB | 1080×1350 · 30fps · H.264/AAC · +faststart · 46.60s |
 
-Both masters rendered `--quality high`. Lint: 0 errors, 0 warnings on the 9:16
-master and on the generated 4:5.
+Lint: 0 errors, 0 warnings on the 9:16 master and the generated 4:5.
 
-**Verified by looking, not by lint:**
+**This revision:**
+- **No b-roll clip appears twice.** The two beats that had reused b2-cookies and
+  b4-box are now Sean to camera. S9 absorbed the old cookie-rack repeat, giving a
+  4.35s on-camera hold through "custom work at scale… nobody else can touch" —
+  the longest hold in the piece, on the line that carries the argument.
+- **The cuts are no longer flat.** Each is a hard 6px white horizontal line with
+  a white/blue-tint halo, swept top to bottom over 0.22s and crossing centre
+  exactly on the cut, trailing a blurred glow wake, with a short full-frame
+  flash (0.30 opacity, ~0.045s) on the cut. The incoming scene arrives from
+  +15% Y at scale 1.07 under 24px of blur.
 
-- Every scene's hero frame plus every one of the 18 transitions read from the
-  final render. No cropped faces, no overflow, no blank frames.
-- Whip transitions confirmed present in the render (streak sweeping, incoming
-  scene resolving 16px → 0.14px of blur). They were silently missing at first —
-  see the heredoc entry in `docs/LESSONS.md`.
-- Card E's bars measured at exactly **3.000** — flexbox had been shrinking the
-  long bar to ~2.5× while the label still said 3×.
-- Every on-screen figure sampled every 0.10s across all cards: no frame ever
-  shows a value other than the real one. (Card D's count-up was displaying
-  "+110% TOTAL SALES" mid-tween; figures now land whole.)
-- Every card's deepest content clears the subtitle zone in both ratios
+**Verified from the render:**
+- The line was measured, not eyeballed: a row-luma profile during a whip shows a
+  single bright band (peak 230 at y≈300) against 162 max on a clean frame — one
+  clean line, nothing stationary or doubled.
+- Every scene sampled in both ratios: six distinct b-roll clips, six Sean beats,
+  five cards, end card. No cropped faces, no overflow, subtitle zone clear
   (9:16 y<1344, 4:5 y<945).
-- Audio sits at exactly **0 ms** against the source VO in both ratios (FFT
-  cross-correlation; normalised peak 1.000 on the 9:16). Video and VO share one
-  trim point, so lip sync holds by construction.
-- `+faststart` confirmed on both masters (moov before mdat).
+- Card E bars still exactly 3.000; no frame shows a figure other than the real
+  value (sampled every 0.10s).
+
+**On confirmation** I'll bake both at `--quality high` and commit them as
+`final-9x16.mp4` / `final-4x5.mp4`.
