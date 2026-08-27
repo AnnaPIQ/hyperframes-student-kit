@@ -341,11 +341,11 @@ attach, rather than quietly sending a squashed copy.
 Rendered `--quality high`, native size, and frame-verified across the whole
 timeline (22 frames per ratio, every one inspected).
 
-| Ratio | File | Size |
+| Ratio | File | Size (v1 → v2) |
 |---|---|--:|
-| 9:16 | `renders/ecomiq-how-it-works-916.mp4` | 80 MB |
-| 1:1 | `renders/ecomiq-how-it-works-1x1.mp4` | 50 MB |
-| 4:5 | `renders/ecomiq-how-it-works-4x5.mp4` | 58 MB |
+| 9:16 | `renders/ecomiq-how-it-works-916.mp4` | 80 → **75 MB** |
+| 1:1 | `renders/ecomiq-how-it-works-1x1.mp4` | 50 → **48 MB** |
+| 4:5 | `renders/ecomiq-how-it-works-4x5.mp4` | 58 → **55 MB** |
 
 Verified identical on all three:
 
@@ -419,3 +419,12 @@ The graphics only cover the mechanism section, as scoped. The earlier hook and
 credibility beats (the Shopify Premier Partner reveal, the team grid — both exist
 in the founder-ad build) would take the retime to roughly **1.2×**, close to
 native. Not built: say the word.
+
+### v2 verified, all three ratios
+- H.264 **High** / **yuv420p**, native size
+- **30/30 fps CFR** — one distinct frame duration across all 2293 frames
+- **AAC 48 kHz**, `+faststart`, **76.433333 s**
+- Trigger line at **71.4333 s** in all three, measured in the delivered audio
+- 32 frames inspected per ratio, covering the overlay fade-in, the
+  montage→graphics cut, every beat head and staged reveal, the graphics→montage
+  cut, both lower-thirds, the dissolve and the card hold
