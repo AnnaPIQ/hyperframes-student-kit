@@ -112,9 +112,22 @@ founders (beat 14) → the fork, one node vs. the full cluster (beat 18). Four r
 
 ## Seam mechanics
 Every graphic beat is built on the same three layers: a non-animated `class="clip"`
-`.slot`, an opaque navy `.plate`, and a `.body` carrying the content. Graphic-after-
-founder seams wipe the whole plate up over the live footage (0.26–0.28s, `power3`)
-while the body rides in with a 26px blur; graphic-after-graphic seams hold both plates
-still and cross-whip only the bodies, so the navy canvas never breaks. Each founder
-clip is cut with 0.30s of pre-roll and 0.35s of post-roll so there is always live
-footage under the wipe. No hard cuts anywhere in the piece.
+`.slot`, an opaque navy `.plate`, and a `.body` carrying the content.
+
+**Every seam wipes the incoming plate.** It rides up over whatever is on screen in
+0.24s (`power3`), with a blurred light streak pinned to its leading edge, while the
+`.body` rises from +150px under a 24px blur that de-ramps over 0.52s. Each founder clip
+carries 0.30s of pre-roll and 0.35s of post-roll so there is always live footage beneath
+the wipe; on the two graphic-to-graphic seams (7→8, 18→19) the outgoing beat simply
+**holds** and the incoming plate covers it.
+
+Two things this deliberately avoids, both caught by pulling frames at the seams:
+
+- *Cross-whipping two bodies* (lift the outgoing one out, slide the incoming one in)
+  left ~6 frames of bare canvas, because the incoming beat's elements had not entered
+  yet. Holding the outgoing beat and wiping over it removes the gap entirely.
+- *A plate landing before its own content starts.* Every beat's first element now enters
+  at local `0`, so the frame is never empty behind the arriving panel.
+
+The plate is never blurred — `filter: blur()` would make its edges translucent and show
+the footage through. Only the inner `.body` blurs. No hard cuts anywhere in the piece.
