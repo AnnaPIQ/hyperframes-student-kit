@@ -5,11 +5,11 @@ Paste everything below the line into a new session. Fill the two `‹…›` bla
 Everything in `BRIEF-TEMPLATE.md` applies unchanged — style, content rules, pipeline, traps,
 verification, delivery. This brief only covers what is specific to Mob Armor.
 
-## Read this first — the premise changed
+## Read this first — what you already have
 
-The Drive folder was checked before this brief was written. **You already have vertical
-lifestyle b-roll; you do not have to go hunting online.** The folder is not "just product
-footage":
+The Drive folder and the site were both checked before this brief was written, so you can skip
+the survey. The folder is **not** "just product footage" — it already contains vertical
+lifestyle b-roll, which changes where the searching effort should go:
 
 | Subfolder | What's actually in it |
 |---|---|
@@ -19,8 +19,9 @@ footage":
 | **Products**, **Icons** | Stills. |
 | **BRANDING_GUIDE.pdf** (2.8 MB), **brandprofile-032921.pdf** | **Read both before choosing any type or colour.** |
 
-So the sourcing job is small: use Social Cuts for lifestyle beats, Product Videos for product
-beats, and only go outside if a specific beat can't be filled.
+So: Social Cuts and Product Videos cover a good part of the cut, and the search job (next
+section) is for the lifestyle context they don't have — off-road, trucking, moto, work-truck,
+first responder.
 
 **Two real technical constraints, both verified:**
 - **Every clip is 24fps** and carries an audio track plus a stray data stream. Normalise to
@@ -65,30 +66,53 @@ is Mob Armor's, not EcomIQ's. **Ask me which, in one line, before you design any
 Same hard rule as always: **never invent a figure**, and a beat with no real number gets no
 graphic. Re-check each of these on the live site before it goes on screen — they change.
 
-### Sourcing order
-1. **Transcribe the VO and build a shot list first**, then match clips to beats.
-2. **Social Cuts** for anything human or in-vehicle. Already 1080×1920.
-3. **MP4 Product Videos** for product beats — as inset windows, not full-bleed (see above).
-4. **Shopify product images** if you need clean stills: `https://www.mobarmor.com/products.json?limit=250`
-   returns image URLs on `cdn.shopify.com`. Verified working.
-5. Only then look outside. What was tested from the container:
-   - **YouTube `@mobarmor`** — `yt-dlp` **lists** the channel fine and there is genuinely good
-     material (*Top 5 Extreme Uses: Drift, Off-Road, Work Truck*, *Behind the Build*, *Why
-     Riders Trust Mob Armor*, plus vertical Shorts). But **downloading is blocked** — "Sign in
-     to confirm you're not a bot". It needs `--cookies` / `--cookies-from-browser`. Ask me for
-     cookies rather than assuming it works.
-   - **Instagram / TikTok** — pages return 200 but media realistically needs auth. Don't count
-     on them.
-   - **Product-page video on the site is Okendo customer-review UGC**, only 576×1024. **Do not
-     use it**: it would upscale 1.9× to fill 1080×1920, and review video is licensed to the
-     merchant for on-store display, not for paid ads — those are identifiable real customers.
-     If you want it, I have to get written permission first.
+### Sourcing b-roll — this is real work, budget for it
+
+The Drive folder covers product beats and some in-vehicle lifestyle, but it is **February 2025
+material and product-led**. Expect to go looking for more, and treat that as a proper step
+rather than a fallback.
+
+1. **Transcribe the VO and build a shot list first.** One line per beat: what the words are
+   doing, and the shot that supports them. Search against that list — never browse first and
+   retro-fit the edit to whatever turns up.
+2. **Mine the Drive folder against the list.** Social Cuts for anything human or in-cab (already
+   1080×1920); MP4 Product Videos for product beats (as inset windows, not full-bleed).
+3. **Then search the client's own channels for anything still missing.** Their social is the
+   right place for lifestyle, off-road, trucking, moto and first-responder context that the
+   product folder doesn't have:
+   - **YouTube `@mobarmor`** — the richest source. Already spotted: *Top 5 Extreme Uses: Drift,
+     Off-Road, Work Truck*, *Behind the Build: How We Make Our Phone Mounts*, *Why Riders Trust
+     Mob Armor*, *Mob Armor Mag FLEX Plate Install*, plus a stream of **vertical Shorts**.
+     `yt-dlp --flat-playlist` lists the channel fine — use it to build a candidate list with
+     ids and durations. **But downloading is blocked**: YouTube answers "Sign in to confirm
+     you're not a bot". It needs `--cookies-from-browser` or a cookies file. **Ask me for
+     cookies as soon as you know which videos you want** — don't burn time retrying, and don't
+     silently drop the beat.
+   - **Instagram `@mobarmor` and TikTok `@mobarmor`** — pages respond, but media realistically
+     needs auth. Try, and tell me quickly if you're blocked.
+   - **mobarmor.com** — `https://www.mobarmor.com/products.json?limit=250` returns product
+     image URLs on `cdn.shopify.com` and works without a key. Good for clean stills, a
+     Ken-Burns push, or an inset product window. Verified.
+   - Blog / case-study / collection pages are worth a look for embedded video and for **real
+     figures** you can put on a card.
+4. **Report what you found and what you couldn't.** For every beat the shot list can't fill
+   from first-party material, say so and propose an alternative (a different shot idea, a
+   product-video inset, or a motion-graphic card) rather than quietly substituting stock.
+   **Don't use free stock libraries here** — this is a first-party, proof-led ad and stock
+   people would read as fake customers. If you think a beat genuinely needs stock, ask first.
+5. **Log every clip** in `assets/broll/CREDITS.md`: where it came from, the URL or Drive id,
+   and the date pulled.
 
 ### Rights
-Everything in the Drive folder and on the site is the client's own, so the licensing worry
-from stock footage mostly disappears — with two exceptions: **the Okendo review videos above**,
-and any creator/UGC content reposted on their social, which the brand may not own for paid
-media. If a clip's origin isn't obviously first-party, ask before using it.
+Everything in the Drive folder and on the client's own channels is first-party, so the
+licensing worry that comes with stock mostly disappears. Two exceptions:
+
+- **The product-page video on mobarmor.com is Okendo customer-review UGC and only 576×1024.
+  Do not use it.** It would upscale 1.9× to fill 1080×1920, and review video is licensed to
+  the merchant for on-store display, not for paid ads — those are identifiable real customers.
+  If you want it, I have to get written permission first.
+- **Creator/UGC content reposted on their social** may not be the brand's to license for paid
+  media. If a clip's origin isn't obviously first-party, ask before using it.
 
 ### Everything else is unchanged
 Audio-led, full VO, no cutdown. Graphics only where a real figure is spoken, each a full-bleed
