@@ -33,12 +33,13 @@ SUBS = [
         width: 1080px; height: 1350px; overflow: hidden;"""),
     ('data-width="1080" data-height="1920"', 'data-width="1080" data-height="1350"'),
 
-    # ── footage: source is 1080x1920, so 4:5 centre-crops it vertically.
-    #    Bias the crop up to 42% — faces and horizons sit above centre in this footage. ──
+    # ── footage: b-roll is 1080x1920, so 4:5 centre-crops it vertically. Bias the crop
+    #    up to 42% — faces and horizons sit above centre in this material. The A-roll is
+    #    NOT cropped: it has its own 1728-wide 4:5 crop from the 4K master (see aroll45). ──
     ("""        position: absolute; inset: 0; width: 1080px; height: 1920px;
-        object-fit: cover; z-index: 1; will-change: transform, filter;""",
+        object-fit: cover; will-change: transform, filter;""",
      """        position: absolute; inset: 0; width: 1080px; height: 1350px;
-        object-fit: cover; object-position: 50% 42%; z-index: 1; will-change: transform, filter;"""),
+        object-fit: cover; object-position: 50% 42%; will-change: transform, filter;"""),
 
     # ── card band re-centres on y=575; bottom 30% (below y=945) stays clear ──
     ("position: absolute; left: 0; right: 0; top: 300px; height: 1040px; z-index: 6;",
@@ -119,6 +120,14 @@ def main():
         for n, frag in failed:
             print(f"  {n} match(es): {frag}")
         return 1
+
+    # A-roll is re-cropped from the 4K master for 4:5 (1728x2160 -> 1080x1350) rather than
+    # letterbox-cropped from the 9:16 cut, which would cut Sean's head or torso.
+    n_aroll = out.count('assets/aroll/')
+    if n_aroll != 5:
+        print(f"make-4x5: expected 5 A-roll references, found {n_aroll}")
+        return 1
+    out = out.replace('assets/aroll/', 'assets/aroll45/')
 
     # Distinct composition id so the two builds can never resolve to each other's timeline.
     out = out.replace('data-composition-id="mob-armor-social-proof"',

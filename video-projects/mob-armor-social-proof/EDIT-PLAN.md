@@ -4,6 +4,8 @@
 card, Mob Armor's white wordmark on the stat cards.
 **Master format:** 9:16 · 1080×1920 · 30 fps. Relayout: 4:5 · 1080×1350.
 **Runtime:** 38.60 s (VO 1.38 → 35.13, then 3.47 s of held end card).
+**Registers:** Sean to camera (A-roll), motion-graphic stat cards, client b-roll — the
+edit moves between all three. Sean opens it and closes it.
 **Source of truth for timings:** `assets/vo-transcript.json` — word-level Whisper
 (`small.en`), head and every hero block re-transcribed on trimmed segments and
 cross-checked against `silencedetect` boundaries. All beat times snapped to 1/30 s.
@@ -104,36 +106,73 @@ VO. I verified them live today anyway, and they're in §7 if you want one used.
 
 ---
 
-## 4 · Beat sheet — 17 beats, 38.60 s
+## 4 · Beat sheet — 18 beats, 38.60 s
 
-Mid-section average shot length **2.06 s**. Every cut is a blur-whip (exit `y:-140`,
+Mid-section average shot length **2.02 s**. Every cut is a blur-whip (exit `y:-140`,
 `blur(24px)`, `power2.in` 0.30 s starting 0.10 s early → entry `y:140`, `blur(24px)`→0,
 `power2.out` 0.45 s), same direction on both sides so the two blurs overlap and the cut
 hides inside the motion. Cards A and D additionally get a flame light-streak fired on
 the cut. Grid + crosshairs + vignette + grain on every beat. EcomIQ white logo pinned
 top-left (72, 96) for the whole runtime, in a positioned non-`clip` div.
 
-| # | in → out | VO | On screen | Clip (Drive source, in–out) |
+| # | in → out | VO | On screen | Source |
 |---|---|---|---|---|
-| 00 | 0.000 → 0.900 | *(silence)* | Cold open. Navy stage, grid, crosshairs, EcomIQ logo fades up. | — |
-| 01 | 0.900 → 4.400 | "Up over 500% in a single year." | **CARD A — 500%.** Eyebrow "Total sales" at 1.06; numerals snap at 1.700, 0.20 s ahead of the spoken word; flame rule wipes 2.10; "In a single year" 3.10; Mob Armor wordmark on a black chip 3.45. | — |
-| 02 | 4.400 → 6.033 | "That's what happened to Mob Armor's…" | Phone on dash mount, in-cab | `Mobnetic Stix` **2.85–4.75** |
-| 03 | 6.033 → 8.100 | "…total sales after they started" | CNC cutting head, sparks — the product being made | `Tabnetic Discs` **5.95–8.35** |
-| 04 | 8.100 → 10.267 | "working with us. And it wasn't a lucky viral moment." | **Hero:** drone, buggy across sand dunes, slow 1.08× push | `Tab Mount Maxx Tube` **32.00–34.45** |
-| 05 | 10.267 → 11.733 | "It wasn't a magic ad." | Tablet going onto a wall mount, loading bay | `Tabnetic Direct` **20.55–22.35** |
-| 06a | 11.733 → 12.733 | "When they came to us," | Real vehicle interior — hand, phone, keys in the ignition | `Water balloon` **2.55–3.80** |
-| 06b | 12.733 → 14.700 | "almost everything ran through Facebook." | Load test — a man hanging his full weight off two mounts on a press rig | `Tabnetic Direct` **14.90–17.20** |
+| 00 | 0.000 → 1.700 | *(silence)* → "Up over…" | **A-ROLL.** Cold open on Sean. The ad opens on a face, not a card — it's a case study, and a person saying it is the proof. Slow 1.03× push. | `a00` 0.000–1.950 |
+| 01 | 1.700 → 4.400 | "…500% in a single year." | **CARD A — 500%.** Numeral snaps at 1.700, 0.20 s ahead of the spoken word, inside a flame streak. Rule wipes 2.10; "In a single year" 3.10; Mob Armor wordmark on a black chip 3.45. | — |
+| 02 | 4.400 → 6.033 | "That's what happened to Mob Armor's…" | **A-ROLL.** Back to Sean for the attribution. | `a02` 4.400–6.283 |
+| 03 | 6.033 → 8.520 | "…total sales after they started working with us." | **Hero b-roll:** drone, buggy across sand dunes, 1.08× push. | `Tab Mount Maxx Tube` 31.95–34.75 |
+| 04 | 8.520 → 11.733 | "And it wasn't a lucky viral moment. It wasn't a magic ad." | **A-ROLL.** Sean's direct-address block — opinion belongs on a face. **Punch-in at 10.160** on the sentence boundary: a deliberate jump hidden in a 3-frame blur, so 3.2 s never goes static without needing a second angle. | `a04` 8.520–11.983 |
+| 05 | 11.733 → 13.200 | "When they came to us," | B-roll: phone on dash mount, in-cab. | `Mobnetic Stix` 2.85–4.75 |
+| 06 | 13.200 → 14.700 | "almost everything ran through Facebook." | B-roll: load test — a man hanging his full weight off two mounts. | `Tabnetic Direct` 14.90–17.20 |
 | 07 | 14.700 → 17.267 | "There was one channel doing all of the work." | **CARD B — 1.** One flame dot lit, three dark, the lit one visibly overloading on a 4-beat pulse. | — |
 | 08 | 17.267 → 19.400 | "We found three more that fit the brand" | **CARD C — +3.** Numeral swaps in place; three blue-tint dots ignite on "three more" and the two beats after. | — |
 | 09 | 19.400 → 21.733 | "and got them working in the right order." | Same card, **no cut** — copy recolours and a flame pulse runs the wire left→right, popping each dot in sequence. | — |
-| 10 | 21.733 → 23.867 | "A year later, sales are up over" | Facility floor, mount in foreground, 1.06× push | `Tab Mount Maxx Direct` **12.70–15.10** |
-| 11 | 23.867 → 25.233 | **"500%"** | **CARD D — the callback.** Card A returns, faster (0.34 s vs 0.42 s), with the Mob Armor shield instead of the wordmark. | — |
+| 10a | 21.733 → 22.800 | "A year later," | B-roll: facility floor, 1.05× push. | `Tab Mount Maxx Direct` 12.70–15.10 |
+| 10b | 22.800 → 23.867 | "sales are up over" | B-roll: CNC cutting head, sparks. Two 1.07 s shots accelerating into the callback. | `Tabnetic Discs` 5.95–8.35 |
+| 11 | 23.867 → 25.233 | **"500%"** | **CARD D — the callback.** Card A returns, faster (0.34 s vs 0.42 s), carrying the Mob Armor shield rather than the wordmark. | — |
 | 12 | 25.233 → 27.500 | "across four channels instead of just one." | **CARD E — 4.** All four dots lit, staggered. "Channels — not one." | — |
-| 13 | 27.500 → 29.567 | "And that's what the right plan does." | Rugged tablet locked into its mount — everything in its place | `Tabnetic Direct` **41.10–43.45** |
-| 14 | 29.567 → 31.833 | "This is a real brand with real numbers." | A real customer, face to camera, in his truck with the radio on the mount | `Rad Mount` **28.20–30.75** |
-| 15 | 31.833 → 38.600 | "If you wanna see what's possible for yours, tap the link to find out more." | **EcomIQ end card.** Centred logo, "See what's *possible* for yours." with the single serif-italic word, flame CTA on "tap the link" at 33.40. Holds **6.77 s**, the last 3.47 s in silence. Entry only — no exit tween, so the final frame never blurs away. | — |
+| 13 | 27.500 → 29.567 | "And that's what the right plan does." | **A-ROLL.** Sean draws the conclusion. | `a13` 27.500–29.817 |
+| 14 | 29.567 → 31.833 | "This is a real brand with real numbers." | B-roll: a real customer, face to camera, radio on the mount in his truck. | `Rad Mount` 28.20–30.75 |
+| 15 | 31.833 → 33.500 | "If you wanna see what's possible for yours," | **A-ROLL.** Sean hands off to the CTA. | `a15` 31.833–33.750 |
+| 16 | 33.500 → 38.600 | "tap the link to find out more." + 3.47 s silence | **EcomIQ end card.** Centred logo, "See what's *possible* for yours." with the single serif-italic word, flame CTA at 34.20. Holds **5.10 s**. Entry only — no exit tween, so the final frame never blurs away. | — |
 
-## 4.1 · What changed between the approved plan and the build
+### How the three registers alternate
+
+| Register | Share | Job |
+|---|---|---|
+| **A-roll (Sean)** | 10.3 s · 27% | Opens the ad, carries every line of opinion or conclusion, hands off to the CTA |
+| **Motion graphics** | 18.5 s · 48% | Only where a real figure is spoken — five cards, no more |
+| **Client b-roll** | 9.9 s · 25% | Proof texture under the narrative beats |
+
+Sean appears five times. The pattern is deliberate: **face → number → face → proof → face**.
+He states the claim, the graphic evidences it, he interprets it. The b-roll never carries
+a claim on its own — it sits under lines that are setting up or paying off a figure.
+
+## 4.1 · The A-roll pass
+
+The first build was audio-led only — Sean's voice, no picture of him. Bringing him on
+screen changed the structure, not the timings: every card and every VO anchor sits where
+it did, and the b-roll gave up five slots.
+
+- **Five A-roll segments**, each cut at its own source timecode and placed in the
+  composition at that same timecode. The VO is one continuous track from the same file,
+  so the lips lock with no offset. Re-trimming a segment to a different start would break
+  that — the constraint is written into `index.html` above the A-roll block.
+- **Two crops from the 4K master**, not one crop re-cropped: 9:16 takes `1215×2160` at
+  x=1200, 4:5 takes `1728×2160` at x=940, both from 3840×2160. Letterboxing the 9:16 cut
+  into 4:5 would have cut his head or his torso.
+- **A grade on the A-roll only** — `saturation 0.86, contrast 1.05, brightness −0.015`
+  plus a small blue push — to ease the electric-cyan backdrop toward the EcomIQ navy
+  world without touching his skin tones.
+- **Sean sits above the b-roll scrim.** The scrim is one layer for the whole runtime at
+  z-index 2; b-roll is z-index 1 and gets dimmed by it, Sean is z-index 3 and does not.
+  A talking head under a navy scrim reads as an error, not a grade.
+- **A punch-in instead of a second angle.** Beat 04 runs 3.2 s, well over this cut rate.
+  At the sentence boundary (10.160) the shot jumps 1.045× → 1.16× inside a 3-frame blur.
+- **Three b-roll clips lost their slots** — `tablet-wall`, `tablet-locked`, `phone-dash`.
+  Ranges are still logged in `assets/broll/CREDITS.md` if you want them back.
+
+## 4.2 · What changed between the approved plan and the build
 
 Three clips in the approved sheet did not survive contact with the footage, and the
 first draft render exposed a grade problem. All fixed:
@@ -205,18 +244,18 @@ None of these is spoken in the VO, so under the brief's own rule none gets a gra
 
 ---
 
-## 8 · Open questions — answer these and I'll build
+## 8 · Decisions taken
 
-1. **Confirm the 500% figure and its wording.** It's EcomIQ's own case-study number; I
-   can't verify it against any source I have. Before it goes on a full-bleed card twice:
-   is it *total sales, up over 500%, year over year*? Any qualifier needed for ad-claim
-   safety?
-2. **Confirm the four-channel claim** the same way — "one channel (Facebook) → four".
-3. **Subtitles:** I'm keeping the bottom 30 % clear and **not** burning captions, per the
-   brief. Say if you'd rather I burn them.
-4. **Mob Armor logo on navy.** Their BRANDING_GUIDE is explicit: white logo on black,
-   *"avoid using other colours directly behind the logo"*. I'm putting the white wordmark
-   on a black `#101820` chip inside the navy card, which satisfies the rule and reads as
-   a deliberate lockup. Confirm, or I'll ask them.
-5. **38.6 s runtime** — full VO, no cutdown, as briefed. Confirm that's the intent for a
-   paid placement.
+1. **Whose ad** — EcomIQ, crediting Mob Armor. Confirmed.
+2. **The 500% and the four-channel claim** — taken from Sean's own recorded VO as the
+   source of truth. There is no external source to check them against, so the words on
+   screen are the words he says. If EcomIQ's records qualify either differently, that is
+   the one thing to change before this runs as paid media.
+3. **No customer reviews** — no review UGC, no star-rating graphics, nowhere in the cut.
+4. **No burned-in subtitles.** The bottom 30% is held clear for them to be added later.
+5. **Full VO, no cutdown** — 38.60 s.
+6. **Mob Armor's logo on navy** — their guide says white-on-black and *"avoid using other
+   colours directly behind the logo"*. It sits on a black `#101820` chip inside the navy
+   card, which honours the rule and reads as a deliberate lockup.
+7. **Sean on screen** — five A-roll segments, moving between him, the graphics and the
+   b-roll. See §4.1.

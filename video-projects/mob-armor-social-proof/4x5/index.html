@@ -31,22 +31,25 @@
       }
 
       /* ── footage ──────────────────────────────────────────────────────
-         The <video> IS the animated element — no timed wrapper. A wrapper that
-         also carries data-start makes the frame extractor and the visibility
-         window disagree, which shows the wrong source frames. Transform/filter
-         on a <video> is fine; width/height/top/left is what freezes it. */
-      .shot {
+         Every <video> is a direct child of the stage — a wrapper that also
+         carries data-start makes the frame extractor and the visibility window
+         disagree, which shows the wrong source frames. Transform/filter on a
+         <video> is fine; width/height/top/left is what freezes it. */
+      .shot, .aroll {
         position: absolute; inset: 0; width: 1080px; height: 1350px;
-        object-fit: cover; object-position: 50% 42%; z-index: 1; will-change: transform, filter;
+        object-fit: cover; object-position: 50% 42%; will-change: transform, filter;
       }
-      /* One navy scrim for the whole runtime, stacked above the footage and below
-         the type — holds nine cuts together as one piece instead of a reel. */
+      .shot  { z-index: 1; }   /* b-roll — sits UNDER the scrim */
+      .aroll { z-index: 3; }   /* Sean — sits OVER it, so his face is never dimmed */
+
+      /* One navy scrim for the whole runtime, above the b-roll and below Sean.
+         Holds six cuts of client footage together as one piece instead of a reel. */
       #scrim {
         position: absolute; inset: 0; pointer-events: none; z-index: 2;
         background: linear-gradient(180deg, rgba(6,40,76,.34) 0%, rgba(6,40,76,.12) 40%, rgba(6,40,76,.30) 100%);
       }
 
-      /* ── cards: content lives in the top 1344px, bottom 30% stays clear ── */
+      /* ── cards: content centres on y=820, bottom 30% stays clear ── */
       .card {
         position: absolute; left: 0; right: 0; top: 190px; height: 770px; z-index: 6;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -135,15 +138,13 @@
 
       /* ── unifying texture ────────────────────────────────────── */
       #grid {
-        position: absolute; inset: -120px; pointer-events: none; z-index: 3;
+        position: absolute; inset: -120px; pointer-events: none; z-index: 4;
         background:
           repeating-linear-gradient(0deg,  rgba(255,255,255,.062) 0 1px, transparent 1px 90px),
           repeating-linear-gradient(90deg, rgba(255,255,255,.062) 0 1px, transparent 1px 90px);
       }
-      #crosshairs { position: absolute; inset: 0; pointer-events: none; opacity: .5; z-index: 4; }
-      #crosshairs i {
-        position: absolute; width: 26px; height: 26px;
-      }
+      #crosshairs { position: absolute; inset: 0; pointer-events: none; opacity: .5; z-index: 5; }
+      #crosshairs i { position: absolute; width: 26px; height: 26px; }
       #crosshairs i::before, #crosshairs i::after {
         content: ""; position: absolute; background: rgba(255,255,255,.46);
       }
@@ -178,47 +179,59 @@
 
       <div id="bg" class="clip" data-start="0" data-duration="38.6" data-track-index="0"></div>
 
-      <!-- ══ FOOTAGE BEATS — each <video> is a direct child of the stage ═══ -->
-      <!-- 02 · "That's what happened to Mob Armor's…" -->
-      <video id="s02" class="shot" src="assets/broll/incab-dash.mp4" muted
-             data-start="4.400" data-duration="1.883" data-track-index="1"></video>
-      <!-- 03 · "…total sales after they started" -->
-      <video id="s03" class="shot" src="assets/broll/cnc-sparks.mp4" muted
-             data-start="6.033" data-duration="2.317" data-track-index="2"></video>
-      <!-- 04 · "working with us. And it wasn't a lucky viral moment." — hero -->
-      <video id="s04" class="shot" src="assets/broll/dunes-drone.mp4" muted
-             data-start="8.100" data-duration="2.417" data-track-index="3"></video>
-      <!-- 05 · "It wasn't a magic ad." -->
-      <video id="s05" class="shot" src="assets/broll/tablet-wall.mp4" muted
-             data-start="10.267" data-duration="1.717" data-track-index="4"></video>
-      <!-- 06a · "When they came to us," -->
-      <video id="s06a" class="shot" src="assets/broll/phone-dash.mp4" muted
-             data-start="11.733" data-duration="1.250" data-track-index="5"></video>
-      <!-- 06b · "almost everything ran through Facebook." -->
-      <video id="s06b" class="shot" src="assets/broll/load-test.mp4" muted
-             data-start="12.733" data-duration="2.217" data-track-index="6"></video>
-      <!-- 10 · "A year later, sales are up over" -->
-      <video id="s10" class="shot" src="assets/broll/facility-floor.mp4" muted
-             data-start="21.733" data-duration="2.383" data-track-index="7"></video>
-      <!-- 13 · "And that's what the right plan does." -->
-      <video id="s13" class="shot" src="assets/broll/tablet-locked.mp4" muted
-             data-start="27.500" data-duration="2.317" data-track-index="8"></video>
+      <!-- ══ B-ROLL ══════════════════════════════════════════════ -->
+      <!-- 03 · "…total sales after they started working with us." — hero -->
+      <video id="s03" class="shot" src="assets/broll/dunes-drone.mp4" muted
+             data-start="6.033" data-duration="2.737" data-track-index="1"></video>
+      <!-- 05 · "When they came to us," -->
+      <video id="s05" class="shot" src="assets/broll/incab-dash.mp4" muted
+             data-start="11.733" data-duration="1.717" data-track-index="2"></video>
+      <!-- 06 · "almost everything ran through Facebook." -->
+      <video id="s06" class="shot" src="assets/broll/load-test.mp4" muted
+             data-start="13.200" data-duration="1.750" data-track-index="3"></video>
+      <!-- 10a · "A year later," -->
+      <video id="s10a" class="shot" src="assets/broll/facility-floor.mp4" muted
+             data-start="21.733" data-duration="1.317" data-track-index="4"></video>
+      <!-- 10b · "sales are up over" -->
+      <video id="s10b" class="shot" src="assets/broll/cnc-sparks.mp4" muted
+             data-start="22.800" data-duration="1.317" data-track-index="5"></video>
       <!-- 14 · "This is a real brand with real numbers." -->
       <video id="s14" class="shot" src="assets/broll/radio-guy.mp4" muted
-             data-start="29.567" data-duration="2.517" data-track-index="9"></video>
+             data-start="29.567" data-duration="2.516" data-track-index="6"></video>
+
       <div id="scrim" class="clip" data-start="0" data-duration="38.6" data-track-index="10"></div>
 
+      <!-- ══ A-ROLL — Sean to camera ═════════════════════════════
+           Each segment's data-start equals its source timecode, and the VO is one
+           continuous track from the same file, so the lips stay locked without an
+           offset. Never re-trim these to a start that differs from their source time. -->
+      <!-- 00 · cold open, into "Up over…" -->
+      <video id="a00" class="aroll" src="assets/aroll45/a00.mp4" muted
+             data-start="0.000" data-duration="1.950" data-track-index="14"></video>
+      <!-- 02 · "That's what happened to Mob Armor's…" -->
+      <video id="a02" class="aroll" src="assets/aroll45/a02.mp4" muted
+             data-start="4.400" data-duration="1.883" data-track-index="15"></video>
+      <!-- 04 · "And it wasn't a lucky viral moment. It wasn't a magic ad." -->
+      <video id="a04" class="aroll" src="assets/aroll45/a04.mp4" muted
+             data-start="8.520" data-duration="3.463" data-track-index="16"></video>
+      <!-- 13 · "And that's what the right plan does." -->
+      <video id="a13" class="aroll" src="assets/aroll45/a13.mp4" muted
+             data-start="27.500" data-duration="2.317" data-track-index="17"></video>
+      <!-- 15 · "If you wanna see what's possible for yours," -->
+      <video id="a15" class="aroll" src="assets/aroll45/a15.mp4" muted
+             data-start="31.833" data-duration="1.917" data-track-index="18"></video>
+
       <!-- ══ TEXTURE (over footage, under type) ══════════════════ -->
-      <div id="grid" class="clip" data-start="0" data-duration="38.6" data-track-index="12"></div>
-      <div id="crosshairs" class="clip" data-start="0" data-duration="38.6" data-track-index="13">
+      <div id="grid" class="clip" data-start="0" data-duration="38.6" data-track-index="19"></div>
+      <div id="crosshairs" class="clip" data-start="0" data-duration="38.6" data-track-index="20">
         <i style="left:264px;  top:333px"></i><i style="left:804px;  top:333px"></i>
         <i style="left:264px;  top:713px"></i><i style="left:804px; top:713px"></i>
         <i style="left:534px;  top:523px"></i>
       </div>
 
       <!-- ══ STAT CARDS ══════════════════════════════════════════ -->
-      <!-- A · 1.700 → 4.400 · "Up over 500% in a single year." -->
-      <div id="cardA" class="card clip" data-start="0.900" data-duration="3.750" data-track-index="20">
+      <!-- A · 1.700 → 4.400 · "…500% in a single year." -->
+      <div id="cardA" class="card clip" data-start="1.700" data-duration="2.950" data-track-index="21">
         <div class="eyebrow">Total sales</div>
         <div class="stat xl" id="statA"><span class="bloom"></span>500%</div>
         <div class="rule" id="ruleA"></div>
@@ -230,7 +243,7 @@
       </div>
 
       <!-- B/C · 14.700 → 21.733 · one continuous card, no cut -->
-      <div id="cardCh" class="card clip" data-start="14.700" data-duration="7.283" data-track-index="21">
+      <div id="cardCh" class="card clip" data-start="14.700" data-duration="7.283" data-track-index="22">
         <div class="eyebrow" id="chEyebrow">Where the revenue came from</div>
         <div class="stat lg" id="chStat"><span class="bloom" id="chBloom"></span>1</div>
         <div class="dots" id="chDots">
@@ -244,7 +257,7 @@
       </div>
 
       <!-- D · 23.867 → 25.233 · the 500% callback -->
-      <div id="cardD" class="card clip" data-start="23.867" data-duration="1.617" data-track-index="22">
+      <div id="cardD" class="card clip" data-start="23.867" data-duration="1.617" data-track-index="23">
         <div class="eyebrow">A year later</div>
         <div class="stat xl" id="statD"><span class="bloom"></span>500%</div>
         <div class="rule" id="ruleD"></div>
@@ -255,7 +268,7 @@
       </div>
 
       <!-- E · 25.233 → 27.500 · the four channels resolve -->
-      <div id="cardE" class="card clip" data-start="25.233" data-duration="2.517" data-track-index="23">
+      <div id="cardE" class="card clip" data-start="25.233" data-duration="2.517" data-track-index="24">
         <div class="eyebrow">Working together</div>
         <div class="stat lg" id="statE"><span class="bloom"></span>4</div>
         <div class="dots" id="eDots">
@@ -267,15 +280,15 @@
         <div class="sub" id="subE">Channels &mdash; not one</div>
       </div>
 
-      <!-- 15 · end card -->
-      <div id="endcard" class="card clip" data-start="31.833" data-duration="6.767" data-track-index="24">
+      <!-- 16 · end card -->
+      <div id="endcard" class="card clip" data-start="33.500" data-duration="5.100" data-track-index="25">
         <img class="logo" id="ecLogo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
         <div class="head" id="ecHead">See what&rsquo;s <span class="em">possible</span> for yours.</div>
         <div class="cta" id="ecCta">Tap the link &rarr;</div>
       </div>
 
       <!-- ══ TOP LAYERS ══════════════════════════════════════════ -->
-      <div class="streak clip" id="streakA" data-start="0.800" data-duration="0.600" data-track-index="27"></div>
+      <div class="streak clip" id="streakA" data-start="1.600" data-duration="0.600" data-track-index="27"></div>
       <div class="streak clip" id="streakD" data-start="23.767" data-duration="0.600" data-track-index="28"></div>
       <div id="vignette" class="clip" data-start="0" data-duration="38.6" data-track-index="32"></div>
       <div id="grain"    class="clip" data-start="0" data-duration="38.6" data-track-index="33"></div>
@@ -308,8 +321,17 @@
             { y: -140, opacity: 0, filter: "blur(" + BLUR + "px)", duration: OUT_D, ease: "power2.in" },
             tOut - 0.10);
         }
+        // Slow push. Sean is a locked-off talking head, so every A-roll beat gets one —
+        // Law 4: a static frame is a dead frame.
+        function push(sel, tIn, dur, to) {
+          tl.fromTo(sel, { scale: 1 }, { scale: to, duration: dur, ease: "none" }, tIn);
+        }
 
-        /* ── 00 · cold open ─────────────────────────────────────────────── */
+        /* ── 00 · cold open on Sean ─────────────────────────────────────── */
+        // The ad opens on a face, not a card: it's a case study, and a person saying it is
+        // the proof. His first word lands at 1.38; the card takes the number over at 1.70.
+        beat("#a00", 0.000, 1.700);
+        push("#a00", 0.000, 1.700, 1.03);
         tl.fromTo("#logo-slot", { opacity: 0, y: -18 },
           { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.25);
 
@@ -323,16 +345,16 @@
         /* ── 01 · CARD A — 500% ─────────────────────────────────────────── */
         // Streak fires ON the cut, not before it — the numeral lands inside the flash.
         tl.fromTo("#streakA", { xPercent: -60, opacity: 0, scaleX: 0.6 },
-          { xPercent: 40, opacity: 1, scaleX: 1.4, duration: 0.20, ease: "power3.in" }, 0.80)
-          .to("#streakA", { xPercent: 130, opacity: 0, duration: 0.22, ease: "power3.out" }, 1.00);
+          { xPercent: 40, opacity: 1, scaleX: 1.4, duration: 0.20, ease: "power3.in" }, 1.60)
+          .to("#streakA", { xPercent: 130, opacity: 0, duration: 0.22, ease: "power3.out" }, 1.80);
 
-        beat("#cardA", 0.900, 4.400);
-        // Numeral snaps 0.20s AHEAD of the spoken "500%" at 1.90 — the visual leads, so it reads
-        // as inevitable rather than reactive.
+        beat("#cardA", 1.700, 4.400);
+        // Numeral snaps 0.20s AHEAD of the spoken "500%" at 1.90 — the visual leads, so it
+        // reads as inevitable rather than reactive.
         tl.fromTo("#statA", { scale: 1.34, opacity: 0 },
           { scale: 1, opacity: 1, duration: 0.42, ease: "expo.out" }, 1.700);
         tl.fromTo("#cardA .eyebrow", { y: 24, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.36, ease: "power2.out" }, 1.060);
+          { y: 0, opacity: 1, duration: 0.36, ease: "power2.out" }, 1.820);
         tl.fromTo("#ruleA", { scaleX: 0 }, { scaleX: 1, duration: 0.40, ease: "power3.out" }, 2.100);
         // "In a single year" lands on the phrase at 3.21.
         tl.fromTo("#subA", { y: 26, opacity: 0 },
@@ -340,15 +362,28 @@
         tl.fromTo("#chipA", { y: 22, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.40, ease: "power2.out" }, 3.450);
 
-        /* ── 02–06b · footage run ───────────────────────────────────────── */
-        beat("#s02",  4.400,  6.033);
-        beat("#s03",  6.033,  8.100);
-        beat("#s04",  8.100, 10.267);
-        beat("#s05", 10.267, 11.733);
-        beat("#s06a", 11.733, 12.733);
-        beat("#s06b", 12.733, 14.700);
-        // Slow push on the hero dune shot so the drone move reads as OUR camera too.
-        tl.fromTo("#s04", { scale: 1.0 }, { scale: 1.08, duration: 2.417, ease: "none" }, 8.100);
+        /* ── 02 · back to Sean for the attribution line ─────────────────── */
+        beat("#a02", 4.400, 6.033);
+        push("#a02", 4.400, 1.633, 1.03);
+
+        /* ── 03 · hero b-roll on the payoff ─────────────────────────────── */
+        beat("#s03", 6.033, 8.520);
+        push("#s03", 6.033, 2.487, 1.08);
+
+        /* ── 04 · Sean's direct-address block ───────────────────────────── */
+        // The two "it wasn't…" lines are opinion, so they belong on a face. 3.2s is long at
+        // this cut rate, so the sentence boundary at 10.16 gets a punch-in: a deliberate jump
+        // hidden inside a 3-frame blur, which re-energises the shot without a second angle.
+        beat("#a04", 8.520, 11.733);
+        tl.fromTo("#a04", { scale: 1 }, { scale: 1.045, duration: 1.640, ease: "none" }, 8.520);
+        tl.to("#a04", { filter: "blur(14px)", duration: 0.060, ease: "power2.in" }, 10.100);
+        tl.set("#a04", { scale: 1.16 }, 10.160);
+        tl.to("#a04", { filter: "blur(0px)", duration: 0.100, ease: "power2.out" }, 10.160);
+        tl.to("#a04", { scale: 1.205, duration: 1.573, ease: "none" }, 10.160);
+
+        /* ── 05/06 · client texture under the setup ─────────────────────── */
+        beat("#s05", 11.733, 13.200);
+        beat("#s06", 13.200, 14.700);
 
         /* ── 07/08/09 · CARD B→C — one card, no cut ─────────────────────── */
         beat("#cardCh", 14.700, 21.733);
@@ -390,7 +425,7 @@
           document.getElementById("chEyebrow").textContent = "The plan";
         }, null, 19.560);
         tl.fromTo("#chSub", { opacity: 0.15 }, { opacity: 1, duration: 0.30, ease: "power2.out" }, 19.560);
-        tl.fromTo("#chPulse", { x: -130, opacity: 0 },
+        tl.fromTo("#chPulse", { x: -150, opacity: 0 },
           { x: 414, opacity: 1, duration: 1.30, ease: "power1.inOut" }, 19.700);
         tl.to("#chPulse", { opacity: 0, duration: 0.24, ease: "power2.in" }, 21.000);
         [0, 1, 2, 3].forEach((i) => {
@@ -398,9 +433,10 @@
             .to("#d" + i, { scale: 1.0, duration: 0.26, ease: "power2.inOut" }, 20.040 + i * 0.320);
         });
 
-        /* ── 10 · footage — a year later ────────────────────────────────── */
-        beat("#s10", 21.733, 23.867);
-        tl.fromTo("#s10", { scale: 1.0 }, { scale: 1.06, duration: 2.383, ease: "none" }, 21.733);
+        /* ── 10a/10b · two quick shots accelerating into the callback ───── */
+        beat("#s10a", 21.733, 22.800);
+        beat("#s10b", 22.800, 23.867);
+        push("#s10a", 21.733, 1.067, 1.05);
 
         /* ── 11 · CARD D — the 500% callback ────────────────────────────── */
         tl.fromTo("#streakD", { xPercent: -60, opacity: 0, scaleX: 0.6 },
@@ -429,25 +465,32 @@
         tl.fromTo("#subE", { y: 22, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.34, ease: "power2.out" }, 26.100);
 
-        /* ── 13/14 · footage close ──────────────────────────────────────── */
-        beat("#s13", 27.500, 29.567);
+        /* ── 13 · Sean draws the conclusion ─────────────────────────────── */
+        beat("#a13", 27.500, 29.567);
+        push("#a13", 27.500, 2.067, 1.035);
+
+        /* ── 14 · a real customer, to land "real brand" ─────────────────── */
         beat("#s14", 29.567, 31.833);
 
-        /* ── 15 · end card — the piece stops moving and lets the CTA land ── */
+        /* ── 15 · Sean hands off to the CTA ─────────────────────────────── */
+        beat("#a15", 31.833, 33.500);
+        push("#a15", 31.833, 1.667, 1.03);
+
+        /* ── 16 · end card — the piece stops moving and lets the CTA land ── */
         // Top-left logo hands off to the centred lockup, so the mark is never doubled.
-        tl.to("#logo-slot", { opacity: 0, duration: 0.32, ease: "power2.in" }, 31.700);
-        // ENTRY only — matches beat 14's -140px / 24px exit. There is no exit tween: this is
+        tl.to("#logo-slot", { opacity: 0, duration: 0.32, ease: "power2.in" }, 33.360);
+        // ENTRY only — matches beat 15's -140px / 24px exit. There is no exit tween: this is
         // the held final frame, and blurring it away would eat the outro's stillness.
         tl.fromTo("#endcard", { y: 140, opacity: 0, filter: "blur(24px)" },
-          { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "power2.out" }, 31.833);
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.45, ease: "power2.out" }, 33.500);
         tl.fromTo("#ecLogo", { y: 26, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.52, ease: "power3.out" }, 31.950);
+          { y: 0, opacity: 1, duration: 0.52, ease: "power3.out" }, 33.600);
         tl.fromTo("#ecHead", { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.58, ease: "power3.out" }, 32.250);
-        // CTA arrives on "tap the link" at 33.55.
+          { y: 0, opacity: 1, duration: 0.58, ease: "power3.out" }, 33.820);
+        // CTA lands while "tap the link to find out more" is still being said.
         tl.fromTo("#ecCta", { scale: 0.86, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.46, ease: "back.out(1.7)" }, 33.400);
-        tl.to("#ecCta", { scale: 1.035, duration: 1.5, repeat: 2, yoyo: true, ease: "sine.inOut" }, 34.200);
+          { scale: 1, opacity: 1, duration: 0.46, ease: "back.out(1.7)" }, 34.200);
+        tl.to("#ecCta", { scale: 1.035, duration: 1.5, repeat: 2, yoyo: true, ease: "sine.inOut" }, 35.000);
 
         // Law 11 — anchor the timeline to the full slot so no tail frame goes black.
         tl.to({}, { duration: DUR }, 0);

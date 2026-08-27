@@ -8,7 +8,7 @@ https://drive.google.com/drive/folders/1DBvZ_8bcxVX9wPEe0a8dUvXZhdftuAgt
 Subfolder used: **Social Cuts** (Drive id `1ArKbSBupieY_R4spsdiF7sJqxYc0qzas`)
 
 Every Social Cut is 1080×1920, **24 fps**, H.264, carrying an audio track *and* a stray
-data stream. Prep for all nine clips — video-only, normalised to 30 fps cfr:
+data stream. Prep for all six b-roll clips — video-only, normalised to 30 fps cfr:
 
 ```bash
 ffmpeg -y -ss <in> -t <dur> -i <src>.mp4 \
@@ -20,24 +20,52 @@ ffmpeg -y -ss <in> -t <dur> -i <src>.mp4 \
 
 | Local file | Beat | Source clip (Drive) | Drive file id | In–out | Pulled |
 |---|---|---|---|---|---|
-| `incab-dash.mp4` | 02 | Mobnetic Stix.mp4 | `1BDmv8-GU7194MJedTT_Ewje4m1N2y0NF` | 2.85–4.75 | 2026-08-27 |
-| `cnc-sparks.mp4` | 03 | Tabnetic Discs.mp4 | `1sQIRGCsAxMEFB3J7w-BFFTjR-xF7ctJc` | 5.95–8.35 | 2026-08-27 |
-| `dunes-drone.mp4` | 04 | Tab Mount Maxx Tube Mount.mp4 | `1a8KoxoKVBnCt7oyuspILNfhsW7Mx7r0E` | 32.00–34.45 | 2026-08-27 |
-| `tablet-wall.mp4` | 05 | Tabnetic Direct.mp4 | `1BqMYocdVmTMAGKIrBiitTGrgpG9kzbL2` | 20.55–22.35 | 2026-08-27 |
-| `phone-dash.mp4` | 06a | Mobnetic Maxx Water balloon.mp4 | `1uI6ZN5iO__2ixCbD3S__95f7bU2BPd-a` | 2.55–3.80 | 2026-08-27 |
-| `load-test.mp4` | 06b | Tabnetic Direct.mp4 | `1BqMYocdVmTMAGKIrBiitTGrgpG9kzbL2` | 14.90–17.20 | 2026-08-27 |
-| `facility-floor.mp4` | 10 | Tab Mount Maxx Direct.mp4 | `1ud577NtpMV6BpnnCF260IGagWDuocPLJ` | 12.70–15.10 | 2026-08-27 |
-| `tablet-locked.mp4` | 13 | Tabnetic Direct.mp4 | `1BqMYocdVmTMAGKIrBiitTGrgpG9kzbL2` | 41.10–43.45 | 2026-08-27 |
+| `dunes-drone.mp4` | 03 | Tab Mount Maxx Tube Mount.mp4 | `1a8KoxoKVBnCt7oyuspILNfhsW7Mx7r0E` | 31.95–34.75 | 2026-08-27 |
+| `incab-dash.mp4` | 05 | Mobnetic Stix.mp4 | `1BDmv8-GU7194MJedTT_Ewje4m1N2y0NF` | 2.85–4.75 | 2026-08-27 |
+| `load-test.mp4` | 06 | Tabnetic Direct.mp4 | `1BqMYocdVmTMAGKIrBiitTGrgpG9kzbL2` | 14.90–17.20 | 2026-08-27 |
+| `facility-floor.mp4` | 10a | Tab Mount Maxx Direct.mp4 | `1ud577NtpMV6BpnnCF260IGagWDuocPLJ` | 12.70–15.10 | 2026-08-27 |
+| `cnc-sparks.mp4` | 10b | Tabnetic Discs.mp4 | `1sQIRGCsAxMEFB3J7w-BFFTjR-xF7ctJc` | 5.95–8.35 | 2026-08-27 |
 | `radio-guy.mp4` | 14 | Rad Mount.mp4 | `1tDsY1YT6wk4z4xHC7Etaln2_8-qSmivU` | 28.20–30.75 | 2026-08-27 |
+
+### A-roll — Sean to camera (`assets/aroll/`, `assets/aroll45/`)
+
+Source: `Mob Armor Ad.mov` (`1f2kXr2Ng227CLaBd5OH9d_EzX2d7TniS`), ProRes 3840×2160
+25 fps. Five segments, each cut at its **source timecode** and placed in the composition
+at that same timecode, so the lips stay locked to the continuous VO track with no offset.
+
+| Local file | Beat | Source in–out | Line |
+|---|---|---|---|
+| `a00.mp4` | 00 | 0.000–1.950 | cold open, into "Up over…" |
+| `a02.mp4` | 02 | 4.400–6.283 | "That's what happened to Mob Armor's…" |
+| `a04.mp4` | 04 | 8.520–11.983 | "And it wasn't a lucky viral moment. It wasn't a magic ad." |
+| `a13.mp4` | 13 | 27.500–29.817 | "And that's what the right plan does." |
+| `a15.mp4` | 15 | 31.833–33.750 | "If you wanna see what's possible for yours," |
+
+Two crops from the 4K master rather than one crop re-cropped — a 9:16 letterbox of the
+4:5 cut would cut his head or torso:
+
+```bash
+# 9:16  crop=1215:2160:1200:0,scale=1080:1920   -> assets/aroll/
+# 4:5   crop=1728:2160:940:0,scale=1080:1350    -> assets/aroll45/
+# both  eq=saturation=0.86:contrast=1.05:brightness=-0.015,colorbalance=rs=-0.02:bs=0.03
+#       -r 30 -vsync cfr -crf 19 -an
+```
+
+The grade eases the electric-cyan backdrop toward the EcomIQ navy world. Sean is layered
+**above** the b-roll scrim, so his face is never dimmed by it.
+
+### Cut but kept in the shot list
+`tablet-wall` (Tabnetic Direct 20.55–22.35), `tablet-locked` (Tabnetic Direct 41.10–43.45)
+and `phone-dash` (Water balloon 2.55–3.80) were in the graphics-only cut and lost their
+slots to the A-roll. Files removed; the ranges above regenerate them in one ffmpeg line.
 
 **Logos** (client-supplied white versions — not redrawn, not recoloured):
 `Logos/logo-white@2x.png` (`1yMyyTH9kNmlSJ2Il2mFY_JqEvvQcmKWZ`, 2800×481 RGBA) and
 `Logos/logo-shield-white@2x.png` (`1MgOoFVh5E1YVkfnCpgOmyWCWxY_9JKhS`, 901×1061 RGBA),
 pulled 2026-08-27. Both sit on a black `#101820` chip, per `BRANDING_GUIDE.pdf`.
 
-**A-roll / voiceover:** `Mob Armor Ad.mov` (`1f2kXr2Ng227CLaBd5OH9d_EzX2d7TniS`),
-ProRes 3840×2160 25 fps, PCM 24-bit stereo, 39.28 s. Audio only is used — the picture
-is never cut in. Prepped to `assets/vo.m4a` (high-pass 70 Hz, `loudnorm I=-16 TP=-1.5`).
+**Voiceover:** the same `Mob Armor Ad.mov`, audio track only — prepped to `assets/vo.m4a`
+(high-pass 70 Hz, `loudnorm I=-16:TP=-1.5:LRA=11`) and laid as one continuous 38.6 s bed.
 Pulled 2026-08-27.
 
 ## Every in-point sits inside a clean, text-free run
