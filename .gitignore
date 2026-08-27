@@ -28,6 +28,10 @@ raw-media/
 # Raw source-footage working dir (multi-GB masters + probe stills — never commit)
 assets/raw/
 
+# Compressed review copies for chat delivery — derived from each project's
+# final.mp4, so they'd be duplicate video in the repo
+deliverables/
+
 # Raw asset drop zone — stage media here; don't commit the big raw/prepped files
 assets/incoming/*
 !assets/incoming/README.md
