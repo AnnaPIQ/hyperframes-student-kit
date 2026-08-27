@@ -29,6 +29,12 @@ raw-media/
 assets/incoming/*
 !assets/incoming/README.md
 
+# Prepped intermediate clips — regenerate with a project's
+# scripts/pull-media.sh + scripts/prep-assets.sh (they carry the measured
+# trim points, crop windows and grades). Only the final-*.mp4 deliverables
+# at a project root are committed.
+**/assets/broll/
+
 # Playwright browser profiles
 .playwright-profile/
 

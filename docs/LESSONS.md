@@ -77,6 +77,43 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+- **`hyperframes doctor` can report a false FFmpeg failure.** It printed
+  *"Failed to run /usr/bin/ffmpeg -version"* while ffmpeg 6.1.1 was present and
+  encoding H.264/AAC fine (it self-corrected on a later session-start). **Fix:**
+  don't trust that one row — verify directly with
+  `ffmpeg -f lavfi -i testsrc -t 1 -c:v libx264 /tmp/t.mp4` before concluding the
+  toolchain is broken.
+- **Whisper transcription works without whisper-cpp.** doctor reports whisper-cpp
+  missing and suggests a cmake build; `pip3 install --break-system-packages
+  faster-whisper` is far quicker (CTranslate2, no torch) and HuggingFace is
+  reachable from the web container. `small.en` with `word_timestamps=True` gives
+  the word onsets an audio-led edit needs; re-check any spoken *figure* with
+  `medium.en` before it goes on a card.
+- **Phone-vertical b-roll can be sideways with NO rotation metadata.** `ffprobe`
+  showed no `rotation` side-data and a normal 3840×2160, but the picture was on
+  its side. **Fix:** always eyeball a frame before trusting the dimensions;
+  `transpose=1` (90° CW) fixes it and conveniently yields 2160×3840 = exactly
+  9:16, so the 1080×1920 downscale is a clean 2:1 with no upscaling.
+- **Measure luma before cutting A-roll against b-roll.** A blue-lit talking-head
+  master read ~72 mean luma against bakery b-roll at ~120–143 — nearly 2×, so
+  every A/B cut flashed. **Fix:** measure with
+  `ffprobe -f lavfi -i "movie=F,signalstats" -show_entries frame_tags=lavfi.signalstats.YAVG`
+  and close the gap with `eq=brightness=…:contrast=…` in the prep pass, not in
+  the composition.
+- **Link-shared Drive files download anonymously, no API or gdown needed.**
+  `curl -sL "https://drive.usercontent.google.com/download?id=<ID>&export=download&confirm=t"`
+  serves the full master with HTTP 206 range support. Guard the result by
+  **expected byte size** — a revoked link or spent quota returns a few KB of HTML,
+  not a video, and that failure is otherwise silent.
+- **Trust the file, not the brief's label.** A source listed as "team working,
+  1:00–1:03" was actually a different clip only 14.56s long, so the timecode
+  didn't exist. Probe every clip's real duration and content before planning a
+  cut around it.
+- **Don't put a derived total on a card.** A case study stated an "8 hour"
+  fulfilment window while its own timeline (midnight order → noon delivery) implied
+  12. **Fix:** card the source's verifiable primitives ("MIDNIGHT → 8AM"), never
+  arithmetic you did yourself on inconsistent inputs.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
