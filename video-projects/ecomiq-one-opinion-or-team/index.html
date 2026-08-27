@@ -159,9 +159,12 @@
         window.__timelines = window.__timelines || {};
         const tl = gsap.timeline({ paused: true });
 
-        // lockup settles in over the cold open, then holds for the whole piece
+        // lockup settles in over the cold open and holds for the whole piece —
+        // except on the CTA card, where the hero lockup takes over. Two wordmarks
+        // on one frame reads as a mistake, so the pinned one hands off.
         tl.fromTo("#logo-pin", { opacity: 0, y: -18 },
           { opacity: 1, y: 0, duration: .6, ease: "power3.out" }, .25);
+        tl.to("#logo-pin", { opacity: 0, duration: .3, ease: "power2.in" }, 65.3000);
 
         // slow push on the A-roll for each founder segment (camera never sleeps).
         // Resets between segments are hidden under whichever card is covering.

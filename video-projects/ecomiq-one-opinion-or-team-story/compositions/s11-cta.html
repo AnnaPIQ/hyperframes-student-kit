@@ -9,11 +9,10 @@
       <div class="grain"></div>
       <div class="content">
         <div class="ctawrap">
-          <div class="marktile" id="s11-mark"><img src="assets/ecomiq-icon-white.svg" alt="EcomIQ" /></div>
-          <div class="ctaq" id="s11-h">One opinion, or a whole team&rsquo;s?</div>
-          <div class="body" id="s11-sub">Let&rsquo;s see if it&rsquo;s a good fit.</div>
+          <img class="ctalogo" id="s11-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+          <div class="ctaq" id="s11-h">See if it will work for you.</div>
           <div class="pill" id="s11-pill">
-            <span class="pilltxt">Tap the link below</span>
+            <span class="pilltxt">Learn More</span>
             <span class="shine" id="s11-shine"></span>
           </div>
         </div>
@@ -103,23 +102,21 @@
       filter: blur(7px); opacity: 0; }
     [data-composition-id="s11-cta"] .streak { top: 38%; }
 
-    [data-composition-id="s11-cta"] .content { align-items: center; text-align: center; }
+    [data-composition-id="s11-cta"] .content { align-items: center; text-align: center; justify-content: center; }
     [data-composition-id="s11-cta"] .ctawrap { display: flex; flex-direction: column; align-items: center;
-      gap: 33.12px; }
-    [data-composition-id="s11-cta"] .marktile { width: 114px; height: 114px;
-      border-radius: 28.5px; overflow: hidden; line-height: 0;
-      box-shadow: 0 18px 54px -18px rgba(0,0,0,.8); }
-    [data-composition-id="s11-cta"] .marktile img { width: 100%; height: 100%; display: block; }
-    [data-composition-id="s11-cta"] .ctaq { font-weight: 800; font-size: 76px; line-height: 1.04;
-      letter-spacing: -.025em; max-width: 92%; }
-    [data-composition-id="s11-cta"] .pill { position: relative; overflow: hidden; display: inline-flex; align-items: center;
-      gap: 16px; margin-top: 13.799999999999999px; padding: 28.52px 43.699999999999996px;
-      border-radius: 999px; font-weight: 800; font-size: 39.36px;
-      letter-spacing: -.01em; color: #FFFFFF;
-      background: linear-gradient(100deg, #FF4C32 0%, #F09025 100%);
-      box-shadow: 0 26px 70px -18px rgba(255,76,50,.72); }
+      gap: 78.2px; }
+    [data-composition-id="s11-cta"] .ctalogo { width: 660px; height: auto; display: block;
+      filter: drop-shadow(0 10px 40px rgba(0,0,0,.5)); }
+    [data-composition-id="s11-cta"] .ctaq { font-weight: 800; font-size: 60px; line-height: 1.06;
+      letter-spacing: -.025em; }
+    [data-composition-id="s11-cta"] .pill { position: relative; overflow: hidden; display: inline-flex;
+      align-items: center; justify-content: center; margin-top: 23px;
+      padding: 30.360000000000003px 69px; border-radius: 999px;
+      font-weight: 700; font-size: 41.28px; letter-spacing: -.005em;
+      color: #FFFFFF; background: #FF4C32;
+      box-shadow: 0 26px 74px -20px rgba(255,76,50,.78); }
     [data-composition-id="s11-cta"] .shine { position: absolute; top: 0; bottom: 0; left: -55%; width: 42%;
-      background: linear-gradient(100deg, transparent, rgba(255,255,255,.42), transparent);
+      background: linear-gradient(100deg, transparent, rgba(255,255,255,.4), transparent);
       filter: blur(4px); }
     </style>
 
@@ -146,18 +143,15 @@
       tl.to(root + " .wrap", { opacity: 1, duration: .12, ease: "none" }, 0);
       tl.to(root + " .wrap", { y: 0, filter: "blur(0px)", duration: .46, ease: "power2.out" }, 0);
 
-      tl.fromTo(root + " #s11-mark", { opacity: 0, scale: .7, y: -18 },
-        { opacity: 1, scale: 1, y: 0, duration: .56, ease: "back.out(1.8)" }, 0.03333333333333333);
-      // HERO — the question, called back from the payoff beat
-      tl.fromTo(root + " #s11-h", { opacity: 0, y: 42, scale: .93 },
-        { opacity: 1, y: 0, scale: 1, duration: .5, ease: "expo.out" }, 1.0333333333333334);
-      tl.fromTo(root + " #s11-sub", { opacity: 0, y: 22 },
-        { opacity: 1, y: 0, duration: .44, ease: "power2.out" }, 1.8);
-      tl.fromTo(root + " #s11-pill", { opacity: 0, scale: .82 },
-        { opacity: 1, scale: 1, duration: .52, ease: "back.out(1.9)" }, 2.466666666666667);
-      // --- the hold: one breath + one shimmer, sized to the shorter tail ---
-      tl.fromTo(root + " #s11-pill", { boxShadow: "0 26px 70px -18px rgba(255,76,50,.72)" },
-        { boxShadow: "0 30px 92px -14px rgba(255,76,50,.95)", duration: .4,
+      tl.fromTo(root + " #s11-logo", { opacity: 0, y: -20, scale: .93 },
+        { opacity: 1, y: 0, scale: 1, duration: .56, ease: "back.out(1.5)" }, 0.03333333333333333);
+      tl.fromTo(root + " #s11-h", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: .48, ease: "expo.out" }, 1.0333333333333334);
+      tl.fromTo(root + " #s11-pill", { opacity: 0, scale: .84 },
+        { opacity: 1, scale: 1, duration: .5, ease: "back.out(1.9)" }, 2.466666666666667);
+      // --- the hold: one breath + one shimmer, sized to the short tail ---
+      tl.fromTo(root + " #s11-pill", { boxShadow: "0 26px 74px -20px rgba(255,76,50,.78)" },
+        { boxShadow: "0 30px 94px -14px rgba(255,76,50,.98)", duration: .4,
           ease: "sine.inOut", yoyo: true, repeat: 1 }, 2.8666666666666667);
       tl.fromTo(root + " #s11-shine", { xPercent: 0 }, { xPercent: 405, duration: .7,
         ease: "power2.inOut" }, 2.9066666666666667);

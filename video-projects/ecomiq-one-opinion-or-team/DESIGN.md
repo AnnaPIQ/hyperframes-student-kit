@@ -16,7 +16,7 @@ Partner, so you get a whole team working inside dozens of live brands every day.
 - **Cold open:** the founder himself, straight to camera — no card
 - **First graphic:** "Based on one brand" → "5–10 YEARS AGO." (both white, per direction)
 - **Turn / payoff:** "So — which do you want?" → one opinion vs a whole team
-- **CTA:** "Book a call." / flame gradient pill "Tap the link below →"
+- **CTA:** full EcomIQ lockup / "See if it will work for you." / solid flame "Learn More" pill
 
 ## Source material
 
@@ -73,8 +73,12 @@ Navy base → two radial blooms (blue top-left, flame bottom-right) → faint 90
 and the vignette breathes across every slot: the camera never sleeps.
 
 The EcomIQ lockup is pinned top-left (60px) in the **root** composition, so it
-persists across all 73.3s, over both the A-roll and every card. A navy scrim sits
-over the A-roll so the white lockup always separates from the blue-lit backdrop.
+persists over both the A-roll and every card. A navy scrim sits over the A-roll so
+the white lockup always separates from the blue-lit backdrop.
+
+**One exception:** the pinned lockup fades out as the CTA card arrives, because that
+card carries the full lockup as its hero. Two wordmarks on one frame reads as a
+mistake, so the pinned one hands off to the hero.
 
 ## Structure — 9 graphic beats + a client b-roll beat, interleaved with 7 founder segments
 
@@ -100,7 +104,7 @@ never drift, because the picture is never re-cut against the audio.
 | — | **Client b-roll** — Sweet E's then Dryft Sleep, real footage with brand chips | 54.53–59.40 | "pulled from real client work…" |
 | — | **Founder** | 59.40–61.43 | "before it comes anywhere near you" |
 | S10 | Payoff — "Which do you want?" · one outdated opinion (struck) vs the lit team cluster | 61.43–65.33 | "a whole team's opinion" |
-| S11 | CTA end card — mark, "One opinion, or a whole team's?", flame pill | 65.33–**69.00** | "tap the link… book a call" |
+| S11 | CTA end card — full lockup, "See if it will work for you.", solid flame "Learn More" pill | 65.33–**69.00** | "tap the link… book a call" |
 
 **Callbacks:** the strike-through motif runs S02 → S10; the one-vs-many contrast is
 set up by the S04 team grid and paid off in S10; the 01/02/03 spine ties S06–S08.
@@ -111,6 +115,10 @@ role label, then the payoff line with "team's" in flame. Source photos are in
 `assets/team/`, cropped square and face-checked. **The role labels are read off that
 reference's own grid** — the same ten people appear in it — rather than assigned by
 guesswork, which would mean publishing invented job titles for real named people.
+
+**The CTA end card** follows a supplied reference: three elements and a lot of air —
+the full lockup, one line of copy, and a **solid** flame pill (not the gradient used
+elsewhere). No eyebrow, no subhead.
 
 **Client b-roll (54.53–59.40)** reuses two portfolio clips from the
 `aug-general-ad-5` branch (~18–20s in that build): Sweet E's and Dryft. They're
