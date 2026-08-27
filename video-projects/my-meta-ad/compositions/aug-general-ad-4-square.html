@@ -110,8 +110,8 @@
          with all 21 client marks drifting up a tidy 4-column grid and the
          Shopify Premier Partner badge landing centre as hero. */
       #wall { position: absolute; inset: 0; z-index: 6; overflow: hidden; }
-      /* .in clips the (much taller) drifting track, so the exit can slide the
-         whole opaque panel off as one piece instead of leaving stray logos. */
+      /* .in clips the (much taller) drifting track and groups the scrim, logos
+         and badge, so the exit can fade the whole panel as one piece. */
       #wall .in { position: absolute; inset: 0; overflow: hidden; }
       #wall-scrim { position: absolute; inset: 0; background: var(--brand-navy); }
       #wall-track {
@@ -371,10 +371,11 @@
           .fromTo("#wall-hero", { opacity: 0, scale: 1.34, y: -18, filter: "blur(16px)" },
                   { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.44, ease: "back.out(1.6)" }, 8.4)
           .to("#wall-hero", { scale: 1.025, duration: 0.9, ease: "sine.inOut", yoyo: true, repeat: 1 }, 9.0)
-          // EXIT — the whole opaque panel wipes up and off, so the footage is
-          // revealed cleanly from beneath instead of showing through the wall.
-          .to("#wall .in", { y: -1080, duration: 0.26, ease: "power3.in" }, 13.0733)
-          .set("#wall .in", { opacity: 0 }, 13.3333);
+          // EXIT — the whole panel (navy scrim, logos and badge together) fades
+          // out, crossfading the footage back in underneath. Fading `.in` rather
+          // than the logos alone keeps the scrim in step, so the wall never
+          // thins out to reveal Sean through a half-transparent grid.
+          .to("#wall .in", { opacity: 0, duration: 0.5333, ease: "power2.inOut" }, 12.8);
 
         /* ---- Beat 4 · "right now." scales as the line lands ---- */
         tl.fromTo("#g4", { opacity: 0, y: 40, filter: "blur(18px)" },
