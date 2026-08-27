@@ -185,8 +185,8 @@
       <video id="s00" class="shot" src="assets/broll/dunes-drone.mp4" muted
              data-start="0.000" data-duration="1.950" data-track-index="1"></video>
       <!-- 03 · "…total sales after they started working with us." -->
-      <video id="s03" class="shot" src="assets/broll/cnc-sparks.mp4" muted
-             data-start="6.033" data-duration="2.537" data-track-index="2"></video>
+      <video id="s03" class="shot" src="assets/broll/tablet-wall.mp4" muted
+             data-start="6.033" data-duration="2.437" data-track-index="2"></video>
       <!-- 05 · "When they came to us," -->
       <video id="s05" class="shot" src="assets/broll/incab-dash.mp4" muted
              data-start="11.733" data-duration="1.717" data-track-index="3"></video>
@@ -197,7 +197,7 @@
       <video id="s10a" class="shot" src="assets/broll/facility-floor.mp4" muted
              data-start="21.733" data-duration="1.317" data-track-index="5"></video>
       <!-- 10b · "sales are up over" -->
-      <video id="s10b" class="shot" src="assets/broll/tablet-locked.mp4" muted
+      <video id="s10b" class="shot" src="assets/broll/cnc-sparks.mp4" muted
              data-start="22.800" data-duration="1.317" data-track-index="6"></video>
       <!-- 14 · "This is a real brand with real numbers." -->
       <video id="s14" class="shot" src="assets/broll/radio-guy.mp4" muted
@@ -216,7 +216,7 @@
              data-start="4.280" data-duration="2.000" data-track-index="15"></video>
       <!-- 04 · "And it wasn't a lucky viral moment. It wasn't a magic ad." (first word 8.52) -->
       <video id="a04" class="aroll" src="assets/aroll45/a04.mp4" muted
-             data-start="8.320" data-duration="3.663" data-track-index="16"></video>
+             data-start="8.220" data-duration="3.763" data-track-index="16"></video>
       <!-- 13 · "And that's what the right plan does." (first word 27.43) -->
       <video id="a13" class="aroll" src="assets/aroll45/a13.mp4" muted
              data-start="27.200" data-duration="2.617" data-track-index="17"></video>
@@ -382,15 +382,15 @@
         push("#a02", 4.280, 1.753, 1.03);
 
         /* ── 03 · b-roll on the payoff ──────────────────────────────────── */
-        beat("#s03", 6.033, 8.320);
-        push("#s03", 6.033, 2.287, 1.06);
+        beat("#s03", 6.033, 8.220);
+        push("#s03", 6.033, 2.187, 1.06);
 
         /* ── 04 · Sean's direct-address block ───────────────────────────── */
         // The two "it wasn't…" lines are opinion, so they belong on a face. 3.2s is long at
         // this cut rate, so the sentence boundary at 10.16 gets a punch-in: a deliberate jump
         // hidden inside a 3-frame blur, which re-energises the shot without a second angle.
-        beatFace("#a04", 8.320, 11.733);
-        tl.fromTo("#a04", { scale: 1 }, { scale: 1.045, duration: 1.840, ease: "none" }, 8.320);
+        beatFace("#a04", 8.220, 11.733);
+        tl.fromTo("#a04", { scale: 1 }, { scale: 1.045, duration: 1.940, ease: "none" }, 8.220);
         tl.to("#a04", { filter: "blur(14px)", duration: 0.060, ease: "power2.in" }, 10.100);
         tl.set("#a04", { scale: 1.16 }, 10.160);
         tl.to("#a04", { filter: "blur(0px)", duration: 0.100, ease: "power2.out" }, 10.160);
