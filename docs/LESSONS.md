@@ -77,6 +77,70 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+
+## Whip transitions between beats (opaque-plate pattern)
+
+- **The incoming plate lands before its content starts → blank-frame flash.** A beat
+  built as `slot(clip) > plate(opaque navy) > body(content)` wipes the plate up over the
+  outgoing frame in ~0.25s, but if the body's first element tween starts at 0.05–0.15s
+  the plate arrives on an empty frame. **Fix:** every beat's *first* element enters at
+  local `0`. Grab a frame at each seam and look — lint cannot see this.
+- **Cross-whipping two graphic beats empties the frame.** Lifting the outgoing body out
+  while the incoming body slides in leaves ~6 frames of bare canvas, because the
+  incoming elements have not entered yet. **Fix:** hold the outgoing beat in place and
+  wipe the incoming beat's opaque plate over it. Only wipe *bodies* when something
+  opaque is already covering the frame.
+- **A sliding opaque panel reads as a panel, not a whip.** Add a blurred light streak
+  (`opacity: 0` at rest, tweened 0→1→0 over ~0.2s) pinned to the plate's leading edge.
+  Cheap, and it turns the slide into a whip.
+- **Never blur the opaque plate itself** — `filter: blur()` makes its edges translucent
+  and the footage underneath shows through. Blur the inner content wrapper instead and
+  slide the plate with `y` only.
+- **Cut founder clips with pre/post-roll at every seam.** ~0.30s head + 0.35s tail means
+  the adjoining graphic plate always has live footage to wipe over instead of bare `#bg`.
+
+## Transcription & A/V alignment
+
+- **whisper.cpp `small.en` word *ends* are unreliable; word *starts* are solid.** It
+  stretches the opening words backwards into leading silence (a clip whose first audible
+  word is at 2.08s reported it at 0.02s). **Fix:** anchor cuts to word *starts*, and
+  cross-check the whole track against `ffmpeg -af silencedetect=noise=-30dB:d=0.3`. If
+  the two agree within ~0.15s across the timeline, the timebase is trustworthy — then
+  take the measured speech onset over Whisper's for the very first word.
+- **`npx hyperframes transcribe` provisions whisper.cpp itself** (builds from source +
+  downloads the model, several minutes on first use) even when `doctor` reports
+  `whisper-cpp Not found`. Run it before assuming transcription is unavailable.
+
+## Tooling gotchas
+
+- **`hyperframes doctor` can false-negative on FFmpeg.** It reported "Failed to run
+  /usr/bin/ffmpeg -version" on a container where ffmpeg 6.1.1 worked perfectly. Verify
+  with `ffmpeg -version` before installing anything.
+- **Don't wait on a render by testing for the output file.** The previous render's MP4
+  sits there until the new one is nearly done, so the check passes instantly and you
+  verify stale frames. **Fix:** wait on file-exists AND `! pgrep -f "hyperframes render"`,
+  or compare mtime.
+- **Lint (≥0.8.15) errors on `../assets/...` in sub-compositions**
+  (`invalid_parent_traversal_in_asset_path`). Compositions are served with the *project
+  root* as base URL — use root-relative `assets/...` even from `compositions/`.
+- **Lint rejects animating `letterSpacing`** (`gsap_non_transform_motion`) — it reflows
+  text and snaps glyphs under the seek-by-frame capture engine. Use `scaleX` for the
+  same spread-in feel, or hold the value statically.
+- **Repeating a logo set to fill a drifting wall trips `duplicate_media_discovery_risk`.**
+  Re-grid so one pass fills the track (e.g. 2 columns × 230px rows covers 1350px + drift)
+  instead of listing the same 21 marks twice.
+
+## Layout
+
+- **Text over a drifting logo wall needs its own scrim.** At 34% opacity the marks still
+  cut straight through an eyebrow or a headline. Add radial navy gradients behind each
+  text band plus a `text-shadow`; the top/bottom linear fades alone are not enough.
+- **A strike-through on a flex child spans the flex width, not the text.** Wrap the words
+  in a `position: relative; display: inline-block` span and anchor the rule to that, or
+  it overshoots by however much room the flex item had.
+- **Receding "stack" cards need to go well below 0.5 opacity.** At 0.5 half-legible text
+  reads as a rendering bug; ~0.22 reads as depth.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
