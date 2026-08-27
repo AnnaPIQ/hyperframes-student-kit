@@ -86,7 +86,7 @@ never drift, because the picture is never re-cut against the audio.
 | S02 | Brand card greys out, struck through, **"5–10 YEARS AGO."** | 4.87–8.97 | "five or ten years ago" |
 | — | **Founder** | 8.97–12.30 | "this is why EcomIQ is completely different" |
 | S03 | Partner reveal — the real **Shopify Premier Partner badge** on a white credential card + Pacific IQ chip | 12.30–16.37 | "Shopify premier partner" |
-| S04 | Comparison bars — one person's take (struck) vs a whole team | 16.37–20.70 | "an entire team" |
+| S04 | **Team grid** — 10 real headshots pop in 3/4/3 with their roles, then "An entire *team's* knowledge" | 16.37–20.70 | "not one person's take" → "an entire team" |
 | S05 | **Logo wall** — 21 real client marks drifting up, no type at all | 20.70–24.63 | "dozens" |
 | — | **Founder** | 24.63–28.67 | "now here is how it works" |
 | S06 | Step 01 — strategy session; both rows white, blue step spine | 28.67–34.43 | "map out your business" |
@@ -100,9 +100,15 @@ never drift, because the picture is never re-cut against the audio.
 | S10 | Payoff — a lone struck bar vs the lit team cluster | 61.43–65.33 | "a whole team's opinion" |
 | S11 | CTA end card — icon, "Book a call.", flame pill; **holds 5.4s** | 65.33–73.30 | "tap the link… book a call" |
 
-**Callbacks:** the strike-through motif runs S02 → S04 → S10; the muted-bar-vs-team
-contrast set up in S04 returns as the S10 payoff; the 01/02/03 spine ties S06–S08
-together.
+**Callbacks:** the strike-through motif runs S02 → S10; the one-vs-many contrast is
+set up by the S04 team grid and paid off in S10; the 01/02/03 spine ties S06–S08.
+
+**S04 team grid** follows the `Team_Knowledge.mp4` reference: eyebrow, a staggered
+3/4/3 wall of headshots flying in oversized-and-blurred one at a time, each with a
+role label, then the payoff line with "team's" in flame. Source photos are in
+`assets/team/`, cropped square and face-checked. **The role labels are read off that
+reference's own grid** — the same ten people appear in it — rather than assigned by
+guesswork, which would mean publishing invented job titles for real named people.
 
 **Client b-roll (54.53–59.40)** reuses two portfolio clips from the
 `aug-general-ad-5` branch (~18–20s in that build): Sweet E's and Dryft. They're

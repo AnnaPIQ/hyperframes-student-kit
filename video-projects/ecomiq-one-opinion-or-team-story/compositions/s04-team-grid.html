@@ -1,0 +1,214 @@
+<template id="s04-team-grid-template">
+  <div data-composition-id="s04-team-grid" data-start="0" data-duration="4.3333"
+       data-width="1080" data-height="1920">
+    <div class="wrap">
+      <div class="bg"></div>
+      <div class="grid"></div>
+      <div class="marks"><i style="left:40.27%;top:60.22%"></i><i style="left:81.96%;top:45.23%"></i><i style="left:59.84%;top:91.99%"></i><i style="left:68.09%;top:42.44%"></i><i style="left:75.84%;top:62.60%"></i><i style="left:50.09%;top:89.03%"></i><i style="left:87.20%;top:22.54%"></i><i style="left:29.16%;top:76.62%"></i><i style="left:93.17%;top:81.10%"></i><i style="left:6.70%;top:14.25%"></i><i style="left:93.35%;top:86.43%"></i><i style="left:27.81%;top:68.68%"></i></div>
+      <div class="vig"></div>
+      <div class="grain"></div>
+      <div class="content">
+        <div class="eyebrow" id="s4-eb">Not one person&rsquo;s take</div>
+        <div class="tgrid" id="s4-grid">
+          <div class="trow">
+            <div class="tc">
+              <div class="tph"><img src="assets/team/01-founder.jpg" alt="Founder" /></div>
+              <div class="tlb">Founder</div>
+            </div>
+            <div class="tc">
+              <div class="tph"><img src="assets/team/02-operations.jpg" alt="Operations" /></div>
+              <div class="tlb">Operations</div>
+            </div>
+            <div class="tc">
+              <div class="tph"><img src="assets/team/03-strategy.jpg" alt="Strategy" /></div>
+              <div class="tlb">Strategy</div>
+            </div>
+          </div>
+          <div class="trow">
+            <div class="tc">
+              <div class="tph"><img src="assets/team/04-paid-media.jpg" alt="Paid media" /></div>
+              <div class="tlb">Paid media</div>
+            </div>
+            <div class="tc">
+              <div class="tph"><img src="assets/team/05-email.jpg" alt="Email" /></div>
+              <div class="tlb">Email</div>
+            </div>
+            <div class="tc">
+              <div class="tph"><img src="assets/team/06-tech.jpg" alt="Tech" /></div>
+              <div class="tlb">Tech</div>
+            </div>
+            <div class="tc">
+              <div class="tph"><img src="assets/team/07-seo.jpg" alt="SEO" /></div>
+              <div class="tlb">SEO</div>
+            </div>
+          </div>
+          <div class="trow">
+            <div class="tc">
+              <div class="tph"><img src="assets/team/08-creative.jpg" alt="Creative" /></div>
+              <div class="tlb">Creative</div>
+            </div>
+            <div class="tc">
+              <div class="tph"><img src="assets/team/09-cro.jpg" alt="CRO" /></div>
+              <div class="tlb">CRO</div>
+            </div>
+            <div class="tc">
+              <div class="tph"><img src="assets/team/10-analytics.jpg" alt="Analytics" /></div>
+              <div class="tlb">Analytics</div>
+            </div>
+          </div>
+        </div>
+        <div class="h2" id="s4-head">An entire <span class="hot">team&rsquo;s</span><br />knowledge</div>
+      </div>
+      <div class="streak" id="s04-team-grid-streak"></div>
+    </div>
+
+    <style>
+      /* LOCAL font — no network at render time (a CDN fetch is non-deterministic) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+
+    [data-composition-id="s04-team-grid"] { position: absolute; inset: 0; overflow: hidden;
+      font-family: 'Rethink Sans', system-ui, sans-serif;
+      color: #FFFFFF; -webkit-font-smoothing: antialiased; }
+    [data-composition-id="s04-team-grid"] * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* the animated card — rides in/out on a blurred whip, revealing the A-roll */
+    [data-composition-id="s04-team-grid"] .wrap { position: absolute; inset: 0; will-change: transform, filter, opacity; }
+
+    [data-composition-id="s04-team-grid"] .bg { position: absolute; inset: 0; background:
+        radial-gradient(64% 44% at 16% 12%, rgba(156,212,255,.15) 0%, rgba(6,40,76,0) 62%),
+        radial-gradient(58% 40% at 88% 86%, rgba(255,76,50,.11) 0%, rgba(6,40,76,0) 60%),
+        #06284C; }
+
+    [data-composition-id="s04-team-grid"] .grid { position: absolute; inset: -12%; opacity: .5; background-repeat: repeat;
+      background-image:
+        repeating-linear-gradient(0deg,  rgba(156,212,255,.070) 0 1px, transparent 1px 96px),
+        repeating-linear-gradient(90deg, rgba(156,212,255,.070) 0 1px, transparent 1px 96px); }
+
+    /* registration crosshairs — the spine under everything */
+    [data-composition-id="s04-team-grid"] .marks { position: absolute; inset: 0; opacity: .34; }
+    [data-composition-id="s04-team-grid"] .marks i { position: absolute; width: 15px; height: 15px; }
+    [data-composition-id="s04-team-grid"] .marks i::before, [data-composition-id="s04-team-grid"] .marks i::after { content: ''; position: absolute;
+      background: rgba(156,212,255,.5); }
+    [data-composition-id="s04-team-grid"] .marks i::before { left: 7px; top: 0; width: 1px; height: 15px; }
+    [data-composition-id="s04-team-grid"] .marks i::after  { top: 7px; left: 0; height: 1px; width: 15px; }
+
+    [data-composition-id="s04-team-grid"] .vig { position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 82% 66% at 50% 44%, rgba(2,14,30,0) 34%, rgba(2,14,30,.9) 100%); }
+
+    /* deterministic CSS grain — no PNG, no randomness */
+    [data-composition-id="s04-team-grid"] .grain { position: absolute; inset: 0; pointer-events: none; opacity: .5; mix-blend-mode: overlay;
+      background-image:
+        radial-gradient(rgba(255,255,255,.030) .5px, transparent .5px),
+        radial-gradient(rgba(255,255,255,.022) .5px, transparent .5px),
+        radial-gradient(rgba(0,0,0,.020) .5px, transparent .5px);
+      background-size: 3px 3px, 5px 5px, 7px 7px;
+      background-position: 0 0, 1px 2px, 3px 1px; }
+
+    /* content plate */
+    [data-composition-id="s04-team-grid"] .content { position: absolute; inset: 0; display: flex; flex-direction: column;
+      justify-content: center; padding: 380px 96px 450px; }
+
+    /* --- shared type ------------------------------------------------------ */
+    [data-composition-id="s04-team-grid"] .eyebrow { font-weight: 600; font-size: 27px; letter-spacing: .3em;
+      text-transform: uppercase; color: #6F8DB3; }
+    [data-composition-id="s04-team-grid"] .h1 { font-weight: 800; font-size: 96px; line-height: .95; letter-spacing: -.03em; }
+    [data-composition-id="s04-team-grid"] .h2 { font-weight: 800; font-size: 68px; line-height: 1.0;  letter-spacing: -.025em; }
+    [data-composition-id="s04-team-grid"] .h3 { font-weight: 700; font-size: 48px; line-height: 1.08; letter-spacing: -.02em; }
+    [data-composition-id="s04-team-grid"] .body { font-weight: 500; font-size: 34px; line-height: 1.32; color: #C7DAF0; }
+    [data-composition-id="s04-team-grid"] .hot   { color: #FF4C32; }
+    [data-composition-id="s04-team-grid"] .cool  { color: #9CD4FF; }
+    [data-composition-id="s04-team-grid"] .dim   { color: #6F8DB3; }
+    [data-composition-id="s04-team-grid"] .num { font-weight: 800; letter-spacing: -.045em; font-variant-numeric: tabular-nums;
+      line-height: .84; }
+
+    /* tags / chips */
+    [data-composition-id="s04-team-grid"] .tag { display: inline-flex; align-items: center; gap: 10px; font-weight: 700;
+      font-size: 26px; letter-spacing: .085em; text-transform: uppercase;
+      padding: 11px 20px; border-radius: 999px; border: 1px solid #1D4A7A;
+      background: rgba(13,58,107,.62); color: #9CD4FF; }
+    [data-composition-id="s04-team-grid"] .tag.hotTag { color: #FF4C32; border-color: rgba(255,76,50,.5);
+      background: rgba(255,76,50,.11); }
+    [data-composition-id="s04-team-grid"] .tag.dimTag { color: #6F8DB3; border-color: rgba(111,141,179,.4);
+      background: rgba(111,141,179,.09); }
+    [data-composition-id="s04-team-grid"] .dot { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+
+    /* panels */
+    [data-composition-id="s04-team-grid"] .panel { border: 1px solid #1D4A7A; border-radius: 26px;
+      background: linear-gradient(160deg, rgba(16,61,111,.9) 0%, rgba(8,44,84,.86) 100%);
+      box-shadow: 0 30px 80px -34px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.09); }
+
+    /* light streak used for in-scene whips */
+    [data-composition-id="s04-team-grid"] .streak { position: absolute; left: -40%; width: 60%; height: 5px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.92), transparent);
+      filter: blur(7px); opacity: 0; }
+    [data-composition-id="s04-team-grid"] .streak { top: 62%; }
+
+    [data-composition-id="s04-team-grid"] .content { gap: 36.800000000000004px; }
+    [data-composition-id="s04-team-grid"] .tgrid { display: flex; flex-direction: column; gap: 23px; }
+    [data-composition-id="s04-team-grid"] .trow { display: flex; justify-content: center; gap: 20.7px; }
+    [data-composition-id="s04-team-grid"] .tc { width: 200px; display: flex; flex-direction: column; gap: 9px; }
+    [data-composition-id="s04-team-grid"] .tph { width: 200px; height: 200px; border-radius: 14px;
+      overflow: hidden; background: #0A325F; line-height: 0;
+      border: 1px solid rgba(222,238,254,.28);
+      box-shadow: 0 18px 44px -18px rgba(0,0,0,.72); }
+    [data-composition-id="s04-team-grid"] .tph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    [data-composition-id="s04-team-grid"] .tlb { font-size: 21px; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: #9CD4FF; }
+    [data-composition-id="s04-team-grid"] #s4-head { margin-top: 16.099999999999998px; }
+    </style>
+
+    <!-- GSAP vendored locally — a CDN script cert-fails in the render env -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const root = '[data-composition-id="s04-team-grid"]';
+        const tl = gsap.timeline({ paused: true });
+
+      // --- ambient: grid parallax + vignette breath (camera never sleeps) ---
+      tl.fromTo(root + " .grid", { backgroundPositionY: 0, backgroundPositionX: 0 },
+        { backgroundPositionY: -28, backgroundPositionX: 16,
+          duration: 4.3333, ease: "none" }, 0);
+      tl.fromTo(root + " .vig", { opacity: .82 }, { opacity: 1, duration: 2.1667,
+        ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+      tl.fromTo(root + " .marks", { opacity: .2 }, { opacity: .40,
+        duration: 2.1667, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+
+      // ENTRY — rises in from the left under blur; matches the
+      // previous beat's exit velocity. Opacity snaps early so the A-roll never ghosts through.
+      gsap.set(root + " .wrap", { opacity: 0, x: -190, filter: "blur(30px)" });
+      tl.to(root + " .wrap", { opacity: 1, duration: .12, ease: "none" }, 0);
+      tl.to(root + " .wrap", { x: 0, filter: "blur(0px)", duration: .46, ease: "power2.out" }, 0);
+
+      tl.fromTo(root + " #s4-eb", { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: .42, ease: "power2.out" }, 0.06666666666666667);
+      // each face flies in oversized and settles into the wall — one at a time
+      tl.fromTo(root + " #s4-grid .tph",
+        { opacity: 0, scale: 1.5, x: 46, y: 34, filter: "blur(9px)" },
+        { opacity: 1, scale: 1, x: 0, y: 0, filter: "blur(0px)",
+          duration: .44, ease: "back.out(1.35)", stagger: .13 }, 0.26666666666666666);
+      tl.fromTo(root + " #s4-grid .tlb", { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: .3, ease: "power2.out", stagger: .13 }, 0.4666666666666667);
+      // PAYOFF — lands on "you are getting an entire team"
+      tl.fromTo(root + " #s4-head", { opacity: 0, y: 34 },
+        { opacity: 1, y: 0, duration: .5, ease: "expo.out" }, 2.1333333333333333);
+
+      // in-scene light streak — motion blur across the seam, never a hard cut
+      tl.fromTo(root + " #s04-team-grid-streak", { xPercent: -60, opacity: 0, scaleX: .6 },
+        { xPercent: 260, opacity: .9, scaleX: 1.4, duration: .34, ease: "power3.in" }, 0.06);
+      tl.to(root + " #s04-team-grid-streak", { opacity: 0, duration: .16 }, 0.4000);
+
+      // EXIT (local 3.9733) — rides right under blur, handing the
+      // frame back to the founder A-roll. Matches the next beat's entry blur.
+      tl.to(root + " .wrap", { x: 190, filter: "blur(30px)", duration: .36, ease: "power2.in" }, 3.9733);
+      tl.to(root + " .wrap", { opacity: 0, duration: .18, ease: "power1.in" }, 4.1533);
+
+        // Law #11 — anchor the timeline to the full slot or HyperFrames hides
+        // the composition early and you get a black-frame flash at the tail.
+        tl.to({}, { duration: 4.3333 }, 0);
+        window.__timelines['s04-team-grid'] = tl;
+      })();
+    </script>
+  </div>
+</template>
