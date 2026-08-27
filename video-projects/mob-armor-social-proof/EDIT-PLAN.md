@@ -42,9 +42,9 @@ surfaced:
 | Context the brief said was missing | Where it actually is |
 |---|---|
 | Off-road | `Tab Mount Maxx Tube` 31.9–35.0 — drone, buggy across sand dunes |
-| Race / UTV | `Tab Mount Maxx Direct` 9.6–12.6 — race UTV, Method wheels, at an event |
+| Race / UTV | `Tab Mount Maxx Direct` 9.6–10.8 — race UTV, Method wheels, at an event |
 | In-cab driving | `Mobnetic Stix` 2.8–4.6 and 29.2–30.0 — dash mount, road ahead |
-| Work truck / fleet | `Tab Mount Maxx Direct` 39.4–41.6 — tablet on mount, driving |
+| Work truck / fleet | `Tabnetic Direct` 34.5–44.0 — worker fitting a rugged tablet, then the tablet locked in |
 | Manufacturing | `Tabnetic Discs` 5.9–9.9 — CNC/plasma cutting, sparks |
 | Facility / real ops | `Tabnetic Direct` 30.0–37.0 — warehouse floor, worker fitting a mount |
 | Real people | `Mobnetic Maxx Water balloon` 1.3–4.3; `Rad Mount` 28.1–31.0 |
