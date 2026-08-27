@@ -1,0 +1,270 @@
+/* ===========================================================================
+   beats.css — the motion-graphics section (ad 31.500s -> 54.900s).
+
+   Ported from video-projects/ecomiq-one-opinion-or-team-story on branch
+   claude/ecomiq-founder-ad-build-9auz5l: the MOTION_PHILOSOPHY spine (navy
+   ground + perspective grid + registration crosshairs + vignette + grain),
+   numbered step heads with an outlined numeral, a 3-segment progress spine,
+   panel rows, and the node graph on beat 03.
+
+   Adapted for this ad:
+   - The speaker stays in the corner PiP and never goes full frame, so the
+     content plate sits under a top guard that clears the bug + PiP.
+   - One persistent bed (#gfx) carries the ambient so beat cards can whip in
+     and out over navy, never over black.
+   - Geometry is driven by the per-ratio custom properties below, so all three
+     ratios share this file.
+
+   Each composition MUST set:
+     --g-top      top guard (clears the bug + PiP)
+     --g-bot      bottom guard
+     --g-side     side padding
+     --g-gap      gap between blocks in the content plate
+     --g-h2       step title size
+     --g-h3       row size
+     --g-body     sub-line size
+     --g-num      outlined step numeral size
+     --g-big      the big stat numeral (beat 02)
+     --g-node     height of the node-graph area (beat 03)
+     --g-slam     the "here's how it works" title size
+   =========================================================================== */
+
+/* --- the persistent bed --------------------------------------------------- */
+/* Hard-cuts in at 31.500s, out at 54.900s. Opaque, so it replaces the montage
+   rather than compositing over it. */
+.gfx {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  overflow: hidden;
+}
+.gfx .bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(64% 44% at 16% 12%, rgba(156, 212, 255, 0.15) 0%, rgba(6, 40, 76, 0) 62%),
+    radial-gradient(58% 40% at 88% 86%, rgba(255, 76, 50, 0.11) 0%, rgba(6, 40, 76, 0) 60%),
+    var(--brand-navy);
+}
+.gfx .grid {
+  position: absolute;
+  inset: -12%;
+  opacity: 0.5;
+  background-repeat: repeat;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(156, 212, 255, 0.07) 0 1px, transparent 1px 96px),
+    repeating-linear-gradient(90deg, rgba(156, 212, 255, 0.07) 0 1px, transparent 1px 96px);
+}
+/* registration crosshairs — fixed positions, no randomness (render contract 11) */
+.gfx .marks { position: absolute; inset: 0; opacity: 0.34; }
+.gfx .marks i { position: absolute; width: 15px; height: 15px; }
+.gfx .marks i::before,
+.gfx .marks i::after { content: ''; position: absolute; background: rgba(156, 212, 255, 0.5); }
+.gfx .marks i::before { left: 7px; top: 0; width: 1px; height: 15px; }
+.gfx .marks i::after { top: 7px; left: 0; height: 1px; width: 15px; }
+
+.gfx .vig {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 82% 66% at 50% 44%, rgba(2, 14, 30, 0) 34%, rgba(2, 14, 30, 0.9) 100%);
+}
+/* deterministic CSS grain — no PNG, no PRNG */
+.gfx .grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.03) 0.5px, transparent 0.5px),
+    radial-gradient(rgba(255, 255, 255, 0.022) 0.5px, transparent 0.5px),
+    radial-gradient(rgba(0, 0, 0, 0.02) 0.5px, transparent 0.5px);
+  background-size: 3px 3px, 5px 5px, 7px 7px;
+  background-position: 0 0, 1px 2px, 3px 1px;
+}
+
+/* --- beat cards ----------------------------------------------------------- */
+/* Every beat is a full-frame card that whips in from the left and out to the
+   right under blur. They overlap by a few frames so the bed is never bare. */
+.beat {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  will-change: transform, filter, opacity;
+}
+.beat .plate {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--g-gap);
+  padding: var(--g-top) var(--g-side) var(--g-bot);
+}
+
+/* --- shared type --------------------------------------------------------- */
+.gfx .eyebrow {
+  font-weight: 600;
+  font-size: calc(var(--g-body) * 0.8);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #6f8db3;
+}
+.gfx .h2 { font-weight: 800; font-size: var(--g-h2); line-height: 1; letter-spacing: -0.025em; }
+.gfx .h3 { font-weight: 700; font-size: var(--g-h3); line-height: 1.08; letter-spacing: -0.02em; }
+.gfx .body { font-weight: 500; font-size: var(--g-body); line-height: 1.32; color: #c7daf0; }
+.gfx .cool { color: var(--brand-blue-tint); }
+.gfx .hot { color: var(--brand-flame); }
+.gfx .num { font-weight: 800; letter-spacing: -0.045em; font-variant-numeric: tabular-nums; line-height: 0.84; }
+
+/* the section opener — one line, slammed */
+.slam {
+  font-weight: 800;
+  font-size: var(--g-slam);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-align: center;
+  text-wrap: balance;
+}
+.slam .hot { color: var(--brand-flame); }
+
+/* --- step head ----------------------------------------------------------- */
+.stephead { display: flex; align-items: center; gap: calc(var(--g-gap) * 1.05); }
+.stepnum {
+  font-size: var(--g-num);
+  color: transparent;
+  -webkit-text-stroke: 3px rgba(156, 212, 255, 0.55);
+  flex: none;
+}
+.steptxt { display: flex; flex-direction: column; gap: 8px; }
+
+/* 3-segment progress spine — which of the three steps you are on */
+.spine { display: flex; gap: 12px; }
+.spine i { height: 5px; flex: 1; border-radius: 3px; background: rgba(111, 141, 179, 0.28); transform-origin: 0 50%; }
+.spine i.on { background: var(--brand-blue-tint); box-shadow: 0 0 20px rgba(156, 212, 255, 0.6); }
+
+/* --- panel rows ---------------------------------------------------------- */
+.rows { display: flex; flex-direction: column; gap: calc(var(--g-gap) * 0.72); }
+.row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: calc(var(--g-gap) * 0.8) calc(var(--g-gap) * 1.05);
+  border: 1px solid #1d4a7a;
+  border-radius: 26px;
+  background: linear-gradient(160deg, rgba(16, 61, 111, 0.9) 0%, rgba(8, 44, 84, 0.86) 100%);
+  box-shadow: 0 30px 80px -34px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+.rmark { font-size: var(--g-h3); line-height: 1; flex: none; }
+.tag {
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+  font-weight: 700;
+  font-size: calc(var(--g-body) * 0.72);
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+  padding: 9px 18px;
+  border-radius: 999px;
+  white-space: nowrap;
+  color: var(--brand-flame);
+  border: 1px solid rgba(255, 76, 50, 0.5);
+  background: rgba(255, 76, 50, 0.11);
+}
+
+/* --- beat 02: the stat --------------------------------------------------- */
+.countrow { display: flex; align-items: center; gap: 22px; }
+.big { font-size: var(--g-big); color: var(--brand-white); }
+.perlbl { display: flex; flex-direction: column; gap: 2px; }
+.coaches { display: flex; margin-left: auto; }
+.cav {
+  width: calc(var(--g-big) * 0.30);
+  height: calc(var(--g-big) * 0.30);
+  border-radius: 50%;
+  border: 2px solid rgba(222, 238, 254, 0.7);
+  background: linear-gradient(150deg, rgba(156, 212, 255, 0.7), rgba(110, 170, 225, 0.3));
+}
+.cav + .cav { margin-left: calc(var(--g-big) * -0.12); }
+
+/* --- beat 03: the node graph -------------------------------------------- */
+.net { position: relative; height: var(--g-node); }
+.netsvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.lk {
+  stroke: rgba(156, 212, 255, 0.62);
+  stroke-width: 0.5;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+}
+.nd {
+  position: absolute;
+  width: calc(var(--g-node) * 0.13);
+  height: calc(var(--g-node) * 0.13);
+  margin: calc(var(--g-node) * -0.065) 0 0 calc(var(--g-node) * -0.065);
+  border-radius: 50%;
+  background: linear-gradient(150deg, rgba(156, 212, 255, 0.68), rgba(110, 170, 225, 0.28));
+  border: 2px solid rgba(222, 238, 254, 0.78);
+  box-shadow: 0 0 30px -10px rgba(156, 212, 255, 0.6);
+}
+/* you are the flame node — the community assembles around you */
+.nd.me {
+  background: linear-gradient(150deg, var(--brand-flame), #c9331d);
+  border-color: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 0 40px -4px rgba(255, 76, 50, 0.75);
+}
+
+/* --- light streak — motion blur across a seam, never a hard cut ---------- */
+.streak {
+  position: absolute;
+  left: -40%;
+  top: 58%;
+  width: 60%;
+  height: 5px;
+  z-index: 14;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.92), transparent);
+  filter: blur(7px);
+  opacity: 0;
+}
+
+/* --- lower-third plate over montage B ----------------------------------- */
+/* Brand/credibility graphics, not captions. */
+/* NOTE: .lt must NOT be combined with .gfx. `.gfx { inset: 0 }` would win for
+   top/right and stretch this box to the full frame, which parks the plate at the
+   TOP of frame on top of the brand bug. top/right are pinned to auto here so the
+   box only ever hugs the bottom-left, whatever else lands on the element. */
+.lt {
+  position: absolute;
+  left: var(--g-side);
+  bottom: var(--lt-bot);
+  top: auto;
+  right: auto;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+.lt-tag {
+  font-weight: 700;
+  font-size: calc(var(--g-body) * 0.74);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 9px 18px;
+  border-radius: 999px;
+  color: var(--brand-white);
+  background: var(--brand-flame);
+  box-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.7);
+}
+.lt-name {
+  font-weight: 800;
+  font-size: var(--g-h2);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--brand-white);
+  text-shadow: 0 3px 22px rgba(0, 0, 0, 0.72);
+}
+.lt-sub {
+  font-weight: 500;
+  font-size: var(--g-body);
+  color: #dce9f7;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.75);
+}

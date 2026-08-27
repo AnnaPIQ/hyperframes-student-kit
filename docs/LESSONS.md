@@ -132,6 +132,45 @@ efficient over time instead of relearning the same lessons.
   2.58× read as syrupy; the same total spread 1.75–3.93× by motion held a ~1.9s average shot
   length. Never fill the gap by reprising shots: it reads as a repeat.
 
+## Retiming vs. runtime — the real lever
+
+- **Retiming a short montage to cover a long VO has a hard ceiling.** Stretching
+  27.7s of handheld footage over 71.4s (2.58x, 0.39x speed) read as syrupy slow-motion
+  no matter how cleverly the stretch was distributed per shot. Per-shot allocation
+  helps, but it cannot rescue a factor that big. **Fix:** give runtime to something
+  else. Moving 23.4s onto a motion-graphics section dropped the same montage to 1.73x
+  (0.58x speed) and the average shot from 1.93s to 1.30s. Reach for graphics *before*
+  reaching for a bigger stretch factor.
+- **Split one bed across two clips instead of shortening the montage.** A second
+  `<video>` on the same src with `data-media-start` set to where the first clip ended
+  lets a graphics section sit in the middle while the montage still plays through
+  once, in order, with nothing reprised. Two clips, one pass.
+
+## CSS traps specific to layered compositions
+
+- **A full-bleed utility class with `inset: 0` silently wins `top`/`right` over a
+  later rule that only sets `left`/`bottom`.** A lower-third sharing a `.gfx { inset:
+  0 }` bed class got stretched to full height, so its `align-items: flex-start`
+  content rendered at the TOP of frame, on top of the brand bug — 40s into the ad
+  where no one was looking. **Fix:** don't mix a full-bleed class onto a corner-pinned
+  element, and pin `top: auto; right: auto` on the corner element so nothing can
+  stretch it. Frame-verify overlays over their *actual* background, not just once.
+- **Scoping type tokens under an ancestor class (`.gfx .h2`) means every element that
+  needs them must carry that ancestor class** — which is what tempts you into the trap
+  above. Keep genuinely standalone pieces (`.lt-tag`, `.lt-name`) unscoped.
+
+## Multi-ratio: generate, don't copy
+
+- **Three ratios diverge the moment you hand-edit two of them.** Author one root
+  composition, mark the per-ratio block with sentinel comments (`@@GEO@@` /
+  `@@ENDGEO@@`), and emit the siblings from a script that swaps only that block, the
+  composition id, the bed filename and the track offset. Drive every size off custom
+  properties so the markup and the timeline are byte-identical across ratios.
+- **Sub-compositions can't solve the multi-ratio problem** — a `<template>` sub-comp
+  carries one fixed `data-width`/`data-height`, so a shared beat cannot serve 9:16,
+  4:5 and 1:1. Inline the beats and vary the geometry with custom properties instead.
+  (Expect `composition_file_too_large` warnings as a result; that is the trade.)
+
 ## Housekeeping
 
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat

@@ -9,9 +9,11 @@
     <script src="assets/vendor/gsap.min.js"></script>
     <link rel="stylesheet" href="assets/brand-tokens.css" />
     <link rel="stylesheet" href="assets/ad.css" />
+    <link rel="stylesheet" href="assets/beats.css" />
     <style>
-      /* ---- 9:16 geometry (1080x1920) — the only thing that differs per ratio.
-             --ov-top is 5.2% of frame height so the bug and PiP read as a pair. */
+      /* @@GEO@@ 9:16 geometry (1080x1920) — the only thing that differs per ratio.
+         --ov-top is 5.2% of frame height so the bug and PiP read as a pair;
+         --g-top clears them both so the graphics never collide with the PiP. */
       html, body { width: 1080px; height: 1920px; }
       :root {
         --ov-top: 100px;
@@ -20,7 +22,21 @@
         --pip-d: 240px;
         --card-logo: 497px;   /* 46% of 1080 */
         --card-gap: 34px;
+
+        --g-top: 400px;       /* bug/PiP end at 340 */
+        --g-bot: 260px;
+        --g-side: 84px;
+        --g-gap: 34px;
+        --g-h2: 68px;
+        --g-h3: 44px;
+        --g-body: 32px;
+        --g-num: 136px;
+        --g-big: 200px;
+        --g-node: 440px;
+        --g-slam: 104px;
+        --lt-bot: 320px;
       }
+      /* @@ENDGEO@@ */
     </style>
   </head>
   <body>
@@ -32,20 +48,209 @@
       data-width="1080"
       data-height="1920"
     >
-      <!-- PICTURE BED — montage, once, per-shot retimed. 2143 frames.
-           Hard cuts are baked into the bed. No class="clip" on <video>. -->
+      <!-- ================= PICTURE BED — montage, once, per-shot retimed ==========
+           1441 frames (48.0333s), split across two clips so the motion-graphics
+           section can carry 31.500-54.900s. Clip B resumes exactly where A left
+           off via data-media-start, so the montage still plays through once, in
+           order, with nothing reprised. Hard cuts are baked into the bed. -->
       <video
-        id="montage"
+        id="montage-a"
         class="montage"
         data-start="0"
-        data-duration="71.433333"
+        data-duration="31.5"
         data-track-index="0"
         src="assets/montage-916.mp4"
         muted
         playsinline
       ></video>
 
-      <!-- BRAND BUG — top left -->
+      <video
+        id="montage-b"
+        class="montage"
+        data-start="54.9"
+        data-duration="16.533333"
+        data-track-index="13"
+        data-media-start="31.5"
+        src="assets/montage-916.mp4"
+        muted
+        playsinline
+      ></video>
+
+      <!-- ================= MOTION-GRAPHICS SECTION (31.500 -> 54.900) ============
+           One persistent bed carries the ambient spine so beat cards can whip in
+           and out over navy, never over black. -->
+      <div
+        id="gfx"
+        class="clip gfx"
+        data-start="31.5"
+        data-duration="23.4"
+        data-track-index="6"
+      >
+        <div class="bg"></div>
+        <div class="grid" id="gfx-grid"></div>
+        <div class="marks" id="gfx-marks"><i style="left:40.27%;top:60.22%"></i><i style="left:81.96%;top:45.23%"></i><i style="left:59.84%;top:91.99%"></i><i style="left:68.09%;top:42.44%"></i><i style="left:75.84%;top:62.60%"></i><i style="left:50.09%;top:89.03%"></i><i style="left:87.20%;top:22.54%"></i><i style="left:29.16%;top:76.62%"></i><i style="left:93.17%;top:81.10%"></i><i style="left:6.70%;top:14.25%"></i><i style="left:93.35%;top:86.43%"></i><i style="left:27.81%;top:68.68%"></i></div>
+        <div class="vig" id="gfx-vig"></div>
+        <div class="grain"></div>
+      </div>
+
+      <!-- BEAT 00 — the section opener, one line, slammed -->
+      <div
+        id="g0"
+        class="clip gfx beat"
+        data-start="31.5"
+        data-duration="1.4"
+        data-track-index="7"
+      >
+        <div class="plate" style="justify-content: center">
+          <div class="slam" id="g0-txt">Here&rsquo;s <span class="hot">how it works</span></div>
+          <div class="card-rule" id="g0-rule" style="margin: 0 auto"></div>
+        </div>
+        <div class="streak" id="g0-streak"></div>
+      </div>
+
+      <!-- BEAT 01 — strategy session -->
+      <div
+        id="g1"
+        class="clip gfx beat"
+        data-start="32.8"
+        data-duration="8.9"
+        data-track-index="8"
+      >
+        <div class="plate">
+          <div class="stephead">
+            <div class="num stepnum" id="g1-n">01</div>
+            <div class="steptxt">
+              <div class="h2" id="g1-t">Strategy session</div>
+              <div class="body" id="g1-s">with your lead coach</div>
+            </div>
+          </div>
+          <div class="spine" id="g1-spine"><i class="on"></i><i></i><i></i></div>
+          <div class="rows">
+            <div class="row" id="g1-r1"><span class="rmark cool">&#10003;</span>
+              <span class="h3">Map your whole business</span></div>
+            <div class="row" id="g1-r2"><span class="rmark cool">&#9678;</span>
+              <span class="h3">Find what&rsquo;s holding growth back</span></div>
+            <div class="row" id="g1-r3"><span class="rmark hot">&rarr;</span>
+              <span class="h3">A plan to resolve it</span></div>
+          </div>
+        </div>
+        <div class="streak" id="g1-streak"></div>
+      </div>
+
+      <!-- BEAT 02 — specialist 1:1 calls -->
+      <div
+        id="g2"
+        class="clip gfx beat"
+        data-start="41.6"
+        data-duration="6.8"
+        data-track-index="9"
+      >
+        <div class="plate">
+          <div class="stephead">
+            <div class="num stepnum" id="g2-n">02</div>
+            <div class="steptxt">
+              <div class="h2" id="g2-t">Specialist 1:1 calls</div>
+              <div class="body" id="g2-s">every single month</div>
+            </div>
+          </div>
+          <div class="spine" id="g2-spine"><i></i><i class="on"></i><i></i></div>
+          <div class="countrow" id="g2-count">
+            <div class="num big" id="g2-num">2</div>
+            <div class="perlbl">
+              <div class="h3">calls</div>
+              <div class="eyebrow">a month</div>
+            </div>
+            <div class="coaches" id="g2-coaches"><span class="cav"></span><span class="cav"></span></div>
+          </div>
+          <div class="rows">
+            <div class="row" id="g2-r1"><span class="rmark cool">&rarr;</span>
+              <span class="h3">Teach the next right move</span></div>
+            <div class="row" id="g2-r2"><span class="rmark cool">&rarr;</span>
+              <span class="h3">And hold you to it</span>
+              <span class="tag" id="g2-chip">accountable</span></div>
+          </div>
+        </div>
+        <div class="streak" id="g2-streak"></div>
+      </div>
+
+      <!-- BEAT 03 — Slack & community. The node graph: you are the flame node and
+           the community assembles around you, then the links draw on the line
+           "a community of founders that are all doing the same thing". -->
+      <div
+        id="g3"
+        class="clip gfx beat"
+        data-start="48.3"
+        data-duration="6.6"
+        data-track-index="10"
+      >
+        <div class="plate">
+          <div class="stephead">
+            <div class="num stepnum" id="g3-n">03</div>
+            <div class="steptxt">
+              <div class="h2" id="g3-t">Slack &amp; community</div>
+              <div class="body" id="g3-s">founders doing the same thing as you</div>
+            </div>
+          </div>
+          <div class="spine" id="g3-spine"><i></i><i></i><i class="on"></i></div>
+          <div class="net" id="g3-net">
+            <svg class="netsvg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <line class="lk" x1="50.00" y1="14.00" x2="75.80" y2="27.55" />
+              <line class="lk" x1="50.00" y1="14.00" x2="82.17" y2="58.01" />
+              <line class="lk" x1="50.00" y1="14.00" x2="35.68" y2="82.43" />
+              <line class="lk" x1="50.00" y1="14.00" x2="24.20" y2="27.55" />
+              <line class="lk" x1="75.80" y1="27.55" x2="82.17" y2="58.01" />
+              <line class="lk" x1="75.80" y1="27.55" x2="64.32" y2="82.43" />
+              <line class="lk" x1="75.80" y1="27.55" x2="17.83" y2="58.01" />
+              <line class="lk" x1="82.17" y1="58.01" x2="64.32" y2="82.43" />
+              <line class="lk" x1="82.17" y1="58.01" x2="35.68" y2="82.43" />
+              <line class="lk" x1="82.17" y1="58.01" x2="24.20" y2="27.55" />
+              <line class="lk" x1="64.32" y1="82.43" x2="35.68" y2="82.43" />
+              <line class="lk" x1="64.32" y1="82.43" x2="17.83" y2="58.01" />
+              <line class="lk" x1="35.68" y1="82.43" x2="17.83" y2="58.01" />
+              <line class="lk" x1="35.68" y1="82.43" x2="24.20" y2="27.55" />
+              <line class="lk" x1="17.83" y1="58.01" x2="24.20" y2="27.55" />
+            </svg>
+            <span class="nd me" id="g3-me" style="left:50.00%;top:14.00%"></span>
+            <span class="nd" style="left:75.80%;top:27.55%"></span>
+            <span class="nd" style="left:82.17%;top:58.01%"></span>
+            <span class="nd" style="left:64.32%;top:82.43%"></span>
+            <span class="nd" style="left:35.68%;top:82.43%"></span>
+            <span class="nd" style="left:17.83%;top:58.01%"></span>
+            <span class="nd" style="left:24.20%;top:27.55%"></span>
+          </div>
+          <div class="row" id="g3-row"><span class="rmark cool">&#9679;</span>
+            <span class="h3">Common problems, <span class="cool">already solved</span></span></div>
+        </div>
+        <div class="streak" id="g3-streak"></div>
+      </div>
+
+      <!-- ================= LOWER-THIRDS over montage B ==========================
+           Brand / credibility plates, not captions. -->
+      <div
+        id="lt1"
+        class="clip lt"
+        data-start="55.1"
+        data-duration="4.6"
+        data-track-index="11"
+      >
+        <span class="lt-tag" id="lt1-tag">real client work</span>
+      </div>
+
+      <div
+        id="lt2"
+        class="clip lt"
+        data-start="60.2"
+        data-duration="5.3"
+        data-track-index="12"
+      >
+        <span class="lt-tag" id="lt2-tag">the agency behind it</span>
+        <span class="lt-name" id="lt2-name">Pacific IQ</span>
+        <span class="lt-sub" id="lt2-sub">the eight &amp; nine figure brand agency</span>
+      </div>
+
+      <!-- ================= OVERLAYS =============================================
+           Bug and PiP ride over the montage AND the graphics — the speaker never
+           leaves, and never appears full frame. -->
       <div class="bug-wrap" id="bug-wrap">
         <img
           id="bug"
@@ -58,7 +263,6 @@
         />
       </div>
 
-      <!-- SPEAKER PiP — top right, circular, never full frame -->
       <div class="pip-wrap" id="pip-wrap">
         <video
           id="pip"
@@ -84,8 +288,8 @@
         <div id="card-pill" class="card-pill">Find out more &rarr;</div>
       </div>
 
-      <!-- VOICEOVER — the spine. Head-trimmed 1.854s so speech lands at 0.200s.
-           Montage audio is discarded entirely; the beds are muted. -->
+      <!-- VOICEOVER — the spine. Head-trimmed 1.931063s on the .mov PTS timeline
+           so speech lands at 0.198s. Montage audio is discarded entirely. -->
       <audio
         id="vo"
         data-start="0"
@@ -95,9 +299,8 @@
         data-volume="1"
       ></audio>
 
-      <!-- MUSIC — silent placeholder at volume 0. Drop a real bed at this path
-           and raise data-volume. Duck targets: 0.13 under speech, 0.35 over the
-           card. -->
+      <!-- MUSIC — silent placeholder at volume 0. Duck targets: 0.13 under
+           speech, 0.35 over the card. -->
       <audio
         id="music"
         data-start="0"
@@ -112,23 +315,123 @@
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
-      // Overlays fade in together, done by 0.42s — inside the first 0.5s.
-      // fromTo, not from: these start hidden (docs/LESSONS.md, Animation).
+      /* ---------------------------------------------------------------------
+         Every time below is an ABSOLUTE ad-time in seconds, and every content
+         reveal is anchored to a verified VO word boundary (EDIT-PLAN.md §2).
+         fromTo everywhere, never from/set: these elements are hidden until
+         their clip window opens, so `from` would compute the end state off the
+         hidden state (docs/LESSONS.md) and `gsap.set` at load would touch
+         elements the framework has not mounted yet (render contract rule 10).
+         --------------------------------------------------------------------- */
+
+      /* ---- overlays: in together, done by 0.42s ---- */
       tl.fromTo("#bug-wrap", { opacity: 0 }, { opacity: 1, duration: 0.34, ease: "power2.out" }, 0.08)
         .fromTo("#pip-wrap", { opacity: 0 }, { opacity: 1, duration: 0.34, ease: "power2.out" }, 0.08);
 
-      // THE one dissolve in the whole ad. Linear, 0.35s, across the 0.681s
-      // silence gap, so the card is fully opaque at 71.40 — one frame before
-      // "Tap the link below and book a call." starts at 71.4333.
+      /* ---- graphics bed ambient: the camera never sleeps ---- */
+      tl.fromTo("#gfx-grid", { backgroundPositionY: 0, backgroundPositionX: 0 },
+        { backgroundPositionY: -96, backgroundPositionX: 54, duration: 23.4, ease: "none" }, 31.5);
+      tl.fromTo("#gfx-vig", { opacity: 0.82 },
+        { opacity: 1, duration: 5.85, ease: "sine.inOut", yoyo: true, repeat: 3 }, 31.5);
+      tl.fromTo("#gfx-marks", { opacity: 0.2 },
+        { opacity: 0.4, duration: 5.85, ease: "sine.inOut", yoyo: true, repeat: 3 }, 31.5);
+
+      /* ---- beat whips ----
+         Each card snaps to opaque in 0.10s (so no beat ever cross-dissolves
+         into the next — the brief allows exactly one dissolve, into the card)
+         then rides in from the left under blur, and leaves to the right the
+         same way. Consecutive windows overlap 0.1s so the whips interlock. */
+      function whip(sel, inAt, outAt) {
+        tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.10, ease: "none" }, inAt)
+          .fromTo(sel, { x: -190, filter: "blur(30px)" },
+            { x: 0, filter: "blur(0px)", duration: 0.46, ease: "power2.out" }, inAt)
+          .to(sel, { x: 190, filter: "blur(30px)", duration: 0.36, ease: "power2.in" }, outAt - 0.36)
+          .to(sel, { opacity: 0, duration: 0.14, ease: "none" }, outAt - 0.14);
+      }
+      function streak(sel, at) {
+        tl.fromTo(sel, { xPercent: -60, opacity: 0, scaleX: 0.6 },
+          { xPercent: 260, opacity: 0.9, scaleX: 1.4, duration: 0.34, ease: "power3.in" }, at)
+          .to(sel, { opacity: 0, duration: 0.16 }, at + 0.34);
+      }
+
+      /* ---- BEAT 00 — "Here's how it works"  (on the line at 31.485) ---- */
+      whip("#g0", 31.5, 32.9);
+      tl.fromTo("#g0-txt", { opacity: 0, scale: 1.16 },
+        { opacity: 1, scale: 1, duration: 0.36, ease: "expo.out" }, 31.56);
+      tl.fromTo("#g0-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 31.76);
+      streak("#g0-streak", 31.54);
+
+      /* ---- BEAT 01 — strategy session  (head on 32.843) ---- */
+      whip("#g1", 32.8, 41.7);
+      tl.fromTo("#g1-n", { opacity: 0, x: -46 }, { opacity: 1, x: 0, duration: 0.54, ease: "expo.out" }, 32.87);
+      tl.fromTo("#g1-t", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.46, ease: "power3.out" }, 32.97);
+      tl.fromTo("#g1-s", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 33.07);
+      tl.fromTo("#g1-spine i", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out", stagger: 0.07 }, 33.13);
+      /* rows land on their own lines */
+      tl.fromTo("#g1-r1", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.48, ease: "back.out(1.2)" }, 35.20);
+      tl.fromTo("#g1-r2", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.48, ease: "back.out(1.2)" }, 37.30);
+      tl.fromTo("#g1-r3", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.48, ease: "back.out(1.2)" }, 39.70);
+      streak("#g1-streak", 32.86);
+
+      /* ---- BEAT 02 — specialist calls  (head on 41.757) ---- */
+      whip("#g2", 41.6, 48.4);
+      tl.fromTo("#g2-n", { opacity: 0, x: -46 }, { opacity: 1, x: 0, duration: 0.54, ease: "expo.out" }, 41.67);
+      tl.fromTo("#g2-t", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.46, ease: "power3.out" }, 41.77);
+      tl.fromTo("#g2-s", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 41.87);
+      tl.fromTo("#g2-spine i", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out", stagger: 0.07 }, 41.93);
+      /* the stat slams on "two specialist" */
+      tl.fromTo("#g2-num", { opacity: 0, scale: 0.6 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2.4)" }, 42.55);
+      tl.fromTo("#g2-count .perlbl", { opacity: 0, x: -18 },
+        { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 42.80);
+      tl.fromTo("#g2-coaches .cav", { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.44, ease: "back.out(2)", stagger: 0.11 }, 43.00);
+      tl.fromTo("#g2-r1", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.48, ease: "back.out(1.2)" }, 45.30);
+      tl.fromTo("#g2-r2", { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.48, ease: "back.out(1.2)" }, 46.60);
+      tl.fromTo("#g2-chip", { opacity: 0, scale: 0.82 },
+        { opacity: 1, scale: 1, duration: 0.34, ease: "back.out(2.6)" }, 47.05);
+      streak("#g2-streak", 41.66);
+
+      /* ---- BEAT 03 — Slack & community  (head on 48.471) ---- */
+      whip("#g3", 48.3, 54.9);
+      tl.fromTo("#g3-n", { opacity: 0, x: -46 }, { opacity: 1, x: 0, duration: 0.54, ease: "expo.out" }, 48.37);
+      tl.fromTo("#g3-t", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.46, ease: "power3.out" }, 48.47);
+      tl.fromTo("#g3-s", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 48.57);
+      tl.fromTo("#g3-spine i", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.out", stagger: 0.07 }, 48.63);
+      /* you first, then the community assembles around you */
+      tl.fromTo("#g3-me", { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2.2)" }, 48.90);
+      tl.fromTo("#g3-net .nd:not(.me)", { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.46, ease: "back.out(2)", stagger: 0.085 }, 49.70);
+      /* the links draw exactly on "a community of founders all doing the same
+         thing" (51.957) — the network effect, on the word */
+      tl.fromTo("#g3-net .lk", { opacity: 0, strokeDashoffset: 200 },
+        { opacity: 1, strokeDashoffset: 0, duration: 0.55, ease: "power2.out", stagger: 0.028 }, 51.96);
+      tl.fromTo("#g3-row", { opacity: 0, y: 34 },
+        { opacity: 1, y: 0, duration: 0.48, ease: "back.out(1.2)" }, 53.40);
+      streak("#g3-streak", 48.36);
+
+      /* ---- LOWER-THIRDS over montage B ----
+         Slide in, slide out — motion, not a dissolve. */
+      tl.fromTo("#lt1-tag", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.42, ease: "back.out(1.5)" }, 55.16)
+        .to("#lt1-tag", { opacity: 0, y: 20, duration: 0.3, ease: "power2.in" }, 59.40);
+
+      tl.fromTo("#lt2-tag", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.5)" }, 60.26)
+        .fromTo("#lt2-name", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.48, ease: "power3.out" }, 60.40)
+        .fromTo("#lt2-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.42, ease: "power2.out" }, 60.60)
+        .to("#lt2", { opacity: 0, y: 18, duration: 0.34, ease: "power2.in" }, 65.10);
+
+      /* ---- THE one dissolve: into the end card ----
+         Linear, 0.35s, across the 0.680s silence gap, so the card is fully
+         opaque at 71.400 and "Tap the link below and book a call." lands at
+         71.4333 — verified against the delivered audio. */
       tl.fromTo("#card", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "none" }, 71.05);
 
-      // Card stack rides in on the dissolve and is settled by 71.80, so the
-      // card sits perfectly still for its 5s hold.
       tl.fromTo("#card-logo", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.46, ease: "power3.out" }, 71.18)
         .fromTo("#card-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "power2.out" }, 71.34)
         .fromTo("#card-pill", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.34, ease: "back.out(1.6)" }, 71.46);
 
-      // Hold the card to the end of the VO (render contract rule 7).
+      /* Hold the card to the end of the VO (render contract rule 7). */
       tl.set("#card-pill", { opacity: 1 }, 76.433333);
 
       window.__timelines["ecomiq-how-it-works-ad"] = tl;

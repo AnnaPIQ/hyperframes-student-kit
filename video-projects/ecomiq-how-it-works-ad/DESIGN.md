@@ -9,7 +9,8 @@ Shipped at three ratios from one timeline: **9:16** (1080×1920, `index.html`),
 `compositions/meta45.html`). 30 fps. Runtime **76.433s**.
 
 Brand kit copied from `assets/ecomiq/`; full reference `assets/ecomiq/BRAND.md`.
-Tokens in `assets/brand-tokens.css`, shared structure in `assets/ad.css`.
+Tokens in `assets/brand-tokens.css`, shared structure in `assets/ad.css`, the
+motion-graphics section in `assets/beats.css`.
 All derived numbers and the reasoning behind them: **`EDIT-PLAN.md`**.
 
 ## This project's idea
@@ -32,7 +33,9 @@ montage supplies all the colour, so the graphics stay monochrome-plus-flame.
 | White | `#FFFFFF` | `--brand-white` | brand bug, card lockup, pill label, PiP ring |
 | Black | `#000000` | `--brand-black` | canvas behind the picture bed |
 
-No gradients, no blue tint, no sky. The bug and the PiP ring are white so they sit on top of the footage without
+The graphics section adds **Blue Tint `#9CD4FF`** (step numerals, spine, nodes,
+row marks) and a muted `#6F8DB3` / `#C7DAF0` for sub-lines — the montage sections
+stay monochrome-plus-flame. The bug and the PiP ring are white so they sit on top of the footage without
 competing with it. The bug carries a soft drop-shadow (no box) — the montage
 runs from near-black to a blown-out white UI screen recording, and an
 unprotected white lockup vanishes on the light shots.
@@ -57,12 +60,51 @@ rule (3×150px) → flame pill reading *Find out more →*. One line, centred, s
 Per-ratio geometry lives in each composition's `:root` block; everything else
 comes from `assets/ad.css`. See `EDIT-PLAN.md` §6 for the numbers.
 
-## Motion
+## Structure
+
+| Section | Window | What carries it |
+|---|---|---|
+| Act 1 | 0.000 – 31.500s | montage — the problem + the credibility |
+| Graphics | 31.500 – 54.900s | 4 motion-graphics beats — the mechanism |
+| Act 2 | 54.900 – 71.433s | montage + credibility lower-thirds |
+| Card | 71.433 – 76.433s | end card |
+
+The montage bed is **1441 frames (48.033s)** split across two clips
+(`data-media-start` on the second), so it still plays through **once, in order,
+with nothing reprised** — the graphics section simply sits in the middle.
+
+**This is what fixed the pacing.** Carrying 23.4s on graphics drops the montage
+retime from **2.58× to 1.73×** (0.39× → 0.58× speed) and the average shot from
+1.93s to **1.30s**.
+
+## Motion graphics (31.500 – 54.900s)
+
+Ported from `video-projects/ecomiq-one-opinion-or-team-story` on branch
+`claude/ecomiq-founder-ad-build-9auz5l` — same numbered-step grammar, same
+node graph. Structure and CSS in `assets/beats.css`; geometry per ratio in each
+composition's `:root`.
+
+- **MOTION_PHILOSOPHY spine on every beat:** navy ground, perspective grid with
+  parallax, registration crosshairs, vignette breath, deterministic CSS grain.
+- One persistent bed (`#gfx`) carries the ambient so beat cards whip in and out
+  over navy, **never over black**.
+- **00 "Here's how it works"** — one slammed line, on the words at 31.485s.
+- **01 Strategy session** — outlined `01`, 3-segment progress spine, three panel
+  rows that each land on their own VO line (35.20 / 37.30 / 39.70).
+- **02 Specialist 1:1 calls** — the `2 calls a month` stat slams on "two
+  specialist", two coach avatars, two rows, `accountable` flame chip.
+- **03 Slack & community** — the node graph. You are the flame node; the
+  community assembles around you, then **the links draw exactly on "a community
+  of founders that are all doing the same thing" (51.96s)**.
+- Beats whip in from the left and out to the right under blur, snapping to opaque
+  in 0.10s so no two beats ever cross-dissolve.
+
+## Motion elsewhere
 
 Deliberately almost none — the montage is the motion.
 
-- **Hard cuts throughout.** The 37 cuts are baked into the retimed picture bed,
-  so the composition itself has no scene-to-scene transitions to author.
+- **Hard cuts throughout.** The 37 montage cuts are baked into the retimed
+  picture bed, and montage↔graphics are hard cuts too.
 - **Exactly one dissolve:** 0.35s, linear, into the end card. It runs across the
   0.681s silence gap before the closing line, so the card is fully opaque at
   71.400s and "Tap" lands at 71.4333s — the card resolves one frame before the
@@ -85,8 +127,14 @@ speech, 0.35 over the card.**
   version reprised eight hero shots to fill a gap and it read as a repeat.
 - **Don't put the speaker full frame.** Corner PiP only, and it never moves or
   resizes mid-ad.
-- **Don't add a second dissolve, whip, or shader transition.** One dissolve,
-  into the card. Everything else is a hard cut.
+- **Don't add a second dissolve.** One dissolve in the whole ad, into the card.
+  The beat-to-beat whips are position + blur, never opacity cross-fades — that
+  distinction is the point.
+- **Don't combine `.lt` with `.gfx`.** `.gfx { inset: 0 }` wins for top/right and
+  parks the lower-third at the top of frame on top of the brand bug.
+- **Don't edit `compositions/*.html` by hand.** They are generated —
+  edit `index.html` and the geometry table in `scripts/gen-ratios.py`, then run
+  `python3 scripts/gen-ratios.py`.
 - **Don't inherit the montage master's own end card** (source 27.733–29.721s,
   "Click The Link Below") — it duplicates ours. The bed stops at 27.733s.
 - **Don't add a second line, an italic, or a second weight to the card.**

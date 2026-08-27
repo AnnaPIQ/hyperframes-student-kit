@@ -16,7 +16,7 @@
 #   vo.wav           voiceover bed, head-trimmed, 76.4333s mono 48k
 #   music-bed.wav    SILENT placeholder, 76.4333s stereo 48k  (data-volume="0")
 #   pip.mp4          circular-ready speaker plate, 71.4333s, 480x480, muted
-#   montage-916.mp4  1080x1920  retimed montage, 71.4333s, muted
+#   montage-916.mp4  1080x1920  retimed montage, 48.0333s (1441f), muted
 #   montage-11.mp4   1080x1080  ditto
 #   montage-45.mp4   1080x1350  ditto
 #
@@ -24,14 +24,19 @@
 #   VO head trim      1.931s  -> speech starts at 0.198s
 #   Card trigger      71.4333s = frame 2143  ("Tap the link below and book a call")
 #   Total runtime     76.4333s = frame 2293  (card holds 5.000s)
-#   Montage live      src frames 0-831 (27.7333s) -> 2143 frames (71.4333s)
+#   Montage live      src frames 0-831 (27.7333s) -> 1441 frames (48.0333s)
+#                     Split across two clips in the compositions:
+#                       A  ad 0.000-31.500s   <- bed 0.000-31.500s
+#                       B  ad 54.900-71.4333s <- bed 31.500-48.0333s
+#                     The motion-graphics section carries 31.500-54.900s, which
+#                     is what drops the retime from 2.58x to 1.73x.
 #                     The masters' own baked EcomIQ end card (src 27.733-29.721s)
 #                     is deliberately NOT used - it would duplicate our card.
 #
 # The montage is retimed PER SHOT, not uniformly: stretch is allocated inversely
 # to measured motion energy so near-static shots absorb the slack and moving
 # shots stay closer to native. Table: scripts/retime-shots.tsv (37 rows, sums to
-# exactly 2143 frames). Retiming is frame duplication - no interpolation, so
+# exactly 1441 frames). Retiming is frame duplication - no interpolation, so
 # there are no morph artefacts.
 # =============================================================================
 set -euo pipefail
@@ -55,6 +60,7 @@ VO_TRIM=1.931063
 TOTAL=76.433333      # frame 2293
 CARD=71.433333       # frame 2143
 FADE_OUT_AT=76.033333
+MONT_FRAMES=1441   # retimed montage bed: 832 src frames -> 1441 (48.0333s)
 VO_END=78.364396    # VO_TRIM + TOTAL
 PIP_END=73.364396   # VO_TRIM + CARD
 
@@ -162,7 +168,7 @@ PYEOF
   local got
   got=$(ffprobe -v error -count_frames -select_streams v:0 \
         -show_entries stream=nb_read_frames -of csv=p=0 "$out")
-  [ "$got" = "2143" ] || die "$label: got $got frames, expected 2143"
+  [ "$got" = "$MONT_FRAMES" ] || die "$label: got $got frames, expected $MONT_FRAMES"
   ok "$out  (37 shots, ${got} frames)"
   rm -f "$fc"
 }

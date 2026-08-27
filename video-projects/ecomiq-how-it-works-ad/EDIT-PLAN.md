@@ -1,7 +1,8 @@
 # EcomIQ — "How It Works" VO ad · EDIT PLAN
 
-Status: **approved and built.** Both decisions signed off (trim the dead air,
-retime the montage to fit). Rendered and frame-verified at all three ratios.
+Status: **v2 — motion graphics added.** The 2.58× retime read too slow, so a
+motion-graphics section now carries the mechanism and the montage retime drops to
+1.73×. See §13.
 Branch `claude/ecomiq-short-form-ad-8sw5cx`. Slug `ecomiq-how-it-works-ad`.
 
 ---
@@ -357,3 +358,64 @@ Verified identical on all three:
   the dissolve one frame earlier, at 71.400 s
 
 2× exports (2160×3840 / 2160×2160 / 2160×2700) not built — say the word.
+
+---
+
+## 13. v2 — motion graphics (the pacing fix)
+
+**The problem:** at 2.58× the montage read as syrupy slow-motion. Confirmed on
+review — the retime was the wrong lever on its own.
+
+**The fix:** give 23.4s of runtime to motion graphics, so the montage has less
+ground to cover.
+
+| Section | Window | Frames | Carried by |
+|---|---|--:|---|
+| Act 1 | 0.000 – 31.500 | 0–945 | montage |
+| Graphics | 31.500 – 54.900 | 945–1647 | 4 beats |
+| Act 2 | 54.900 – 71.433 | 1647–2143 | montage + lower-thirds |
+| Card | 71.433 – 76.433 | 2143–2293 | end card |
+
+| | v1 | v2 |
+|---|--:|--:|
+| Montage bed | 2143 frames (71.433s) | **1441 frames (48.033s)** |
+| Retime | 2.58× | **1.73×** |
+| Speed | 0.39× | **0.58×** |
+| Per-shot stretch | 1.75–3.93× | **1.20–2.47×** |
+| Average shot on screen | 1.93s | **1.30s** |
+
+The bed is split across two clips, the second with `data-media-start="31.5"`, so
+the montage still plays through **once, in order, nothing reprised**.
+
+### Beats, and the word each one lands on
+
+Ported from `video-projects/ecomiq-one-opinion-or-team-story` on branch
+`claude/ecomiq-founder-ad-build-9auz5l`.
+
+| Beat | Window | Anchor |
+|---|---|---|
+| 00 "Here's how it works" | 31.500 – 32.900 | "And here is how it works." (31.485) |
+| 01 Strategy session | 32.800 – 41.700 | head 32.843; rows 35.20 / **37.30** ("holding your growth back" 37.248) / **39.70** ("a plan to resolve it" 39.650) |
+| 02 Specialist 1:1 calls | 41.600 – 48.400 | head **41.757**; stat slams 42.55; rows 45.30 / 46.60; chip 47.05 |
+| 03 Slack & community | 48.300 – 54.900 | head **48.471**; nodes 49.70; **links draw 51.96** ("a community of founders that are all doing the same thing" 51.957) |
+| LT "real client work" | 55.100 – 59.700 | "pulled from real client work" (54.962) |
+| LT "Pacific IQ" | 60.200 – 65.500 | "Pacific IQ" (60.194) |
+
+### Still true in v2
+- Exactly **one dissolve** in the ad, into the card. Beat-to-beat is position +
+  blur whip, never an opacity cross-fade.
+- Speaker never full frame — bug and PiP ride over the graphics too.
+- No captions. The two lower-thirds are brand/credibility plates.
+- Montage audio still discarded; music bed still silent at `data-volume="0"`.
+
+### Bug found and fixed in frame verification
+The lower-third was rendering at the **top** of frame, on top of the brand bug:
+`.lt` was sharing the `.gfx` class, and `.gfx { inset: 0 }` won for `top`/`right`,
+stretching the box to full height so its `align-items: flex-start` content sat at
+the top. `.lt` no longer takes `.gfx`, and pins `top`/`right` to `auto`.
+
+### Still open
+The graphics only cover the mechanism section, as scoped. The earlier hook and
+credibility beats (the Shopify Premier Partner reveal, the team grid — both exist
+in the founder-ad build) would take the retime to roughly **1.2×**, close to
+native. Not built: say the word.
