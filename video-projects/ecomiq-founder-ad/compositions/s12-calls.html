@@ -28,46 +28,73 @@
     [data-composition-id="s12-calls"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
       font-style: italic; font-weight: 400; }
 
-    [data-composition-id="s12-calls"] .step { position: absolute; left: 100px; width: 880px;
-      background: linear-gradient(180deg, #0d3768 0%, #0a325f 100%); border: 1px solid #1d4a7a;
-      border-radius: 26px; box-shadow: 0 24px 60px -22px rgba(0,0,0,.6);
-      display: flex; align-items: center; padding: 0 44px; gap: 32px; }
-    [data-composition-id="s12-calls"] .step .no { flex: none; width: 96px; height: 96px; border-radius: 22px;
-      background: rgba(156,212,255,.14); border: 1px solid rgba(156,212,255,.45); color: #9CD4FF;
-      display: grid; place-items: center; font-weight: 800; font-size: 42px; font-variant-numeric: tabular-nums; }
-    [data-composition-id="s12-calls"] .step .txt b { display: block; font-weight: 800; font-size: 50px;
-      line-height: 1.08; letter-spacing: -.025em; color: #FFFFFF; }
-    [data-composition-id="s12-calls"] .step .txt span { display: block; margin-top: 10px; font-weight: 600;
-      font-size: 27px; letter-spacing: .05em; text-transform: uppercase; color: #9fb6d4; }
+    [data-composition-id="s12-calls"] .hd { position: absolute; left: 90px; top: 296px; }
+    [data-composition-id="s12-calls"] .hd .no { position: absolute; left: 0; top: 0; width: 150px;
+      font-weight: 800; font-size: 118px; line-height: .92; letter-spacing: -.04em;
+      color: transparent; -webkit-text-stroke: 3px rgba(156,212,255,.42);
+      font-variant-numeric: tabular-nums; }
+    [data-composition-id="s12-calls"] .hd .ti { position: absolute; left: 168px; top: 2px;
+      font-weight: 800; font-size: 62px; letter-spacing: -.03em; color: #FFFFFF; white-space: nowrap; }
+    [data-composition-id="s12-calls"] .hd .su { position: absolute; left: 170px; top: 80px;
+      font-weight: 600; font-size: 30px; letter-spacing: .01em; color: #9fb6d4; white-space: nowrap; }
+    [data-composition-id="s12-calls"] .meter { position: absolute; left: 90px; top: 440px; width: 900px; height: 4px; }
+    [data-composition-id="s12-calls"] .meter i { position: absolute; top: 0; width: 286px; height: 4px;
+      border-radius: 2px; background: rgba(156,212,255,.20); transform-origin: left center; }
+    [data-composition-id="s12-calls"] .meter i:nth-child(1) { left: 0; }
+    [data-composition-id="s12-calls"] .meter i:nth-child(2) { left: 307px; }
+    [data-composition-id="s12-calls"] .meter i:nth-child(3) { left: 614px; }
+    [data-composition-id="s12-calls"] .meter i.on { background: #9CD4FF; box-shadow: 0 0 18px rgba(156,212,255,.75); }
+    [data-composition-id="s12-calls"] .row { position: absolute; left: 90px; width: 900px; height: 84px;
+      background: linear-gradient(180deg, rgba(19,68,124,.92), rgba(10,50,95,.92));
+      border: 1px solid #1d4a7a; border-radius: 18px; display: flex; align-items: center;
+      padding: 0 30px; gap: 22px; box-shadow: 0 18px 44px -20px rgba(0,0,0,.6); }
+    [data-composition-id="s12-calls"] .row .ic { flex: none; width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(156,212,255,.16); border: 1px solid rgba(156,212,255,.5); color: #9CD4FF;
+      display: grid; place-items: center; font-weight: 800; font-size: 22px; }
+    [data-composition-id="s12-calls"] .row .lb { flex: 1; font-weight: 700; font-size: 38px;
+      letter-spacing: -.02em; color: #FFFFFF; }
+    [data-composition-id="s12-calls"] .row .lb u { text-decoration: none; color: #9CD4FF; }
+    [data-composition-id="s12-calls"] .row .tag { flex: none; font-weight: 700; font-size: 22px;
+      letter-spacing: .12em; text-transform: uppercase; color: #FF8A4C; padding: 9px 18px;
+      border-radius: 999px; background: rgba(255,76,50,.13); border: 1px solid rgba(255,76,50,.55); }
 
-    [data-composition-id="s12-calls"] .eyebrow { top: 282px; }
-    [data-composition-id="s12-calls"] #st3 { top: 344px; height: 232px; }
-    [data-composition-id="s12-calls"] .big { position: absolute; left: 0; right: 0; top: 618px; text-align: center;
-      font-weight: 800; font-size: 168px; line-height: .9; letter-spacing: -.05em; color: #FFFFFF;
-      font-variant-numeric: tabular-nums; text-shadow: 0 0 70px rgba(156,212,255,.4); }
-    [data-composition-id="s12-calls"] .bigsub { position: absolute; left: 0; right: 0; top: 806px; text-align: center;
-      font-weight: 700; font-size: 34px; letter-spacing: .22em; color: #9CD4FF; }
-    [data-composition-id="s12-calls"] .prom { position: absolute; left: 50%; margin-left: -340px; width: 680px;
-      text-align: center; font-weight: 700; font-size: 36px; padding: 22px 0; border-radius: 999px; }
-    [data-composition-id="s12-calls"] #p1 { top: 900px; background: rgba(156,212,255,.14);
-      border: 1px solid rgba(156,212,255,.5); color: #9CD4FF; }
-    [data-composition-id="s12-calls"] #p2 { top: 1010px; background: rgba(255,76,50,.13);
-      border: 1px solid rgba(255,76,50,.55); color: #FF8A4C; }
+    [data-composition-id="s12-calls"] .cnt { position: absolute; left: 90px; top: 496px; }
+    [data-composition-id="s12-calls"] .cnt .big { font-weight: 800; font-size: 150px; line-height: .88;
+      letter-spacing: -.05em; color: #FFFFFF; font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 60px rgba(156,212,255,.45); }
+    [data-composition-id="s12-calls"] .cnt .cw { position: absolute; left: 108px; top: 20px; }
+    [data-composition-id="s12-calls"] .cnt .cw b { display: block; font-weight: 700; font-size: 40px;
+      letter-spacing: -.02em; color: #FFFFFF; }
+    [data-composition-id="s12-calls"] .cnt .cw span { display: block; margin-top: 4px; font-weight: 700;
+      font-size: 24px; letter-spacing: .22em; color: #9fb6d4; }
+    /* two overlapping discs — the pair of calls */
+    [data-composition-id="s12-calls"] .venn { position: absolute; right: 96px; top: 508px; width: 200px; height: 104px; }
+    [data-composition-id="s12-calls"] .venn i { position: absolute; top: 0; width: 104px; height: 104px;
+      border-radius: 50%; background: radial-gradient(circle at 36% 30%, #cfe6ff, #9CD4FF 60%, #4b8fce 100%);
+      opacity: .85; }
+    [data-composition-id="s12-calls"] .venn i:nth-child(1) { left: 0; }
+    [data-composition-id="s12-calls"] .venn i:nth-child(2) { left: 66px; }
+    [data-composition-id="s12-calls"] #r1 { top: 690px; }
+    [data-composition-id="s12-calls"] #r2 { top: 794px; }
   </style>
 
   <div class="slot clip" id="s12-calls-slot" data-start="0" data-duration="3.5" data-track-index="0">
     <div class="plate">
       <div class="grid"></div>
       <div class="body">
-        <div class="eyebrow">Every single month</div>
-        <div class="step" id="st3">
-          <div class="no">03</div>
-          <div class="txt"><b>Specialist 1-on-1 calls</b><span>with the right expert</span></div>
+        <div class="hd">
+          <div class="no">02</div>
+          <div class="ti">Specialist 1:1 calls</div>
+          <div class="su">every single month</div>
         </div>
-        <div class="big">&times;2</div>
-        <div class="bigsub">PER MONTH</div>
-        <div class="prom" id="p1">Teaches you the right move</div>
-        <div class="prom" id="p2">Holds you to actually doing it</div>
+        <div class="meter"><i></i><i class="on"></i><i></i></div>
+        <div class="cnt">
+          <div class="big" id="bignum">0</div>
+          <div class="cw"><b>calls</b><span>A MONTH</span></div>
+        </div>
+        <div class="venn"><i></i><i></i></div>
+        <div class="row" id="r1"><div class="ic">&rarr;</div><div class="lb">Teach the next right move</div></div>
+        <div class="row" id="r2"><div class="ic">&rarr;</div><div class="lb">And hold you to it</div><div class="tag">Accountable</div></div>
       </div>
       <div class="edge edge-t"></div>
       <div class="edge edge-b"></div>
@@ -85,19 +112,23 @@
       tl.to(S+'.edge-t', { opacity: 0, duration: 0.15, ease: 'sine.in' }, 0.09);
       tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
         { y: 0, filter: 'blur(0px)', duration: 0.52, ease: 'power2.out' }, 0);
-      tl.fromTo(S+'.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .38, ease: 'power2.out' }, 0);
-      tl.fromTo(S+'#st3', { opacity: 0, y: 38, scale: .96 },
-        { opacity: 1, y: 0, scale: 1, duration: .52, ease: 'back.out(1.5)' }, 0);
-      tl.fromTo(S+'#st3 .no', { opacity: 0, scale: .5, rotation: -14 },
-        { opacity: 1, scale: 1, rotation: 0, duration: .42, ease: 'back.out(2)' }, 0.26);
-      // "each month" -> local 0.24
-      tl.fromTo(S+'.big', { opacity: 0, scale: 1.7 },
-        { opacity: 1, scale: 1, duration: .44, ease: 'power4.out' }, 0.24);
-      tl.fromTo(S+'.bigsub', { opacity: 0, y: 18, scaleX: 1.22 },
-        { opacity: 1, y: 0, scaleX: 1, duration: .50, ease: 'expo.out' }, 0.44);
-      // the two halves of the promise, each on its own VO phrase
-      tl.fromTo(S+'#p1', { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: .48, ease: 'power3.out' }, 0.79);
-      tl.fromTo(S+'#p2', { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: .48, ease: 'power3.out' }, 2.31);
+      tl.fromTo(S+'.hd .no', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: .44, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.hd .ti', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: .42, ease: 'expo.out' }, 0.04);
+      tl.fromTo(S+'.hd .su', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .38, ease: 'power2.out' }, 0.20);
+      // meter carries over from step 01 with segment 2 now lit
+      tl.fromTo(S+'.meter i', { scaleX: 0 }, { scaleX: 1, duration: .40, stagger: .05, ease: 'power2.out' }, 0.15);
+      // "each month" (0.24) — the count lands on the word
+      const o = { v: 0 }, bn = document.querySelector(S+'#bignum');
+      tl.fromTo(S+'.cnt', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: .40, ease: 'expo.out' }, 0.24);
+      tl.to(o, { v: 2, duration: .55, ease: 'power2.out',
+        onUpdate(){ bn.textContent = Math.round(o.v); } }, 0.30);
+      tl.fromTo(S+'.venn i', { opacity: 0, scale: .3 },
+        { opacity: .85, scale: 1, duration: .44, stagger: .14, ease: 'back.out(1.9)' }, 0.34);
+      // the two halves of the promise: "teach" 0.79, "hold you" 2.31
+      tl.fromTo(S+'#r1', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .44, ease: 'power3.out' }, 0.79);
+      tl.fromTo(S+'#r2', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .44, ease: 'power3.out' }, 2.31);
+      tl.fromTo(S+'#r2 .tag', { opacity: 0, scale: .8 },
+        { opacity: 1, scale: 1, duration: .34, ease: 'back.out(2)' }, 2.60);
       // EXIT — matches the incoming founder cut: body lifts with 30px blur while the
       // plate wipes off as one opaque piece, revealing the footage cleanly beneath.
       tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);

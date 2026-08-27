@@ -28,57 +28,78 @@
     [data-composition-id="s14-community"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
       font-style: italic; font-weight: 400; }
 
-    [data-composition-id="s14-community"] .step { position: absolute; left: 100px; width: 880px;
-      background: linear-gradient(180deg, #0d3768 0%, #0a325f 100%); border: 1px solid #1d4a7a;
-      border-radius: 26px; box-shadow: 0 24px 60px -22px rgba(0,0,0,.6);
-      display: flex; align-items: center; padding: 0 44px; gap: 32px; }
-    [data-composition-id="s14-community"] .step .no { flex: none; width: 96px; height: 96px; border-radius: 22px;
-      background: rgba(156,212,255,.14); border: 1px solid rgba(156,212,255,.45); color: #9CD4FF;
-      display: grid; place-items: center; font-weight: 800; font-size: 42px; font-variant-numeric: tabular-nums; }
-    [data-composition-id="s14-community"] .step .txt b { display: block; font-weight: 800; font-size: 50px;
-      line-height: 1.08; letter-spacing: -.025em; color: #FFFFFF; }
-    [data-composition-id="s14-community"] .step .txt span { display: block; margin-top: 10px; font-weight: 600;
-      font-size: 27px; letter-spacing: .05em; text-transform: uppercase; color: #9fb6d4; }
+    [data-composition-id="s14-community"] .hd { position: absolute; left: 90px; top: 296px; }
+    [data-composition-id="s14-community"] .hd .no { position: absolute; left: 0; top: 0; width: 150px;
+      font-weight: 800; font-size: 118px; line-height: .92; letter-spacing: -.04em;
+      color: transparent; -webkit-text-stroke: 3px rgba(156,212,255,.42);
+      font-variant-numeric: tabular-nums; }
+    [data-composition-id="s14-community"] .hd .ti { position: absolute; left: 168px; top: 2px;
+      font-weight: 800; font-size: 62px; letter-spacing: -.03em; color: #FFFFFF; white-space: nowrap; }
+    [data-composition-id="s14-community"] .hd .su { position: absolute; left: 170px; top: 80px;
+      font-weight: 600; font-size: 30px; letter-spacing: .01em; color: #9fb6d4; white-space: nowrap; }
+    [data-composition-id="s14-community"] .meter { position: absolute; left: 90px; top: 440px; width: 900px; height: 4px; }
+    [data-composition-id="s14-community"] .meter i { position: absolute; top: 0; width: 286px; height: 4px;
+      border-radius: 2px; background: rgba(156,212,255,.20); transform-origin: left center; }
+    [data-composition-id="s14-community"] .meter i:nth-child(1) { left: 0; }
+    [data-composition-id="s14-community"] .meter i:nth-child(2) { left: 307px; }
+    [data-composition-id="s14-community"] .meter i:nth-child(3) { left: 614px; }
+    [data-composition-id="s14-community"] .meter i.on { background: #9CD4FF; box-shadow: 0 0 18px rgba(156,212,255,.75); }
+    [data-composition-id="s14-community"] .row { position: absolute; left: 90px; width: 900px; height: 84px;
+      background: linear-gradient(180deg, rgba(19,68,124,.92), rgba(10,50,95,.92));
+      border: 1px solid #1d4a7a; border-radius: 18px; display: flex; align-items: center;
+      padding: 0 30px; gap: 22px; box-shadow: 0 18px 44px -20px rgba(0,0,0,.6); }
+    [data-composition-id="s14-community"] .row .ic { flex: none; width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(156,212,255,.16); border: 1px solid rgba(156,212,255,.5); color: #9CD4FF;
+      display: grid; place-items: center; font-weight: 800; font-size: 22px; }
+    [data-composition-id="s14-community"] .row .lb { flex: 1; font-weight: 700; font-size: 38px;
+      letter-spacing: -.02em; color: #FFFFFF; }
+    [data-composition-id="s14-community"] .row .lb u { text-decoration: none; color: #9CD4FF; }
+    [data-composition-id="s14-community"] .row .tag { flex: none; font-weight: 700; font-size: 22px;
+      letter-spacing: .12em; text-transform: uppercase; color: #FF8A4C; padding: 9px 18px;
+      border-radius: 999px; background: rgba(255,76,50,.13); border: 1px solid rgba(255,76,50,.55); }
 
-    [data-composition-id="s14-community"] .eyebrow { top: 242px; }
-    [data-composition-id="s14-community"] #st4 { top: 304px; height: 220px; }
-    [data-composition-id="s14-community"] .ring { position: absolute; left: 0; right: 0; top: 590px; height: 480px; }
-    [data-composition-id="s14-community"] .orbit { position: absolute; left: 50%; top: 50%; width: 372px; height: 372px;
-      margin: -186px 0 0 -186px; border-radius: 50%; border: 2px dashed rgba(156,212,255,.28); }
-    [data-composition-id="s14-community"] .hub { position: absolute; left: 50%; top: 50%; width: 132px; height: 132px;
-      margin: -66px 0 0 -66px; border-radius: 32px; background: linear-gradient(180deg,#0d3768,#0a325f);
-      border: 1px solid #2b5d92; display: grid; place-items: center;
-      box-shadow: 0 0 56px rgba(156,212,255,.32); }
-    [data-composition-id="s14-community"] .hub img { width: 78px; height: auto; display: block; }
-    [data-composition-id="s14-community"] .av { position: absolute; left: 50%; top: 50%; width: 76px; height: 76px;
-      border-radius: 50%; background: radial-gradient(circle at 36% 30%, #cfe6ff, #9CD4FF 58%, #4b8fce 100%);
-      box-shadow: 0 0 26px rgba(156,212,255,.6); }
-    [data-composition-id="s14-community"] .cap { position: absolute; left: 70px; right: 70px; top: 1128px;
-      text-align: center; font-weight: 700; font-size: 42px; line-height: 1.12; letter-spacing: -.025em; color: #FFFFFF; }
+    [data-composition-id="s14-community"] .net { position: absolute; left: 90px; top: 510px; width: 900px; height: 340px; }
+    [data-composition-id="s14-community"] .net svg { width: 100%; height: 100%; overflow: visible; }
+    [data-composition-id="s14-community"] .ln { stroke: rgba(156,212,255,.34); stroke-width: 2; fill: none; }
+    [data-composition-id="s14-community"] .nd { fill: #9CD4FF; filter: drop-shadow(0 0 14px rgba(156,212,255,.75)); }
+    [data-composition-id="s14-community"] .nd.hub { fill: #FF4C32; filter: drop-shadow(0 0 20px rgba(255,76,50,.95)); }
+    [data-composition-id="s14-community"] #r1 { top: 900px; }
   </style>
 
   <div class="slot clip" id="s14-community-slot" data-start="0" data-duration="4.9" data-track-index="0">
     <div class="plate">
       <div class="grid"></div>
       <div class="body">
-        <div class="eyebrow">Plus, on top of that</div>
-        <div class="step" id="st4">
-          <div class="no">04</div>
-          <div class="txt"><b>Slack support channel</b><span>answers between calls</span></div>
+        <div class="hd">
+          <div class="no">03</div>
+          <div class="ti">Slack &amp; community</div>
+          <div class="su">founders doing the same thing as you</div>
         </div>
-        <div class="ring">
-          <div class="orbit"></div>
-          <div class="av" style="margin:-224px 0 0 -38px"></div>
-          <div class="av" style="margin:-170px 0 0 94px"></div>
-          <div class="av" style="margin:-38px 0 0 148px"></div>
-          <div class="av" style="margin:94px 0 0 94px"></div>
-          <div class="av" style="margin:148px 0 0 -38px"></div>
-          <div class="av" style="margin:94px 0 0 -170px"></div>
-          <div class="av" style="margin:-38px 0 0 -224px"></div>
-          <div class="av" style="margin:-170px 0 0 -170px"></div>
-          <div class="hub"><img src="assets/ecomiq-icon-white.svg" alt="EcomIQ" /></div>
+        <div class="meter"><i></i><i></i><i class="on"></i></div>
+        <div class="net">
+          <svg viewBox="0 0 900 340" preserveAspectRatio="xMidYMid meet">
+            <line class="ln" x1="450" y1="42" x2="248" y2="116" />
+            <line class="ln" x1="450" y1="42" x2="652" y2="116" />
+            <line class="ln" x1="450" y1="42" x2="132" y2="224" />
+            <line class="ln" x1="450" y1="42" x2="768" y2="224" />
+            <line class="ln" x1="248" y1="116" x2="132" y2="224" />
+            <line class="ln" x1="652" y1="116" x2="768" y2="224" />
+            <line class="ln" x1="248" y1="116" x2="322" y2="306" />
+            <line class="ln" x1="652" y1="116" x2="578" y2="306" />
+            <line class="ln" x1="132" y1="224" x2="322" y2="306" />
+            <line class="ln" x1="768" y1="224" x2="578" y2="306" />
+            <line class="ln" x1="322" y1="306" x2="578" y2="306" />
+            <line class="ln" x1="248" y1="116" x2="652" y2="116" />
+            <circle class="nd hub" cx="450" cy="42" r="22" />
+            <circle class="nd" cx="248" cy="116" r="19" />
+            <circle class="nd" cx="652" cy="116" r="19" />
+            <circle class="nd" cx="132" cy="224" r="19" />
+            <circle class="nd" cx="768" cy="224" r="19" />
+            <circle class="nd" cx="322" cy="306" r="19" />
+            <circle class="nd" cx="578" cy="306" r="19" />
+          </svg>
         </div>
-        <div class="cap">Founders all doing the same thing.</div>
+        <div class="row" id="r1"><div class="ic">&#8226;</div><div class="lb">Common problems, <u>already solved</u></div></div>
       </div>
       <div class="edge edge-t"></div>
       <div class="edge edge-b"></div>
@@ -96,22 +117,23 @@
       tl.to(S+'.edge-t', { opacity: 0, duration: 0.15, ease: 'sine.in' }, 0.09);
       tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
         { y: 0, filter: 'blur(0px)', duration: 0.52, ease: 'power2.out' }, 0);
-      tl.fromTo(S+'.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .40, ease: 'power2.out' }, 0);
-      // Slack card on the VO word "Slack" (local 0.56)
-      tl.fromTo(S+'#st4', { opacity: 0, y: 38, scale: .96 },
-        { opacity: 1, y: 0, scale: 1, duration: .52, ease: 'back.out(1.5)' }, 0.20);
-      tl.fromTo(S+'#st4 .no', { opacity: 0, scale: .5, rotation: -14 },
-        { opacity: 1, scale: 1, rotation: 0, duration: .42, ease: 'back.out(2)' }, 0.42);
-      tl.fromTo(S+'.orbit', { opacity: 0, scale: .7, rotation: -30 },
-        { opacity: 1, scale: 1, rotation: 0, duration: .70, ease: 'power3.out' }, 1.40);
-      tl.fromTo(S+'.hub', { opacity: 0, scale: .5 },
-        { opacity: 1, scale: 1, duration: .48, ease: 'back.out(1.8)' }, 1.56);
-      // CALLBACK — the empty seats from the hook now fill completely, one per beat
-      tl.fromTo(S+'.av', { opacity: 0, scale: .25 },
-        { opacity: 1, scale: 1, duration: .40, stagger: .085, ease: 'back.out(2.2)' }, 1.76);
-      tl.to(S+'.orbit', { rotation: 22, duration: 2.6, ease: 'sine.inOut' }, 2.20);
-      tl.fromTo(S+'.cap', { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: .55, ease: 'power3.out' }, 3.00);
+      tl.fromTo(S+'.hd .no', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: .46, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.hd .ti', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: .44, ease: 'expo.out' }, 0.06);
+      tl.fromTo(S+'.hd .su', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .40, ease: 'power2.out' }, 0.26);
+      // meter completes — segment 3 is the last of the three steps
+      tl.fromTo(S+'.meter i', { scaleX: 0 }, { scaleX: 1, duration: .42, stagger: .06, ease: 'power2.out' }, 0.30);
+      // hub first (that is you), then the peers wire in on "community" / "founders"
+      tl.fromTo(S+'.nd.hub', { opacity: 0, scale: .3, transformOrigin: '50% 50%' },
+        { opacity: 1, scale: 1, duration: .42, ease: 'back.out(2)' }, 0.90);
+      tl.fromTo(S+'.nd:not(.hub)', { opacity: 0, scale: .3, transformOrigin: '50% 50%' },
+        { opacity: 1, scale: 1, duration: .38, stagger: .075, ease: 'back.out(2)' }, 1.43);
+      // edges draw themselves in, so the network assembles rather than appearing
+      gsap.utils.toArray(S+'.ln').forEach(function(ln, i){
+        const L = ln.getTotalLength();
+        gsap.set(ln, { strokeDasharray: L, strokeDashoffset: L });
+        tl.to(ln, { strokeDashoffset: 0, duration: .50, ease: 'power2.out' }, 1.62 + i * 0.055);
+      });
+      tl.fromTo(S+'#r1', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .46, ease: 'power3.out' }, 2.90);
       // EXIT — matches the incoming founder cut: body lifts with 30px blur while the
       // plate wipes off as one opaque piece, revealing the footage cleanly beneath.
       tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);

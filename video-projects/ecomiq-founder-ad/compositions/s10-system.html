@@ -28,52 +28,56 @@
     [data-composition-id="s10-system"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
       font-style: italic; font-weight: 400; }
 
-    [data-composition-id="s10-system"] .step { position: absolute; left: 100px; width: 880px;
-      background: linear-gradient(180deg, #0d3768 0%, #0a325f 100%); border: 1px solid #1d4a7a;
-      border-radius: 26px; box-shadow: 0 24px 60px -22px rgba(0,0,0,.6);
-      display: flex; align-items: center; padding: 0 44px; gap: 32px; }
-    [data-composition-id="s10-system"] .step .no { flex: none; width: 96px; height: 96px; border-radius: 22px;
-      background: rgba(156,212,255,.14); border: 1px solid rgba(156,212,255,.45); color: #9CD4FF;
-      display: grid; place-items: center; font-weight: 800; font-size: 42px; font-variant-numeric: tabular-nums; }
-    [data-composition-id="s10-system"] .step .txt b { display: block; font-weight: 800; font-size: 50px;
-      line-height: 1.08; letter-spacing: -.025em; color: #FFFFFF; }
-    [data-composition-id="s10-system"] .step .txt span { display: block; margin-top: 10px; font-weight: 600;
-      font-size: 27px; letter-spacing: .05em; text-transform: uppercase; color: #9fb6d4; }
+    [data-composition-id="s10-system"] .hd { position: absolute; left: 90px; top: 296px; }
+    [data-composition-id="s10-system"] .hd .no { position: absolute; left: 0; top: 0; width: 150px;
+      font-weight: 800; font-size: 118px; line-height: .92; letter-spacing: -.04em;
+      color: transparent; -webkit-text-stroke: 3px rgba(156,212,255,.42);
+      font-variant-numeric: tabular-nums; }
+    [data-composition-id="s10-system"] .hd .ti { position: absolute; left: 168px; top: 2px;
+      font-weight: 800; font-size: 62px; letter-spacing: -.03em; color: #FFFFFF; white-space: nowrap; }
+    [data-composition-id="s10-system"] .hd .su { position: absolute; left: 170px; top: 80px;
+      font-weight: 600; font-size: 30px; letter-spacing: .01em; color: #9fb6d4; white-space: nowrap; }
+    [data-composition-id="s10-system"] .meter { position: absolute; left: 90px; top: 440px; width: 900px; height: 4px; }
+    [data-composition-id="s10-system"] .meter i { position: absolute; top: 0; width: 286px; height: 4px;
+      border-radius: 2px; background: rgba(156,212,255,.20); transform-origin: left center; }
+    [data-composition-id="s10-system"] .meter i:nth-child(1) { left: 0; }
+    [data-composition-id="s10-system"] .meter i:nth-child(2) { left: 307px; }
+    [data-composition-id="s10-system"] .meter i:nth-child(3) { left: 614px; }
+    [data-composition-id="s10-system"] .meter i.on { background: #9CD4FF; box-shadow: 0 0 18px rgba(156,212,255,.75); }
+    [data-composition-id="s10-system"] .row { position: absolute; left: 90px; width: 900px; height: 84px;
+      background: linear-gradient(180deg, rgba(19,68,124,.92), rgba(10,50,95,.92));
+      border: 1px solid #1d4a7a; border-radius: 18px; display: flex; align-items: center;
+      padding: 0 30px; gap: 22px; box-shadow: 0 18px 44px -20px rgba(0,0,0,.6); }
+    [data-composition-id="s10-system"] .row .ic { flex: none; width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(156,212,255,.16); border: 1px solid rgba(156,212,255,.5); color: #9CD4FF;
+      display: grid; place-items: center; font-weight: 800; font-size: 22px; }
+    [data-composition-id="s10-system"] .row .lb { flex: 1; font-weight: 700; font-size: 38px;
+      letter-spacing: -.02em; color: #FFFFFF; }
+    [data-composition-id="s10-system"] .row .lb u { text-decoration: none; color: #9CD4FF; }
+    [data-composition-id="s10-system"] .row .tag { flex: none; font-weight: 700; font-size: 22px;
+      letter-spacing: .12em; text-transform: uppercase; color: #FF8A4C; padding: 9px 18px;
+      border-radius: 999px; background: rgba(255,76,50,.13); border: 1px solid rgba(255,76,50,.55); }
 
-    [data-composition-id="s10-system"] .eyebrow { top: 250px; }
-    [data-composition-id="s10-system"] #st1 { top: 320px; height: 232px; }
-    [data-composition-id="s10-system"] #st2 { top: 654px; height: 232px; }
-    [data-composition-id="s10-system"] #wire { position: absolute; left: 538px; top: 556px; width: 4px; height: 94px;
-      background: linear-gradient(180deg, #9CD4FF, rgba(156,212,255,.15)); transform-origin: top center; }
-    [data-composition-id="s10-system"] .blocks { position: absolute; left: 0; right: 0; top: 934px;
-      display: flex; justify-content: center; gap: 20px; }
-    [data-composition-id="s10-system"] .blocks .b { background: rgba(255,76,50,.12); border: 1px solid rgba(255,76,50,.5);
-      color: #FF8A4C; font-weight: 700; font-size: 32px; padding: 16px 30px; border-radius: 14px; white-space: nowrap; }
-    [data-composition-id="s10-system"] #plan { position: absolute; left: 50%; top: 1064px; margin-left: -290px;
-      width: 580px; text-align: center; font-weight: 700; font-size: 36px; padding: 20px 0; border-radius: 999px;
-      background: rgba(156,212,255,.14); border: 1px solid rgba(156,212,255,.5); color: #9CD4FF; }
+    [data-composition-id="s10-system"] #r1 { top: 520px; }
+    [data-composition-id="s10-system"] #r2 { top: 624px; }
+    [data-composition-id="s10-system"] #r3 { top: 728px; }
+    [data-composition-id="s10-system"] #r3 .ic { background: rgba(255,76,50,.14);
+      border-color: rgba(255,76,50,.55); color: #FF8A4C; }
   </style>
 
   <div class="slot clip" id="s10-system-slot" data-start="0" data-duration="8.85" data-track-index="0">
     <div class="plate">
       <div class="grid"></div>
       <div class="body">
-        <div class="eyebrow">How it works</div>
-        <div class="step" id="st1">
+        <div class="hd">
           <div class="no">01</div>
-          <div class="txt"><b>Strategy session</b><span>with your lead coach</span></div>
+          <div class="ti">Strategy session</div>
+          <div class="su">with your lead coach</div>
         </div>
-        <div id="wire"></div>
-        <div class="step" id="st2">
-          <div class="no">02</div>
-          <div class="txt"><b>What&rsquo;s holding growth back</b><span>mapped out with you</span></div>
-        </div>
-        <div class="blocks">
-          <div class="b">Ad efficiency</div>
-          <div class="b">Retention</div>
-          <div class="b">Margin</div>
-        </div>
-        <div id="plan">&rarr;&nbsp; and a plan to resolve it</div>
+        <div class="meter"><i class="on"></i><i></i><i></i></div>
+        <div class="row" id="r1"><div class="ic">&#10003;</div><div class="lb">Map your whole business</div></div>
+        <div class="row" id="r2"><div class="ic">&#9678;</div><div class="lb">Find what&rsquo;s <u>holding growth back</u></div></div>
+        <div class="row" id="r3"><div class="ic">&rarr;</div><div class="lb">And a plan to resolve it</div></div>
       </div>
       <div class="edge edge-t"></div>
       <div class="edge edge-b"></div>
@@ -91,27 +95,16 @@
       tl.to(S+'.edge-t', { opacity: 0, duration: 0.15, ease: 'sine.in' }, 0.09);
       tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
         { y: 0, filter: 'blur(0px)', duration: 0.52, ease: 'power2.out' }, 0);
-      tl.fromTo(S+'.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .40, ease: 'power2.out' }, 0);
-      // step 01 on "You'll start with a strategy session" (local 0.04)
-      tl.fromTo(S+'#st1', { opacity: 0, y: 40, scale: .96 },
-        { opacity: 1, y: 0, scale: 1, duration: .55, ease: 'back.out(1.5)' }, 0);
-      tl.fromTo(S+'#st1 .no', { opacity: 0, scale: .5, rotation: -14 },
-        { opacity: 1, scale: 1, rotation: 0, duration: .45, ease: 'back.out(2)' }, 0.30);
-      // the wire draws down between the two steps
-      tl.fromTo(S+'#wire', { opacity: 0, scaleY: 0 },
-        { opacity: 1, scaleY: 1, duration: .45, ease: 'power2.inOut' }, 2.30);
-      // step 02 on "They will map out with you" (local 2.72)
-      tl.fromTo(S+'#st2', { opacity: 0, y: 40, scale: .96 },
-        { opacity: 1, y: 0, scale: 1, duration: .55, ease: 'back.out(1.5)' }, 2.72);
-      tl.fromTo(S+'#st2 .no', { opacity: 0, scale: .5, rotation: -14 },
-        { opacity: 1, scale: 1, rotation: 0, duration: .45, ease: 'back.out(2)' }, 2.96);
-      // blockers surface on "holding your growth back" (local 5.06)
-      tl.fromTo(S+'.blocks .b', { opacity: 0, y: 22, scale: .9 },
-        { opacity: 1, y: 0, scale: 1, duration: .42, stagger: .24, ease: 'back.out(1.7)' }, 5.06);
-      // ...and resolve into the plan on "work on a plan" (local 7.20)
-      tl.to(S+'.blocks .b', { opacity: .45, duration: .45, ease: 'sine.inOut' }, 7.00);
-      tl.fromTo(S+'#plan', { opacity: 0, y: 24, scale: .94 },
-        { opacity: 1, y: 0, scale: 1, duration: .52, ease: 'back.out(1.6)' }, 7.20);
+      tl.fromTo(S+'.hd .no', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: .50, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.hd .ti', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .48, ease: 'expo.out' }, 0.06);
+      tl.fromTo(S+'.hd .su', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .42, ease: 'power2.out' }, 0.30);
+      // the meter draws, then segment 1 lights — it advances across the three step beats
+      tl.fromTo(S+'.meter i', { scaleX: 0 }, { scaleX: 1, duration: .46, stagger: .07, ease: 'power2.out' }, 0.45);
+      tl.fromTo(S+'.meter i.on', { opacity: .3 }, { opacity: 1, duration: .40, ease: 'sine.out' }, 0.78);
+      // rows land on their own VO phrases: "map" 3.22, "holding growth back" 5.06, "plan" 7.20
+      tl.fromTo(S+'#r1', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .46, ease: 'power3.out' }, 3.22);
+      tl.fromTo(S+'#r2', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .46, ease: 'power3.out' }, 5.06);
+      tl.fromTo(S+'#r3', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .46, ease: 'power3.out' }, 7.20);
       // EXIT — matches the incoming founder cut: body lifts with 30px blur while the
       // plate wipes off as one opaque piece, revealing the footage cleanly beneath.
       tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
