@@ -57,7 +57,12 @@ tokens above. Neither hardcodes a colour or a font — everything resolves throu
 | | File | Canvas | Render |
 |---|---|---|---|
 | 9:16 | `compositions/aug-general-ad-4-vertical.html` | 1080×1920 | `renders/aug-general-ad-4-vertical.mp4` |
+| 4:5 | `compositions/aug-general-ad-4-meta.html` | 1080×1350 | `renders/aug-general-ad-4-meta.mp4` |
 | 1:1 | `compositions/aug-general-ad-4-square.html` | 1080×1080 | `renders/aug-general-ad-4-square.mp4` |
+
+All three share one beat map and one asset set; only the layout re-flows.
+Shippable copies of each also sit at the project root, since `renders/` is
+gitignored.
 
 **Source.** `What We Do Version 1.mov` (Drive) — 3840×2160 ProRes, 25fps, 37.20s,
 PCM 24-bit. Normalized by `scripts/prep-aroll.sh` into `assets/aroll-vertical.mp4`,
@@ -65,8 +70,11 @@ PCM 24-bit. Normalized by `scripts/prep-aroll.sh` into `assets/aroll-vertical.mp
 30fps CFR · faststart · AAC 192k).
 
 **Both targets are crops, centre-punched on the speaker at ~47% of frame width:**
-9:16 crops `1215×2160 @ x=1198` → `1080×1920`; 1:1 crops `2160×2160 @ x=725` →
-`1080×1080`. Both are **full bleed** — the clip fills the canvas edge to edge.
+9:16 crops `1215×2160 @ x=1198` → `1080×1920`; 4:5 crops `1728×2160 @ x=941` →
+`1080×1350`; 1:1 crops `2160×2160 @ x=725` → `1080×1080`. All three are **full
+bleed** — the clip fills the canvas edge to edge. Every crop takes the source's
+full 2160 height, so the speaker sits at the same fraction of frame height in
+each format; only the horizontal window widens.
 
 **Don't try to "zoom out" by widening these crops.** They already use the source's
 entire 2160-pixel height, so this is the widest field of view a full-bleed frame
@@ -107,7 +115,8 @@ centre as hero.
 
 - **Assets:** `assets/logos/` (21 white knockouts, built by the shared
   `scripts/prep-logo-wall.sh`) + `assets/shopify-premier-partner.png`.
-- **Grid:** 3 columns / 200px rows on 9:16, 4 columns / 170px rows on 1:1. Marks
+- **Grid:** 3 columns / 200px rows on 9:16 and 4:5 (same 1080 width), 4 columns
+  / 170px rows on 1:1. Marks
   at 34% opacity. The 21 logos are listed **twice** so the track is taller than
   the frame and can scroll — that duplication is what raises lint's
   `duplicate_media_discovery_risk` warning. It is benign here: these are
@@ -123,8 +132,9 @@ centre as hero.
   padding where it can be tuned — 90px on 9:16 (660px card around 480px of
   artwork), 78px on 1:1. Don't go back to a bare `<img>`; the mark ends up
   touching the card edge.
-- **Drift is scaled to this ad's longer beat**: 6.4s here vs 4.36s in ad-5, so
-  the track travels −700px (9:16) / −470px (1:1) instead of −480/−320.
+- **Drift is scaled to this ad's longer beat and each canvas height**: 6.4s here
+  vs 4.36s in ad-5, so the track travels −700px (9:16) / −490px (4:5) / −470px
+  (1:1) instead of ad-5's −480/−320.
 - `#wall-hero` is centred with `margin-top`, not `translateY` — GSAP animates
   `y` on it and a CSS transform would be clobbered.
 

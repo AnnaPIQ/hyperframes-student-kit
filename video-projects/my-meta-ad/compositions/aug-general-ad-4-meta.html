@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>Aug-General ad 4 — 4:5</title>
+
+    <!-- LESSONS.md: GSAP is vendored locally. A CDN <script> cert-fails in the
+         render env and freezes the render. Never swap this for a CDN URL. -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+
+    <style>
+      /* Local .woff2 — no render-time network fetch (render contract rule 11).
+         Families are named literally, not via var(), because the linter does not
+         resolve custom properties and would false-warn on a missing font. */
+      @font-face {
+        font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2');
+      }
+      @font-face {
+        font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2');
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-text);
+      }
+
+      /* ---------------------------------------------------------------------
+         META 4:5 LAYOUT MAP (1080x1350)
+           y    0 – 1350   A-roll, FULL BLEED (1080x1350). Do not shrink this to
+                           "zoom out" — see the note in the 9:16 cut.
+           y    0 –  250   logo zone (top-left lockup)
+           y  200 –  745   speaker's face — never covered. Every crop uses the
+                           source's full height, so the face lands at the same
+                           fraction of frame height in all three formats.
+           y  800 – 1055   motion-graphics band
+           y 1080 – 1250   CAPTION SAFE ZONE — deliberately left empty
+           y 1250 – 1350   bottom margin — left empty
+         ------------------------------------------------------------------ */
+
+      /* Never animate width/height/top/left on a <video> (render contract #9). */
+      #video {
+        position: absolute; inset: 0;
+        width: 1080px; height: 1350px; object-fit: cover;
+      }
+
+      /* Grade scrim: pulls the blue-lit studio toward the EcomIQ navy and darkens
+         top + bottom so the logo and the (later) captions always have contrast. */
+      #grade {
+        position: absolute; inset: 0; z-index: 2; pointer-events: none;
+        background:
+          linear-gradient(180deg,
+            rgba(6,40,76,.62) 0%, rgba(6,40,76,.16) 18%,
+            rgba(6,40,76,.04) 45%, rgba(6,40,76,.42) 78%, rgba(6,40,76,.72) 100%);
+      }
+      /* Unifying texture #1 — registration crosshairs at the safe-area corners. */
+      #marks { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: .5; }
+      /* Unifying texture #2 — vignette on every scene. */
+      #vignette {
+        position: absolute; inset: 0; z-index: 4; pointer-events: none;
+        background: radial-gradient(ellipse 78% 58% at 50% 42%, rgba(0,0,0,0) 42%, rgba(3,18,36,.78) 100%);
+      }
+      /* Unifying texture #3 — deterministic CSS grain (no PNG, no PRNG). */
+      #grain {
+        position: absolute; inset: 0; z-index: 9; pointer-events: none; opacity: .055;
+        background-image:
+          radial-gradient(rgba(255,255,255,.9) .5px, transparent .6px),
+          radial-gradient(rgba(255,255,255,.7) .5px, transparent .6px),
+          radial-gradient(rgba(0,0,0,.8) .5px, transparent .6px);
+        background-size: 3px 3px, 5px 5px, 7px 7px;
+        background-position: 0 0, 1px 2px, 3px 1px;
+      }
+
+      /* Persistent logo. LESSONS.md: the engine repositions class="clip" nodes, so
+         the lockup lives in a positioned NON-clip wrapper and stays put. */
+      #logo-wrap { position: absolute; left: 72px; top: 78px; z-index: 8; width: 210px; }
+      #logo { display: block; width: 100%; height: auto;
+              filter: drop-shadow(0 6px 22px rgba(0,0,0,.72)); }
+
+      /* ---- Motion-graphics band ---- */
+      .band {
+        position: absolute; left: 72px; right: 72px; top: 800px; z-index: 5;
+        opacity: 0; will-change: transform, opacity, filter;
+      }
+      .eyebrow {
+        font-size: 24px; font-weight: 600; letter-spacing: .34em;
+        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 18px;
+      }
+      .line {
+        font-size: 78px; font-weight: 800; line-height: .98; letter-spacing: -.03em;
+        color: var(--brand-white); text-shadow: 0 8px 40px rgba(0,0,0,.55);
+      }
+      /* "right now." reads as part of the line — same sans, same weight, same
+         white. Per Anna, no serif-italic emphasis anywhere in this cut. */
+      .line .em {
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        font-style: normal; font-weight: 800; letter-spacing: -.03em;
+        color: var(--brand-white);
+      }
+      /* Flame strike-through that wipes across (scaleX 0 -> 1). */
+      .strike {
+        position: absolute; left: 0; height: 9px; border-radius: 5px;
+        background: var(--brand-flame); transform-origin: left center;
+        box-shadow: 0 0 26px rgba(255,76,50,.75);
+      }
+
+      /* Beat 1 — "MOST ADVICE" */
+      #g1 { }
+      #g1 .line { position: relative; display: inline-block; }
+      #g1 .strike { top: 46px; width: 100%; }
+
+      /* Beat 3 — "DOZENS OF LIVE BRANDS" + store-tile grid */
+      /* ---- Beat 3 · logo wall · "…dozens of live brands every single day" ----
+         Ported from claude/aug-general-ad-5-shortform-59z10c at Anna's request.
+         A FULL opaque navy takeover — the footage is completely covered here —
+         with all 21 client marks drifting up a tidy 3-column grid and the
+         Shopify Premier Partner badge landing centre as hero. */
+      #wall { position: absolute; inset: 0; z-index: 6; overflow: hidden; }
+      /* .in clips the (much taller) drifting track and groups the scrim, logos
+         and badge, so the exit can fade the whole panel as one piece. */
+      #wall .in { position: absolute; inset: 0; overflow: hidden; }
+      #wall-scrim { position: absolute; inset: 0; background: var(--brand-navy); }
+      #wall-track {
+        position: absolute; left: 0; top: 0; width: 1080px;
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 200px; align-items: center; justify-items: center;
+      }
+      #wall-track img {
+        max-width: 314px; max-height: 104px; width: auto; height: auto;
+        opacity: .34; filter: drop-shadow(0 0 18px rgba(6,40,76,.9));
+      }
+      #wall-fade {
+        position: absolute; inset: 0; pointer-events: none;
+        background:
+          linear-gradient(180deg, var(--brand-navy) 0%, rgba(6,40,76,0) 12%),
+          linear-gradient(0deg,  var(--brand-navy) 0%, rgba(6,40,76,0) 12%);
+      }
+      /* The badge is a white CARD, not a bare image: prep trims the source flush
+         to the artwork, so the white margin around the mark is added here where
+         it can be tuned. box-sizing is border-box globally, so `width` is the
+         card and the padding insets the artwork. */
+      #wall-hero {
+        position: absolute; left: 50%; top: 50%; width: 600px;
+        /* margin-top, not translateY: GSAP animates `y` on this element and a
+           CSS transform would be clobbered. Centres the card and lifts it off
+           dead centre. */
+        margin-left: -300px; margin-top: -216px;
+        background: var(--brand-white); border-radius: 12px;
+        padding: 82px;
+        box-shadow: 0 30px 90px -20px rgba(0,0,0,.75);
+      }
+      /* Source art is 338x149; it ships pre-upscaled 3x rather than letting the
+         browser stretch it at render time. */
+      #wall-hero img { display: block; width: 100%; height: auto; }
+      /* Beat 4 — "right now." */
+      #g4 .line { font-size: 84px; }
+
+      /* ---- Full-frame type beats (the rule-of-threes act) ---- */
+      #scrim {
+        position: absolute; inset: 0; z-index: 5; opacity: 0; pointer-events: none;
+        background:
+          radial-gradient(ellipse 70% 50% at 50% 46%, rgba(6,40,76,.72) 0%, rgba(4,24,48,.93) 100%);
+      }
+      .hero {
+        position: absolute; left: 96px; right: 96px; top: 535px; z-index: 6;
+        text-align: center; opacity: 0; will-change: transform, opacity, filter;
+      }
+      .hero .big {
+        position: relative; display: inline-block;
+        font-size: 116px; font-weight: 800; line-height: .96; letter-spacing: -.035em;
+        color: var(--brand-white); text-shadow: 0 0 60px rgba(0,0,0,.6);
+      }
+      .hero .strike { top: 70px; width: 100%; }
+      #g7 .big { font-size: 92px; }
+      /* "profitable" reads as part of the line — same sans, same weight, same
+         white. The flame accent on this beat is carried by the rule alone. */
+      #g7 .em {
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        font-style: normal; font-weight: 800; color: var(--brand-white);
+      }
+      #g7 .rule {
+        width: 180px; height: 8px; border-radius: 4px; margin: 40px auto 0;
+        background: var(--brand-flame); transform-origin: center;
+        box-shadow: 0 0 30px rgba(255,76,50,.7);
+      }
+
+      /* Motion-blur whip streak that masks the beat cuts. */
+      #streak {
+        position: absolute; left: 0; top: 50%; z-index: 7; width: 46%; height: 10px;
+        margin-top: -5px; opacity: 0; pointer-events: none; filter: blur(7px);
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,.95), transparent);
+      }
+
+      /* ---- End card ---- */
+      #endcard {
+        position: absolute; inset: 0; z-index: 7; opacity: 0;
+        background:
+          radial-gradient(88% 52% at 50% 22%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 58%),
+          var(--brand-navy);
+      }
+      #ec-bloom {
+        position: absolute; left: -12%; bottom: -20%; width: 124%; height: 58%;
+        background: var(--brand-gradient-2); filter: blur(96px); opacity: .40;
+      }
+      #ec-copy {
+        position: absolute; left: 96px; right: 96px; top: 591px; text-align: center;
+      }
+      #ec-head {
+        font-size: 74px; font-weight: 800; line-height: 1.0; letter-spacing: -.03em;
+        color: var(--brand-white); opacity: 0;
+      }
+      /* End-card headline reads as one white line — no italic, no tint. */
+      #ec-head .em {
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        font-style: normal; font-weight: 800; color: var(--brand-white);
+      }
+      #ec-cta {
+        display: inline-flex; align-items: center; gap: 18px; margin-top: 46px;
+        font-size: 36px; font-weight: 700; color: var(--brand-white);
+        background: var(--brand-flame); padding: 26px 54px; border-radius: 999px;
+        box-shadow: 0 22px 70px -16px rgba(255,76,50,.68); opacity: 0;
+      }
+      #ec-cta .arrow { font-size: 38px; line-height: 1; transform: translateY(-2px); }
+    </style>
+  </head>
+
+  <body>
+    <!-- Render contract: root carries id + data-composition-id + data-start=0 +
+         data-width/height. Timed visible children are class="clip" with
+         data-start / data-duration / data-track-index. <video> and <audio> are
+         the two exceptions that must NOT get class="clip". -->
+    <div
+      id="root"
+      data-composition-id="aug-general-ad-4-meta"
+      data-start="0"
+      data-duration="32"
+      data-width="1080"
+      data-height="1350"
+      data-fps="30"
+    >
+      <!-- A-roll: 9:16 centre-punch, silent. VO rides as a sibling <audio>. -->
+      <video id="video" src="assets/aroll-meta.mp4"
+             data-start="0" data-duration="28.4" data-track-index="0" muted></video>
+      <audio id="vo" src="assets/aroll-vo.m4a"
+             data-start="0" data-duration="31.1" data-track-index="1" data-volume="1"></audio>
+
+      <div id="grade" class="clip" data-start="0" data-duration="28.4" data-track-index="2"></div>
+
+      <svg id="marks" class="clip" data-start="0" data-duration="28.4" data-track-index="3"
+           width="1080" height="1350" viewBox="0 0 1080 1350" fill="none">
+        <g stroke="#9CD4FF" stroke-width="2" opacity=".34">
+          <path d="M56 210h34M73 193v34" /><path d="M990 210h34M1007 193v34" />
+          <path d="M56 985h34M73 968v34" /><path d="M990 985h34M1007 968v34" />
+        </g>
+      </svg>
+
+      <div id="vignette" class="clip" data-start="0" data-duration="28.4" data-track-index="4"></div>
+
+      <!-- Beat 1 · "Most ecommerce advice…" (VO 0.27–5.02) -->
+      <div id="g1" class="band clip" data-start="1.0333" data-duration="3.4" data-track-index="5">
+        <div class="eyebrow">The problem</div>
+        <div class="line">Most advice<span class="strike"></span></div>
+      </div>
+
+      <!-- Beat 3 · "…coaching side of a Shopify agency…" (VO 6.72–13.46) -->
+      <div id="wall" class="clip" data-start="6.9333" data-duration="6.4" data-track-index="6">
+        <div class="in">
+          <div id="wall-scrim"></div>
+          <div id="wall-track">
+            <img src="assets/logos/harmless-harvest-logo-webp.png" alt="" />
+            <img src="assets/logos/images-10-png.png" alt="" />
+            <img src="assets/logos/images-11-png.png" alt="" />
+            <img src="assets/logos/images-12-png.png" alt="" />
+            <img src="assets/logos/images-13-png.png" alt="" />
+            <img src="assets/logos/images-14-png.png" alt="" />
+            <img src="assets/logos/images-2-png.png" alt="" />
+            <img src="assets/logos/images-3-png.png" alt="" />
+            <img src="assets/logos/images-4-jpeg.png" alt="" />
+            <img src="assets/logos/images-4-png.png" alt="" />
+            <img src="assets/logos/images-5-jpeg.png" alt="" />
+            <img src="assets/logos/images-5-png.png" alt="" />
+            <img src="assets/logos/images-6-jpeg.png" alt="" />
+            <img src="assets/logos/images-6-png.png" alt="" />
+            <img src="assets/logos/images-7-jpeg.png" alt="" />
+            <img src="assets/logos/images-7-png.png" alt="" />
+            <img src="assets/logos/images-8-jpeg.png" alt="" />
+            <img src="assets/logos/images-8-png.png" alt="" />
+            <img src="assets/logos/images-9-png.png" alt="" />
+            <img src="assets/logos/sotheby-s-logo-wine-svg.png" alt="" />
+            <img src="assets/logos/unnamed-jpg.png" alt="" />
+            <img src="assets/logos/harmless-harvest-logo-webp.png" alt="" />
+            <img src="assets/logos/images-10-png.png" alt="" />
+            <img src="assets/logos/images-11-png.png" alt="" />
+            <img src="assets/logos/images-12-png.png" alt="" />
+            <img src="assets/logos/images-13-png.png" alt="" />
+            <img src="assets/logos/images-14-png.png" alt="" />
+            <img src="assets/logos/images-2-png.png" alt="" />
+            <img src="assets/logos/images-3-png.png" alt="" />
+            <img src="assets/logos/images-4-jpeg.png" alt="" />
+            <img src="assets/logos/images-4-png.png" alt="" />
+            <img src="assets/logos/images-5-jpeg.png" alt="" />
+            <img src="assets/logos/images-5-png.png" alt="" />
+            <img src="assets/logos/images-6-jpeg.png" alt="" />
+            <img src="assets/logos/images-6-png.png" alt="" />
+            <img src="assets/logos/images-7-jpeg.png" alt="" />
+            <img src="assets/logos/images-7-png.png" alt="" />
+            <img src="assets/logos/images-8-jpeg.png" alt="" />
+            <img src="assets/logos/images-8-png.png" alt="" />
+            <img src="assets/logos/images-9-png.png" alt="" />
+            <img src="assets/logos/sotheby-s-logo-wine-svg.png" alt="" />
+            <img src="assets/logos/unnamed-jpg.png" alt="" />
+          </div>
+          <div id="wall-fade"></div>
+          <div id="wall-hero"><img src="assets/shopify-premier-partner.png" alt="Shopify Premier Partner" /></div>
+        </div>
+      </div>
+
+      <!-- Beat 4 · "…we're doing it right now." (VO 14.73–22.00) -->
+      <div id="g4" class="band clip" data-start="17.4" data-duration="4.5" data-track-index="7">
+        <div class="eyebrow">Not theory — practice</div>
+        <div class="line">We're doing it<br /><span class="em">right now.</span></div>
+      </div>
+
+      <!-- Rule-of-threes act: scrim + three full-frame type hits (VO 22.49–26.81) -->
+      <div id="scrim" class="clip" data-start="22.4667" data-duration="4.9333" data-track-index="8"></div>
+
+      <div id="g5" class="hero clip" data-start="22.4667" data-duration="1.3333" data-track-index="9">
+        <div class="big">No gurus.<span class="strike"></span></div>
+      </div>
+      <div id="g6" class="hero clip" data-start="23.8" data-duration="0.9667" data-track-index="10">
+        <div class="big">No theory.<span class="strike"></span></div>
+      </div>
+      <div id="g7" class="hero clip" data-start="24.7667" data-duration="2.6333" data-track-index="11">
+        <div class="big">Just what grows a<br /><span class="em">profitable</span> brand.</div>
+        <div class="rule"></div>
+      </div>
+
+      <div id="streak" class="clip" data-start="22.2" data-duration="9" data-track-index="12"></div>
+
+      <!-- End card · holds 5.13s after the VO ends -->
+      <div id="endcard" class="clip" data-start="27.6" data-duration="4.4" data-track-index="13">
+        <div id="ec-bloom"></div>
+        <div id="ec-copy">
+          <div id="ec-head">Advice from people<br /><span class="em">doing it</span></div>
+          <div id="ec-cta">Learn More <span class="arrow">&rarr;</span></div>
+        </div>
+      </div>
+
+      <!-- Persistent lockup, top-left on every frame. Non-clip wrapper (LESSONS.md)
+           so the engine can't reposition it; it flies to centre for the end card,
+           which is the piece's one callback. -->
+      <div id="logo-wrap">
+        <img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      </div>
+
+      <div id="grain" class="clip" data-start="0" data-duration="32" data-track-index="14"></div>
+    </div>
+
+    <script>
+      // Render contract: exactly one paused GSAP timeline, keyed to
+      // data-composition-id. Deterministic — no Date.now(), no Math.random().
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+        const SLOT = 32;
+
+        /* ---- Beat 1 · "Most advice" + flame strike ---- */
+        tl.fromTo("#g1", { opacity: 0, y: 46, filter: "blur(18px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, 1.0333)
+          .fromTo("#g1 .strike", { scaleX: 0 },
+            { scaleX: 1, duration: 0.4667, ease: "power3.inOut" }, 2.6)
+          .to("#g1", { opacity: 0, y: -60, filter: "blur(22px)", duration: 0.3, ease: "power2.in" }, 4.1333);
+
+        /* ---- Beat 3 · logo wall (6.9333 -> 13.3333) ------------------------
+           VO: "EcomIQ is the coaching side of a Shopify agency, working inside
+           dozens of live brands every single day." (6.72–13.46)
+           The wall drifts up continuously so it never reads as a static plate;
+           marks stagger in behind, then the badge lands on "Shopify agency". */
+        tl.set("#wall-scrim", { opacity: 1 }, 6.9333)
+          .fromTo("#wall-track", { y: 0 }, { y: -490, duration: 6.30, ease: "none" }, 6.9533)
+          .fromTo("#wall-track img", { opacity: 0, y: 26 },
+                  { opacity: .34, y: 0, duration: 0.42, ease: "power2.out", stagger: 0.012 }, 6.9733)
+          .fromTo("#wall-hero", { opacity: 0, scale: 1.34, y: -18, filter: "blur(16px)" },
+                  { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.44, ease: "back.out(1.6)" }, 8.4)
+          .to("#wall-hero", { scale: 1.025, duration: 0.9, ease: "sine.inOut", yoyo: true, repeat: 1 }, 9.0)
+          // EXIT — the whole panel (navy scrim, logos and badge together) fades
+          // out, crossfading the footage back in underneath. Fading `.in` rather
+          // than the logos alone keeps the scrim in step, so the wall never
+          // thins out to reveal Sean through a half-transparent grid.
+          .to("#wall .in", { opacity: 0, duration: 0.5333, ease: "power2.inOut" }, 12.8);
+
+        /* ---- Beat 4 · "right now." scales as the line lands ---- */
+        tl.fromTo("#g4", { opacity: 0, y: 46, filter: "blur(18px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, 17.4)
+          .fromTo("#g4 .em", { scale: 0.86, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.4333, ease: "back.out(1.5)" }, 17.7333)
+          .to("#g4", { opacity: 0, y: -60, filter: "blur(22px)", duration: 0.3, ease: "power2.in" }, 21.6);
+
+        /* ---- Rule-of-threes act ---- */
+        tl.fromTo("#scrim", { opacity: 0 }, { opacity: 1, duration: 0.2667, ease: "power2.out" }, 22.4667)
+          .to("#scrim", { opacity: 0, duration: 0.3333, ease: "power2.in" }, 27.0667);
+
+        // Cut-the-curve vertical whip: each hit exits up with blur while the next
+        // rises from below with matching blur — velocity matched across the seam.
+        const hit = (sel, tIn, tOut) => {
+          tl.fromTo(sel, { opacity: 0, y: 130, filter: "blur(26px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.3667, ease: "expo.out" }, tIn)
+            .to(sel, { opacity: 0, y: -120, filter: "blur(26px)", duration: 0.2333, ease: "power2.in" }, tOut);
+        };
+        hit("#g5", 22.4667, 23.6667);
+        hit("#g6", 23.8, 24.6333);
+        tl.fromTo("#g7", { opacity: 0, y: 130, filter: "blur(26px)" },
+          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4333, ease: "expo.out" }, 24.7667)
+          .to("#g7", { opacity: 0, y: -120, filter: "blur(26px)", duration: 0.2667, ease: "power2.in" }, 27.1333);
+
+        tl.fromTo("#g5 .strike", { scaleX: 0 }, { scaleX: 1, duration: 0.2667, ease: "power3.inOut" }, 22.8)
+          .fromTo("#g6 .strike", { scaleX: 0 }, { scaleX: 1, duration: 0.2333, ease: "power3.inOut" }, 24.0667)
+          .fromTo("#g7 .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power3.out" }, 25.3333);
+
+        /* ---- Whip streaks masking the three cuts ---- */
+        const whip = (t) => {
+          tl.fromTo("#streak", { xPercent: -120, opacity: 0, scaleX: 0.6 },
+            { xPercent: 250, opacity: 1, scaleX: 1.5, duration: 0.3333, ease: "power3.in" }, t)
+            .to("#streak", { opacity: 0, duration: 0.1333, ease: "power2.out" }, t + 0.2333);
+        };
+        whip(22.3333); whip(23.7); whip(24.6667);
+
+        /* ---- End card · logo flies from top-left to centre (the callback) ---- */
+        tl.to("#logo-wrap", { x: 363, y: 341, scale: 2.2, duration: 0.7667,
+              ease: "power3.inOut", transformOrigin: "center center" }, 27.2)
+          .fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 27.6)
+          .fromTo("#ec-head", { opacity: 0, y: 34 },
+            { opacity: 1, y: 0, duration: 0.5667, ease: "power3.out" }, 28.35)
+          .fromTo("#ec-cta", { opacity: 0, scale: 0.86 },
+            { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 28.75)
+          // Keeps the 5s hold alive rather than freezing (Law #4: camera never sleeps).
+          .to("#ec-cta", { scale: 1.035, duration: 0.7667, ease: "sine.inOut", yoyo: true, repeat: 3 }, 29.3)
+          .to("#ec-bloom", { opacity: 0.52, duration: 2.3333, ease: "sine.inOut", yoyo: true, repeat: 1 }, 27.8)
+          .to("#vignette", { opacity: 0.86, duration: 3.6667, ease: "sine.inOut", yoyo: true, repeat: 3 }, 0);
+
+        // Law #11 — no-op anchor so timeline.duration() fills the whole slot and
+        // the engine never hides the composition on a short tail.
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines["aug-general-ad-4-meta"] = tl;
+      })();
+    </script>
+  </body>
+</html>

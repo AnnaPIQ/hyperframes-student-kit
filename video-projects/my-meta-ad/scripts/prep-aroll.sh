@@ -26,7 +26,11 @@
 # needed, the fix is a re-shoot or a blurred self-fill behind the clip, not a
 # wider crop.
 #   9:16  crop 1215x2160 @ x=1198 -> 1080x1920  (full bleed)
+#   4:5   crop 1728x2160 @ x=941  -> 1080x1350  (full bleed)
 #   1:1   crop 2160x2160 @ x=725  -> 1080x1080  (full bleed)
+# Every crop takes the source's full 2160 height, so all three share the same
+# vertical field of view — the speaker sits at the same fraction of frame
+# height in each, and only the horizontal window widens.
 #
 # Usage: bash scripts/prep-aroll.sh [path-to-source.mov]
 set -euo pipefail
@@ -48,6 +52,14 @@ ffmpeg -y -hide_banner -loglevel error -stats \
   -vsync cfr -r 30 -movflags +faststart -an \
   "$OUT/aroll-vertical.mp4"
 
+echo "→ 4:5   1080x1350  (crop 1728x2160 @ x=941)"
+ffmpeg -y -hide_banner -loglevel error -stats \
+  -ss "$SS" -i "$SRC" -t "$DUR" \
+  -vf "crop=1728:2160:941:0,scale=1080:1350:flags=lanczos" \
+  -c:v libx264 -preset medium -crf "$CRF" -pix_fmt yuv420p \
+  -vsync cfr -r 30 -movflags +faststart -an \
+  "$OUT/aroll-meta.mp4"
+
 echo "→ 1:1   1080x1080  (crop 2160x2160 @ x=725)"
 ffmpeg -y -hide_banner -loglevel error -stats \
   -ss "$SS" -i "$SRC" -t "$DUR" \
@@ -63,7 +75,7 @@ ffmpeg -y -hide_banner -loglevel error -stats \
   "$OUT/aroll-vo.m4a"
 
 echo "done:"
-for f in "$OUT/aroll-vertical.mp4" "$OUT/aroll-square.mp4" "$OUT/aroll-vo.m4a"; do
+for f in "$OUT/aroll-vertical.mp4" "$OUT/aroll-meta.mp4" "$OUT/aroll-square.mp4" "$OUT/aroll-vo.m4a"; do
   printf '  %-28s %s\n' "$(basename "$f")" \
     "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f")s"
 done
