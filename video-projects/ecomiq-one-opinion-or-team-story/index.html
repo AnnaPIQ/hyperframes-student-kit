@@ -65,7 +65,7 @@
   </head>
   <body>
     <div id="root" data-composition-id="ecomiq-one-opinion-or-team-story" data-start="0"
-         data-duration="73.3000" data-width="1080" data-height="1920">
+         data-duration="69.0000" data-width="1080" data-height="1920">
 
       <!-- A-roll runs continuously underneath so lips never drift from the VO.
            Graphic scenes sit on top and reveal it at each seam. -->
@@ -73,11 +73,11 @@
         <video id="founder" src="assets/founder.mp4" data-start="0" data-duration="66.5000"
                data-track-index="0" muted playsinline></video>
       </div>
-      <div id="scrim" class="clip" data-start="0" data-duration="73.3000" data-track-index="1"></div>
+      <div id="scrim" class="clip" data-start="0" data-duration="69.0000" data-track-index="1"></div>
 
       <!-- VO: the founder's own audio, trimmed at 6.12s and loudness-normalised -->
       <audio id="vo" src="assets/vo-founder.m4a" data-start="0"
-             data-duration="73.3000" data-track-index="2" data-volume="1"></audio>
+             data-duration="69.0000" data-track-index="2" data-volume="1"></audio>
 
       <!-- Real client b-roll (aug-general-ad-5 footage). Each <video> is the
            timed element; its wrapper is untimed and carries the drift. -->
@@ -102,12 +102,12 @@
            style="z-index:10"></div>
       <div id="clip-s03-partner-reveal" class="scene-slot" data-composition-id="s03-partner-reveal"
            data-composition-src="compositions/s03-partner-reveal.html"
-           data-start="12.3000" data-duration="4.0667"
+           data-start="12.3000" data-duration="4.5667"
            data-track-index="11" data-width="1080" data-height="1920"
            style="z-index:11"></div>
       <div id="clip-s04-team-grid" class="scene-slot" data-composition-id="s04-team-grid"
            data-composition-src="compositions/s04-team-grid.html"
-           data-start="16.3667" data-duration="4.3333"
+           data-start="16.3667" data-duration="4.8333"
            data-track-index="12" data-width="1080" data-height="1920"
            style="z-index:12"></div>
       <div id="clip-s05-live-brands" class="scene-slot" data-composition-id="s05-live-brands"
@@ -132,12 +132,12 @@
            style="z-index:16"></div>
       <div id="clip-s10-payoff" class="scene-slot" data-composition-id="s10-payoff"
            data-composition-src="compositions/s10-payoff.html"
-           data-start="61.4333" data-duration="3.9000"
+           data-start="61.4333" data-duration="4.4000"
            data-track-index="17" data-width="1080" data-height="1920"
            style="z-index:17"></div>
       <div id="clip-s11-cta" class="scene-slot" data-composition-id="s11-cta"
            data-composition-src="compositions/s11-cta.html"
-           data-start="65.3333" data-duration="7.9667"
+           data-start="65.3333" data-duration="3.6667"
            data-track-index="18" data-width="1080" data-height="1920"
            style="z-index:18"></div>
 
@@ -220,7 +220,7 @@
         tl.to("#seam4", { opacity: 0, duration: .14 }, 65.5667);
 
         // Law #11 anchor — keep the root alive for its full slot
-        tl.to({}, { duration: 73.3000 }, 0);
+        tl.to({}, { duration: 69.0000 }, 0);
         window.__timelines['ecomiq-one-opinion-or-team-story'] = tl;
       })();
     </script>

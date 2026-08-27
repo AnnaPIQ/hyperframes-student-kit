@@ -173,6 +173,28 @@ efficient over time instead of relearning the same lessons.
 - **Type over a logo wall needs its own scrim** — a localised radial band centred on the
   text block (not a full-frame wash, which flattens the whole wall into murk).
 
+## Transitions between adjacent cards
+
+- **A graphic card whipping out reveals the A-roll — even when the next card starts on
+  the same frame.** Two matched blur-whips (outgoing rides away, incoming rides in) leave
+  a ~0.6s window where neither covers the frame, so the talking head flashes through
+  between two graphics. It reads as a stray flash-cut and viewers notice it immediately.
+  **Fix:** only whip OUT when a founder beat actually follows. Where card is followed
+  directly by card, hold the outgoing card full-frame and let the incoming one ride in
+  over the top of it.
+- **Holding a card past its cut needs a duration TAIL, not just a suppressed exit.** If
+  the outgoing card's slot ends on the same frame the incoming card starts, the framework
+  removes it while the incoming one is still fading up from `opacity: 0` — same flash,
+  different cause. Give the outgoing clip ~0.5s of extra `data-duration` (different
+  track-index, lower z-index, so it simply sits behind) AND extend its Law-#11 anchor to
+  match, or the timeline goes short and the card is hidden early anyway.
+- **Derive adjacency in the beat sheet, not by hand.** A helper like
+  `adjacentNext(id) → CUTS[i].end === CUTS[i+1].start` keeps the rule correct as beats are
+  added, removed or retimed; hardcoding "these three seams are adjacent" silently rots.
+- **Verify seams with a filmstrip, not a single frame.** Sample every ~0.1s across the
+  cut and montage them into one strip — a one-frame grab lands either side of a 0.6s
+  flash and looks fine.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

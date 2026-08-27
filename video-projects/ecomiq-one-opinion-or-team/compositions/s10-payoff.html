@@ -1,5 +1,5 @@
 <template id="s10-payoff-template">
-  <div data-composition-id="s10-payoff" data-start="0" data-duration="3.9000"
+  <div data-composition-id="s10-payoff" data-start="0" data-duration="4.4000"
        data-width="1080" data-height="1350">
     <div class="wrap">
       <div class="bg"></div>
@@ -8,12 +8,12 @@
       <div class="vig"></div>
       <div class="grain"></div>
       <div class="content">
-        <div class="h2" id="s10-q">So &mdash; which do you want?</div>
+        <div class="h2" id="s10-q">Which do you want?</div>
         <div class="duo">
           <div class="opt cold" id="s10-left">
             <div class="obar" id="s10-lb"></div>
             <div class="ostrike" id="s10-ls"></div>
-            <div class="olbl dim">one opinion</div>
+            <div class="olbl dim">one outdated opinion</div>
           </div>
           <div class="opt warm" id="s10-right">
             <div class="ocluster" id="s10-cl">
@@ -149,11 +149,11 @@
       // --- ambient: grid parallax + vignette breath (camera never sleeps) ---
       tl.fromTo(root + " .grid", { backgroundPositionY: 0, backgroundPositionX: 0 },
         { backgroundPositionY: -28, backgroundPositionX: 16,
-          duration: 3.9000, ease: "none" }, 0);
-      tl.fromTo(root + " .vig", { opacity: .82 }, { opacity: 1, duration: 1.9500,
+          duration: 4.4000, ease: "none" }, 0);
+      tl.fromTo(root + " .vig", { opacity: .82 }, { opacity: 1, duration: 2.2000,
         ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
       tl.fromTo(root + " .marks", { opacity: .2 }, { opacity: .40,
-        duration: 1.9500, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+        duration: 2.2000, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
 
       // ENTRY — rises in from the left under blur; matches the
       // previous beat's exit velocity. Opacity snaps early so the A-roll never ghosts through.
@@ -183,14 +183,12 @@
         { xPercent: 260, opacity: .9, scaleX: 1.4, duration: .34, ease: "power3.in" }, 0.06);
       tl.to(root + " #s10-payoff-streak", { opacity: 0, duration: .16 }, 0.4000);
 
-      // EXIT (local 3.5400) — rides right under blur, handing the
-      // frame back to the founder A-roll. Matches the next beat's entry blur.
-      tl.to(root + " .wrap", { x: 190, filter: "blur(30px)", duration: .36, ease: "power2.in" }, 3.5400);
-      tl.to(root + " .wrap", { opacity: 0, duration: .18, ease: "power1.in" }, 3.7200);
+      // NO EXIT — the next card lands on this frame and rides in over the top.
+      // Whipping out here would expose the A-roll for a beat (a stray flash-cut).
 
         // Law #11 — anchor the timeline to the full slot or HyperFrames hides
         // the composition early and you get a black-frame flash at the tail.
-        tl.to({}, { duration: 3.9000 }, 0);
+        tl.to({}, { duration: 4.4000 }, 0);
         window.__timelines['s10-payoff'] = tl;
       })();
     </script>

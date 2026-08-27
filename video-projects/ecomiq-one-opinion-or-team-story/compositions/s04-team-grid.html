@@ -1,5 +1,5 @@
 <template id="s04-team-grid-template">
-  <div data-composition-id="s04-team-grid" data-start="0" data-duration="4.3333"
+  <div data-composition-id="s04-team-grid" data-start="0" data-duration="4.8333"
        data-width="1080" data-height="1920">
     <div class="wrap">
       <div class="bg"></div>
@@ -57,7 +57,7 @@
             </div>
           </div>
         </div>
-        <div class="h2" id="s4-head">An entire <span class="hot">team&rsquo;s</span><br />knowledge</div>
+        <div class="h2" id="s4-head">An entire team&rsquo;s<br />knowledge</div>
       </div>
       <div class="streak" id="s04-team-grid-streak"></div>
     </div>
@@ -169,11 +169,11 @@
       // --- ambient: grid parallax + vignette breath (camera never sleeps) ---
       tl.fromTo(root + " .grid", { backgroundPositionY: 0, backgroundPositionX: 0 },
         { backgroundPositionY: -28, backgroundPositionX: 16,
-          duration: 4.3333, ease: "none" }, 0);
-      tl.fromTo(root + " .vig", { opacity: .82 }, { opacity: 1, duration: 2.1667,
+          duration: 4.8333, ease: "none" }, 0);
+      tl.fromTo(root + " .vig", { opacity: .82 }, { opacity: 1, duration: 2.4167,
         ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
       tl.fromTo(root + " .marks", { opacity: .2 }, { opacity: .40,
-        duration: 2.1667, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+        duration: 2.4167, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
 
       // ENTRY — rises in from the left under blur; matches the
       // previous beat's exit velocity. Opacity snaps early so the A-roll never ghosts through.
@@ -199,14 +199,12 @@
         { xPercent: 260, opacity: .9, scaleX: 1.4, duration: .34, ease: "power3.in" }, 0.06);
       tl.to(root + " #s04-team-grid-streak", { opacity: 0, duration: .16 }, 0.4000);
 
-      // EXIT (local 3.9733) — rides right under blur, handing the
-      // frame back to the founder A-roll. Matches the next beat's entry blur.
-      tl.to(root + " .wrap", { x: 190, filter: "blur(30px)", duration: .36, ease: "power2.in" }, 3.9733);
-      tl.to(root + " .wrap", { opacity: 0, duration: .18, ease: "power1.in" }, 4.1533);
+      // NO EXIT — the next card lands on this frame and rides in over the top.
+      // Whipping out here would expose the A-roll for a beat (a stray flash-cut).
 
         // Law #11 — anchor the timeline to the full slot or HyperFrames hides
         // the composition early and you get a black-frame flash at the tail.
-        tl.to({}, { duration: 4.3333 }, 0);
+        tl.to({}, { duration: 4.8333 }, 0);
         window.__timelines['s04-team-grid'] = tl;
       })();
     </script>

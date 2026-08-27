@@ -1,5 +1,5 @@
 <template id="s11-cta-template">
-  <div data-composition-id="s11-cta" data-start="0" data-duration="7.9667"
+  <div data-composition-id="s11-cta" data-start="0" data-duration="3.6667"
        data-width="1080" data-height="1920">
     <div class="wrap">
       <div class="bg"></div>
@@ -10,12 +10,10 @@
       <div class="content">
         <div class="ctawrap">
           <div class="marktile" id="s11-mark"><img src="assets/ecomiq-icon-white.svg" alt="EcomIQ" /></div>
-          <div class="eyebrow" id="s11-eb">One opinion, or a whole team?</div>
-          <div class="h1" id="s11-h">Book a call.</div>
+          <div class="ctaq" id="s11-h">One opinion, or a whole team&rsquo;s?</div>
           <div class="body" id="s11-sub">Let&rsquo;s see if it&rsquo;s a good fit.</div>
           <div class="pill" id="s11-pill">
             <span class="pilltxt">Tap the link below</span>
-            <span class="pillarrow">&rarr;</span>
             <span class="shine" id="s11-shine"></span>
           </div>
         </div>
@@ -112,14 +110,14 @@
       border-radius: 28.5px; overflow: hidden; line-height: 0;
       box-shadow: 0 18px 54px -18px rgba(0,0,0,.8); }
     [data-composition-id="s11-cta"] .marktile img { width: 100%; height: 100%; display: block; }
-    [data-composition-id="s11-cta"] #s11-eb { color: #9CD4FF; letter-spacing: .18em; }
+    [data-composition-id="s11-cta"] .ctaq { font-weight: 800; font-size: 76px; line-height: 1.04;
+      letter-spacing: -.025em; max-width: 92%; }
     [data-composition-id="s11-cta"] .pill { position: relative; overflow: hidden; display: inline-flex; align-items: center;
       gap: 16px; margin-top: 13.799999999999999px; padding: 28.52px 43.699999999999996px;
       border-radius: 999px; font-weight: 800; font-size: 39.36px;
       letter-spacing: -.01em; color: #FFFFFF;
       background: linear-gradient(100deg, #FF4C32 0%, #F09025 100%);
       box-shadow: 0 26px 70px -18px rgba(255,76,50,.72); }
-    [data-composition-id="s11-cta"] .pillarrow { font-weight: 800; }
     [data-composition-id="s11-cta"] .shine { position: absolute; top: 0; bottom: 0; left: -55%; width: 42%;
       background: linear-gradient(100deg, transparent, rgba(255,255,255,.42), transparent);
       filter: blur(4px); }
@@ -136,11 +134,11 @@
       // --- ambient: grid parallax + vignette breath (camera never sleeps) ---
       tl.fromTo(root + " .grid", { backgroundPositionY: 0, backgroundPositionX: 0 },
         { backgroundPositionY: 28, backgroundPositionX: -16,
-          duration: 7.9667, ease: "none" }, 0);
-      tl.fromTo(root + " .vig", { opacity: .82 }, { opacity: 1, duration: 3.9833,
+          duration: 3.6667, ease: "none" }, 0);
+      tl.fromTo(root + " .vig", { opacity: .82 }, { opacity: 1, duration: 1.8333,
         ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
       tl.fromTo(root + " .marks", { opacity: .2 }, { opacity: .40,
-        duration: 3.9833, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
+        duration: 1.8333, ease: "sine.inOut", yoyo: true, repeat: 1 }, 0);
 
       // ENTRY — rises from below under blur; matches the
       // previous beat's exit velocity. Opacity snaps early so the A-roll never ghosts through.
@@ -150,25 +148,19 @@
 
       tl.fromTo(root + " #s11-mark", { opacity: 0, scale: .7, y: -18 },
         { opacity: 1, scale: 1, y: 0, duration: .56, ease: "back.out(1.8)" }, 0.03333333333333333);
-      tl.fromTo(root + " #s11-eb", { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, duration: .44, ease: "power2.out" }, 0.19333333333333333);
-      // HERO — lands on "book a call"
-      tl.fromTo(root + " #s11-h", { opacity: 0, y: 46, scale: .9 },
+      // HERO — the question, called back from the payoff beat
+      tl.fromTo(root + " #s11-h", { opacity: 0, y: 42, scale: .93 },
         { opacity: 1, y: 0, scale: 1, duration: .5, ease: "expo.out" }, 1.0333333333333334);
       tl.fromTo(root + " #s11-sub", { opacity: 0, y: 22 },
         { opacity: 1, y: 0, duration: .44, ease: "power2.out" }, 1.8);
       tl.fromTo(root + " #s11-pill", { opacity: 0, scale: .82 },
         { opacity: 1, scale: 1, duration: .52, ease: "back.out(1.9)" }, 2.466666666666667);
-      // --- the hold: breathing glow + two shimmer passes, then settle ---
+      // --- the hold: one breath + one shimmer, sized to the shorter tail ---
       tl.fromTo(root + " #s11-pill", { boxShadow: "0 26px 70px -18px rgba(255,76,50,.72)" },
-        { boxShadow: "0 30px 92px -14px rgba(255,76,50,.95)", duration: 1.35,
-          ease: "sine.inOut", yoyo: true, repeat: 3 }, 2.966666666666667);
-      tl.fromTo(root + " #s11-shine", { xPercent: 0 }, { xPercent: 405, duration: 1.0,
-        ease: "power2.inOut" }, 3.3666666666666667);
-      tl.fromTo(root + " #s11-shine", { xPercent: 0 }, { xPercent: 405, duration: 1.0,
-        ease: "power2.inOut" }, 6.166666666666667);
-      tl.fromTo(root + " #s11-mark", { y: 0 }, { y: -10, duration: 2.4,
-        ease: "sine.inOut", yoyo: true, repeat: 1 }, 3.066666666666667);
+        { boxShadow: "0 30px 92px -14px rgba(255,76,50,.95)", duration: .4,
+          ease: "sine.inOut", yoyo: true, repeat: 1 }, 2.8666666666666667);
+      tl.fromTo(root + " #s11-shine", { xPercent: 0 }, { xPercent: 405, duration: .7,
+        ease: "power2.inOut" }, 2.9066666666666667);
 
       // in-scene light streak — motion blur across the seam, never a hard cut
       tl.fromTo(root + " #s11-cta-streak", { xPercent: -60, opacity: 0, scaleX: .6 },
@@ -179,7 +171,7 @@
 
         // Law #11 — anchor the timeline to the full slot or HyperFrames hides
         // the composition early and you get a black-frame flash at the tail.
-        tl.to({}, { duration: 7.9667 }, 0);
+        tl.to({}, { duration: 3.6667 }, 0);
         window.__timelines['s11-cta'] = tl;
       })();
     </script>

@@ -1,6 +1,6 @@
 # EcomIQ — "One opinion, or a whole team?" (founder ad)
 
-Format: **4:5 Meta feed · 1080×1350 @ 30fps** · runtime **73.3s** · safe area ~96px.
+Format: **4:5 Meta feed · 1080×1350 @ 30fps** · runtime **69.0s** · safe area ~96px.
 **Subtitle band:** the bottom ~22% (300px on 4:5, 450px on 9:16) is deliberately kept
 clear of graphics so subtitles can be added by hand afterwards. `botGuard` in the
 format config enforces it for every card; the b-roll chips sit above it too.
@@ -27,8 +27,10 @@ Partner, so you get a whole team working inside dozens of live brands every day.
 | A/V sync | the source's audio stream starts at **0.078958s** while its video starts at 0, so the picture is cut at **6.20s** to line up with audio cut at 6.12s |
 | Word timings | `faster-whisper small.en`, word-level. **Every scene cut is anchored to a real word onset.** |
 
-`t_timeline = t_source − 6.12`. Speech runs t=0.40 → 67.92; the CTA card then
-holds 5.4s in silence.
+`t_timeline = t_source − 6.12`. Speech runs t=0.40 → 67.92, and the piece cuts hard
+at **69.0s** — the tail past that was dead air, so the CTA card holds ~1.1s rather
+than the 5.4s it originally sat on. Its breathing-glow and shimmer are sized to that
+shorter tail so they still complete.
 
 **The 79 ms sync offset matters.** The `.mov`'s audio stream carries an edit-list
 offset (`start_time = 0.078958`, video `start_time = 0`). Extracting audio to WAV
@@ -97,8 +99,8 @@ never drift, because the picture is never re-cut against the audio.
 | — | **Founder** | 51.60–54.53 | "every single strategy" |
 | — | **Client b-roll** — Sweet E's then Dryft Sleep, real footage with brand chips | 54.53–59.40 | "pulled from real client work…" |
 | — | **Founder** | 59.40–61.43 | "before it comes anywhere near you" |
-| S10 | Payoff — a lone struck bar vs the lit team cluster | 61.43–65.33 | "a whole team's opinion" |
-| S11 | CTA end card — icon, "Book a call.", flame pill; **holds 5.4s** | 65.33–73.30 | "tap the link… book a call" |
+| S10 | Payoff — "Which do you want?" · one outdated opinion (struck) vs the lit team cluster | 61.43–65.33 | "a whole team's opinion" |
+| S11 | CTA end card — mark, "One opinion, or a whole team's?", flame pill | 65.33–**69.00** | "tap the link… book a call" |
 
 **Callbacks:** the strike-through motif runs S02 → S10; the one-vs-many contrast is
 set up by the S04 team grid and paid off in S10; the 01/02/03 spine ties S06–S08.
@@ -134,7 +136,13 @@ Partner badge is deliberately excluded** from this wall.
 - Every entrance is `gsap.fromTo` — `from` leaves `opacity:0` elements invisible.
 - **No hard cuts.** Every seam is a cut-the-curve whip: the card rides in from
   +170px under `blur(30px)` and rides out the opposite way, revealing the A-roll.
-  Axis alternates y / x across the 11 seams so no move repeats back to back.
+  Axis alternates y / x so no move repeats back to back.
+- **Card-to-card seams do NOT whip out.** Where a card is followed immediately by
+  another (S03→S04, S04→S05, S10→S11) there is no A-roll to reveal, and riding the
+  outgoing card away exposed the founder for ~0.6s — a stray flash-cut. Those cards
+  instead hold full-frame while the incoming one rides in over the top, so each
+  carries a `TAIL` (0.5s) past its cut on a lower z-index. `adjacentNext()` in the
+  beat sheet decides this, so it cannot drift as beats move.
 - A light streak crosses each seam; 5 bigger white→flame streaks mark the act breaks
   (8.97 / 28.67 / 54.53 / 59.40 / 65.33), including both edges of the b-roll beat.
 - Numbers count up. Elements settle with a slight overshoot (`back.out`).
