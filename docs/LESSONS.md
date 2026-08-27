@@ -114,6 +114,60 @@ efficient over time instead of relearning the same lessons.
   12. **Fix:** card the source's verifiable primitives ("MIDNIGHT → 8AM"), never
   arithmetic you did yourself on inconsistent inputs.
 
+
+## Authoring gotchas found building the Sweet E's ad
+
+- **An unquoted bash heredoc silently eats `${...}` in the file you are writing.**
+  Writing `index.html` with `cat > f <<HTMLEOF` let bash expand `${cuts_placeholder}`
+  to an empty string *before* the follow-up injector ran, so `const CUTS = [];` —
+  every whip transition and motion blur was missing and the piece was all hard
+  cuts. Lint passed; the page ran; nothing errored. **Fix:** quote the delimiter
+  (`<<'HTMLEOF'`) whenever the body contains `$`, backticks or `$(`. And never
+  verify an injection with `grep -c placeholder` — an expanded placeholder is
+  *gone*, so absence reads as success. Assert the **injected value** is present
+  instead.
+- **`mix-blend-mode: screen` on an overlay renders as nothing.** A blend-mode
+  overlay had no backdrop to composite against in the render's stacking context,
+  so the whip streak was invisible at full opacity. **Fix:** use straight alpha
+  (a plain rgba gradient) for overlays that must appear over footage.
+- **Flexbox silently falsified a chart's ratio.** A `1×` vs `3×` bar pair
+  overflowed its row, so flex shrank the long bar to ~2.5× — the labels still
+  said 3×. **Fix:** `flex: 0 0 auto` on every bar/label in a ratio chart, size
+  the row to fit, and *measure it* (`offsetWidth`, which ignores GSAP's scaleX)
+  rather than eyeballing a contact sheet.
+- **`page.evaluate` / `waitForFunction` hangs if the callback returns a GSAP
+  timeline.** `tl.time(t)` returns the timeline, and Playwright then tries to
+  serialise a circular object — the call never resolves and looks like a browser
+  launch problem. **Fix:** use a block body (`() => { tl.time(t); }`) or return a
+  scalar/boolean.
+- **A static seek does not re-run the engine's clip gating.** Scrubbing a
+  composition in Playwright shows only the always-on layers, so cards appear as
+  empty background. **Fix:** after seeking, reproduce the gating yourself —
+  toggle `display` on every `.clip[data-start]` by comparing the seek time
+  against `data-start`/`data-duration` (see a project's `scripts/scrub.mjs`).
+- **Playwright's own browser download is absent in this container.** `chromium
+  .launch()` fails pointing at `/opt/pw-browsers/...`. **Fix:** reuse the shell
+  Hyperframes already ensures — glob
+  `/root/.cache/hyperframes/chrome/**/chrome-headless-shell` and pass it as
+  `executablePath`, **filtering to files** (the glob also matches a directory of
+  the same name, which fails with `EACCES`).
+- **`hyperframes lint` rejects two root-level compositions in one project**
+  (`multiple_root_compositions`), and it does **not** resolve a symlinked
+  `assets/` directory. **Fix:** generate an alternate ratio into
+  `build/<tag>/` as a mini-project (index.html + hyperframes.json + meta.json)
+  and hard-link the asset tree in with `cp -al` — zero extra disk, and lint
+  resolves every file.
+- **Cards must not open on bare canvas.** A full-bleed panel whose first
+  element enters at +0.3s reads as a dead flash after a whip from bright
+  footage — worst on an end card, where the top-left logo has already gone.
+  **Fix:** first element in by +0.02s with a ~0.24s entrance; on an end card
+  bring the lockup in at +0.00.
+- **Don't count a figure up from 0 if the number is spoken.** A 0→10,000
+  counter puts "2,710" on screen exactly when the voiceover says "ten
+  thousand". **Fix:** land the whole number on the word; if it must change,
+  drive the text from a `onUpdate` that is a pure function of card-local time
+  so every seek is correct and the render stays deterministic.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

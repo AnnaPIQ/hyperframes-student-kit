@@ -1,0 +1,21 @@
+import { chromium } from 'playwright';
+import { createServer } from 'node:http';
+import { readFile } from 'node:fs/promises';
+import { globSync, statSync } from 'node:fs';
+import { extname, join, resolve } from 'node:path';
+const ROOT=resolve('.');const T={'.html':'text/html','.js':'text/javascript','.css':'text/css','.mp4':'video/mp4','.m4a':'audio/mp4','.woff2':'font/woff2','.svg':'image/svg+xml','.png':'image/png'};
+const server=createServer(async(rq,rs)=>{try{const p=join(ROOT,decodeURIComponent(rq.url.split('?')[0]));const b=await readFile(p);rs.writeHead(200,{'Content-Type':T[extname(p)]||'application/octet-stream'});rs.end(b);}catch{rs.writeHead(404).end('x');}});
+await new Promise(r=>server.listen(0,'127.0.0.1',r));
+const CHROME=globSync('/root/.cache/hyperframes/chrome/**/chrome-headless-shell').filter(p=>{try{return statSync(p).isFile()}catch{return false}})[0];
+const b=await chromium.launch({executablePath:CHROME});
+const pg=await b.newPage({viewport:{width:1080,height:1920}});
+await pg.goto(`http://127.0.0.1:${server.address().port}/index.html`,{waitUntil:'domcontentloaded'});
+await pg.waitForFunction(()=>!!(window.__timelines&&window.__timelines['ecomiq-sweet-es']));
+await pg.evaluate(()=>window.__timelines['ecomiq-sweet-es'].time(7.9,false));
+await pg.waitForTimeout(200);
+console.log(await pg.evaluate(()=>{
+  const q=s=>{const e=document.querySelector(s);if(!e)return 'MISSING';const c=getComputedStyle(e);
+    return {disp:c.display,op:c.opacity,vis:c.visibility,inline:e.getAttribute('style')||'',txt:(e.textContent||'').slice(0,24)};};
+  return {cardA:q('#cardA'), inner:q('#cardA .inner'), eye:q('#aEye'), fig:q('#aFig'), bg:q('#bg')};
+}));
+await b.close(); server.close();

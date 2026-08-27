@@ -80,7 +80,10 @@ COOKIES. NO PROBLEM.          ← label
 ```
 Spoken at 7.46. Corroborated by the case study: *"Send us your logo, send us your
 photo. We'll plaster it on 10,000 cookies. No problem."*
-**Deliberately does not show 20,000** — see Discrepancies.
+**Decision (approved):** the figure lands as a whole `10,000` on the word at
+7.46 and swaps to `20,000` on the second spoken figure at 8.48 — as Sean says
+it. It is not a 0→N counter: that would have put "2,710" on screen exactly as
+he said "ten thousand".
 
 ### CARD B · 12.05–15.25
 ```
@@ -113,8 +116,9 @@ FOUR YEARS WITH ECOMIQ
 "over four years" is spoken at 26.00. All three figures are the measured
 four-year outcomes in EcomIQ's own Sweet E's case study. Rule of threes; each
 counts up on a proxy tween, staggered 0.28s.
-**This is the one card carrying figures that are real and sourced but not spoken
-aloud — flagged for your call below.**
+**Decision (approved):** all three run. They are the one set of figures in the
+piece that are real and sourced but not spoken aloud; "four years" is spoken, and
+every value is from EcomIQ's own case study.
 
 ### CARD E · 31.70–34.90
 ```
@@ -136,6 +140,9 @@ last word, all content above the subtitle zone.
 
 ## Discrepancies found while grounding — your call on the first two
 
+0. **Resolved by you:** card A shows `10,000 → 20,000` as spoken; card D carries
+   all three four-year results.
+
 1. **The A-roll take doesn't match the script you pasted.** The audio says
    *"…on 10,000, 20,000 cookies, absolutely no problem"*, *"over four years"*,
    *"They have been so successful, they recently had to move into a bigger
@@ -145,9 +152,8 @@ last word, all content above the subtitle zone.
    transcription passes agree on the audio. **I've timed everything to the audio
    I have, since the ad is audio-led.** If a newer take matches your script,
    send it and I'll re-time — the plan is timing-only, so it's a cheap swap.
-2. **`20,000` is spoken but I've left it off the card.** Only 10,000 is
-   corroborated by the case study, and it's the only figure in your script. Say
-   the word and I'll make card A read `10,000 → 20,000`.
+2. **`20,000` is spoken and now shown**, per your call. Note it is corroborated
+   only by the take itself — the case study and your script both say 10,000.
 3. **I avoided asserting "8 hours."** The case study lists a total fulfilment
    window of 8 hours, but its own timeline runs midnight order → noon delivery,
    which is 12. Card C states the two verifiable clock times instead.
