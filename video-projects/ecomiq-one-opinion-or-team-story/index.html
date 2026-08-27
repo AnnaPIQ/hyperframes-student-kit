@@ -38,6 +38,25 @@
       #logo-pin img { width: 100%; height: auto; display: block;
         filter: drop-shadow(0 6px 22px rgba(0,0,0,.55)); }
 
+      /* --- client b-roll -------------------------------------------------- */
+      /* Untimed wrapper carries the drift; never animate the <video> itself. */
+      .br-wrap { position: absolute; inset: 0; overflow: hidden; opacity: 0; z-index: 30;
+        will-change: transform, filter; }
+      .br-wrap video { width: 1080px; height: 1920px; object-fit: cover; display: block; }
+      .br-scrim { position: absolute; inset: 0; z-index: 31; pointer-events: none;
+        background:
+          linear-gradient(180deg, rgba(6,40,76,.88) 0%, rgba(6,40,76,.72) 10%, rgba(6,40,76,0) 30%),
+          linear-gradient(0deg,  rgba(6,40,76,.82) 0%, rgba(6,40,76,0) 34%); }
+      .br-chip { position: absolute; left: 96px; right: 96px;
+        bottom: 400px; z-index: 32; display: flex; flex-direction: column;
+        align-items: flex-start; gap: 14px; }
+      .br-chip .brname { display: inline-block; padding: 13px 28px; border-radius: 999px;
+        background: rgba(6,40,76,.72); border: 1.5px solid rgba(156,212,255,.5);
+        font-size: 26px; font-weight: 700; letter-spacing: .2em;
+        text-transform: uppercase; color: #FFFFFF; }
+      .br-chip .brline { font-size: 48px; font-weight: 800; letter-spacing: -.02em;
+        color: #FFFFFF; text-shadow: 0 4px 30px rgba(0,0,0,.7); }
+
       /* --- act-break light streaks --------------------------------------- */
       .seam { position: absolute; left: -30%; width: 60%; height: 7px; z-index: 70;
         background: linear-gradient(90deg, transparent, #FFFFFF, rgba(255,76,50,.9), transparent);
@@ -60,68 +79,74 @@
       <audio id="vo" src="assets/vo-founder.m4a" data-start="0"
              data-duration="73.3000" data-track-index="2" data-volume="1"></audio>
 
+      <!-- Real client b-roll (aug-general-ad-5 footage). Each <video> is the
+           timed element; its wrapper is untimed and carries the drift. -->
+      <div id="br0-wrap" class="br-wrap">
+        <video id="br0" src="assets/broll-sweetes.mp4" data-start="54.5333"
+               data-duration="2.5667" data-track-index="50" muted playsinline></video>
+      </div>
+      <div id="br0-scrim" class="clip br-scrim" data-start="54.5333" data-duration="2.5667" data-track-index="52"></div>
+      <div id="br0-chip" class="clip br-chip" data-start="54.5333" data-duration="2.5667" data-track-index="54"><span class="brname">Sweet E’s</span><span class="brline">real client work</span></div>
+      <div id="br1-wrap" class="br-wrap">
+        <video id="br1" src="assets/broll-dryft.mp4" data-start="57.1000"
+               data-duration="2.3000" data-track-index="51" muted playsinline></video>
+      </div>
+      <div id="br1-scrim" class="clip br-scrim" data-start="57.1000" data-duration="2.3000" data-track-index="53"></div>
+      <div id="br1-chip" class="clip br-chip" data-start="57.1000" data-duration="2.3000" data-track-index="55"><span class="brname">Dryft</span><span class="brline">8 &amp; 9 figure brands</span></div>
+
       <!-- graphic beats -->
-      <div id="clip-s01-hook-one-person" class="scene-slot" data-composition-id="s01-hook-one-person"
-           data-composition-src="compositions/s01-hook-one-person.html"
-           data-start="0.0000" data-duration="4.8667"
-           data-track-index="10" data-width="1080" data-height="1920"
-           style="z-index:10"></div>
       <div id="clip-s02-hook-one-brand" class="scene-slot" data-composition-id="s02-hook-one-brand"
            data-composition-src="compositions/s02-hook-one-brand.html"
            data-start="4.8667" data-duration="4.1000"
-           data-track-index="11" data-width="1080" data-height="1920"
-           style="z-index:11"></div>
+           data-track-index="10" data-width="1080" data-height="1920"
+           style="z-index:10"></div>
       <div id="clip-s03-partner-reveal" class="scene-slot" data-composition-id="s03-partner-reveal"
            data-composition-src="compositions/s03-partner-reveal.html"
            data-start="12.3000" data-duration="4.0667"
-           data-track-index="12" data-width="1080" data-height="1920"
-           style="z-index:12"></div>
+           data-track-index="11" data-width="1080" data-height="1920"
+           style="z-index:11"></div>
       <div id="clip-s04-one-vs-team" class="scene-slot" data-composition-id="s04-one-vs-team"
            data-composition-src="compositions/s04-one-vs-team.html"
            data-start="16.3667" data-duration="4.3333"
-           data-track-index="13" data-width="1080" data-height="1920"
-           style="z-index:13"></div>
+           data-track-index="12" data-width="1080" data-height="1920"
+           style="z-index:12"></div>
       <div id="clip-s05-live-brands" class="scene-slot" data-composition-id="s05-live-brands"
            data-composition-src="compositions/s05-live-brands.html"
            data-start="20.7000" data-duration="3.9333"
-           data-track-index="14" data-width="1080" data-height="1920"
-           style="z-index:14"></div>
+           data-track-index="13" data-width="1080" data-height="1920"
+           style="z-index:13"></div>
       <div id="clip-s06-step-strategy" class="scene-slot" data-composition-id="s06-step-strategy"
            data-composition-src="compositions/s06-step-strategy.html"
            data-start="28.6667" data-duration="5.7667"
-           data-track-index="15" data-width="1080" data-height="1920"
-           style="z-index:15"></div>
+           data-track-index="14" data-width="1080" data-height="1920"
+           style="z-index:14"></div>
       <div id="clip-s07-step-calls" class="scene-slot" data-composition-id="s07-step-calls"
            data-composition-src="compositions/s07-step-calls.html"
            data-start="36.4333" data-duration="5.7667"
-           data-track-index="16" data-width="1080" data-height="1920"
-           style="z-index:16"></div>
+           data-track-index="15" data-width="1080" data-height="1920"
+           style="z-index:15"></div>
       <div id="clip-s08-step-community" class="scene-slot" data-composition-id="s08-step-community"
            data-composition-src="compositions/s08-step-community.html"
            data-start="45.0667" data-duration="6.5333"
-           data-track-index="17" data-width="1080" data-height="1920"
-           style="z-index:17"></div>
-      <div id="clip-s09-provenance" class="scene-slot" data-composition-id="s09-provenance"
-           data-composition-src="compositions/s09-provenance.html"
-           data-start="54.5333" data-duration="4.8667"
-           data-track-index="18" data-width="1080" data-height="1920"
-           style="z-index:18"></div>
+           data-track-index="16" data-width="1080" data-height="1920"
+           style="z-index:16"></div>
       <div id="clip-s10-payoff" class="scene-slot" data-composition-id="s10-payoff"
            data-composition-src="compositions/s10-payoff.html"
            data-start="61.4333" data-duration="3.9000"
-           data-track-index="19" data-width="1080" data-height="1920"
-           style="z-index:19"></div>
+           data-track-index="17" data-width="1080" data-height="1920"
+           style="z-index:17"></div>
       <div id="clip-s11-cta" class="scene-slot" data-composition-id="s11-cta"
            data-composition-src="compositions/s11-cta.html"
            data-start="65.3333" data-duration="7.9667"
-           data-track-index="20" data-width="1080" data-height="1920"
-           style="z-index:20"></div>
+           data-track-index="18" data-width="1080" data-height="1920"
+           style="z-index:18"></div>
 
       <!-- act-break streaks -->
       <div id="seam0" class="clip seam" data-start="8.8000" data-duration="0.5000" data-track-index="40"></div>
       <div id="seam1" class="clip seam" data-start="28.5000" data-duration="0.5000" data-track-index="41"></div>
       <div id="seam2" class="clip seam" data-start="54.3667" data-duration="0.5000" data-track-index="42"></div>
-      <div id="seam3" class="clip seam" data-start="65.1667" data-duration="0.5000" data-track-index="43"></div>
+      <div id="seam3" class="clip seam" data-start="59.2333" data-duration="0.5000" data-track-index="43"></div>
+      <div id="seam4" class="clip seam" data-start="65.1667" data-duration="0.5000" data-track-index="44"></div>
 
       <!-- persistent lockup, above everything -->
       <div id="logo-pin">
@@ -141,17 +166,41 @@
         // slow push on the A-roll for each founder segment (camera never sleeps).
         // Resets between segments are hidden under whichever card is covering.
         tl.fromTo("#founder-wrap", { scale: 1.000 },
-          { scale: 1.030, duration: 3.3333, ease: "none", transformOrigin: "50% 42%" }, 8.9667);
+          { scale: 1.030, duration: 4.8667, ease: "none", transformOrigin: "50% 42%" }, 0.0000);
         tl.fromTo("#founder-wrap", { scale: 1.030 },
-          { scale: 1.000, duration: 4.0333, ease: "none", transformOrigin: "50% 42%" }, 24.6333);
+          { scale: 1.000, duration: 3.3333, ease: "none", transformOrigin: "50% 42%" }, 8.9667);
         tl.fromTo("#founder-wrap", { scale: 1.000 },
-          { scale: 1.030, duration: 2.0000, ease: "none", transformOrigin: "50% 42%" }, 34.4333);
+          { scale: 1.030, duration: 4.0333, ease: "none", transformOrigin: "50% 42%" }, 24.6333);
         tl.fromTo("#founder-wrap", { scale: 1.030 },
-          { scale: 1.000, duration: 2.8667, ease: "none", transformOrigin: "50% 42%" }, 42.2000);
+          { scale: 1.000, duration: 2.0000, ease: "none", transformOrigin: "50% 42%" }, 34.4333);
         tl.fromTo("#founder-wrap", { scale: 1.000 },
-          { scale: 1.030, duration: 2.9333, ease: "none", transformOrigin: "50% 42%" }, 51.6000);
+          { scale: 1.030, duration: 2.8667, ease: "none", transformOrigin: "50% 42%" }, 42.2000);
         tl.fromTo("#founder-wrap", { scale: 1.030 },
-          { scale: 1.000, duration: 2.0333, ease: "none", transformOrigin: "50% 42%" }, 59.4000);
+          { scale: 1.000, duration: 2.9333, ease: "none", transformOrigin: "50% 42%" }, 51.6000);
+        tl.fromTo("#founder-wrap", { scale: 1.000 },
+          { scale: 1.030, duration: 2.0333, ease: "none", transformOrigin: "50% 42%" }, 59.4000);
+
+        // client b-roll
+        tl.set("#br0-wrap", { opacity: 1 }, 54.5333);
+        tl.fromTo("#br0-wrap", { scale: 1.07, filter: "blur(16px)" },
+          { scale: 1, filter: "blur(0px)", duration: .36, ease: "power3.out" }, 54.5333);
+        tl.to("#br0-wrap", { scale: 1.05, duration: 2.2000, ease: "none" }, 54.9000);
+        // hard cut out — a fade would ghost the A-roll through for a few frames;
+        // the seam streak carries the cut instead
+        tl.set("#br0-wrap", { opacity: 0 }, 57.1000);
+        tl.fromTo("#br0-chip", { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: .32, ease: "expo.out" }, 54.7000);
+        tl.to("#br0-chip", { opacity: 0, duration: .2, ease: "power2.in" }, 56.8333);
+        tl.set("#br1-wrap", { opacity: 1 }, 57.1000);
+        tl.fromTo("#br1-wrap", { scale: 1.05, filter: "blur(16px)" },
+          { scale: 1, filter: "blur(0px)", duration: .36, ease: "power3.out" }, 57.1000);
+        tl.to("#br1-wrap", { scale: 1.05, duration: 1.9333, ease: "none" }, 57.4667);
+        // hard cut out — a fade would ghost the A-roll through for a few frames;
+        // the seam streak carries the cut instead
+        tl.set("#br1-wrap", { opacity: 0 }, 59.4000);
+        tl.fromTo("#br1-chip", { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: .32, ease: "expo.out" }, 57.2667);
+        tl.to("#br1-chip", { opacity: 0, duration: .2, ease: "power2.in" }, 59.1333);
 
         // act-break light streaks
         tl.fromTo("#seam0", { xPercent: -70, opacity: 0, scaleX: .6 },
@@ -164,8 +213,11 @@
           { xPercent: 260, opacity: 1, scaleX: 1.5, duration: .34, ease: "power3.in" }, 54.3667);
         tl.to("#seam2", { opacity: 0, duration: .14 }, 54.7667);
         tl.fromTo("#seam3", { xPercent: -70, opacity: 0, scaleX: .6 },
+          { xPercent: 260, opacity: 1, scaleX: 1.5, duration: .34, ease: "power3.in" }, 59.2333);
+        tl.to("#seam3", { opacity: 0, duration: .14 }, 59.6333);
+        tl.fromTo("#seam4", { xPercent: -70, opacity: 0, scaleX: .6 },
           { xPercent: 260, opacity: 1, scaleX: 1.5, duration: .34, ease: "power3.in" }, 65.1667);
-        tl.to("#seam3", { opacity: 0, duration: .14 }, 65.5667);
+        tl.to("#seam4", { opacity: 0, duration: .14 }, 65.5667);
 
         // Law #11 anchor — keep the root alive for its full slot
         tl.to({}, { duration: 73.3000 }, 0);

@@ -9,15 +9,8 @@
       <div class="grain"></div>
       <div class="content">
         <div class="eyebrow" id="s3-eb">It&rsquo;s the coaching arm of a</div>
-        <div class="badge panel" id="s3-badge">
-          <div class="bd-check" id="s3-check">
-            <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 17l6 6 12-13" fill="none"
-              stroke="#9CD4FF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="bd-txt">
-            <div class="h3" id="s3-l1">Shopify</div>
-            <div class="h2" id="s3-l2">Premier Partner</div>
-          </div>
+        <div class="badgecard" id="s3-badge">
+          <img id="s3-spp" src="assets/shopify-premier-partner.png" alt="Shopify Premier Partner" />
         </div>
         <div class="chiprow" id="s3-chips">
           <span class="tag" id="s3-chip1"><span class="dot"></span>Pacific IQ</span>
@@ -111,14 +104,11 @@
     [data-composition-id="s03-partner-reveal"] .streak { top: 38%; }
 
     [data-composition-id="s03-partner-reveal"] .content { gap: 46px; }
-    [data-composition-id="s03-partner-reveal"] .badge { display: flex; align-items: center; gap: 36.800000000000004px; padding: 46px;
-      border-color: rgba(156,212,255,.34); }
-    [data-composition-id="s03-partner-reveal"] .bd-check { width: 104px; height: 104px; flex: none; border-radius: 50%;
-      display: grid; place-items: center; background: rgba(156,212,255,.13);
-      border: 1px solid rgba(156,212,255,.4); box-shadow: 0 0 44px -6px rgba(156,212,255,.45); }
-    [data-composition-id="s03-partner-reveal"] .bd-check svg { width: 56%; height: 56%; }
-    [data-composition-id="s03-partner-reveal"] .bd-txt { display: flex; flex-direction: column; gap: 6px; }
-    [data-composition-id="s03-partner-reveal"] .bd-txt .h3 { color: #9CD4FF; letter-spacing: .01em; }
+    /* the badge art is black-on-white, so it sits on its own white credential card */
+    [data-composition-id="s03-partner-reveal"] .badgecard { align-self: flex-start; background: #FFFFFF; border-radius: 22px;
+      padding: 39.1px 46px; line-height: 0;
+      box-shadow: 0 34px 90px -26px rgba(0,0,0,.8), 0 0 70px -22px rgba(156,212,255,.55); }
+    [data-composition-id="s03-partner-reveal"] .badgecard img { width: 500px; height: auto; display: block; }
     [data-composition-id="s03-partner-reveal"] .chiprow { display: flex; flex-wrap: wrap; gap: 16px; }
     [data-composition-id="s03-partner-reveal"] .rule { height: 4px; border-radius: 3px; width: 46%; transform-origin: 0% 50%;
       background: linear-gradient(90deg, #FF4C32, rgba(255,76,50,0)); }
@@ -151,14 +141,11 @@
         { opacity: 1, y: 0, duration: .46, ease: "power2.out" }, 0.03333333333333333);
       tl.fromTo(root + " #s3-rule", { scaleX: 0 }, { scaleX: 1, duration: .5, ease: "expo.out" }, 0.17333333333333334);
       // the credential lands with weight
-      tl.fromTo(root + " #s3-badge", { opacity: 0, y: 52, scale: .94 },
-        { opacity: 1, y: 0, scale: 1, duration: .6, ease: "back.out(1.2)" }, 1.3);
-      tl.fromTo(root + " #s3-check", { scale: 0, rotate: -40 },
-        { scale: 1, rotate: 0, duration: .5, ease: "back.out(2)" }, 1.44);
-      tl.fromTo(root + " #s3-l1", { opacity: 0, x: -26 },
-        { opacity: 1, x: 0, duration: .42, ease: "power3.out" }, 1.5);
-      tl.fromTo(root + " #s3-l2", { opacity: 0, x: -34 },
-        { opacity: 1, x: 0, duration: .48, ease: "expo.out" }, 1.6);
+      // the real credential lands with weight, exactly on "Shopify premier partner"
+      tl.fromTo(root + " #s3-badge", { opacity: 0, y: 54, scale: .9 },
+        { opacity: 1, y: 0, scale: 1, duration: .62, ease: "back.out(1.35)" }, 1.3);
+      tl.fromTo(root + " #s3-spp", { opacity: 0, scale: 1.08 },
+        { opacity: 1, scale: 1, duration: .46, ease: "power3.out" }, 1.46);
       tl.fromTo(root + " #s3-chip1", { opacity: 0, y: 24, scale: .9 },
         { opacity: 1, y: 0, scale: 1, duration: .44, ease: "back.out(1.6)" }, 2.6333333333333333);
       tl.fromTo(root + " #s3-chip2", { opacity: 0, y: 20 },

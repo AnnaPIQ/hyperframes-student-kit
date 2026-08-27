@@ -10,7 +10,8 @@ Most ecommerce coaching is one person selling you the playbook from the one bran
 they happened to run — years ago. EcomIQ is the coaching arm of a Shopify Premier
 Partner, so you get a whole team working inside dozens of live brands every day.
 
-- **Hook (2-part cold open):** "ONE PERSON." (white) → "5–10 YEARS AGO." (flame — the pain/turn)
+- **Cold open:** the founder himself, straight to camera — no card
+- **First graphic:** "Based on one brand" → "5–10 YEARS AGO." (both white, per direction)
 - **Turn / payoff:** "So — which do you want?" → one opinion vs a whole team
 - **CTA:** "Book a call." / flame gradient pill "Tap the link below →"
 
@@ -70,7 +71,7 @@ The EcomIQ lockup is pinned top-left (60px) in the **root** composition, so it
 persists across all 73.3s, over both the A-roll and every card. A navy scrim sits
 over the A-roll so the white lockup always separates from the blue-lit backdrop.
 
-## Structure — 11 graphic beats interleaved with 6 founder segments
+## Structure — 9 graphic beats + a client b-roll beat, interleaved with 7 founder segments
 
 The A-roll is **one continuous muted clip on track 0** for the whole piece; the
 graphic cards sit above it and reveal it at each seam. That guarantees lip-sync can
@@ -78,12 +79,12 @@ never drift, because the picture is never re-cut against the audio.
 
 | # | Beat | t | Lands on |
 |---|---|---|---|
-| S01 | Cold open A — "ONE PERSON." + a one-bar chart, 5 slots empty | 0.00–4.87 | "just one person" |
-| S02 | Cold open B — brand card greys out, struck, **"5–10 YEARS AGO."** in flame | 4.87–8.97 | "five or ten years ago" |
+| — | **Founder cold open** — the ad opens on his face, no card | 0.00–4.87 | "most ecommerce coaching is just one person" |
+| S02 | Brand card greys out, struck through, **"5–10 YEARS AGO."** | 4.87–8.97 | "five or ten years ago" |
 | — | **Founder** | 8.97–12.30 | "this is why EcomIQ is completely different" |
-| S03 | Partner reveal — Shopify Premier Partner badge + Pacific IQ chip | 12.30–16.37 | "Shopify premier partner" |
+| S03 | Partner reveal — the real **Shopify Premier Partner badge** on a white credential card + Pacific IQ chip | 12.30–16.37 | "Shopify premier partner" |
 | S04 | Comparison bars — one person's take (struck) vs a whole team | 16.37–20.70 | "an entire team" |
-| S05 | **Logo wall** — 21 real client marks drifting up behind the type | 20.70–24.63 | "dozens" |
+| S05 | **Logo wall** — 21 real client marks drifting up, no type at all | 20.70–24.63 | "dozens" |
 | — | **Founder** | 24.63–28.67 | "now here is how it works" |
 | S06 | Step 01 — strategy session; flame row "holding growth back" | 28.67–34.43 | "map out your business" |
 | — | **Founder** | 34.43–36.43 | "two specialist…" |
@@ -91,13 +92,23 @@ never drift, because the picture is never re-cut against the audio.
 | — | **Founder** | 42.20–45.07 | "full Slack support" |
 | S08 | Step 03 — 7-node founder network, links draw between them | 45.07–51.60 | "a community of founders" |
 | — | **Founder** | 51.60–54.53 | "every single strategy" |
-| S09 | Provenance flow — client work → **8 & 9 figure** → a dashed, unlit "you" | 54.53–59.40 | "eight and nine figure brands" |
+| — | **Client b-roll** — Sweet E's then Dryft, real footage with brand chips | 54.53–59.40 | "pulled from real client work… eight and nine figure brands" |
 | — | **Founder** | 59.40–61.43 | "before it comes anywhere near you" |
-| S10 | Payoff — **callback**: S01's lone struck bar vs the lit team cluster | 61.43–65.33 | "a whole team's opinion" |
+| S10 | Payoff — a lone struck bar vs the lit team cluster | 61.43–65.33 | "a whole team's opinion" |
 | S11 | CTA end card — icon, "Book a call.", flame pill; **holds 5.4s** | 65.33–73.30 | "tap the link… book a call" |
 
-**Callbacks:** the lone muted bar from S01 returns in S10 still struck through; the
-strike-through motif runs S02 → S04 → S10; the 01/02/03 spine ties S06–S08 together.
+**Callbacks:** the strike-through motif runs S02 → S04 → S10; the muted-bar-vs-team
+contrast set up in S04 returns as the S10 payoff; the 01/02/03 spine ties S06–S08
+together.
+
+**Client b-roll (54.53–59.40)** reuses two portfolio clips from the
+`aug-general-ad-5` branch (~18–20s in that build): Sweet E's and Dryft. They're
+cover-cropped per format and slowed ~1.23× so the pair fills the slot to the frame —
+a `<video>` that runs out of source black-frames, so the arithmetic has to be exact.
+Each clip is a `<video>` in the **root** composition (never inside a sub-composition)
+with an untimed wrapper carrying the drift, per render-contract #9. They cut out hard
+rather than fading — a fade ghosts the A-roll through for a few frames — with the seam
+streak carrying the cut.
 
 The **S05 logo wall** reuses the prepped client marks from the `aug-general-ad-5`
 branch (`assets/logos/`, 21 white knockouts produced by `scripts/prep-logo-wall.sh`
@@ -115,8 +126,8 @@ Partner badge is deliberately excluded** from this wall.
 - **No hard cuts.** Every seam is a cut-the-curve whip: the card rides in from
   +170px under `blur(30px)` and rides out the opposite way, revealing the A-roll.
   Axis alternates y / x across the 11 seams so no move repeats back to back.
-- A light streak crosses each seam; 4 bigger white→flame streaks mark the act breaks
-  (8.97 / 28.67 / 54.53 / 65.33).
+- A light streak crosses each seam; 5 bigger white→flame streaks mark the act breaks
+  (8.97 / 28.67 / 54.53 / 59.40 / 65.33), including both edges of the b-roll beat.
 - Numbers count up. Elements settle with a slight overshoot (`back.out`).
 - Every tween lands on a 1/30s boundary — steep eases alias off-grid.
 - No `repeat: -1` anywhere; ambient loops use finite `yoyo` counts.
@@ -132,7 +143,9 @@ brand count appears anywhere.
 
 ## What NOT to do
 
-- No second hot accent — flame is the only one, and only for pain or the CTA.
+- No second hot accent — flame is the only one, and only for pain or the CTA. (Note:
+  the S02 headline is white on direction, not flame, so flame now appears only as the
+  strike-through marks, the step spine, and the CTA.)
 - No italic serif emphasis (see the type note above).
 - Never animate the `<video>`; the wrapper `#founder-wrap` takes the push.
 - No CDN GSAP, no Google-Fonts link, no render-time fetch of any kind.

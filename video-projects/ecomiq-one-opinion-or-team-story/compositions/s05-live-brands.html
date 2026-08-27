@@ -53,13 +53,8 @@
           <img src="assets/logos/unnamed-jpg-b.png" alt="" />
         </div>
         <div class="wall-fade"></div>
-        <div class="wall-scrim"></div>
       </div>
       <div class="content">
-        <div class="eyebrow" id="s5-eb">Working inside</div>
-        <div class="h1" id="s5-slam">DOZENS</div>
-        <div class="h3 cool" id="s5-sub">of live brands</div>
-        <div class="tagrow" id="s5-live"><span class="tag" id="s5-livetag"><span class="dot" id="s5-pulse"></span>live &middot; every single day</span></div>
       </div>
       <div class="streak" id="s05-live-brands-streak"></div>
     </div>
@@ -158,12 +153,7 @@
     [data-composition-id="s05-live-brands"] .wall-fade { position: absolute; inset: 0; pointer-events: none; background:
         linear-gradient(180deg, #06284C 0%, #06284C 14%, rgba(6,40,76,0) 27%),
         linear-gradient(0deg,  #06284C 0%, #06284C 5%, rgba(6,40,76,0) 16%); }
-    /* keeps the headline legible over the marks */
-    [data-composition-id="s05-live-brands"] .wall-scrim { position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(ellipse 70% 30% at 40% 54%,
-        rgba(6,40,76,.98) 0%, rgba(6,40,76,.92) 44%, rgba(6,40,76,.58) 68%, rgba(6,40,76,0) 86%); }
-    [data-composition-id="s05-live-brands"] .tagrow { display: flex; margin-top: 23px; }
-    [data-composition-id="s05-live-brands"] #s5-pulse { color: #FF4C32; }
+
     </style>
 
     <!-- GSAP vendored locally — a CDN script cert-fails in the render env -->
@@ -192,21 +182,10 @@
       // the wall drifts up for the whole beat — dozens of real brands, always moving
       tl.fromTo(root + " #s5-track", { y: 0 },
         { y: -470, duration: 3.9333, ease: "none" }, 0);
+      // with no type competing, the marks can carry full strength
       tl.fromTo(root + " #s5-track img", { opacity: 0, y: 24 },
-        { opacity: .34, y: 0, duration: .42, ease: "power2.out", stagger: .008 }, 0.06666666666666667);
-      tl.fromTo(root + " #s5-eb", { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: .42, ease: "power2.out" }, 0.06666666666666667);
-      // HERO — "dozens"
-      tl.fromTo(root + " #s5-slam", { opacity: 0, scale: .74, y: 30 },
-        { opacity: 1, scale: 1, y: 0, duration: .46, ease: "expo.out" }, 1.1);
-      tl.fromTo(root + " #s5-sub", { opacity: 0, y: 22 },
-        { opacity: 1, y: 0, duration: .4, ease: "power3.out" }, 1.2400000000000002);
-      // the marks lift as the number lands
-      tl.to(root + " #s5-track img", { opacity: .48, duration: .5, ease: "power2.out" }, 1.1);
-      tl.fromTo(root + " #s5-live", { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: .42, ease: "power2.out" }, 2.566666666666667);
-      tl.fromTo(root + " #s5-pulse", { scale: .6 }, { scale: 1.35, duration: .42,
-        ease: "sine.inOut", yoyo: true, repeat: 3 }, 2.666666666666667);
+        { opacity: .42, y: 0, duration: .42, ease: "power2.out", stagger: .008 }, 0.06666666666666667);
+      tl.to(root + " #s5-track img", { opacity: .64, duration: .8, ease: "power2.out" }, 1.1);
 
       // in-scene light streak — motion blur across the seam, never a hard cut
       tl.fromTo(root + " #s05-live-brands-streak", { xPercent: -60, opacity: 0, scaleX: .6 },
