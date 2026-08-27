@@ -2,35 +2,34 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1080, height=1920" />
-    <title>ecomiq-how-it-works-ad — 9:16</title>
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>ecomiq-how-it-works-ad — 4:5</title>
     <!-- GSAP vendored locally — a CDN <script> cert-fails in the render env and
          freezes the render (docs/LESSONS.md, render-breaking) -->
     <script src="assets/vendor/gsap.min.js"></script>
     <link rel="stylesheet" href="assets/brand-tokens.css" />
     <link rel="stylesheet" href="assets/ad.css" />
     <style>
-      /* ---- 9:16 geometry (1080x1920) — the only thing that differs per ratio.
-             --ov-top is 5.2% of frame height so the bug and PiP read as a pair. */
-      html, body { width: 1080px; height: 1920px; }
+      /* ---- 4:5 geometry (1080x1350) — derived from the 1:1 master — see EDIT-PLAN.md §6 */
+      html, body { width: 1080px; height: 1350px; }
       :root {
-        --ov-top: 100px;
-        --ov-side: 56px;
-        --bug-w: 260px;
-        --pip-d: 240px;
+        --ov-top: 70px;
+        --ov-side: 54px;
+        --bug-w: 250px;
+        --pip-d: 230px;
         --card-logo: 497px;   /* 46% of 1080 */
-        --card-gap: 34px;
+        --card-gap: 32px;
       }
     </style>
   </head>
   <body>
     <div
       id="root"
-      data-composition-id="ecomiq-how-it-works-ad"
+      data-composition-id="ecomiq-how-it-works-ad-45"
       data-start="0"
       data-duration="76.433333"
       data-width="1080"
-      data-height="1920"
+      data-height="1350"
     >
       <!-- PICTURE BED — montage, once, per-shot retimed. 2143 frames.
            Hard cuts are baked into the bed. No class="clip" on <video>. -->
@@ -39,8 +38,8 @@
         class="montage"
         data-start="0"
         data-duration="71.433333"
-        data-track-index="0"
-        src="assets/montage-916.mp4"
+        data-track-index="20"
+        src="assets/montage-45.mp4"
         muted
         playsinline
       ></video>
@@ -52,7 +51,7 @@
           class="clip"
           data-start="0"
           data-duration="71.433333"
-          data-track-index="1"
+          data-track-index="21"
           src="assets/ecomiq-logo-white.svg"
           alt="EcomIQ"
         />
@@ -64,7 +63,7 @@
           id="pip"
           data-start="0"
           data-duration="71.433333"
-          data-track-index="2"
+          data-track-index="22"
           src="assets/pip.mp4"
           muted
           playsinline
@@ -77,7 +76,7 @@
         class="clip card"
         data-start="71.05"
         data-duration="5.383333"
-        data-track-index="3"
+        data-track-index="23"
       >
         <img id="card-logo" class="card-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div id="card-rule" class="card-rule"></div>
@@ -90,7 +89,7 @@
         id="vo"
         data-start="0"
         data-duration="76.433333"
-        data-track-index="4"
+        data-track-index="24"
         src="assets/vo.wav"
         data-volume="1"
       ></audio>
@@ -102,7 +101,7 @@
         id="music"
         data-start="0"
         data-duration="76.433333"
-        data-track-index="5"
+        data-track-index="25"
         src="assets/music-bed.wav"
         data-volume="0"
       ></audio>
@@ -131,7 +130,7 @@
       // Hold the card to the end of the VO (render contract rule 7).
       tl.set("#card-pill", { opacity: 1 }, 76.433333);
 
-      window.__timelines["ecomiq-how-it-works-ad"] = tl;
+      window.__timelines["ecomiq-how-it-works-ad-45"] = tl;
     </script>
   </body>
 </html>

@@ -1,0 +1,11 @@
+# Derived render beds — regenerate with `bash scripts/build-assets.sh`.
+# Sources live in the repo-root assets/incoming/ (also gitignored).
+assets/vo.wav
+assets/music-bed.wav
+assets/pip.mp4
+assets/montage-916.mp4
+assets/montage-11.mp4
+assets/montage-45.mp4
+
+# Build scratch
+.build-work/

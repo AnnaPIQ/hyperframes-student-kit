@@ -1,6 +1,7 @@
 # EcomIQ — "How It Works" VO ad · EDIT PLAN
 
-Status: **awaiting approval — nothing rendered yet.**
+Status: **approved and built.** Both decisions signed off (trim the dead air,
+retime the montage to fit). Rendered and frame-verified at all three ratios.
 Branch `claude/ecomiq-short-form-ad-8sw5cx`. Slug `ecomiq-how-it-works-ad`.
 
 ---
@@ -96,11 +97,18 @@ the obvious alternative is the closing question at **65.760 s**, which would giv
 
 ## 3. Two decisions I need you to confirm
 
-### (a) Trim the 2.054 s of silence off the head of the VO — **recommended**
-The file opens on 2 s of nothing. On paid social that's the whole hook window. I'd
-start the VO 1.854 s in, so speech lands at **0.200 s**. Everything downstream
-shifts earlier by 1.854 s. Numbers in §4 assume this. Say no and I'll add 1.854 s
-back to every figure (ad becomes 78.30 s).
+### (a) Trim the silence off the head of the VO — **approved**
+The file opened on 2 s of nothing. On paid social that's the whole hook window, so
+the VO starts **1.931 s** in and speech lands at **0.198 s**.
+
+**Corrected during the build:** the plan first said 1.854 s. `speaker-raw.mov` has
+its **audio stream starting at PTS 0.074563** (`start_pts=3579 @ 1/48000`) while the
+video starts at 0. Every transcript timing was measured off a straight `-vn` WAV
+dump, which discards that offset — so transcript time *t* is .mov audio PTS
+*t + 0.074563*. Trimming 1.854 s on the PTS timeline left the trigger line 2 frames
+late (measured at 71.510 s, not 71.433 s). Both trims now run on the .mov PTS
+timeline at **1.931063 s**, which keeps A/V locked exactly as the source has it and
+puts the trigger line at **71.4333 s — verified in the delivered audio.**
 
 ### (b) The montage is cut for a 30 s ad and the VO is 76 s — retime is heavy
 27.733 s of live picture has to cover 71.433 s. That's **2.576× uniform**, i.e.
@@ -139,7 +147,7 @@ already saw that fail.
 |---|--:|--:|---|
 | Montage in | 0.000 | 0 | shot 0, hard cut in |
 | Brand bug + PiP fade in | 0.000 → 0.400 | 0–12 | both, together, inside first 0.5 s |
-| VO speech starts | 0.200 | 6 | after head trim |
+| VO speech starts | 0.198 | 6 | after head trim |
 | 36 hard cuts | per §5 table | | no dissolves, no whips |
 | **Dissolve to end card starts** | **71.083** | 2132 | 0.35 s, over the 0.681 s silence gap |
 | **End card fully up** | **71.433** | 2143 | resolves exactly as "Tap" hits |
@@ -277,6 +285,24 @@ Two options, both lossy:
 **Taking the second** — less material discarded, and the 1:1 master is already framed
 centre-safe. Flagging it because it is a derivation, not a supplied master. A native
 4:5 export of the montage would beat it.
+
+### ⚠️ The montage carries the speaker in two of its own shots
+Verified by pulling one frame per shot for all 37:
+
+- **Shot 23** (on screen **40.100 → 43.367 s**) is a pale UI screen recording with
+  the master's **own circular headshot inset** in the middle of frame. For those
+  3.3 s there are two circular speaker insets on screen — mine top right, the
+  master's centre. Nothing in the composition can remove it; it is baked into the
+  montage.
+- **Shot 24** (**43.367 → 45.833 s**) is a stacked pair of rectangular talking-head
+  windows. Less of a clash, but the speaker is in the picture there too.
+
+Left as-is because the brief has the PiP riding along for the whole montage. Say the
+word and I can duck the PiP out across shot 23 — it costs one extra fade in each
+ratio, though it breaks the "speaker rides along" continuity.
+
+Shot 23 is also where the white brand bug was hardest to read, which is why the bug
+now carries a soft drop-shadow (no box).
 
 ---
 

@@ -1,0 +1,126 @@
+/* ===========================================================================
+   ecomiq-how-it-works-ad — shared structure for all three ratios.
+
+   Every ratio uses this same file and only overrides the geometry custom
+   properties below. Timeline, card and overlay behaviour are identical across
+   9:16 / 1:1 / 4:5 — see EDIT-PLAN.md §6.
+
+   Geometry each composition MUST set:
+     --ov-top     shared top offset for the bug + PiP (they read as a pair)
+     --ov-side    left inset for the bug, right inset for the PiP
+     --bug-w      brand bug width
+     --pip-d      PiP diameter
+     --card-logo  end-card lockup width
+     --card-gap   end-card stack gap
+   =========================================================================== */
+
+/* LOCAL fonts — no network dependency at render time (LESSONS: no CDN fetches) */
+@font-face {
+  font-family: 'Rethink Sans';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: block;
+  /* Relative to THIS stylesheet (assets/), not to the document — so the same
+     file works from index.html at the root and from compositions/*.html. */
+  src: url(fonts/RethinkSans.woff2) format('woff2');
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  overflow: hidden;
+  background: var(--brand-black);
+  font-family: 'Rethink Sans', system-ui, sans-serif;
+  color: var(--brand-white);
+}
+
+/* --- picture bed ---------------------------------------------------------- */
+/* The retimed montage. Hard cuts are baked into the bed, so the composition
+   sees one continuous clip — there is no scene-to-scene transition to author. */
+.montage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- brand bug ------------------------------------------------------------ */
+/* Non-`clip` positioned wrapper. The render engine repositions elements marked
+   `clip`, which drifts a corner lockup (LESSONS: Layout). The wrapper owns the
+   position; the timed <img> inside just fills it. */
+.bug-wrap {
+  position: absolute;
+  top: var(--ov-top);
+  left: var(--ov-side);
+  width: var(--bug-w);
+  z-index: 20;
+}
+.bug-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* The montage runs from near-black to blown-out white (shot 23 is a pale UI
+     screen recording), so an unprotected white lockup disappears on the light
+     shots. A soft shadow costs nothing on the dark ones and keeps the mark
+     readable on every frame. No box — just the shadow. */
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.5))
+          drop-shadow(0 0 2px rgba(0, 0, 0, 0.4));
+}
+
+/* --- speaker PiP ---------------------------------------------------------- */
+/* Circular mask lives on the wrapper, never on the <video> — animating a
+   video's box freezes frames (render contract rule 9). Only the wrapper's
+   opacity is ever animated. The ring is a box-shadow spread so it sits outside
+   the mask instead of eating into the picture. */
+.pip-wrap {
+  position: absolute;
+  top: var(--ov-top);
+  right: var(--ov-side);
+  width: var(--pip-d);
+  height: var(--pip-d);
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 20;
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.55),
+    0 18px 48px -14px rgba(0, 0, 0, 0.6);
+}
+.pip-wrap video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- end card ------------------------------------------------------------- */
+/* Navy ground, one face, one weight, no italics, no second line.
+   Opaque, so it covers the bug and the PiP as it resolves. */
+.card {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  background: var(--brand-navy);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--card-gap);
+}
+.card-logo { display: block; width: var(--card-logo); height: auto; }
+.card-rule {
+  width: 150px;
+  height: 3px;
+  background: var(--brand-flame);
+  transform-origin: 50% 50%;
+}
+.card-pill {
+  font-weight: 700;
+  font-size: calc(var(--card-logo) * 0.082);
+  letter-spacing: -0.01em;
+  color: var(--brand-white);
+  background: var(--brand-flame);
+  padding: 0.62em 1.5em;
+  border-radius: 999px;
+  white-space: nowrap;
+}
