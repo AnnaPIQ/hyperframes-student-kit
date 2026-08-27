@@ -180,46 +180,49 @@
       <div id="bg" class="clip" data-start="0" data-duration="38.6" data-track-index="0"></div>
 
       <!-- ══ B-ROLL ══════════════════════════════════════════════ -->
-      <!-- 03 · "…total sales after they started working with us." — hero -->
-      <video id="s03" class="shot" src="assets/broll/dunes-drone.mp4" muted
-             data-start="6.033" data-duration="2.737" data-track-index="1"></video>
+      <!-- 00 · cold open. The first ~1.05s of Sean's take is him setting up at the
+           recorder, so the silent lead belongs to the strongest shot in the folder. -->
+      <video id="s00" class="shot" src="assets/broll/dunes-drone.mp4" muted
+             data-start="0.000" data-duration="1.950" data-track-index="1"></video>
+      <!-- 03 · "…total sales after they started working with us." -->
+      <video id="s03" class="shot" src="assets/broll/cnc-sparks.mp4" muted
+             data-start="6.033" data-duration="2.537" data-track-index="2"></video>
       <!-- 05 · "When they came to us," -->
       <video id="s05" class="shot" src="assets/broll/incab-dash.mp4" muted
-             data-start="11.733" data-duration="1.717" data-track-index="2"></video>
+             data-start="11.733" data-duration="1.717" data-track-index="3"></video>
       <!-- 06 · "almost everything ran through Facebook." -->
       <video id="s06" class="shot" src="assets/broll/load-test.mp4" muted
-             data-start="13.200" data-duration="1.750" data-track-index="3"></video>
+             data-start="13.200" data-duration="1.750" data-track-index="4"></video>
       <!-- 10a · "A year later," -->
       <video id="s10a" class="shot" src="assets/broll/facility-floor.mp4" muted
-             data-start="21.733" data-duration="1.317" data-track-index="4"></video>
+             data-start="21.733" data-duration="1.317" data-track-index="5"></video>
       <!-- 10b · "sales are up over" -->
-      <video id="s10b" class="shot" src="assets/broll/cnc-sparks.mp4" muted
-             data-start="22.800" data-duration="1.317" data-track-index="5"></video>
+      <video id="s10b" class="shot" src="assets/broll/tablet-locked.mp4" muted
+             data-start="22.800" data-duration="1.317" data-track-index="6"></video>
       <!-- 14 · "This is a real brand with real numbers." -->
       <video id="s14" class="shot" src="assets/broll/radio-guy.mp4" muted
-             data-start="29.567" data-duration="2.516" data-track-index="6"></video>
+             data-start="29.567" data-duration="2.333" data-track-index="7"></video>
 
       <div id="scrim" class="clip" data-start="0" data-duration="38.6" data-track-index="10"></div>
 
       <!-- ══ A-ROLL — Sean to camera ═════════════════════════════
            Each segment's data-start equals its source timecode, and the VO is one
-           continuous track from the same file, so the lips stay locked without an
-           offset. Never re-trim these to a start that differs from their source time. -->
-      <!-- 00 · cold open, into "Up over…" -->
-      <video id="a00" class="aroll" src="assets/aroll45/a00.mp4" muted
-             data-start="0.000" data-duration="1.950" data-track-index="14"></video>
-      <!-- 02 · "That's what happened to Mob Armor's…" -->
+           continuous track from the same file, so the lips stay locked with no offset.
+           Never re-trim these to a start that differs from their source time.
+           Each also starts ~0.2s BEFORE its first word, so his face is settled and
+           readable before he speaks rather than arriving mid-syllable. -->
+      <!-- 02 · "That's what happened to Mob Armor's…" (first word 4.44) -->
       <video id="a02" class="aroll" src="assets/aroll45/a02.mp4" muted
-             data-start="4.400" data-duration="1.883" data-track-index="15"></video>
-      <!-- 04 · "And it wasn't a lucky viral moment. It wasn't a magic ad." -->
+             data-start="4.280" data-duration="2.000" data-track-index="15"></video>
+      <!-- 04 · "And it wasn't a lucky viral moment. It wasn't a magic ad." (first word 8.52) -->
       <video id="a04" class="aroll" src="assets/aroll45/a04.mp4" muted
-             data-start="8.520" data-duration="3.463" data-track-index="16"></video>
-      <!-- 13 · "And that's what the right plan does." -->
+             data-start="8.320" data-duration="3.663" data-track-index="16"></video>
+      <!-- 13 · "And that's what the right plan does." (first word 27.43) -->
       <video id="a13" class="aroll" src="assets/aroll45/a13.mp4" muted
-             data-start="27.500" data-duration="2.317" data-track-index="17"></video>
-      <!-- 15 · "If you wanna see what's possible for yours," -->
+             data-start="27.200" data-duration="2.617" data-track-index="17"></video>
+      <!-- 15 · "If you wanna see what's possible for yours," (first word 31.83) -->
       <video id="a15" class="aroll" src="assets/aroll45/a15.mp4" muted
-             data-start="31.833" data-duration="1.917" data-track-index="18"></video>
+             data-start="31.650" data-duration="2.100" data-track-index="18"></video>
 
       <!-- ══ TEXTURE (over footage, under type) ══════════════════ -->
       <div id="grid" class="clip" data-start="0" data-duration="38.6" data-track-index="19"></div>
@@ -231,7 +234,7 @@
 
       <!-- ══ STAT CARDS ══════════════════════════════════════════ -->
       <!-- A · 1.700 → 4.400 · "…500% in a single year." -->
-      <div id="cardA" class="card clip" data-start="1.700" data-duration="2.950" data-track-index="21">
+      <div id="cardA" class="card clip" data-start="1.700" data-duration="2.830" data-track-index="21">
         <div class="eyebrow">Total sales</div>
         <div class="stat xl" id="statA"><span class="bloom"></span>500%</div>
         <div class="rule" id="ruleA"></div>
@@ -268,7 +271,7 @@
       </div>
 
       <!-- E · 25.233 → 27.500 · the four channels resolve -->
-      <div id="cardE" class="card clip" data-start="25.233" data-duration="2.517" data-track-index="24">
+      <div id="cardE" class="card clip" data-start="25.233" data-duration="2.217" data-track-index="24">
         <div class="eyebrow">Working together</div>
         <div class="stat lg" id="statE"><span class="bloom"></span>4</div>
         <div class="dots" id="eDots">
@@ -321,17 +324,29 @@
             { y: -140, opacity: 0, filter: "blur(" + BLUR + "px)", duration: OUT_D, ease: "power2.in" },
             tOut - 0.10);
         }
+        /* ── Face cut ────────────────────────────────────────────────────────
+           A-roll does NOT get the whip. The whip runs 0.45s, and Sean starts speaking
+           the moment he cuts in, so the slide-and-blur was covering his first words —
+           you heard speech over an unreadable face, which reads as bad lip sync even
+           though the A/V is frame-accurate. His face is readable in 4 frames instead. */
+        function beatFace(sel, tIn, tOut) {
+          tl.fromTo(sel, { opacity: 0, filter: "blur(12px)" },
+            { opacity: 1, filter: "blur(0px)", duration: 0.13, ease: "power2.out" }, tIn);
+          tl.to(sel, { opacity: 0, filter: "blur(12px)", duration: 0.10, ease: "power2.in" },
+            tOut - 0.06);
+        }
         // Slow push. Sean is a locked-off talking head, so every A-roll beat gets one —
         // Law 4: a static frame is a dead frame.
         function push(sel, tIn, dur, to) {
           tl.fromTo(sel, { scale: 1 }, { scale: to, duration: dur, ease: "none" }, tIn);
         }
 
-        /* ── 00 · cold open on Sean ─────────────────────────────────────── */
-        // The ad opens on a face, not a card: it's a case study, and a person saying it is
-        // the proof. His first word lands at 1.38; the card takes the number over at 1.70.
-        beat("#a00", 0.000, 1.700);
-        push("#a00", 0.000, 1.700, 1.03);
+        /* ── 00 · cold open ─────────────────────────────────────────────── */
+        // Sean's take opens with him setting up at the recorder — head down, mic not yet
+        // raised — so the silent 1.7s lead goes to the strongest shot in the folder
+        // instead. He enters properly at 4.280, introducing his own client.
+        beat("#s00", 0.000, 1.700);
+        push("#s00", 0.000, 1.700, 1.07);
         tl.fromTo("#logo-slot", { opacity: 0, y: -18 },
           { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.25);
 
@@ -348,7 +363,7 @@
           { xPercent: 40, opacity: 1, scaleX: 1.4, duration: 0.20, ease: "power3.in" }, 1.60)
           .to("#streakA", { xPercent: 130, opacity: 0, duration: 0.22, ease: "power3.out" }, 1.80);
 
-        beat("#cardA", 1.700, 4.400);
+        beat("#cardA", 1.700, 4.280);
         // Numeral snaps 0.20s AHEAD of the spoken "500%" at 1.90 — the visual leads, so it
         // reads as inevitable rather than reactive.
         tl.fromTo("#statA", { scale: 1.34, opacity: 0 },
@@ -362,20 +377,20 @@
         tl.fromTo("#chipA", { y: 22, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.40, ease: "power2.out" }, 3.450);
 
-        /* ── 02 · back to Sean for the attribution line ─────────────────── */
-        beat("#a02", 4.400, 6.033);
-        push("#a02", 4.400, 1.633, 1.03);
+        /* ── 02 · Sean's entrance, 0.16s before his first word ──────────── */
+        beatFace("#a02", 4.280, 6.033);
+        push("#a02", 4.280, 1.753, 1.03);
 
-        /* ── 03 · hero b-roll on the payoff ─────────────────────────────── */
-        beat("#s03", 6.033, 8.520);
-        push("#s03", 6.033, 2.487, 1.08);
+        /* ── 03 · b-roll on the payoff ──────────────────────────────────── */
+        beat("#s03", 6.033, 8.320);
+        push("#s03", 6.033, 2.287, 1.06);
 
         /* ── 04 · Sean's direct-address block ───────────────────────────── */
         // The two "it wasn't…" lines are opinion, so they belong on a face. 3.2s is long at
         // this cut rate, so the sentence boundary at 10.16 gets a punch-in: a deliberate jump
         // hidden inside a 3-frame blur, which re-energises the shot without a second angle.
-        beat("#a04", 8.520, 11.733);
-        tl.fromTo("#a04", { scale: 1 }, { scale: 1.045, duration: 1.640, ease: "none" }, 8.520);
+        beatFace("#a04", 8.320, 11.733);
+        tl.fromTo("#a04", { scale: 1 }, { scale: 1.045, duration: 1.840, ease: "none" }, 8.320);
         tl.to("#a04", { filter: "blur(14px)", duration: 0.060, ease: "power2.in" }, 10.100);
         tl.set("#a04", { scale: 1.16 }, 10.160);
         tl.to("#a04", { filter: "blur(0px)", duration: 0.100, ease: "power2.out" }, 10.160);
@@ -454,7 +469,7 @@
           { y: 0, opacity: 1, duration: 0.32, ease: "power2.out" }, 24.320);
 
         /* ── 12 · CARD E — four channels ────────────────────────────────── */
-        beat("#cardE", 25.233, 27.500);
+        beat("#cardE", 25.233, 27.200);
         tl.fromTo("#statE", { scale: 1.26, opacity: 0 },
           { scale: 1, opacity: 1, duration: 0.36, ease: "expo.out" }, 25.300);
         // All four already lit — the payoff of the diagram built in beats 07–09.
@@ -465,16 +480,16 @@
         tl.fromTo("#subE", { y: 22, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.34, ease: "power2.out" }, 26.100);
 
-        /* ── 13 · Sean draws the conclusion ─────────────────────────────── */
-        beat("#a13", 27.500, 29.567);
-        push("#a13", 27.500, 2.067, 1.035);
+        /* ── 13 · Sean draws the conclusion, 0.23s before his first word ── */
+        beatFace("#a13", 27.200, 29.567);
+        push("#a13", 27.200, 2.367, 1.035);
 
         /* ── 14 · a real customer, to land "real brand" ─────────────────── */
-        beat("#s14", 29.567, 31.833);
+        beat("#s14", 29.567, 31.650);
 
-        /* ── 15 · Sean hands off to the CTA ─────────────────────────────── */
-        beat("#a15", 31.833, 33.500);
-        push("#a15", 31.833, 1.667, 1.03);
+        /* ── 15 · Sean hands off to the CTA, 0.18s before his first word ── */
+        beatFace("#a15", 31.650, 33.500);
+        push("#a15", 31.650, 1.850, 1.03);
 
         /* ── 16 · end card — the piece stops moving and lets the CTA land ── */
         // Top-left logo hands off to the centred lockup, so the mark is never doubled.
