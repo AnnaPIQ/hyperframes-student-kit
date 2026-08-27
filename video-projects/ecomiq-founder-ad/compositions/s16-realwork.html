@@ -44,12 +44,10 @@
     [data-composition-id="s16-realwork"] #j1 { top: 0; }
     [data-composition-id="s16-realwork"] #j2 { top: 102px; }
     [data-composition-id="s16-realwork"] #j3 { top: 204px; }
-    [data-composition-id="s16-realwork"] .lock { position: absolute; left: 0; right: 0; top: 862px; text-align: center; }
-    [data-composition-id="s16-realwork"] .lock .mark { display: inline-block; vertical-align: middle;
-      width: 54px; height: 54px; border-radius: 14px; margin-right: 22px;
-      background: linear-gradient(140deg, #FF4C32, #FFA63D); box-shadow: 0 0 30px rgba(255,76,50,.5); }
-    [data-composition-id="s16-realwork"] .lock .wm { display: inline-block; vertical-align: middle;
-      font-weight: 800; font-size: 92px; letter-spacing: -.035em; color: #FFFFFF; }
+    [data-composition-id="s16-realwork"] .lock { position: absolute; left: 50%; top: 856px;
+      width: 540px; margin-left: -270px; }
+    [data-composition-id="s16-realwork"] .lock img { width: 540px; height: auto; display: block;
+      filter: drop-shadow(0 8px 26px rgba(0,0,0,.55)); }
     [data-composition-id="s16-realwork"] .line { position: absolute; left: 90px; right: 90px; top: 1002px;
       text-align: center; font-weight: 600; font-size: 40px; color: #cfe0f4; }
     [data-composition-id="s16-realwork"] .line em { font-family: 'Hedvig Letters Serif', Georgia, serif;
@@ -66,7 +64,7 @@
           <div class="job" id="j2"><i></i><div class="t">Paid media overhaul</div><div class="m">8-figure</div></div>
           <div class="job" id="j3"><i></i><div class="t">Margin recovery</div><div class="m">8-figure</div></div>
         </div>
-        <div class="lock"><span class="mark"></span><span class="wm">Pacific IQ</span></div>
+        <div class="lock"><img src="assets/pacific-iq-logo-white.png" alt="Pacific IQ" /></div>
         <div class="line">the <em>8- &amp; 9-figure</em> brand agency</div>
       </div>
       <div class="edge edge-t"></div>
@@ -96,10 +94,8 @@
       // ...then compress toward the agency that produced them
       tl.to(S+'.deck', { y: -30, scale: .88, opacity: .22, duration: .60, ease: 'power2.inOut' }, 1.30);
       // lockup lands on the VO word "Pacific" (local 1.58)
-      tl.fromTo(S+'.lock .mark', { opacity: 0, scale: .3, rotation: -30 },
-        { opacity: 1, scale: 1, rotation: 0, duration: .48, ease: 'back.out(2)' }, 1.58);
-      tl.fromTo(S+'.lock .wm', { opacity: 0, y: 26 },
-        { opacity: 1, y: 0, duration: .55, ease: 'expo.out' }, 1.70);
+      tl.fromTo(S+'.lock', { opacity: 0, y: 28, scale: .94 },
+        { opacity: 1, y: 0, scale: 1, duration: .55, ease: 'back.out(1.5)' }, 1.58);
       tl.fromTo(S+'.line', { opacity: 0, y: 18 },
         { opacity: 1, y: 0, duration: .50, ease: 'power2.out' }, 2.44);
       // EXIT — matches the incoming founder cut: body lifts with 30px blur while the
