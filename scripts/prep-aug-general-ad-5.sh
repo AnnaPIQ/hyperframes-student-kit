@@ -5,7 +5,10 @@
 #
 #   bash scripts/prep-aug-general-ad-5.sh <source.mp4|mov>
 #
-# The source is a single continuous 1920x1080 @25fps take. Silence analysis
+# The source is a single continuous 3840x2160 ProRes 422 10-bit @25fps take.
+# Every output below is a PURE CROP of that master — no scaling anywhere — so
+# the delivery resolution is decided by the renderer, not baked in.
+# Silence analysis
 # (ffmpeg silencedetect, -34dB/0.28s) puts speech at 1.892s -> 38.087s, so we
 # trim 1.75s off the head (keeping a breath) and hold 1.16s past the last word.
 #
@@ -15,8 +18,9 @@
 #   aug5-vo.m4a           stereo AAC         the voice track for the mixer
 #
 # Crop windows are centred on the speaker, who sits at x ~= 48.8% of frame:
-#   9:16  608x1080 @ x=632  -> upscaled 1.78x to 1080x1920 (lanczos + unsharp)
-#   1:1  1080x1080 @ x=396  -> native pixels, no resample
+#   9:16  1216x2160 @ x=1266   (1216px is ALL the horizontal detail a 9:16
+#                              window of a 16:9 frame can contain)
+#   1:1   2160x2160 @ x=794    full-height square, true 4K
 # =============================================================================
 set -euo pipefail
 cd "$(dirname "$0")/.." || exit 1
@@ -29,19 +33,19 @@ DUR=37.5         # 1125 frames @30fps; last word lands at 36.34, 1.16s ring-out
 [ -f "$SRC" ] || { echo "source not found: $SRC" >&2; exit 1; }
 mkdir -p "$DEST"
 
-echo "▶ 9:16  1080x1920 (crop 608x1080 @632, lanczos + unsharp)"
+echo "▶ 9:16  crop 1216x2160 @1266 out of the 4K master (pure crop, no resample)"
 ffmpeg -nostdin -y -v error -ss "$IN" -t "$DUR" -i "$SRC" \
-  -an -vf "crop=608:1080:632:0,scale=1080:1920:flags=lanczos,unsharp=5:5:0.55:5:5:0.0,format=yuv420p" \
-  -r 30 -c:v libx264 -preset slow -crf 17 -movflags +faststart \
+  -an -vf "crop=1216:2160:1266:0,format=yuv420p" \
+  -r 30 -c:v libx264 -preset slow -crf 16 -movflags +faststart \
   "$DEST/aug5-aroll-9x16.mp4"
 
-echo "▶ 1:1   1080x1080 (crop 1080x1080 @396, native pixels)"
+echo "▶ 1:1   crop 2160x2160 @794 out of the 4K master (pure crop, no resample)"
 ffmpeg -nostdin -y -v error -ss "$IN" -t "$DUR" -i "$SRC" \
-  -an -vf "crop=1080:1080:396:0,format=yuv420p" \
-  -r 30 -c:v libx264 -preset slow -crf 17 -movflags +faststart \
+  -an -vf "crop=2160:2160:794:0,format=yuv420p" \
+  -r 30 -c:v libx264 -preset slow -crf 16 -movflags +faststart \
   "$DEST/aug5-aroll-1x1.mp4"
 
-echo "▶ VO    stereo AAC"
+echo "▶ VO    stereo AAC (from the master's 24-bit PCM)"
 ffmpeg -nostdin -y -v error -ss "$IN" -t "$DUR" -i "$SRC" \
   -vn -c:a aac -b:a 192k -movflags +faststart \
   "$DEST/aug5-vo.m4a"
@@ -58,8 +62,8 @@ done
 #
 # Both sources are phone footage stored landscape with no rotation metadata, so
 # they need an explicit 90° clockwise rotate (transpose=1). After the rotate a
-# 1920x1080 source is exactly 1080x1920 — native fit for the 9:16, and the 1:1
-# takes a 1080x1080 window pulled up from centre to keep faces and product in.
+# 3840x2160 master is exactly 2160x3840 — native fit for the 9:16, and the 1:1
+# takes a 2160x2160 window pulled up from centre to keep faces and product in.
 # Audio is stripped: the A-roll VO keeps running underneath.
 # -----------------------------------------------------------------------------
 prep_broll() {   # <src> <in> <dur> <slug> <square-y>
@@ -68,17 +72,17 @@ prep_broll() {   # <src> <in> <dur> <slug> <square-y>
   echo "▶ b-roll $slug  9:16 + 1:1  (rotate 90° CW, from ${tin}s +${tdur}s)"
   ffmpeg -nostdin -y -v error -ss "$tin" -t "$tdur" -i "$src" \
     -an -vf "transpose=1,format=yuv420p" -r 30 \
-    -c:v libx264 -preset slow -crf 18 -movflags +faststart \
+    -c:v libx264 -preset slow -crf 16 -movflags +faststart \
     "$DEST/aug5-broll-${slug}-9x16.mp4"
   ffmpeg -nostdin -y -v error -ss "$tin" -t "$tdur" -i "$src" \
-    -an -vf "transpose=1,crop=1080:1080:0:${sqy},format=yuv420p" -r 30 \
-    -c:v libx264 -preset slow -crf 18 -movflags +faststart \
+    -an -vf "transpose=1,crop=2160:2160:0:${sqy},format=yuv420p" -r 30 \
+    -c:v libx264 -preset slow -crf 16 -movflags +faststart \
     "$DEST/aug5-broll-${slug}-1x1.mp4"
 }
 
 BROLL_DIR="${BROLL_DIR:-.media}"
-prep_broll "$BROLL_DIR/broll-sweetes.mp4" 88.5 2.05 sweetes 290
-prep_broll "$BROLL_DIR/broll-dryft.mp4"   21.2 1.85 dryft   250
+prep_broll "$BROLL_DIR/broll-sweetes-master.mp4" 88.5 2.05 sweetes 580
+prep_broll "$BROLL_DIR/broll-dryft-master.mp4"   21.2 1.85 dryft   500
 
 for f in "$DEST"/aug5-broll-*.mp4; do
   [ -e "$f" ] || continue

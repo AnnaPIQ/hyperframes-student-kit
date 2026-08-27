@@ -7,11 +7,11 @@ square feed). Both 30fps, **37.0s**.
 | | |
 |---|---|
 | Compositions | `compositions/aug-general-ad-5-9x16.html`, `compositions/aug-general-ad-5-1x1.html` |
-| Renders | `renders/aug-general-ad-5-9x16.mp4`, `renders/aug-general-ad-5-1x1.mp4` |
+| Renders | `renders/aug-general-ad-5-{9x16,1x1}.mp4` (1080, `--quality high`) + `…-4k.mp4` 2× exports |
 | Footage prep | `scripts/prep-aug-general-ad-5.sh` (repo root) |
-| A-roll | Drive `1PrOe05PfJ1yxNLV7abFliy16ygbYtM-F` — *whats working.mov*, 2.41 GB ProRes |
-| B-roll | Drive `1cF3UR7rqtK27rx9HUh5H7Wt_yipf8fhp` — *Sweet E's Owner Erica - Packing cake*, from 1:27.4 (+3.6s) |
-| B-roll | Drive `1jHsUTe013mdBLjB6VQvJmjzwj0r6cXzT` — *Dryft - Walking in wholesaler*, from 0:21.0 (+2.45s) |
+| A-roll | Drive `1PrOe05PfJ1yxNLV7abFliy16ygbYtM-F` — *whats working.mov*, 2.41 GB **3840×2160 ProRes 422 10-bit** |
+| B-roll | Drive `1cF3UR7rqtK27rx9HUh5H7Wt_yipf8fhp` — *Sweet E's Owner Erica - Packing cake*, 4K, from 1:28.5 (+2.05s) |
+| B-roll | Drive `1jHsUTe013mdBLjB6VQvJmjzwj0r6cXzT` — *Dryft - Walking in wholesaler*, 4K, from 0:21.2 (+1.85s) |
 
 ## The one structural idea
 
@@ -107,36 +107,40 @@ Both were requested directly and are intentional, not oversights:
 - **No grid/crosshair texture over the footage.** It read as dirt on the speaker's
   face, so it survives on the end card only. Vignette and grain remain global.
 
-## Known limitation — the 9:16 is soft
+## Resolution & delivery
 
-Google rate-limited the 2.41 GB ProRes master ("too many users have viewed or
-downloaded this file recently", up to 24h), so both cuts were baked from Drive's
-**1080p transcode** (~1.3 Mbps). Consequences:
+All three sources are **3840×2160**, and every prepped asset is a **pure crop of
+its master — no scaling anywhere**, so the delivery resolution is decided by the
+renderer rather than baked in:
 
-- **1:1 is unaffected** — its crop is a native-pixel 1080×1080 lift, no resample.
-- **9:16 is soft** — a 608×1080 window upscaled 1.78×. Punch-ins are capped at
-  1.12 for that reason (the square would take more).
+| Asset | Crop | Result |
+|---|---|---|
+| A-roll 9:16 | `crop=1216:2160:1266:0` | 1216 px is *all* the horizontal detail a 9:16 window of a 16:9 frame can hold |
+| A-roll 1:1 | `crop=2160:2160:794:0` | full-height square — true 4K |
+| B-roll 9:16 | `transpose=1` only | lands natively at 2160×3840 |
+| B-roll 1:1 | `transpose=1` + `crop=2160:2160` | true 4K |
 
-**To re-bake once the master downloads:**
+**Shipping files** — `--quality high` (CRF 15) at native 1080×1920 / 1080×1080.
+This is the right size for Meta feed and Reels, and the footage is now a *down*scale
+rather than the 1.78× upscale of the earlier proxy build.
+
+**2× exports** — `…-4k.mp4` via `--resolution portrait-4k` / `square-4k`:
+
+- **1:1 at 2160×2160 is genuinely 4K** end to end.
+- **9:16 at 2160×3840 upscales the footage.** The graphics, logo wall, type and
+  end card all render at true 2×, but the A-roll only carries 1216 px of real
+  width. Use it for archival or for platforms that reward a larger file; the
+  1080 version is not visibly worse on a phone.
+
+### The prepped A-roll crops are gitignored
+
+At 143 MB and 250 MB they exceed GitHub's 100 MB per-file hard limit. They are
+fully reproducible:
 
 ```bash
-.media/fetch-chunked.sh 1PrOe05PfJ1yxNLV7abFliy16ygbYtM-F .media/aroll.mov 2411074211
-bash scripts/prep-aug-general-ad-5.sh .media/aroll.mov
-cd video-projects/my-meta-ad
-npx hyperframes render -c compositions/aug-general-ad-5-9x16.html --quality standard \
-  --output renders/aug-general-ad-5-9x16.mp4
+yt-dlp -f source -o .media/aroll-master.mov \
+  "https://drive.google.com/file/d/1PrOe05PfJ1yxNLV7abFliy16ygbYtM-F/view"
+bash scripts/prep-aug-general-ad-5.sh .media/aroll-master.mov
 ```
 
-Nothing in the compositions changes — they reference `assets/aug5-aroll-*.mp4` by
-name, and the punch cap in the 9:16 timeline can go back up to ~1.18.
-
-## Footguns hit on this build
-
-All three are now in `docs/LESSONS.md`:
-
-- **Layer order is DOM order, not `data-track-index`.** A veil with a lower track
-  index still painted over the headline it was meant to sit behind.
-- **`ecomiq-logo-white.svg` renders inverted** in the headless Chrome shell (it uses
-  a `mask-type: luminance` mask) — use the `.png`. Also, `ecomiq-icon-white.svg` is
-  the badge *only*, not a corner logo.
-- Asset paths must be **root-relative** (`assets/…`), never `../assets/…`.
+The B-roll crops are small enough to stay committed.

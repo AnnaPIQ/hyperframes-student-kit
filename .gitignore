@@ -43,3 +43,9 @@ assets/incoming/*
 
 # Downloaded source footage scratch (fetched from Drive per-build; not a deliverable)
 .media/
+
+# Prepped A-roll crops are pure 4K-master crops (143 MB / 250 MB) — past
+# GitHub's 100 MB per-file hard limit, and fully reproducible:
+#   yt-dlp -f source -o .media/aroll-master.mov <drive A-roll url>
+#   bash scripts/prep-aug-general-ad-5.sh .media/aroll-master.mov
+video-projects/*/assets/aug5-aroll-*.mp4
