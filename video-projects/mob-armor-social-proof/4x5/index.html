@@ -57,13 +57,13 @@
       }
       .eyebrow {
         font-weight: 800; font-size: 25px; letter-spacing: .30em; text-transform: uppercase;
-        color: var(--brand-blue-tint);
+        color: var(--brand-white);
       }
       .stat {
         font-weight: 800; letter-spacing: -.045em; line-height: .86;
         color: var(--brand-white); position: relative;
       }
-      .stat.xl  { font-size: 268px; }
+      .stat.xl  { font-size: 217px; }
       .stat.lg  { font-size: 212px; }
       .bloom {                            /* flame heat behind the numeral — light, not colour */
         position: absolute; left: 50%; top: 50%; width: 736px; height: 506px;
@@ -86,7 +86,7 @@
       .ma-chip.shield img { width: 62px; }
       .ma-chip .lbl {
         font-weight: 800; font-size: 16px; letter-spacing: .22em; text-transform: uppercase;
-        color: #7f8b99; border-left: 2px solid #2a3644; padding-left: 18px;
+        color: var(--brand-white); border-left: 2px solid #2a3644; padding-left: 18px;
       }
 
       /* ── channel diagram ─────────────────────────────────────── */
@@ -116,24 +116,22 @@
         background: linear-gradient(90deg, rgba(255,76,50,0), var(--brand-flame), rgba(255,76,50,0));
       }
 
-      /* ── 00 · Mob Armor first screen ──────────────────────────
-         Their guide is explicit: white logo on black, nothing else behind it.
-         So this beat is full-bleed #101820, not navy. */
-      #cardMA { position: absolute; inset: 0; z-index: 6; background: #101820; }
-      .ma-stage {
-        position: absolute; inset: 190px 0 405px;
-        display: flex; align-items: center; justify-content: center;
-      }
-      .ma-stage img { width: 520px; height: auto; display: block; }
+      /* ── 00/01 · opening card ─────────────────────────────────
+         The client's mark and the headline figure are one card now, and it runs
+         full-bleed on Mob Armor's own #101820 black — their guide wants the logo
+         on black with nothing else behind it, and it gives the ad a distinct
+         opening frame before the piece moves into navy. */
+      #cardA { position: absolute; inset: 0; z-index: 6; background: #101820; }
+      #maHero { width: 505px; height: auto; display: block; }
 
       /* ── 14 · summary card — both spoken figures, side by side ── */
-      .stat.md { font-size: 154px; }
+      .stat.md { font-size: 128px; }
       .duo { display: flex; align-items: center; justify-content: center; gap: 45px; }
       .duo-col { display: flex; flex-direction: column; align-items: center; gap: 14px; }
       .duo-rule { width: 3px; height: 122px; background: #2f588a; }
       .duo-lbl {
         font-weight: 800; font-size: 22px; letter-spacing: .22em; text-transform: uppercase;
-        color: var(--brand-blue-tint);
+        color: var(--brand-white);
       }
 
       /* ── end card ────────────────────────────────────────────── */
@@ -144,7 +142,7 @@
       }
       #endcard .head .em {
         font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400;
-        color: var(--brand-blue-tint);
+        color: var(--brand-white);
       }
       #endcard .cta {
         font-weight: 800; font-size: 33px; letter-spacing: -.01em; color: var(--brand-white);
@@ -199,11 +197,6 @@
 
       <div id="bg" class="clip" data-start="0" data-duration="38.6" data-track-index="0"></div>
 
-      <!-- ══ B-ROLL — one shot only ══════════════════════════════ -->
-      <!-- 03 · "…total sales after they started working with us." -->
-      <video id="s03" class="shot" src="assets/broll/dunes-drone.mp4" muted
-             data-start="6.680" data-duration="1.790" data-track-index="1"></video>
-
       <div id="scrim" class="clip" data-start="0" data-duration="38.6" data-track-index="10"></div>
 
       <!-- ══ A-ROLL — Sean to camera ═════════════════════════════
@@ -211,10 +204,10 @@
            recording — cross-correlating mouth-opening contrast against the audio
            envelope over 303 frames peaks cleanly at -5. So every segment is cut from
            source (composition-time + 0.167) and placed at composition-time, which
-           advances the video by exactly that much. Do not re-cut these without
+           advances the video by exactly that. Do not re-cut these without
            re-applying the offset. -->
       <video id="a02" class="aroll" src="assets/aroll45/a02.mp4" muted
-             data-start="4.280" data-duration="2.650" data-track-index="11"></video>
+             data-start="4.280" data-duration="4.190" data-track-index="11"></video>
       <video id="a04" class="aroll" src="assets/aroll45/a04.mp4" muted
              data-start="8.220" data-duration="3.763" data-track-index="12"></video>
       <video id="a05" class="aroll" src="assets/aroll45/a05.mp4" muted
@@ -235,20 +228,15 @@
       </div>
 
       <!-- ══ CARDS ═══════════════════════════════════════════════ -->
-      <!-- 00 · first screen: the client's mark, on their own black -->
-      <div id="cardMA" class="clip" data-start="0.000" data-duration="1.950" data-track-index="21">
-        <div class="ma-stage"><img id="maHero" src="assets/mobarmor-wordmark-hero.png" alt="Mob Armor" /></div>
-      </div>
-
-      <!-- A · 1.700 → 4.280 · "…500% in a single year." -->
-      <div id="cardA" class="card clip" data-start="1.700" data-duration="2.830" data-track-index="22">
-        <div class="eyebrow">Total sales</div>
-        <div class="stat xl" id="statA"><span class="bloom"></span>500%</div>
-        <div class="rule" id="ruleA"></div>
-        <div class="sub" id="subA">In a single year</div>
-        <div class="ma-chip" id="chipA">
-          <img id="maWordmark" src="assets/mobarmor-logo-white.png" alt="Mob Armor" />
-          <span class="lbl">Client</span>
+      <!-- 00 · the opening card — client's mark and the headline figure together,
+           full-bleed on Mob Armor's own black. Logo holds alone until 1.700. -->
+      <div id="cardA" class="clip" data-start="0.000" data-duration="4.530" data-track-index="21">
+        <div class="card">
+          <img id="maHero" src="assets/mobarmor-wordmark-hero.png" alt="Mob Armor" />
+          <div class="eyebrow">Total sales</div>
+          <div class="stat xl" id="statA"><span class="bloom"></span>+500%</div>
+          <div class="rule" id="ruleA"></div>
+          <div class="sub" id="subA">In a single year</div>
         </div>
       </div>
 
@@ -269,7 +257,7 @@
       <!-- D · 23.867 → 25.233 · the 500% callback -->
       <div id="cardD" class="card clip" data-start="23.867" data-duration="1.617" data-track-index="24">
         <div class="eyebrow">A year later</div>
-        <div class="stat xl" id="statD"><span class="bloom"></span>500%</div>
+        <div class="stat xl" id="statD"><span class="bloom"></span>+500%</div>
         <div class="rule" id="ruleD"></div>
         <div class="ma-chip shield" id="chipD">
           <img id="maShield" src="assets/mobarmor-shield-white.png" alt="Mob Armor" />
@@ -295,7 +283,7 @@
       <div id="cardF" class="card clip" data-start="29.567" data-duration="2.333" data-track-index="26">
         <div class="eyebrow">Real numbers</div>
         <div class="duo" id="duo">
-          <div class="duo-col"><div class="stat md" id="fStat1">500%</div><div class="duo-lbl">Total sales</div></div>
+          <div class="duo-col"><div class="stat md" id="fStat1">+500%</div><div class="duo-lbl">Total sales</div></div>
           <div class="duo-rule" id="fRule"></div>
           <div class="duo-col"><div class="stat md" id="fStat2">4</div><div class="duo-lbl">Channels</div></div>
         </div>
@@ -383,13 +371,17 @@
           tl.to(sel,  { scale: f.scale + drift, duration: dur, ease: "none" }, t);
         }
 
-        /* ── 00 · first screen: the client's mark ───────────────────────── */
-        // Their guide wants the logo on black with room around it, so this beat is
-        // full-bleed #101820 and the EcomIQ mark stays off until the card at 1.700.
-        beat("#cardMA", 0.000, 1.700);
+        /* ── 00/01 · the opening card ───────────────────────────────────
+           The client's mark lands first and holds alone for 1.6s (Nate: "first screen
+           should be the mob armor logo"), then the figure snaps in above the rule.
+           Full-bleed on Mob Armor black, so the logo sits on the ground their guide
+           asks for and the ad gets a distinct opening frame. */
+        tl.fromTo("#cardA", { opacity: 0 }, { opacity: 1, duration: 0.30, ease: "power2.out" }, 0);
+        tl.to("#cardA", { y: -140, opacity: 0, filter: "blur(24px)", duration: OUT_D,
+          ease: "power2.in" }, 4.280 - 0.10);
         tl.fromTo("#maHero", { scale: 0.94, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.70, ease: "power3.out" }, 0.12);
-        tl.to("#maHero", { scale: 1.04, duration: 0.90, ease: "none" }, 0.82);
+          { scale: 1, opacity: 1, duration: 0.70, ease: "power3.out" }, 0.10);
+        tl.to("#maHero", { scale: 1.03, duration: 1.50, ease: "none" }, 0.80);
 
         /* Camera never sleeps: the grid drifts and the vignette breathes for the
            whole runtime, so even the held end card is never a frozen frame. */
@@ -397,15 +389,14 @@
           { backgroundPosition: "0px -90px, -90px 0px", duration: DUR, ease: "none" }, 0);
         tl.to("#vignette", { opacity: 0.88, duration: 5.2, repeat: 7, yoyo: true, ease: "sine.inOut" }, 0);
         tl.fromTo("#crosshairs", { opacity: 0 }, { opacity: 0.5, duration: 1.0, ease: "power2.out" }, 0.4);
+        // EcomIQ's mark holds off until Sean — the opening frame belongs to the client.
         tl.fromTo("#logo-slot", { opacity: 0, y: -18 },
-          { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 1.700);
+          { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 4.320);
 
-        /* ── 01 · CARD A — 500% ─────────────────────────────────────────── */
         tl.fromTo("#streakA", { xPercent: -60, opacity: 0, scaleX: 0.6 },
           { xPercent: 40, opacity: 1, scaleX: 1.4, duration: 0.20, ease: "power3.in" }, 1.60)
           .to("#streakA", { xPercent: 130, opacity: 0, duration: 0.22, ease: "power3.out" }, 1.80);
 
-        beat("#cardA", 1.700, 4.280);
         // Numeral snaps 0.20s AHEAD of the spoken "500%" at 1.90 — the visual leads.
         tl.fromTo("#statA", { scale: 1.34, opacity: 0 },
           { scale: 1, opacity: 1, duration: 0.42, ease: "expo.out" }, 1.700);
@@ -414,26 +405,24 @@
         tl.fromTo("#ruleA", { scaleX: 0 }, { scaleX: 1, duration: 0.40, ease: "power3.out" }, 2.100);
         tl.fromTo("#subA", { y: 26, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.38, ease: "power2.out" }, 3.100);
-        tl.fromTo("#chipA", { y: 22, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.40, ease: "power2.out" }, 3.450);
 
-        /* ── 02 · Sean, "That's what happened to Mob Armor's total sales" ── */
-        beatFace("#a02", 4.280, 6.680);
+        /* ── 02 · Sean, "That's what happened to Mob Armor's total sales
+                        after they started working with us." ─────────────── */
+        // The dune shot used to sit at 6.68 and did not connect to the line, so the
+        // slot folds back into Sean and the beat re-frames on "after" instead.
+        beatFace("#a02", 4.280, 8.220);
         hold("#a02", 4.280, 2.400, FRAME.M, 0.04);
-
-        /* ── 03 · the one b-roll shot, on the payoff ────────────────────── */
-        beat("#s03", 6.680, 8.220);
-        push("#s03", 6.680, 1.540, 1.06);
+        reframe("#a02", 6.680, FRAME.W, 1.540, 0.035);
 
         /* ── 04 · "And it wasn't a lucky viral moment. It wasn't a magic ad." */
         beatFace("#a04", 8.220, 11.733);
-        hold("#a04", 8.220, 1.940, FRAME.W, 0.045);
-        reframe("#a04", 10.160, FRAME.T, 1.573, 0.045);   // on the sentence boundary
+        hold("#a04", 8.220, 1.940, FRAME.T, 0.045);
+        reframe("#a04", 10.160, FRAME.M, 1.573, 0.045);
 
         /* ── 05 · "When they came to us, everything ran through Facebook." ── */
         beatFace("#a05", 11.733, 14.700);
         hold("#a05", 11.733, 0.747, FRAME.W, 0.03);
-        reframe("#a05", 12.480, FRAME.M, 2.220, 0.045);   // on "almost everything"
+        reframe("#a05", 12.480, FRAME.T, 2.220, 0.045);
 
         /* ── 07/08/09 · CARD B→C — one card, no cut ─────────────────────── */
         beat("#cardCh", 14.700, 21.733);
@@ -479,7 +468,7 @@
 
         /* ── 10 · Sean, "A year later, sales are up over" ───────────────── */
         beatFace("#a10", 21.733, 23.867);
-        hold("#a10", 21.733, 2.134, FRAME.T, 0.045);
+        hold("#a10", 21.733, 2.134, FRAME.M, 0.045);
 
         /* ── 11 · CARD D — the 500% callback ────────────────────────────── */
         tl.fromTo("#streakD", { xPercent: -60, opacity: 0, scaleX: 0.6 },

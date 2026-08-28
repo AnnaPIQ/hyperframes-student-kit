@@ -50,7 +50,7 @@ SUBS = [
     # ── type scale ──────────────────────────────────────────────────────────
     ("font-weight: 800; font-size: 30px; letter-spacing: .30em;",
      "font-weight: 800; font-size: 25px; letter-spacing: .30em;"),
-    (".stat.xl  { font-size: 330px; }", ".stat.xl  { font-size: 268px; }"),
+    (".stat.xl  { font-size: 268px; }", ".stat.xl  { font-size: 217px; }"),
     (".stat.lg  { font-size: 260px; }", ".stat.lg  { font-size: 212px; }"),
     ("font-weight: 800; font-size: 46px; line-height: 1.14;",
      "font-weight: 800; font-size: 39px; line-height: 1.14;"),
@@ -66,8 +66,8 @@ SUBS = [
     (".ma-chip img { width: 300px; height: auto; display: block; }",
      ".ma-chip img { width: 248px; height: auto; display: block; }"),
     (".ma-chip.shield img { width: 74px; }", ".ma-chip.shield img { width: 62px; }"),
-    ("font-weight: 800; font-size: 19px; letter-spacing: .22em; text-transform: uppercase;\n        color: #7f8b99; border-left: 2px solid #2a3644; padding-left: 22px;",
-     "font-weight: 800; font-size: 16px; letter-spacing: .22em; text-transform: uppercase;\n        color: #7f8b99; border-left: 2px solid #2a3644; padding-left: 18px;"),
+    ("font-weight: 800; font-size: 19px; letter-spacing: .22em; text-transform: uppercase;\n        color: var(--brand-white); border-left: 2px solid #2a3644; padding-left: 22px;",
+     "font-weight: 800; font-size: 16px; letter-spacing: .22em; text-transform: uppercase;\n        color: var(--brand-white); border-left: 2px solid #2a3644; padding-left: 18px;"),
 
     # ── channel diagram (4x78 + 3x34 = 414, so the wire spans the dot row) ──
     (".dots { display: flex; align-items: center; justify-content: center; gap: 42px; height: 132px; }",
@@ -84,17 +84,15 @@ SUBS = [
     ("{ x: 510, opacity: 1, duration: 1.30", "{ x: 414, opacity: 1, duration: 1.30"),
 
     # ── Mob Armor first screen + summary card ───────────────────────────────
-    ("        position: absolute; inset: 300px 0 576px;",
-     "        position: absolute; inset: 190px 0 405px;"),
-    (".ma-stage img { width: 640px; height: auto; display: block; }",
-     ".ma-stage img { width: 520px; height: auto; display: block; }"),
-    (".stat.md { font-size: 190px; }", ".stat.md { font-size: 154px; }"),
+    ("      #maHero { width: 620px; height: auto; display: block; }",
+     "      #maHero { width: 505px; height: auto; display: block; }"),
+    (".stat.md { font-size: 158px; }", ".stat.md { font-size: 128px; }"),
     (".duo { display: flex; align-items: center; justify-content: center; gap: 56px; }",
      ".duo { display: flex; align-items: center; justify-content: center; gap: 45px; }"),
     (".duo-rule { width: 3px; height: 150px; background: #2f588a; }",
      ".duo-rule { width: 3px; height: 122px; background: #2f588a; }"),
-    ("        font-weight: 800; font-size: 26px; letter-spacing: .22em; text-transform: uppercase;\n        color: var(--brand-blue-tint);",
-     "        font-weight: 800; font-size: 22px; letter-spacing: .22em; text-transform: uppercase;\n        color: var(--brand-blue-tint);"),
+    ("      .duo-lbl {\n        font-weight: 800; font-size: 26px;",
+     "      .duo-lbl {\n        font-weight: 800; font-size: 22px;"),
 
     # ── end card ────────────────────────────────────────────────────────────
     ("#endcard img.logo { width: 560px; height: auto; }",
