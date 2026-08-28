@@ -44,7 +44,7 @@ enc() { # enc <outfile> <filterchain> <input> <ss> <dur>
 
 # name:source:ss:dur:crop4x5_y   (b-roll; y offset used only for the 4:5 cut)
 BROLL=(
-  "b1-cake:broll-erica-packing.mp4:5.00:3.40:380"
+  "b1-cake:broll-erica-packing.mp4:5.00:4.60:380"
   "b2-cookies:broll-cookie-scroll.mp4:1.00:5.20:570"
   "b3-sprinkle:broll-sprinkle.mp4:0.80:2.40:570"
   "b4-box:broll-erica-packing.mp4:29.00:5.60:570"

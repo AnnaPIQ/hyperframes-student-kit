@@ -108,21 +108,9 @@
       /* Logo lives inside a positioned non-clip wrapper so it cannot drift. */
       #logoWrap { position: absolute; top: 74px; left: 74px; width: 300px; }
       #logoWrap img { width: 100%; height: auto; display: block; }
-      /* The transition: one hard white horizontal line with a blurred glow
-         wake, swept through frame, plus a brief full-frame flash on the cut.
-         One assembly, reused at every cut (cuts are >=0.95s apart). */
-      #whip { position: absolute; left: -6%; width: 112%; height: 300px; top: 0;
-        pointer-events: none; opacity: 0; will-change: transform; }
-      #whipGlow { position: absolute; inset: 0; filter: blur(30px);
-        background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(156,212,255,.26) 38%,
-          rgba(255,255,255,.70) 50%, rgba(156,212,255,.26) 62%, rgba(255,255,255,0) 100%); }
-      /* the line itself — thin, hard, pure white, with a wide soft halo */
-      #whipLine { position: absolute; left: 0; right: 0; top: 147px; height: 6px;
-        background: var(--brand-white);
-        box-shadow: 0 0 24px 8px rgba(255,255,255,.92),
-                    0 0 90px 30px rgba(156,212,255,.55); }
-      #flash { position: absolute; inset: 0; background: var(--brand-white);
-        pointer-events: none; opacity: 0; }
+      /* Transitions carry no bright element at all: the energy is movement.
+         Each cut is a short scale-and-slide push with just enough blur to
+         soften the join — a heavy blur reads as a smear, not as speed. */
     </style>
   </head>
   <body>
@@ -132,30 +120,28 @@
       <div id="bg" class="clip" data-start="0" data-duration="46.6" data-track-index="0"></div>
 
       <!-- ================= FOOTAGE ================= -->
-      <div class="shot" id="w-s1"><div class="drift" id="d-s1"><video id="v-s1" src="assets/broll/aroll-9x16.mp4" muted
-        data-start="0.00" data-duration="2.32" data-track-index="1" data-media-start="0.00"></video></div></div>
       <div class="shot" id="w-s2"><div class="drift" id="d-s2"><video id="v-s2" src="assets/broll/b1-cake-9x16.mp4" muted
-        data-start="2.20" data-duration="1.22" data-track-index="2" data-media-start="0.00"></video></div></div>
+        data-start="0.00" data-duration="3.42" data-track-index="1" data-media-start="0.00"></video></div></div>
       <div class="shot" id="w-s3"><div class="drift" id="d-s3"><video id="v-s3" src="assets/broll/aroll-9x16.mp4" muted
-        data-start="3.30" data-duration="1.92" data-track-index="3" data-media-start="3.30"></video></div></div>
+        data-start="3.30" data-duration="1.92" data-track-index="2" data-media-start="3.30"></video></div></div>
       <div class="shot" id="w-s4"><div class="drift" id="d-s4"><video id="v-s4" src="assets/broll/b2-cookies-9x16.mp4" muted
-        data-start="5.10" data-duration="2.42" data-track-index="4" data-media-start="0.00"></video></div></div>
+        data-start="5.10" data-duration="2.42" data-track-index="3" data-media-start="0.00"></video></div></div>
       <div class="shot" id="w-s6"><div class="drift" id="d-s6"><video id="v-s6" src="assets/broll/aroll-9x16.mp4" muted
-        data-start="10.85" data-duration="1.32" data-track-index="5" data-media-start="10.85"></video></div></div>
+        data-start="10.85" data-duration="1.32" data-track-index="4" data-media-start="10.85"></video></div></div>
       <div class="shot" id="w-s8"><div class="drift" id="d-s8"><video id="v-s8" src="assets/broll/b3-sprinkle-9x16.mp4" muted
-        data-start="15.25" data-duration="1.07" data-track-index="6" data-media-start="0.00"></video></div></div>
+        data-start="15.25" data-duration="1.07" data-track-index="5" data-media-start="0.00"></video></div></div>
       <div class="shot" id="w-s9"><div class="drift" id="d-s9"><video id="v-s9" src="assets/broll/aroll-9x16.mp4" muted
-        data-start="16.20" data-duration="4.47" data-track-index="7" data-media-start="16.20"></video></div></div>
+        data-start="16.20" data-duration="4.47" data-track-index="6" data-media-start="16.20"></video></div></div>
       <div class="shot" id="w-s11"><div class="drift" id="d-s11"><video id="v-s11" src="assets/broll/b4-box-9x16.mp4" muted
-        data-start="20.55" data-duration="1.87" data-track-index="8" data-media-start="0.00"></video></div></div>
+        data-start="20.55" data-duration="1.87" data-track-index="7" data-media-start="0.00"></video></div></div>
       <div class="shot" id="w-s13"><div class="drift" id="d-s13"><video id="v-s13" src="assets/broll/b6-sean-laptop-9x16.mp4" muted
-        data-start="24.15" data-duration="1.92" data-track-index="9" data-media-start="0.00"></video></div></div>
+        data-start="24.15" data-duration="1.92" data-track-index="8" data-media-start="0.00"></video></div></div>
       <div class="shot" id="w-s15"><div class="drift" id="d-s15"><video id="v-s15" src="assets/broll/aroll-9x16.mp4" muted
-        data-start="29.15" data-duration="2.67" data-track-index="10" data-media-start="29.15"></video></div></div>
+        data-start="29.15" data-duration="2.67" data-track-index="9" data-media-start="29.15"></video></div></div>
       <div class="shot" id="w-s17"><div class="drift" id="d-s17"><video id="v-s17" src="assets/broll/b5-erica-box-9x16.mp4" muted
-        data-start="34.90" data-duration="2.92" data-track-index="11" data-media-start="0.00"></video></div></div>
+        data-start="34.90" data-duration="2.92" data-track-index="10" data-media-start="0.00"></video></div></div>
       <div class="shot" id="w-s18"><div class="drift" id="d-s18"><video id="v-s18" src="assets/broll/aroll-9x16.mp4" muted
-        data-start="37.70" data-duration="2.12" data-track-index="12" data-media-start="37.70"></video></div></div>
+        data-start="37.70" data-duration="2.12" data-track-index="11" data-media-start="37.70"></video></div></div>
 
       <!-- ================= FIGURE CARDS ================= -->
       <div class="cardwrap" id="wrapA">
@@ -239,11 +225,6 @@
       <div id="grain" class="clip" data-start="0" data-duration="46.6" data-track-index="31"></div>
       <div id="logoWrap"><img id="logo" class="clip" data-start="0" data-duration="39.70"
         data-track-index="32" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
-      <div id="whip" class="clip" data-start="0" data-duration="46.6" data-track-index="33">
-        <div id="whipGlow"></div>
-        <div id="whipLine"></div>
-      </div>
-      <div id="flash" class="clip" data-start="0" data-duration="46.6" data-track-index="34"></div>
 
       <!-- The voiceover. Audio and video share one track-index space. -->
       <audio id="vo" src="assets/vo.m4a" data-start="0" data-duration="41.90" data-track-index="41"></audio>
@@ -272,33 +253,16 @@
           { opacity: 1, scaleX: 1, duration: 0.42, ease: 'power3.out' }, at);
       }
 
-      /* ---- every cut is a white flash line, never a fade ---------------- */
-      /* Sweep distance comes from the root's declared height, so the same JS
-         is correct in both delivery ratios. */
-      const H = +document.querySelector('#root').dataset.height;
-      const CUTS = [2.20,3.30,5.10,7.40,10.85,12.05,15.25,16.20,20.55,22.30,24.15,25.95,29.15,31.70,34.90,37.70,39.70];
-      CUTS.forEach(t => {
-        const s = t - 0.09;                       /* line crosses centre on the cut */
-        tl.fromTo('#whip', { y: -300 }, { y: H + 300, duration: 0.22, ease: 'none' }, s);
-        tl.fromTo('#whip', { opacity: 0 }, { opacity: 1, duration: 0.03, ease: 'none' }, s);
-        tl.to('#whip', { opacity: 0, duration: 0.05, ease: 'none' }, s + 0.18);
-        /* the flash — short and shallow, so it reads as a snap, not a blowout */
-        tl.fromTo('#flash', { opacity: 0 },
-          { opacity: 0.30, duration: 0.045, ease: 'power2.out' }, t - 0.045);
-        tl.to('#flash', { opacity: 0, duration: 0.12, ease: 'power2.in' }, t);
-      });
-
-      /* Card panels whip in on the same beat as the footage cuts. */
+      /* Cards push in on the same beat as the footage cuts. */
       [['#wrapA', 7.40], ['#wrapB', 12.05], ['#wrapC', 22.30], ['#wrapD', 25.95],
        ['#wrapE', 31.70], ['#wrapEnd', 39.70]].forEach(([sel, at]) => {
-        tl.fromTo(sel, { yPercent: 7, filter: 'blur(14px)' },
-          { yPercent: 0, filter: 'blur(0px)', duration: 0.24, ease: 'power3.out' }, at);
+        tl.fromTo(sel, { yPercent: 6, scale: 1.04, filter: 'blur(6px)' },
+          { yPercent: 0, scale: 1, filter: 'blur(0px)', duration: 0.22, ease: 'power3.out' }, at);
       });
 
-      /* ---- footage: whip-in, then the camera never sleeps --------------- */
+      /* ---- footage: push in, then the camera never sleeps -------------- */
       const SHOTS = [
-        ['#w-s1', '#d-s1', 0.00, 2.32],
-        ['#w-s2', '#d-s2', 2.20, 1.22],
+        ['#w-s2', '#d-s2', 0.00, 3.42],
         ['#w-s3', '#d-s3', 3.30, 1.92],
         ['#w-s4', '#d-s4', 5.10, 2.42],
         ['#w-s6', '#d-s6', 10.85, 1.32],
@@ -311,8 +275,8 @@
         ['#w-s18', '#d-s18', 37.70, 2.12]
       ];
       SHOTS.forEach(([wrap, drift, at, dur]) => {
-        tl.fromTo(wrap, { yPercent: 15, scale: 1.07, filter: 'blur(24px)' },
-          { yPercent: 0, scale: 1, filter: 'blur(0px)', duration: 0.32, ease: 'power3.out' }, at);
+        tl.fromTo(wrap, { yPercent: 6, scale: 1.05, filter: 'blur(6px)' },
+          { yPercent: 0, scale: 1, filter: 'blur(0px)', duration: 0.22, ease: 'power3.out' }, at);
         tl.fromTo(drift, { scale: 1.0 }, { scale: 1.05, duration: dur, ease: 'none' }, at);
       });
 

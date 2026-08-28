@@ -41,47 +41,57 @@ Figure onsets that drive the cards: **`10,000` 7.46** · `Nordstrom` 12.06 ·
 
 ---
 
-## Beat sheet — 18 scenes
+## Beat sheet — 17 scenes
 
-Every cut is a **hard white horizontal line** swept through frame with a blurred
-glow wake, plus a short full-frame flash on the cut itself. Never a fade.
+Every cut is a short **scale-and-slide push** — no white line, no flash, no
+bright element of any kind. 0.22s, from +6% Y at scale 1.05 under 6px of blur,
+resolving to 0. The energy is movement only.
+
+**The ad opens on b-roll, not on Sean.** In the previous cut the first 0.4s
+showed his hand reaching up to hit record. The cake shot now carries the whole
+first VO line, which removes that entirely and gives the opening shot 3.30s
+instead of 1.10s. Sean arrives on "but here's what you don't know."
+
 **Each b-roll clip is used exactly once**; where a beat has no fresh b-roll it
 plays Sean to camera. "Clean" = footage with no scrim, no graphic.
 
 | # | In | Out | Dur | Source | Content |
 |---|---|---|---|---|---|
-| S1 | 0.00 | 2.20 | 2.20 | **A-roll** | Sean opens to camera — "You probably know Sweet E's Bake Shop…" |
-| S2 | 2.20 | 3.30 | 1.10 | b1-cake | clean — the ruffle cake, landing on "…for cakes" |
-| S3 | 3.30 | 5.10 | 1.80 | **A-roll** | "but here's what you don't know about them" |
-| S4 | 5.10 | 7.40 | 2.30 | b2-cookies | clean — trays of logo-printed cookies, under "your logo or your photo" |
-| S5 | 7.40 | 10.85 | 3.45 | **CARD A** | **10,000 → 20,000** — lands on the spoken figures at 7.46 and 8.48 |
-| S6 | 10.85 | 12.05 | 1.20 | **A-roll** | "absolutely no problem" |
-| S7 | 12.05 | 15.25 | 3.20 | **CARD B** | client roster, each name on its own spoken onset |
-| S8 | 15.25 | 16.20 | 0.95 | b3-sprinkle | clean — sprinkles falling; the breath before the scale claim |
-| S9 | 16.20 | 20.55 | 4.35 | **A-roll** | "custom work at scale… almost nobody else can touch" — the longest on-camera hold, and the argument's centre |
-| S10 | 20.55 | 22.30 | 1.75 | b4-box | clean — cake boxed, under "made in LA" |
-| S11 | 22.30 | 24.15 | 1.85 | **CARD C** | **MIDNIGHT → 8AM** — lands on "hours" at 22.62 |
-| S12 | 24.15 | 25.95 | 1.80 | b6-sean-laptop | clean — EcomIQ at work, under "a brand we've worked with for…" |
-| S13 | 25.95 | 29.15 | 3.20 | **CARD D** | **hero results card** — lands on "four years" at 26.00 |
-| S14 | 29.15 | 31.70 | 2.55 | **A-roll** | "they recently had to move into a bigger facility" |
-| S15 | 31.70 | 34.90 | 3.20 | **CARD E** | **3× THE SIZE** + labelled 1:3 bars — lands on "three times" at 31.84 |
-| S16 | 34.90 | 37.70 | 2.80 | b5-erica-box | clean — Erica to camera with the cake box (the warmest frame in the piece) |
-| S17 | 37.70 | 39.70 | 2.00 | **A-roll** | "if you want us in your corner" — direct address |
-| S18 | 39.70 | 46.60 | 6.90 | **END CARD** | comes up under "tap the link and find out more", then holds 4.70s in silence |
+| S1 | 0.00 | 3.30 | 3.30 | b1-cake | clean — opens on the ruffle cake being boxed, under "You probably know Sweet E's Bake Shop for cakes" |
+| S2 | 3.30 | 5.10 | 1.80 | **A-roll** | Sean's first appearance — "but here's what you don't know about them" |
+| S3 | 5.10 | 7.40 | 2.30 | b2-cookies | clean — trays of logo-printed cookies, under "your logo or your photo" |
+| S4 | 7.40 | 10.85 | 3.45 | **CARD A** | **10,000 → 20,000** — lands on the spoken figures at 7.46 and 8.48 |
+| S5 | 10.85 | 12.05 | 1.20 | **A-roll** | "absolutely no problem" |
+| S6 | 12.05 | 15.25 | 3.20 | **CARD B** | client roster, each name on its own spoken onset |
+| S7 | 15.25 | 16.20 | 0.95 | b3-sprinkle | clean — sprinkles falling; the breath before the scale claim |
+| S8 | 16.20 | 20.55 | 4.35 | **A-roll** | "custom work at scale… almost nobody else can touch" — the longest on-camera hold |
+| S9 | 20.55 | 22.30 | 1.75 | b4-box | clean — cake boxed, under "made in LA" |
+| S10 | 22.30 | 24.15 | 1.85 | **CARD C** | **MIDNIGHT → 8AM** — lands on "hours" at 22.62 |
+| S11 | 24.15 | 25.95 | 1.80 | b6-sean-laptop | clean — EcomIQ at work, under "a brand we've worked with for…" |
+| S12 | 25.95 | 29.15 | 3.20 | **CARD D** | **hero results card** — lands on "four years" at 26.00 |
+| S13 | 29.15 | 31.70 | 2.55 | **A-roll** | "they recently had to move into a bigger facility" |
+| S14 | 31.70 | 34.90 | 3.20 | **CARD E** | **3× THE SIZE** + labelled 1:3 bars — lands on "three times" at 31.84 |
+| S15 | 34.90 | 37.70 | 2.80 | b5-erica-box | clean — Erica to camera with the cake box |
+| S16 | 37.70 | 39.70 | 2.00 | **A-roll** | "if you want us in your corner" — direct address |
+| S17 | 39.70 | 46.60 | 6.90 | **END CARD** | comes up under "tap the link and find out more", then holds 4.70s |
 
-Balance: A-roll 14.10s over six appearances · b-roll 10.70s over six clips, one
-use each · figure cards 14.90s · end card 6.90s. 17 cuts.
+Balance: b-roll 12.90s over six clips (one use each) · A-roll 11.90s over five
+appearances · figure cards 14.90s · end card 6.90s. 16 cuts.
 
-### The transition (one assembly, reused at all 17 cuts)
-- A 6px pure-white line, full frame width, with a 24px/90px white-and-blue-tint
-  halo, swept from above frame to below it over 0.22s — crossing centre exactly
-  on the cut.
-- A blurred glow wake travelling with it (300px band, 30px blur).
-- A full-frame white flash to 0.30 opacity for ~0.045s on the cut, decaying over
-  0.12s — a snap, not a blowout.
-- The incoming scene arrives from +15% Y at scale 1.07 under 24px of blur,
-  resolving over 0.32s. Its slow push-in (1.00 → 1.05) runs on a separate inner
-  element so the two never fight over one transform.
+### Card B — the client roster
+Still set as **type**, not logos. Sweet E's four named clients cannot currently
+be shown as logos without breaking the "never redraw a third-party logo" rule:
+
+| Brand | Official file obtainable? |
+|---|---|
+| The Lakers | **Yes** — official NBA-hosted crest (`cdn.nba.com/logos/nba/1610612747/…`), full colour |
+| Beyond Yoga | Only a black **icon** (their Shopify CDN `Layer_1.png`, 294×200) — no wordmark, and it is invisible on navy |
+| Nordstrom | **No** — the served HTML contains no logo asset at all (client-rendered; automated access blocked) |
+| Tory Burch | **No** — only the *Tory Burch Foundation* mark is published, which is a different entity |
+
+So the choice is: supply the four files, accept a mixed logo/type card, or keep
+type. Note also that the Lakers crest is purple and gold, which would break the
+"flame is the only hot accent" rule — worth a decision either way.
 
 ## The five figure cards — every value sourced
 

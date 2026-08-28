@@ -109,12 +109,12 @@ for (const t of times.split(',').map(Number)) {
   console.log(`  ✓ ${out}`);
 }
 if (process.argv.includes('--probe')) {
-  for (const t of [3.24, 3.30, 3.38, 3.50]) {
+  for (const t of [3.30, 3.36, 3.44, 3.60]) {
     await page.evaluate(([i, tt]) => { window.__timelines[i].time(tt, false); }, [compId, t]);
     const r = await page.evaluate(() => {
       const c = s => { const e = document.querySelector(s); const st = getComputedStyle(e);
         return { transform: st.transform, filter: st.filter, opacity: st.opacity }; };
-      return { whip: c('#whip'), flash: c('#flash'), wrap: c('#w-s3'), drift: c('#d-s3') };
+      return { wrap: c('#w-s3'), drift: c('#d-s3') };
     });
     console.log(`  t=${t}`, JSON.stringify(r));
   }
