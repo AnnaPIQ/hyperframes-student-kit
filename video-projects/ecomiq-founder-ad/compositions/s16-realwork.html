@@ -1,6 +1,6 @@
 <template id="s16-realwork-template">
   <script src="assets/vendor/gsap.min.js"></script>
-  <div data-composition-id="s16-realwork" data-start="0" data-duration="5.25" data-width="1080" data-height="1350">
+  <div data-composition-id="s16-realwork" data-start="0" data-duration="2.85" data-width="1080" data-height="1350">
   <style>
     @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
     @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
@@ -28,42 +28,20 @@
     [data-composition-id="s16-realwork"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
       font-style: italic; font-weight: 400; }
 
-    [data-composition-id="s16-realwork"] .kicker { top: 296px; }
-    [data-composition-id="s16-realwork"] .kicker b { color: #FFFFFF; font-weight: 800; }
-    [data-composition-id="s16-realwork"] .kicker span { color: #9fb6d4; font-weight: 600; }
-    [data-composition-id="s16-realwork"] .deck { position: absolute; left: 0; right: 0; top: 438px; height: 330px; }
-    [data-composition-id="s16-realwork"] .job { position: absolute; left: 50%; top: 0; width: 720px; height: 128px;
-      margin-left: -360px; background: linear-gradient(180deg,#0d3768,#0a325f); border: 1px solid #1d4a7a;
-      border-radius: 22px; box-shadow: 0 20px 50px -20px rgba(0,0,0,.65);
-      display: flex; align-items: center; padding: 0 36px; gap: 24px; }
-    [data-composition-id="s16-realwork"] .job i { width: 14px; height: 14px; border-radius: 50%; flex: none;
-      background: #9CD4FF; box-shadow: 0 0 16px rgba(156,212,255,.85); }
-    [data-composition-id="s16-realwork"] .job .t { flex: 1; font-weight: 700; font-size: 36px; color: #FFFFFF; }
-    [data-composition-id="s16-realwork"] .job .m { font-weight: 700; font-size: 30px; color: #9CD4FF;
-      font-variant-numeric: tabular-nums; }
-    [data-composition-id="s16-realwork"] #j1 { top: 0; }
-    [data-composition-id="s16-realwork"] #j2 { top: 102px; }
-    [data-composition-id="s16-realwork"] #j3 { top: 204px; }
-    [data-composition-id="s16-realwork"] .lock { position: absolute; left: 50%; top: 856px;
-      width: 540px; margin-left: -270px; }
-    [data-composition-id="s16-realwork"] .lock img { width: 540px; height: auto; display: block;
+    [data-composition-id="s16-realwork"] .lock { position: absolute; left: 50%; top: 560px;
+      width: 620px; margin-left: -310px; }
+    [data-composition-id="s16-realwork"] .lock img { width: 620px; height: auto; display: block;
       filter: drop-shadow(0 8px 26px rgba(0,0,0,.55)); }
-    [data-composition-id="s16-realwork"] .line { position: absolute; left: 90px; right: 90px; top: 1002px;
-      text-align: center; font-weight: 600; font-size: 40px; color: #cfe0f4; }
+    [data-composition-id="s16-realwork"] .line { position: absolute; left: 90px; right: 90px; top: 726px;
+      text-align: center; font-weight: 600; font-size: 42px; color: #cfe0f4; }
     [data-composition-id="s16-realwork"] .line em { font-family: 'Hedvig Letters Serif', Georgia, serif;
       font-style: italic; font-weight: 400; color: #9CD4FF; }
   </style>
 
-  <div class="slot clip" id="s16-realwork-slot" data-start="0" data-duration="5.25" data-track-index="0">
+  <div class="slot clip" id="s16-realwork-slot" data-start="0" data-duration="2.85" data-track-index="0">
     <div class="plate">
       <div class="grid"></div>
       <div class="body">
-        <div class="kicker"><span>Every strategy is</span> <b>pulled from real client work.</b></div>
-        <div class="deck">
-          <div class="job" id="j1"><i></i><div class="t">Retention rebuild</div><div class="m">9-figure</div></div>
-          <div class="job" id="j2"><i></i><div class="t">Paid media overhaul</div><div class="m">8-figure</div></div>
-          <div class="job" id="j3"><i></i><div class="t">Margin recovery</div><div class="m">8-figure</div></div>
-        </div>
         <div class="lock"><img src="assets/pacific-iq-logo-white.png" alt="Pacific IQ" /></div>
         <div class="line">the <em>8- &amp; 9-figure</em> brand agency</div>
       </div>
@@ -74,7 +52,7 @@
 
   <script>
     (function(){
-      const SLOT = 5.25, S = '[data-composition-id="s16-realwork"] ';
+      const SLOT = 2.85, S = '[data-composition-id="s16-realwork"] ';
       const tl = gsap.timeline({ paused: true });
       // ENTRY — the opaque plate wipes up over the outgoing frame with a light streak
       // on its leading edge; the content rides in behind it under matching blur.
@@ -83,21 +61,11 @@
       tl.to(S+'.edge-t', { opacity: 0, duration: 0.15, ease: 'sine.in' }, 0.09);
       tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
         { y: 0, filter: 'blur(0px)', duration: 0.52, ease: 'power2.out' }, 0);
-      tl.fromTo(S+'.kicker', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .50, ease: 'power3.out' }, 0);
-      // three real jobs deal in on "real client work" (local 0.23-0.61)
-      tl.fromTo(S+'#j1', { opacity: 0, x: -60, rotation: -3 },
-        { opacity: 1, x: 0, rotation: 0, duration: .46, ease: 'power3.out' }, 0.23);
-      tl.fromTo(S+'#j2', { opacity: 0, x: 60, rotation: 3 },
-        { opacity: 1, x: 0, rotation: 0, duration: .46, ease: 'power3.out' }, 0.42);
-      tl.fromTo(S+'#j3', { opacity: 0, x: -60, rotation: -3 },
-        { opacity: 1, x: 0, rotation: 0, duration: .46, ease: 'power3.out' }, 0.61);
-      // ...then compress toward the agency that produced them
-      tl.to(S+'.deck', { y: -30, scale: .88, opacity: .22, duration: .60, ease: 'power2.inOut' }, 1.30);
-      // lockup lands on the VO word "Pacific" (local 1.58)
-      tl.fromTo(S+'.lock', { opacity: 0, y: 28, scale: .94 },
-        { opacity: 1, y: 0, scale: 1, duration: .55, ease: 'back.out(1.5)' }, 1.58);
+      tl.fromTo(S+'.lock', { opacity: 0, y: 30, scale: .94 },
+        { opacity: 1, y: 0, scale: 1, duration: .58, ease: 'back.out(1.5)' }, 0.04);
       tl.fromTo(S+'.line', { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, duration: .50, ease: 'power2.out' }, 2.44);
+        { opacity: 1, y: 0, duration: .50, ease: 'power2.out' }, 0.62);
+      tl.to(S+'.lock', { scale: 1.02, duration: 1.0, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.00);
       // EXIT — matches the incoming founder cut: body lifts with 30px blur while the
       // plate wipes off as one opaque piece, revealing the footage cleanly beneath.
       tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);

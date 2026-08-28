@@ -51,9 +51,6 @@
       padding: 18px 0; border-radius: 999px; background: rgba(156,212,255,.14);
       border: 1px solid rgba(156,212,255,.5); color: #9CD4FF; }
     [data-composition-id="s05-logo-wall"] #yrs { top: 828px; }
-    [data-composition-id="s05-logo-wall"] .rail { position: absolute; left: 90px; right: 90px; top: 992px;
-      text-align: center; font-weight: 800; font-size: 56px; line-height: 1.1; letter-spacing: -.02em;
-      color: #FFFFFF; text-shadow: 0 4px 26px rgba(2,14,30,.95); }
   </style>
 
   <div class="slot clip" id="s05-logo-wall-slot" data-start="0" data-duration="7.1" data-track-index="0">
@@ -87,7 +84,6 @@
         <div class="eyebrow">The coach arm of a</div>
         <img id="wall-hero" src="assets/shopify-premier-partner.png" alt="Shopify Premier Partner" />
         <div class="chip" id="yrs">10+ years in business</div>
-        <div class="rail">Some of the biggest brands in the world.</div>
       </div>
       <div class="edge edge-t"></div>
       <div class="edge edge-b"></div>
@@ -117,8 +113,6 @@
       // "over 10 years" -> project 17.64 = local 3.84
       tl.fromTo(S+'#yrs', { opacity: 0, y: 20, scale: .9 },
         { opacity: 1, y: 0, scale: 1, duration: .48, ease: 'back.out(1.7)' }, 3.84);
-      // "biggest brands in the world" -> project 19.48 = local 5.68
-      tl.fromTo(S+'.rail', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .55, ease: 'power3.out' }, 5.68);
       // EXIT — matches the incoming founder cut: body lifts with 30px blur while the
       // plate wipes off as one opaque piece, revealing the footage cleanly beneath.
       tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
