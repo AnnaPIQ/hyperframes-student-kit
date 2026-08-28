@@ -41,10 +41,14 @@
         font-weight: 700; font-size: 24px; letter-spacing: .16em; text-transform: uppercase;
         color: #FFFFFF; background: rgba(6,40,76,.82); border: 1px solid rgba(156,212,255,.5);
         padding: 12px 22px; border-radius: 999px; backdrop-filter: blur(6px); }
-      #bscrim { position: absolute; left: 0; right: 0; bottom: 0; height: 430px; pointer-events: none;
-        background: linear-gradient(0deg, rgba(2,14,30,.90) 0%, rgba(2,14,30,.58) 40%, rgba(2,14,30,0) 100%); }
+      /* The Sweet E's wall is near-white exactly under the caption, so this needs to be
+         heavy — at .58 the white type was still washing out. */
+      #bscrim { position: absolute; left: 0; right: 0; bottom: 0; height: 500px; pointer-events: none;
+        background: linear-gradient(0deg, rgba(2,14,30,.97) 0%, rgba(2,14,30,.90) 26%,
+          rgba(2,14,30,.62) 52%, rgba(2,14,30,0) 100%); }
       #bcap { position: absolute; left: 90px; top: 1176px; font-weight: 700; font-size: 40px;
-        letter-spacing: -.02em; color: #FFFFFF; text-shadow: 0 4px 22px rgba(2,14,30,.9); }
+        letter-spacing: -.02em; color: #FFFFFF;
+        text-shadow: 0 2px 6px rgba(2,14,30,.95), 0 6px 26px rgba(2,14,30,.9); }
       #brandmark { position: absolute; top: 60px; left: 64px; z-index: 50; }
       #brandmark img { width: 264px; height: auto; display: block;
         filter: drop-shadow(0 6px 18px rgba(0,0,0,.55)); }
