@@ -48,17 +48,23 @@
       data-width="1080"
       data-height="1350"
     >
-      <!-- ================= PICTURE BED — montage, once, per-shot retimed ==========
-           1441 frames (48.0333s), split across two clips so the motion-graphics
-           section can carry 31.500-54.900s. Clip B resumes exactly where A left
-           off via data-media-start, so the montage still plays through once, in
-           order, with nothing reprised. Hard cuts are baked into the bed. -->
+      <!-- ================= PICTURE BED — montage at NATIVE SPEED =================
+           832 frames (27.7333s) = every live source frame, exactly once, in
+           order. NO retiming: an earlier cut stretched this montage to cover
+           the runtime and the per-shot version made it speed up and slow down
+           shot to shot, which reads as broken. The graphics carry the other
+           43.7s instead. Three windows, chained with data-media-start:
+             M1  0.000- 6.800  <- bed  0.000- 6.800  (204 frames)
+             M2 20.600-25.000  <- bed  6.800-11.200  (132 frames)
+             M3 54.900-71.4333 <- bed 11.200-27.7333 (496 frames)
+           204 + 132 + 496 = 832. -->
       <video
         id="montage-a"
         class="montage"
         data-start="0"
-        data-duration="31.5"
+        data-duration="6.8"
         data-track-index="40"
+        data-media-start="0"
         src="assets/montage-45.mp4"
         muted
         playsinline
@@ -67,45 +73,169 @@
       <video
         id="montage-b"
         class="montage"
-        data-start="54.9"
-        data-duration="16.533333"
-        data-track-index="53"
-        data-media-start="31.5"
+        data-start="20.6"
+        data-duration="4.4"
+        data-track-index="50"
+        data-media-start="6.8"
         src="assets/montage-45.mp4"
         muted
         playsinline
       ></video>
 
-      <!-- ================= MOTION-GRAPHICS SECTION (31.500 -> 54.900) ============
-           One persistent bed carries the ambient spine so beat cards can whip in
-           and out over navy, never over black. -->
+      <video
+        id="montage-c"
+        class="montage"
+        data-start="54.9"
+        data-duration="16.533333"
+        data-track-index="56"
+        data-media-start="11.2"
+        src="assets/montage-45.mp4"
+        muted
+        playsinline
+      ></video>
+
+      <!-- ================= MOTION-GRAPHICS SECTION ==============================
+           Two runs, because montage window M2 sits between them:
+             run 1   6.800-20.600   beats A, B
+             run 2  25.000-54.900   beats C, 00, 01, 02, 03
+           Each run has its own persistent bed carrying the ambient spine, so
+           beat cards whip in and out over navy, never over black. -->
       <div
-        id="gfx"
+        id="gfx1"
         class="clip gfx"
-        data-start="31.5"
-        data-duration="23.4"
+        data-start="6.8"
+        data-duration="13.8"
         data-track-index="46"
       >
         <div class="bg"></div>
-        <div class="grid" id="gfx-grid"></div>
-        <div class="marks" id="gfx-marks"><i style="left:40.27%;top:60.22%"></i><i style="left:81.96%;top:45.23%"></i><i style="left:59.84%;top:91.99%"></i><i style="left:68.09%;top:42.44%"></i><i style="left:75.84%;top:62.60%"></i><i style="left:50.09%;top:89.03%"></i><i style="left:87.20%;top:22.54%"></i><i style="left:29.16%;top:76.62%"></i><i style="left:93.17%;top:81.10%"></i><i style="left:6.70%;top:14.25%"></i><i style="left:93.35%;top:86.43%"></i><i style="left:27.81%;top:68.68%"></i></div>
-        <div class="vig" id="gfx-vig"></div>
+        <div class="grid" id="gfx1-grid"></div>
+        <div class="marks" id="gfx1-marks"><i style="left:40.27%;top:60.22%"></i><i style="left:81.96%;top:45.23%"></i><i style="left:59.84%;top:91.99%"></i><i style="left:68.09%;top:42.44%"></i><i style="left:75.84%;top:62.60%"></i><i style="left:50.09%;top:89.03%"></i><i style="left:87.20%;top:22.54%"></i><i style="left:29.16%;top:76.62%"></i><i style="left:93.17%;top:81.10%"></i><i style="left:6.70%;top:14.25%"></i><i style="left:93.35%;top:86.43%"></i><i style="left:27.81%;top:68.68%"></i></div>
+        <div class="vig" id="gfx1-vig"></div>
         <div class="grain"></div>
+      </div>
+
+      <div
+        id="gfx2"
+        class="clip gfx"
+        data-start="25"
+        data-duration="29.9"
+        data-track-index="47"
+      >
+        <div class="bg"></div>
+        <div class="grid" id="gfx2-grid"></div>
+        <div class="marks" id="gfx2-marks"><i style="left:40.27%;top:60.22%"></i><i style="left:81.96%;top:45.23%"></i><i style="left:59.84%;top:91.99%"></i><i style="left:68.09%;top:42.44%"></i><i style="left:75.84%;top:62.60%"></i><i style="left:50.09%;top:89.03%"></i><i style="left:87.20%;top:22.54%"></i><i style="left:29.16%;top:76.62%"></i><i style="left:93.17%;top:81.10%"></i><i style="left:6.70%;top:14.25%"></i><i style="left:93.35%;top:86.43%"></i><i style="left:27.81%;top:68.68%"></i></div>
+        <div class="vig" id="gfx2-vig"></div>
+        <div class="grain"></div>
+      </div>
+
+      <!-- BEAT A — one person, one brand, years ago -->
+      <div
+        id="gA"
+        class="clip gfx beat"
+        data-start="6.8"
+        data-duration="4.9"
+        data-track-index="48"
+      >
+        <div class="wrap" id="gA-w">
+        <div class="plate">
+          <div class="eyebrow" id="gA-eb">Most e-commerce coaching</div>
+          <div class="h2" id="gA-t">One person&rsquo;s opinion</div>
+          <div class="brandcard" id="gA-card">
+            <div class="bc-top">
+              <div class="bc-mark"></div>
+              <div class="bc-lines"><i></i><i></i></div>
+            </div>
+            <div class="bc-strike" id="gA-strike"></div>
+            <div class="bc-foot" id="gA-foot">based on one brand</div>
+          </div>
+          <div class="years" id="gA-years">
+            <span class="yr"></span><span class="yr"></span><span class="yr"></span>
+            <span class="yr"></span><span class="yr"></span><span class="yr"></span>
+            <span class="yr"></span><span class="yr hot"></span>
+          </div>
+          <div class="h1" id="gA-big">5&ndash;10 years ago.</div>
+        </div>
+        <div class="streak" id="gA-streak"></div>
+        </div>
+      </div>
+
+      <!-- BEAT B — the Shopify Premier Partner reveal -->
+      <div
+        id="gB"
+        class="clip gfx beat"
+        data-start="11.6"
+        data-duration="9"
+        data-track-index="49"
+      >
+        <div class="wrap" id="gB-w">
+        <div class="plate">
+          <div class="eyebrow" id="gB-eb">EcomIQ works differently &mdash; it&rsquo;s the coach arm of a</div>
+          <div class="badgecard" id="gB-badge">
+            <img id="gB-img" src="assets/shopify-premier-partner.png" alt="Shopify Premier Partner" />
+          </div>
+          <div class="brule" id="gB-rule"></div>
+          <div class="chiprow" id="gB-chips">
+            <span class="chip" id="gB-c1"><span class="dot"></span>Pacific IQ</span>
+            <span class="chip" id="gB-c2">10+ years</span>
+            <span class="chip hotChip" id="gB-c3">the biggest brands in the world</span>
+          </div>
+        </div>
+        <div class="streak" id="gB-streak"></div>
+        </div>
+      </div>
+
+      <!-- BEAT C — an entire team, not one person -->
+      <div
+        id="gC"
+        class="clip gfx beat"
+        data-start="25"
+        data-duration="6"
+        data-track-index="51"
+      >
+        <div class="wrap" id="gC-w">
+        <div class="plate">
+          <div class="eyebrow" id="gC-eb">Not one person&rsquo;s take</div>
+          <div class="tgrid" id="gC-grid">
+            <div class="trow">
+              <div class="tc"><div class="tph"><img src="assets/team/01-founder.jpg" alt="Founder" /></div><div class="tlb">Founder</div></div>
+              <div class="tc"><div class="tph"><img src="assets/team/02-operations.jpg" alt="Operations" /></div><div class="tlb">Ops</div></div>
+              <div class="tc"><div class="tph"><img src="assets/team/03-strategy.jpg" alt="Strategy" /></div><div class="tlb">Strategy</div></div>
+              <div class="tc"><div class="tph"><img src="assets/team/04-paid-media.jpg" alt="Paid media" /></div><div class="tlb">Paid</div></div>
+              <div class="tc"><div class="tph"><img src="assets/team/05-email.jpg" alt="Email" /></div><div class="tlb">Email</div></div>
+            </div>
+            <div class="trow">
+              <div class="tc"><div class="tph"><img src="assets/team/06-tech.jpg" alt="Tech" /></div><div class="tlb">Tech</div></div>
+              <div class="tc"><div class="tph"><img src="assets/team/07-seo.jpg" alt="SEO" /></div><div class="tlb">SEO</div></div>
+              <div class="tc"><div class="tph"><img src="assets/team/08-creative.jpg" alt="Creative" /></div><div class="tlb">Creative</div></div>
+              <div class="tc"><div class="tph"><img src="assets/team/09-cro.jpg" alt="CRO" /></div><div class="tlb">CRO</div></div>
+              <div class="tc"><div class="tph"><img src="assets/team/10-analytics.jpg" alt="Analytics" /></div><div class="tlb">Data</div></div>
+            </div>
+          </div>
+          <div class="h2" id="gC-t">An entire <span class="hot">team&rsquo;s</span> knowledge</div>
+          <div class="chiprow" id="gC-chips">
+            <span class="chip" id="gC-c1">8 &amp; 9 figure brands</span>
+            <span class="chip hotChip" id="gC-c2">their entire career</span>
+          </div>
+        </div>
+        <div class="streak" id="gC-streak"></div>
+        </div>
       </div>
 
       <!-- BEAT 00 — the section opener, one line, slammed -->
       <div
         id="g0"
         class="clip gfx beat"
-        data-start="31.5"
-        data-duration="1.4"
-        data-track-index="47"
+        data-start="31"
+        data-duration="1.9"
+        data-track-index="52"
       >
+        <div class="wrap" id="g0-w">
         <div class="plate" style="justify-content: center">
           <div class="slam" id="g0-txt">Here&rsquo;s <span class="hot">how it works</span></div>
           <div class="card-rule" id="g0-rule" style="margin: 0 auto"></div>
         </div>
         <div class="streak" id="g0-streak"></div>
+        </div>
       </div>
 
       <!-- BEAT 01 — strategy session -->
@@ -114,8 +244,9 @@
         class="clip gfx beat"
         data-start="32.8"
         data-duration="8.9"
-        data-track-index="48"
+        data-track-index="53"
       >
+        <div class="wrap" id="g1-w">
         <div class="plate">
           <div class="stephead">
             <div class="num stepnum" id="g1-n">01</div>
@@ -135,6 +266,7 @@
           </div>
         </div>
         <div class="streak" id="g1-streak"></div>
+        </div>
       </div>
 
       <!-- BEAT 02 — specialist 1:1 calls -->
@@ -143,8 +275,9 @@
         class="clip gfx beat"
         data-start="41.6"
         data-duration="6.8"
-        data-track-index="49"
+        data-track-index="54"
       >
+        <div class="wrap" id="g2-w">
         <div class="plate">
           <div class="stephead">
             <div class="num stepnum" id="g2-n">02</div>
@@ -171,6 +304,7 @@
           </div>
         </div>
         <div class="streak" id="g2-streak"></div>
+        </div>
       </div>
 
       <!-- BEAT 03 — Slack & community. The node graph: you are the flame node and
@@ -181,8 +315,9 @@
         class="clip gfx beat"
         data-start="48.3"
         data-duration="6.6"
-        data-track-index="50"
+        data-track-index="55"
       >
+        <div class="wrap" id="g3-w">
         <div class="plate">
           <div class="stephead">
             <div class="num stepnum" id="g3-n">03</div>
@@ -222,6 +357,7 @@
             <span class="h3">Common problems, <span class="cool">already solved</span></span></div>
         </div>
         <div class="streak" id="g3-streak"></div>
+        </div>
       </div>
 
       <!-- ================= LOWER-THIRDS over montage B ==========================
@@ -231,7 +367,7 @@
         class="clip lt"
         data-start="55.1"
         data-duration="4.6"
-        data-track-index="51"
+        data-track-index="57"
       >
         <span class="lt-tag" id="lt1-tag">real client work</span>
       </div>
@@ -241,7 +377,7 @@
         class="clip lt"
         data-start="60.2"
         data-duration="5.3"
-        data-track-index="52"
+        data-track-index="58"
       >
         <span class="lt-tag" id="lt2-tag">the agency behind it</span>
         <span class="lt-name" id="lt2-name">Pacific IQ</span>
@@ -328,25 +464,36 @@
       tl.fromTo("#bug-wrap", { opacity: 0 }, { opacity: 1, duration: 0.34, ease: "power2.out" }, 0.08)
         .fromTo("#pip-wrap", { opacity: 0 }, { opacity: 1, duration: 0.34, ease: "power2.out" }, 0.08);
 
-      /* ---- graphics bed ambient: the camera never sleeps ---- */
-      tl.fromTo("#gfx-grid", { backgroundPositionY: 0, backgroundPositionX: 0 },
-        { backgroundPositionY: -96, backgroundPositionX: 54, duration: 23.4, ease: "none" }, 31.5);
-      tl.fromTo("#gfx-vig", { opacity: 0.82 },
-        { opacity: 1, duration: 5.85, ease: "sine.inOut", yoyo: true, repeat: 3 }, 31.5);
-      tl.fromTo("#gfx-marks", { opacity: 0.2 },
-        { opacity: 0.4, duration: 5.85, ease: "sine.inOut", yoyo: true, repeat: 3 }, 31.5);
+      /* ---- graphics bed ambient: the camera never sleeps ----
+         Two runs, because montage window M2 sits between them. */
+      function bedAmbient(p, at, dur) {
+        tl.fromTo(p + "-grid", { backgroundPositionY: 0, backgroundPositionX: 0 },
+          { backgroundPositionY: -(dur * 4), backgroundPositionX: dur * 2.3,
+            duration: dur, ease: "none" }, at);
+        const half = dur / 2;
+        tl.fromTo(p + "-vig", { opacity: 0.82 },
+          { opacity: 1, duration: half, ease: "sine.inOut", yoyo: true, repeat: 1 }, at);
+        tl.fromTo(p + "-marks", { opacity: 0.2 },
+          { opacity: 0.4, duration: half, ease: "sine.inOut", yoyo: true, repeat: 1 }, at);
+      }
+      bedAmbient("#gfx1", 6.8, 13.8);
+      bedAmbient("#gfx2", 25.0, 29.9);
 
       /* ---- beat whips ----
          Each card snaps to opaque in 0.10s (so no beat ever cross-dissolves
          into the next — the brief allows exactly one dissolve, into the card)
          then rides in from the left under blur, and leaves to the right the
          same way. Consecutive windows overlap 0.1s so the whips interlock. */
-      function whip(sel, inAt, outAt) {
+      function whip(id, inAt, outAt) {
+        const sel = id + "-w";   // the inner wrapper, never the clip element
         tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.10, ease: "none" }, inAt)
           .fromTo(sel, { x: -190, filter: "blur(30px)" },
             { x: 0, filter: "blur(0px)", duration: 0.46, ease: "power2.out" }, inAt)
           .to(sel, { x: 190, filter: "blur(30px)", duration: 0.36, ease: "power2.in" }, outAt - 0.36)
           .to(sel, { opacity: 0, duration: 0.14, ease: "none" }, outAt - 0.14);
+        // hard kill on the exit boundary so a seek landing past it cannot leave
+        // the wrapper visible (hyperframes lint: gsap_exit_missing_hard_kill)
+        tl.set(sel, { opacity: 0 }, outAt);
       }
       function streak(sel, at) {
         tl.fromTo(sel, { xPercent: -60, opacity: 0, scaleX: 0.6 },
@@ -354,12 +501,56 @@
           .to(sel, { opacity: 0, duration: 0.16 }, at + 0.34);
       }
 
+      /* ---- BEAT A — one person's opinion, based on one brand, years ago ----
+         VO: "Most e-commerce coaching agencies are just one person and they're
+         giving you their personal opinion based on the time that they once
+         worked at another DTC brand five to ten years ago." (0.198-12.70) */
+      whip("#gA", 6.8, 11.7);
+      tl.fromTo("#gA-eb", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.36, ease: "power2.out" }, 6.90);
+      tl.fromTo("#gA-t", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.46, ease: "power3.out" }, 7.00);
+      tl.fromTo("#gA-card", { opacity: 0, y: 30, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.2)" }, 7.40);
+      /* the single stale reference point gets struck through */
+      tl.fromTo("#gA-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: "power3.inOut" }, 8.60);
+      /* a pip per year — the gap since that one brand */
+      tl.fromTo("#gA-years .yr", { opacity: 0, scaleY: 0.2 },
+        { opacity: 1, scaleY: 1, duration: 0.3, ease: "power2.out", stagger: 0.055 }, 9.10);
+      tl.fromTo("#gA-big", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.44, ease: "expo.out" }, 9.70);
+      streak("#gA-streak", 6.86);
+
+      /* ---- BEAT B — Shopify Premier Partner  (badge on 13.54) ----
+         VO: "...this is why it works differently. It's the coach arm of a
+         Shopify Premier Partner, an agency that's been around for over 10 years
+         and worked with some of the biggest brands in the world." */
+      whip("#gB", 11.6, 20.6);
+      tl.fromTo("#gB-eb", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 11.75);
+      tl.fromTo("#gB-badge", { opacity: 0, y: 34, scale: 0.94 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.58, ease: "back.out(1.4)" }, 13.70);
+      tl.fromTo("#gB-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.44, ease: "power2.out" }, 14.60);
+      tl.fromTo("#gB-c1", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 15.20);
+      tl.fromTo("#gB-c2", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 16.80);
+      tl.fromTo("#gB-c3", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 18.40);
+      streak("#gB-streak", 11.66);
+
+      /* ---- BEAT C — an entire team  (grid on 25.4, career chip on 29.6) ----
+         VO: "...you're getting an entire team's knowledge and experience that's
+         worked across eight and nine figure brands for their entire career." */
+      whip("#gC", 25.0, 31.0);
+      tl.fromTo("#gC-eb", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.34, ease: "power2.out" }, 25.10);
+      /* the team lands tile by tile — the whole bench, not one person */
+      tl.fromTo("#gC-grid .tc", { opacity: 0, y: 22, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.8)", stagger: 0.055 }, 25.40);
+      tl.fromTo("#gC-t", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.46, ease: "power3.out" }, 26.10);
+      tl.fromTo("#gC-c1", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 26.60);
+      tl.fromTo("#gC-c2", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 29.60);
+      streak("#gC-streak", 25.06);
+
       /* ---- BEAT 00 — "Here's how it works"  (on the line at 31.485) ---- */
-      whip("#g0", 31.5, 32.9);
+      whip("#g0", 31.0, 32.9);
       tl.fromTo("#g0-txt", { opacity: 0, scale: 1.16 },
-        { opacity: 1, scale: 1, duration: 0.36, ease: "expo.out" }, 31.56);
-      tl.fromTo("#g0-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 31.76);
-      streak("#g0-streak", 31.54);
+        { opacity: 1, scale: 1, duration: 0.36, ease: "expo.out" }, 31.49);
+      tl.fromTo("#g0-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 31.69);
+      streak("#g0-streak", 31.06);
 
       /* ---- BEAT 01 — strategy session  (head on 32.843) ---- */
       whip("#g1", 32.8, 41.7);

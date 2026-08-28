@@ -1,8 +1,7 @@
 # EcomIQ — "How It Works" VO ad · EDIT PLAN
 
-Status: **v2 — motion graphics added.** The 2.58× retime read too slow, so a
-motion-graphics section now carries the mechanism and the montage retime drops to
-1.73×. See §13.
+Status: **v3 — the montage runs at native speed.** Retiming is gone entirely;
+seven motion-graphics beats carry 43.7s so the montage fits at 1.0×. See §14.
 Branch `claude/ecomiq-short-form-ad-8sw5cx`. Slug `ecomiq-how-it-works-ad`.
 
 ---
@@ -428,3 +427,76 @@ native. Not built: say the word.
 - 32 frames inspected per ratio, covering the overlay fade-in, the
   montage→graphics cut, every beat head and staged reveal, the graphics→montage
   cut, both lower-thirds, the dissolve and the card hold
+
+---
+
+## 14. v3 — retiming removed; the montage plays at native speed
+
+**The problem with v2:** the per-shot retime made the montage *speed up and slow
+down from shot to shot* (stretch 1.20–2.47×, i.e. 0.83× down to 0.40× speed).
+Reported as "fast sometimes and slow sometimes, really horrible to watch" — and
+that is exactly right.
+
+**The mistake was mine and it was conceptual.** Allocating stretch inversely to
+motion energy is defensible on paper: hide the slow-motion where there is least
+motion to betray it. In practice it fails, because **a viewer reads a speed
+*change* far more easily than a constant offset from native.** Uniform
+slow-motion is a look; varying slow-motion is a fault. v2 traded a consistent
+problem for an inconsistent one, which is worse.
+
+**The fix:** stop retiming. The montage now plays **every live source frame
+exactly once at 1.0×** — 832 frames, 27.733s — and the graphics section was
+extended from 23.4s to **43.7s** to absorb the difference.
+
+| Attempt | Montage | Verdict |
+|---|---|---|
+| v1 | 2.58× uniform (0.39× speed) | too slow |
+| v2 | 1.20–2.47× per shot, by motion energy | **worse** — uneven |
+| v3 | **1.0× native, no retime** | correct by construction |
+
+The per-shot retime machinery (`retime-shots.tsv`, `retime-frames.json`, the
+37-branch filter graph) is **deleted**. `scripts/shot-list.tsv` keeps the shot
+boundaries and motion measurements as reference only.
+
+### Structure
+
+| Section | Window | Frames | Carried by |
+|---|---|--:|---|
+| M1 montage | 0.000 – 6.800 | bed 0–204 | footage |
+| Beat A | 6.800 – 11.700 | | one person's opinion |
+| Beat B | 11.600 – 20.600 | | Shopify Premier Partner |
+| M2 montage | 20.600 – 25.000 | bed 204–336 | footage |
+| Beat C | 25.000 – 31.000 | | the team grid |
+| Beat 00 | 31.000 – 32.900 | | "Here's how it works" |
+| Beat 01 | 32.800 – 41.700 | | Strategy session |
+| Beat 02 | 41.600 – 48.400 | | Specialist 1:1 calls |
+| Beat 03 | 48.300 – 54.900 | | Slack & community |
+| M3 montage | 54.900 – 71.433 | bed 336–832 | footage + lower-thirds |
+| Card | 71.433 – 76.433 | | end card |
+
+204 + 132 + 496 = **832** — every live source frame, once, in order, chained
+with `data-media-start`. Three windows instead of two, so the montage is spread
+through the ad rather than bookending it.
+
+### The three new beats, and the word each lands on
+
+| Beat | Anchor |
+|---|---|
+| A — one brand, years ago | card 7.40; strike **8.60**; year pips 9.10; "5–10 years ago." **9.70** |
+| B — Premier Partner | eyebrow 11.75 ("works differently"); badge **13.70** ("coach arm of a Shopify Premier Partner" 13.54); chips 15.20 / **16.80** ("over 10 years") / **18.40** ("the biggest brands in the world") |
+| C — an entire team | eyebrow 25.10; ten tiles stagger 25.40; headline 26.10; "8 & 9 figure brands" **26.60**; "their entire career" **29.60** (line at 29.54) |
+
+Assets for B and C (`shopify-premier-partner.png`, `team/*.jpg` ×10) come from
+the same founder-ad build the beat grammar was ported from.
+
+### Lint error fixed on the way
+`gsap_exit_missing_hard_kill` on beat C, whose whip-out ended exactly on beat
+00's clip-start boundary. Every beat's whip now animates an **inner non-`clip`
+`.wrap`** and hard-kills its opacity at the exit boundary; the framework owns a
+clip's own visibility, so animating the clip directly lets a seek land past the
+fade and leave stale state.
+
+### Unchanged
+Exactly one dissolve, into the card. Speaker never full frame. No captions.
+Montage audio discarded. Music bed silent at `data-volume="0"`. Trigger line at
+71.4333s.

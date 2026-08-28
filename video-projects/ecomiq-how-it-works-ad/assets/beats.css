@@ -85,10 +85,14 @@
 /* --- beat cards ----------------------------------------------------------- */
 /* Every beat is a full-frame card that whips in from the left and out to the
    right under blur. They overlap by a few frames so the bed is never bare. */
-.beat {
+.beat { position: absolute; inset: 0; z-index: 12; }
+/* The whip animates THIS, never the .beat clip element itself. The framework
+   owns a clip's visibility, so animating the clip's own opacity/transform lets
+   non-linear seeking land after the exit fade and leave stale state
+   (hyperframes lint: gsap_exit_missing_hard_kill). */
+.beat > .wrap {
   position: absolute;
   inset: 0;
-  z-index: 12;
   will-change: transform, filter, opacity;
 }
 .beat .plate {
@@ -267,4 +271,127 @@
   font-size: var(--g-body);
   color: #dce9f7;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.75);
+}
+
+/* ===========================================================================
+   Beats A/B/C — the opening half (added when the montage went to native speed
+   and the graphics had to carry 43.7s instead of 23.4s).
+   Ported from s02-hook-one-brand / s03-partner-reveal / s04-team-grid.
+   =========================================================================== */
+
+/* --- beat A: one brand, years ago -------------------------------------- */
+.brandcard {
+  position: relative;
+  padding: calc(var(--g-gap) * 1.35);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--g-gap) * 0.7);
+  border: 1px solid #1d4a7a;
+  border-radius: 26px;
+  background: linear-gradient(160deg, rgba(16, 61, 111, 0.9) 0%, rgba(8, 44, 84, 0.86) 100%);
+  box-shadow: 0 30px 80px -34px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+.bc-top { display: flex; align-items: center; gap: 22px; }
+.bc-mark {
+  width: calc(var(--g-num) * 0.62);
+  height: calc(var(--g-num) * 0.62);
+  border-radius: 20px;
+  flex: none;
+  background: linear-gradient(150deg, rgba(156, 212, 255, 0.34), rgba(110, 170, 225, 0.14));
+  border: 1px solid rgba(156, 212, 255, 0.34);
+}
+.bc-lines { flex: 1; display: flex; flex-direction: column; gap: 14px; }
+.bc-lines i { height: 14px; border-radius: 8px; background: rgba(199, 218, 240, 0.3); display: block; }
+.bc-lines i:first-child { width: 74%; }
+.bc-lines i:last-child { width: 46%; }
+/* the strike-through that kills the single stale reference point */
+.bc-strike {
+  position: absolute;
+  left: calc(var(--g-gap) * 0.8);
+  right: calc(var(--g-gap) * 0.8);
+  top: 50%;
+  height: 4px;
+  border-radius: 3px;
+  background: var(--brand-flame);
+  transform-origin: 0% 50%;
+  box-shadow: 0 0 24px rgba(255, 76, 50, 0.6);
+}
+.bc-foot {
+  font-weight: 600;
+  font-size: calc(var(--g-body) * 0.82);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6f8db3;
+}
+/* a year per pip — the gap since that one brand */
+.years { display: flex; align-items: center; gap: 12px; }
+.yr { flex: 1; height: 9px; border-radius: 5px; background: rgba(111, 141, 179, 0.3); transform-origin: 50% 50%; }
+.yr.hot { background: var(--brand-flame); box-shadow: 0 0 18px rgba(255, 76, 50, 0.55); }
+
+/* --- beat B: the Premier Partner reveal --------------------------------- */
+/* White card, because the badge artwork is supplied on white. */
+.badgecard {
+  align-self: flex-start;
+  background: var(--brand-white);
+  border-radius: 22px;
+  padding: calc(var(--g-gap) * 0.8) calc(var(--g-gap) * 1.05);
+  box-shadow: 0 34px 90px -34px rgba(0, 0, 0, 0.8);
+}
+.badgecard img { width: calc(var(--g-node) * 1.05); max-width: 100%; height: auto; display: block; }
+.chiprow { display: flex; flex-wrap: wrap; gap: 16px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: calc(var(--g-body) * 0.78);
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid #1d4a7a;
+  background: rgba(13, 58, 107, 0.62);
+  color: var(--brand-blue-tint);
+}
+.chip .dot { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+.chip.hotChip { color: var(--brand-flame); border-color: rgba(255, 76, 50, 0.5); background: rgba(255, 76, 50, 0.11); }
+.brule {
+  height: 4px;
+  border-radius: 3px;
+  width: 46%;
+  transform-origin: 0% 50%;
+  background: linear-gradient(90deg, var(--brand-flame), rgba(255, 76, 50, 0));
+}
+
+/* --- beat C: the team grid --------------------------------------------- */
+.tgrid { display: flex; flex-direction: column; gap: calc(var(--g-gap) * 0.62); }
+.trow { display: flex; justify-content: center; gap: calc(var(--g-gap) * 0.56); }
+.tc { width: var(--g-tile); display: flex; flex-direction: column; gap: 9px; }
+.tph {
+  width: var(--g-tile);
+  height: var(--g-tile);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(156, 212, 255, 0.28);
+  background: rgba(13, 58, 107, 0.6);
+}
+.tph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tlb {
+  font-size: calc(var(--g-body) * 0.62);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #6f8db3;
+  text-align: center;
+}
+/* the stat that closes beat C */
+.statrow { display: flex; align-items: baseline; gap: 18px; }
+.statrow .big { font-size: calc(var(--g-big) * 0.86); }
+
+/* a left-aligned statement line, smaller than the centred .slam opener */
+.gfx .h1 {
+  font-weight: 800;
+  font-size: calc(var(--g-slam) * 0.78);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
 }

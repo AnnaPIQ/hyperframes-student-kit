@@ -18,12 +18,14 @@ OUT="${2:-renders/frames}"
 mkdir -p "$OUT"
 rm -f "$OUT"/*.png
 
-# Coverage: overlay fade-in, montage A, the montage->graphics cut, every beat
-# head and every staged reveal inside the graphics section, the graphics->montage
-# cut, both lower-thirds, then the single dissolve and the card hold.
-TIMES=(0.10 0.45 6.00 14.00 22.00 29.00 31.45 31.70 32.20 33.30 35.60 37.70 \
-       40.10 41.90 43.30 45.70 47.20 48.70 50.20 52.60 54.00 54.85 55.50 \
-       58.00 60.80 62.50 66.00 69.50 71.25 71.45 73.00 76.30)
+# Coverage: overlay fade-in, all three native-speed montage windows, every beat
+# head and staged reveal across beats A/B/C/00/01/02/03, both montage<->graphics
+# cuts, both lower-thirds, the single dissolve, and the card hold.
+TIMES=(0.10 0.45 3.00 6.00 7.20 8.80 9.90 11.00 \
+       12.00 14.00 15.60 17.20 19.00 21.50 23.50 25.30 \
+       26.40 27.50 30.00 31.60 33.30 37.70 40.10 42.00 \
+       43.40 46.80 48.80 50.30 52.60 54.20 55.60 58.00 \
+       60.90 63.00 67.00 70.00 71.25 71.45 73.00 76.30)
 
 for t in "${TIMES[@]}"; do
   ffmpeg -y -v error -ss "$t" -i "$SRC" -frames:v 1 -q:v 2 "$OUT/t$t.png"
@@ -41,8 +43,7 @@ build_strip() {
   ffmpeg -y -v error "${args[@]}" -filter_complex "hstack=inputs=$n" -frames:v 1 "$out"
   rm -f "$OUT"/.s*.png
 }
-build_strip "$OUT/strip-a.png" "${TIMES[@]:0:8}"
-build_strip "$OUT/strip-b.png" "${TIMES[@]:8:8}"
-build_strip "$OUT/strip-c.png" "${TIMES[@]:16:8}"
-build_strip "$OUT/strip-d.png" "${TIMES[@]:24:8}"
-echo "wrote $OUT/strip-{a,b,c,d}.png"
+for n in 0 1 2 3 4; do
+  build_strip "$OUT/strip-$n.png" "${TIMES[@]:$((n*8)):8}"
+done
+echo "wrote $OUT/strip-0..4.png"

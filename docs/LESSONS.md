@@ -126,11 +126,19 @@ efficient over time instead of relearning the same lessons.
 - **Confirm alternate-ratio masters share a cut list before deriving one set of timings.**
   `select='gt(scene,0.25)',showinfo` on each; identical frame counts *and* identical
   timestamps means one table drives every ratio.
-- **When a montage must cover far more runtime than it was cut for, retime per shot, not
-  uniformly.** Measure motion energy per shot (mean `signalstats.YDIF`) and allocate stretch
-  inversely — near-static shots absorb the slack, moving shots stay closer to native. A flat
-  2.58× read as syrupy; the same total spread 1.75–3.93× by motion held a ~1.9s average shot
-  length. Never fill the gap by reprising shots: it reads as a repeat.
+- **Never retime a montage per shot. A viewer reads a speed CHANGE far more easily than a
+  constant offset from native.** Allocating stretch inversely to measured motion (so the
+  slow-motion hides where there is least motion to betray it) sounds right and is wrong:
+  the picture visibly speeds up and slows down shot to shot, and it reads as broken rather
+  than as a look. Verdict across three cuts of the same ad: 2.58× uniform = "too slow";
+  1.20–2.47× per shot = "fast sometimes and slow sometimes, really horrible to watch";
+  **1.0× native = correct.** Uniform slow-motion is a style choice; varying slow-motion is
+  a fault. If you must stretch, stretch everything equally.
+- **If the montage doesn't fit the runtime, change the runtime it has to fill — not its
+  speed.** Motion-graphics beats are the lever. Going from 4 beats (23.4s) to 7 beats
+  (43.7s) let the same 27.7s montage play at exactly 1.0×: every source frame once, in
+  order, split across three windows chained with `data-media-start`. Never fill the gap by
+  reprising shots either — that reads as a repeat.
 
 ## Retiming vs. runtime — the real lever
 
@@ -170,6 +178,26 @@ efficient over time instead of relearning the same lessons.
   carries one fixed `data-width`/`data-height`, so a shared beat cannot serve 9:16,
   4:5 and 1:1. Inline the beats and vary the geometry with custom properties instead.
   (Expect `composition_file_too_large` warnings as a result; that is the trade.)
+
+## HyperFrames: animating clips vs. their contents
+
+- **Never animate a `clip` element's own opacity/transform for a scene enter/exit.** The
+  framework owns a clip's visibility, so a non-linear seek can land past your exit fade and
+  leave stale state — `hyperframes lint` catches it as `gsap_exit_missing_hard_kill`, and it
+  fires when an exit tween ends exactly on another clip's start boundary. **Fix:** put an
+  inner non-`clip` `<div class="wrap">` inside the clip, animate that, and hard-kill it with
+  `tl.set(sel, {opacity: 0}, <exit time>)`.
+
+## Shell hazards when driving renders
+
+- **`pkill -f <pattern>` will kill your own shell if the pattern appears in its command
+  line.** `pkill -f 'hyperframes render'` matched the wrapping bash (whose args contained
+  the render command) and killed the whole invocation — surfacing as a bare `exit code 144`
+  with no output, which looks exactly like a render crash. **Fix:** check with
+  `ps -eo pid,args | grep` first and kill by PID, or pick a pattern that cannot match your
+  own process. Don't pre-emptively pkill at all unless something is actually stuck.
+- **A full render can exceed a 10-minute foreground timeout.** Run renders with
+  `run_in_background` and poll, rather than losing the work to a SIGTERM at the deadline.
 
 ## Housekeeping
 

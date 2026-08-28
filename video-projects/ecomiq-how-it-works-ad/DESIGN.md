@@ -64,30 +64,64 @@ comes from `assets/ad.css`. See `EDIT-PLAN.md` §6 for the numbers.
 
 | Section | Window | What carries it |
 |---|---|---|
-| Act 1 | 0.000 – 31.500s | montage — the problem + the credibility |
-| Graphics | 31.500 – 54.900s | 4 motion-graphics beats — the mechanism |
-| Act 2 | 54.900 – 71.433s | montage + credibility lower-thirds |
+| M1 montage | 0.000 – 6.800s | hook footage |
+| Beat A | 6.800 – 11.700s | one person's opinion, one brand, years ago |
+| Beat B | 11.600 – 20.600s | Shopify Premier Partner reveal |
+| M2 montage | 20.600 – 25.000s | "not one person's take…" |
+| Beat C | 25.000 – 31.000s | the team grid |
+| Beat 00 | 31.000 – 32.900s | "Here's how it works" |
+| Beat 01 | 32.800 – 41.700s | Strategy session |
+| Beat 02 | 41.600 – 48.400s | Specialist 1:1 calls |
+| Beat 03 | 48.300 – 54.900s | Slack & community + node graph |
+| M3 montage | 54.900 – 71.433s | montage + credibility lower-thirds |
 | Card | 71.433 – 76.433s | end card |
 
-The montage bed is **1441 frames (48.033s)** split across two clips
-(`data-media-start` on the second), so it still plays through **once, in order,
-with nothing reprised** — the graphics section simply sits in the middle.
+## The montage runs at NATIVE speed — there is no retime
 
-**This is what fixed the pacing.** Carrying 23.4s on graphics drops the montage
-retime from **2.58× to 1.73×** (0.39× → 0.58× speed) and the average shot from
-1.93s to **1.30s**.
+**832 frames (27.733s) = every live source frame, exactly once, in order**, split
+across three windows chained with `data-media-start`:
 
-## Motion graphics (31.500 – 54.900s)
+| | ad window | bed window | frames |
+|---|---|---|--:|
+| M1 | 0.000 – 6.800 | 0.000 – 6.800 | 204 |
+| M2 | 20.600 – 25.000 | 6.800 – 11.200 | 132 |
+| M3 | 54.900 – 71.433 | 11.200 – 27.733 | 496 |
+| | | | **832** |
+
+This replaced two earlier attempts, and the history matters:
+
+| Attempt | Montage | Result |
+|---|---|---|
+| v1 | 2.58× uniform (0.39× speed) | too slow — syrupy |
+| v2 | 1.20–2.47× **per shot**, by motion energy | **worse** — the picture visibly sped up and slowed down shot to shot |
+| v3 | **1.0× native** | correct |
+
+The v2 idea — spend more stretch on shots with little motion — is defensible on
+paper and wrong in practice: **a viewer reads a speed *change* far more easily
+than a constant offset from native.** Uniform slow-motion is a look; varying
+slow-motion is a fault. Native is the only setting that cannot read as wrong, so
+the graphics were extended until the montage fitted at 1.0×.
+
+## Motion graphics (43.7s across seven beats)
 
 Ported from `video-projects/ecomiq-one-opinion-or-team-story` on branch
-`claude/ecomiq-founder-ad-build-9auz5l` — same numbered-step grammar, same
-node graph. Structure and CSS in `assets/beats.css`; geometry per ratio in each
-composition's `:root`.
+`claude/ecomiq-founder-ad-build-9auz5l` — same numbered-step grammar, same node
+graph, and its `shopify-premier-partner.png` + `team/*.jpg` assets. Structure
+and CSS in `assets/beats.css`; geometry per ratio in each composition's `:root`.
 
 - **MOTION_PHILOSOPHY spine on every beat:** navy ground, perspective grid with
   parallax, registration crosshairs, vignette breath, deterministic CSS grain.
-- One persistent bed (`#gfx`) carries the ambient so beat cards whip in and out
-  over navy, **never over black**.
+- Two persistent beds (`#gfx1`, `#gfx2`) carry the ambient — two runs, because
+  montage window M2 sits between them — so beat cards whip in and out over navy,
+  **never over black**.
+- **A One person's opinion** — a card standing in for that single stale
+  reference brand, struck through in flame, then a pip per year and
+  "5–10 years ago."
+- **B Shopify Premier Partner** — the badge on a white card, landing on "coach
+  arm of a Shopify Premier Partner" (13.54s), then chips for "10+ years" and
+  "the biggest brands in the world" on their own lines.
+- **C An entire team's knowledge** — ten team tiles land one by one, then the
+  "8 & 9 figure brands" chip, then "their entire career" at 29.60s.
 - **00 "Here's how it works"** — one slammed line, on the words at 31.485s.
 - **01 Strategy session** — outlined `01`, 3-segment progress spine, three panel
   rows that each land on their own VO line (35.20 / 37.30 / 39.70).
@@ -97,7 +131,10 @@ composition's `:root`.
   community assembles around you, then **the links draw exactly on "a community
   of founders that are all doing the same thing" (51.96s)**.
 - Beats whip in from the left and out to the right under blur, snapping to opaque
-  in 0.10s so no two beats ever cross-dissolve.
+  in 0.10s so no two beats ever cross-dissolve. The whip animates an **inner
+  non-`clip` `.wrap`**, never the clip element itself, and hard-kills its opacity
+  on the exit boundary — the framework owns a clip's visibility, so animating it
+  directly lets a seek land past the fade and leave stale state.
 
 ## Motion elsewhere
 
@@ -123,6 +160,9 @@ speech, 0.35 over the card.**
 
 ## What NOT to do
 
+- **Don't retime the montage.** It plays at native speed. Two earlier attempts
+  (uniform, then per-shot) both failed; the per-shot one failed worse. If the
+  montage doesn't fit, change how much runtime it has to fill, not its speed.
 - **Don't loop or reprise the montage.** It plays through once. An earlier
   version reprised eight hero shots to fill a gap and it read as a repeat.
 - **Don't put the speaker full frame.** Corner PiP only, and it never moves or
@@ -130,6 +170,7 @@ speech, 0.35 over the card.**
 - **Don't add a second dissolve.** One dissolve in the whole ad, into the card.
   The beat-to-beat whips are position + blur, never opacity cross-fades — that
   distinction is the point.
+- **Don't animate a beat's clip element.** Animate its inner `.wrap`.
 - **Don't combine `.lt` with `.gfx`.** `.gfx { inset: 0 }` wins for top/right and
   parks the lower-third at the top of frame on top of the brand bug.
 - **Don't edit `compositions/*.html` by hand.** They are generated —
