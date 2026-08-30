@@ -1,7 +1,7 @@
 # EcomIQ — "How It Works" VO ad · EDIT PLAN
 
-Status: **v5 — 12 kHz burst in the source repaired; payoff cut; colour and chip
-changes.** Montage still native speed, contiguous, all 832 frames. See §16.
+Status: **v6 — all headline type is white.** Montage still native speed,
+contiguous, all 832 frames. See §17.
 Branch `claude/ecomiq-short-form-ad-8sw5cx`. Slug `ecomiq-how-it-works-ad`.
 
 ---
@@ -656,3 +656,26 @@ image files finds nothing, and no Pacific IQ mark exists in this repo or on the
 two sibling branches. The wordmark is therefore still type in the `lt2`
 lower-third. Commit the file to the repo, or give me a URL, and it is a one-line
 swap.
+
+---
+
+## 17. v6 — all headline type in white
+
+`Their entire career.` on the logo wall was the last flame headline; it is now
+white, matching the two changed in v5.
+
+Flame is now reserved for non-type accents plus one chip, so it marks structure
+rather than words:
+
+| Element | Where |
+|---|---|
+| Card rule | end card, beat B0, logo wall |
+| Brand-card strike-through | beat A |
+| Final year pip | beat A |
+| Row arrow mark | beat 01 |
+| `8 & 9 figure brands` chip | beat C |
+| CTA pill | end card |
+
+Headlines set to white across v5–v6: **"differently"** (B0), **"team's"** (C),
+**"Their entire career."** (logo wall). The red *"the biggest brands in the
+world"* chip was removed outright.

@@ -30,7 +30,7 @@ montage supplies all the colour, so the graphics stay monochrome-plus-flame.
 |---|---|---|---|
 | Navy | `#06284C` | `--brand-navy` | end-card ground |
 | Flame Orange | `#FF4C32` | `--brand-flame` | card rule, CTA pill — the only hot accent |
-| White | `#FFFFFF` | `--brand-white` | brand bug, card lockup, pill label, PiP ring |
+| White | `#FFFFFF` | `--brand-white` | brand bug, card lockup, pill label, PiP ring, **all headline type** |
 | Black | `#000000` | `--brand-black` | canvas behind the picture bed |
 
 The graphics section adds **Blue Tint `#9CD4FF`** (step numerals, spine, nodes,
@@ -39,6 +39,24 @@ stay monochrome-plus-flame. The bug and the PiP ring are white so they sit on to
 competing with it. The bug carries a soft drop-shadow (no box) — the montage
 runs from near-black to a blown-out white UI screen recording, and an
 unprotected white lockup vanishes on the light shots.
+
+## Where flame is still used
+
+Every headline is **white**. Flame is now reserved for non-type accents and one
+chip, so it marks structure rather than words:
+
+| Element | Where |
+|---|---|
+| Card rule | end card, beat B0, logo wall |
+| Brand-card strike-through | beat A |
+| Final year pip | beat A |
+| Row arrow mark | beat 01 |
+| `8 & 9 figure brands` chip | beat C |
+| CTA pill | end card |
+
+Headlines changed to white on request: **"differently"** (B0), **"team's"** (C),
+**"Their entire career."** (logo wall). The red *"the biggest brands in the
+world"* chip was removed entirely.
 
 ## Type
 
@@ -151,7 +169,7 @@ and CSS in `assets/beats.css`; geometry per ratio in each composition's `:root`.
   reads as a static plate. Ported from `my-meta-ad`'s `aug-general-ad-5` on
   branch `claude/aug-general-ad-5-shortform-59z10c` (marks prepped by that
   branch's `scripts/prep-logo-wall.sh`). The hero lands on "for their entire
-  career" (29.54s); the marks then lift in brightness so the tail has motion
+  career" (29.54s, all white); the marks then lift in brightness so the tail has motion
   too; the whole panel wipes up and off as one piece. **The reference's Premier
   Partner hero is deliberately dropped** — beat B already does that badge.
 
