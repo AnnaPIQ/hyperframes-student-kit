@@ -30,5 +30,25 @@ otherwise unchanged — see the sister spec.
 ```bash
 cd video-projects/ecomiq-one-opinion-or-team-story
 npx hyperframes lint
-npx hyperframes render --quality high --output renders/final.mp4
+npx hyperframes render --quality high --output renders/final.mp4                    # 1080x1920
+npx hyperframes render --resolution portrait-4k --quality high --output renders/final-4k.mp4   # 2160x3840
 ```
+
+## 4K master (2160×3840)
+
+`final-4k.mp4` is a true 2× supersample, not an upscale: `--resolution portrait-4k`
+re-renders the composition at Chrome `deviceScaleFactor` 2, so all type, vectors,
+borders and shadows are drawn at native 4K. The A-roll is re-encoded for it straight
+from the 3840×2160 ProRes master (`crop=1215:2160:1223:0 → 2160×3840`) rather than
+letting Chrome upscale the 1080 delivery file — swap it in over `assets/founder.mp4`
+for the render, then restore the 1080 one.
+
+Three sources cannot carry 2× and are genuinely upscaled in it: the Shopify Premier
+Partner badge (338×149 native), the logo-wall marks (~320–420px native) and the
+client b-roll (1080-wide originals). Everything else gains real detail.
+
+**The 4:5 cut has no 4K equivalent.** `--resolution` only accepts fixed presets and
+none is 4:5, and declaring the composition at 2160×2700 with a CSS `zoom: 2` was
+tested and **breaks sub-composition rendering** — the cards drop out and only the
+chrome and pinned logo survive. A true 2160×2700 needs the layout rebuilt at 2×
+(every format value and ~168 hardcoded px doubled), which has not been done.

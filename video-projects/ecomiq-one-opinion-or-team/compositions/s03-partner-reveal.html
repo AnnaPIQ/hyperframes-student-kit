@@ -26,6 +26,10 @@
       @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
         font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
 
+    /* At scale > 1 the card keeps its 1x coordinate space and Chrome renders it at
+       N x device pixels via zoom — type, borders, radii and shadows all stay natively
+       crisp instead of being raster-upscaled, and the layout maths never changes.
+       At 1x this stays exactly inset:0 so the verified build is untouched. */
     [data-composition-id="s03-partner-reveal"] { position: absolute; inset: 0; overflow: hidden;
       font-family: 'Rethink Sans', system-ui, sans-serif;
       color: #FFFFFF; -webkit-font-smoothing: antialiased; }
