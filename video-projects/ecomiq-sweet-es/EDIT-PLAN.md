@@ -94,20 +94,34 @@ The timeline is asserted contiguous: 17 elements, 0.00 → 46.60, zero gaps.
 Balance: b-roll 14.95s over six clips (one use each) · A-roll 10.05s over five
 appearances · figure cards 14.70s · end card 6.90s. 16 cuts.
 
-### Card B — the client roster
-Still set as **type**, not logos. Sweet E's four named clients cannot currently
-be shown as logos without breaking the "never redraw a third-party logo" rule:
+### Card B — the client roster, as logos
 
-| Brand | Official file obtainable? |
-|---|---|
-| The Lakers | **Yes** — official NBA-hosted crest (`cdn.nba.com/logos/nba/1610612747/…`), full colour |
-| Beyond Yoga | Only a black **icon** (their Shopify CDN `Layer_1.png`, 294×200) — no wordmark, and it is invisible on navy |
-| Nordstrom | **No** — the served HTML contains no logo asset at all (client-rendered; automated access blocked) |
-| Tory Burch | **No** — only the *Tory Burch Foundation* mark is published, which is a different entity |
+A 2×2 wall of white chips, each holding the brand's **own logo file**, used
+unmodified — never redrawn, never recoloured. The marks are dark, so each sits
+on a white chip rather than being inverted to suit the navy. Each chip lands on
+the moment its brand is spoken (12.06 / 12.78 / 13.86 / 14.70).
 
-So the choice is: supply the four files, accept a mixed logo/type card, or keep
-type. Note also that the Lakers crest is purple and gold, which would break the
-"flame is the only hot accent" rule — worth a decision either way.
+| Brand | File | Status |
+|---|---|---|
+| Nordstrom | `assets/logos/nordstrom.svg` | in place — shield + wordmark |
+| Tory Burch | `assets/logos/tory-burch.svg` | **placeholder** — needs the real file |
+| Beyond Yoga | `assets/logos/beyond-yoga.svg` | **placeholder** — needs the real file |
+| The Lakers | `assets/logos/lakers.svg` | in place — official NBA-hosted crest, full colour |
+
+Why the two placeholders: the only Tory Burch vector obtainable is an
+outline-only treatment (confirmed by rendering it in Chrome — every path is
+`fill="none"`), not the solid mark; and Beyond Yoga publish only their lotus
+**icon**, with no wordmark, which is unrecognisable beside three wordmarks.
+Dropping the correct files at those two paths is the only step left — the card
+picks them up with no code change.
+
+`scripts/fit-logo-viewbox.mjs` tightens a logo SVG's viewBox to its real ink
+bounds, because brand exports sit on a large square canvas (often behind a white
+backing plate) and `object-fit: contain` otherwise fits the empty canvas and
+renders the mark tiny. It only crops whitespace — no path, colour or proportion
+is touched. Run it on any newly added file:
+
+    node scripts/fit-logo-viewbox.mjs assets/logos/tory-burch.svg
 
 ## The five figure cards — every value sourced
 

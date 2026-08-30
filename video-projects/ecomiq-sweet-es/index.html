@@ -57,9 +57,16 @@
       .label { font-weight: 800; font-size: 40px; letter-spacing: .06em; text-transform: uppercase;
         color: var(--brand-white); }
 
-      /* card B — the client roster, set as type. No third-party logo is ever redrawn. */
-      .names { height: 440px; display: flex; flex-direction: column; justify-content: flex-start; }
-      .name { font-weight: 800; font-size: 92px; line-height: 1.16; letter-spacing: -.02em; }
+      /* card B — the client roster as real logos. Each brand's own file, used
+         unmodified: never redrawn, never recoloured. They are dark marks, so
+         each sits on a white chip rather than being inverted to suit the navy. */
+      .logos { display: grid; grid-template-columns: repeat(2, 400px); gap: 34px;
+        justify-content: center; margin-top: 34px; }
+      .chip { width: 400px; height: 190px; background: var(--brand-white);
+        border-radius: 22px; display: flex; align-items: center; justify-content: center;
+        padding: 30px 38px; opacity: 0; }
+      .chip img { max-width: 100%; max-height: 100%; width: auto; height: auto;
+        object-fit: contain; display: block; }
 
       /* card D — three measured results, rule of threes */
       .row { display: flex; align-items: center; gap: 40px; width: 100%; max-width: 860px;
@@ -160,11 +167,11 @@
           <div class="inner">
             <div class="eyebrow" id="bEye">They&rsquo;ve made for</div>
             <div class="hair" id="bHair"></div>
-            <div class="names">
-              <div class="name" id="bN1">Nordstrom</div>
-              <div class="name" id="bN2">Tory Burch</div>
-              <div class="name" id="bN3">Beyond Yoga</div>
-              <div class="name" id="bN4">The Lakers</div>
+            <div class="logos">
+              <div class="chip" id="bN1"><img src="assets/logos/nordstrom.svg" alt="Nordstrom" /></div>
+              <div class="chip" id="bN2"><img src="assets/logos/tory-burch.svg" alt="Tory Burch" /></div>
+              <div class="chip" id="bN3"><img src="assets/logos/beyond-yoga.svg" alt="Beyond Yoga" /></div>
+              <div class="chip" id="bN4"><img src="assets/logos/lakers.svg" alt="Los Angeles Lakers" /></div>
             </div>
           </div>
         </div>
@@ -304,10 +311,11 @@
       const B = 12.05;
       rise('#bEye', B + 0.02, 16, 0.24);
       hair('#bHair', B + 0.14);
-      rise('#bN1', B + 0.01, 30, 0.40);   /* Nordstrom   12.06 */
-      rise('#bN2', B + 0.73, 30, 0.40);   /* Tory Burch  12.78 */
-      rise('#bN3', B + 1.81, 30, 0.40);   /* Beyond Yoga 13.86 */
-      rise('#bN4', B + 2.65, 30, 0.40);   /* The Lakers  14.70 */
+      /* each logo lands on the moment its brand is spoken */
+      [['#bN1', 0.01], ['#bN2', 0.73], ['#bN3', 1.81], ['#bN4', 2.65]].forEach(([sel, off]) => {
+        tl.fromTo(sel, { opacity: 0, y: 26, scale: .94 },
+          { opacity: 1, y: 0, scale: 1, duration: .42, ease: 'back.out(1.4)' }, B + off);
+      });
 
       /* ================= CARD C · midnight → 8am ================= */
       const C = 22.30;
