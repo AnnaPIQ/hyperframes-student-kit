@@ -101,27 +101,38 @@ unmodified — never redrawn, never recoloured. The marks are dark, so each sits
 on a white chip rather than being inverted to suit the navy. Each chip lands on
 the moment its brand is spoken (12.06 / 12.78 / 13.86 / 14.70).
 
-| Brand | File | Status |
+| Brand | File | Source |
 |---|---|---|
-| Nordstrom | `assets/logos/nordstrom.svg` | in place — shield + wordmark |
-| Tory Burch | `assets/logos/tory-burch.svg` | **placeholder** — needs the real file |
-| Beyond Yoga | `assets/logos/beyond-yoga.svg` | **placeholder** — needs the real file |
-| The Lakers | `assets/logos/lakers.svg` | in place — official NBA-hosted crest, full colour |
+| Nordstrom | `nordstrom.svg` | shield + wordmark, solid |
+| Tory Burch | `tory-burch.png` | official solid mark, stacked lockup |
+| Beyond Yoga | `beyond-yoga.svg` | **their own site's header wordmark**, lifted from beyondyoga.com |
+| The Lakers | `lakers.svg` | official NBA-hosted crest, full colour |
 
-Why the two placeholders: the only Tory Burch vector obtainable is an
-outline-only treatment (confirmed by rendering it in Chrome — every path is
-`fill="none"`), not the solid mark; and Beyond Yoga publish only their lotus
-**icon**, with no wordmark, which is unrecognisable beside three wordmarks.
-Dropping the correct files at those two paths is the only step left — the card
-picks them up with no code change.
+Beyond Yoga's file paints with `fill="currentColor"`, i.e. it carries no colour
+of its own; it is set to the black they present it in. Tory Burch's flat white
+margin was trimmed so the mark fills its chip — a crop only, nothing redrawn.
+
+**Legibility.** The chips are 420×250 with tight padding, and each logo is
+`width/height: 100%` + `object-fit: contain` so it scales **up** to fill its
+chip. This matters: with `width: auto` a logo only ever renders at its intrinsic
+size, which had the Lakers crest drawing at 17% of frame width — far too small
+to read in-feed. Measured rendered widths now:
+
+| Logo | Drawn | % of frame width |
+|---|---|---|
+| Nordstrom | 368×151 | 34% |
+| Beyond Yoga | 368×38 | 34% |
+| The Lakers | 329×209 | 30% |
+| Tory Burch | 231×209 | 21% |
+
+Tory Burch is smallest because its stacked lockup is nearly square and so is
+height-constrained; the others are wide and fill the chip's width. Card content
+bottoms out at y=1093, still clear of the subtitle zone.
 
 `scripts/fit-logo-viewbox.mjs` tightens a logo SVG's viewBox to its real ink
-bounds, because brand exports sit on a large square canvas (often behind a white
-backing plate) and `object-fit: contain` otherwise fits the empty canvas and
-renders the mark tiny. It only crops whitespace — no path, colour or proportion
-is touched. Run it on any newly added file:
-
-    node scripts/fit-logo-viewbox.mjs assets/logos/tory-burch.svg
+bounds — brand exports sit on a large square canvas, often behind a white
+backing plate, which otherwise makes `object-fit: contain` fit the empty canvas.
+It crops whitespace only. Run it on any newly added SVG.
 
 ## The five figure cards — every value sourced
 
