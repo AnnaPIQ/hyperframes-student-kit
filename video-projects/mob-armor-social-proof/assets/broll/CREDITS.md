@@ -7,8 +7,13 @@ Source folder: `Client media` →
 https://drive.google.com/drive/folders/1DBvZ_8bcxVX9wPEe0a8dUvXZhdftuAgt
 Subfolder used: **Social Cuts** (Drive id `1ArKbSBupieY_R4spsdiF7sJqxYc0qzas`)
 
-Every Social Cut is 1080×1920, **24 fps**, H.264, carrying an audio track *and* a stray
-data stream. Prep for all six b-roll clips — video-only, normalised to 30 fps cfr:
+**No b-roll is used in the shipped cut.** The last remaining shot — a drone pass of a
+buggy on sand dunes — sat under "after they started working with us" and did not connect
+to the line, so it was cut and the slot folded into Sean. The piece is now the opening
+card, Sean to camera, and the stat graphics.
+
+Ranges below are all still logged: each regenerates in one ffmpeg line if a shot is
+wanted back.
 
 ```bash
 ffmpeg -y -ss <in> -t <dur> -i <src>.mp4 \
@@ -16,13 +21,24 @@ ffmpeg -y -ss <in> -t <dur> -i <src>.mp4 \
   -vsync cfr -r 30 -movflags +faststart assets/broll/<name>.mp4
 ```
 
-`-map 0:v:0 -an` drops both the audio and the data stream in one pass.
+| Candidate | Source clip (Drive) | In–out | Note |
+|---|---|---|---|
+| `dunes-drone` | Tab Mount Maxx Tube Mount.mp4 | 31.95–34.75 | drone, buggy on dunes — the strongest single shot |
+| `load-test` | Tabnetic Direct.mp4 | 14.90–17.20 | a man hanging his full weight off two mounts — the best *proof* shot |
+| `incab-dash` | Mobnetic Stix.mp4 | 2.85–4.75 | phone on a dash mount, in-cab |
+| `facility-floor` | Tab Mount Maxx Direct.mp4 | 12.70–15.10 | facility floor, mount in foreground |
+| `cnc-sparks` | Tabnetic Discs.mp4 | 5.95–7.55 | CNC head, sparks. **Must stay inside 5.92–7.79** — there is a real cut at 7.79 that scene detection at the 0.35 threshold misses |
+| `radio-guy` | Rad Mount.mp4 | 28.20–30.75 | a real customer, face to camera, in his truck |
+| `tablet-wall` | Tabnetic Direct.mp4 | 20.50–23.00 | tablet going onto a wall mount |
+| `tablet-locked` | Tabnetic Direct.mp4 | 41.10–43.45 | rugged tablet locked into its mount |
+| `phone-dash` | Mobnetic Maxx Water balloon.mp4 | 2.55–3.80 | real vehicle interior, hand and keys |
 
-| Local file | Beat | Source clip (Drive) | Drive file id | In–out | Pulled |
-|---|---|---|---|---|---|
-| `dunes-drone.mp4` | 03 | Tab Mount Maxx Tube Mount.mp4 | `1a8KoxoKVBnCt7oyuspILNfhsW7Mx7r0E` | 31.95–34.75 | 2026-08-27 |
-
-This is the only b-roll shot in the cut. Sean carries the rest.
+Drive file ids: Tab Mount Maxx Tube `1a8KoxoKVBnCt7oyuspILNfhsW7Mx7r0E` · Tabnetic Direct
+`1BqMYocdVmTMAGKIrBiitTGrgpG9kzbL2` · Mobnetic Stix `1BDmv8-GU7194MJedTT_Ewje4m1N2y0NF` ·
+Tab Mount Maxx Direct `1ud577NtpMV6BpnnCF260IGagWDuocPLJ` · Tabnetic Discs
+`1sQIRGCsAxMEFB3J7w-BFFTjR-xF7ctJc` · Rad Mount `1tDsY1YT6wk4z4xHC7Etaln2_8-qSmivU` ·
+Water balloon `1uI6ZN5iO__2ixCbD3S__95f7bU2BPd-a`. All 1080×1920, 24 fps, with an audio
+track *and* a stray data stream — `-map 0:v:0 -an` drops both in one pass.
 
 ### A-roll — Sean to camera (`assets/aroll/`, `assets/aroll45/`)
 
@@ -37,7 +53,7 @@ Source: `Mob Armor Ad.mov` (`1f2kXr2Ng227CLaBd5OH9d_EzX2d7TniS`), ProRes 3840×2
 
 | File | Beat | Composition in | Source in | Dur | Line |
 |---|---|---|---|---|---|
-| `a02.mp4` | 02 | 4.280 | 4.447 | 2.65 | "That's what happened to Mob Armor's total sales" |
+| `a02.mp4` | 02 | 4.280 | 4.447 | 4.19 | "That's what happened to Mob Armor's total sales after they started working with us." |
 | `a04.mp4` | 04 | 8.220 | 8.387 | 3.77 | "And it wasn't a lucky viral moment. It wasn't a magic ad." |
 | `a05.mp4` | 05 | 11.733 | 11.900 | 3.22 | "When they came to us, almost everything ran through Facebook." |
 | `a10.mp4` | 10 | 21.733 | 21.900 | 2.39 | "A year later, sales are up over" |
@@ -54,22 +70,16 @@ would cut his head or torso:
 #       -ss <composition-time + 0.167> -r 30 -vsync cfr -crf 19 -an
 ```
 
-The grade eases the electric-cyan backdrop toward the EcomIQ navy world. Sean is layered
-**above** the b-roll scrim, so his face is never dimmed by it.
-
-### Cut but kept in the shot list
-`incab-dash` (Mobnetic Stix 2.85–4.75), `load-test` (Tabnetic Direct 14.90–17.20),
-`facility-floor` (Tab Mount Maxx Direct 12.70–15.10), `cnc-sparks` (Tabnetic Discs
-5.95–7.55 — **must stay inside 5.92–7.79**, there is a real cut at 7.79 that scene
-detection at the 0.35 threshold misses), `radio-guy` (Rad Mount 28.20–30.75),
-`tablet-wall` (Tabnetic Direct 20.50–23.00), `tablet-locked` (Tabnetic Direct
-41.10–43.45), `phone-dash` (Water balloon 2.55–3.80). All were in earlier cuts and lost
-their slots when the edit moved to Sean. Files removed; each range is one ffmpeg line.
+The grade eases the electric-cyan backdrop toward the EcomIQ navy world.
 
 **Logos** (client-supplied white versions — not redrawn, not recoloured):
 `Logos/logo-white@2x.png` (`1yMyyTH9kNmlSJ2Il2mFY_JqEvvQcmKWZ`, 2800×481 RGBA) and
 `Logos/logo-shield-white@2x.png` (`1MgOoFVh5E1YVkfnCpgOmyWCWxY_9JKhS`, 901×1061 RGBA),
-pulled 2026-08-27. Both sit on a black `#101820` chip, per `BRANDING_GUIDE.pdf`.
+pulled 2026-08-27. Exported at four sizes so no two `<img>` share a source (same src with
+no `data-start` trips `duplicate_media_discovery_risk`): `mobarmor-wordmark-hero.png`
+(opening card), `mobarmor-logo-white.png`, `mobarmor-wordmark-sm.png` and
+`mobarmor-shield-white.png`. The opening card runs on `#101820` and the credit chips are
+`#101820` plates, so the mark is always on black per `BRANDING_GUIDE.pdf`.
 
 **Voiceover:** the same `Mob Armor Ad.mov`, audio track only — prepped to `assets/vo.m4a`
 (high-pass 70 Hz, `loudnorm I=-16:TP=-1.5:LRA=11`) and laid as one continuous 38.6 s bed.

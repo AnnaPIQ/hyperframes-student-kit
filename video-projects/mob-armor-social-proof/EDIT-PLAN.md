@@ -106,9 +106,9 @@ VO. I verified them live today anyway, and they're in §7 if you want one used.
 
 ---
 
-## 4 · Beat sheet — 18 beats, 38.60 s
+## 4 · Beat sheet — 14 beats, 38.60 s
 
-Mid-section average shot length **2.02 s**. Every cut is a blur-whip (exit `y:-140`,
+Mid-section average shot length **2.4 s**. Every cut is a blur-whip (exit `y:-140`,
 `blur(24px)`, `power2.in` 0.30 s starting 0.10 s early → entry `y:140`, `blur(24px)`→0,
 `power2.out` 0.45 s), same direction on both sides so the two blurs overlap and the cut
 hides inside the motion. Cards A and D additionally get a flame light-streak fired on
@@ -117,33 +117,46 @@ top-left (72, 96) for the whole runtime, in a positioned non-`clip` div.
 
 | # | in → out | VO | On screen | Source |
 |---|---|---|---|---|
-| 00 | 0.000 → 1.700 | *(silence)* → "Up over…" | **MOB ARMOR FIRST SCREEN.** The client's wordmark, full-bleed on their own `#101820` black — their guide wants white-on-black with nothing else behind it, so the EcomIQ mark holds off until 1.700. Logo scales up, then a slow push. | `mobarmor-wordmark-hero.png` |
-| 01 | 1.700 → 4.280 | "…500% in a single year." | **CARD A — 500%.** Numeral snaps at 1.700, 0.20 s ahead of the spoken word, inside a flame streak. Rule 2.10; "In a single year" 3.10; Mob Armor wordmark on a black chip 3.45. | — |
-| 02 | 4.280 → 6.680 | "That's what happened to Mob Armor's total sales" | **A-ROLL** — medium framing. | `a02` |
-| 03 | 6.680 → 8.220 | "after they started working with us." | **The only b-roll shot** — drone, buggy across sand dunes, 1.06× push. | `Tab Mount Maxx Tube` 31.95–34.75 |
-| 04 | 8.220 → 11.733 | "And it wasn't a lucky viral moment. It wasn't a magic ad." | **A-ROLL** — wide, **re-framing to tight at 10.160** on the sentence boundary. | `a04` |
-| 05 | 11.733 → 14.700 | "When they came to us, almost everything ran through Facebook." | **A-ROLL** — wide, **re-framing to medium at 12.480** on "almost everything". | `a05` |
+| 00 | 0.000 → 4.280 | *(silence)* → "Up over 500% in a single year." | **OPENING CARD**, full-bleed on Mob Armor's own `#101820`. The client's wordmark lands at 0.10 and **holds alone until 1.700** — the first screen is their mark. Then `+500%` snaps in beneath it, 0.20 s ahead of the spoken word and inside a flame streak; "Total sales" 1.82; flame rule 2.10; "In a single year" 3.10. EcomIQ's mark stays off until 4.32. | `mobarmor-wordmark-hero.png` |
+| 02 | 4.280 → 8.220 | "That's what happened to Mob Armor's total sales after they started working with us." | **A-ROLL** — medium framing, **re-framing to wide at 6.680** on "after". | `a02` |
+| 04 | 8.220 → 11.733 | "And it wasn't a lucky viral moment. It wasn't a magic ad." | **A-ROLL** — tight, **re-framing to medium at 10.160** on the sentence boundary. | `a04` |
+| 05 | 11.733 → 14.700 | "When they came to us, almost everything ran through Facebook." | **A-ROLL** — wide, **re-framing to tight at 12.480** on "almost everything". | `a05` |
 | 07 | 14.700 → 17.267 | "There was one channel doing all of the work." | **CARD B — 1.** One flame dot lit, three dark, the lit one visibly overloading on a four-beat pulse. | — |
 | 08 | 17.267 → 19.400 | "We found three more that fit the brand" | **CARD C — +3.** Numeral swaps in place; three blue-tint dots ignite on "three more". | — |
 | 09 | 19.400 → 21.733 | "and got them working in the right order." | Same card, **no cut** — copy recolours and a flame pulse runs the wire left→right, popping each dot in sequence. | — |
-| 10 | 21.733 → 23.867 | "A year later, sales are up over" | **A-ROLL** — tight framing. | `a10` |
-| 11 | 23.867 → 25.233 | **"500%"** | **CARD D — the callback.** Card A returns, faster, carrying the Mob Armor shield rather than the wordmark. | — |
+| 10 | 21.733 → 23.867 | "A year later, sales are up over" | **A-ROLL** — medium framing. | `a10` |
+| 11 | 23.867 → 25.233 | **"500%"** | **CARD D — the callback.** `+500%` returns, faster than the opener, carrying the Mob Armor shield. | — |
 | 12 | 25.233 → 27.200 | "across four channels instead of just one." | **CARD E — 4.** All four dots lit, staggered. | — |
 | 13 | 27.200 → 29.567 | "And that's what the right plan does." | **A-ROLL** — wide framing. | `a13` |
-| 14 | 29.567 → 31.650 | "This is a real brand with real numbers." | **CARD F — the summary.** Both spoken figures side by side — `500% / TOTAL SALES` and `4 / CHANNELS` — under the client's wordmark. Calls back to beat 00. | — |
-| 15 | 31.650 → 33.500 | "If you wanna see what's possible for yours," | **A-ROLL** — medium framing, hands off to the CTA. | `a15` |
+| 14 | 29.567 → 31.650 | "This is a real brand with real numbers." | **CARD F — the summary.** Both spoken figures side by side — `+500% / TOTAL SALES` and `4 / CHANNELS` — under the client's wordmark. Calls back to the opening card. | — |
+| 15 | 31.650 → 33.500 | "If you wanna see what's possible for yours," | **A-ROLL** — tight framing, hands off to the CTA. | `a15` |
 | 16 | 33.500 → 38.600 | "tap the link to find out more." + 3.47 s silence | **EcomIQ end card.** Centred logo, "See what's *possible* for yours.", flame CTA at 34.20. Holds **5.10 s**. Entry only. | — |
 
 ### How the three registers alternate
 
 | Register | Share | Job |
 |---|---|---|
-| **A-roll (Sean)** | 15.2 s · 39% | Six segments. Carries the narrative and every line of opinion or conclusion |
-| **Motion graphics** | 21.8 s · 57% | The client's mark opens and recurs; six cards, one per spoken figure plus a summary |
-| **Client b-roll** | 1.5 s · 4% | One shot, on the payoff line |
+| **A-roll (Sean)** | 16.8 s · 43% | Six segments. Carries the whole narrative between the cards |
+| **Motion graphics** | 21.8 s · 57% | The client's mark opens the ad and recurs; six cards |
+| **Client b-roll** | — | None. See §4.2 |
 
 The ad opens on the client's mark, and Sean carries the story between the cards. He
 states each claim, the graphic evidences it, he interprets it.
+
+**There is no b-roll.** It went 29% → 4% → none across three passes: too much of it, then
+the one survivor did not connect to its line. Every candidate range is still logged in
+`assets/broll/CREDITS.md` and regenerates in one ffmpeg line. If a shot is wanted back,
+`load-test` (a man hanging his full weight off two mounts) is the one that earns its
+place, and it would sit under "almost everything ran through Facebook".
+
+**All copy is white** — eyebrows, chip labels, summary labels and the end card's serif
+emphasis word were blue-tint or grey until this pass. The brief said all text white; the
+build had drifted from it. Blue-tint survives only as a *graphic* accent on the channel
+dots, never on type.
+
+**The figure reads `+500%`**, which is ~20% wider than `500%`, so `.stat.xl` drops
+330 → 268 px and `.stat.md` 190 → 158 px to keep the leading plus inside the 888 px
+content width.
 
 **One camera means one crop**, so the extra A-roll time is carried by re-framing rather
 than by holding: three presets (wide 1.00 / medium 1.10 +45x / tight 1.20 −30x) switched
