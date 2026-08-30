@@ -106,13 +106,6 @@ SUBS = [
     ("#logo-slot { position: absolute; top: 96px; left: 72px; width: 320px; z-index: 7; }",
      "#logo-slot { position: absolute; top: 68px; left: 58px; width: 262px; z-index: 7; }"),
 
-    # ── crosshairs: y positions scaled by 1350/1920 ─────────────────────────
-    ("""        <i style="left:264px;  top:474px"></i><i style="left:804px;  top:474px"></i>
-        <i style="left:264px;  top:1014px"></i><i style="left:804px; top:1014px"></i>
-        <i style="left:534px;  top:744px"></i>""",
-     """        <i style="left:264px;  top:333px"></i><i style="left:804px;  top:333px"></i>
-        <i style="left:264px;  top:713px"></i><i style="left:804px; top:713px"></i>
-        <i style="left:534px;  top:523px"></i>"""),
 ]
 
 
@@ -135,8 +128,8 @@ def main():
     # A-roll is re-cropped from the 4K master for 4:5 (1728x2160 -> 1080x1350) rather than
     # letterbox-cropped from the 9:16 cut, which would cut Sean's head or torso.
     n_aroll = out.count('assets/aroll/')
-    if n_aroll != 6:
-        print(f"make-4x5: expected 6 A-roll references, found {n_aroll}")
+    if n_aroll != 4:
+        print(f"make-4x5: expected 4 A-roll references, found {n_aroll}")
         return 1
     out = out.replace('assets/aroll/', 'assets/aroll45/')
 

@@ -117,11 +117,10 @@
       }
 
       /* ── 00/01 · opening card ─────────────────────────────────
-         The client's mark and the headline figure are one card now, and it runs
-         full-bleed on Mob Armor's own #101820 black — their guide wants the logo
-         on black with nothing else behind it, and it gives the ad a distinct
-         opening frame before the piece moves into navy. */
-      #cardA { position: absolute; inset: 0; z-index: 6; background: #101820; }
+         The client's mark and the headline figure are one card. Transparent, so the
+         navy #bg and the vignette read through it exactly as they do behind every
+         other motion-graphic card. */
+      #cardA { position: absolute; inset: 0; z-index: 6; }
       #maHero { width: 620px; height: auto; display: block; }
 
       /* ── 14 · summary card — both spoken figures, side by side ── */
@@ -140,10 +139,6 @@
         font-weight: 800; font-size: 92px; line-height: .98; letter-spacing: -.032em;
         max-width: 830px;
       }
-      #endcard .head .em {
-        font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400;
-        color: var(--brand-white);
-      }
       #endcard .cta {
         font-weight: 800; font-size: 40px; letter-spacing: -.01em; color: var(--brand-white);
         background: var(--brand-flame); padding: 30px 62px; border-radius: 999px;
@@ -155,19 +150,6 @@
       #logo-slot img { width: 100%; height: auto; display: block; }
 
       /* ── unifying texture ────────────────────────────────────── */
-      #grid {
-        position: absolute; inset: -120px; pointer-events: none; z-index: 4;
-        background:
-          repeating-linear-gradient(0deg,  rgba(255,255,255,.062) 0 1px, transparent 1px 90px),
-          repeating-linear-gradient(90deg, rgba(255,255,255,.062) 0 1px, transparent 1px 90px);
-      }
-      #crosshairs { position: absolute; inset: 0; pointer-events: none; opacity: .5; z-index: 5; }
-      #crosshairs i { position: absolute; width: 26px; height: 26px; }
-      #crosshairs i::before, #crosshairs i::after {
-        content: ""; position: absolute; background: rgba(255,255,255,.46);
-      }
-      #crosshairs i::before { left: 50%; top: 0; width: 1px; height: 100%; }
-      #crosshairs i::after  { top: 50%; left: 0; height: 1px; width: 100%; }
       #vignette {
         position: absolute; inset: 0; pointer-events: none; z-index: 8;
         background: radial-gradient(ellipse 82% 66% at 50% 44%, rgba(0,0,0,0) 34%, rgba(0,0,0,.44) 100%);
@@ -193,11 +175,11 @@
 
   <body>
     <div id="root" data-composition-id="mob-armor-social-proof"
-         data-start="0" data-duration="38.6" data-width="1080" data-height="1920">
+         data-start="0" data-duration="36.0" data-width="1080" data-height="1920">
 
-      <div id="bg" class="clip" data-start="0" data-duration="38.6" data-track-index="0"></div>
+      <div id="bg" class="clip" data-start="0" data-duration="36.0" data-track-index="0"></div>
 
-      <div id="scrim" class="clip" data-start="0" data-duration="38.6" data-track-index="10"></div>
+      <div id="scrim" class="clip" data-start="0" data-duration="36.0" data-track-index="10"></div>
 
       <!-- ══ A-ROLL — Sean to camera ═════════════════════════════
            MEASURED OFFSET: the picture lags the sound by 5 frames (0.167s) in this
@@ -206,26 +188,14 @@
            source (composition-time + 0.167) and placed at composition-time, which
            advances the video by exactly that. Do not re-cut these without
            re-applying the offset. -->
-      <video id="a02" class="aroll" src="assets/aroll/a02.mp4" muted
-             data-start="4.280" data-duration="4.190" data-track-index="11"></video>
-      <video id="a04" class="aroll" src="assets/aroll/a04.mp4" muted
-             data-start="8.220" data-duration="3.763" data-track-index="12"></video>
-      <video id="a05" class="aroll" src="assets/aroll/a05.mp4" muted
-             data-start="11.733" data-duration="3.217" data-track-index="13"></video>
+      <video id="aMain" class="aroll" src="assets/aroll/a-main.mp4" muted
+             data-start="4.280" data-duration="10.670" data-track-index="11"></video>
       <video id="a10" class="aroll" src="assets/aroll/a10.mp4" muted
              data-start="21.733" data-duration="2.384" data-track-index="14"></video>
       <video id="a13" class="aroll" src="assets/aroll/a13.mp4" muted
              data-start="27.200" data-duration="2.617" data-track-index="15"></video>
       <video id="a15" class="aroll" src="assets/aroll/a15.mp4" muted
              data-start="31.650" data-duration="2.100" data-track-index="16"></video>
-
-      <!-- ══ TEXTURE (over footage, under type) ══════════════════ -->
-      <div id="grid" class="clip" data-start="0" data-duration="38.6" data-track-index="19"></div>
-      <div id="crosshairs" class="clip" data-start="0" data-duration="38.6" data-track-index="20">
-        <i style="left:264px;  top:474px"></i><i style="left:804px;  top:474px"></i>
-        <i style="left:264px;  top:1014px"></i><i style="left:804px; top:1014px"></i>
-        <i style="left:534px;  top:744px"></i>
-      </div>
 
       <!-- ══ CARDS ═══════════════════════════════════════════════ -->
       <!-- 00 · the opening card — client's mark and the headline figure together,
@@ -294,28 +264,28 @@
       </div>
 
       <!-- 16 · end card -->
-      <div id="endcard" class="card clip" data-start="33.500" data-duration="5.100" data-track-index="27">
+      <div id="endcard" class="card clip" data-start="33.500" data-duration="2.500" data-track-index="27">
         <img class="logo" id="ecLogo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
-        <div class="head" id="ecHead">See what&rsquo;s <span class="em">possible</span> for yours.</div>
-        <div class="cta" id="ecCta">Tap the link &rarr;</div>
+        <div class="head" id="ecHead">See what&rsquo;s possible for yours.</div>
+        <div class="cta" id="ecCta">Tap the link</div>
       </div>
 
       <!-- ══ TOP LAYERS ══════════════════════════════════════════ -->
       <div class="streak clip" id="streakA" data-start="1.600" data-duration="0.600" data-track-index="28"></div>
       <div class="streak clip" id="streakD" data-start="23.767" data-duration="0.600" data-track-index="29"></div>
-      <div id="vignette" class="clip" data-start="0" data-duration="38.6" data-track-index="32"></div>
-      <div id="grain"    class="clip" data-start="0" data-duration="38.6" data-track-index="33"></div>
+      <div id="vignette" class="clip" data-start="0" data-duration="36.0" data-track-index="32"></div>
+      <div id="grain"    class="clip" data-start="0" data-duration="36.0" data-track-index="33"></div>
 
       <!-- Logo lives in a positioned, non-clip div so the engine can't reposition it -->
       <div id="logo-slot"><img id="maLogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
 
-      <audio id="vo" src="assets/vo.m4a" data-start="0" data-duration="38.6" data-track-index="40" data-volume="1"></audio>
+      <audio id="vo" src="assets/vo.m4a" data-start="0" data-duration="36.0" data-track-index="40" data-volume="1"></audio>
     </div>
 
     <script>
       window.__timelines = window.__timelines || {};
       (() => {
-        const DUR = 38.6;
+        const DUR = 36.0;
         const tl = gsap.timeline({ paused: true });
 
         /* ── Cut-the-curve vertical whip ────────────────────────────────────
@@ -351,25 +321,6 @@
           tl.fromTo(sel, { scale: 1 }, { scale: to, duration: dur, ease: "none" }, tIn);
         }
 
-        /* ── Framing presets ────────────────────────────────────────────────
-           One camera, one crop — so variety comes from re-framing in post. Switching
-           preset at a sentence boundary, inside a 3-frame blur, reads as a second
-           angle and keeps a long talking-head block alive. */
-        const FRAME = {
-          W: { scale: 1.00, x:   0, y:   0 },   // wide, centred
-          M: { scale: 1.10, x:  45, y:  10 },   // medium, favouring right
-          T: { scale: 1.20, x: -30, y: -20 },   // tight, favouring left
-        };
-        function hold(sel, tIn, dur, f, drift) {   // one framing, slow push
-          tl.fromTo(sel, { scale: f.scale, x: f.x, y: f.y },
-            { scale: f.scale + drift, x: f.x, y: f.y, duration: dur, ease: "none" }, tIn);
-        }
-        function reframe(sel, t, f, dur, drift) {  // cut to a new framing on a word boundary
-          tl.to(sel,  { filter: "blur(14px)", duration: 0.060, ease: "power2.in" }, t - 0.060);
-          tl.set(sel, { scale: f.scale, x: f.x, y: f.y }, t);
-          tl.to(sel,  { filter: "blur(0px)", duration: 0.100, ease: "power2.out" }, t);
-          tl.to(sel,  { scale: f.scale + drift, duration: dur, ease: "none" }, t);
-        }
 
         /* ── 00/01 · the opening card ───────────────────────────────────
            The client's mark lands first and holds alone for 1.6s (Nate: "first screen
@@ -383,12 +334,8 @@
           { scale: 1, opacity: 1, duration: 0.70, ease: "power3.out" }, 0.10);
         tl.to("#maHero", { scale: 1.03, duration: 1.50, ease: "none" }, 0.80);
 
-        /* Camera never sleeps: the grid drifts and the vignette breathes for the
-           whole runtime, so even the held end card is never a frozen frame. */
-        tl.fromTo("#grid", { backgroundPosition: "0px 0px, 0px 0px" },
-          { backgroundPosition: "0px -90px, -90px 0px", duration: DUR, ease: "none" }, 0);
-        tl.to("#vignette", { opacity: 0.88, duration: 5.2, repeat: 7, yoyo: true, ease: "sine.inOut" }, 0);
-        tl.fromTo("#crosshairs", { opacity: 0 }, { opacity: 0.5, duration: 1.0, ease: "power2.out" }, 0.4);
+        // The vignette breathes for the whole runtime so held frames never freeze.
+        tl.to("#vignette", { opacity: 0.88, duration: 5.2, repeat: 6, yoyo: true, ease: "sine.inOut" }, 0);
         // EcomIQ's mark holds off until Sean — the opening frame belongs to the client.
         tl.fromTo("#logo-slot", { opacity: 0, y: -18 },
           { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 4.320);
@@ -406,23 +353,12 @@
         tl.fromTo("#subA", { y: 26, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.38, ease: "power2.out" }, 3.100);
 
-        /* ── 02 · Sean, "That's what happened to Mob Armor's total sales
-                        after they started working with us." ─────────────── */
-        // The dune shot used to sit at 6.68 and did not connect to the line, so the
-        // slot folds back into Sean and the beat re-frames on "after" instead.
-        beatFace("#a02", 4.280, 8.220);
-        hold("#a02", 4.280, 2.400, FRAME.M, 0.04);
-        reframe("#a02", 6.680, FRAME.W, 1.540, 0.035);
-
-        /* ── 04 · "And it wasn't a lucky viral moment. It wasn't a magic ad." */
-        beatFace("#a04", 8.220, 11.733);
-        hold("#a04", 8.220, 1.940, FRAME.T, 0.045);
-        reframe("#a04", 10.160, FRAME.M, 1.573, 0.045);
-
-        /* ── 05 · "When they came to us, everything ran through Facebook." ── */
-        beatFace("#a05", 11.733, 14.700);
-        hold("#a05", 11.733, 0.747, FRAME.W, 0.03);
-        reframe("#a05", 12.480, FRAME.T, 2.220, 0.045);
+        /* ── Sean, unbroken 4.280 → 14.700 ──────────────────────────────
+           No cut and no re-framing anywhere in here. 4.280 to 14.700 is one
+           continuous stretch of the take, so it is one clip with a slow push —
+           the only movement on him is the push itself. */
+        beatFace("#aMain", 4.280, 14.700);
+        push("#aMain", 4.280, 10.420, 1.06);
 
         /* ── 07/08/09 · CARD B→C — one card, no cut ─────────────────────── */
         beat("#cardCh", 14.700, 21.733);
@@ -468,7 +404,7 @@
 
         /* ── 10 · Sean, "A year later, sales are up over" ───────────────── */
         beatFace("#a10", 21.733, 23.867);
-        hold("#a10", 21.733, 2.134, FRAME.M, 0.045);
+        push("#a10", 21.733, 2.134, 1.03);
 
         /* ── 11 · CARD D — the 500% callback ────────────────────────────── */
         tl.fromTo("#streakD", { xPercent: -60, opacity: 0, scaleX: 0.6 },
@@ -497,7 +433,7 @@
 
         /* ── 13 · Sean, "And that's what the right plan does." ──────────── */
         beatFace("#a13", 27.200, 29.567);
-        hold("#a13", 27.200, 2.367, FRAME.W, 0.04);
+        push("#a13", 27.200, 2.367, 1.03);
 
         /* ── 14 · CARD F — both figures together, under the client's mark ── */
         // Lands on "real numbers", and calls back to the mark that opened the ad.
@@ -516,7 +452,7 @@
 
         /* ── 15 · Sean hands off to the CTA ─────────────────────────────── */
         beatFace("#a15", 31.650, 33.500);
-        hold("#a15", 31.650, 1.850, FRAME.M, 0.04);
+        push("#a15", 31.650, 1.850, 1.03);
 
         /* ── 16 · end card — the piece stops moving and lets the CTA land ── */
         tl.to("#logo-slot", { opacity: 0, duration: 0.32, ease: "power2.in" }, 33.360);
@@ -528,7 +464,7 @@
           { y: 0, opacity: 1, duration: 0.58, ease: "power3.out" }, 33.820);
         tl.fromTo("#ecCta", { scale: 0.86, opacity: 0 },
           { scale: 1, opacity: 1, duration: 0.46, ease: "back.out(1.7)" }, 34.200);
-        tl.to("#ecCta", { scale: 1.035, duration: 1.5, repeat: 2, yoyo: true, ease: "sine.inOut" }, 35.000);
+        tl.to("#ecCta", { scale: 1.03, duration: 0.55, repeat: 1, yoyo: true, ease: "sine.inOut" }, 34.800);
 
         // Law 11 — anchor the timeline to the full slot so no tail frame goes black.
         tl.to({}, { duration: DUR }, 0);
