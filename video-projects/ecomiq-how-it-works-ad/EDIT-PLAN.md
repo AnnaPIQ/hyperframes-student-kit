@@ -1,7 +1,7 @@
 # EcomIQ — "How It Works" VO ad · EDIT PLAN
 
-Status: **v4 — two beats cut, logo wall added, dead air closed.** Montage still
-at native speed and now contiguous in bed time. See §15.
+Status: **v5 — 12 kHz burst in the source repaired; payoff cut; colour and chip
+changes.** Montage still native speed, contiguous, all 832 frames. See §16.
 Branch `claude/ecomiq-short-form-ad-8sw5cx`. Slug `ecomiq-how-it-works-ad`.
 
 ---
@@ -576,3 +576,83 @@ chat did not reach the container — nothing landed in the uploads directory and
 there is no Pacific IQ mark anywhere in the repo or on the sibling branches. Send
 it again (or point me at a path/URL) and it is a one-line swap in the `lt2`
 lower-third and the payoff beat.
+
+---
+
+## 16. v5 — the audio artefact, and four visual changes
+
+### The loud high-pitched click at 23–24s — found in the source
+Reported as "loud high pitched clip between 23 second and 24 second".
+
+It is **not** a compositing fault. The montage beds carry no audio at all (built
+with `-an`) and the music bed is `anullsrc` at `data-volume="0"`, so the only
+audio path is the VO. Traced it there and then back to the master:
+
+| | |
+|---|---|
+| Location | mov PTS **26.276 – 26.292** = ad **24.345 – 24.361** (~16 ms) |
+| Character | near-pure tone at **~11975 Hz** |
+| Level | peak **1.2601** — clipped *above* full scale |
+| Speech around it | peak 0.045 → the burst is **+26 dB** |
+| 8–16 kHz energy | ~**2200×** the neighbouring window |
+| Occurrences | **one**, confirmed by a full-file >9 kHz scan |
+
+An equipment artefact in the recording — a sync beep or wireless-mic glitch.
+
+**The repair** is a timeline-gated low-pass over just that window, so the tone
+dies and the speech underneath survives intact rather than a hole being punched
+in the word. It needed **four** 2-pole stages at 4.5 kHz: a single biquad at
+5.5 kHz only got from 0.891 to 0.283 (≈ −18 dB), because 12 kHz is barely an
+octave above the corner.
+
+| | before | 1 stage | 4 stages |
+|---|--:|--:|--:|
+| window peak | 0.8910 | 0.2827 | **0.0485** |
+| 5.5–24 kHz energy | 380 | 46 | **0.30** |
+
+Reference speech peak in a neighbouring window is **0.0447** and its 5.5–24 kHz
+energy is **0.10** — so the window is now indistinguishable from ordinary speech.
+Verified click-free: max sample-to-sample delta across the gated window is
+0.01917 against 0.01883 in ordinary speech.
+
+### The four visual changes
+1. **"differently" now white** (was flame) in beat B0.
+2. **"team's" now white** (was flame) in beat C's headline.
+3. **Red "the biggest brands in the world" chip removed** from beat B.
+4. **Payoff beat removed** — footage runs to the card again.
+
+### Removing the payoff cost the opening footage 2.8s
+Picture time is 71.433s and the montage is fixed at 27.733s (832 frames at
+1.0×), so **graphics must total exactly 43.700s**. Handing 2.8s back to footage
+had to be paid for, and the only currency is another graphic.
+
+So **"One person's opinion" is back**, at 8.8–11.7s (2.9s, down from its original
+4.9s), and the opening footage run drops from 11.6s to 8.8s. That beat was cut
+earlier with "we might put it back in later" — this is what put it back.
+
+The alternative, if you'd rather it stayed out: bring the **end card** up at
+68.633s instead. That needs no beat at all, but the card then rises 2.8s *before*
+"Tap the link below and book a call" — losing the anchor the whole edit is built
+around — and holds for 7.8s instead of 5.0s. Say the word.
+
+| | ad window | bed window | frames |
+|---|---|---|--:|
+| M1 | 0.000 – 8.800 | 0.000 – 8.800 | 264 |
+| M2 | 20.600 – 23.000 | 8.800 – 11.200 | 72 |
+| M3 | 54.900 – 71.433 | 11.200 – 27.733 | 496 |
+| | | | **832** |
+
+Still every live source frame, once, in order, contiguous in bed time.
+
+### Caught in the process
+Removing the payoff block sliced out the **two lower-thirds** with it — they sat
+between the payoff and the overlays in document order. Caught by an id-presence
+check before rendering, and restored from git.
+
+### Still open
+**The Pacific IQ logo has not reached the container** on either attempt. The
+uploads directory holds only the reference MP4, a filesystem sweep for recent
+image files finds nothing, and no Pacific IQ mark exists in this repo or on the
+two sibling branches. The wordmark is therefore still type in the `lt2`
+lower-third. Commit the file to the repo, or give me a URL, and it is a one-line
+swap.

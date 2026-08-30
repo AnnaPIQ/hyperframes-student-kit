@@ -63,6 +63,10 @@ MONT_FRAMES=832    # native montage bed: every live source frame, once
 VO_END=78.364396    # VO_TRIM + TOTAL
 PIP_END=73.364396   # VO_TRIM + CARD
 
+# The 12 kHz burst repair (see the VO bed below for why four stages).
+BURST_GATE="enable='between(t,24.320,24.390)'"
+BURST_FIX="lowpass=f=4500:poles=2:${BURST_GATE},lowpass=f=4500:poles=2:${BURST_GATE},lowpass=f=4500:poles=2:${BURST_GATE},lowpass=f=4500:poles=2:${BURST_GATE}"
+
 IN="../../assets/incoming"
 OUT="assets"
 WORK=".build-work"
@@ -93,8 +97,26 @@ say "VO bed  (trim ${VO_TRIM}s head, ${TOTAL}s, mono 48k)"
 # atrim, NOT -ss: input seeking on this ProRes container snapped and
 # under-trimmed by 0.075s, which pushed the trigger line 2 frames late
 # (docs/LESSONS.md, ffmpeg gotchas). The filter is sample-exact.
+#
+# THE 12 kHz BURST. The source recording carries one equipment artefact: a
+# near-pure ~11975 Hz tone from mov PTS 26.276-26.292 (ad 24.345-24.361, ~16ms)
+# that peaks at 1.2601 - clipped ABOVE full scale - while the speech around it
+# peaks at 0.045. That is +26 dB, and 8-16 kHz energy in that window measures
+# ~2200x the neighbouring window: audible as a loud high-pitched click.
+# It is the ONLY such event in the file (verified by a full-file >9 kHz scan).
+# The repair is a timeline-gated low-pass over just that window, so the tone
+# dies and the speech underneath survives intact - no hole punched in the word.
+# FOUR stages are needed, not one: a single biquad at 5.5 kHz only took the burst
+# from 0.891 to 0.283 (about -18 dB) because 12 kHz is barely an octave above the
+# corner. Four 2-pole stages at 4.5 kHz bring the window peak to 0.0485 against a
+# reference speech peak of 0.0447 - i.e. back to ordinary level - and drop
+# 5.5-24 kHz band energy from 380 to 0.30 (reference 0.10).
+# Verified click-free: max sample-to-sample delta across the gated window is
+# 0.01917 vs 0.01883 in ordinary speech.
 ffmpeg -y -nostdin -v error -i "$SPK" -vn -ac 1 -ar 48000 \
-  -af "atrim=start=${VO_TRIM}:end=${VO_END},asetpts=N/SR/TB,afade=t=in:st=0:d=0.12,afade=t=out:st=${FADE_OUT_AT}:d=0.4" \
+  -af "atrim=start=${VO_TRIM}:end=${VO_END},asetpts=N/SR/TB,\
+${BURST_FIX},\
+afade=t=in:st=0:d=0.12,afade=t=out:st=${FADE_OUT_AT}:d=0.4" \
   -c:a pcm_s16le "$OUT/vo.wav"
 ok "assets/vo.wav"
 fi

@@ -58,18 +58,17 @@
            the runtime and the per-shot version made it speed up and slow down
            shot to shot, which reads as broken. The graphics carry the other
            43.7s instead. Three windows, chained with data-media-start:
-             M1  0.000-11.600  <- bed  0.000-11.600  (348 frames)
-             M2 20.600-23.000  <- bed 11.600-14.000  ( 72 frames)
-             M3 54.900-68.6333 <- bed 14.000-27.7333 (412 frames)
-           348 + 72 + 412 = 832 = every live source frame, once, in order, with
-           no gaps in bed time either. The opening runs 11.6s of straight
-           footage because the "one person's opinion" beat that used to sit
-           there was cut. -->
+             M1  0.000- 8.800  <- bed  0.000- 8.800  (264 frames)
+             M2 20.600-23.000  <- bed  8.800-11.200  ( 72 frames)
+             M3 54.900-71.4333 <- bed 11.200-27.7333 (496 frames)
+           264 + 72 + 496 = 832 = every live source frame, once, in order, with
+           no gaps in bed time either. M3 now runs all the way to the card,
+           which is what removing the payoff beat required. -->
       <video
         id="montage-a"
         class="montage"
         data-start="0"
-        data-duration="11.6"
+        data-duration="8.8"
         data-track-index="30"
         data-media-start="0"
         src="assets/montage-11.mp4"
@@ -83,7 +82,7 @@
         data-start="20.6"
         data-duration="2.4"
         data-track-index="41"
-        data-media-start="11.6"
+        data-media-start="8.8"
         src="assets/montage-11.mp4"
         muted
         playsinline
@@ -93,9 +92,9 @@
         id="montage-c"
         class="montage"
         data-start="54.9"
-        data-duration="13.733333"
+        data-duration="16.533333"
         data-track-index="47"
-        data-media-start="14"
+        data-media-start="11.2"
         src="assets/montage-11.mp4"
         muted
         playsinline
@@ -103,16 +102,15 @@
 
       <!-- ================= MOTION-GRAPHICS SECTION ==============================
            Two runs, because montage window M2 sits between them:
-             run 1  11.600-20.600   beats B0, B
+             run 1   8.800-20.600   beats A, B0, B
              run 2  23.000-54.900   beats C, LOGO WALL, 01, 02, 03
-             run 3  68.633-71.4333  the payoff callback
            Each run has its own persistent bed carrying the ambient spine, so
            beat cards whip in and out over navy, never over black. -->
       <div
         id="gfx1"
         class="clip gfx"
-        data-start="11.6"
-        data-duration="9"
+        data-start="8.8"
+        data-duration="11.8"
         data-track-index="36"
       >
         <div class="bg"></div>
@@ -136,6 +134,39 @@
         <div class="grain"></div>
       </div>
 
+      <!-- BEAT A — one person, one brand, years ago. Cut on request, then restored
+           because removing the payoff beat meant the montage needed its 2.8s
+           back, which left this window with nothing to carry it. -->
+      <div
+        id="gA"
+        class="clip gfx beat"
+        data-start="8.8"
+        data-duration="2.9"
+        data-track-index="38"
+      >
+        <div class="wrap" id="gA-w">
+        <div class="plate">
+          <div class="eyebrow" id="gA-eb">Most e-commerce coaching</div>
+          <div class="h2" id="gA-t">One person&rsquo;s opinion</div>
+          <div class="brandcard" id="gA-card">
+            <div class="bc-top">
+              <div class="bc-mark"></div>
+              <div class="bc-lines"><i></i><i></i></div>
+            </div>
+            <div class="bc-strike" id="gA-strike"></div>
+            <div class="bc-foot" id="gA-foot">based on one brand</div>
+          </div>
+          <div class="years" id="gA-years">
+            <span class="yr"></span><span class="yr"></span><span class="yr"></span>
+            <span class="yr"></span><span class="yr"></span><span class="yr"></span>
+            <span class="yr"></span><span class="yr hot"></span>
+          </div>
+          <div class="h1" id="gA-big">5&ndash;10 years ago.</div>
+        </div>
+        <div class="streak" id="gA-streak"></div>
+        </div>
+      </div>
+
       <!-- BEAT B0 — "works differently". Exists because beat B used to open at
            11.6 with nothing but a dim eyebrow until the badge arrived at 13.70:
            a 1.55s dead screen. This carries that window with a real statement. -->
@@ -148,7 +179,7 @@
       >
         <div class="wrap" id="gB0-w">
         <div class="plate" style="justify-content: center">
-          <div class="slam" id="gB0-txt">EcomIQ works <span class="hot">differently</span></div>
+          <div class="slam" id="gB0-txt">EcomIQ works differently</div>
           <div class="card-rule" id="gB0-rule" style="margin: 0 auto"></div>
         </div>
         <div class="streak" id="gB0-streak"></div>
@@ -173,7 +204,6 @@
           <div class="chiprow" id="gB-chips">
             <span class="chip" id="gB-c1"><span class="dot"></span>Pacific IQ</span>
             <span class="chip" id="gB-c2">10+ years</span>
-            <span class="chip hotChip" id="gB-c3">the biggest brands in the world</span>
           </div>
         </div>
         <div class="streak" id="gB-streak"></div>
@@ -207,7 +237,7 @@
               <div class="tc"><div class="tph"><img src="assets/team/10-analytics.jpg" alt="Analytics" /></div><div class="tlb">Data</div></div>
             </div>
           </div>
-          <div class="h2" id="gC-t">An entire <span class="hot">team&rsquo;s</span> knowledge</div>
+          <div class="h2" id="gC-t">An entire team&rsquo;s knowledge</div>
           <div class="chiprow" id="gC-chips">
             <span class="chip hotChip" id="gC-c1">8 &amp; 9 figure brands</span>
           </div>
@@ -406,46 +436,7 @@
         </div>
       </div>
 
-      <!-- ================= PAYOFF (68.633 -> 71.4333) ==========================
-           The closing callback, straight into the card. This window exists
-           because cutting the "one person's opinion" beat freed 4.8s at the
-           head, which went to the opening footage run — leaving the montage
-           with no frames left to cover the last 2.8s. -->
-      <div
-        id="gfx3"
-        class="clip gfx"
-        data-start="68.633333"
-        data-duration="2.8"
-        data-track-index="38"
-      >
-        <div class="bg"></div>
-        <div class="grid" id="gfx3-grid"></div>
-        <div class="marks" id="gfx3-marks"><i style="left:40.27%;top:60.22%"></i><i style="left:81.96%;top:45.23%"></i><i style="left:59.84%;top:91.99%"></i><i style="left:68.09%;top:42.44%"></i><i style="left:75.84%;top:62.60%"></i><i style="left:50.09%;top:89.03%"></i><i style="left:87.20%;top:22.54%"></i><i style="left:29.16%;top:76.62%"></i><i style="left:93.17%;top:81.10%"></i><i style="left:6.70%;top:14.25%"></i><i style="left:93.35%;top:86.43%"></i><i style="left:27.81%;top:68.68%"></i></div>
-        <div class="vig" id="gfx3-vig"></div>
-        <div class="grain"></div>
-      </div>
-
-      <div
-        id="gP"
-        class="clip gfx beat payoff"
-        data-start="68.633333"
-        data-duration="2.8"
-        data-track-index="50"
-      >
-        <div class="wrap" id="gP-w">
-        <div class="plate" style="justify-content: center; align-items: center; text-align: center">
-          <div class="strike-line" id="gP-strike">one person&rsquo;s opinion<i class="sx" id="gP-sx"></i></div>
-          <div class="slam" id="gP-txt">An entire <span class="hot">team</span>.</div>
-          <div class="card-rule" id="gP-rule" style="margin: 0 auto"></div>
-          <div class="chiprow" id="gP-chips" style="justify-content: center">
-            <span class="chip hotChip" id="gP-chip">with a proven track record</span>
-          </div>
-        </div>
-        <div class="streak" id="gP-streak"></div>
-        </div>
-      </div>
-
-      <!-- ================= LOWER-THIRDS over montage B ==========================
+      <!-- ================= LOWER-THIRDS over montage M3 ==========================
            Brand / credibility plates, not captions. -->
       <div
         id="lt1"
@@ -561,9 +552,8 @@
         tl.fromTo(p + "-marks", { opacity: 0.2 },
           { opacity: 0.4, duration: half, ease: "sine.inOut", yoyo: true, repeat: 1 }, at);
       }
-      bedAmbient("#gfx1", 11.6, 9.0);
+      bedAmbient("#gfx1", 8.8, 11.8);
       bedAmbient("#gfx2", 23.0, 31.9);
-      bedAmbient("#gfx3", 68.633333, 2.8);
 
       /* ---- beat whips ----
          Each card snaps to opaque in 0.10s (so no beat ever cross-dissolves
@@ -587,6 +577,20 @@
           .to(sel, { opacity: 0, duration: 0.16 }, at + 0.34);
       }
 
+      /* ---- BEAT A — one person's opinion, one brand, years ago ----
+         VO: "...they once worked at another DTC brand five to ten years ago."
+         Compressed into 2.9s (it had 4.9s before it was cut). */
+      whip("#gA", 8.8, 11.7);
+      tl.fromTo("#gA-eb", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.32, ease: "power2.out" }, 8.88);
+      tl.fromTo("#gA-t", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" }, 8.98);
+      tl.fromTo("#gA-card", { opacity: 0, y: 28, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.46, ease: "back.out(1.2)" }, 9.26);
+      tl.fromTo("#gA-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power3.inOut" }, 9.84);
+      tl.fromTo("#gA-years .yr", { opacity: 0, scaleY: 0.2 },
+        { opacity: 1, scaleY: 1, duration: 0.28, ease: "power2.out", stagger: 0.045 }, 10.22);
+      tl.fromTo("#gA-big", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 10.72);
+      streak("#gA-streak", 8.86);
+
       /* ---- BEAT B0 — "works differently"  (on the line at ~12.2) ----
          Carries 11.6-13.1, which used to be a dead screen: beat B opened here
          with nothing but a dim eyebrow until the badge arrived at 13.70. */
@@ -607,7 +611,6 @@
       tl.fromTo("#gB-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.44, ease: "power2.out" }, 14.60);
       tl.fromTo("#gB-c1", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 15.20);
       tl.fromTo("#gB-c2", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 16.80);
-      tl.fromTo("#gB-c3", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 18.40);
       streak("#gB-streak", 13.51);
 
       /* ---- BEAT C — an entire team  (grid on 25.4, career chip on 29.6) ----
@@ -703,19 +706,6 @@
         .fromTo("#lt2-name", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.48, ease: "power3.out" }, 60.40)
         .fromTo("#lt2-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.42, ease: "power2.out" }, 60.60)
         .to("#lt2", { opacity: 0, y: 18, duration: 0.34, ease: "power2.in" }, 65.10);
-
-      /* ---- PAYOFF (68.633 -> 71.4333) ----
-         VO: "...or would you prefer the opinion of an entire team with a proven
-         track record?" The callback: the single opinion is struck out, the team
-         answer lands, then straight into the card's dissolve. */
-      whip("#gP", 68.633333, 71.433333);
-      tl.fromTo("#gP-strike", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.32, ease: "power2.out" }, 68.72);
-      tl.fromTo("#gP-sx", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "power3.inOut" }, 68.88);
-      tl.fromTo("#gP-txt", { opacity: 0, scale: 1.14 },
-        { opacity: 1, scale: 1, duration: 0.4, ease: "expo.out" }, 69.10);
-      tl.fromTo("#gP-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 69.46);
-      tl.fromTo("#gP-chip", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.36, ease: "back.out(1.6)" }, 69.90);
-      streak("#gP-streak", 68.70);
 
       /* ---- THE one dissolve: into the end card ----
          Linear, 0.35s, across the 0.680s silence gap, so the card is fully

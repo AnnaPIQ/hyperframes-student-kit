@@ -199,6 +199,43 @@ efficient over time instead of relearning the same lessons.
 - **A full render can exceed a 10-minute foreground timeout.** Run renders with
   `run_in_background` and poll, rather than losing the work to a SIGTERM at the deadline.
 
+## Audio artefacts hide in the source — scan for them
+
+- **A single loud high-frequency burst can sit in a master and survive every visual
+  check.** This build shipped four times before one was reported: a near-pure ~11975 Hz
+  tone, 16 ms long, peaking at **1.2601 (clipped above full scale)** where the speech
+  around it peaked at 0.045 — +26 dB, and ~2200x the neighbouring window's 8–16 kHz
+  energy. **Fix:** before shipping, sweep the VO for band-limited outliers, not just
+  peak level:
+  `-af "highpass=f=9000,astats=metadata=1:reset=1:length=0.02,ametadata=print:key=lavfi.astats.Overall.Peak_level:file=-"`
+  and look for any window standing 20 dB+ above its neighbours. Peak/RMS over the whole
+  file will not show it — the burst is short and the file is otherwise well levelled.
+- **One biquad will not remove a +26 dB tone.** `lowpass=f=5500` only reached −18 dB,
+  because 12 kHz is barely an octave above the corner. **Four** 2-pole stages at 4.5 kHz
+  brought the window back to ordinary speech level (0.891 → 0.0485 vs a 0.0447
+  reference). Chain stages; check the result numerically rather than assuming.
+- **Repair band-limited, not by muting.** A timeline-gated low-pass
+  (`lowpass=...:enable='between(t,a,b)'`, biquads support the `enable` timeline option)
+  kills the tone while leaving the speech under it intact — no hole punched in a word.
+  Verify the gate is click-free by comparing max sample-to-sample delta inside the
+  window against ordinary speech (0.01917 vs 0.01883 here).
+- **Prove where a defect lives before fixing it.** Montage beds built with `-an` and a
+  silent `anullsrc` music bed meant the VO was the only possible path; confirming the
+  burst in the raw `.mov` at the mapped PTS ruled out the compositing entirely.
+
+## Editing a composition by slicing text
+
+- **Removing a block by slicing between two comment markers will take anything that
+  sits between them.** Cutting from the payoff-beat comment to the overlays comment
+  silently deleted the two lower-thirds that lived in between. **Fix:** after any
+  structural edit, assert every expected clip id is still present exactly once, and
+  dump the clip table (id / start / end / track / media-start) before rendering. Both
+  checks take seconds and caught this before a 20-minute render.
+- **In a fixed-runtime edit, every cut has to be paid for.** Picture time minus the
+  montage's native length gives the graphics budget exactly; removing a beat means
+  adding another beat or taking footage from a different footage window. Work the
+  arithmetic before agreeing to a cut, and say what it costs.
+
 ## Housekeeping
 
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat

@@ -64,17 +64,17 @@ comes from `assets/ad.css`. See `EDIT-PLAN.md` §6 for the numbers.
 
 | Section | Window | What carries it |
 |---|---|---|
-| M1 montage | 0.000 – 11.600s | 11.6s of straight footage — the hook |
-| Beat B0 | 11.600 – 13.100s | "EcomIQ works differently" |
-| Beat B | 13.000 – 20.600s | Shopify Premier Partner reveal |
+| M1 montage | 0.000 – 8.800s | opening footage |
+| Beat A | 8.800 – 11.700s | one person's opinion, one brand, years ago |
+| Beat B0 | 11.600 – 13.550s | "EcomIQ works differently" |
+| Beat B | 13.450 – 20.600s | Shopify Premier Partner reveal |
 | M2 montage | 20.600 – 23.000s | footage |
 | Beat C | 23.000 – 27.600s | the team grid |
-| **Logo wall** | 27.500 – 32.900s | 21 real client marks, opaque takeover |
+| Logo wall | 27.500 – 32.900s | 21 real client marks, opaque takeover |
 | Beat 01 | 32.800 – 41.700s | Strategy session |
 | Beat 02 | 41.600 – 48.400s | Specialist 1:1 calls |
 | Beat 03 | 48.300 – 54.900s | Slack & community + node graph |
-| M3 montage | 54.900 – 68.633s | footage + credibility lower-thirds |
-| Payoff | 68.633 – 71.433s | the closing callback |
+| M3 montage | 54.900 – 71.433s | footage + credibility lower-thirds |
 | Card | 71.433 – 76.433s | end card |
 
 ## The montage runs at NATIVE speed — there is no retime
@@ -84,9 +84,9 @@ now with **no gaps in bed time either** — the three windows are contiguous:
 
 | | ad window | bed window | frames |
 |---|---|---|--:|
-| M1 | 0.000 – 11.600 | 0.000 – 11.600 | 348 |
-| M2 | 20.600 – 23.000 | 11.600 – 14.000 | 72 |
-| M3 | 54.900 – 68.633 | 14.000 – 27.733 | 412 |
+| M1 | 0.000 – 8.800 | 0.000 – 8.800 | 264 |
+| M2 | 20.600 – 23.000 | 8.800 – 11.200 | 72 |
+| M3 | 54.900 – 71.433 | 11.200 – 27.733 | 496 |
 | | | | **832** |
 
 This replaced two earlier attempts, and the history matters:
@@ -103,17 +103,22 @@ than a constant offset from native.** Uniform slow-motion is a look; varying
 slow-motion is a fault. Native is the only setting that cannot read as wrong, so
 the graphics were extended until the montage fitted at 1.0×.
 
-## Cut graphics (may return)
+## Cut graphics
 
-- **"One person's opinion"** — the brand-card-struck-through beat that used to
-  run 6.8–11.7s. Cut on request; the markup is in git history at the v3 commit.
-  Its 4.8s went to the opening footage run.
 - **"Here's how it works"** — the slam that used to run 31.0–32.9s. Cut on
   request; its window went to the logo wall's tail.
+- **The payoff callback** — briefly existed at 68.633–71.433s. Cut on request;
+  footage (M3) runs to the card again.
 
-Removing the first one is what forced the **payoff** beat: with 4.8s handed to
-the opening footage, the montage had no frames left to cover the last 2.8s
-before the card, so a graphic had to carry it.
+**"One person's opinion" was cut and then restored.** Removing the payoff beat
+meant the montage needed its 2.8s back, and the montage has no spare frames — so
+the opening footage went from 11.6s to 8.8s and this beat returned to carry
+8.8–11.7s. It is now 2.9s rather than its original 4.9s.
+
+The arithmetic is unforgiving here: picture time is 71.433s and the montage is
+fixed at 27.733s (832 frames at 1.0×), so **graphics must total exactly
+43.700s**. Any beat removed has to be paid for by another beat or by footage,
+and footage can only come from another footage window.
 
 ## Motion graphics (43.7s across seven beats)
 
@@ -127,13 +132,16 @@ and CSS in `assets/beats.css`; geometry per ratio in each composition's `:root`.
 - Two persistent beds (`#gfx1`, `#gfx2`) carry the ambient — two runs, because
   montage window M2 sits between them — so beat cards whip in and out over navy,
   **never over black**.
-- **B0 "EcomIQ works differently"** — one slammed line. This beat exists
+- **A One person's opinion** — a card standing in for that single stale
+  reference brand, struck through in flame, then a pip per year and
+  "5–10 years ago."
+- **B0 "EcomIQ works differently"** — one slammed line, all white. This beat exists
   purely to kill a dead screen: beat B used to open at 11.6s with nothing but a
   dim eyebrow until the badge arrived at 13.70s, and 1.55s of near-empty navy
   reads as a mistake.
 - **B Shopify Premier Partner** — the badge on a white card, landing on "coach
-  arm of a Shopify Premier Partner" (13.54s), then chips for "10+ years" and
-  "the biggest brands in the world" on their own lines.
+  arm of a Shopify Premier Partner" (13.54s), then a "10+ years" chip. (The red
+  "biggest brands in the world" chip was cut on request.)
 - **C An entire team's knowledge** — ten team tiles land one by one (stagger
   slow enough that the grid is still assembling as the headline arrives, so
   there is never a static frame), then the "8 & 9 figure brands" chip.
@@ -146,8 +154,7 @@ and CSS in `assets/beats.css`; geometry per ratio in each composition's `:root`.
   career" (29.54s); the marks then lift in brightness so the tail has motion
   too; the whole panel wipes up and off as one piece. **The reference's Premier
   Partner hero is deliberately dropped** — beat B already does that badge.
-- **Payoff** — "one person's opinion" struck through in flame, then "An entire
-  team." and a "proven track record" chip, straight into the card's dissolve.
+
 - **00 "Here's how it works"** — one slammed line, on the words at 31.485s.
 - **01 Strategy session** — outlined `01`, 3-segment progress spine, three panel
   rows that each land on their own VO line (35.20 / 37.30 / 39.70).
@@ -178,6 +185,22 @@ Deliberately almost none — the montage is the motion.
 - No exit animations anywhere. The card covers the overlays; nothing fades out.
 
 ## Audio
+
+### The 12 kHz burst in the source recording
+`speaker-raw.mov` carries one equipment artefact: a near-pure **~11975 Hz tone**
+at mov PTS 26.276–26.292 (**ad 24.345–24.361**, ~16 ms) peaking at **1.2601** —
+clipped above full scale — while the speech around it peaks at 0.045. That is
+**+26 dB**, and 8–16 kHz energy in that window measures ~2200× the neighbouring
+window. It reads as a loud high-pitched click. A full-file >9 kHz scan confirms
+it is the **only** such event.
+
+Repaired in `build-assets.sh` with a timeline-gated low-pass over just that
+window, so the tone dies and the speech underneath survives — no hole in the
+word. **Four** 2-pole stages at 4.5 kHz are needed: a single biquad at 5.5 kHz
+only reached −18 dB because 12 kHz is barely an octave above the corner. After
+the fix the window peaks at **0.0485** against a reference speech peak of 0.0447,
+and 5.5–24 kHz band energy drops from 380 to 0.30 (reference 0.10). Verified
+click-free — max sample-to-sample delta 0.01917 vs 0.01883 in ordinary speech.
 
 VO is the spine at full level; **montage audio is discarded entirely**.
 `assets/music-bed.wav` is a silent placeholder wired at `data-volume="0"` —
