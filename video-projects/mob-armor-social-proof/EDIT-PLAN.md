@@ -126,8 +126,8 @@ top-left (72, 96) for the whole runtime, in a positioned non-`clip` div.
 | 10 | 21.733 → 23.867 | "A year later, sales are up over" | **A-ROLL** — slow push. | `a10` |
 | 11 | 23.867 → 25.233 | **"500%"** | **CARD D — the callback.** `+500%` returns faster than the opener, carrying the Mob Armor shield. | — |
 | 12 | 25.233 → 27.200 | "across four channels instead of just one." | **CARD E — 4.** All four dots lit, staggered. | — |
-| 13 | 27.200 → 29.567 | "And that's what the right plan does." | **A-ROLL** — slow push. | `a13` |
-| 14 | 29.567 → 31.650 | "This is a real brand with real numbers." | **CARD F — the summary.** Both spoken figures side by side — `+500% / TOTAL SALES` and `4 / CHANNELS` — under the client's wordmark. Calls back to the opening card. | — |
+| 13 | 27.200 → 29.567 | "And that's what the right plan does." | **CLIENT B-ROLL — the load test.** A man hangs his full body weight off two mounts. The line claims a plan works; the shot is the product being proved. Slow 1.05× push. | `load-test` |
+| 14 | 29.567 → 31.650 | "This is a real brand with real numbers." | **CLIENT B-ROLL — a real customer.** Face to camera in his truck, then his hand taking the radio off the mount. The line asks for a real brand, so it shows one. Slow 1.04× push. | `radio-guy` |
 | 15 | 31.650 → 33.500 | "If you wanna see what's possible for yours," | **A-ROLL** — slow push, hands off to the CTA. | `a15` |
 | 16 | 33.500 → 36.000 | "tap the link to find out more." + 0.87 s tail | **EcomIQ end card.** Logo 33.56, headline 33.72, CTA 33.98 — all three pulled forward when the runtime was cut, so the CTA still lands after "tap the link" (33.55) and holds ~1.7 s instead of ~1.3 s. | — |
 
@@ -135,18 +135,21 @@ top-left (72, 96) for the whole runtime, in a positioned non-`clip` div.
 
 | Register | Share | Job |
 |---|---|---|
-| **A-roll (Sean)** | 16.8 s · 47% | Four segments, the first a single unbroken 10.42 s take |
-| **Motion graphics** | 19.2 s · 53% | The client's mark opens the ad and recurs; six cards |
-| **Client b-roll** | — | None |
+| **A-roll (Sean)** | 14.4 s · 40% | Three segments, the first a single unbroken 10.42 s take |
+| **Motion graphics** | 17.2 s · 48% | The client's mark opens the ad and recurs; five cards |
+| **Client b-roll** | 4.4 s · 12% | Two shots, both under the closing claim |
 
 The ad opens on the client's mark, and Sean carries the story between the cards. He
 states each claim, the graphic evidences it, he interprets it.
 
-**There is no b-roll.** It went 29% → 4% → none across three passes: too much of it, then
-the one survivor did not connect to its line. Every candidate range is still logged in
-`assets/broll/CREDITS.md` and regenerates in one ffmpeg line. If a shot is wanted back,
-`load-test` (a man hanging his full weight off two mounts) is the one that earns its
-place, and it would sit under "almost everything ran through Facebook".
+**B-roll went 29% → 4% → none → 12%.** The first pass used too much of it, the middle
+passes cut it back to nothing, and the final pass brought two shots back — but only under
+the two lines that ask for physical proof rather than a number: "that's what the right
+plan does" and "a real brand with real numbers". Both are the client's own footage.
+Card F (the `+500% / 4 CHANNELS` summary) gave up its slot for the second of them, so
+**"real numbers" now plays with no number on screen** — a deliberate trade, since the
+same two figures have already been on screen four times by then. Every other candidate
+range stays logged in `assets/broll/CREDITS.md` and regenerates in one ffmpeg line.
 
 **All copy is white** — eyebrows, chip labels, summary labels and the end card's serif
 emphasis word were blue-tint or grey until this pass. The brief said all text white; the
@@ -170,14 +173,15 @@ slide — so his lips are readable the moment he speaks (see §4.1).
 
 The first build was audio-led only — Sean's voice, no picture of him. Bringing him on
 screen changed the structure, not the timings: every card and every VO anchor sits where
-it did, and the b-roll gave up four slots.
+it did, and the b-roll gave up four slots (two of which it later won back — see above).
 
 **Two things had to be fixed after the first A-roll cut:**
 
 **The opening.** Sean's take begins with him setting up at the recorder — head down, mic
 not yet raised, until ~1.05 s. Because the A-roll is time-locked to the audio (below),
 there is no trim that fixes this: showing him at all in the first second means showing
-the fumble. The silent 1.7 s lead went to the dune-drone hero shot instead.
+the fumble. The silent 1.7 s lead went to the Mob Armor opening card instead — the
+client's wordmark holding alone, which is where Nate wanted the first screen anyway.
 
 **The A/V offset — measured properly the second time.** My first pass checked mouth
 closure against silence gaps by eye and concluded the A/V was frame-accurate. That method

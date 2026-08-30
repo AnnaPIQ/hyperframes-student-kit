@@ -7,13 +7,15 @@ Source folder: `Client media` →
 https://drive.google.com/drive/folders/1DBvZ_8bcxVX9wPEe0a8dUvXZhdftuAgt
 Subfolder used: **Social Cuts** (Drive id `1ArKbSBupieY_R4spsdiF7sJqxYc0qzas`)
 
-**No b-roll is used in the shipped cut.** The last remaining shot — a drone pass of a
-buggy on sand dunes — sat under "after they started working with us" and did not connect
-to the line, so it was cut and the slot folded into Sean. The piece is now the opening
-card, Sean to camera, and the stat graphics.
+**Two shots are used in the shipped cut**, both under the closing claim (beats 13 and 14):
 
-Ranges below are all still logged: each regenerates in one ffmpeg line if a shot is
-wanted back.
+| File | Beat | Composition in–out | Source clip | Source in–out |
+|---|---|---|---|---|
+| `load-test.mp4` | 13 | 27.200–29.567 | Tabnetic Direct.mp4 | 14.55–17.25 (2.700 s) |
+| `radio-guy.mp4` | 14 | 29.567–31.650 | Rad Mount.mp4 | 28.15–30.78 (2.633 s) |
+
+Both are 1080×1920, 30 fps, silent. The remaining ranges below are candidates only —
+each regenerates in one ffmpeg line if a shot is wanted back.
 
 ```bash
 ffmpeg -y -ss <in> -t <dur> -i <src>.mp4 \
@@ -24,11 +26,11 @@ ffmpeg -y -ss <in> -t <dur> -i <src>.mp4 \
 | Candidate | Source clip (Drive) | In–out | Note |
 |---|---|---|---|
 | `dunes-drone` | Tab Mount Maxx Tube Mount.mp4 | 31.95–34.75 | drone, buggy on dunes — the strongest single shot |
-| `load-test` | Tabnetic Direct.mp4 | 14.90–17.20 | a man hanging his full weight off two mounts — the best *proof* shot |
+| `load-test` | Tabnetic Direct.mp4 | 14.55–17.25 | **IN USE (beat 13)** — a man hanging his full weight off two mounts |
 | `incab-dash` | Mobnetic Stix.mp4 | 2.85–4.75 | phone on a dash mount, in-cab |
 | `facility-floor` | Tab Mount Maxx Direct.mp4 | 12.70–15.10 | facility floor, mount in foreground |
 | `cnc-sparks` | Tabnetic Discs.mp4 | 5.95–7.55 | CNC head, sparks. **Must stay inside 5.92–7.79** — there is a real cut at 7.79 that scene detection at the 0.35 threshold misses |
-| `radio-guy` | Rad Mount.mp4 | 28.20–30.75 | a real customer, face to camera, in his truck |
+| `radio-guy` | Rad Mount.mp4 | 28.15–30.78 | **IN USE (beat 14)** — a real customer, face to camera in his truck, then his hand taking the radio off the mount |
 | `tablet-wall` | Tabnetic Direct.mp4 | 20.50–23.00 | tablet going onto a wall mount |
 | `tablet-locked` | Tabnetic Direct.mp4 | 41.10–43.45 | rugged tablet locked into its mount |
 | `phone-dash` | Mobnetic Maxx Water balloon.mp4 | 2.55–3.80 | real vehicle interior, hand and keys |
@@ -55,7 +57,6 @@ Source: `Mob Armor Ad.mov` (`1f2kXr2Ng227CLaBd5OH9d_EzX2d7TniS`), ProRes 3840×2
 |---|---|---|---|---|---|
 | `a-main.mp4` | 02 | 4.280 | 4.447 | 10.67 | 4.280→14.700 in one unbroken take — no cut, no re-framing |
 | `a10.mp4` | 10 | 21.733 | 21.900 | 2.39 | "A year later, sales are up over" |
-| `a13.mp4` | 13 | 27.200 | 27.367 | 2.62 | "And that's what the right plan does." |
 | `a15.mp4` | 15 | 31.650 | 31.817 | 2.10 | "If you wanna see what's possible for yours," |
 
 Two crops from the 4K master rather than one re-cropped — a 9:16 letterbox of the 4:5 cut
@@ -73,10 +74,9 @@ The grade eases the electric-cyan backdrop toward the EcomIQ navy world.
 **Logos** (client-supplied white versions — not redrawn, not recoloured):
 `Logos/logo-white@2x.png` (`1yMyyTH9kNmlSJ2Il2mFY_JqEvvQcmKWZ`, 2800×481 RGBA) and
 `Logos/logo-shield-white@2x.png` (`1MgOoFVh5E1YVkfnCpgOmyWCWxY_9JKhS`, 901×1061 RGBA),
-pulled 2026-08-27. Exported at four sizes so no two `<img>` share a source (same src with
+pulled 2026-08-27. Exported at three sizes so no two `<img>` share a source (same src with
 no `data-start` trips `duplicate_media_discovery_risk`): `mobarmor-wordmark-hero.png`
-(opening card), `mobarmor-logo-white.png`, `mobarmor-wordmark-sm.png` and
-`mobarmor-shield-white.png`. The opening card runs on `#101820` and the credit chips are
+(opening card), `mobarmor-logo-white.png` and `mobarmor-shield-white.png`. The opening card runs on `#101820` and the credit chips are
 `#101820` plates, so the mark is always on black per `BRANDING_GUIDE.pdf`.
 
 **Voiceover:** the same `Mob Armor Ad.mov`, audio track only — prepped to `assets/vo.m4a`
