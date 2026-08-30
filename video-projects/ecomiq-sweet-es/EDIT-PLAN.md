@@ -57,26 +57,42 @@ plays Sean to camera. "Clean" = footage with no scrim, no graphic.
 
 | # | In | Out | Dur | Source | Content |
 |---|---|---|---|---|---|
-| S1 | 0.00 | 3.30 | 3.30 | b1-cake | clean — opens on the ruffle cake being boxed, under "You probably know Sweet E's Bake Shop for cakes" |
-| S2 | 3.30 | 5.10 | 1.80 | **A-roll** | Sean's first appearance — "but here's what you don't know about them" |
-| S3 | 5.10 | 7.40 | 2.30 | b2-cookies | clean — trays of logo-printed cookies, under "your logo or your photo" |
+| S1 | 0.00 | 3.30 | **3.30** | b1-cake | clean — opens on the ruffle cake being boxed, under "You probably know Sweet E's Bake Shop for cakes" |
+| S2 | 3.30 | 4.65 | 1.35 | **A-roll** | Sean's first appearance — "but here's what you don't know about them" |
+| S3 | 4.65 | 7.40 | **2.75** | b2-cookies | clean — trays of logo-printed cookies, under "your logo or your photo" |
 | S4 | 7.40 | 10.85 | 3.45 | **CARD A** | **10,000 → 20,000** — lands on the spoken figures at 7.46 and 8.48 |
 | S5 | 10.85 | 12.05 | 1.20 | **A-roll** | "absolutely no problem" |
 | S6 | 12.05 | 15.25 | 3.20 | **CARD B** | client roster, each name on its own spoken onset |
-| S7 | 15.25 | 16.20 | 0.95 | b3-sprinkle | clean — sprinkles falling; the breath before the scale claim |
-| S8 | 16.20 | 20.55 | 4.35 | **A-roll** | "custom work at scale… almost nobody else can touch" — the longest on-camera hold |
-| S9 | 20.55 | 22.30 | 1.75 | b4-box | clean — cake boxed, under "made in LA" |
-| S10 | 22.30 | 24.15 | 1.85 | **CARD C** | **MIDNIGHT → 8AM** — lands on "hours" at 22.62 |
-| S11 | 24.15 | 25.95 | 1.80 | b6-sean-laptop | clean — EcomIQ at work, under "a brand we've worked with for…" |
+| S7 | 15.25 | 17.10 | **1.85** | b3-sprinkle | clean — sprinkles falling, holding over the top of "custom work at scale" |
+| S8 | 17.10 | 20.05 | 2.95 | **A-roll** | "…is something that almost nobody else can touch" |
+| S9 | 20.05 | 22.30 | **2.25** | b4-box | clean — cake boxed, under "made in LA" |
+| S10 | 22.30 | 23.95 | 1.65 | **CARD C** | **MIDNIGHT → 8AM** — lands on "hours" at 22.62 |
+| S11 | 23.95 | 25.95 | **2.00** | b6-sean-laptop | clean — EcomIQ at work, under "a brand we've worked with for…" |
 | S12 | 25.95 | 29.15 | 3.20 | **CARD D** | **hero results card** — lands on "four years" at 26.00 |
 | S13 | 29.15 | 31.70 | 2.55 | **A-roll** | "they recently had to move into a bigger facility" |
 | S14 | 31.70 | 34.90 | 3.20 | **CARD E** | **3× THE SIZE** + labelled 1:3 bars — lands on "three times" at 31.84 |
-| S15 | 34.90 | 37.70 | 2.80 | b5-erica-box | clean — Erica to camera with the cake box |
+| S15 | 34.90 | 37.70 | **2.80** | b5-erica-box | clean — Erica to camera with the cake box |
 | S16 | 37.70 | 39.70 | 2.00 | **A-roll** | "if you want us in your corner" — direct address |
 | S17 | 39.70 | 46.60 | 6.90 | **END CARD** | comes up under "tap the link and find out more", then holds 4.70s |
 
-Balance: b-roll 12.90s over six clips (one use each) · A-roll 11.90s over five
-appearances · figure cards 14.90s · end card 6.90s. 16 cuts.
+### Why the b-roll lengths are what they are
+Every b-roll shot was lengthened except the first and last, which were already
+long enough. Shortest is now **1.85s** (was 0.95s); the average is 2.49s, up
+from 2.15s.
+
+The extra time comes from the adjacent **A-roll** beats, never from a card — a
+card's in-point is locked to the word it lands on. Each A-roll scene's
+`data-media-start` moves with its start, so lip sync is preserved by
+construction (asserted: all five A-roll scenes have `media-start == data-start`).
+
+One exception: the laptop shot at 23.95 sits between two cards, so it had no
+adjacent A-roll to borrow from. Card C gives up 0.20s of its tail (1.85 → 1.65s)
+— its content is fully on screen by ~1.1s, so it still holds for ~0.55s.
+
+The timeline is asserted contiguous: 17 elements, 0.00 → 46.60, zero gaps.
+
+Balance: b-roll 14.95s over six clips (one use each) · A-roll 10.05s over five
+appearances · figure cards 14.70s · end card 6.90s. 16 cuts.
 
 ### Card B — the client roster
 Still set as **type**, not logos. Sweet E's four named clients cannot currently
