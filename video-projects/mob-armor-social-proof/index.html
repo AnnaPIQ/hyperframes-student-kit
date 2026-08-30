@@ -123,16 +123,6 @@
       #cardA { position: absolute; inset: 0; z-index: 6; }
       #maHero { width: 620px; height: auto; display: block; }
 
-      /* ── 14 · summary card — both spoken figures, side by side ── */
-      .stat.md { font-size: 158px; }
-      .duo { display: flex; align-items: center; justify-content: center; gap: 56px; }
-      .duo-col { display: flex; flex-direction: column; align-items: center; gap: 14px; }
-      .duo-rule { width: 3px; height: 150px; background: #2f588a; }
-      .duo-lbl {
-        font-weight: 800; font-size: 26px; letter-spacing: .22em; text-transform: uppercase;
-        color: var(--brand-white);
-      }
-
       /* ── end card ────────────────────────────────────────────── */
       #endcard img.logo { width: 560px; height: auto; }
       #endcard .head {
@@ -179,6 +169,14 @@
 
       <div id="bg" class="clip" data-start="0" data-duration="36.0" data-track-index="0"></div>
 
+      <!-- ══ B-ROLL — Mob Armor, under Sean's two closing lines ══ -->
+      <!-- 13 · "And that's what the right plan does." -->
+      <video id="s13" class="shot" src="assets/broll/load-test.mp4" muted
+             data-start="27.200" data-duration="2.617" data-track-index="1"></video>
+      <!-- 14 · "This is a real brand with real numbers." -->
+      <video id="s14" class="shot" src="assets/broll/radio-guy.mp4" muted
+             data-start="29.567" data-duration="2.333" data-track-index="2"></video>
+
       <div id="scrim" class="clip" data-start="0" data-duration="36.0" data-track-index="10"></div>
 
       <!-- ══ A-ROLL — Sean to camera ═════════════════════════════
@@ -192,8 +190,6 @@
              data-start="4.280" data-duration="10.670" data-track-index="11"></video>
       <video id="a10" class="aroll" src="assets/aroll/a10.mp4" muted
              data-start="21.733" data-duration="2.384" data-track-index="14"></video>
-      <video id="a13" class="aroll" src="assets/aroll/a13.mp4" muted
-             data-start="27.200" data-duration="2.617" data-track-index="15"></video>
       <video id="a15" class="aroll" src="assets/aroll/a15.mp4" muted
              data-start="31.650" data-duration="2.100" data-track-index="16"></video>
 
@@ -246,21 +242,6 @@
           <div class="dot"><span class="halo"></span><span class="core"></span></div>
         </div>
         <div class="sub" id="subE">Channels &mdash; not one</div>
-      </div>
-
-      <!-- F · 29.567 → 31.650 · "This is a real brand with real numbers."
-           Both spoken figures together, under the client's mark — a callback to beat 00. -->
-      <div id="cardF" class="card clip" data-start="29.567" data-duration="2.333" data-track-index="26">
-        <div class="eyebrow">Real numbers</div>
-        <div class="duo" id="duo">
-          <div class="duo-col"><div class="stat md" id="fStat1">+500%</div><div class="duo-lbl">Total sales</div></div>
-          <div class="duo-rule" id="fRule"></div>
-          <div class="duo-col"><div class="stat md" id="fStat2">4</div><div class="duo-lbl">Channels</div></div>
-        </div>
-        <div class="ma-chip" id="chipF">
-          <img id="maWordmarkSm" src="assets/mobarmor-wordmark-sm.png" alt="Mob Armor" />
-          <span class="lbl">Client</span>
-        </div>
       </div>
 
       <!-- 16 · end card -->
@@ -431,24 +412,16 @@
         tl.fromTo("#subE", { y: 22, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.34, ease: "power2.out" }, 26.100);
 
-        /* ── 13 · Sean, "And that's what the right plan does." ──────────── */
-        beatFace("#a13", 27.200, 29.567);
-        push("#a13", 27.200, 2.367, 1.03);
+        /* ── 13 · Mob Armor b-roll — "that's what the right plan does" ──
+           The load test: a man hanging his full body weight off two mounts. */
+        beat("#s13", 27.200, 29.567);
+        push("#s13", 27.200, 2.367, 1.05);
 
-        /* ── 14 · CARD F — both figures together, under the client's mark ── */
-        // Lands on "real numbers", and calls back to the mark that opened the ad.
-        beat("#cardF", 29.567, 31.650);
-        tl.fromTo("#cardF .eyebrow", { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.32, ease: "power2.out" }, 29.640);
-        tl.fromTo("#fStat1", { scale: 1.22, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.36, ease: "expo.out" }, 29.780);
-        tl.fromTo("#fRule", { scaleY: 0 }, { scaleY: 1, duration: 0.30, ease: "power3.out" }, 30.020);
-        tl.fromTo("#fStat2", { scale: 1.22, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.36, ease: "expo.out" }, 30.160);
-        tl.fromTo("#cardF .duo-lbl", { y: 16, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.30, ease: "power2.out", stagger: 0.10 }, 30.300);
-        tl.fromTo("#chipF", { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.34, ease: "power2.out" }, 30.620);
+        /* ── 14 · Mob Armor b-roll — "a real brand with real numbers" ──
+           A real customer: face to camera, then his hand taking the radio off the
+           mount in his truck. The line asks for a real brand, so it shows one. */
+        beat("#s14", 29.567, 31.650);
+        push("#s14", 29.567, 2.083, 1.04);
 
         /* ── 15 · Sean hands off to the CTA ─────────────────────────────── */
         beatFace("#a15", 31.650, 33.500);

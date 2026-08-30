@@ -86,13 +86,6 @@ SUBS = [
     # ── Mob Armor first screen + summary card ───────────────────────────────
     ("      #maHero { width: 620px; height: auto; display: block; }",
      "      #maHero { width: 505px; height: auto; display: block; }"),
-    (".stat.md { font-size: 158px; }", ".stat.md { font-size: 128px; }"),
-    (".duo { display: flex; align-items: center; justify-content: center; gap: 56px; }",
-     ".duo { display: flex; align-items: center; justify-content: center; gap: 45px; }"),
-    (".duo-rule { width: 3px; height: 150px; background: #2f588a; }",
-     ".duo-rule { width: 3px; height: 122px; background: #2f588a; }"),
-    ("      .duo-lbl {\n        font-weight: 800; font-size: 26px;",
-     "      .duo-lbl {\n        font-weight: 800; font-size: 22px;"),
 
     # ── end card ────────────────────────────────────────────────────────────
     ("#endcard img.logo { width: 560px; height: auto; }",
@@ -128,8 +121,8 @@ def main():
     # A-roll is re-cropped from the 4K master for 4:5 (1728x2160 -> 1080x1350) rather than
     # letterbox-cropped from the 9:16 cut, which would cut Sean's head or torso.
     n_aroll = out.count('assets/aroll/')
-    if n_aroll != 4:
-        print(f"make-4x5: expected 4 A-roll references, found {n_aroll}")
+    if n_aroll != 3:
+        print(f"make-4x5: expected 3 A-roll references, found {n_aroll}")
         return 1
     out = out.replace('assets/aroll/', 'assets/aroll45/')
 
