@@ -141,6 +141,19 @@ efficient over time instead of relearning the same lessons.
 - **Receding "stack" cards need to go well below 0.5 opacity.** At 0.5 half-legible text
   reads as a rendering bug; ~0.22 reads as depth.
 
+
+- **`pkill -f hyperframes` kills your own shell in this repo.** The workspace path
+  contains "hyperframes", so `pgrep`/`pkill -f` matches the agent process, every shell
+  whose cwd string includes it, and the render — the shell dies with exit 137/144 before
+  the edit lands. **Fix:** match the binary path (`pkill -f "node .*hyperframes/bin"`) or
+  check `ps -eo pid,cmd` first. Same reason `pgrep -c -f hyperframes` over-reports
+  "renders running".
+- **Silencing `duplicate_media_discovery_risk` can change the design.** A drifting logo
+  wall needs a track taller than frame + drift, which means listing the marks twice. I
+  re-gridded 3 columns → 2 to make the warning go away and the wall stopped matching its
+  source. The warning is benign for decorative background images — keep the duplication
+  and the layout.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
