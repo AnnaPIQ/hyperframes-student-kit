@@ -1,7 +1,7 @@
 # EcomIQ — "How It Works" VO ad · EDIT PLAN
 
-Status: **v3 — the montage runs at native speed.** Retiming is gone entirely;
-seven motion-graphics beats carry 43.7s so the montage fits at 1.0×. See §14.
+Status: **v4 — two beats cut, logo wall added, dead air closed.** Montage still
+at native speed and now contiguous in bed time. See §15.
 Branch `claude/ecomiq-short-form-ad-8sw5cx`. Slug `ecomiq-how-it-works-ad`.
 
 ---
@@ -500,3 +500,79 @@ fade and leave stale state.
 Exactly one dissolve, into the card. Speaker never full frame. No captions.
 Montage audio discarded. Music bed silent at `data-volume="0"`. Trigger line at
 71.4333s.
+
+---
+
+## 15. v4 — cuts, the logo wall, and closing the dead air
+
+### Reported
+A screenshot of **11.6–13.7s**: navy with one dim eyebrow line and nothing else,
+for ~2 seconds. Correct — beat B opened at 11.6 but its badge was anchored to
+"coach arm of a Shopify Premier Partner" at 13.70, and I left the gap unfilled.
+
+### Requested in the same pass
+1. Cut the **"One person's opinion"** beat (may return later).
+2. Cut the **"Here's how it works"** slam.
+3. Bring the **team graphic in at 23s**.
+4. After the team graphic, **roll into the logo wall** from
+   `claude/aug-general-ad-5-shortform-59z10c`.
+
+### Structure now
+
+| Section | Window | Carried by |
+|---|---|---|
+| M1 montage | 0.000 – 11.600 | 348 frames |
+| Beat B0 | 11.600 – 13.100 | "EcomIQ works differently" |
+| Beat B | 13.000 – 20.600 | Premier Partner |
+| M2 montage | 20.600 – 23.000 | 72 frames |
+| Beat C | 23.000 – 27.600 | team grid |
+| Logo wall | 27.500 – 32.900 | 21 client marks |
+| Beat 01 | 32.800 – 41.700 | Strategy |
+| Beat 02 | 41.600 – 48.400 | Calls |
+| Beat 03 | 48.300 – 54.900 | Community |
+| M3 montage | 54.900 – 68.633 | 412 frames |
+| Payoff | 68.633 – 71.433 | closing callback |
+| Card | 71.433 – 76.433 | end card |
+
+Montage **348 + 72 + 412 = 832** — and unlike v3 the bed windows are now
+**contiguous** (0→11.6, 11.6→14.0, 14.0→27.733), so not one source frame is
+skipped. Picture coverage checked programmatically: no holes, ends exactly at
+76.4333.
+
+### Why a payoff beat appeared
+Cutting the "One person's opinion" beat freed 4.8s at the head. That went to the
+opening footage run (11.6s of straight montage — a stronger hook than a graphic
+anyway), which used up the montage's spare frames. With none left, the last 2.8s
+before the card had to be a graphic. The closing callback — "one person's
+opinion" struck out, "An entire team." — is the natural content, landing on "of
+an entire team with a proven track record?" (68.58s).
+
+### The logo wall
+Full opaque navy takeover. 21 marks knocked out to white, list repeated so the
+drifting track always overruns the frame, drifting continuously for its whole
+5.05s so it never reads as a static plate. Hero lands on "for their entire
+career" (29.54); marks then lift 0.34→0.52 opacity so the tail also has motion;
+the panel wipes up and off as one piece via `.in`, revealing beat 01 cleanly
+rather than showing through the marks.
+
+**Deliberately dropped from the port:** the reference's Shopify Premier Partner
+hero at wall centre. Beat B already does that badge 14s earlier, and repeating it
+would blunt both.
+
+### Dead-air discipline
+Built a gap audit (reveal times vs. beat windows) and ran it before and after.
+It over-reports — it models neither stagger spans nor the wall's continuous
+drift — so every moment it flagged is settled by pulling that exact frame and
+looking. The 40 verification timestamps in `scripts/verify-frames.sh` now target
+those moments specifically.
+
+Two real fixes came out of it: **beat B0** for the reported gap, and **beat C's
+tile stagger slowed to 0.16s** so the grid is still assembling when the headline
+lands instead of sitting static for 2.6s.
+
+### Still open
+**The Pacific IQ wordmark is still type, not the logo.** The logo attached in
+chat did not reach the container — nothing landed in the uploads directory and
+there is no Pacific IQ mark anywhere in the repo or on the sibling branches. Send
+it again (or point me at a path/URL) and it is a one-line swap in the `lt2`
+lower-third and the payoff beat.

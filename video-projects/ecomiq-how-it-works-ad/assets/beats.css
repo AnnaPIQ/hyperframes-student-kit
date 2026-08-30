@@ -395,3 +395,96 @@
   line-height: 0.98;
   letter-spacing: -0.035em;
 }
+
+/* ===========================================================================
+   LOGO WALL — ported from video-projects/my-meta-ad/compositions/
+   aug-general-ad-5-9x16.html on branch claude/aug-general-ad-5-shortform-59z10c.
+
+   A FULL opaque navy takeover: 21 client marks knocked out to white (by that
+   branch's scripts/prep-logo-wall.sh) drifting continuously up behind a hero
+   line, so the panel never reads as a static plate. The mark list is repeated
+   twice so the drifting track is always taller than the frame.
+
+   Deliberately NOT carrying the reference's Shopify Premier Partner hero —
+   beat B already does that badge, and repeating it would blunt both.
+
+   Per-ratio properties: --w-row, --w-logo-w, --w-logo-h, --w-drift
+   =========================================================================== */
+.wall { position: absolute; inset: 0; overflow: hidden; }
+/* .in clips the much taller drifting track, so the exit slides the whole opaque
+   panel off as one piece instead of leaving stray logos behind. */
+.wall .in { position: absolute; inset: 0; overflow: hidden; }
+.wall-scrim { position: absolute; inset: 0; background: var(--brand-navy); }
+.wall-track {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: var(--w-row);
+  align-items: center;
+  justify-items: center;
+}
+.wall-track img {
+  max-width: var(--w-logo-w);
+  max-height: var(--w-logo-h);
+  width: auto;
+  height: auto;
+  opacity: 0.34;
+  filter: drop-shadow(0 0 18px rgba(6, 40, 76, 0.9));
+}
+.wall-fade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, var(--brand-navy) 0%, rgba(6, 40, 76, 0) 12%),
+    linear-gradient(0deg, var(--brand-navy) 0%, rgba(6, 40, 76, 0) 12%);
+}
+/* the hero line sits on a soft navy plate so it stays legible over the marks */
+.wall-hero {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 var(--g-side);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--g-gap) * 0.6);
+  text-align: center;
+}
+.wall-hero .eyebrow { text-align: center; }
+.wall-hero .big-line {
+  font-weight: 800;
+  font-size: var(--g-slam);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  text-shadow: 0 6px 40px rgba(2, 14, 30, 0.9);
+}
+.wall-hero .big-line .hot { color: var(--brand-flame); }
+
+/* ===========================================================================
+   PAYOFF — the closing callback, 68.633 -> 71.4333, straight into the card.
+   =========================================================================== */
+.payoff .strike-line {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  font-size: var(--g-h3);
+  color: #6f8db3;
+}
+/* a real element, not a ::after — GSAP cannot animate a pseudo-element */
+.payoff .strike-line .sx {
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: 52%;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--brand-flame);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}

@@ -18,14 +18,14 @@ OUT="${2:-renders/frames}"
 mkdir -p "$OUT"
 rm -f "$OUT"/*.png
 
-# Coverage: overlay fade-in, all three native-speed montage windows, every beat
-# head and staged reveal across beats A/B/C/00/01/02/03, both montage<->graphics
-# cuts, both lower-thirds, the single dissolve, and the card hold.
-TIMES=(0.10 0.45 3.00 6.00 7.20 8.80 9.90 11.00 \
-       12.00 14.00 15.60 17.20 19.00 21.50 23.50 25.30 \
-       26.40 27.50 30.00 31.60 33.30 37.70 40.10 42.00 \
-       43.40 46.80 48.80 50.30 52.60 54.20 55.60 58.00 \
-       60.90 63.00 67.00 70.00 71.25 71.45 73.00 76.30)
+# Coverage: every montage window, every beat head and staged reveal, and
+# specifically each moment the dead-air audit flagged as a possible hold, so
+# "is this screen empty?" is settled by looking rather than by arithmetic.
+TIMES=(0.45 6.00 11.00 11.75 12.40 13.30 14.20 16.20 \
+       18.00 19.80 21.50 23.20 24.40 25.60 26.90 28.00 \
+       29.00 30.50 31.90 32.70 33.60 34.80 36.00 38.60 \
+       41.00 42.20 44.00 45.80 47.50 49.00 50.80 52.40 \
+       54.00 56.00 62.00 67.00 69.00 70.20 71.45 74.00)
 
 for t in "${TIMES[@]}"; do
   ffmpeg -y -v error -ss "$t" -i "$SRC" -frames:v 1 -q:v 2 "$OUT/t$t.png"

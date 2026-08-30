@@ -12,7 +12,7 @@ Run from the PROJECT folder after editing index.html:
 
     python3 scripts/gen-ratios.py && npx hyperframes lint
 
-Track indices are offset per variant (0-13 / 20-33 / 40-53) because
+Track indices are offset per variant (0-20 / 30-50 / 60-80) because
 `hyperframes lint` merges sibling root compositions into one graph and would
 otherwise report bogus duplicate_audio_track overlaps. Track indices are
 per-composition, so the offset costs nothing.
@@ -27,7 +27,7 @@ SRC = HERE / "index.html"
 VARIANTS = {
     "compositions/square.html": dict(
         cid="ecomiq-how-it-works-ad-square", label="1:1", W=1080, H=1080,
-        bed="montage-11.mp4", tbase=20,
+        bed="montage-11.mp4", tbase=30,
         note="1:1 geometry (1080x1080)",
         geo="""        --ov-top: 56px;
         --ov-side: 52px;
@@ -47,10 +47,14 @@ VARIANTS = {
         --g-big: 132px;
         --g-node: 250px;
         --g-slam: 78px;
-        --lt-bot: 150px;"""),
+        --lt-bot: 150px;
+        --g-tile: 120px;
+        --w-row: 150px;
+        --w-logo-w: 250px;
+        --w-logo-h: 82px;"""),
     "compositions/meta45.html": dict(
         cid="ecomiq-how-it-works-ad-45", label="4:5", W=1080, H=1350,
-        bed="montage-45.mp4", tbase=40,
+        bed="montage-45.mp4", tbase=60,
         note="4:5 geometry (1080x1350) — picture derived from the 1:1 master",
         geo="""        --ov-top: 70px;
         --ov-side: 54px;
@@ -70,7 +74,11 @@ VARIANTS = {
         --g-big: 160px;
         --g-node: 320px;
         --g-slam: 88px;
-        --lt-bot: 210px;"""),
+        --lt-bot: 210px;
+        --g-tile: 148px;
+        --w-row: 172px;
+        --w-logo-w: 280px;
+        --w-logo-h: 92px;"""),
 }
 
 
@@ -123,7 +131,7 @@ def main() -> None:
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(build(src, v))
         print(f"wrote {rel}  ({v['label']} {v['W']}x{v['H']}, tracks "
-              f"{v['tbase']}-{v['tbase'] + 13}, bed {v['bed']})")
+              f"{v['tbase']}-{v['tbase'] + 20}, bed {v['bed']})")
 
 
 if __name__ == "__main__":

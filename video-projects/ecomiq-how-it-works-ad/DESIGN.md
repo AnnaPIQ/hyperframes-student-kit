@@ -64,28 +64,29 @@ comes from `assets/ad.css`. See `EDIT-PLAN.md` §6 for the numbers.
 
 | Section | Window | What carries it |
 |---|---|---|
-| M1 montage | 0.000 – 6.800s | hook footage |
-| Beat A | 6.800 – 11.700s | one person's opinion, one brand, years ago |
-| Beat B | 11.600 – 20.600s | Shopify Premier Partner reveal |
-| M2 montage | 20.600 – 25.000s | "not one person's take…" |
-| Beat C | 25.000 – 31.000s | the team grid |
-| Beat 00 | 31.000 – 32.900s | "Here's how it works" |
+| M1 montage | 0.000 – 11.600s | 11.6s of straight footage — the hook |
+| Beat B0 | 11.600 – 13.100s | "EcomIQ works differently" |
+| Beat B | 13.000 – 20.600s | Shopify Premier Partner reveal |
+| M2 montage | 20.600 – 23.000s | footage |
+| Beat C | 23.000 – 27.600s | the team grid |
+| **Logo wall** | 27.500 – 32.900s | 21 real client marks, opaque takeover |
 | Beat 01 | 32.800 – 41.700s | Strategy session |
 | Beat 02 | 41.600 – 48.400s | Specialist 1:1 calls |
 | Beat 03 | 48.300 – 54.900s | Slack & community + node graph |
-| M3 montage | 54.900 – 71.433s | montage + credibility lower-thirds |
+| M3 montage | 54.900 – 68.633s | footage + credibility lower-thirds |
+| Payoff | 68.633 – 71.433s | the closing callback |
 | Card | 71.433 – 76.433s | end card |
 
 ## The montage runs at NATIVE speed — there is no retime
 
-**832 frames (27.733s) = every live source frame, exactly once, in order**, split
-across three windows chained with `data-media-start`:
+**832 frames (27.733s) = every live source frame, exactly once, in order**, and
+now with **no gaps in bed time either** — the three windows are contiguous:
 
 | | ad window | bed window | frames |
 |---|---|---|--:|
-| M1 | 0.000 – 6.800 | 0.000 – 6.800 | 204 |
-| M2 | 20.600 – 25.000 | 6.800 – 11.200 | 132 |
-| M3 | 54.900 – 71.433 | 11.200 – 27.733 | 496 |
+| M1 | 0.000 – 11.600 | 0.000 – 11.600 | 348 |
+| M2 | 20.600 – 23.000 | 11.600 – 14.000 | 72 |
+| M3 | 54.900 – 68.633 | 14.000 – 27.733 | 412 |
 | | | | **832** |
 
 This replaced two earlier attempts, and the history matters:
@@ -94,13 +95,25 @@ This replaced two earlier attempts, and the history matters:
 |---|---|---|
 | v1 | 2.58× uniform (0.39× speed) | too slow — syrupy |
 | v2 | 1.20–2.47× **per shot**, by motion energy | **worse** — the picture visibly sped up and slowed down shot to shot |
-| v3 | **1.0× native** | correct |
+| v3+ | **1.0× native** | correct |
 
 The v2 idea — spend more stretch on shots with little motion — is defensible on
 paper and wrong in practice: **a viewer reads a speed *change* far more easily
 than a constant offset from native.** Uniform slow-motion is a look; varying
 slow-motion is a fault. Native is the only setting that cannot read as wrong, so
 the graphics were extended until the montage fitted at 1.0×.
+
+## Cut graphics (may return)
+
+- **"One person's opinion"** — the brand-card-struck-through beat that used to
+  run 6.8–11.7s. Cut on request; the markup is in git history at the v3 commit.
+  Its 4.8s went to the opening footage run.
+- **"Here's how it works"** — the slam that used to run 31.0–32.9s. Cut on
+  request; its window went to the logo wall's tail.
+
+Removing the first one is what forced the **payoff** beat: with 4.8s handed to
+the opening footage, the montage had no frames left to cover the last 2.8s
+before the card, so a graphic had to carry it.
 
 ## Motion graphics (43.7s across seven beats)
 
@@ -114,14 +127,27 @@ and CSS in `assets/beats.css`; geometry per ratio in each composition's `:root`.
 - Two persistent beds (`#gfx1`, `#gfx2`) carry the ambient — two runs, because
   montage window M2 sits between them — so beat cards whip in and out over navy,
   **never over black**.
-- **A One person's opinion** — a card standing in for that single stale
-  reference brand, struck through in flame, then a pip per year and
-  "5–10 years ago."
+- **B0 "EcomIQ works differently"** — one slammed line. This beat exists
+  purely to kill a dead screen: beat B used to open at 11.6s with nothing but a
+  dim eyebrow until the badge arrived at 13.70s, and 1.55s of near-empty navy
+  reads as a mistake.
 - **B Shopify Premier Partner** — the badge on a white card, landing on "coach
   arm of a Shopify Premier Partner" (13.54s), then chips for "10+ years" and
   "the biggest brands in the world" on their own lines.
-- **C An entire team's knowledge** — ten team tiles land one by one, then the
-  "8 & 9 figure brands" chip, then "their entire career" at 29.60s.
+- **C An entire team's knowledge** — ten team tiles land one by one (stagger
+  slow enough that the grid is still assembling as the headline arrives, so
+  there is never a static frame), then the "8 & 9 figure brands" chip.
+  Lands at **23.0s**, on "you're getting an entire team's".
+- **Logo wall** — a full opaque navy takeover: 21 real client marks knocked out
+  to white, drifting up continuously behind the hero line so the panel never
+  reads as a static plate. Ported from `my-meta-ad`'s `aug-general-ad-5` on
+  branch `claude/aug-general-ad-5-shortform-59z10c` (marks prepped by that
+  branch's `scripts/prep-logo-wall.sh`). The hero lands on "for their entire
+  career" (29.54s); the marks then lift in brightness so the tail has motion
+  too; the whole panel wipes up and off as one piece. **The reference's Premier
+  Partner hero is deliberately dropped** — beat B already does that badge.
+- **Payoff** — "one person's opinion" struck through in flame, then "An entire
+  team." and a "proven track record" chip, straight into the card's dissolve.
 - **00 "Here's how it works"** — one slammed line, on the words at 31.485s.
 - **01 Strategy session** — outlined `01`, 3-segment progress spine, three panel
   rows that each land on their own VO line (35.20 / 37.30 / 39.70).
@@ -167,6 +193,8 @@ speech, 0.35 over the card.**
   version reprised eight hero shots to fill a gap and it read as a repeat.
 - **Don't put the speaker full frame.** Corner PiP only, and it never moves or
   resizes mid-ad.
+- **Don't put the Premier Partner badge on the logo wall.** Beat B owns it;
+  repeating it blunts both.
 - **Don't add a second dissolve.** One dissolve in the whole ad, into the card.
   The beat-to-beat whips are position + blur, never opacity cross-fades — that
   distinction is the point.
