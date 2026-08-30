@@ -63,8 +63,8 @@ plays Sean to camera. "Clean" = footage with no scrim, no graphic.
 | S4 | 7.40 | 10.85 | 3.45 | **CARD A** | **10,000 → 20,000** — lands on the spoken figures at 7.46 and 8.48 |
 | S5 | 10.85 | 12.05 | 1.20 | **A-roll** | "absolutely no problem" |
 | S6 | 12.05 | 15.25 | 3.20 | **CARD B** | client roster, each name on its own spoken onset |
-| S7 | 15.25 | 17.10 | **1.85** | b3-sprinkle | clean — sprinkles falling, holding over the top of "custom work at scale" |
-| S8 | 17.10 | 20.05 | 2.95 | **A-roll** | "…is something that almost nobody else can touch" |
+| S7 | 15.25 | 17.45 | **2.20** | b3-sprinkle | clean — sprinkles falling, holding over the top of "custom work at scale", then **cross-dissolving** into Sean |
+| S8 | 17.45 | 20.05 | 2.60 | **A-roll** | dissolves up over the cupcakes — "…is something that almost nobody else can touch" |
 | S9 | 20.05 | 22.30 | **2.25** | b4-box | clean — cake boxed, under "made in LA" |
 | S10 | 22.30 | 23.95 | 1.65 | **CARD C** | **MIDNIGHT → 8AM** — lands on "hours" at 22.62 |
 | S11 | 23.95 | 25.95 | **2.00** | b6-sean-laptop | clean — EcomIQ at work, under "a brand we've worked with for…" |

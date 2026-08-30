@@ -46,7 +46,7 @@ enc() { # enc <outfile> <filterchain> <input> <ss> <dur>
 BROLL=(
   "b1-cake:broll-erica-packing.mp4:5.00:4.60:380"
   "b2-cookies:broll-cookie-scroll.mp4:1.00:5.20:570"
-  "b3-sprinkle:broll-sprinkle.mp4:0.80:2.40:570"
+  "b3-sprinkle:broll-sprinkle.mp4:0.80:3.40:570"
   "b4-box:broll-erica-packing.mp4:29.00:5.60:570"
   "b5-erica-box:broll-erica-packing.mp4:59.80:4.20:300"
   "b6-sean-laptop:broll-sean-laptop.mp4:1.80:4.40:380"
