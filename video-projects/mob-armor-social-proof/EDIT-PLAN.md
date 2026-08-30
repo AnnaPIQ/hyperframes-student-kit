@@ -3,7 +3,8 @@
 **Whose ad:** EcomIQ, crediting Mob Armor. EcomIQ navy + flame throughout, EcomIQ end
 card, Mob Armor's white wordmark on the stat cards.
 **Master format:** 9:16 · 1080×1920 · 30 fps. Relayout: 4:5 · 1080×1350.
-**Runtime:** 38.60 s (VO 1.38 → 35.13, then 3.47 s of held end card).
+**Runtime:** 36.00 s (VO 1.38 → 35.13, then 0.87 s of tail). Cut from 38.60 s on
+Nate's note — nothing spoken is lost, the end card just stops holding dead air.
 **Registers:** Sean to camera (A-roll), motion-graphic stat cards, client b-roll — the
 edit moves between all three. Sean opens it and closes it.
 **Source of truth for timings:** `assets/vo-transcript.json` — word-level Whisper
@@ -106,7 +107,7 @@ VO. I verified them live today anyway, and they're in §7 if you want one used.
 
 ---
 
-## 4 · Beat sheet — 14 beats, 38.60 s
+## 4 · Beat sheet — 12 beats, 36.00 s
 
 Mid-section average shot length **2.4 s**. Every cut is a blur-whip (exit `y:-140`,
 `blur(24px)`, `power2.in` 0.30 s starting 0.10 s early → entry `y:140`, `blur(24px)`→0,
@@ -117,28 +118,26 @@ top-left (72, 96) for the whole runtime, in a positioned non-`clip` div.
 
 | # | in → out | VO | On screen | Source |
 |---|---|---|---|---|
-| 00 | 0.000 → 4.280 | *(silence)* → "Up over 500% in a single year." | **OPENING CARD**, full-bleed on Mob Armor's own `#101820`. The client's wordmark lands at 0.10 and **holds alone until 1.700** — the first screen is their mark. Then `+500%` snaps in beneath it, 0.20 s ahead of the spoken word and inside a flame streak; "Total sales" 1.82; flame rule 2.10; "In a single year" 3.10. EcomIQ's mark stays off until 4.32. | `mobarmor-wordmark-hero.png` |
-| 02 | 4.280 → 8.220 | "That's what happened to Mob Armor's total sales after they started working with us." | **A-ROLL** — medium framing, **re-framing to wide at 6.680** on "after". | `a02` |
-| 04 | 8.220 → 11.733 | "And it wasn't a lucky viral moment. It wasn't a magic ad." | **A-ROLL** — tight, **re-framing to medium at 10.160** on the sentence boundary. | `a04` |
-| 05 | 11.733 → 14.700 | "When they came to us, almost everything ran through Facebook." | **A-ROLL** — wide, **re-framing to tight at 12.480** on "almost everything". | `a05` |
+| 00 | 0.000 → 4.280 | *(silence)* → "Up over 500% in a single year." | **OPENING CARD.** The client's wordmark lands at 0.10 and **holds alone until 1.700** — the first screen is their mark. Then `+500%` snaps in beneath it, 0.20 s ahead of the spoken word; "Total sales" 1.82; flame rule 2.10; "In a single year" 3.10. Transparent, so the navy ground reads through it like every other card. EcomIQ's mark stays off until 4.32. | `mobarmor-wordmark-hero.png` |
+| 02 | 4.280 → 14.700 | "That's what happened to Mob Armor's total sales after they started working with us. And it wasn't a lucky viral moment. It wasn't a magic ad. When they came to us, almost everything ran through Facebook." | **A-ROLL — one unbroken shot.** No cut and no re-framing anywhere in 10.42 s; the only movement is a slow 1.06× push. | `a-main` |
 | 07 | 14.700 → 17.267 | "There was one channel doing all of the work." | **CARD B — 1.** One flame dot lit, three dark, the lit one visibly overloading on a four-beat pulse. | — |
-| 08 | 17.267 → 19.400 | "We found three more that fit the brand" | **CARD C — +3.** Numeral swaps in place; three blue-tint dots ignite on "three more". | — |
+| 08 | 17.267 → 19.400 | "We found three more that fit the brand" | **CARD C — +3.** Numeral swaps in place; three dots ignite on "three more". | — |
 | 09 | 19.400 → 21.733 | "and got them working in the right order." | Same card, **no cut** — copy recolours and a flame pulse runs the wire left→right, popping each dot in sequence. | — |
-| 10 | 21.733 → 23.867 | "A year later, sales are up over" | **A-ROLL** — medium framing. | `a10` |
-| 11 | 23.867 → 25.233 | **"500%"** | **CARD D — the callback.** `+500%` returns, faster than the opener, carrying the Mob Armor shield. | — |
+| 10 | 21.733 → 23.867 | "A year later, sales are up over" | **A-ROLL** — slow push. | `a10` |
+| 11 | 23.867 → 25.233 | **"500%"** | **CARD D — the callback.** `+500%` returns faster than the opener, carrying the Mob Armor shield. | — |
 | 12 | 25.233 → 27.200 | "across four channels instead of just one." | **CARD E — 4.** All four dots lit, staggered. | — |
-| 13 | 27.200 → 29.567 | "And that's what the right plan does." | **A-ROLL** — wide framing. | `a13` |
+| 13 | 27.200 → 29.567 | "And that's what the right plan does." | **A-ROLL** — slow push. | `a13` |
 | 14 | 29.567 → 31.650 | "This is a real brand with real numbers." | **CARD F — the summary.** Both spoken figures side by side — `+500% / TOTAL SALES` and `4 / CHANNELS` — under the client's wordmark. Calls back to the opening card. | — |
-| 15 | 31.650 → 33.500 | "If you wanna see what's possible for yours," | **A-ROLL** — tight framing, hands off to the CTA. | `a15` |
-| 16 | 33.500 → 38.600 | "tap the link to find out more." + 3.47 s silence | **EcomIQ end card.** Centred logo, "See what's *possible* for yours.", flame CTA at 34.20. Holds **5.10 s**. Entry only. | — |
+| 15 | 31.650 → 33.500 | "If you wanna see what's possible for yours," | **A-ROLL** — slow push, hands off to the CTA. | `a15` |
+| 16 | 33.500 → 36.000 | "tap the link to find out more." + 0.87 s tail | **EcomIQ end card.** Logo 33.56, headline 33.72, CTA 33.98 — all three pulled forward when the runtime was cut, so the CTA still lands after "tap the link" (33.55) and holds ~1.7 s instead of ~1.3 s. | — |
 
 ### How the three registers alternate
 
 | Register | Share | Job |
 |---|---|---|
-| **A-roll (Sean)** | 16.8 s · 43% | Six segments. Carries the whole narrative between the cards |
-| **Motion graphics** | 21.8 s · 57% | The client's mark opens the ad and recurs; six cards |
-| **Client b-roll** | — | None. See §4.2 |
+| **A-roll (Sean)** | 16.8 s · 47% | Four segments, the first a single unbroken 10.42 s take |
+| **Motion graphics** | 19.2 s · 53% | The client's mark opens the ad and recurs; six cards |
+| **Client b-roll** | — | None |
 
 The ad opens on the client's mark, and Sean carries the story between the cards. He
 states each claim, the graphic evidences it, he interprets it.
@@ -158,9 +157,11 @@ dots, never on type.
 330 → 268 px and `.stat.md` 190 → 158 px to keep the leading plus inside the 888 px
 content width.
 
-**One camera means one crop**, so the extra A-roll time is carried by re-framing rather
-than by holding: three presets (wide 1.00 / medium 1.10 +45x / tight 1.20 −30x) switched
-at sentence boundaries inside a 3-frame blur, which reads as a second angle.
+**No cuts or re-framing on Sean.** An earlier pass switched framing presets at sentence
+boundaries to keep long blocks alive; Nate read those as weird cuts, so they are gone.
+4.280–14.700 has no cards in it, so it is one clip rather than three, and the only
+movement on him is a slow push. The consequence is a 10.42 s unbroken take — if that
+drags, the fix is a card or a cutaway in the middle, not a re-frame.
 
 **A-roll uses a different transition from everything else** — a 4-frame blur kiss, no
 slide — so his lips are readable the moment he speaks (see §4.1).
@@ -269,14 +270,13 @@ accent and would read as a second hot colour.
   tint `#9CD4FF` eyebrows + the three found channels · Mob Armor black `#101820`, used
   **only** as the chip behind their wordmark.
 - **Type:** Rethink Sans **800**, −2 % tracking, ~0.98 leading on every display line, per
-  the brief. Hedvig Letters Serif italic **exactly once**, on "*possible*" in the end
-  card — the EcomIQ signature move.
-- **Texture:** perspective grid + crosshairs + vignette + grain on every beat, footage
-  included (grid at low alpha over video).
+  the brief. **No serif italic anywhere** — the EcomIQ signature emphasis word was on
+  "possible" in the end card until Nate asked for it plain.
+- **Texture:** vignette + grain only. The grid and crosshairs are gone — the grid layer
+  sat above the A-roll, so its verticals ran across Sean's face.
 - **Safe area:** nothing below **y = 1344** (9:16) / **y = 945** (4:5) — the bottom ~30 %
   stays clear for subtitles.
-- **Footage treatment:** navy scrim at ~0.35 over all b-roll so white type and the grid
-  read consistently, and so the cuts feel like one piece rather than a reel.
+- **CTA:** flame pill, no arrow.
 
 ## 6 · Build & delivery
 
@@ -311,7 +311,8 @@ None of these is spoken in the VO, so under the brief's own rule none gets a gra
    the one thing to change before this runs as paid media.
 3. **No customer reviews** — no review UGC, no star-rating graphics, nowhere in the cut.
 4. **No burned-in subtitles.** The bottom 30% is held clear for them to be added later.
-5. **Full VO, no cutdown** — 38.60 s.
+5. **Full VO, no cutdown** — the whole voiceover plays; runtime trimmed to 36.00 s so the
+   end card stops on the last word rather than holding dead air.
 6. **Mob Armor's logo on navy** — their guide says white-on-black and *"avoid using other
    colours directly behind the logo"*. It sits on a black `#101820` chip inside the navy
    card, which honours the rule and reads as a deliberate lockup.

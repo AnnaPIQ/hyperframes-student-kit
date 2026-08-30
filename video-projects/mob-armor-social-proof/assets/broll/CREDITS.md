@@ -53,9 +53,7 @@ Source: `Mob Armor Ad.mov` (`1f2kXr2Ng227CLaBd5OH9d_EzX2d7TniS`), ProRes 3840×2
 
 | File | Beat | Composition in | Source in | Dur | Line |
 |---|---|---|---|---|---|
-| `a02.mp4` | 02 | 4.280 | 4.447 | 4.19 | "That's what happened to Mob Armor's total sales after they started working with us." |
-| `a04.mp4` | 04 | 8.220 | 8.387 | 3.77 | "And it wasn't a lucky viral moment. It wasn't a magic ad." |
-| `a05.mp4` | 05 | 11.733 | 11.900 | 3.22 | "When they came to us, almost everything ran through Facebook." |
+| `a-main.mp4` | 02 | 4.280 | 4.447 | 10.67 | 4.280→14.700 in one unbroken take — no cut, no re-framing |
 | `a10.mp4` | 10 | 21.733 | 21.900 | 2.39 | "A year later, sales are up over" |
 | `a13.mp4` | 13 | 27.200 | 27.367 | 2.62 | "And that's what the right plan does." |
 | `a15.mp4` | 15 | 31.650 | 31.817 | 2.10 | "If you wanna see what's possible for yours," |
