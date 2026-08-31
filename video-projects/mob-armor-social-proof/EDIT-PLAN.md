@@ -122,8 +122,7 @@ top-left (72, 96) for the whole runtime, in a positioned non-`clip` div.
 | 02 | 4.280 → 14.700 | "That's what happened to Mob Armor's total sales after they started working with us. And it wasn't a lucky viral moment. It wasn't a magic ad. When they came to us, almost everything ran through Facebook." | **A-ROLL — one unbroken shot.** No cut and no re-framing anywhere in 10.42 s; the only movement is a slow 1.06× push. | `a-main` |
 | 07 | 14.700 → 17.267 | "There was one channel doing all of the work." | **CARD B — 1.** One flame dot lit, three dark, the lit one visibly overloading on a four-beat pulse. | — |
 | 08 | 17.267 → 19.400 | "We found three more that fit the brand" | **CARD C — +3.** Numeral swaps in place; three dots ignite on "three more". | — |
-| 09 | 19.400 → 21.733 | "and got them working in the right order." | **A-ROLL** — slow push. Was a third state of the channel card (recoloured copy, a pulse running the wire, dots popping in order); cut on request, and the line went back to Sean rather than holding the `+3` card for 4.5 s. | `a09` |
-| 10 | 21.733 → 23.867 | "A year later, sales are up over" | **A-ROLL** — slow push. | `a10` |
+| 09/10 | 19.400 → 23.867 | "and got them working in the right order." / "A year later, sales are up over" | **A-ROLL — one unbroken shot**, 4.47 s, slow 1.05× push. Beat 09 was a third state of the channel card (recoloured copy, a pulse running the wire, dots popping in order); it was cut on request and the line went back to Sean. That made 09 and 10 adjacent A-roll, so they are one clip rather than two — see below. | `a09` |
 | 11 | 23.867 → 25.233 | **"500%"** | **CARD D — the callback.** `+500%` returns faster than the opener. Eyebrow, figure, flame rule — the Mob Armor chip that sat under it was cut on request, so the client's mark now appears only on the opening card. | — |
 | 12 | 25.233 → 27.200 | "across four channels instead of just one." | **CARD E — 4.** All four dots lit, staggered. | — |
 | 13 | 27.200 → 29.567 | "And that's what the right plan does." | **CLIENT B-ROLL — the claw mount.** A phone goes onto the claw clamped to a workbench, seats, and holds as the hand leaves for the impact driver. Pan baked into the clip; no `push()` on top, because this is the one shot cut from a landscape source. | `claw-mount` |
@@ -167,6 +166,13 @@ dots, never on type.
 **The figure reads `+500%`**, which is ~20% wider than `500%`, so `.stat.xl` drops
 330 → 268 px and `.stat.md` 190 → 158 px to keep the leading plus inside the 888 px
 content width.
+
+**Beats 09 and 10 are one clip, not two.** When beat 09 became A-roll it sat directly
+against beat 10, which was already A-roll. Cutting between them would have put a blur kiss
+in the middle of a continuous take — the two segments resolve to the *same source frame* at
+21.733, so the "cut" would have been pure transition artefact on an unbroken shot, and
+exactly the weird-cut-on-Sean problem from an earlier pass. `a10` was therefore folded into
+`a09` as a single 4.47 s take.
 
 **No cuts or re-framing on Sean.** An earlier pass switched framing presets at sentence
 boundaries to keep long blocks alive; Nate read those as weird cuts, so they are gone.

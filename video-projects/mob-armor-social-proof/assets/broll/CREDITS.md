@@ -96,8 +96,7 @@ Source: `Mob Armor Ad.mov` (`1f2kXr2Ng227CLaBd5OH9d_EzX2d7TniS`), ProRes 3840×2
 | File | Beat | Composition in | Source in | Dur | Line |
 |---|---|---|---|---|---|
 | `a-main.mp4` | 02 | 4.280 | 4.447 | 10.67 | 4.280→14.700 in one unbroken take — no cut, no re-framing |
-| `a09.mp4` | 09 | 19.400 | 19.567 | 2.63 | "and got them working in the right order" |
-| `a10.mp4` | 10 | 21.733 | 21.900 | 2.39 | "A year later, sales are up over" |
+| `a09.mp4` | 09/10 | 19.400 | 19.567 | 4.77 | 19.400→23.867 in one unbroken take — covers both lines, no cut |
 | `a15.mp4` | 15 | 31.650 | 31.817 | 2.10 | "If you wanna see what's possible for yours," |
 
 Two crops from the 4K master rather than one re-cropped — a 9:16 letterbox of the 4:5 cut

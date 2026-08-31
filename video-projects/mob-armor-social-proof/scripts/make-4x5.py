@@ -110,8 +110,8 @@ def main():
     # A-roll is re-cropped from the 4K master for 4:5 (1728x2160 -> 1080x1350) rather than
     # letterbox-cropped from the 9:16 cut, which would cut Sean's head or torso.
     n_aroll = out.count('assets/aroll/')
-    if n_aroll != 4:
-        print(f"make-4x5: expected 4 A-roll references, found {n_aroll}")
+    if n_aroll != 3:
+        print(f"make-4x5: expected 3 A-roll references, found {n_aroll}")
         return 1
     out = out.replace('assets/aroll/', 'assets/aroll45/')
 

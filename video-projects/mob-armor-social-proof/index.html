@@ -173,10 +173,10 @@
            re-applying the offset. -->
       <video id="aMain" class="aroll" src="assets/aroll/a-main.mp4" muted
              data-start="4.280" data-duration="10.670" data-track-index="11"></video>
+      <!-- 09/10 · one unbroken take, no cut: beats 09 and 10 are adjacent Sean, and
+           cutting between them would put a blur kiss in the middle of a continuous take -->
       <video id="a09" class="aroll" src="assets/aroll/a09.mp4" muted
-             data-start="19.400" data-duration="2.450" data-track-index="13"></video>
-      <video id="a10" class="aroll" src="assets/aroll/a10.mp4" muted
-             data-start="21.733" data-duration="2.384" data-track-index="14"></video>
+             data-start="19.400" data-duration="4.584" data-track-index="13"></video>
       <video id="a15" class="aroll" src="assets/aroll/a15.mp4" muted
              data-start="31.650" data-duration="2.100" data-track-index="16"></video>
 
@@ -357,12 +357,8 @@
            This was a third state of the channel card — recoloured copy, a pulse
            running the wire, the dots popping in order. It came out, so the line
            goes back to him rather than holding the +3 card for 4.5 s. */
-        beatFace("#a09", 19.400, 21.733);
-        push("#a09", 19.400, 2.333, 1.03);
-
-        /* ── 10 · Sean, "A year later, sales are up over" ───────────────── */
-        beatFace("#a10", 21.733, 23.867);
-        push("#a10", 21.733, 2.134, 1.03);
+        beatFace("#a09", 19.400, 23.867);
+        push("#a09", 19.400, 4.467, 1.05);
 
         /* ── 11 · CARD D — the 500% callback ────────────────────────────── */
         tl.fromTo("#streakD", { xPercent: -60, opacity: 0, scaleX: 0.6 },

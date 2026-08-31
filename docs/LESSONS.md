@@ -169,3 +169,12 @@ efficient over time instead of relearning the same lessons.
   **Fix:** `setpts=<beat/take>*PTS` rather than moving the beat boundaries — a stretch up
   to ~1.15× is imperceptible on handheld footage and costs nothing, whereas retiming the
   beat shifts everything downstream of it.
+
+- **Symptom:** removing a graphic beat turns its slot into A-roll, which then sits directly
+  against an A-roll beat that was already there — and the transition fires a blur/whip in
+  the middle of what is, in the source, one continuous take.
+  **Fix:** when two adjacent beats are both A-roll cut from the same take at the same
+  offset, they resolve to the *same source frame* at the boundary, so the "cut" is pure
+  transition artefact. Fold them into a single clip and give it one `beat()` spanning both.
+  Check for this every time a beat changes register — the lint will not catch it, and it
+  reads as an unmotivated flicker on the presenter's face.
