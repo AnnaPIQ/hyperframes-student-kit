@@ -266,39 +266,47 @@ last word, all content above the subtitle zone.
 
 ---
 
-## Status — awaiting your sign-off on the cut
+## Status — DELIVERED
 
-Rendered `--quality standard` only, per your instruction. Nothing is baked at
-`high` until you confirm the cut.
+Both ratios baked at `--quality high`. Lint: 0 errors, 0 warnings on the 9:16
+master and the generated 4:5.
 
 | File (project root) | Size | Spec |
 |---|---|---|
-| `preview-9x16.mp4` | 46.6 MiB | 1080×1920 · 30fps · H.264/AAC · +faststart · 46.60s |
-| `preview-9x16-small.mp4` | 13.4 MiB | same, CRF 24, for playback in chat |
-| `preview-4x5.mp4` | 32.3 MiB | 1080×1350 · 30fps · H.264/AAC · +faststart · 46.60s |
+| `final-9x16.mp4` | 84.3 MiB | 1080×1920 · 30fps · H.264 High/yuv420p · AAC 48kHz stereo · +faststart · 46.60s · ~15.2 Mb/s |
+| `final-9x16-small.mp4` | 16.1 MiB | same, CRF 23 — the sub-30 MiB copy |
+| `final-4x5.mp4` | 59.7 MiB | 1080×1350 · 30fps · H.264 High/yuv420p · AAC 48kHz stereo · +faststart · 46.60s · ~10.7 Mb/s |
+| `final-4x5-small.mp4` | 12.0 MiB | same, CRF 23 — the sub-30 MiB copy |
 
-Lint: 0 errors, 0 warnings on the 9:16 master and the generated 4:5.
+**Verified on the final files, not on a proxy:**
 
-**This revision:**
-- **No b-roll clip appears twice.** The two beats that had reused b2-cookies and
-  b4-box are now Sean to camera. S9 absorbed the old cookie-rack repeat, giving a
-  4.35s on-camera hold through "custom work at scale… nobody else can touch" —
-  the longest hold in the piece, on the line that carries the argument.
-- **The cuts are no longer flat.** Each is a hard 6px white horizontal line with
-  a white/blue-tint halo, swept top to bottom over 0.22s and crossing centre
-  exactly on the cut, trailing a blurred glow wake, with a short full-frame
-  flash (0.30 opacity, ~0.045s) on the cut. The incoming scene arrives from
-  +15% Y at scale 1.07 under 24px of blur.
+- Container and streams read back at spec in both ratios; `moov` before `mdat`
+  confirms `+faststart`.
+- Audio sits at exactly **0 ms** against the source VO in both ratios (FFT
+  cross-correlation). Video and VO share one trim point, so lip sync holds by
+  construction.
+- 21 frames read across the full 9:16 timeline and 9 across the 4:5: every
+  dissolve present, all four client logos legible, no cropped faces, no
+  overflow, subtitle zone clear (9:16 y<1344, 4:5 y<945), end card holding to
+  46.2s.
+- Machine checks passed before the bake: every b-roll shot's successor is a
+  dissolve; `media-start + duration` fits inside every source clip; the timeline
+  is contiguous 0.00–46.60 with zero gaps; all five A-roll scenes at
+  `media-start == data-start`.
 
-**Verified from the render:**
-- The line was measured, not eyeballed: a row-luma profile during a whip shows a
-  single bright band (peak 230 at y≈300) against 162 max on a clean frame — one
-  clean line, nothing stationary or doubled.
-- Every scene sampled in both ratios: six distinct b-roll clips, six Sean beats,
-  five cards, end card. No cropped faces, no overflow, subtitle zone clear
-  (9:16 y<1344, 4:5 y<945).
-- Card E bars still exactly 3.000; no frame shows a figure other than the real
-  value (sampled every 0.10s).
+### Outstanding (cosmetic, not blocking)
+- **Tory Burch** is the stacked lockup. Every horizontal vector obtainable is an
+  outline-only treatment (single path, `fill="none"`, stroke only). Drop the
+  horizontal file at `assets/logos/tory-burch.png` and re-render to swap.
+- **The Lakers** is the official full-colour crest; a mono version would sit
+  better beside the three black marks.
 
-**On confirmation** I'll bake both at `--quality high` and commit them as
-`final-9x16.mp4` / `final-4x5.mp4`.
+### To re-render from scratch
+```
+bash scripts/pull-media.sh          # all six Drive masters, size-guarded
+bash scripts/prep-assets.sh all     # measured trims, crops, rotations, grades
+python3 scripts/make-ratios.py      # emits build/4x5/ from index.html
+npx hyperframes lint
+npx hyperframes render --quality high --fps 30 --output renders/final-9x16.mp4
+cd build/4x5 && npx hyperframes render --quality high --fps 30 --output final-4x5.mp4
+```
