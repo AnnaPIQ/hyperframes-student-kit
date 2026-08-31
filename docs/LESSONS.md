@@ -249,6 +249,23 @@ efficient over time instead of relearning the same lessons.
 - **Do not change a timing the user did not ask you to change.** When one requested
   edit forces a second, unrequested one, say so and let them choose — do not pick the
   option that preserves your own bookkeeping. State the cost and ask.
+- **Interpolating a phrase's position across a speech run is not measurement — and it
+  will be wrong by seconds.** A cut had beat A's "5-10 years ago." headline at 9.70s
+  because the phrase was estimated by dividing an unbroken 12.5s speech run
+  proportionally by word count. Measured, the phrase is 8.12-9.25s: the graphic fired
+  half a second *after* he finished saying it. The same guess had beat B's badge at
+  13.70 when "Shopify Premier Partner" is 14.72-16.21 — a full second *early*.
+  **Fix:** for every staged reveal, cut the VO bed down to the few seconds around it
+  (`atrim`) and run `whisper-cli -ml 1 -oj` on that slice alone, then add the slice
+  offset back. One-word segments come back with real per-word offsets; whole-file
+  transcription does not, and `silencedetect` only finds the pauses *between* runs,
+  never the words inside one. Budget ~10s per slice; it is cheaper than one render.
+- **Holding on a finished frame is fine; holding on a half-built one is not.** The
+  complaint earlier in this build ("stays on this screen too long with nothing
+  happening") was about a beat that showed only a dim eyebrow for 1.5s. Beat B holds
+  2.4s on a complete frame — eyebrow, badge, rule, two chips — and reads as a beat
+  landing. Re-anchoring reveals later in a beat is safe for the same reason; it is
+  emptiness, not stillness, that reads as broken.
 
 ## Housekeeping
 

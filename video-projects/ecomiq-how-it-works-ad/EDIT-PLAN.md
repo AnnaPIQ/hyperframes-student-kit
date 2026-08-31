@@ -482,8 +482,8 @@ through the ad rather than bookending it.
 
 | Beat | Anchor |
 |---|---|
-| A — one brand, years ago | card 7.40; strike **8.60**; year pips 9.10; "5–10 years ago." **9.70** |
-| B — Premier Partner | eyebrow 11.75 ("works differently"); badge **13.70** ("coach arm of a Shopify Premier Partner" 13.54); chips 15.20 / **16.80** ("over 10 years") / **18.40** ("the biggest brands in the world") |
+| A — one brand, years ago | card 7.40; strike **7.85**; year pips 8.10; "5–10 years ago." **8.36** |
+| B — Premier Partner | eyebrow 13.55 ("It's the coach arm of a" 13.46); badge **14.75** ("Shopify Premier Partner" 14.72); rule 16.28 / chips **16.42** ("an agency that's been around" 16.21) / **17.42** ("for over 10 years" 17.23) |
 | C — an entire team | eyebrow 25.10; ten tiles stagger 25.40; headline 26.10; "8 & 9 figure brands" **26.60**; "their entire career" **29.60** (line at 29.54) |
 
 Assets for B and C (`shopify-premier-partner.png`, `team/*.jpg` ×10) come from
@@ -694,16 +694,37 @@ montage frames in play, because handing 2.8s back to footage had to come from
 somewhere. That was the wrong trade: it protected my own frame-accounting
 invariant at the cost of the graphic landing on the line it illustrates.
 
-Beat A is back at **6.800–11.700s** with its original anchors:
+Beat A stays at **6.800–11.700s**, but its reveals are now **measured**, not
+estimated. The earlier table interpolated word positions across an unbroken
+12.5s speech run; measuring the same run word by word (`atrim` a 3.8–12.2s
+slice, then `whisper-cli -ml 1 -oj` on that slice alone) put every anchor
+1.3–1.6s later than the truth:
 
-| Reveal | At | Lands on |
-|---|--:|---|
-| eyebrow | 6.90 | — |
-| "One person's opinion" | 7.00 | after "their personal opinion" (~4.8s) |
-| brand card | 7.40 | — |
-| strike-through | 8.60 | "worked at another DTC brand" (~8.0s) |
-| year pips | 9.10 | — |
-| "5–10 years ago." | 9.70 | "five to ten years ago" (9.3–10.3s) |
+| Reveal | was | now | Lands on (measured) |
+|---|--:|--:|---|
+| eyebrow | 6.90 | 6.90 | — (beat head) |
+| "One person's opinion" | 7.00 | 7.00 | — (beat head) |
+| brand card | 7.40 | 7.40 | "another DTC brand" **6.98–8.12** |
+| strike-through | 8.60 | **7.85** | ditto, resolving as the phrase ends |
+| year pips | 9.10 | **8.10** | "**five** to ten years ago" starts **8.12** |
+| "5–10 years ago." | 9.70 | **8.36** | "ten **years ago.**" **8.52–9.25** |
+
+Beat B was wrong the other way — its badge fired a full second *before* he
+named it:
+
+| Reveal | was | now | Lands on (measured) |
+|---|--:|--:|---|
+| eyebrow | 13.55 | 13.55 | "It's the coach arm of a" **13.46–14.72** |
+| Premier Partner badge | 13.70 | **14.75** | "Shopify Premier Partner," **14.72–16.21** |
+| flame rule | 14.60 | **16.28** | "an agency that's been around" **16.21–17.23** |
+| chip "Pacific IQ" | 15.20 | **16.42** | ditto |
+| chip "10+ years" | 16.80 | **17.42** | "for over 10 years" **17.23–18.02** |
+
+"…worked with some of the biggest brands in the world" (18.02–20.23) carries no
+graphic — the red "biggest brands" chip was cut on request — so beat B holds
+2.4s on a *complete* frame. That is a beat landing, not a dead screen: the
+earlier "nothing happening" complaint was about a frame with only a dim eyebrow
+on it.
 
 ### What paid for it
 The montage now uses **772 of its 832 frames** — 2.0s trimmed, taken mid-bed

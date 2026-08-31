@@ -140,12 +140,17 @@
       </div>
 
       <!-- BEAT A — one person, one brand, years ago. Cut on request, then
-           restored when the payoff beat was removed. Starts at 6.8s: the
-           reveals are anchored to "personal opinion" (~4.8s), "worked at
-           another DTC brand" (~8.0s) and "five to ten years ago" (9.3-10.3s).
-           It was briefly moved to 8.8s to keep all 832 montage frames in play,
-           which pushed the graphic well past the words it belongs to - the
-           frame budget is not worth more than the sync. -->
+           restored when the payoff beat was removed. Starts at 6.8s.
+           Reveal times are MEASURED off the VO bed (whisper -ml 1 over an
+           isolated 3.8-12.2s slice), never interpolated across a speech run -
+           an earlier cut guessed them and landed "5-10 years ago." at 9.70,
+           half a second AFTER he had finished saying it:
+             6.38-6.98  "once worked at"
+             6.98-8.12  "another DTC brand"   -> brand card 7.40, strike 7.85
+             8.12-9.25  "five to ten years ago." -> pips 8.10, headline 8.36
+           It was also briefly moved to 8.8s to keep all 832 montage frames in
+           play, which pushed the graphic past its words - the frame budget is
+           not worth more than the sync. -->
       <div
         id="gA"
         class="clip gfx beat"
@@ -587,11 +592,11 @@
         { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.2)" }, 7.40);
       /* the one stale reference point gets struck through, on "worked at
          another DTC brand" (~8.0s) */
-      tl.fromTo("#gA-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: "power3.inOut" }, 8.60);
+      tl.fromTo("#gA-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: "power3.inOut" }, 7.85);
       tl.fromTo("#gA-years .yr", { opacity: 0, scaleY: 0.2 },
-        { opacity: 1, scaleY: 1, duration: 0.3, ease: "power2.out", stagger: 0.055 }, 9.10);
+        { opacity: 1, scaleY: 1, duration: 0.3, ease: "power2.out", stagger: 0.045 }, 8.10);
       /* "5-10 years ago." on the words (9.3-10.3s) */
-      tl.fromTo("#gA-big", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.44, ease: "expo.out" }, 9.70);
+      tl.fromTo("#gA-big", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.44, ease: "expo.out" }, 8.36);
       streak("#gA-streak", 6.86);
 
       /* ---- BEAT B0 — "works differently"  (on the line at ~12.2) ----
@@ -603,17 +608,24 @@
       tl.fromTo("#gB0-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.28, ease: "power2.out" }, 11.92);
       streak("#gB0-streak", 11.66);
 
-      /* ---- BEAT B — Shopify Premier Partner  (badge on 13.54) ----
-         VO: "It's the coach arm of a Shopify Premier Partner, an agency that's
-         been around for over 10 years and worked with some of the biggest
-         brands in the world." */
+      /* ---- BEAT B — Shopify Premier Partner ----
+         MEASURED word positions (whisper -ml 1 over an isolated 13.3-21.2s
+         slice). The badge used to fire at 13.70, a full second before he named
+         it, and both chips landed ahead of their lines:
+           13.46-14.72  "It's the coach arm of a"       -> eyebrow 13.55
+           14.72-16.21  "Shopify Premier Partner,"      -> badge   14.75
+           16.21-17.23  "an agency that's been around"  -> rule 16.28, chip 16.42
+           17.23-18.02  "for over 10 years"             -> chip    17.42
+           18.02-20.23  "...the biggest brands in the world"  (no graphic -
+                        the red "biggest brands" chip was cut on request, so
+                        the beat holds on a complete frame through this line) */
       whip("#gB", 13.45, 20.6);
       tl.fromTo("#gB-eb", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 13.55);
       tl.fromTo("#gB-badge", { opacity: 0, y: 34, scale: 0.94 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.58, ease: "back.out(1.4)" }, 13.70);
-      tl.fromTo("#gB-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.44, ease: "power2.out" }, 14.60);
-      tl.fromTo("#gB-c1", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 15.20);
-      tl.fromTo("#gB-c2", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 16.80);
+        { opacity: 1, y: 0, scale: 1, duration: 0.58, ease: "back.out(1.4)" }, 14.75);
+      tl.fromTo("#gB-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.44, ease: "power2.out" }, 16.28);
+      tl.fromTo("#gB-c1", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 16.42);
+      tl.fromTo("#gB-c2", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 17.42);
       streak("#gB-streak", 13.51);
 
       /* ---- BEAT C — an entire team  (grid on 25.4, career chip on 29.6) ----
