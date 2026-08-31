@@ -193,7 +193,7 @@ anywhere in the piece. Each name whips in on its own spoken onset.
 
 ### CARD D · 25.95–29.15 — the hero
 ```
-FOUR YEARS WITH ECOMIQ
+FOUR YEARS WITH OUR EXPERTS
 7×        SESSIONS
 +115%     TOTAL SALES
 +15%      AVERAGE ORDER VALUE
