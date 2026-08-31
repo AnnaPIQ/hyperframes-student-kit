@@ -445,24 +445,15 @@
         </div>
       </div>
 
-      <!-- ================= LOWER-THIRDS over montage M3 ==========================
-           Brand / credibility plates, not captions. -->
-      <div
-        id="lt1"
-        class="clip lt"
-        data-start="55.1"
-        data-duration="4.6"
-        data-track-index="78"
-      >
-        <span class="lt-tag" id="lt1-tag">real client work</span>
-      </div>
-
+      <!-- ================= LOWER-THIRD over montage M3 ===========================
+           One brand/credibility plate, not a caption. The "real client work"
+           pill that used to sit at 55.1-59.7s was removed on request. -->
       <div
         id="lt2"
         class="clip lt"
         data-start="60.2"
         data-duration="5.3"
-        data-track-index="79"
+        data-track-index="78"
       >
         <span class="lt-tag" id="lt2-tag">the agency behind it</span>
         <span class="lt-name" id="lt2-name">Pacific IQ</span>
@@ -711,8 +702,6 @@
 
       /* ---- LOWER-THIRDS over montage B ----
          Slide in, slide out — motion, not a dissolve. */
-      tl.fromTo("#lt1-tag", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.42, ease: "back.out(1.5)" }, 55.16)
-        .to("#lt1-tag", { opacity: 0, y: 20, duration: 0.3, ease: "power2.in" }, 59.40);
 
       tl.fromTo("#lt2-tag", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.5)" }, 60.26)
         .fromTo("#lt2-name", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.48, ease: "power3.out" }, 60.40)

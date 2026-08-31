@@ -1,7 +1,7 @@
 # EcomIQ — "How It Works" VO ad · EDIT PLAN
 
-Status: **v7 — beat A back at 6.8s, on its words.** Montage native speed;
-772 of 832 frames used. See §18.
+Status: **v8 — "real client work" pill removed.** Beat A on its words at 6.8s;
+montage native speed, 772 of 832 frames. See §19.
 Branch `claude/ecomiq-short-form-ad-8sw5cx`. Slug `ecomiq-how-it-works-ad`.
 
 ---
@@ -721,3 +721,14 @@ order, nothing reprised.
 that** — not frame budgets, not "use every source frame". When the arithmetic
 does not close, the montage gets trimmed, not the anchor moved. Recorded in
 `docs/LESSONS.md`.
+
+---
+
+## 19. v8 — "real client work" pill removed
+
+The flame pill at **55.1–59.7s** is gone on request. Montage M3 now runs from
+54.900s with no overlay until the **Pacific IQ** lower-third at 60.2–65.5s,
+which is unchanged.
+
+Nothing else moved: no timing, no montage window, no other graphic. The in-flight
+render was stopped rather than allowed to finish on a stale build.

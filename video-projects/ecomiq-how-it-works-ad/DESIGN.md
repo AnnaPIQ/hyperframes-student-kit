@@ -92,7 +92,7 @@ comes from `assets/ad.css`. See `EDIT-PLAN.md` §6 for the numbers.
 | Beat 01 | 32.800 – 41.700s | Strategy session |
 | Beat 02 | 41.600 – 48.400s | Specialist 1:1 calls |
 | Beat 03 | 48.300 – 54.900s | Slack & community + node graph |
-| M3 montage | 54.900 – 71.433s | footage + credibility lower-thirds |
+| M3 montage | 54.900 – 71.433s | footage + the Pacific IQ lower-third |
 | Card | 71.433 – 76.433s | end card |
 
 ## The montage runs at NATIVE speed — there is no retime
@@ -227,6 +227,9 @@ and 5.5–24 kHz band energy drops from 380 to 0.30 (reference 0.10). Verified
 click-free — max sample-to-sample delta 0.01917 vs 0.01883 in ordinary speech.
 
 VO is the spine at full level; **montage audio is discarded entirely**.
+One lower-third only: **Pacific IQ** at 60.2–65.5s. The "real client work" pill
+that used to precede it at 55.1–59.7s was removed on request.
+
 `assets/music-bed.wav` is a silent placeholder wired at `data-volume="0"` —
 drop a real bed at that path and raise the volume. Duck targets: **0.13 under
 speech, 0.35 over the card.**
