@@ -1,0 +1,121 @@
+<template id="s10-system-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s10-system" data-start="0" data-duration="8.85" data-width="1080" data-height="1920">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s10-system"] { position: absolute; inset: 0; overflow: hidden; background: transparent;
+      font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+    [data-composition-id="s10-system"] .plate { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(64% 46% at 50% 42%, rgba(156,212,255,.11) 0%, rgba(6,40,76,0) 64%), #06284C; }
+    [data-composition-id="s10-system"] .grid { position: absolute; inset: 0; opacity: .13;
+      background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
+      background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
+    [data-composition-id="s10-system"] .body { position: absolute; left: 0; right: 0;
+      top: 285px; height: 1350px; }
+    /* Light streak riding the wiping edge of the plate — turns the panel slide into a
+       whip. Held at opacity 0 so it is invisible while the beat is at rest. */
+    [data-composition-id="s10-system"] .edge { position: absolute; left: -40px; right: -40px; height: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(156,212,255,0));
+      filter: blur(7px); opacity: 0; pointer-events: none; }
+    [data-composition-id="s10-system"] .edge-t { top: 0; }
+    [data-composition-id="s10-system"] .edge-b { bottom: 0; transform: scaleY(-1); }
+    /* shared scene furniture */
+    [data-composition-id="s10-system"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF;
+      text-shadow: 0 3px 20px rgba(2,14,30,.9); }
+    [data-composition-id="s10-system"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
+      font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
+    [data-composition-id="s10-system"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; }
+
+    [data-composition-id="s10-system"] .hd { position: absolute; left: 90px; top: 380px; }
+    [data-composition-id="s10-system"] .hd .no { position: absolute; left: 0; top: 0; width: 150px;
+      font-weight: 800; font-size: 118px; line-height: .92; letter-spacing: -.04em;
+      color: transparent; -webkit-text-stroke: 3px rgba(156,212,255,.42);
+      font-variant-numeric: tabular-nums; }
+    [data-composition-id="s10-system"] .hd .ti { position: absolute; left: 168px; top: 2px;
+      font-weight: 800; font-size: 62px; letter-spacing: -.03em; color: #FFFFFF; white-space: nowrap; }
+    [data-composition-id="s10-system"] .hd .su { position: absolute; left: 170px; top: 80px;
+      font-weight: 600; font-size: 30px; letter-spacing: .01em; color: #9fb6d4; white-space: nowrap; }
+    [data-composition-id="s10-system"] .meter { position: absolute; left: 90px; top: 524px; width: 900px; height: 4px; }
+    [data-composition-id="s10-system"] .meter i { position: absolute; top: 0; width: 286px; height: 4px;
+      border-radius: 2px; background: rgba(156,212,255,.20); transform-origin: left center; }
+    [data-composition-id="s10-system"] .meter i:nth-child(1) { left: 0; }
+    [data-composition-id="s10-system"] .meter i:nth-child(2) { left: 307px; }
+    [data-composition-id="s10-system"] .meter i:nth-child(3) { left: 614px; }
+    [data-composition-id="s10-system"] .meter i.on { background: #9CD4FF; box-shadow: 0 0 18px rgba(156,212,255,.75); }
+    [data-composition-id="s10-system"] .row { position: absolute; left: 90px; width: 900px; height: 84px;
+      background: linear-gradient(180deg, rgba(19,68,124,.92), rgba(10,50,95,.92));
+      border: 1px solid #1d4a7a; border-radius: 18px; display: flex; align-items: center;
+      padding: 0 30px; gap: 22px; box-shadow: 0 18px 44px -20px rgba(0,0,0,.6); }
+    [data-composition-id="s10-system"] .row .ic { flex: none; width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(156,212,255,.16); border: 1px solid rgba(156,212,255,.5); color: #9CD4FF;
+      display: grid; place-items: center; font-weight: 800; font-size: 22px; }
+    [data-composition-id="s10-system"] .row .lb { flex: 1; font-weight: 700; font-size: 38px;
+      letter-spacing: -.02em; color: #FFFFFF; }
+    [data-composition-id="s10-system"] .row .lb u { text-decoration: none; color: #9CD4FF; }
+    [data-composition-id="s10-system"] .row .tag { flex: none; font-weight: 700; font-size: 22px;
+      letter-spacing: .12em; text-transform: uppercase; color: #FF8A4C; padding: 9px 18px;
+      border-radius: 999px; background: rgba(255,76,50,.13); border: 1px solid rgba(255,76,50,.55); }
+
+    [data-composition-id="s10-system"] #r1 { top: 604px; }
+    [data-composition-id="s10-system"] #r2 { top: 708px; }
+    [data-composition-id="s10-system"] #r3 { top: 812px; }
+    [data-composition-id="s10-system"] #r3 .ic { background: rgba(255,76,50,.14);
+      border-color: rgba(255,76,50,.55); color: #FF8A4C; }
+  </style>
+
+  <div class="slot clip" id="s10-system-slot" data-start="0" data-duration="8.85" data-track-index="0">
+    <div class="plate">
+      <div class="grid"></div>
+      <div class="body">
+        <div class="hd">
+          <div class="no">01</div>
+          <div class="ti">Strategy session</div>
+          <div class="su">with your lead coach</div>
+        </div>
+        <div class="meter"><i class="on"></i><i></i><i></i></div>
+        <div class="row" id="r1"><div class="ic">&#10003;</div><div class="lb">Map your whole business</div></div>
+        <div class="row" id="r2"><div class="ic">&#9678;</div><div class="lb">Find what&rsquo;s holding growth back</div></div>
+        <div class="row" id="r3"><div class="ic">&rarr;</div><div class="lb">And a plan to resolve it</div></div>
+      </div>
+      <div class="edge edge-t"></div>
+      <div class="edge edge-b"></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 8.85, S = '[data-composition-id="s10-system"] ';
+      const tl = gsap.timeline({ paused: true });
+      // ENTRY — the opaque plate wipes up over the outgoing frame with a light streak
+      // on its leading edge; the content rides in behind it under matching blur.
+      tl.fromTo(S+'.plate', { y: 1920 }, { y: 0, duration: 0.24, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.edge-t', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, 0);
+      tl.to(S+'.edge-t', { opacity: 0, duration: 0.15, ease: 'sine.in' }, 0.09);
+      tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
+        { y: 0, filter: 'blur(0px)', duration: 0.52, ease: 'power2.out' }, 0);
+      tl.fromTo(S+'.hd .no', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: .50, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.hd .ti', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .48, ease: 'expo.out' }, 0.06);
+      tl.fromTo(S+'.hd .su', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .42, ease: 'power2.out' }, 0.30);
+      // the meter draws, then segment 1 lights — it advances across the three step beats
+      tl.fromTo(S+'.meter i', { scaleX: 0 }, { scaleX: 1, duration: .46, stagger: .07, ease: 'power2.out' }, 0.45);
+      tl.fromTo(S+'.meter i.on', { opacity: .3 }, { opacity: 1, duration: .40, ease: 'sine.out' }, 0.78);
+      // rows land on their own VO phrases: "map" 3.22, "holding growth back" 5.06, "plan" 7.20
+      tl.fromTo(S+'#r1', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .46, ease: 'power3.out' }, 3.22);
+      tl.fromTo(S+'#r2', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .46, ease: 'power3.out' }, 5.06);
+      tl.fromTo(S+'#r3', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .46, ease: 'power3.out' }, 7.20);
+      // EXIT — matches the incoming founder cut: body lifts with 30px blur while the
+      // plate wipes off as one opaque piece, revealing the footage cleanly beneath.
+      tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
+      tl.to(S+'.plate', { y: -1920, duration: 0.26, ease: 'power3.in' }, SLOT - 0.26);
+      tl.fromTo(S+'.edge-b', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, SLOT - 0.26);
+      tl.to(S+'.edge-b', { opacity: 0, duration: 0.13, ease: 'sine.in' }, SLOT - 0.17);
+      tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s10-system'] = tl;
+    })();
+  </script>
+  </div>
+</template>

@@ -1,0 +1,145 @@
+<template id="s12-calls-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s12-calls" data-start="0" data-duration="3.5" data-width="1080" data-height="1920">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s12-calls"] { position: absolute; inset: 0; overflow: hidden; background: transparent;
+      font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+    [data-composition-id="s12-calls"] .plate { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(64% 46% at 50% 42%, rgba(156,212,255,.11) 0%, rgba(6,40,76,0) 64%), #06284C; }
+    [data-composition-id="s12-calls"] .grid { position: absolute; inset: 0; opacity: .13;
+      background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
+      background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
+    [data-composition-id="s12-calls"] .body { position: absolute; left: 0; right: 0;
+      top: 285px; height: 1350px; }
+    /* Light streak riding the wiping edge of the plate — turns the panel slide into a
+       whip. Held at opacity 0 so it is invisible while the beat is at rest. */
+    [data-composition-id="s12-calls"] .edge { position: absolute; left: -40px; right: -40px; height: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(156,212,255,0));
+      filter: blur(7px); opacity: 0; pointer-events: none; }
+    [data-composition-id="s12-calls"] .edge-t { top: 0; }
+    [data-composition-id="s12-calls"] .edge-b { bottom: 0; transform: scaleY(-1); }
+    /* shared scene furniture */
+    [data-composition-id="s12-calls"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF;
+      text-shadow: 0 3px 20px rgba(2,14,30,.9); }
+    [data-composition-id="s12-calls"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
+      font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
+    [data-composition-id="s12-calls"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; }
+
+    [data-composition-id="s12-calls"] .hd { position: absolute; left: 90px; top: 380px; }
+    [data-composition-id="s12-calls"] .hd .no { position: absolute; left: 0; top: 0; width: 150px;
+      font-weight: 800; font-size: 118px; line-height: .92; letter-spacing: -.04em;
+      color: transparent; -webkit-text-stroke: 3px rgba(156,212,255,.42);
+      font-variant-numeric: tabular-nums; }
+    [data-composition-id="s12-calls"] .hd .ti { position: absolute; left: 168px; top: 2px;
+      font-weight: 800; font-size: 62px; letter-spacing: -.03em; color: #FFFFFF; white-space: nowrap; }
+    [data-composition-id="s12-calls"] .hd .su { position: absolute; left: 170px; top: 80px;
+      font-weight: 600; font-size: 30px; letter-spacing: .01em; color: #9fb6d4; white-space: nowrap; }
+    [data-composition-id="s12-calls"] .meter { position: absolute; left: 90px; top: 524px; width: 900px; height: 4px; }
+    [data-composition-id="s12-calls"] .meter i { position: absolute; top: 0; width: 286px; height: 4px;
+      border-radius: 2px; background: rgba(156,212,255,.20); transform-origin: left center; }
+    [data-composition-id="s12-calls"] .meter i:nth-child(1) { left: 0; }
+    [data-composition-id="s12-calls"] .meter i:nth-child(2) { left: 307px; }
+    [data-composition-id="s12-calls"] .meter i:nth-child(3) { left: 614px; }
+    [data-composition-id="s12-calls"] .meter i.on { background: #9CD4FF; box-shadow: 0 0 18px rgba(156,212,255,.75); }
+    [data-composition-id="s12-calls"] .row { position: absolute; left: 90px; width: 900px; height: 84px;
+      background: linear-gradient(180deg, rgba(19,68,124,.92), rgba(10,50,95,.92));
+      border: 1px solid #1d4a7a; border-radius: 18px; display: flex; align-items: center;
+      padding: 0 30px; gap: 22px; box-shadow: 0 18px 44px -20px rgba(0,0,0,.6); }
+    [data-composition-id="s12-calls"] .row .ic { flex: none; width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(156,212,255,.16); border: 1px solid rgba(156,212,255,.5); color: #9CD4FF;
+      display: grid; place-items: center; font-weight: 800; font-size: 22px; }
+    [data-composition-id="s12-calls"] .row .lb { flex: 1; font-weight: 700; font-size: 38px;
+      letter-spacing: -.02em; color: #FFFFFF; }
+    [data-composition-id="s12-calls"] .row .lb u { text-decoration: none; color: #9CD4FF; }
+    [data-composition-id="s12-calls"] .row .tag { flex: none; font-weight: 700; font-size: 22px;
+      letter-spacing: .12em; text-transform: uppercase; color: #FF8A4C; padding: 9px 18px;
+      border-radius: 999px; background: rgba(255,76,50,.13); border: 1px solid rgba(255,76,50,.55); }
+
+    [data-composition-id="s12-calls"] .cnt { position: absolute; left: 90px; top: 578px; }
+    [data-composition-id="s12-calls"] .cnt .big { font-weight: 800; font-size: 150px; line-height: .88;
+      letter-spacing: -.05em; color: #FFFFFF; font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 60px rgba(156,212,255,.45); }
+    [data-composition-id="s12-calls"] .cnt .cw { position: absolute; left: 108px; top: 20px; width: 320px; }
+    [data-composition-id="s12-calls"] .cnt .cw b { display: block; font-weight: 700; font-size: 40px;
+      letter-spacing: -.02em; color: #FFFFFF; }
+    [data-composition-id="s12-calls"] .cnt .cw span { display: block; margin-top: 4px; font-weight: 700;
+      font-size: 24px; letter-spacing: .22em; color: #9fb6d4; white-space: nowrap; }
+    /* two overlapping discs — the pair of calls */
+    [data-composition-id="s12-calls"] .venn { position: absolute; right: 96px; top: 590px; width: 200px; height: 104px; }
+    [data-composition-id="s12-calls"] .venn i { position: absolute; top: 0; width: 104px; height: 104px;
+      border-radius: 50%; background: radial-gradient(circle at 36% 30%, #cfe6ff, #9CD4FF 60%, #4b8fce 100%);
+      opacity: .85; }
+    [data-composition-id="s12-calls"] .venn i:nth-child(1) { left: 0; }
+    [data-composition-id="s12-calls"] .venn i:nth-child(2) { left: 66px; }
+    [data-composition-id="s12-calls"] #r1 { top: 772px; }
+    [data-composition-id="s12-calls"] #r2 { top: 876px; }
+  </style>
+
+  <div class="slot clip" id="s12-calls-slot" data-start="0" data-duration="3.5" data-track-index="0">
+    <div class="plate">
+      <div class="grid"></div>
+      <div class="body">
+        <div class="hd">
+          <div class="no">02</div>
+          <div class="ti">Specialist 1:1 calls</div>
+          <div class="su">every single month</div>
+        </div>
+        <div class="meter"><i></i><i class="on"></i><i></i></div>
+        <div class="cnt">
+          <div class="big" id="bignum">0</div>
+          <div class="cw"><b>calls</b><span>A MONTH</span></div>
+        </div>
+        <div class="venn"><i></i><i></i></div>
+        <div class="row" id="r1"><div class="ic">&rarr;</div><div class="lb">Teach the next right move</div></div>
+        <div class="row" id="r2"><div class="ic">&rarr;</div><div class="lb">And hold you to it</div><div class="tag">Accountable</div></div>
+      </div>
+      <div class="edge edge-t"></div>
+      <div class="edge edge-b"></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 3.5, S = '[data-composition-id="s12-calls"] ';
+      const tl = gsap.timeline({ paused: true });
+      // ENTRY — the opaque plate wipes up over the outgoing frame with a light streak
+      // on its leading edge; the content rides in behind it under matching blur.
+      tl.fromTo(S+'.plate', { y: 1920 }, { y: 0, duration: 0.24, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.edge-t', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, 0);
+      tl.to(S+'.edge-t', { opacity: 0, duration: 0.15, ease: 'sine.in' }, 0.09);
+      tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
+        { y: 0, filter: 'blur(0px)', duration: 0.52, ease: 'power2.out' }, 0);
+      tl.fromTo(S+'.hd .no', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: .44, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.hd .ti', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: .42, ease: 'expo.out' }, 0.04);
+      tl.fromTo(S+'.hd .su', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .38, ease: 'power2.out' }, 0.20);
+      // meter carries over from step 01 with segment 2 now lit
+      tl.fromTo(S+'.meter i', { scaleX: 0 }, { scaleX: 1, duration: .40, stagger: .05, ease: 'power2.out' }, 0.15);
+      // "each month" (0.24) — the count lands on the word
+      const o = { v: 0 }, bn = document.querySelector(S+'#bignum');
+      tl.fromTo(S+'.cnt', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: .40, ease: 'expo.out' }, 0.24);
+      tl.to(o, { v: 2, duration: .55, ease: 'power2.out',
+        onUpdate(){ bn.textContent = Math.round(o.v); } }, 0.30);
+      tl.fromTo(S+'.venn i', { opacity: 0, scale: .3 },
+        { opacity: .85, scale: 1, duration: .44, stagger: .14, ease: 'back.out(1.9)' }, 0.34);
+      // the two halves of the promise: "teach" 0.79, "hold you" 2.31
+      tl.fromTo(S+'#r1', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .44, ease: 'power3.out' }, 0.79);
+      tl.fromTo(S+'#r2', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: .44, ease: 'power3.out' }, 2.31);
+      tl.fromTo(S+'#r2 .tag', { opacity: 0, scale: .8 },
+        { opacity: 1, scale: 1, duration: .34, ease: 'back.out(2)' }, 2.60);
+      // EXIT — matches the incoming founder cut: body lifts with 30px blur while the
+      // plate wipes off as one opaque piece, revealing the footage cleanly beneath.
+      tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
+      tl.to(S+'.plate', { y: -1920, duration: 0.26, ease: 'power3.in' }, SLOT - 0.26);
+      tl.fromTo(S+'.edge-b', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, SLOT - 0.26);
+      tl.to(S+'.edge-b', { opacity: 0, duration: 0.13, ease: 'sine.in' }, SLOT - 0.17);
+      tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s12-calls'] = tl;
+    })();
+  </script>
+  </div>
+</template>

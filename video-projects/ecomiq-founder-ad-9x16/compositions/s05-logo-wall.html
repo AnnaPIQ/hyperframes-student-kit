@@ -1,0 +1,150 @@
+<template id="s05-logo-wall-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s05-logo-wall" data-start="0" data-duration="7.1" data-width="1080" data-height="1920">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s05-logo-wall"] { position: absolute; inset: 0; overflow: hidden; background: transparent;
+      font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+    [data-composition-id="s05-logo-wall"] .plate { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(64% 46% at 50% 42%, rgba(156,212,255,.11) 0%, rgba(6,40,76,0) 64%), #06284C; }
+    [data-composition-id="s05-logo-wall"] .grid { position: absolute; inset: 0; opacity: .13;
+      background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
+      background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
+    [data-composition-id="s05-logo-wall"] .body { position: absolute; left: 0; right: 0;
+      top: 285px; height: 1350px; }
+    /* Light streak riding the wiping edge of the plate — turns the panel slide into a
+       whip. Held at opacity 0 so it is invisible while the beat is at rest. */
+    [data-composition-id="s05-logo-wall"] .edge { position: absolute; left: -40px; right: -40px; height: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(156,212,255,0));
+      filter: blur(7px); opacity: 0; pointer-events: none; }
+    [data-composition-id="s05-logo-wall"] .edge-t { top: 0; }
+    [data-composition-id="s05-logo-wall"] .edge-b { bottom: 0; transform: scaleY(-1); }
+    /* shared scene furniture */
+    [data-composition-id="s05-logo-wall"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF;
+      text-shadow: 0 3px 20px rgba(2,14,30,.9); }
+    [data-composition-id="s05-logo-wall"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
+      font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
+    [data-composition-id="s05-logo-wall"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; }
+
+    [data-composition-id="s05-logo-wall"] #wall-track { position: absolute; left: 0; top: -285px; width: 1080px;
+      display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 200px;
+      align-items: center; justify-items: center; }
+    [data-composition-id="s05-logo-wall"] #wall-track img { max-width: 314px; max-height: 104px;
+      width: auto; height: auto; opacity: .34; filter: drop-shadow(0 0 18px rgba(6,40,76,.9)); }
+    /* Scrim: the marks drift behind the copy, so darken the centre band and both ends
+       or the eyebrow/chip/rail collide with logo strokes and stop being readable. */
+    [data-composition-id="s05-logo-wall"] #wall-fade { position: absolute; inset: -285px 0; pointer-events: none;
+      background:
+        radial-gradient(74% 30% at 50% 40%, rgba(6,40,76,.94) 0%, rgba(6,40,76,0) 72%),
+        radial-gradient(70% 20% at 50% 64%, rgba(6,40,76,.90) 0%, rgba(6,40,76,0) 74%),
+        linear-gradient(180deg, #06284C 0%, rgba(6,40,76,.30) 13%, rgba(6,40,76,0) 22%),
+        linear-gradient(0deg,  #06284C 0%, rgba(6,40,76,.80) 20%, rgba(6,40,76,.18) 32%, rgba(6,40,76,0) 40%); }
+    [data-composition-id="s05-logo-wall"] .eyebrow { top: 430px; }
+    /* margin-top, not translateY: GSAP animates y here and a CSS transform would be clobbered */
+    [data-composition-id="s05-logo-wall"] #wall-hero { position: absolute; left: 50%; top: 50%;
+      width: 500px; margin-left: -250px; margin-top: -196px; height: auto; display: block;
+      border-radius: 12px; box-shadow: 0 30px 90px -20px rgba(0,0,0,.75); }
+    [data-composition-id="s05-logo-wall"] .chip { position: absolute; left: 50%; margin-left: -246px;
+      width: 492px; text-align: center; font-weight: 700; font-size: 32px; letter-spacing: .02em;
+      padding: 18px 0; border-radius: 999px; background: rgba(156,212,255,.14);
+      border: 1px solid rgba(156,212,255,.5); color: #9CD4FF; }
+    [data-composition-id="s05-logo-wall"] #yrs { top: 828px; }
+  </style>
+
+  <div class="slot clip" id="s05-logo-wall-slot" data-start="0" data-duration="7.1" data-track-index="0">
+    <div class="plate">
+      <div class="grid"></div>
+      <div class="body">
+        <div id="wall-track">
+          <img src="assets/logos/harmless-harvest-logo-webp.png" alt="" />
+          <img src="assets/logos/images-10-png.png" alt="" />
+          <img src="assets/logos/images-11-png.png" alt="" />
+          <img src="assets/logos/images-12-png.png" alt="" />
+          <img src="assets/logos/images-13-png.png" alt="" />
+          <img src="assets/logos/images-14-png.png" alt="" />
+          <img src="assets/logos/images-2-png.png" alt="" />
+          <img src="assets/logos/images-3-png.png" alt="" />
+          <img src="assets/logos/images-4-jpeg.png" alt="" />
+          <img src="assets/logos/images-4-png.png" alt="" />
+          <img src="assets/logos/images-5-jpeg.png" alt="" />
+          <img src="assets/logos/images-5-png.png" alt="" />
+          <img src="assets/logos/images-6-jpeg.png" alt="" />
+          <img src="assets/logos/images-6-png.png" alt="" />
+          <img src="assets/logos/images-7-jpeg.png" alt="" />
+          <img src="assets/logos/images-7-png.png" alt="" />
+          <img src="assets/logos/images-8-jpeg.png" alt="" />
+          <img src="assets/logos/images-8-png.png" alt="" />
+          <img src="assets/logos/images-9-png.png" alt="" />
+          <img src="assets/logos/sotheby-s-logo-wine-svg.png" alt="" />
+          <img src="assets/logos/unnamed-jpg.png" alt="" />
+          <img src="assets/logos/harmless-harvest-logo-webp.png" alt="" />
+          <img src="assets/logos/images-10-png.png" alt="" />
+          <img src="assets/logos/images-11-png.png" alt="" />
+          <img src="assets/logos/images-12-png.png" alt="" />
+          <img src="assets/logos/images-13-png.png" alt="" />
+          <img src="assets/logos/images-14-png.png" alt="" />
+          <img src="assets/logos/images-2-png.png" alt="" />
+          <img src="assets/logos/images-3-png.png" alt="" />
+          <img src="assets/logos/images-4-jpeg.png" alt="" />
+          <img src="assets/logos/images-4-png.png" alt="" />
+          <img src="assets/logos/images-5-jpeg.png" alt="" />
+          <img src="assets/logos/images-5-png.png" alt="" />
+          <img src="assets/logos/images-6-jpeg.png" alt="" />
+          <img src="assets/logos/images-6-png.png" alt="" />
+          <img src="assets/logos/images-7-jpeg.png" alt="" />
+          <img src="assets/logos/images-7-png.png" alt="" />
+          <img src="assets/logos/images-8-jpeg.png" alt="" />
+          <img src="assets/logos/images-8-png.png" alt="" />
+          <img src="assets/logos/images-9-png.png" alt="" />
+          <img src="assets/logos/sotheby-s-logo-wine-svg.png" alt="" />
+          <img src="assets/logos/unnamed-jpg.png" alt="" />
+        </div>
+        <div id="wall-fade"></div>
+        <div class="eyebrow">The coach arm of a</div>
+        <img id="wall-hero" src="assets/shopify-premier-partner.png" alt="Shopify Premier Partner" />
+        <div class="chip" id="yrs">10+ years in business</div>
+      </div>
+      <div class="edge edge-t"></div>
+      <div class="edge edge-b"></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 7.1, S = '[data-composition-id="s05-logo-wall"] ';
+      const tl = gsap.timeline({ paused: true });
+      // ENTRY — the opaque plate wipes up over the outgoing frame with a light streak
+      // on its leading edge; the content rides in behind it under matching blur.
+      tl.fromTo(S+'.plate', { y: 1920 }, { y: 0, duration: 0.24, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.edge-t', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, 0);
+      tl.to(S+'.edge-t', { opacity: 0, duration: 0.15, ease: 'sine.in' }, 0.09);
+      tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
+        { y: 0, filter: 'blur(0px)', duration: 0.52, ease: 'power2.out' }, 0);
+      // the wall drifts continuously so it never reads as a static plate
+      tl.fromTo(S+'#wall-track', { y: -285 }, { y: -885, duration: 7.10, ease: 'none' }, 0);
+      tl.fromTo(S+'#wall-track img', { opacity: 0, y: 26 },
+        { opacity: .34, y: 0, duration: .42, stagger: .011, ease: 'power2.out' }, 0);
+      tl.fromTo(S+'.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .42, ease: 'power2.out' }, 0.62);
+      // badge lands centre on the VO word "Shopify" (project 14.78 = local 0.98)
+      tl.fromTo(S+'#wall-hero', { opacity: 0, scale: 1.34, y: -18, filter: 'blur(16px)' },
+        { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: .46, ease: 'back.out(1.6)' }, 0.98);
+      tl.to(S+'#wall-hero', { scale: 1.025, duration: .90, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.70);
+      // "over 10 years" -> project 17.64 = local 3.84
+      tl.fromTo(S+'#yrs', { opacity: 0, y: 20, scale: .9 },
+        { opacity: 1, y: 0, scale: 1, duration: .48, ease: 'back.out(1.7)' }, 3.84);
+      // EXIT — matches the incoming founder cut: body lifts with 30px blur while the
+      // plate wipes off as one opaque piece, revealing the footage cleanly beneath.
+      tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
+      tl.to(S+'.plate', { y: -1920, duration: 0.26, ease: 'power3.in' }, SLOT - 0.26);
+      tl.fromTo(S+'.edge-b', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, SLOT - 0.26);
+      tl.to(S+'.edge-b', { opacity: 0, duration: 0.13, ease: 'sine.in' }, SLOT - 0.17);
+      tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s05-logo-wall'] = tl;
+    })();
+  </script>
+  </div>
+</template>

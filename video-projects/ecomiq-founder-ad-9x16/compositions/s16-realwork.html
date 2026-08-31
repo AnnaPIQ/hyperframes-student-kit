@@ -1,0 +1,82 @@
+<template id="s16-realwork-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s16-realwork" data-start="0" data-duration="2.85" data-width="1080" data-height="1920">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s16-realwork"] { position: absolute; inset: 0; overflow: hidden; background: transparent;
+      font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+    [data-composition-id="s16-realwork"] .plate { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(64% 46% at 50% 42%, rgba(156,212,255,.11) 0%, rgba(6,40,76,0) 64%), #06284C; }
+    [data-composition-id="s16-realwork"] .grid { position: absolute; inset: 0; opacity: .13;
+      background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
+      background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
+    [data-composition-id="s16-realwork"] .body { position: absolute; left: 0; right: 0;
+      top: 285px; height: 1350px; }
+    /* Light streak riding the wiping edge of the plate — turns the panel slide into a
+       whip. Held at opacity 0 so it is invisible while the beat is at rest. */
+    [data-composition-id="s16-realwork"] .edge { position: absolute; left: -40px; right: -40px; height: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(156,212,255,0));
+      filter: blur(7px); opacity: 0; pointer-events: none; }
+    [data-composition-id="s16-realwork"] .edge-t { top: 0; }
+    [data-composition-id="s16-realwork"] .edge-b { bottom: 0; transform: scaleY(-1); }
+    /* shared scene furniture */
+    [data-composition-id="s16-realwork"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF;
+      text-shadow: 0 3px 20px rgba(2,14,30,.9); }
+    [data-composition-id="s16-realwork"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
+      font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
+    [data-composition-id="s16-realwork"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; }
+
+    [data-composition-id="s16-realwork"] .lock { position: absolute; left: 50%; top: 560px;
+      width: 620px; margin-left: -310px; }
+    [data-composition-id="s16-realwork"] .lock img { width: 620px; height: auto; display: block;
+      filter: drop-shadow(0 8px 26px rgba(0,0,0,.55)); }
+    [data-composition-id="s16-realwork"] .line { position: absolute; left: 90px; right: 90px; top: 726px;
+      text-align: center; font-weight: 600; font-size: 42px; color: #cfe0f4; }
+    [data-composition-id="s16-realwork"] .line em { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; color: #9CD4FF; }
+  </style>
+
+  <div class="slot clip" id="s16-realwork-slot" data-start="0" data-duration="2.85" data-track-index="0">
+    <div class="plate">
+      <div class="grid"></div>
+      <div class="body">
+        <div class="lock"><img src="assets/pacific-iq-logo-white.png" alt="Pacific IQ" /></div>
+        <div class="line">the <em>8- &amp; 9-figure</em> brand agency</div>
+      </div>
+      <div class="edge edge-t"></div>
+      <div class="edge edge-b"></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 2.85, S = '[data-composition-id="s16-realwork"] ';
+      const tl = gsap.timeline({ paused: true });
+      // ENTRY — the opaque plate wipes up over the outgoing frame with a light streak
+      // on its leading edge; the content rides in behind it under matching blur.
+      tl.fromTo(S+'.plate', { y: 1920 }, { y: 0, duration: 0.24, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.edge-t', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, 0);
+      tl.to(S+'.edge-t', { opacity: 0, duration: 0.15, ease: 'sine.in' }, 0.09);
+      tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
+        { y: 0, filter: 'blur(0px)', duration: 0.52, ease: 'power2.out' }, 0);
+      tl.fromTo(S+'.lock', { opacity: 0, y: 30, scale: .94 },
+        { opacity: 1, y: 0, scale: 1, duration: .58, ease: 'back.out(1.5)' }, 0.04);
+      tl.fromTo(S+'.line', { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: .50, ease: 'power2.out' }, 0.62);
+      tl.to(S+'.lock', { scale: 1.02, duration: 1.0, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.00);
+      // EXIT — matches the incoming founder cut: body lifts with 30px blur while the
+      // plate wipes off as one opaque piece, revealing the footage cleanly beneath.
+      tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
+      tl.to(S+'.plate', { y: -1920, duration: 0.26, ease: 'power3.in' }, SLOT - 0.26);
+      tl.fromTo(S+'.edge-b', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, SLOT - 0.26);
+      tl.to(S+'.edge-b', { opacity: 0, duration: 0.13, ease: 'sine.in' }, SLOT - 0.17);
+      tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s16-realwork'] = tl;
+    })();
+  </script>
+  </div>
+</template>

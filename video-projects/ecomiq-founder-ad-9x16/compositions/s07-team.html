@@ -1,0 +1,97 @@
+<template id="s07-team-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s07-team" data-start="0" data-duration="6.9" data-width="1080" data-height="1920">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s07-team"] { position: absolute; inset: 0; overflow: hidden; background: transparent;
+      font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+    [data-composition-id="s07-team"] .plate { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(64% 46% at 50% 42%, rgba(156,212,255,.11) 0%, rgba(6,40,76,0) 64%), #06284C; }
+    [data-composition-id="s07-team"] .grid { position: absolute; inset: 0; opacity: .13;
+      background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
+      background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
+    [data-composition-id="s07-team"] .body { position: absolute; left: 0; right: 0;
+      top: 285px; height: 1350px; }
+    /* Light streak riding the wiping edge of the plate — turns the panel slide into a
+       whip. Held at opacity 0 so it is invisible while the beat is at rest. */
+    [data-composition-id="s07-team"] .edge { position: absolute; left: -40px; right: -40px; height: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(156,212,255,0));
+      filter: blur(7px); opacity: 0; pointer-events: none; }
+    [data-composition-id="s07-team"] .edge-t { top: 0; }
+    [data-composition-id="s07-team"] .edge-b { bottom: 0; transform: scaleY(-1); }
+    /* shared scene furniture */
+    [data-composition-id="s07-team"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF;
+      text-shadow: 0 3px 20px rgba(2,14,30,.9); }
+    [data-composition-id="s07-team"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
+      font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
+    [data-composition-id="s07-team"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; }
+
+    [data-composition-id="s07-team"] .eyebrow { top: 310px; }
+    [data-composition-id="s07-team"] .grid-wrap { position: absolute; inset: 0; }
+    [data-composition-id="s07-team"] .card { position: absolute; width: 168px; }
+    [data-composition-id="s07-team"] .card img { width: 168px; height: 168px; object-fit: cover;
+      display: block; border-radius: 14px; border: 1px solid rgba(156,212,255,.22);
+      box-shadow: 0 16px 36px -14px rgba(0,0,0,.66); }
+    [data-composition-id="s07-team"] .card b { display: block; margin-top: 9px; text-align: center;
+      font-weight: 700; font-size: 19px; letter-spacing: .13em; text-transform: uppercase;
+      color: #9CD4FF; white-space: nowrap; }
+  </style>
+
+  <div class="slot clip" id="s07-team-slot" data-start="0" data-duration="6.9" data-track-index="0">
+    <div class="plate">
+      <div class="grid"></div>
+      <div class="body">
+        <div class="eyebrow">Not one person&rsquo;s take</div>
+        <div class="grid-wrap">
+          <div class="card" style="left:268px;top:374px"><img src="assets/team/founder.jpg" alt="" /><b>Founder</b></div>
+          <div class="card" style="left:456px;top:374px"><img src="assets/team/operations.jpg" alt="" /><b>Operations</b></div>
+          <div class="card" style="left:644px;top:374px"><img src="assets/team/strategy.jpg" alt="" /><b>Strategy</b></div>
+          <div class="card" style="left:174px;top:592px"><img src="assets/team/paid-media.jpg" alt="" /><b>Paid media</b></div>
+          <div class="card" style="left:362px;top:592px"><img src="assets/team/email.jpg" alt="" /><b>Email</b></div>
+          <div class="card" style="left:550px;top:592px"><img src="assets/team/tech.jpg" alt="" /><b>Tech</b></div>
+          <div class="card" style="left:738px;top:592px"><img src="assets/team/seo.jpg" alt="" /><b>SEO</b></div>
+          <div class="card" style="left:268px;top:810px"><img src="assets/team/creative.jpg" alt="" /><b>Creative</b></div>
+          <div class="card" style="left:456px;top:810px"><img src="assets/team/cro.jpg" alt="" /><b>Design</b></div>
+          <div class="card" style="left:644px;top:810px"><img src="assets/team/analytics.jpg" alt="" /><b>Analytics</b></div>
+        </div>
+      </div>
+      <div class="edge edge-t"></div>
+      <div class="edge edge-b"></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 6.9, S = '[data-composition-id="s07-team"] ';
+      const tl = gsap.timeline({ paused: true });
+      // ENTRY — the opaque plate wipes up over the outgoing frame with a light streak
+      // on its leading edge; the content rides in behind it under matching blur.
+      tl.fromTo(S+'.plate', { y: 1920 }, { y: 0, duration: 0.24, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.edge-t', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, 0);
+      tl.to(S+'.edge-t', { opacity: 0, duration: 0.15, ease: 'sine.in' }, 0.09);
+      tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
+        { y: 0, filter: 'blur(0px)', duration: 0.52, ease: 'power2.out' }, 0);
+      tl.fromTo(S+'.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .38, ease: 'power2.out' }, 0);
+      // the whole grid expands from a point while the cards pop outward from the middle —
+      // "one operator" becoming ten specialists, without needing a separate beat for it
+      tl.fromTo(S+'.grid-wrap', { scale: .86 }, { scale: 1, duration: .70, ease: 'power3.out' }, 0.02);
+      tl.fromTo(S+'.card', { opacity: 0, scale: .55 },
+        { opacity: 1, scale: 1, duration: .34, ease: 'back.out(1.9)',
+          stagger: { each: .05, from: 'center' } }, 0.04);
+      // the grid keeps breathing so the hold never goes static
+      tl.to(S+'.grid-wrap', { scale: 1.018, duration: 1.15, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.10);
+      // a second, slower breath carries the extended hold over "eight and nine figure
+      // brands for their entire career" so the grid never sits still
+      tl.to(S+'.grid-wrap', { scale: 1.022, duration: 1.60, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 3.50);
+      // EXIT — hands off to another graphic beat: hold the content in place and let the
+      // incoming beat's plate wipe over it. Lifting it here emptied the frame first.
+      tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s07-team'] = tl;
+    })();
+  </script>
+  </div>
+</template>

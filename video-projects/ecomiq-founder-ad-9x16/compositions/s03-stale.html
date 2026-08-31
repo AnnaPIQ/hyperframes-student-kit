@@ -1,0 +1,116 @@
+<template id="s03-stale-template">
+  <script src="assets/vendor/gsap.min.js"></script>
+  <div data-composition-id="s03-stale" data-start="0" data-duration="2.55" data-width="1080" data-height="1920">
+  <style>
+    @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800; font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+    @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400; font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+    [data-composition-id="s03-stale"] { position: absolute; inset: 0; overflow: hidden; background: transparent;
+      font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+    [data-composition-id="s03-stale"] .plate { position: absolute; inset: 0; overflow: hidden;
+      background: radial-gradient(64% 46% at 50% 42%, rgba(156,212,255,.11) 0%, rgba(6,40,76,0) 64%), #06284C; }
+    [data-composition-id="s03-stale"] .grid { position: absolute; inset: 0; opacity: .13;
+      background-image: linear-gradient(#1d4a7a 1px, transparent 1px), linear-gradient(90deg, #1d4a7a 1px, transparent 1px);
+      background-size: 90px 90px; -webkit-mask-image: radial-gradient(76% 58% at 50% 42%, #000 40%, transparent 86%); }
+    [data-composition-id="s03-stale"] .body { position: absolute; left: 0; right: 0;
+      top: 285px; height: 1350px; }
+    /* Light streak riding the wiping edge of the plate — turns the panel slide into a
+       whip. Held at opacity 0 so it is invisible while the beat is at rest. */
+    [data-composition-id="s03-stale"] .edge { position: absolute; left: -40px; right: -40px; height: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(156,212,255,0));
+      filter: blur(7px); opacity: 0; pointer-events: none; }
+    [data-composition-id="s03-stale"] .edge-t { top: 0; }
+    [data-composition-id="s03-stale"] .edge-b { bottom: 0; transform: scaleY(-1); }
+    /* shared scene furniture */
+    [data-composition-id="s03-stale"] .eyebrow { position: absolute; left: 0; right: 0; text-align: center;
+      font-weight: 600; font-size: 24px; letter-spacing: .30em; text-transform: uppercase; color: #9CD4FF;
+      text-shadow: 0 3px 20px rgba(2,14,30,.9); }
+    [data-composition-id="s03-stale"] .kicker { position: absolute; left: 90px; right: 90px; text-align: center;
+      font-weight: 700; font-size: 46px; line-height: 1.14; letter-spacing: -.01em; color: #FFFFFF; }
+    [data-composition-id="s03-stale"] .serif { font-family: 'Hedvig Letters Serif', Georgia, serif;
+      font-style: italic; font-weight: 400; }
+
+    [data-composition-id="s03-stale"] .eyebrow { top: 404px; }
+    [data-composition-id="s03-stale"] .card { position: absolute; left: 230px; top: 476px; width: 620px; height: 250px;
+      background: linear-gradient(180deg, #0d3768 0%, #0a325f 100%); border: 2px dashed #2b5d92;
+      border-radius: 26px; box-shadow: 0 24px 60px -22px rgba(0,0,0,.6);
+      display: flex; align-items: center; padding: 0 44px; gap: 30px; }
+    [data-composition-id="s03-stale"] .card .who { width: 96px; height: 96px; border-radius: 50%; flex: none;
+      background: radial-gradient(circle at 36% 30%, #8fa8c4, #6f8db3 60%, #4c6b90 100%); }
+    [data-composition-id="s03-stale"] .card .txt b { display: block; font-weight: 800; font-size: 54px;
+      letter-spacing: -.02em; color: #cfe0f4; }
+    [data-composition-id="s03-stale"] .card .txt span { display: block; margin-top: 8px; font-weight: 600;
+      font-size: 28px; letter-spacing: .02em; color: #6f8db3; }
+    [data-composition-id="s03-stale"] .stamp { position: absolute; left: 50%; top: 790px; margin-left: -300px;
+      width: 600px; text-align: center; font-weight: 800; font-size: 62px; letter-spacing: -.01em;
+      color: #FF4C32; border: 5px solid #FF4C32; border-radius: 18px; padding: 18px 0;
+      box-shadow: 0 0 40px rgba(255,76,50,.35); text-shadow: 0 0 26px rgba(255,76,50,.45); }
+    [data-composition-id="s03-stale"] .rail { position: absolute; left: 156px; right: 156px; top: 1010px; height: 2px;
+      background: repeating-linear-gradient(90deg, #2b5d92 0 16px, transparent 16px 30px); }
+    [data-composition-id="s03-stale"] .yr { position: absolute; top: 1032px; width: 200px; text-align: center;
+      font-weight: 700; font-size: 26px; letter-spacing: .18em; color: #6f8db3; }
+    [data-composition-id="s03-stale"] .yr.now { color: #9CD4FF; }
+    [data-composition-id="s03-stale"] .dot { position: absolute; top: 1004px; width: 14px; height: 14px;
+      border-radius: 50%; background: #6f8db3; }
+    [data-composition-id="s03-stale"] .dot.now { background: #9CD4FF; box-shadow: 0 0 16px rgba(156,212,255,.9); }
+  </style>
+
+  <div class="slot clip" id="s03-stale-slot" data-start="0" data-duration="2.55" data-track-index="0">
+    <div class="plate">
+      <div class="grid"></div>
+      <div class="body">
+        <div class="eyebrow">Where that opinion came from</div>
+        <div class="card">
+          <div class="who"></div>
+          <div class="txt"><b>1 DTC brand</b><span>ONE JOB &middot; ONE TAKE</span></div>
+        </div>
+        <div class="stamp">5&ndash;10 YEARS AGO</div>
+        <div class="rail"></div>
+        <div class="dot" style="left:150px"></div>
+        <div class="yr" style="left:56px">THEN</div>
+        <div class="dot now" style="left:916px"></div>
+        <div class="yr now" style="left:824px">TODAY</div>
+      </div>
+      <div class="edge edge-t"></div>
+      <div class="edge edge-b"></div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const SLOT = 2.55, S = '[data-composition-id="s03-stale"] ';
+      const tl = gsap.timeline({ paused: true });
+      // ENTRY — the opaque plate wipes up over the outgoing frame with a light streak
+      // on its leading edge; the content rides in behind it under matching blur.
+      tl.fromTo(S+'.plate', { y: 1920 }, { y: 0, duration: 0.24, ease: 'power3.out' }, 0);
+      tl.fromTo(S+'.edge-t', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, 0);
+      tl.to(S+'.edge-t', { opacity: 0, duration: 0.15, ease: 'sine.in' }, 0.09);
+      tl.fromTo(S+'.body', { y: 150, filter: 'blur(24px)' },
+        { y: 0, filter: 'blur(0px)', duration: 0.52, ease: 'power2.out' }, 0);
+      tl.fromTo(S+'.eyebrow', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .40, ease: 'power2.out' }, 0);
+      // card in on "another DTC brand"
+      tl.fromTo(S+'.card', { opacity: 0, y: 34, scale: .96 },
+        { opacity: 1, y: 0, scale: 1, duration: .50, ease: 'back.out(1.5)' }, 0.16);
+      tl.fromTo(S+'.rail', { opacity: 0, scaleX: .2 },
+        { opacity: 1, scaleX: 1, duration: .55, ease: 'power3.out' }, 0.40);
+      tl.fromTo(S+'.dot', { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: .35, stagger: .10, ease: 'back.out(2)' }, 0.66);
+      tl.fromTo(S+'.yr', { opacity: 0 }, { opacity: 1, duration: .35, stagger: .10, ease: 'sine.out' }, 0.72);
+      // the stamp slams on the VO word "five" (project 8.06 = local 1.06)
+      tl.fromTo(S+'.stamp', { opacity: 0, scale: 1.7, rotation: -12 },
+        { opacity: 1, scale: 1, rotation: -3, duration: .34, ease: 'power4.out' }, 1.06);
+      tl.to(S+'.stamp', { scale: 1.035, duration: .55, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.44);
+      // the coach card cools off behind it
+      tl.to(S+'.card', { opacity: .55, duration: .50, ease: 'sine.inOut' }, 1.20);
+      // EXIT — matches the incoming founder cut: body lifts with 30px blur while the
+      // plate wipes off as one opaque piece, revealing the footage cleanly beneath.
+      tl.to(S+'.body', { y: -150, filter: 'blur(30px)', duration: 0.26, ease: 'power2.in' }, SLOT - 0.26);
+      tl.to(S+'.plate', { y: -1920, duration: 0.26, ease: 'power3.in' }, SLOT - 0.26);
+      tl.fromTo(S+'.edge-b', { opacity: 0 }, { opacity: 1, duration: 0.07, ease: 'sine.out' }, SLOT - 0.26);
+      tl.to(S+'.edge-b', { opacity: 0, duration: 0.13, ease: 'sine.in' }, SLOT - 0.17);
+      tl.to({}, { duration: SLOT }, 0);   // Law #11 anchor — fills the slot, no black flash
+      window.__timelines = window.__timelines || {};
+      window.__timelines['s03-stale'] = tl;
+    })();
+  </script>
+  </div>
+</template>
