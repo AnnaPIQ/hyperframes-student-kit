@@ -157,3 +157,24 @@ efficient over time instead of relearning the same lessons.
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
+
+### Porting a 4:5 composition to 9:16
+- **Symptom:** the vertical cut reads sparse — content floats in the middle with large
+  empty bands top and bottom. **Fix:** accept it, don't stretch. Both formats are 1080
+  wide, so content cannot scale up; the only lever is spreading elements further apart,
+  which breaks visual grouping and pushes rows into the platform UI zone. Centre the
+  original content box and let the full-frame background layers (bloom, grid, vignette)
+  carry the margins. A centred 1350-tall box in 1920 lands exactly inside the
+  Reels/TikTok safe area (top ~250px, bottom ~420px).
+- **Symptom:** re-cropping 9:16 from the finished 4:5 render gives soft footage.
+  **Fix:** re-crop from the original 4K master
+  (`scale=<w>:1920:flags=lanczos, crop=1080:1920:<x>:0`), never from a delivered render.
+- **Symptom:** after re-basing `.body` into a taller frame, full-bleed children inside it
+  (scrolling logo walls, edge fades) stop reaching the frame edges. **Fix:** every child
+  that must be full-bleed needs its offset negated by the body's new top inset
+  (`top: -285px`, `inset: -285px 0`), and any tween on it re-based by the same amount.
+- **Symptom:** `--resolution` rejects a 2× export. **Fix:** it only takes named presets
+  (landscape / portrait / square, plus `-4k` variants) — there is no 4:5 preset and
+  explicit dimensions are rejected. 9:16 can use `portrait-4k`; 4:5 cannot go above its
+  native size. Also check the source first: upscaling 2160-tall footage to 3840 to gain
+  sharper *graphics* trades real detail for none.
