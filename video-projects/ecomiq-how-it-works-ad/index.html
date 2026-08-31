@@ -73,7 +73,7 @@
         id="montage-a"
         class="montage"
         data-start="0"
-        data-duration="6.8"
+        data-duration="2.266667"
         data-track-index="0"
         data-media-start="0"
         src="assets/montage-916.mp4"
@@ -114,8 +114,8 @@
       <div
         id="gfx1"
         class="clip gfx"
-        data-start="6.8"
-        data-duration="13.8"
+        data-start="2.266667"
+        data-duration="18.333333"
         data-track-index="6"
       >
         <div class="bg"></div>
@@ -140,22 +140,19 @@
       </div>
 
       <!-- BEAT A — one person, one brand, years ago. Cut on request, then
-           restored when the payoff beat was removed. Starts at 6.8s.
-           Reveal times are MEASURED off the VO bed (whisper -ml 1 over an
-           isolated 3.8-12.2s slice), never interpolated across a speech run -
-           an earlier cut guessed them and landed "5-10 years ago." at 9.70,
-           half a second AFTER he had finished saying it:
-             6.38-6.98  "once worked at"
-             6.98-8.12  "another DTC brand"   -> brand card 7.40, strike 7.85
-             8.12-9.25  "five to ten years ago." -> pips 8.10, headline 8.36
-           It was also briefly moved to 8.8s to keep all 832 montage frames in
-           play, which pushed the graphic past its words - the frame budget is
-           not worth more than the sync. -->
+           restored when the payoff beat was removed. Spans 2.267-10.100s,
+           i.e. the length of the ONE SENTENCE it illustrates: it opens on
+           "just one person" (2.280) and clears after "five to ten years ago."
+           (9.250). See the timeline block for the measured per-word anchors.
+           Two earlier cuts parked it at 6.8s and 8.8s, both of which started
+           the graphic three-quarters of the way through its own sentence. The
+           opening montage window pays for it (6.800s -> 2.267s); a montage
+           trim is invisible, a graphic out of sync with the VO is not. -->
       <div
         id="gA"
         class="clip gfx beat"
-        data-start="6.8"
-        data-duration="4.9"
+        data-start="2.266667"
+        data-duration="7.833333"
         data-track-index="8"
       >
         <div class="wrap" id="gA-w">
@@ -187,8 +184,8 @@
       <div
         id="gB0"
         class="clip gfx beat"
-        data-start="11.6"
-        data-duration="1.95"
+        data-start="10.0"
+        data-duration="3.55"
         data-track-index="9"
       >
         <div class="wrap" id="gB0-w">
@@ -557,7 +554,7 @@
         tl.fromTo(p + "-marks", { opacity: 0.2 },
           { opacity: 0.4, duration: half, ease: "sine.inOut", yoyo: true, repeat: 1 }, at);
       }
-      bedAmbient("#gfx1", 6.8, 13.8);
+      bedAmbient("#gfx1", 2.266667, 18.333333);
       bedAmbient("#gfx2", 23.0, 31.9);
 
       /* ---- beat whips ----
@@ -583,30 +580,52 @@
       }
 
       /* ---- BEAT A — one person's opinion, one brand, years ago ----
-         VO: "...they once worked at another DTC brand five to ten years ago."
-         Compressed into 2.9s (it had 4.9s before it was cut). */
-      whip("#gA", 6.8, 11.7);
-      tl.fromTo("#gA-eb", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.36, ease: "power2.out" }, 6.90);
-      tl.fromTo("#gA-t", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.46, ease: "power3.out" }, 7.00);
+         The beat illustrates ONE WHOLE SENTENCE, so it runs the length of that
+         sentence: "...are just one person, and they're giving you their
+         personal opinion based on the time that they once worked at another
+         DTC brand five to ten years ago."  It opens on "just" (2.280) and
+         clears after "ago." (9.250).
+
+         MEASURED word positions (atrim a 0-4.6s slice, whisper-cli -ml 1 -oj,
+         same for 3.8-12.2s). Every reveal below starts at
+         word - entrance duration, so it LANDS on the word:
+
+           0.190-1.440  "Most e-commerce coaching"     (eyebrow copy)
+           2.280-3.320  "just one person"        -> eb 2.34, title 2.44
+           3.320-4.960  "their personal opinion" -> brand card 3.60
+           4.960-6.170  "based on the time that" -> card footer 4.70
+           6.170-8.120  "once worked at another DTC brand" -> strike 6.56
+           8.120-9.250  "five to ten years ago." -> pips 8.00, headline 8.36
+
+         Earlier cuts had the whole beat parked at 6.8s or 8.8s, i.e. starting
+         three-quarters of the way through its own sentence. */
+      whip("#gA", 2.266667, 10.1);
+      tl.fromTo("#gA-eb", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.36, ease: "power2.out" }, 2.34);
+      tl.fromTo("#gA-t", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.46, ease: "power3.out" }, 2.44);
       tl.fromTo("#gA-card", { opacity: 0, y: 30, scale: 0.97 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.2)" }, 7.40);
-      /* the one stale reference point gets struck through, on "worked at
-         another DTC brand" (~8.0s) */
-      tl.fromTo("#gA-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: "power3.inOut" }, 7.85);
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.2)" }, 3.60);
+      /* the footer is staged off the card now rather than riding in with it -
+         the sentence gives it its own clause ("based on the time that...") and
+         the beat is long enough that it needs the extra step to stay alive. */
+      tl.fromTo("#gA-foot", { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.36, ease: "power2.out" }, 4.70);
+      /* the one stale reference point gets struck through, landing exactly on
+         "another DTC brand" (6.980) */
+      tl.fromTo("#gA-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: "power3.inOut" }, 6.56);
       tl.fromTo("#gA-years .yr", { opacity: 0, scaleY: 0.2 },
-        { opacity: 1, scaleY: 1, duration: 0.3, ease: "power2.out", stagger: 0.045 }, 8.10);
-      /* "5-10 years ago." on the words (9.3-10.3s) */
+        { opacity: 1, scaleY: 1, duration: 0.3, ease: "power2.out", stagger: 0.045 }, 8.00);
+      /* "5-10 years ago." lands on "years ago" (8.680-9.250) */
       tl.fromTo("#gA-big", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.44, ease: "expo.out" }, 8.36);
-      streak("#gA-streak", 6.86);
+      streak("#gA-streak", 2.34);
 
       /* ---- BEAT B0 — "works differently"  (on the line at ~12.2) ----
          Carries 11.6-13.1, which used to be a dead screen: beat B opened here
          with nothing but a dim eyebrow until the badge arrived at 13.70. */
-      whip("#gB0", 11.6, 13.55);
+      whip("#gB0", 10.0, 13.55);
       tl.fromTo("#gB0-txt", { opacity: 0, scale: 1.14 },
-        { opacity: 1, scale: 1, duration: 0.36, ease: "expo.out" }, 11.70);
-      tl.fromTo("#gB0-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.28, ease: "power2.out" }, 11.92);
-      streak("#gB0-streak", 11.66);
+        { opacity: 1, scale: 1, duration: 0.36, ease: "expo.out" }, 10.10);
+      tl.fromTo("#gB0-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.28, ease: "power2.out" }, 11.60);
+      streak("#gB0-streak", 10.06);
 
       /* ---- BEAT B — Shopify Premier Partner ----
          MEASURED word positions (whisper -ml 1 over an isolated 13.3-21.2s

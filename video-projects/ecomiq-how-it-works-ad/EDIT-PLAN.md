@@ -694,7 +694,52 @@ montage frames in play, because handing 2.8s back to footage had to come from
 somewhere. That was the wrong trade: it protected my own frame-accounting
 invariant at the cost of the graphic landing on the line it illustrates.
 
-Beat A stays at **6.800–11.700s**, but its reveals are now **measured**, not
+### Beat A covers a sentence, so it runs the length of that sentence
+
+Beat A now spans **2.267–10.100s**. It illustrates one whole sentence —
+
+> "Most e-commerce coaching agencies are **just one person**, and they're giving
+> you their personal opinion based on the time that they once worked at another
+> DTC brand five to ten years ago."
+
+— so it opens on "just" (**2.280**) and clears after "ago." (**9.250**). Three
+earlier cuts placed it at 8.8s, then 6.8s, then re-anchored its internals at
+6.8s; all three started the graphic three-quarters of the way through its own
+sentence, because the beat was positioned by what was left in the frame budget
+instead of by the line it belongs to.
+
+Measured anchors (`atrim` a 0–4.6s slice + a 3.8–12.2s slice, `whisper-cli
+-ml 1 -oj` on each, offset added back). Every start is
+**word − entrance duration** so the element *lands* on the word:
+
+| Reveal | At | Entrance | Lands on (measured) |
+|---|--:|--:|---|
+| eyebrow "Most e-commerce coaching" | 2.34 | 0.36 | "**just** one person" **2.280** |
+| "One person's opinion" | 2.44 | 0.46 | "just **one person**" **2.640** |
+| brand card | 3.60 | 0.50 | "their **personal opinion**" **4.040** |
+| card footer "based on one brand" | 4.70 | 0.36 | "**based on the time** that" **4.960** |
+| strike-through | 6.56 | 0.42 | "another **DTC brand**" **6.980** |
+| year pips | 8.00 | 0.30+stagger | "**five to ten** years" **8.120** |
+| "5–10 years ago." | 8.36 | 0.44 | "ten **years ago.**" **8.680** |
+
+The card footer is now staged off the card rather than riding in with it — the
+sentence gives it its own clause, and the beat is long enough that it needs the
+extra step to stay alive.
+
+**What paid for it.** The opening montage window drops from 6.800s to 2.267s
+(204 frames → 68). The bed is untouched; the composition simply never shows bed
+frames 68–203. There is a hard cut at ad 2.267s and 18s of graphics before M2
+resumes at bed 6.800s, so the jump cannot read. Montage total: **636 of 832
+frames**, in order, none reprised.
+
+**Beat B0 slides up to keep the chain unbroken**: 11.600 → **10.000–13.550s**.
+Its slam now lands on "we've **created EcomIQ**" (10.160–10.800) at 10.10 and
+its rule on "this is why **it works**" (11.530–12.040) at 11.60. Beat B is
+untouched at 13.450.
+
+### Superseded: the previous pass, which only fixed beat A's internals
+
+Beat A was at **6.800–11.700s**, with its reveals **measured**, not
 estimated. The earlier table interpolated word positions across an unbroken
 12.5s speech run; measuring the same run word by word (`atrim` a 3.8–12.2s
 slice, then `whisper-cli -ml 1 -oj` on that slice alone) put every anchor

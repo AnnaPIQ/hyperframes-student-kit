@@ -25,11 +25,19 @@
 #   Card trigger      71.4333s = frame 2143  ("Tap the link below and book a call")
 #   Total runtime     76.4333s = frame 2293  (card holds 5.000s)
 #   Montage        src frames 0-831 (27.7333s) at NATIVE SPEED - no retime.
-#                     Split across three clips in the compositions:
-#                       M1  ad  0.000- 6.800s  <- bed  0.000- 6.800s  (204f)
-#                       M2  ad 20.600-25.000s  <- bed  6.800-11.200s  (132f)
-#                       M3  ad 54.900-71.4333s <- bed 11.200-27.7333s (496f)
-#                     204+132+496 = 832 = every source frame, once, in order.
+#                     The BED is still the full 832 frames; the compositions
+#                     pick three windows out of it via data-media-start:
+#                       M1  ad  0.000- 2.2667s <- bed  0.0000- 2.2667s  ( 68f)
+#                       M2  ad 20.600-23.000s  <- bed  6.8000-11.2000s  ( 72f)
+#                       M3  ad 54.900-71.4333s <- bed 11.2000-27.7333s  (496f)
+#                     636 of 832 frames, in order, none reprised. Bed frames
+#                     68-203 are simply never shown - there is a hard cut at
+#                     ad 2.2667s and 18s of graphics before M2 resumes, so the
+#                     jump is invisible.
+#                     The opening window shrank from 6.800s because beat A has
+#                     to open on "just one person" (VO 2.280s) - it illustrates
+#                     that whole sentence. Sync outranks the frame budget; see
+#                     docs/LESSONS.md, "Anchors outrank arithmetic".
 #                     Motion graphics carry the other 43.7s. Retiming was
 #                     removed outright: a per-shot variable stretch made the
 #                     montage speed up and slow down shot to shot, which reads

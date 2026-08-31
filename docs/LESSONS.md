@@ -260,6 +260,17 @@ efficient over time instead of relearning the same lessons.
   offset back. One-word segments come back with real per-word offsets; whole-file
   transcription does not, and `silencedetect` only finds the pauses *between* runs,
   never the words inside one. Budget ~10s per slice; it is cheaper than one render.
+- **A beat that illustrates a sentence has to run the length of that sentence.**
+  Anchoring a beat by its *payoff* line is not enough. Beat A on this build carried
+  one sentence — "…are just one person, and they're giving you their personal opinion
+  based on the time that they once worked at another DTC brand five to ten years ago"
+  — and was placed at 8.8s, then 6.8s, then re-anchored internally at 6.8s. All three
+  were rejected, because the sentence *starts* at 2.280s: the graphic was appearing
+  three-quarters of the way through its own line every time. **Fix:** measure the
+  first and last word of the clause the beat illustrates and make the beat span
+  exactly that, then distribute the reveals across it. Positioning a beat by what is
+  left in the frame budget produces this bug every time — and each partial fix costs
+  a full render cycle plus a round of the viewer's patience.
 - **Anchor the END of an entrance to the word, not the start of it.** Correcting a
   late badge by firing it exactly on "Shopify Premier Partner" (14.72) fixed the sync
   and immediately created the *other* defect: a 0.58s `back.out` entrance is still
