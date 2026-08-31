@@ -131,11 +131,11 @@
 
       <!-- ================= FOOTAGE ================= -->
       <div class="shot" id="w-s1"><div class="drift" id="d-s1"><video id="v-s1" src="assets/broll/b1-cake-4x5.mp4" muted
-        data-start="0.00" data-duration="3.42" data-track-index="1" data-media-start="0.00"></video></div></div>
+        data-start="0.00" data-duration="4.00" data-track-index="1" data-media-start="0.00"></video></div></div>
       <div class="shot" id="w-s2"><div class="drift" id="d-s2"><video id="v-s2" src="assets/broll/aroll-4x5.mp4" muted
         data-start="3.30" data-duration="1.47" data-track-index="2" data-media-start="3.30"></video></div></div>
       <div class="shot" id="w-s3"><div class="drift" id="d-s3"><video id="v-s3" src="assets/broll/b2-cookies-4x5.mp4" muted
-        data-start="4.65" data-duration="2.87" data-track-index="3" data-media-start="0.00"></video></div></div>
+        data-start="4.65" data-duration="3.45" data-track-index="3" data-media-start="0.00"></video></div></div>
       <div class="shot" id="w-s5"><div class="drift" id="d-s5"><video id="v-s5" src="assets/broll/aroll-4x5.mp4" muted
         data-start="10.85" data-duration="1.32" data-track-index="4" data-media-start="10.85"></video></div></div>
       <div class="shot" id="w-s7"><div class="drift" id="d-s7"><video id="v-s7" src="assets/broll/b3-sprinkle-4x5.mp4" muted
@@ -143,9 +143,9 @@
       <div class="shot" id="w-s8"><div class="drift" id="d-s8"><video id="v-s8" src="assets/broll/aroll-4x5.mp4" muted
         data-start="17.45" data-duration="2.72" data-track-index="6" data-media-start="17.45"></video></div></div>
       <div class="shot" id="w-s9"><div class="drift" id="d-s9"><video id="v-s9" src="assets/broll/b4-box-4x5.mp4" muted
-        data-start="20.05" data-duration="3.57" data-track-index="7" data-media-start="0.00"></video></div></div>
+        data-start="20.05" data-duration="4.15" data-track-index="7" data-media-start="0.00"></video></div></div>
       <div class="shot" id="w-s11"><div class="drift" id="d-s11"><video id="v-s11" src="assets/broll/b7-sean-erica-4x5.mp4" muted
-        data-start="23.50" data-duration="2.57" data-track-index="8" data-media-start="0.00"></video></div></div>
+        data-start="23.50" data-duration="3.15" data-track-index="8" data-media-start="0.00"></video></div></div>
       <div class="shot" id="w-s13"><div class="drift" id="d-s13"><video id="v-s13" src="assets/broll/aroll-4x5.mp4" muted
         data-start="29.15" data-duration="2.67" data-track-index="9" data-media-start="29.15"></video></div></div>
       <div class="shot" id="w-s15"><div class="drift" id="d-s15"><video id="v-s15" src="assets/broll/b5-erica-box-4x5.mp4" muted
@@ -253,31 +253,35 @@
       }
 
       /* Cards push in on the same beat as the footage cuts. */
-      [['#wrapA', 7.40], ['#wrapB', 12.05], ['#wrapD', 25.95],
-       ['#wrapE', 31.70], ['#wrapEnd', 39.70]].forEach(([sel, at]) => {
-        tl.fromTo(sel, { yPercent: 6, scale: 1.04, filter: 'blur(6px)' },
-          { yPercent: 0, scale: 1, filter: 'blur(0px)', duration: 0.22, ease: 'power3.out' }, at);
+      [['#wrapA', 7.40, 'fade'], ['#wrapB', 12.05], ['#wrapD', 25.95, 'fade'],
+       ['#wrapE', 31.70], ['#wrapEnd', 39.70]].forEach(([sel, at, mode]) => {
+        if (mode === 'fade') {
+          tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.50, ease: 'sine.inOut' }, at);
+        } else {
+          tl.fromTo(sel, { yPercent: 6, scale: 1.04, filter: 'blur(6px)' },
+            { yPercent: 0, scale: 1, filter: 'blur(0px)', duration: 0.22, ease: 'power3.out' }, at);
+        }
       });
 
       /* ---- footage: push in, then the camera never sleeps -------------- */
       const SHOTS = [
-        ['#w-s1', '#d-s1', 0.00, 3.42],
-        ['#w-s2', '#d-s2', 3.30, 1.47],
-        ['#w-s3', '#d-s3', 4.65, 2.87],
+        ['#w-s1', '#d-s1', 0.00, 4.00],
+        ['#w-s2', '#d-s2', 3.30, 1.47, 'fade'],
+        ['#w-s3', '#d-s3', 4.65, 3.45],
         ['#w-s5', '#d-s5', 10.85, 1.32],
         ['#w-s7', '#d-s7', 15.25, 2.90],
         ['#w-s8', '#d-s8', 17.45, 2.72, 'fade'],
-        ['#w-s9', '#d-s9', 20.05, 3.57],
-        ['#w-s11', '#d-s11', 23.50, 2.57],
+        ['#w-s9', '#d-s9', 20.05, 4.15],
+        ['#w-s11', '#d-s11', 23.50, 3.15, 'fade'],
         ['#w-s13', '#d-s13', 29.15, 2.67],
         ['#w-s15', '#d-s15', 34.90, 3.80],
         ['#w-s16', '#d-s16', 37.95, 1.87, 'fade']
       ];
       SHOTS.forEach(([wrap, drift, at, dur, mode]) => {
         if (mode === 'fade') {
-          /* Two cuts dissolve rather than push, both back into Sean: out of the
-             cupcakes and out of Erica. In each case the outgoing shot keeps
-             playing underneath on a lower track. */
+          /* Every b-roll shot dissolves into what follows, rather than cutting.
+             The outgoing clip keeps playing underneath on a lower track; only
+             cuts out of Sean use the push. */
           tl.fromTo(wrap, { opacity: 0 }, { opacity: 1, duration: 0.50, ease: 'sine.inOut' }, at);
         } else {
           tl.fromTo(wrap, { yPercent: 6, scale: 1.05, filter: 'blur(6px)' },

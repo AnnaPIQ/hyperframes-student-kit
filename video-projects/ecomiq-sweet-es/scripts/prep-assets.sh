@@ -49,7 +49,7 @@ BROLL=(
   "b3-sprinkle:broll-sprinkle.mp4:0.80:3.40:570"
   "b4-box:broll-erica-packing.mp4:29.00:5.60:570"
   "b5-erica-box:broll-erica-packing.mp4:59.80:4.20:300"
-  "b7-sean-erica:broll-sean-erica.mp4:11.45:2.80:250"
+  "b7-sean-erica:broll-sean-erica.mp4:11.45:3.30:250"
 )
 
 do_ratio() {

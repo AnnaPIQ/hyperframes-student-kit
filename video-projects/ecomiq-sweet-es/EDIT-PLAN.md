@@ -74,29 +74,34 @@ plays Sean to camera. "Clean" = footage with no scrim, no graphic.
 | S15 | 37.95 | 39.70 | 1.75 | **A-roll** | dissolves up over Erica — "if you want us in your corner", direct address |
 | S16 | 39.70 | 46.60 | 6.90 | **END CARD** | comes up under "tap the link and find out more", then holds 4.70s |
 
-### Transitions — pushes, plus two dissolves
+### Transitions — b-roll dissolves, everything else pushes
 
-Every cut is a short **scale-and-slide push**: 0.22s, from +6% Y at scale 1.05
-under 6px of blur, resolving to 0. No white line, no flash, no bright element of
-any kind — the energy is movement only.
+**Every b-roll shot dissolves into whatever follows.** A 0.50s `sine.inOut`
+cross-dissolve, and in each case the outgoing clip's `data-duration` is extended
+past the dissolve start so it keeps *playing* underneath rather than freezing or
+cutting to black. The incoming element is always on a higher track index, so a
+plain opacity fade-up on it reads as a cross-dissolve.
 
-The two **returns to Sean** are the exceptions; both read as too abrupt on
-review. Each is a 0.50s `sine.inOut` cross-dissolve, and in each case the
-outgoing shot's `data-duration` runs past the dissolve start so it keeps
-*playing* underneath rather than freezing or cutting to black:
-
-| Cut | Shot held | Dissolve |
+| Out of | Into | At |
 |---|---|---|
-| cupcakes → Sean | 1.85 → **2.20s** | 17.45 → 17.95 |
-| Erica → Sean | 2.80 → **3.05s** | 37.95 → 38.45 |
+| b1-cake | Sean | 3.30 |
+| b2-cookies | card A | 7.40 |
+| b3-sprinkle | Sean | 17.45 |
+| b4-box | Sean + Erica | 23.50 |
+| b7-sean-erica | card D | 25.95 |
+| b5-erica-box | Sean | 37.95 |
 
-Verified in-page both times: Sean's opacity climbs 0 → 0.50 → 1 while the
-outgoing shot holds at 1.
+Cuts **out of Sean** keep the push: 0.22s, from +6% Y at scale 1.05 under 6px of
+blur, resolving to 0. No white line, no flash, no bright element anywhere — on
+the push beats the energy is movement only.
 
-The cupcake clip is one continuous camera pull-back with no internal cut, so it
-was re-prepped at 3.40s to give the dissolve material. Erica's clip is used to
-3.80s of its 4.23s, which stays clear of the last few frames where the cake box
-is pushed into the lens.
+Asserted before each render, by parsing `index.html` rather than by eye:
+
+- every b-roll shot's successor is a dissolve, not a push;
+- `data-media-start + data-duration` fits inside each source clip, so no shot can
+  freeze on its last frame mid-dissolve;
+- the timeline is contiguous with zero gaps (a hole renders as a black frame);
+- every A-roll scene still has `media-start == data-start`, so lip sync holds.
 
 ### Why the b-roll lengths are what they are
 Every b-roll shot was lengthened except the first and last, which were already
