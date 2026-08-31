@@ -178,3 +178,11 @@ efficient over time instead of relearning the same lessons.
   explicit dimensions are rejected. 9:16 can use `portrait-4k`; 4:5 cannot go above its
   native size. Also check the source first: upscaling 2160-tall footage to 3840 to gain
   sharper *graphics* trades real detail for none.
+- **Symptom:** the subject sits off-centre in a re-cropped vertical/square cut, even
+  though the crop x was computed as the exact centre of the scaled source.
+  **Fix:** a centre crop only centres the subject if the subject is centred in the
+  *source*. Measure where they actually are, then set `crop=W:H:(subject_x - W/2):0`.
+  Verify on the render by drawing the true centre line over a head crop —
+  `-vf "crop=1080:800:0:200,scale=400:296,drawbox=x=199:y=0:w=2:h=296:color=red:t=fill"` —
+  and check the line lands between the eyes, not on an ear. Arithmetic that looks right
+  is not verification; this shipped in two aspect ratios before anyone drew the line.

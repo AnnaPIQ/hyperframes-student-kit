@@ -8,9 +8,17 @@ copy, timing rationale, audio notes and seam architecture see the 4:5 storyboard
 ## What differs from the 4:5
 
 **Founder A-roll.** Re-cropped natively from the 4K source rather than upscaled from the
-4:5 renders — `scale=3413:1920:flags=lanczos, crop=1080:1920:1166:0, fps=30`. The crop
-window is offset right of centre to keep Sean on the vertical thirds; head-room and the
-PacificIQ chest logo both stay in frame.
+4:5 renders — `scale=3413:1920:flags=lanczos, crop=1080:1920:1049:0, fps=30`.
+
+The crop x is **not** the centre of the scaled source (that would be 1166). Sean stands
+right of centre in the 3840x2160 master, so a mathematically centred crop puts him ~115px
+left of frame — which is what shipped in the first pass, and in the 4:5 as well (~85px
+there, crop x corrected to 577 in a 2400x1350 scale). Both are cut from the same measured
+subject position: eyeline on source-x 1589 in the 3413-wide space. Verify framing by
+drawing the centre line, never by trusting the arithmetic:
+
+    ffmpeg -ss <t> -i <render> -frames:v 1 \
+      -vf "crop=1080:800:0:200,scale=400:296,drawbox=x=199:y=0:w=2:h=296:color=red:t=fill" chk.png
 
 **Social-proof b-roll.** Native 1080×1920 masters pulled from the
 `ecomiq-one-opinion-or-team-story` variant on `claude/ecomiq-founder-ad-build-9auz5l`,
