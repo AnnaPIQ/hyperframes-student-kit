@@ -145,3 +145,13 @@ efficient over time instead of relearning the same lessons.
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
+
+- **Symptom:** the talent's opening breath-in is audible under the first card, but the
+  A-roll is time-locked to the audio so trimming the head would shift every beat and
+  force a re-cut of every A-roll segment.
+  **Fix:** duck the breath in place instead of trimming — an `ffmpeg volume` expression
+  with `eval=frame`, ramped in and out, attenuating just that window down to the room-tone
+  floor (measure the floor first with `astats` at ~20 ms resolution and pick the gain so
+  the breath's peak lands at or below it). Every timing survives untouched. Verify with
+  `ebur128` before and after: if only sub-−45 dB material was touched, I / LRA / true peak
+  come back identical, which is the proof that speech was not altered.

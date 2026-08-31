@@ -83,6 +83,21 @@ no `data-start` trips `duplicate_media_discovery_risk`): `mobarmor-wordmark-hero
 (high-pass 70 Hz, `loudnorm I=-16:TP=-1.5:LRA=11`) and laid as one continuous 38.6 s bed.
 Pulled 2026-08-27.
 
+> **The opening breath is ducked, not trimmed.** Sean's take begins with an audible breath
+> in — a hump from ~0.30 to ~1.15 s peaking at −45.5 dB RMS, well above the −63 dB room
+> tone around it. It is attenuated 16.5 dB with ramps at 0.15–0.32 and 1.10–1.25 s, which
+> puts its peak at −62.7 dB, i.e. into the floor. **Trimming the head was not an option:**
+> the A-roll is time-locked to the audio (see the offset note above), so removing 1.39 s
+> of lead would shift every beat and force a re-cut of all three A-roll segments. Ducking
+> leaves every timing untouched — first speech at 1.386 s is bit-identical, and the file
+> measures the same before and after (I −17.1 LUFS, LRA 5.4, true peak −1.4 dBFS).
+>
+> ```bash
+> ffmpeg -i vo.m4a -af "volume='if(lt(t,0.15),1, if(lt(t,0.32), 1-0.85*(t-0.15)/0.17, \
+>   if(lt(t,1.10),0.15, if(lt(t,1.25), 0.15+0.85*(t-1.10)/0.15, 1))))':eval=frame" \
+>   -c:a aac -b:a 192k -ar 48000 -ac 2 vo.m4a
+> ```
+
 ## Every in-point sits inside a clean, text-free run
 
 Most Social Cuts carry burned-in marketing text. Cut points were chosen against a
