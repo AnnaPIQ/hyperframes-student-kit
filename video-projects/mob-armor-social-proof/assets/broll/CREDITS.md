@@ -11,10 +11,50 @@ Subfolder used: **Social Cuts** (Drive id `1ArKbSBupieY_R4spsdiF7sJqxYc0qzas`)
 
 | File | Beat | Composition in–out | Source clip | Source in–out |
 |---|---|---|---|---|
-| `load-test.mp4` | 13 | 27.200–29.567 | Tabnetic Direct.mp4 | 14.55–17.25 (2.700 s) |
+| `claw-mount.mp4` | 13 | 27.200–29.567 | MOBNETIC CLAW.mp4 | 21.85–23.92, stretched 1.14343x |
 | `radio-guy.mp4` | 14 | 29.567–31.650 | Rad Mount.mp4 | 28.15–30.78 (2.633 s) |
 
-Both are 1080×1920, 30 fps, silent. The remaining ranges below are candidates only —
+`radio-guy` is native 1080×1920; `claw-mount` is cropped from a 1920×1080 landscape
+source and so has a per-aspect file (see below). Both are 30 fps and silent.
+
+### `claw-mount` — the one landscape source, and what that cost
+
+`MOBNETIC CLAW.mp4` (Drive id `1mTbhx6wkCHZmaG8sQtiUKkntSdIPboTM`, parent folder
+`1_SQ5A_MTjNzzzBp5wByRBDWEC0uFpvot`, pulled 2026-08-31) is 1920×1080, 23.976 fps,
+52.67 s — the landscape shape the brief warned about. A full-bleed 9:16 crop of 1080p is
+only 608 px wide, i.e. a **1.78× upscale**. It holds up here because the shot is shallow
+-depth-of-field handheld, so the softness reads as bokeh rather than as scaling — but it
+is the softest clip in the piece, and it is the reason beat 13 carries **no `push()`**:
+a further scale on top would compound it.
+
+The 4:5 gets its own crop rather than a vertical trim of the 9:16, because 4:5 can take an
+864 px window — a **1.25× upscale**, visibly sharper. `make-4x5.py` swaps the path and
+guards the reference count.
+
+**The usable shot is 21.81–23.94, not 22–23.** Full-file scene detection puts hard cuts at
+both ends; the first attempt ran 22.0→24.367 and crossed the 23.94 cut, landing in a
+completely different scene. The shot is 2.13 s and beat 13 is 2.367 s, so the cut is
+21.85–23.92 (40 ms clear of each cut) stretched 1.14343× — imperceptible on handheld, and
+it makes the beat sit a touch more deliberately.
+
+> **Scene detection needs a full decode.** `ffmpeg -ss X -to Y -i src -vf select='gt(scene,N)'`
+> returned *nothing* on this file at thresholds down to 0.03, including across a hard cut.
+> Decoding the whole file without `-ss` found all 28 cuts at threshold 0.15. Seeking first
+> silently breaks the filter — always run the detection pass over the whole file.
+
+```bash
+# 9:16 — 608px window, panning left with the subject, upscaled 1.78x
+ffmpeg -ss 21.85 -t 2.07 -i "MOBNETIC CLAW.mp4" -map 0:v:0 -an \
+  -vf "crop=608:1080:'560-110*(t/2.07)':0,scale=1080:1920:flags=lanczos,setpts=1.14348*PTS" \
+  -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p -vsync cfr -r 30 \
+  -movflags +faststart assets/broll/claw-mount.mp4
+
+# 4:5 — 864px window, same pan, upscaled only 1.25x
+ffmpeg -ss 21.85 -t 2.07 -i "MOBNETIC CLAW.mp4" -map 0:v:0 -an \
+  -vf "crop=864:1080:'448-120*(t/2.07)':0,scale=1080:1350:flags=lanczos,setpts=1.14348*PTS" \
+  -c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p -vsync cfr -r 30 \
+  -movflags +faststart assets/broll45/claw-mount.mp4
+``` The remaining ranges below are candidates only —
 each regenerates in one ffmpeg line if a shot is wanted back.
 
 ```bash
@@ -26,7 +66,7 @@ ffmpeg -y -ss <in> -t <dur> -i <src>.mp4 \
 | Candidate | Source clip (Drive) | In–out | Note |
 |---|---|---|---|
 | `dunes-drone` | Tab Mount Maxx Tube Mount.mp4 | 31.95–34.75 | drone, buggy on dunes — the strongest single shot |
-| `load-test` | Tabnetic Direct.mp4 | 14.55–17.25 | **IN USE (beat 13)** — a man hanging his full weight off two mounts |
+| `load-test` | Tabnetic Direct.mp4 | 14.55–17.25 | a man hanging his full weight off two mounts — the strongest *proof* shot, held in reserve |
 | `incab-dash` | Mobnetic Stix.mp4 | 2.85–4.75 | phone on a dash mount, in-cab |
 | `facility-floor` | Tab Mount Maxx Direct.mp4 | 12.70–15.10 | facility floor, mount in foreground |
 | `cnc-sparks` | Tabnetic Discs.mp4 | 5.95–7.55 | CNC head, sparks. **Must stay inside 5.92–7.79** — there is a real cut at 7.79 that scene detection at the 0.35 threshold misses |
@@ -120,6 +160,6 @@ Ranges rejected for burned-in text:
   download was attempted and no cookies were required.
 - **Instagram / TikTok @mobarmor** — not needed, same reason.
 - **Stock** — none. This is a proof-led first-party ad.
-- **The `MP4 Product Videos` folder (32 landscape clips)** — not needed. Every
-  product shot required already exists in the Social Cuts at native 1080×1920, so
-  nothing is cropped from 1920×1080 and nothing is upscaled.
+- **The `MP4 Product Videos` folder (32 landscape clips)** — used once, on request, for
+  `claw-mount` at beat 13. Everything else comes from the Social Cuts at native
+  1080×1920. See the `claw-mount` section above for what the landscape crop costs.

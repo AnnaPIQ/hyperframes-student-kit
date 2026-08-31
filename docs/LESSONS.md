@@ -155,3 +155,17 @@ efficient over time instead of relearning the same lessons.
   the breath's peak lands at or below it). Every timing survives untouched. Verify with
   `ebur128` before and after: if only sub-−45 dB material was touched, I / LRA / true peak
   come back identical, which is the proof that speech was not altered.
+
+- **Symptom:** `ffmpeg -ss X -to Y -i src -vf "select='gt(scene,N)',showinfo"` reports no
+  scene cuts at all — even at a threshold of 0.03, and even when a hard cut is plainly
+  inside the range. A clip trimmed from that "single shot" then jumps to a different scene
+  mid-beat.
+  **Fix:** run the detection pass over the **whole file with no `-ss`**
+  (`ffmpeg -i src -map 0:v:0 -filter:v "select='gt(scene,0.15)',metadata=print:file=-" -an -f null -`)
+  and read the in/out points off that list. Seeking before the filter silently breaks it.
+  This is the second time a beat has jumped mid-shot for this reason — always verify the
+  trimmed file by eye as well, never the scene list alone.
+- **Symptom:** the only usable take is shorter than the beat it has to fill.
+  **Fix:** `setpts=<beat/take>*PTS` rather than moving the beat boundaries — a stretch up
+  to ~1.15× is imperceptible on handheld footage and costs nothing, whereas retiming the
+  beat shifts everything downstream of it.

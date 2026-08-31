@@ -126,7 +126,7 @@ top-left (72, 96) for the whole runtime, in a positioned non-`clip` div.
 | 10 | 21.733 → 23.867 | "A year later, sales are up over" | **A-ROLL** — slow push. | `a10` |
 | 11 | 23.867 → 25.233 | **"500%"** | **CARD D — the callback.** `+500%` returns faster than the opener, carrying the Mob Armor shield. | — |
 | 12 | 25.233 → 27.200 | "across four channels instead of just one." | **CARD E — 4.** All four dots lit, staggered. | — |
-| 13 | 27.200 → 29.567 | "And that's what the right plan does." | **CLIENT B-ROLL — the load test.** A man hangs his full body weight off two mounts. The line claims a plan works; the shot is the product being proved. Slow 1.05× push. | `load-test` |
+| 13 | 27.200 → 29.567 | "And that's what the right plan does." | **CLIENT B-ROLL — the claw mount.** A phone goes onto the claw clamped to a workbench, seats, and holds as the hand leaves for the impact driver. Pan baked into the clip; no `push()` on top, because this is the one shot cut from a landscape source. | `claw-mount` |
 | 14 | 29.567 → 31.650 | "This is a real brand with real numbers." | **CLIENT B-ROLL — a real customer.** Face to camera in his truck, then his hand taking the radio off the mount. The line asks for a real brand, so it shows one. Slow 1.04× push. | `radio-guy` |
 | 15 | 31.650 → 33.500 | "If you wanna see what's possible for yours," | **A-ROLL** — slow push, hands off to the CTA. | `a15` |
 | 16 | 33.500 → 36.000 | "tap the link to find out more." + 0.87 s tail | **EcomIQ end card.** Logo 33.56, headline 33.72, CTA 33.98 — all three pulled forward when the runtime was cut, so the CTA still lands after "tap the link" (33.55) and holds ~1.7 s instead of ~1.3 s. | — |
@@ -141,6 +141,14 @@ top-left (72, 96) for the whole runtime, in a positioned non-`clip` div.
 
 The ad opens on the client's mark, and Sean carries the story between the cards. He
 states each claim, the graphic evidences it, he interprets it.
+
+**Beat 13's shot is the one landscape crop in the piece.** `MOBNETIC CLAW.mp4` is
+1920×1080, so a full-bleed 9:16 window is 608 px wide — a 1.78× upscale, the thing the
+brief warned about. It survives because the shot is shallow-depth-of-field handheld, so
+the softness reads as bokeh; it is still the softest clip here, which is why it carries no
+push and why the 4:5 is re-cropped from source at 864 px (1.25×) instead of trimmed from
+the 9:16. `load-test` — the man hanging his weight off two mounts — remains the stronger
+proof shot and is one ffmpeg line away in `CREDITS.md` if this reads too soft on a phone.
 
 **B-roll went 29% → 4% → none → 12%.** The first pass used too much of it, the middle
 passes cut it back to nothing, and the final pass brought two shots back — but only under

@@ -126,6 +126,17 @@ def main():
         return 1
     out = out.replace('assets/aroll/', 'assets/aroll45/')
 
+    # The claw shot is the one clip cut from a 1920x1080 landscape source, so its crop
+    # window is aspect-specific: 608px wide for 9:16 (1.78x upscale) but 864px for 4:5
+    # (1.25x). Re-cropping from the source keeps the 4:5 markedly sharper, so it gets its
+    # own file rather than a vertical trim of the 9:16 cut. Every other b-roll clip is
+    # natively 1080x1920 and is handled by object-fit above.
+    n_claw = out.count('assets/broll/claw-mount.mp4')
+    if n_claw != 1:
+        print(f"make-4x5: expected 1 claw-mount reference, found {n_claw}")
+        return 1
+    out = out.replace('assets/broll/claw-mount.mp4', 'assets/broll45/claw-mount.mp4')
+
     # Distinct composition id so the two builds can never resolve to each other's timeline.
     out = out.replace('data-composition-id="mob-armor-social-proof"',
                       'data-composition-id="mob-armor-social-proof-4x5"')
