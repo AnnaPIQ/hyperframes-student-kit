@@ -60,14 +60,6 @@ SUBS = [
      "position: absolute; left: 50%; top: 50%; width: 736px; height: 506px;"),
     (".rule { width: 420px; height: 8px;", ".rule { width: 344px; height: 7px;"),
 
-    # ── Mob Armor chip ──────────────────────────────────────────────────────
-    ("display: flex; align-items: center; gap: 22px;\n        background: #101820; padding: 22px 38px; border-radius: 10px;",
-     "display: flex; align-items: center; gap: 18px;\n        background: #101820; padding: 18px 30px; border-radius: 9px;"),
-    (".ma-chip img { width: 300px; height: auto; display: block; }",
-     ".ma-chip img { width: 248px; height: auto; display: block; }"),
-    (".ma-chip.shield img { width: 74px; }", ".ma-chip.shield img { width: 62px; }"),
-    ("font-weight: 800; font-size: 19px; letter-spacing: .22em; text-transform: uppercase;\n        color: var(--brand-white); border-left: 2px solid #2a3644; padding-left: 22px;",
-     "font-weight: 800; font-size: 16px; letter-spacing: .22em; text-transform: uppercase;\n        color: var(--brand-white); border-left: 2px solid #2a3644; padding-left: 18px;"),
 
     # ── channel diagram (4x78 + 3x34 = 414, so the wire spans the dot row) ──
     (".dots { display: flex; align-items: center; justify-content: center; gap: 42px; height: 132px; }",
@@ -79,9 +71,6 @@ SUBS = [
     ("position: absolute; inset: -30px; border-radius: 50%; pointer-events: none; opacity: 0;",
      "position: absolute; inset: -24px; border-radius: 50%; pointer-events: none; opacity: 0;"),
     ("width: 510px; height: 4px; background: #3f6fa8;", "width: 414px; height: 4px; background: #3f6fa8;"),
-    ("position: absolute; top: 0; left: 0; width: 150px; height: 4px;",
-     "position: absolute; top: 0; left: 0; width: 122px; height: 4px;"),
-    ("{ x: 510, opacity: 1, duration: 1.30", "{ x: 414, opacity: 1, duration: 1.30"),
 
     # ── Mob Armor first screen + summary card ───────────────────────────────
     ("      #maHero { width: 620px; height: auto; display: block; }",
@@ -121,8 +110,8 @@ def main():
     # A-roll is re-cropped from the 4K master for 4:5 (1728x2160 -> 1080x1350) rather than
     # letterbox-cropped from the 9:16 cut, which would cut Sean's head or torso.
     n_aroll = out.count('assets/aroll/')
-    if n_aroll != 3:
-        print(f"make-4x5: expected 3 A-roll references, found {n_aroll}")
+    if n_aroll != 4:
+        print(f"make-4x5: expected 4 A-roll references, found {n_aroll}")
         return 1
     out = out.replace('assets/aroll/', 'assets/aroll45/')
 

@@ -122,9 +122,9 @@ top-left (72, 96) for the whole runtime, in a positioned non-`clip` div.
 | 02 | 4.280 → 14.700 | "That's what happened to Mob Armor's total sales after they started working with us. And it wasn't a lucky viral moment. It wasn't a magic ad. When they came to us, almost everything ran through Facebook." | **A-ROLL — one unbroken shot.** No cut and no re-framing anywhere in 10.42 s; the only movement is a slow 1.06× push. | `a-main` |
 | 07 | 14.700 → 17.267 | "There was one channel doing all of the work." | **CARD B — 1.** One flame dot lit, three dark, the lit one visibly overloading on a four-beat pulse. | — |
 | 08 | 17.267 → 19.400 | "We found three more that fit the brand" | **CARD C — +3.** Numeral swaps in place; three dots ignite on "three more". | — |
-| 09 | 19.400 → 21.733 | "and got them working in the right order." | Same card, **no cut** — copy recolours and a flame pulse runs the wire left→right, popping each dot in sequence. | — |
+| 09 | 19.400 → 21.733 | "and got them working in the right order." | **A-ROLL** — slow push. Was a third state of the channel card (recoloured copy, a pulse running the wire, dots popping in order); cut on request, and the line went back to Sean rather than holding the `+3` card for 4.5 s. | `a09` |
 | 10 | 21.733 → 23.867 | "A year later, sales are up over" | **A-ROLL** — slow push. | `a10` |
-| 11 | 23.867 → 25.233 | **"500%"** | **CARD D — the callback.** `+500%` returns faster than the opener, carrying the Mob Armor shield. | — |
+| 11 | 23.867 → 25.233 | **"500%"** | **CARD D — the callback.** `+500%` returns faster than the opener. Eyebrow, figure, flame rule — the Mob Armor chip that sat under it was cut on request, so the client's mark now appears only on the opening card. | — |
 | 12 | 25.233 → 27.200 | "across four channels instead of just one." | **CARD E — 4.** All four dots lit, staggered. | — |
 | 13 | 27.200 → 29.567 | "And that's what the right plan does." | **CLIENT B-ROLL — the claw mount.** A phone goes onto the claw clamped to a workbench, seats, and holds as the hand leaves for the impact driver. Pan baked into the clip; no `push()` on top, because this is the one shot cut from a landscape source. | `claw-mount` |
 | 14 | 29.567 → 31.650 | "This is a real brand with real numbers." | **CLIENT B-ROLL — a real customer.** Face to camera in his truck, then his hand taking the radio off the mount. The line asks for a real brand, so it shows one. Slow 1.04× push. | `radio-guy` |
@@ -135,8 +135,8 @@ top-left (72, 96) for the whole runtime, in a positioned non-`clip` div.
 
 | Register | Share | Job |
 |---|---|---|
-| **A-roll (Sean)** | 14.4 s · 40% | Three segments, the first a single unbroken 10.42 s take |
-| **Motion graphics** | 17.2 s · 48% | The client's mark opens the ad and recurs; five cards |
+| **A-roll (Sean)** | 16.7 s · 46% | Four segments, the first a single unbroken 10.42 s take |
+| **Motion graphics** | 14.9 s · 41% | The client's mark opens the ad; four cards |
 | **Client b-roll** | 4.4 s · 12% | Two shots, both under the closing claim |
 
 The ad opens on the client's mark, and Sean carries the story between the cards. He

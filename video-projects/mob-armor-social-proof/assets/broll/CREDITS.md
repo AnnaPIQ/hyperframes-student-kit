@@ -96,6 +96,7 @@ Source: `Mob Armor Ad.mov` (`1f2kXr2Ng227CLaBd5OH9d_EzX2d7TniS`), ProRes 3840×2
 | File | Beat | Composition in | Source in | Dur | Line |
 |---|---|---|---|---|---|
 | `a-main.mp4` | 02 | 4.280 | 4.447 | 10.67 | 4.280→14.700 in one unbroken take — no cut, no re-framing |
+| `a09.mp4` | 09 | 19.400 | 19.567 | 2.63 | "and got them working in the right order" |
 | `a10.mp4` | 10 | 21.733 | 21.900 | 2.39 | "A year later, sales are up over" |
 | `a15.mp4` | 15 | 31.650 | 31.817 | 2.10 | "If you wanna see what's possible for yours," |
 
@@ -114,10 +115,19 @@ The grade eases the electric-cyan backdrop toward the EcomIQ navy world.
 **Logos** (client-supplied white versions — not redrawn, not recoloured):
 `Logos/logo-white@2x.png` (`1yMyyTH9kNmlSJ2Il2mFY_JqEvvQcmKWZ`, 2800×481 RGBA) and
 `Logos/logo-shield-white@2x.png` (`1MgOoFVh5E1YVkfnCpgOmyWCWxY_9JKhS`, 901×1061 RGBA),
-pulled 2026-08-27. Exported at three sizes so no two `<img>` share a source (same src with
+pulled 2026-08-27. Exported at two sizes so no two `<img>` share a source (same src with
 no `data-start` trips `duplicate_media_discovery_risk`): `mobarmor-wordmark-hero.png`
-(opening card), `mobarmor-logo-white.png` and `mobarmor-shield-white.png`. The opening card runs on `#101820` and the credit chips are
-`#101820` plates, so the mark is always on black per `BRANDING_GUIDE.pdf`.
+(opening card) and `mobarmor-logo-white.png` (persistent credit). The shield export was
+dropped when the Mob Armor chip came off Card D — re-export from
+`Logos/logo-shield-white@2x.png` at 480 px if it is ever wanted back.
+
+The client's mark now appears in exactly one place: the opening card. It was originally
+plated on `#101820` to satisfy `BRANDING_GUIDE.pdf` ("white or black logo only, on the
+opposite colour"), but the card ground was changed to the EcomIQ navy on request, and the
+black chip under Card D has since been cut. The white mark therefore sits on navy
+`#06284C` — still a dark ground at high contrast, and the mark itself is the unmodified
+client file with the shield intact, but it is worth knowing it is no longer literally
+white-on-black if the client reviews it against their guide.
 
 **Voiceover:** the same `Mob Armor Ad.mov`, audio track only — prepped to `assets/vo.m4a`
 (high-pass 70 Hz, `loudnorm I=-16:TP=-1.5:LRA=11`) and laid as one continuous 38.6 s bed.

@@ -77,17 +77,6 @@
         text-transform: uppercase; color: var(--brand-white); max-width: 780px;
       }
 
-      /* Mob Armor wordmark — their guide allows white-on-black only, so it sits on a black chip */
-      .ma-chip {
-        display: flex; align-items: center; gap: 18px;
-        background: #101820; padding: 18px 30px; border-radius: 9px;
-      }
-      .ma-chip img { width: 248px; height: auto; display: block; }
-      .ma-chip.shield img { width: 62px; }
-      .ma-chip .lbl {
-        font-weight: 800; font-size: 16px; letter-spacing: .22em; text-transform: uppercase;
-        color: var(--brand-white); border-left: 2px solid #2a3644; padding-left: 18px;
-      }
 
       /* ── channel diagram ─────────────────────────────────────── */
       .dots { display: flex; align-items: center; justify-content: center; gap: 34px; height: 108px; }
@@ -110,10 +99,6 @@
       }
       .wire {
         width: 414px; height: 4px; background: #3f6fa8; position: relative; overflow: hidden;
-      }
-      .wire .pulse {
-        position: absolute; top: 0; left: 0; width: 122px; height: 4px;
-        background: linear-gradient(90deg, rgba(255,76,50,0), var(--brand-flame), rgba(255,76,50,0));
       }
 
       /* ── 00/01 · opening card ─────────────────────────────────
@@ -188,6 +173,8 @@
            re-applying the offset. -->
       <video id="aMain" class="aroll" src="assets/aroll45/a-main.mp4" muted
              data-start="4.280" data-duration="10.670" data-track-index="11"></video>
+      <video id="a09" class="aroll" src="assets/aroll45/a09.mp4" muted
+             data-start="19.400" data-duration="2.450" data-track-index="13"></video>
       <video id="a10" class="aroll" src="assets/aroll45/a10.mp4" muted
              data-start="21.733" data-duration="2.384" data-track-index="14"></video>
       <video id="a15" class="aroll" src="assets/aroll45/a15.mp4" muted
@@ -206,8 +193,8 @@
         </div>
       </div>
 
-      <!-- B/C · 14.700 → 21.733 · one continuous card, no cut -->
-      <div id="cardCh" class="card clip" data-start="14.700" data-duration="7.283" data-track-index="23">
+      <!-- B/C · 14.700 → 19.400 · one continuous card, no cut -->
+      <div id="cardCh" class="card clip" data-start="14.700" data-duration="4.950" data-track-index="23">
         <div class="eyebrow" id="chEyebrow">Where the revenue came from</div>
         <div class="stat lg" id="chStat"><span class="bloom" id="chBloom"></span>1</div>
         <div class="dots" id="chDots">
@@ -216,7 +203,7 @@
           <div class="dot" id="d2"><span class="halo"></span><span class="core"></span></div>
           <div class="dot" id="d3"><span class="halo"></span><span class="core"></span></div>
         </div>
-        <div class="wire" id="chWire"><span class="pulse" id="chPulse"></span></div>
+        <div class="wire" id="chWire"></div>
         <div class="sub" id="chSub">One channel doing all the work</div>
       </div>
 
@@ -225,10 +212,6 @@
         <div class="eyebrow">A year later</div>
         <div class="stat xl" id="statD"><span class="bloom"></span>+500%</div>
         <div class="rule" id="ruleD"></div>
-        <div class="ma-chip shield" id="chipD">
-          <img id="maShield" src="assets/mobarmor-shield-white.png" alt="Mob Armor" />
-          <span class="lbl">Mob Armor</span>
-        </div>
       </div>
 
       <!-- E · 25.233 → 27.200 · the four channels resolve -->
@@ -342,7 +325,7 @@
         push("#aMain", 4.280, 10.420, 1.06);
 
         /* ── 07/08/09 · CARD B→C — one card, no cut ─────────────────────── */
-        beat("#cardCh", 14.700, 21.733);
+        beat("#cardCh", 14.700, 19.400);
         tl.fromTo("#chStat", { scale: 1.3, opacity: 0 },
           { scale: 1, opacity: 1, duration: 0.40, ease: "expo.out" }, 14.760);
         tl.fromTo("#d0 .core", { scale: 0.4, opacity: 0 },
@@ -370,18 +353,12 @@
             { opacity: 0.85, duration: 0.36, ease: "power2.out" }, 17.690 + i * 0.260);
         });
 
-        tl.call(() => {
-          document.getElementById("chSub").textContent = "Working in the right order";
-          document.getElementById("chEyebrow").textContent = "The plan";
-        }, null, 19.560);
-        tl.fromTo("#chSub", { opacity: 0.15 }, { opacity: 1, duration: 0.30, ease: "power2.out" }, 19.560);
-        tl.fromTo("#chPulse", { x: -150, opacity: 0 },
-          { x: 414, opacity: 1, duration: 1.30, ease: "power1.inOut" }, 19.700);
-        tl.to("#chPulse", { opacity: 0, duration: 0.24, ease: "power2.in" }, 21.000);
-        [0, 1, 2, 3].forEach((i) => {
-          tl.to("#d" + i, { scale: 1.14, duration: 0.18, ease: "power2.out" }, 19.860 + i * 0.320)
-            .to("#d" + i, { scale: 1.0, duration: 0.26, ease: "power2.inOut" }, 20.040 + i * 0.320);
-        });
+        /* ── 09 · Sean, "and got them working in the right order" ────────
+           This was a third state of the channel card — recoloured copy, a pulse
+           running the wire, the dots popping in order. It came out, so the line
+           goes back to him rather than holding the +3 card for 4.5 s. */
+        beatFace("#a09", 19.400, 21.733);
+        push("#a09", 19.400, 2.333, 1.03);
 
         /* ── 10 · Sean, "A year later, sales are up over" ───────────────── */
         beatFace("#a10", 21.733, 23.867);
@@ -398,8 +375,6 @@
         tl.fromTo("#ruleD", { scaleX: 0 }, { scaleX: 1, duration: 0.32, ease: "power3.out" }, 24.100);
         tl.fromTo("#cardD .eyebrow", { y: 20, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.30, ease: "power2.out" }, 23.960);
-        tl.fromTo("#chipD", { y: 18, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.32, ease: "power2.out" }, 24.320);
 
         /* ── 12 · CARD E — four channels ────────────────────────────────── */
         beat("#cardE", 25.233, 27.200);
