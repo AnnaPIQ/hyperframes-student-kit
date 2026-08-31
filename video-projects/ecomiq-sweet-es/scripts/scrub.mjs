@@ -109,12 +109,12 @@ for (const t of times.split(',').map(Number)) {
   console.log(`  ✓ ${out}`);
 }
 if (process.argv.includes('--probe')) {
-  for (const t of [17.40, 17.55, 17.72, 17.90, 18.05]) {
+  for (const t of [37.90, 38.05, 38.20, 38.38, 38.50]) {
     await page.evaluate(([i, tt]) => { window.__timelines[i].time(tt, false); }, [compId, t]);
     const r = await page.evaluate(() => {
       const c = s => { const e = document.querySelector(s); const st = getComputedStyle(e);
         return { transform: st.transform, filter: st.filter, opacity: st.opacity }; };
-      return { cupcake: c('#w-s7'), sean: c('#w-s8') };
+      return { erica: c('#w-s15'), sean: c('#w-s16') };
     });
     console.log(`  t=${t}`, JSON.stringify(r));
   }

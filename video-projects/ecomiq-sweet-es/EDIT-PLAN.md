@@ -70,9 +70,33 @@ plays Sean to camera. "Clean" = footage with no scrim, no graphic.
 | S11 | 25.95 | 29.15 | 3.20 | **CARD D** | **hero results card** — lands on "four years" at 26.00 |
 | S12 | 29.15 | 31.70 | 2.55 | **A-roll** | "they recently had to move into a bigger facility" |
 | S13 | 31.70 | 34.90 | 3.20 | **CARD E** | **3× THE SIZE** + labelled 1:3 bars — lands on "three times" at 31.84 |
-| S14 | 34.90 | 37.70 | **2.80** | b5-erica-box | clean — Erica to camera with the cake box |
-| S15 | 37.70 | 39.70 | 2.00 | **A-roll** | "if you want us in your corner" — direct address |
+| S14 | 34.90 | 37.95 | **3.05** | b5-erica-box | clean — Erica to camera with the cake box, then **cross-dissolving** back to Sean |
+| S15 | 37.95 | 39.70 | 1.75 | **A-roll** | dissolves up over Erica — "if you want us in your corner", direct address |
 | S16 | 39.70 | 46.60 | 6.90 | **END CARD** | comes up under "tap the link and find out more", then holds 4.70s |
+
+### Transitions — pushes, plus two dissolves
+
+Every cut is a short **scale-and-slide push**: 0.22s, from +6% Y at scale 1.05
+under 6px of blur, resolving to 0. No white line, no flash, no bright element of
+any kind — the energy is movement only.
+
+The two **returns to Sean** are the exceptions; both read as too abrupt on
+review. Each is a 0.50s `sine.inOut` cross-dissolve, and in each case the
+outgoing shot's `data-duration` runs past the dissolve start so it keeps
+*playing* underneath rather than freezing or cutting to black:
+
+| Cut | Shot held | Dissolve |
+|---|---|---|
+| cupcakes → Sean | 1.85 → **2.20s** | 17.45 → 17.95 |
+| Erica → Sean | 2.80 → **3.05s** | 37.95 → 38.45 |
+
+Verified in-page both times: Sean's opacity climbs 0 → 0.50 → 1 while the
+outgoing shot holds at 1.
+
+The cupcake clip is one continuous camera pull-back with no internal cut, so it
+was re-prepped at 3.40s to give the dissolve material. Erica's clip is used to
+3.80s of its 4.23s, which stays clear of the last few frames where the cake box
+is pushed into the lens.
 
 ### Why the b-roll lengths are what they are
 Every b-roll shot was lengthened except the first and last, which were already

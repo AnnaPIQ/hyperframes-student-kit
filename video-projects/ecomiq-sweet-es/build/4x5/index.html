@@ -149,9 +149,9 @@
       <div class="shot" id="w-s13"><div class="drift" id="d-s13"><video id="v-s13" src="assets/broll/aroll-4x5.mp4" muted
         data-start="29.15" data-duration="2.67" data-track-index="9" data-media-start="29.15"></video></div></div>
       <div class="shot" id="w-s15"><div class="drift" id="d-s15"><video id="v-s15" src="assets/broll/b5-erica-box-4x5.mp4" muted
-        data-start="34.90" data-duration="2.92" data-track-index="10" data-media-start="0.00"></video></div></div>
+        data-start="34.90" data-duration="3.80" data-track-index="10" data-media-start="0.00"></video></div></div>
       <div class="shot" id="w-s16"><div class="drift" id="d-s16"><video id="v-s16" src="assets/broll/aroll-4x5.mp4" muted
-        data-start="37.70" data-duration="2.12" data-track-index="11" data-media-start="37.70"></video></div></div>
+        data-start="37.95" data-duration="1.87" data-track-index="11" data-media-start="37.95"></video></div></div>
 
       <!-- ================= FIGURE CARDS ================= -->
       <div class="cardwrap" id="wrapA">
@@ -270,14 +270,15 @@
         ['#w-s9', '#d-s9', 20.05, 3.57],
         ['#w-s11', '#d-s11', 23.50, 2.57],
         ['#w-s13', '#d-s13', 29.15, 2.67],
-        ['#w-s15', '#d-s15', 34.90, 2.92],
-        ['#w-s16', '#d-s16', 37.70, 2.12]
+        ['#w-s15', '#d-s15', 34.90, 3.80],
+        ['#w-s16', '#d-s16', 37.95, 1.87, 'fade']
       ];
       SHOTS.forEach(([wrap, drift, at, dur, mode]) => {
         if (mode === 'fade') {
-          /* One deliberate exception to the push: Sean dissolves up over the
-             cupcakes, which are still playing underneath on a lower track. */
-          tl.fromTo(wrap, { opacity: 0 }, { opacity: 1, duration: 0.55, ease: 'sine.inOut' }, at);
+          /* Two cuts dissolve rather than push, both back into Sean: out of the
+             cupcakes and out of Erica. In each case the outgoing shot keeps
+             playing underneath on a lower track. */
+          tl.fromTo(wrap, { opacity: 0 }, { opacity: 1, duration: 0.50, ease: 'sine.inOut' }, at);
         } else {
           tl.fromTo(wrap, { yPercent: 6, scale: 1.05, filter: 'blur(6px)' },
             { yPercent: 0, scale: 1, filter: 'blur(0px)', duration: 0.22, ease: 'power3.out' }, at);
