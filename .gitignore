@@ -40,3 +40,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Large intermediate A-roll masters are committed per project; raw 4K sources are not
+**/assets/aroll/*.mov
