@@ -84,8 +84,8 @@
       <video
         id="montage-b"
         class="montage"
-        data-start="20.6"
-        data-duration="2.4"
+        data-start="20.3"
+        data-duration="2.7"
         data-track-index="11"
         data-media-start="6.8"
         src="assets/montage-916.mp4"
@@ -96,10 +96,10 @@
       <video
         id="montage-c"
         class="montage"
-        data-start="54.9"
-        data-duration="16.533333"
+        data-start="54.6"
+        data-duration="16.833333"
         data-track-index="17"
-        data-media-start="11.2"
+        data-media-start="10.9"
         src="assets/montage-916.mp4"
         muted
         playsinline
@@ -114,29 +114,33 @@
       <div
         id="gfx1"
         class="clip gfx"
-        data-start="2.266667"
-        data-duration="18.333333"
+        data-start="1.966667"
+        data-duration="18.633333"
         data-track-index="6"
       >
+        <div class="bedwrap" id="gfx1-w">
         <div class="bg"></div>
         <div class="grid" id="gfx1-grid"></div>
         <div class="marks" id="gfx1-marks"><i style="left:40.27%;top:60.22%"></i><i style="left:81.96%;top:45.23%"></i><i style="left:59.84%;top:91.99%"></i><i style="left:68.09%;top:42.44%"></i><i style="left:75.84%;top:62.60%"></i><i style="left:50.09%;top:89.03%"></i><i style="left:87.20%;top:22.54%"></i><i style="left:29.16%;top:76.62%"></i><i style="left:93.17%;top:81.10%"></i><i style="left:6.70%;top:14.25%"></i><i style="left:93.35%;top:86.43%"></i><i style="left:27.81%;top:68.68%"></i></div>
         <div class="vig" id="gfx1-vig"></div>
         <div class="grain"></div>
+        </div>
       </div>
 
       <div
         id="gfx2"
         class="clip gfx"
-        data-start="23"
-        data-duration="31.9"
+        data-start="22.7"
+        data-duration="32.2"
         data-track-index="7"
       >
+        <div class="bedwrap" id="gfx2-w">
         <div class="bg"></div>
         <div class="grid" id="gfx2-grid"></div>
         <div class="marks" id="gfx2-marks"><i style="left:40.27%;top:60.22%"></i><i style="left:81.96%;top:45.23%"></i><i style="left:59.84%;top:91.99%"></i><i style="left:68.09%;top:42.44%"></i><i style="left:75.84%;top:62.60%"></i><i style="left:50.09%;top:89.03%"></i><i style="left:87.20%;top:22.54%"></i><i style="left:29.16%;top:76.62%"></i><i style="left:93.17%;top:81.10%"></i><i style="left:6.70%;top:14.25%"></i><i style="left:93.35%;top:86.43%"></i><i style="left:27.81%;top:68.68%"></i></div>
         <div class="vig" id="gfx2-vig"></div>
         <div class="grain"></div>
+        </div>
       </div>
 
       <!-- BEAT A — one person, one brand, years ago. Cut on request, then
@@ -554,8 +558,36 @@
         tl.fromTo(p + "-marks", { opacity: 0.2 },
           { opacity: 0.4, duration: half, ease: "sine.inOut", yoyo: true, repeat: 1 }, at);
       }
-      bedAmbient("#gfx1", 2.266667, 18.333333);
-      bedAmbient("#gfx2", 23.0, 31.9);
+      bedAmbient("#gfx1", 1.966667, 18.633333);
+      bedAmbient("#gfx2", 22.7, 32.2);
+
+      /* ---- montage <-> graphics cross-dissolves -------------------------------
+         Every montage/graphics boundary is a 0.30s fade, not a cut (the brief
+         originally called for hard cuts everywhere bar the end card; changed on
+         request once the edit was cut together).
+
+         The fade lives on the BED, because CSS puts .gfx (z-index 10) above the
+         montage (z-index auto). Fading the bed's wrapper reveals the picture
+         underneath - so the montage clip only has to start 0.30s early and run
+         0.30s long to be there for the exchange. Nothing animates a <video>
+         element or a `clip` element directly.
+
+           1.967-2.267  gfx1 fades UP over montage-a
+           20.300-20.600 gfx1 + beat B fade DOWN, montage-b comes through
+           22.700-23.000 gfx2 fades UP over montage-b
+           54.600-54.900 gfx2 + beat 03 fade DOWN, montage-c comes through
+
+         The card dissolve at 71.050 is untouched and still the longest at
+         0.35s, so the resolve into the end card stays the most deliberate
+         transition in the edit. */
+      const XFADE = 0.3;
+      function bedFade(sel, inAt, outAt, fade) {
+        tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: fade, ease: "none" }, inAt)
+          .to(sel, { opacity: 0, duration: fade, ease: "none" }, outAt - fade);
+        tl.set(sel, { opacity: 0 }, outAt);   // hard kill on the exit boundary
+      }
+      bedFade("#gfx1-w", 1.966667, 20.6, XFADE);
+      bedFade("#gfx2-w", 22.7, 54.9, XFADE);
 
       /* ---- beat whips ----
          Each card snaps to opaque in 0.10s (so no beat ever cross-dissolves
@@ -571,6 +603,18 @@
           .to(sel, { opacity: 0, duration: 0.14, ease: "none" }, outAt - 0.14);
         // hard kill on the exit boundary so a seek landing past it cannot leave
         // the wrapper visible (hyperframes lint: gsap_exit_missing_hard_kill)
+        tl.set(sel, { opacity: 0 }, outAt);
+      }
+      /* A beat that hands the frame back to the montage does NOT whip out - it
+         cross-dissolves on the same window as its bed. A card sliding sideways
+         under blur while footage comes up underneath reads as two transitions
+         fighting; fading both layers together reads as one. */
+      function whipInFadeOut(id, inAt, outAt, fade) {
+        const sel = id + "-w";
+        tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.10, ease: "none" }, inAt)
+          .fromTo(sel, { x: -190, filter: "blur(30px)" },
+            { x: 0, filter: "blur(0px)", duration: 0.46, ease: "power2.out" }, inAt)
+          .to(sel, { opacity: 0, duration: fade, ease: "none" }, outAt - fade);
         tl.set(sel, { opacity: 0 }, outAt);
       }
       function streak(sel, at) {
@@ -642,7 +686,7 @@
            18.02-20.23  "...the biggest brands in the world"  (no graphic -
                         the red "biggest brands" chip was cut on request, so
                         the beat holds on a complete frame through this line) */
-      whip("#gB", 13.45, 20.6);
+      whipInFadeOut("#gB", 13.45, 20.6, XFADE);   /* dissolves into montage-b */
       tl.fromTo("#gB-eb", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 13.55);
       tl.fromTo("#gB-badge", { opacity: 0, y: 34, scale: 0.94 },
         { opacity: 1, y: 0, scale: 1, duration: 0.58, ease: "back.out(1.4)" }, 14.32);
@@ -717,7 +761,7 @@
       streak("#g2-streak", 41.66);
 
       /* ---- BEAT 03 — Slack & community  (head on 48.471) ---- */
-      whip("#g3", 48.3, 54.9);
+      whipInFadeOut("#g3", 48.3, 54.9, XFADE);   /* dissolves into montage-c */
       tl.fromTo("#g3-n", { opacity: 0, x: -46 }, { opacity: 1, x: 0, duration: 0.54, ease: "expo.out" }, 48.37);
       tl.fromTo("#g3-t", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.46, ease: "power3.out" }, 48.47);
       tl.fromTo("#g3-s", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 48.57);

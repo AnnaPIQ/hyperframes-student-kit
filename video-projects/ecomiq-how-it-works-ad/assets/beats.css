@@ -30,13 +30,21 @@
    =========================================================================== */
 
 /* --- the persistent bed --------------------------------------------------- */
-/* Hard-cuts in at 31.500s, out at 54.900s. Opaque, so it replaces the montage
-   rather than compositing over it. */
+/* The persistent navy ground behind a graphics run. z-index 10 puts it ABOVE
+   the montage (which has no z-index), which is what makes the montage <-> graphics
+   cross-dissolves cheap: fading .bedwrap reveals the picture underneath, so no
+   <video> and no `clip` element ever has its opacity animated. */
 .gfx {
   position: absolute;
   inset: 0;
   z-index: 10;
   overflow: hidden;
+}
+/* non-`clip` wrapper the bed's cross-dissolve rides on (LESSONS: animate an
+   inner wrapper, never the clip element itself) */
+.gfx > .bedwrap {
+  position: absolute;
+  inset: 0;
 }
 .gfx .bg {
   position: absolute;

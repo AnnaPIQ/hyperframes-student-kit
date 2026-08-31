@@ -28,12 +28,17 @@
 #                     The BED is still the full 832 frames; the compositions
 #                     pick three windows out of it via data-media-start:
 #                       M1  ad  0.000- 2.2667s <- bed  0.0000- 2.2667s  ( 68f)
-#                       M2  ad 20.600-23.000s  <- bed  6.8000-11.2000s  ( 72f)
-#                       M3  ad 54.900-71.4333s <- bed 11.2000-27.7333s  (496f)
-#                     636 of 832 frames, in order, none reprised. Bed frames
-#                     68-203 are simply never shown - there is a hard cut at
-#                     ad 2.2667s and 18s of graphics before M2 resumes, so the
-#                     jump is invisible.
+#                       M2  ad 20.300-23.000s  <- bed  6.8000- 9.5000s  ( 81f)
+#                       M3  ad 54.600-71.4333s <- bed 10.9000-27.7333s  (505f)
+#                     654 of 832 frames, in order, none reprised. Bed frames
+#                     68-203 and 285-326 are never shown, each omission sitting
+#                     across a 0.30s cross-dissolve, so no jump can read.
+#                     Every montage window now starts 0.30s early (or runs
+#                     0.30s long) because all four montage/graphics boundaries
+#                     are fades rather than cuts - the bed dissolves over the
+#                     picture. M3's media-start is 10.900, NOT 11.200: its
+#                     longer window has to end exactly on the bed's final frame
+#                     or the tail runs past end-of-stream and freezes.
 #                     The opening window shrank from 6.800s because beat A has
 #                     to open on "just one person" (VO 2.280s) - it illustrates
 #                     that whole sentence. Sync outranks the frame budget; see

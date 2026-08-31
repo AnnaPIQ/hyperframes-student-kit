@@ -694,6 +694,47 @@ montage frames in play, because handing 2.8s back to footage had to come from
 somewhere. That was the wrong trade: it protected my own frame-accounting
 invariant at the cost of the graphic landing on the line it illustrates.
 
+## Transitions — every montage/graphics boundary is a fade (changed on request)
+
+The brief originally specified hard cuts throughout with exactly one 0.35s
+dissolve, into the end card. Once the edit was cut together that read as too
+abrupt at the montage/graphics boundaries, so all four are now **0.30s
+cross-dissolves**. Beat-to-beat handoffs inside a graphics run keep their
+motion-blurred whips — those were never cuts.
+
+| boundary | window | what exchanges |
+|---|---|---|
+| montage-a → graphics | 1.967–2.267 | gfx1 bed fades **up** over the montage |
+| graphics → montage-b | 20.300–20.600 | gfx1 bed **and beat B** fade down together |
+| montage-b → graphics | 22.700–23.000 | gfx2 bed fades **up** over the montage |
+| graphics → montage-c | 54.600–54.900 | gfx2 bed **and beat 03** fade down together |
+| montage-c → end card | 71.050–71.433 | unchanged, 0.35s — still the longest |
+
+**How it is built.** CSS puts `.gfx` at `z-index: 10` and the montage at
+`z-index: auto`, so the bed is always *above* the picture. Fading the bed's new
+non-`clip` `.bedwrap` reveals the montage underneath, which means no `<video>`
+and no `clip` element ever has its opacity animated. Each montage clip just
+starts 0.30s early (or runs 0.30s long) so it is present for the exchange.
+
+Beats B and 03 sit at the two graphics→montage boundaries, so they use
+`whipInFadeOut` rather than `whip`: a card sliding sideways under blur while
+footage comes up underneath reads as two transitions at once.
+
+**Montage windows re-derived.** The extra 0.30s at each end shifts the bed
+windows, and `montage-c`'s `data-media-start` had to move 11.200 → 10.900 so
+its longer window still ends exactly on the bed's final frame (a longer tail
+would have run 9 frames past end-of-stream and frozen):
+
+| | ad window | bed window | frames |
+|---|---|---|--:|
+| M1 | 0.000 – 2.267 | 0.0000 – 2.2667 | 68 |
+| M2 | 20.300 – 23.000 | 6.8000 – 9.5000 | 81 |
+| M3 | 54.600 – 71.433 | 10.9000 – 27.7333 | 505 |
+
+**654 of 832 frames**, in order, none reprised (bed frames 68–203 and 285–326
+are simply never shown, each across a dissolve). That is 18 frames more montage
+than the previous cut.
+
 ### Beat A covers a sentence, so it runs the length of that sentence
 
 Beat A now spans **2.267–10.100s**. It illustrates one whole sentence —

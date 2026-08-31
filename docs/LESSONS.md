@@ -260,6 +260,19 @@ efficient over time instead of relearning the same lessons.
   offset back. One-word segments come back with real per-word offsets; whole-file
   transcription does not, and `silencedetect` only finds the pauses *between* runs,
   never the words inside one. Budget ~10s per slice; it is cheaper than one render.
+- **Cross-dissolve between a graphics bed and footage by fading the BED, not the
+  video.** The bed sits above the montage in CSS (`z-index: 10` vs auto), so fading
+  the bed's inner wrapper reveals the picture underneath — the montage clip only has
+  to start early and run long enough to be there for the exchange. No `<video>`
+  opacity animation (render contract rule 9 territory) and no `clip` element animated
+  directly. Cost per boundary: extend the bed 0.30s earlier, extend the montage clip
+  0.30s at the relevant end, and re-derive `data-media-start` so the last window
+  still ends exactly on the bed's final frame — a longer tail window silently runs
+  past end-of-stream and freezes.
+- **When a beat hands the frame back to footage, fade it instead of whipping it.** A
+  card sliding sideways under blur while the picture comes up underneath reads as two
+  transitions fighting each other. Give that one beat a fade-out on the same window
+  as its bed (`whipInFadeOut`) and keep the whip only for beat-to-beat handoffs.
 - **A beat that illustrates a sentence has to run the length of that sentence.**
   Anchoring a beat by its *payoff* line is not enough. Beat A on this build carried
   one sentence — "…are just one person, and they're giving you their personal opinion
