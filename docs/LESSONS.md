@@ -260,6 +260,13 @@ efficient over time instead of relearning the same lessons.
   offset back. One-word segments come back with real per-word offsets; whole-file
   transcription does not, and `silencedetect` only finds the pauses *between* runs,
   never the words inside one. Budget ~10s per slice; it is cheaper than one render.
+- **Anchor the END of an entrance to the word, not the start of it.** Correcting a
+  late badge by firing it exactly on "Shopify Premier Partner" (14.72) fixed the sync
+  and immediately created the *other* defect: a 0.58s `back.out` entrance is still
+  rising while the word passes, and the frame before it holds a dim eyebrow alone for
+  1.2s. **Fix:** `start = word - entrance duration`, so the element lands on the
+  syllable. Doing the arithmetic per reveal also closes the dead gap for free, because
+  the entrance now overlaps the lead-in line instead of following it.
 - **Holding on a finished frame is fine; holding on a half-built one is not.** The
   complaint earlier in this build ("stays on this screen too long with nothing
   happening") was about a beat that showed only a dim eyebrow for 1.5s. Beat B holds

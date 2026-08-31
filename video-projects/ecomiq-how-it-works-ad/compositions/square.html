@@ -613,19 +613,23 @@
          slice). The badge used to fire at 13.70, a full second before he named
          it, and both chips landed ahead of their lines:
            13.46-14.72  "It's the coach arm of a"       -> eyebrow 13.55
-           14.72-16.21  "Shopify Premier Partner,"      -> badge   14.75
-           16.21-17.23  "an agency that's been around"  -> rule 16.28, chip 16.42
-           17.23-18.02  "for over 10 years"             -> chip    17.42
+           14.72-16.21  "Shopify Premier Partner,"      -> badge   14.32
+           16.21-17.23  "an agency that's been around"  -> rule 16.05, chip 16.30
+           17.23-18.02  "for over 10 years"             -> chip    17.22
+         Each start is the word MINUS the entrance duration, so the element
+         LANDS on the word instead of still rising through it. Firing the badge
+         at 14.75 (on the word) both arrived late and left 1.2s of eyebrow-only
+         screen - the dead frame this build has already been pulled up on.
            18.02-20.23  "...the biggest brands in the world"  (no graphic -
                         the red "biggest brands" chip was cut on request, so
                         the beat holds on a complete frame through this line) */
       whip("#gB", 13.45, 20.6);
       tl.fromTo("#gB-eb", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 13.55);
       tl.fromTo("#gB-badge", { opacity: 0, y: 34, scale: 0.94 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.58, ease: "back.out(1.4)" }, 14.75);
-      tl.fromTo("#gB-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.44, ease: "power2.out" }, 16.28);
-      tl.fromTo("#gB-c1", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 16.42);
-      tl.fromTo("#gB-c2", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 17.42);
+        { opacity: 1, y: 0, scale: 1, duration: 0.58, ease: "back.out(1.4)" }, 14.32);
+      tl.fromTo("#gB-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.44, ease: "power2.out" }, 16.05);
+      tl.fromTo("#gB-c1", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 16.30);
+      tl.fromTo("#gB-c2", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.38, ease: "back.out(1.6)" }, 17.22);
       streak("#gB-streak", 13.51);
 
       /* ---- BEAT C — an entire team  (grid on 25.4, career chip on 29.6) ----

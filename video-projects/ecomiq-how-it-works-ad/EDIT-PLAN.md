@@ -712,13 +712,19 @@ slice, then `whisper-cli -ml 1 -oj` on that slice alone) put every anchor
 Beat B was wrong the other way — its badge fired a full second *before* he
 named it:
 
-| Reveal | was | now | Lands on (measured) |
-|---|--:|--:|---|
-| eyebrow | 13.55 | 13.55 | "It's the coach arm of a" **13.46–14.72** |
-| Premier Partner badge | 13.70 | **14.75** | "Shopify Premier Partner," **14.72–16.21** |
-| flame rule | 14.60 | **16.28** | "an agency that's been around" **16.21–17.23** |
-| chip "Pacific IQ" | 15.20 | **16.42** | ditto |
-| chip "10+ years" | 16.80 | **17.42** | "for over 10 years" **17.23–18.02** |
+| Reveal | was | now | Entrance | Lands on (measured) |
+|---|--:|--:|--:|---|
+| eyebrow | 13.55 | 13.55 | 0.40 | "It's the coach arm of a" **13.46–14.72** |
+| Premier Partner badge | 13.70 | **14.32** | 0.58 | "**Shopify** Premier Partner," **14.72** |
+| flame rule | 14.60 | **16.05** | 0.44 | "**an agency** that's been around" **16.21** |
+| chip "Pacific IQ" | 15.20 | **16.30** | 0.38 | ditto |
+| chip "10+ years" | 16.80 | **17.22** | 0.38 | "for over **10** years" **17.52** |
+
+Each start is the word **minus the entrance duration**, so the element *lands*
+on the syllable rather than still rising through it. A first pass fired the
+badge at 14.75, exactly on the word — which was correct on paper and wrong on
+screen: the entrance was mid-flight as he said it, and the 1.2s before it held
+nothing but a dim eyebrow. Doing the subtraction closes that gap for free.
 
 "…worked with some of the biggest brands in the world" (18.02–20.23) carries no
 graphic — the red "biggest brands" chip was cut on request — so beat B holds
