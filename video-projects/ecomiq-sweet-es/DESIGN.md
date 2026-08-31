@@ -96,7 +96,7 @@ Sean stays centred in both.
 | B-roll ×3 | `Copy of Sweet E's Owner Erica - Packing cake.MP4` | 93.09s |
 | B-roll | `Copy of Sweet Es - Sprinkle on Cupcakes.MP4` | 48.34s |
 | B-roll | `Copy of Sweet Es Cookie scroll.MP4` | 13.89s |
-| B-roll | `Sean on laptop - typing low angle.MP4` | 14.56s |
+| B-roll | `Sweet E's Sean and Erica - intro.MP4` | 82.87s · 0:11–0:13 used. Replaced the laptop shot on review — it puts client and agency in one frame on the line "a brand *we've* worked with". |
 | Sweet E's logo | `sweetesbakeshop.com/cdn/shop/files/SweetE-Logo-Pink2.png` | Their own file, 1000×396, unmodified — never redrawn, never recoloured. |
 | Figures | `ecomiq.com/blogs/case-studies/how-sweet-es-bake-shop-grew-sessions-7x-in-four-years…` | |
 

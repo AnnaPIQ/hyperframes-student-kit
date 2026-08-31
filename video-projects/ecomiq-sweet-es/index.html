@@ -53,7 +53,6 @@
         margin-top: 30px; font-variant-numeric: tabular-nums; }
       .hair { width: 168px; height: 4px; background: var(--brand-flame); margin: 26px 0 24px;
         border-radius: 2px; transform-origin: 50% 50%; }
-      #cFig { font-size: 104px; white-space: nowrap; text-transform: uppercase; }
       .label { font-weight: 800; font-size: 40px; letter-spacing: .06em; text-transform: uppercase;
         color: var(--brand-white); }
 
@@ -144,9 +143,9 @@
       <div class="shot" id="w-s8"><div class="drift" id="d-s8"><video id="v-s8" src="assets/broll/aroll-9x16.mp4" muted
         data-start="17.45" data-duration="2.72" data-track-index="6" data-media-start="17.45"></video></div></div>
       <div class="shot" id="w-s9"><div class="drift" id="d-s9"><video id="v-s9" src="assets/broll/b4-box-9x16.mp4" muted
-        data-start="20.05" data-duration="2.37" data-track-index="7" data-media-start="0.00"></video></div></div>
-      <div class="shot" id="w-s11"><div class="drift" id="d-s11"><video id="v-s11" src="assets/broll/b6-sean-laptop-9x16.mp4" muted
-        data-start="23.95" data-duration="2.12" data-track-index="8" data-media-start="0.00"></video></div></div>
+        data-start="20.05" data-duration="3.57" data-track-index="7" data-media-start="0.00"></video></div></div>
+      <div class="shot" id="w-s11"><div class="drift" id="d-s11"><video id="v-s11" src="assets/broll/b7-sean-erica-9x16.mp4" muted
+        data-start="23.50" data-duration="2.57" data-track-index="8" data-media-start="0.00"></video></div></div>
       <div class="shot" id="w-s13"><div class="drift" id="d-s13"><video id="v-s13" src="assets/broll/aroll-9x16.mp4" muted
         data-start="29.15" data-duration="2.67" data-track-index="9" data-media-start="29.15"></video></div></div>
       <div class="shot" id="w-s15"><div class="drift" id="d-s15"><video id="v-s15" src="assets/broll/b5-erica-box-9x16.mp4" muted
@@ -177,17 +176,6 @@
               <div class="chip" id="bN3"><img src="assets/logos/beyond-yoga.svg" alt="Beyond Yoga" /></div>
               <div class="chip" id="bN4"><img src="assets/logos/lakers.svg" alt="Los Angeles Lakers" /></div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cardwrap" id="wrapC">
-        <div class="card clip" id="cardC" data-start="22.30" data-duration="1.65" data-track-index="22">
-          <div class="inner">
-            <div class="eyebrow" id="cEye">Made in LA</div>
-            <div class="figure" id="cFig">Midnight &rarr; 8am</div>
-            <div class="hair" id="cHair"></div>
-            <div class="label" id="cLab">Order deadline to boxed</div>
           </div>
         </div>
       </div>
@@ -265,7 +253,7 @@
       }
 
       /* Cards push in on the same beat as the footage cuts. */
-      [['#wrapA', 7.40], ['#wrapB', 12.05], ['#wrapC', 22.30], ['#wrapD', 25.95],
+      [['#wrapA', 7.40], ['#wrapB', 12.05], ['#wrapD', 25.95],
        ['#wrapE', 31.70], ['#wrapEnd', 39.70]].forEach(([sel, at]) => {
         tl.fromTo(sel, { yPercent: 6, scale: 1.04, filter: 'blur(6px)' },
           { yPercent: 0, scale: 1, filter: 'blur(0px)', duration: 0.22, ease: 'power3.out' }, at);
@@ -279,8 +267,8 @@
         ['#w-s5', '#d-s5', 10.85, 1.32],
         ['#w-s7', '#d-s7', 15.25, 2.90],
         ['#w-s8', '#d-s8', 17.45, 2.72, 'fade'],
-        ['#w-s9', '#d-s9', 20.05, 2.37],
-        ['#w-s11', '#d-s11', 23.95, 2.12],
+        ['#w-s9', '#d-s9', 20.05, 3.57],
+        ['#w-s11', '#d-s11', 23.50, 2.57],
         ['#w-s13', '#d-s13', 29.15, 2.67],
         ['#w-s15', '#d-s15', 34.90, 2.92],
         ['#w-s16', '#d-s16', 37.70, 2.12]
@@ -326,15 +314,6 @@
         tl.fromTo(sel, { opacity: 0, y: 26, scale: .94 },
           { opacity: 1, y: 0, scale: 1, duration: .42, ease: 'back.out(1.4)' }, B + off);
       });
-
-      /* ================= CARD C · midnight → 8am ================= */
-      const C = 22.30;
-      rise('#cEye', C + 0.02, 16, 0.24);
-      tl.fromTo('#cFig', { opacity: 0, y: 30, scale: .93 },
-        { opacity: 1, y: 0, scale: 1, duration: .46, ease: 'power3.out' }, C + 0.32);
-      hair('#cHair', C + 0.58);
-      rise('#cLab', C + 0.68, 16);
-      tl.to('#cFig', { scale: 1.014, duration: 1.0, ease: 'sine.inOut' }, C + 0.85);
 
       /* ================= CARD D · the hero results card ================= */
       const D = 25.95;

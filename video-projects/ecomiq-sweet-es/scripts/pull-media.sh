@@ -25,6 +25,7 @@ FILES=(
   "13dyHmvfYPQCPA84j_Kz8HsH9sf_hAUTy:broll-sprinkle.mp4:915779566"
   "1Cy939sI_20AioB9loydrqhbavZ-m_xcS:broll-cookie-scroll.mp4:265539781"
   "1zYln8LRm6OesbDwjXfiiKcpRLxs6H-E7:broll-sean-laptop.mp4:278835660"
+  "1OEhRQ9CeyZxdI_21Eqm9x-SqGXKuoCL2:broll-sean-erica.mp4:1565989652"
 )
 
 for spec in "${FILES[@]}"; do

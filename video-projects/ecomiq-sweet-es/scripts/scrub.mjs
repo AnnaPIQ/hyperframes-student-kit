@@ -150,7 +150,7 @@ if (MEASURE) {
   console.log(`\n  card E bar ratio: ${bars.bar3}/${bars.bar1} = ${bars.ratio}`
     + (bars.ratio === 3 ? '  ✓ true 3:1' : '  ✗ NOT the real ratio'));
 
-  const CHECK = [['cardA',9.6],['cardB',15.0],['cardC',23.6],['cardD',28.6],['cardE',34.2],['endCard',43.0]];
+  const CHECK = [['cardA',9.6],['cardB',15.0],['cardD',28.6],['cardE',34.2],['endCard',43.0]];
   console.log('  subtitle zone (content must stay above y=1344):');
   for (const [id, t] of CHECK) {
     await page.evaluate(([i, tt]) => { window.__timelines[i].time(tt, false); }, [compId, t]);

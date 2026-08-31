@@ -41,7 +41,7 @@ Figure onsets that drive the cards: **`10,000` 7.46** · `Nordstrom` 12.06 ·
 
 ---
 
-## Beat sheet — 17 scenes
+## Beat sheet — 16 scenes
 
 Every cut is a short **scale-and-slide push** — no white line, no flash, no
 bright element of any kind. 0.22s, from +6% Y at scale 1.05 under 6px of blur,
@@ -65,15 +65,14 @@ plays Sean to camera. "Clean" = footage with no scrim, no graphic.
 | S6 | 12.05 | 15.25 | 3.20 | **CARD B** | client roster, each name on its own spoken onset |
 | S7 | 15.25 | 17.45 | **2.20** | b3-sprinkle | clean — sprinkles falling, holding over the top of "custom work at scale", then **cross-dissolving** into Sean |
 | S8 | 17.45 | 20.05 | 2.60 | **A-roll** | dissolves up over the cupcakes — "…is something that almost nobody else can touch" |
-| S9 | 20.05 | 22.30 | **2.25** | b4-box | clean — cake boxed, under "made in LA" |
-| S10 | 22.30 | 23.95 | 1.65 | **CARD C** | **MIDNIGHT → 8AM** — lands on "hours" at 22.62 |
-| S11 | 23.95 | 25.95 | **2.00** | b6-sean-laptop | clean — EcomIQ at work, under "a brand we've worked with for…" |
-| S12 | 25.95 | 29.15 | 3.20 | **CARD D** | **hero results card** — lands on "four years" at 26.00 |
-| S13 | 29.15 | 31.70 | 2.55 | **A-roll** | "they recently had to move into a bigger facility" |
-| S14 | 31.70 | 34.90 | 3.20 | **CARD E** | **3× THE SIZE** + labelled 1:3 bars — lands on "three times" at 31.84 |
-| S15 | 34.90 | 37.70 | **2.80** | b5-erica-box | clean — Erica to camera with the cake box |
-| S16 | 37.70 | 39.70 | 2.00 | **A-roll** | "if you want us in your corner" — direct address |
-| S17 | 39.70 | 46.60 | 6.90 | **END CARD** | comes up under "tap the link and find out more", then holds 4.70s |
+| S9 | 20.05 | 23.50 | **3.45** | b4-box | clean — cake boxed, carrying all of "and this is all made in LA in hours" |
+| S10 | 23.50 | 25.95 | **2.45** | b7-sean-erica | clean — Sean and Erica greeting each other, from "Now this is a brand we've worked with…" |
+| S11 | 25.95 | 29.15 | 3.20 | **CARD D** | **hero results card** — lands on "four years" at 26.00 |
+| S12 | 29.15 | 31.70 | 2.55 | **A-roll** | "they recently had to move into a bigger facility" |
+| S13 | 31.70 | 34.90 | 3.20 | **CARD E** | **3× THE SIZE** + labelled 1:3 bars — lands on "three times" at 31.84 |
+| S14 | 34.90 | 37.70 | **2.80** | b5-erica-box | clean — Erica to camera with the cake box |
+| S15 | 37.70 | 39.70 | 2.00 | **A-roll** | "if you want us in your corner" — direct address |
+| S16 | 39.70 | 46.60 | 6.90 | **END CARD** | comes up under "tap the link and find out more", then holds 4.70s |
 
 ### Why the b-roll lengths are what they are
 Every b-roll shot was lengthened except the first and last, which were already
@@ -85,14 +84,17 @@ card's in-point is locked to the word it lands on. Each A-roll scene's
 `data-media-start` moves with its start, so lip sync is preserved by
 construction (asserted: all five A-roll scenes have `media-start == data-start`).
 
-One exception: the laptop shot at 23.95 sits between two cards, so it had no
-adjacent A-roll to borrow from. Card C gives up 0.20s of its tail (1.85 → 1.65s)
-— its content is fully on screen by ~1.1s, so it still holds for ~0.55s.
+The MIDNIGHT → 8AM card was cut on review. Its 1.65s is absorbed by the two
+footage shots either side, which now cut on the sentence break instead: the
+cake-box shot carries all of "made in LA in hours" (3.45s) and the laptop shot
+starts on "Now this is a brand we've worked with" (2.45s).
 
 The timeline is asserted contiguous: 17 elements, 0.00 → 46.60, zero gaps.
 
-Balance: b-roll 14.95s over six clips (one use each) · A-roll 10.05s over five
-appearances · figure cards 14.70s · end card 6.90s. 16 cuts.
+Balance: b-roll 17.40s over six clips (one use each) · A-roll 9.95s over five
+appearances · figure cards 13.05s · end card 6.90s. 15 cuts.
+Four figure cards remain: 10,000 → 20,000, the logo wall, the four-year results
+and 3× THE SIZE.
 
 ### Card B — the client roster, as logos
 
@@ -160,16 +162,6 @@ THE LAKERS     ← 14.70
 Set as **type**, weight 800, white — no third-party logo is redrawn or recoloured
 anywhere in the piece. Each name whips in on its own spoken onset.
 
-### CARD C · 22.30–24.15
-```
-MADE IN LA
-MIDNIGHT → 8AM
-ORDER DEADLINE TO BOXED
-```
-Both clock facts are stated in the case study (orders close at midnight; bakers in
-at 4–5am; boxed by 8am). Stated as the two real times rather than a derived total
-— see Discrepancies.
-
 ### CARD D · 25.95–29.15 — the hero
 ```
 FOUR YEARS WITH ECOMIQ
@@ -221,11 +213,13 @@ last word, all content above the subtitle zone.
 3. **I avoided asserting "8 hours."** The case study lists a total fulfilment
    window of 8 hours, but its own timeline runs midnight order → noon delivery,
    which is 12. Card C states the two verifiable clock times instead.
-4. **B-roll source #6 is mislabelled in the brief.** Listed as *"Sweet Es team
-   working 1min – 1.03"*; the file is *"Sean on laptop - typing low angle.MP4"*
-   and is only **14.56s** long, so `1:00–1:03` doesn't exist. I used 1.80–6.20s
-   of it and placed it where it earns its keep — under "a brand *we've* worked
-   with", where showing EcomIQ working is the point.
+4. **B-roll source #6 was mislabelled in the brief** — listed as *"Sweet Es team
+   working 1min – 1.03"*, but the file was *"Sean on laptop - typing low angle"*
+   and only 14.56s long, so `1:00–1:03` didn't exist. That shot has since been
+   replaced entirely by the Sean-and-Erica greeting, so the mislabelling no
+   longer affects the cut. Note the replacement's timecode was given as
+   `10:11–10:13`, which is also out of range on an 82.87s clip — read as
+   **0:11–0:13**, which is exactly the greeting.
 5. **Sweet E's has no white lockup.** Their site publishes one logo, pink, and
    only at 180px/120px in the markup; the underlying master is 1000×396 with
    alpha. I pulled the master and use it **unmodified** — it reads well on navy.
