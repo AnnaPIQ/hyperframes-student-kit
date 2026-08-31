@@ -236,6 +236,20 @@ efficient over time instead of relearning the same lessons.
   adding another beat or taking footage from a different footage window. Work the
   arithmetic before agreeing to a cut, and say what it costs.
 
+## Anchors outrank arithmetic
+
+- **A graphic's position is set by the line it illustrates. Nothing outranks that.**
+  Not a frame budget, not "use every source frame", not any invariant you set for
+  yourself earlier in the build. On this build a requested cut freed 2.8s that had to
+  come out of footage; to keep all 832 montage frames in play a beat's start was moved
+  6.8s -> 8.8s, which put the graphic roughly four seconds after the words it
+  illustrated. The viewer noticed immediately, and was right to. **When the arithmetic
+  does not close, trim the montage** — an ordinary 2s editorial trim is invisible; a
+  graphic out of sync with the voiceover is the whole point of the edit being wrong.
+- **Do not change a timing the user did not ask you to change.** When one requested
+  edit forces a second, unrequested one, say so and let them choose — do not pick the
+  option that preserves your own bookkeeping. State the cost and ask.
+
 ## Housekeeping
 
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat

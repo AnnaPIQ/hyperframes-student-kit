@@ -82,8 +82,8 @@ comes from `assets/ad.css`. See `EDIT-PLAN.md` §6 for the numbers.
 
 | Section | Window | What carries it |
 |---|---|---|
-| M1 montage | 0.000 – 8.800s | opening footage |
-| Beat A | 8.800 – 11.700s | one person's opinion, one brand, years ago |
+| M1 montage | 0.000 – 6.800s | opening footage |
+| Beat A | 6.800 – 11.700s | one person's opinion, one brand, years ago |
 | Beat B0 | 11.600 – 13.550s | "EcomIQ works differently" |
 | Beat B | 13.450 – 20.600s | Shopify Premier Partner reveal |
 | M2 montage | 20.600 – 23.000s | footage |
@@ -102,10 +102,16 @@ now with **no gaps in bed time either** — the three windows are contiguous:
 
 | | ad window | bed window | frames |
 |---|---|---|--:|
-| M1 | 0.000 – 8.800 | 0.000 – 8.800 | 264 |
-| M2 | 20.600 – 23.000 | 8.800 – 11.200 | 72 |
+| M1 | 0.000 – 6.800 | 0.000 – 6.800 | 204 |
+| M2 | 20.600 – 23.000 | 6.800 – 9.200 | 72 |
 | M3 | 54.900 – 71.433 | 11.200 – 27.733 | 496 |
-| | | | **832** |
+| | | | **772** of 832 |
+
+**2.0s of the bed (frames 276–335) is not used.** Beat A belongs at 6.8s where
+its reveals match the words, and that leaves the montage 60 frames spare. An
+ordinary 2s editorial trim costs far less than a graphic landing four seconds
+after the line it illustrates. The trim is taken mid-bed rather than off the tail
+so the montage still ends on its real closing shot.
 
 This replaced two earlier attempts, and the history matters:
 
@@ -128,15 +134,15 @@ the graphics were extended until the montage fitted at 1.0×.
 - **The payoff callback** — briefly existed at 68.633–71.433s. Cut on request;
   footage (M3) runs to the card again.
 
-**"One person's opinion" was cut and then restored.** Removing the payoff beat
-meant the montage needed its 2.8s back, and the montage has no spare frames — so
-the opening footage went from 11.6s to 8.8s and this beat returned to carry
-8.8–11.7s. It is now 2.9s rather than its original 4.9s.
+**"One person's opinion" was cut and then restored**, at its original
+**6.800–11.700s** window. It was briefly moved to 8.8s to keep all 832 montage
+frames in play; that pushed the graphic well past the words it belongs to, so it
+went back. **Frame accounting does not outrank VO sync** — trim the montage
+instead.
 
-The arithmetic is unforgiving here: picture time is 71.433s and the montage is
-fixed at 27.733s (832 frames at 1.0×), so **graphics must total exactly
-43.700s**. Any beat removed has to be paid for by another beat or by footage,
-and footage can only come from another footage window.
+The budget still binds: picture time is 71.433s, so graphics + montage must sum
+to it exactly. What gives is how much of the 832-frame bed gets used, not where a
+graphic sits relative to its line.
 
 ## Motion graphics (43.7s across seven beats)
 

@@ -58,17 +58,22 @@
            the runtime and the per-shot version made it speed up and slow down
            shot to shot, which reads as broken. The graphics carry the other
            43.7s instead. Three windows, chained with data-media-start:
-             M1  0.000- 8.800  <- bed  0.000- 8.800  (264 frames)
-             M2 20.600-23.000  <- bed  8.800-11.200  ( 72 frames)
+             M1  0.000- 6.800  <- bed  0.000- 6.800  (204 frames)
+             M2 20.600-23.000  <- bed  6.800- 9.200  ( 72 frames)
              M3 54.900-71.4333 <- bed 11.200-27.7333 (496 frames)
-           264 + 72 + 496 = 832 = every live source frame, once, in order, with
-           no gaps in bed time either. M3 now runs all the way to the card,
-           which is what removing the payoff beat required. -->
+           204 + 72 + 496 = 772 of the bed's 832 frames, at native speed and in
+           order. Bed 9.200-11.200 (60 frames, 2.0s) is simply not used: beat A
+           belongs at 6.8s where its reveals match the words, and an ordinary 2s
+           editorial trim is a far smaller price than a graphic landing four
+           seconds after the line it illustrates. The trim is taken mid-bed
+           rather than off the tail so the montage still ends on its real
+           closing shot; a hard cut across a 2s omission is invisible in a
+           montage of unrelated shots. -->
       <video
         id="montage-a"
         class="montage"
         data-start="0"
-        data-duration="8.8"
+        data-duration="6.8"
         data-track-index="30"
         data-media-start="0"
         src="assets/montage-11.mp4"
@@ -82,7 +87,7 @@
         data-start="20.6"
         data-duration="2.4"
         data-track-index="41"
-        data-media-start="8.8"
+        data-media-start="6.8"
         src="assets/montage-11.mp4"
         muted
         playsinline
@@ -102,15 +107,15 @@
 
       <!-- ================= MOTION-GRAPHICS SECTION ==============================
            Two runs, because montage window M2 sits between them:
-             run 1   8.800-20.600   beats A, B0, B
+             run 1   6.800-20.600   beats A, B0, B
              run 2  23.000-54.900   beats C, LOGO WALL, 01, 02, 03
            Each run has its own persistent bed carrying the ambient spine, so
            beat cards whip in and out over navy, never over black. -->
       <div
         id="gfx1"
         class="clip gfx"
-        data-start="8.8"
-        data-duration="11.8"
+        data-start="6.8"
+        data-duration="13.8"
         data-track-index="36"
       >
         <div class="bg"></div>
@@ -134,14 +139,18 @@
         <div class="grain"></div>
       </div>
 
-      <!-- BEAT A — one person, one brand, years ago. Cut on request, then restored
-           because removing the payoff beat meant the montage needed its 2.8s
-           back, which left this window with nothing to carry it. -->
+      <!-- BEAT A — one person, one brand, years ago. Cut on request, then
+           restored when the payoff beat was removed. Starts at 6.8s: the
+           reveals are anchored to "personal opinion" (~4.8s), "worked at
+           another DTC brand" (~8.0s) and "five to ten years ago" (9.3-10.3s).
+           It was briefly moved to 8.8s to keep all 832 montage frames in play,
+           which pushed the graphic well past the words it belongs to - the
+           frame budget is not worth more than the sync. -->
       <div
         id="gA"
         class="clip gfx beat"
-        data-start="8.8"
-        data-duration="2.9"
+        data-start="6.8"
+        data-duration="4.9"
         data-track-index="38"
       >
         <div class="wrap" id="gA-w">
@@ -552,7 +561,7 @@
         tl.fromTo(p + "-marks", { opacity: 0.2 },
           { opacity: 0.4, duration: half, ease: "sine.inOut", yoyo: true, repeat: 1 }, at);
       }
-      bedAmbient("#gfx1", 8.8, 11.8);
+      bedAmbient("#gfx1", 6.8, 13.8);
       bedAmbient("#gfx2", 23.0, 31.9);
 
       /* ---- beat whips ----
@@ -580,16 +589,19 @@
       /* ---- BEAT A — one person's opinion, one brand, years ago ----
          VO: "...they once worked at another DTC brand five to ten years ago."
          Compressed into 2.9s (it had 4.9s before it was cut). */
-      whip("#gA", 8.8, 11.7);
-      tl.fromTo("#gA-eb", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.32, ease: "power2.out" }, 8.88);
-      tl.fromTo("#gA-t", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" }, 8.98);
-      tl.fromTo("#gA-card", { opacity: 0, y: 28, scale: 0.97 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.46, ease: "back.out(1.2)" }, 9.26);
-      tl.fromTo("#gA-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power3.inOut" }, 9.84);
+      whip("#gA", 6.8, 11.7);
+      tl.fromTo("#gA-eb", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.36, ease: "power2.out" }, 6.90);
+      tl.fromTo("#gA-t", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.46, ease: "power3.out" }, 7.00);
+      tl.fromTo("#gA-card", { opacity: 0, y: 30, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.2)" }, 7.40);
+      /* the one stale reference point gets struck through, on "worked at
+         another DTC brand" (~8.0s) */
+      tl.fromTo("#gA-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: "power3.inOut" }, 8.60);
       tl.fromTo("#gA-years .yr", { opacity: 0, scaleY: 0.2 },
-        { opacity: 1, scaleY: 1, duration: 0.28, ease: "power2.out", stagger: 0.045 }, 10.22);
-      tl.fromTo("#gA-big", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 10.72);
-      streak("#gA-streak", 8.86);
+        { opacity: 1, scaleY: 1, duration: 0.3, ease: "power2.out", stagger: 0.055 }, 9.10);
+      /* "5-10 years ago." on the words (9.3-10.3s) */
+      tl.fromTo("#gA-big", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.44, ease: "expo.out" }, 9.70);
+      streak("#gA-streak", 6.86);
 
       /* ---- BEAT B0 — "works differently"  (on the line at ~12.2) ----
          Carries 11.6-13.1, which used to be a dead screen: beat B opened here

@@ -1,7 +1,7 @@
 # EcomIQ — "How It Works" VO ad · EDIT PLAN
 
-Status: **v6 — all headline type is white.** Montage still native speed,
-contiguous, all 832 frames. See §17.
+Status: **v7 — beat A back at 6.8s, on its words.** Montage native speed;
+772 of 832 frames used. See §18.
 Branch `claude/ecomiq-short-form-ad-8sw5cx`. Slug `ecomiq-how-it-works-ad`.
 
 ---
@@ -679,3 +679,45 @@ rather than words:
 Headlines set to white across v5–v6: **"differently"** (B0), **"team's"** (C),
 **"Their entire career."** (logo wall). The red *"the biggest brands in the
 world"* chip was removed outright.
+
+---
+
+## 18. v7 — beat A back to 6.8s (my error, corrected)
+
+**Reported:** "why are you changing things I don't ask you to change. this
+graphic now comes in when he isn't talking about it at all. should be around
+7 seconds."
+
+Fair, and the cause was mine. Removing the payoff beat in v5 was requested;
+**moving beat A's start from 6.8s to 8.8s was not.** I did it to keep all 832
+montage frames in play, because handing 2.8s back to footage had to come from
+somewhere. That was the wrong trade: it protected my own frame-accounting
+invariant at the cost of the graphic landing on the line it illustrates.
+
+Beat A is back at **6.800–11.700s** with its original anchors:
+
+| Reveal | At | Lands on |
+|---|--:|---|
+| eyebrow | 6.90 | — |
+| "One person's opinion" | 7.00 | after "their personal opinion" (~4.8s) |
+| brand card | 7.40 | — |
+| strike-through | 8.60 | "worked at another DTC brand" (~8.0s) |
+| year pips | 9.10 | — |
+| "5–10 years ago." | 9.70 | "five to ten years ago" (9.3–10.3s) |
+
+### What paid for it
+The montage now uses **772 of its 832 frames** — 2.0s trimmed, taken mid-bed
+(frames 276–335) so the closing shot survives. Still native speed, still in
+order, nothing reprised.
+
+| | ad window | bed window | frames |
+|---|---|---|--:|
+| M1 | 0.000 – 6.800 | 0.000 – 6.800 | 204 |
+| M2 | 20.600 – 23.000 | 6.800 – 9.200 | 72 |
+| M3 | 54.900 – 71.433 | 11.200 – 27.733 | 496 |
+
+### The rule this establishes
+**A graphic's position is set by the line it illustrates. Nothing else outranks
+that** — not frame budgets, not "use every source frame". When the arithmetic
+does not close, the montage gets trimmed, not the anchor moved. Recorded in
+`docs/LESSONS.md`.
