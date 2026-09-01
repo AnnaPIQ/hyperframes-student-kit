@@ -14,11 +14,12 @@
         --safe-bottom: 576px;   /* 1920 - 1344 : platform subtitle zone, kept clear */
         --logo-top: 96px;
         --logo-w: 300px;
-        --wordmark-w: 780px;
+        --wordmark-w: 780px;   /* Mob Armor card, on the spoken name */
+        --openmark-w: 560px;
         --pad-top: 120px;
         --endmark-w: 620px;
-        --b3-top: 428px;   /* landscape inset, centred above the subtitle line */
-        --b3-h: 608px;
+        --inset-top: 428px;   /* landscape inset, centred above the subtitle line */
+        --inset-h: 608px;
       }
       /* --------------------------------------------------------------------- */
 
@@ -43,11 +44,8 @@
       /* ===== ground ======================================================== */
       #bg { position: absolute; inset: 0; background: var(--brand-navy); z-index: 0; }
       /* Radial only — a full-screen linear gradient on dark bands under H.264. */
-      #bloom {
-        position: absolute; inset: 0; z-index: 1;
-        background: radial-gradient(78% 42% at 50% 20%,
-                    rgba(156, 212, 255, 0.13) 0%, rgba(6, 40, 76, 0) 62%);
-      }
+      #bloom { position: absolute; inset: 0; z-index: 1;
+        background: radial-gradient(78% 42% at 50% 20%, rgba(156,212,255,0.13) 0%, rgba(6,40,76,0) 62%); }
 
       /* ===== A-roll — ONE uncut take, wrapper animated (never the video) ==== */
       #aroll-wrap {
@@ -62,11 +60,8 @@
         background: var(--brand-navy);
         will-change: transform, filter;
       }
-      .card .ground {
-        position: absolute; inset: 0;
-        background: radial-gradient(78% 42% at 50% 20%,
-                    rgba(156, 212, 255, 0.13) 0%, rgba(6, 40, 76, 0) 62%);
-      }
+      .card .ground { position: absolute; inset: 0;
+        background: radial-gradient(78% 42% at 50% 20%, rgba(156,212,255,0.13) 0%, rgba(6,40,76,0) 62%); }
       /* Content centres in the space ABOVE the subtitle-safe line. Padding, not
          absolute offsets — so 4:5 re-centres from one swapped constant. */
       .card .inner {
@@ -77,42 +72,21 @@
         text-align: center;
       }
 
-      .eyebrow {
-        font-size: 30px; font-weight: 600; letter-spacing: 0.34em;
-        text-transform: uppercase; color: var(--brand-white);
-      }
-      .figure {
-        font-size: 300px; font-weight: 800; line-height: 0.86;
-        letter-spacing: -0.03em; color: var(--brand-white);
-        font-variant-numeric: tabular-nums;
-      }
-      .display {
-        font-size: 108px; font-weight: 800; line-height: 1.0;
-        letter-spacing: -0.02em; color: var(--brand-white);
-      }
-      .rule {
-        width: 320px; height: 9px; border-radius: 5px;
-        background: var(--brand-flame); transform-origin: center;
-      }
+      .eyebrow { font-size: 30px; font-weight: 600; letter-spacing: 0.34em; text-transform: uppercase; color: var(--brand-white); }
+      .figure { font-size: 300px; font-weight: 800; line-height: 0.86; letter-spacing: -0.03em; color: var(--brand-white); font-variant-numeric: tabular-nums; }
+      .display { font-size: 108px; font-weight: 800; line-height: 1.0; letter-spacing: -0.02em; color: var(--brand-white); }
+      .rule { width: 320px; height: 9px; border-radius: 5px; background: var(--brand-flame); transform-origin: center; }
       .dots { display: flex; gap: 34px; }
-      .dot {
-        width: 44px; height: 44px; border-radius: 50%;
-        background: var(--brand-blue-tint); opacity: 0.22;
-      }
+      .dot { width: 44px; height: 44px; border-radius: 50%; background: var(--brand-blue-tint); opacity: 0.22; }
       .dot.lit { background: var(--brand-flame); opacity: 1; }
-      .names {
-        font-size: 27px; font-weight: 700; letter-spacing: 0.16em;
-        text-transform: uppercase; color: var(--brand-white);
-      }
+      .names { font-size: 27px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brand-white); }
 
-      #s0 .wordmark { width: var(--wordmark-w); height: auto; display: block; }
+      #s0 .openmark { width: var(--openmark-w); height: auto; display: block; }
+      #sma .wordmark { width: var(--wordmark-w); height: auto; display: block; }
 
       /* End card follows the standing EcomIQ pattern: lockup, one line, flame pill. */
       #s9 .endmark { width: var(--endmark-w); height: auto; display: block; }
-      #s9 .endline {
-        font-size: 62px; font-weight: 800; line-height: 1.1;
-        letter-spacing: -0.02em; color: var(--brand-white);
-      }
+      #s9 .endline { font-size: 62px; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; color: var(--brand-white); }
       #s9 .cta {
         display: inline-flex; align-items: center; justify-content: center;
         font-size: 42px; font-weight: 700; letter-spacing: -0.01em;
@@ -125,22 +99,16 @@
       /* Non-timed wrappers: only the <video> inside carries timing, so the frame
          extractor and the visibility window can't disagree. They paint nothing of
          their own, so they are harmless outside their beat. */
-      .broll {
-        position: absolute; inset: 0; z-index: 5;
-        overflow: hidden; will-change: transform, filter;
-      }
+      .broll { position: absolute; inset: 0; z-index: 5; overflow: hidden; will-change: transform, filter; }
       .broll .scale { position: absolute; inset: 0; transform-origin: 50% 50%; }
       .broll video { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-      /* sp3 is a LANDSCAPE source (1920x1080). A 9:16 window off it would be
-         608px wide = a 1.78x upscale, so instead it plays whole at 1080x608 —
+      /* The product b-roll is LANDSCAPE (1920x1080). A 9:16 window off it would be
+         608px wide = a 1.78x upscale, so instead each shot plays whole at 1080x608 —
          a 0.5625x DOWNscale — inset on the navy ground, and takes no push.
          4:5 gets its own 864px crop from source (1.25x) and goes full-bleed. */
-      #b3-bg { position: absolute; inset: 0; background: var(--brand-navy); }
-      #b3-frame {
-        position: absolute; left: 0; width: 100%;
-        top: var(--b3-top); height: var(--b3-h); overflow: hidden;
-      }
+      .inset-bg { position: absolute; inset: 0; background: var(--brand-navy); }
+      .inset-frame { position: absolute; left: 0; width: 100%; top: var(--inset-top); height: var(--inset-h); overflow: hidden; }
 
       /* ===== whip streak — the motion blur that hides every cut ============ */
       #streak {
@@ -162,11 +130,8 @@
       }
 
       /* ===== texture — vignette + grain, every frame ======================= */
-      #vignette {
-        position: absolute; inset: 0; z-index: 10; pointer-events: none;
-        background: radial-gradient(72% 52% at 50% 42%,
-                    rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.62) 100%);
-      }
+      #vignette { position: absolute; inset: 0; z-index: 10; pointer-events: none;
+        background: radial-gradient(72% 52% at 50% 42%, rgba(0,0,0,0) 42%, rgba(0,0,0,0.62) 100%); }
       #grain {
         position: absolute; inset: -300px; z-index: 11; pointer-events: none;
         opacity: 0.17; mix-blend-mode: overlay;
@@ -184,14 +149,8 @@
          data-width, data-height, data-duration. Every timed visible child is
          class="clip" with data-start / data-duration / data-track-index — except
          <video>/<audio>, which take an id and the timing attrs but NEVER "clip". -->
-    <div
-      id="root"
-      data-composition-id="mob-armor-channels-ad"
-      data-start="0"
-      data-duration="38"
-      data-width="1080"
-      data-height="1920"
-    >
+    <div id="root" data-composition-id="mob-armor-channels-ad"
+         data-start="0" data-duration="38" data-width="1080" data-height="1920">
       <div id="bg"    class="clip" data-start="0" data-duration="38" data-track-index="0"></div>
       <div id="bloom" class="clip" data-start="0" data-duration="38" data-track-index="1"></div>
 
@@ -200,30 +159,28 @@
            Wrapper is a plain div (not a clip) so the video is never re-positioned
            by the engine and never has its own w/h/top/left animated. -->
       <div id="aroll-wrap">
-        <video
-          id="aroll"
-          data-start="0"
-          data-duration="37.0667"
-          data-track-index="2"
-          src="assets/aroll/aroll-9x16.mp4"
-          muted
-          playsinline
-        ></video>
+        <video id="aroll" data-start="0" data-duration="37.0667" data-track-index="2"
+               src="assets/aroll/aroll-9x16.mp4" muted playsinline></video>
       </div>
 
       <!-- VO. PCM so no AAC priming delay reopens the sync we measured to the
            sample; the 77.958 ms container offset is already baked into the file. -->
-      <audio
-        id="vo"
-        data-start="0"
-        data-duration="37.0667"
-        data-track-index="3"
-        src="assets/aroll/vo.wav"
-        data-volume="1"
-      ></audio>
+      <audio id="vo" data-start="0" data-duration="37.0667" data-track-index="3"
+             src="assets/aroll/vo.wav" data-volume="1"></audio>
 
-      <!-- S0 — Mob Armor wordmark, first screen, holds alone to 1.7667 -->
-      <div id="s0" class="card clip" data-start="0" data-duration="1.7667" data-track-index="4">
+      <!-- S0 — EcomIQ bumper. It covers the top of the take (he is looking down,
+           settling, until ~0.70) and stamps whose ad this is; the A-roll lands at
+           0.9333, half a second before the first word. -->
+      <div id="s0" class="card clip" data-start="0" data-duration="0.9333" data-track-index="4">
+        <div class="ground"></div>
+        <div class="inner">
+          <img class="openmark" src="assets/ecomiq-logo-white-open.svg" alt="EcomIQ" />
+        </div>
+      </div>
+
+      <!-- SMA — the client's wordmark, landing on the spoken name.
+           "Mob Armor" is said at 3.318-3.578; the card holds to the next phrase. -->
+      <div id="sma" class="card clip" data-start="3.3333" data-duration="1.8667" data-track-index="16">
         <div class="ground"></div>
         <div class="inner">
           <img class="wordmark" src="assets/mobarmor-wordmark-white.png" alt="Mob Armor" />
@@ -236,10 +193,7 @@
         <div class="inner">
           <div class="eyebrow" id="g1-eyebrow">Paid channels</div>
           <div class="figure" id="g1-figure" style="margin-top: 26px">1</div>
-          <div class="dots" id="g1-dots" style="margin-top: 44px">
-            <div class="dot lit"></div><div class="dot"></div>
-            <div class="dot"></div><div class="dot"></div>
-          </div>
+          <div class="dots" id="g1-dots" style="margin-top: 44px"><div class="dot lit"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
           <div class="names" id="g1-names" style="margin-top: 52px">Facebook ads</div>
         </div>
       </div>
@@ -254,19 +208,21 @@
         </div>
       </div>
 
-      <!-- G3 — lands on "four paid channels" (14.0333) -->
-      <div id="g3" class="card clip" data-start="14.0333" data-duration="2.3334" data-track-index="7">
-        <div class="ground"></div>
-        <div class="inner">
-          <div class="eyebrow" id="g3-eyebrow">Paid channels</div>
-          <div class="figure" id="g3-figure" style="margin-top: 26px">1 &rarr; 4</div>
-          <div class="dots" id="g3-dots" style="margin-top: 44px">
-            <div class="dot lit"></div><div class="dot lit"></div>
-            <div class="dot lit"></div><div class="dot lit"></div>
-          </div>
-          <div class="names" id="g3-names" style="margin-top: 52px">
-            Meta &middot; Google &middot; TikTok &middot; TikTok Shop
-          </div>
+      <!-- Over "four paid channels instead of one" (14.0333 - 16.3667): two shots of
+           the client's own product in use, in place of the former "1 -> 4" card. -->
+      <div id="b4" class="broll">
+        <div id="b4-bg" class="inset-bg clip" data-start="14.0333" data-duration="1.3" data-track-index="7"></div>
+        <div class="inset-frame">
+          <video id="b4-vid" data-start="14.0333" data-duration="1.3" data-track-index="17"
+                 src="assets/broll/sp3-claw-9x16.mp4" muted playsinline></video>
+        </div>
+      </div>
+
+      <div id="b5" class="broll">
+        <div id="b5-bg" class="inset-bg clip" data-start="15.3333" data-duration="1.0334" data-track-index="18"></div>
+        <div class="inset-frame">
+          <video id="b5-vid" data-start="15.3333" data-duration="1.0334" data-track-index="19"
+                 src="assets/broll/sp4-slim-dash-9x16.mp4" muted playsinline></video>
         </div>
       </div>
 
@@ -289,10 +245,10 @@
       </div>
 
       <div id="b3" class="broll">
-        <div id="b3-bg" class="clip" data-start="28.9" data-duration="1" data-track-index="10"></div>
-        <div id="b3-frame">
+        <div id="b3-bg" class="inset-bg clip" data-start="28.9" data-duration="1" data-track-index="10"></div>
+        <div class="inset-frame">
           <video id="b3-vid" data-start="28.9" data-duration="1" data-track-index="15"
-                 src="assets/broll/sp3-claw-9x16.mp4" muted playsinline></video>
+                 src="assets/broll/sp5-slim-screen-9x16.mp4" muted playsinline></video>
         </div>
       </div>
 
@@ -308,7 +264,7 @@
 
       <div id="streak" class="clip" data-start="0" data-duration="38" data-track-index="11"></div>
 
-      <img id="logo-pin" class="clip" data-start="1.9" data-duration="30.4667" data-track-index="12"
+      <img id="logo-pin" class="clip" data-start="1" data-duration="31.3667" data-track-index="12"
            src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
 
       <div id="vignette" class="clip" data-start="0" data-duration="38" data-track-index="13"></div>
@@ -353,18 +309,27 @@
         tl.to('#grain', { backgroundPosition: '300px 300px', duration: 1,
                           ease: 'steps(10)', repeat: Math.max(0, Math.floor(DUR / 1) - 1) }, 0);
 
-        /* ---- S0 · Mob Armor wordmark, first screen ------------------------ */
-        tl.fromTo('#s0 .wordmark',
-          { opacity: 0, scale: 0.9, filter: 'blur(14px)' },
-          { opacity: 1, scale: 1, filter: 'blur(0px)', duration: f(0.6667), ease: 'expo.out' }, f(0.1667));
-        tl.to('#s0 .wordmark', { scale: 1.03, duration: f(1.1), ease: 'sine.inOut' }, f(0.6667));
-        whipOut('#s0', 1.7667);
-        streak(1.7667);
+        /* ---- S0 · EcomIQ bumper ------------------------------------------- */
+        tl.fromTo('#s0 .openmark',
+          { opacity: 0, scale: 0.92, filter: 'blur(12px)' },
+          { opacity: 1, scale: 1, filter: 'blur(0px)', duration: f(0.4333), ease: 'expo.out' }, f(0.0667));
+        whipOut('#s0', 0.9333);
+        streak(0.9333);
 
-        /* ---- pinned EcomIQ logo ------------------------------------------ */
+        /* ---- pinned EcomIQ logo — the bumper mark takes its corner --------- */
         tl.fromTo('#logo-pin',
           { opacity: 0, y: -22, filter: 'blur(8px)' },
-          { opacity: 1, y: 0, filter: 'blur(0px)', duration: f(0.5333), ease: 'power3.out' }, f(1.9333));
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: f(0.5333), ease: 'power3.out' }, f(1.0333));
+
+        /* ---- SMA · Mob Armor wordmark, on the spoken name (3.318) ---------- */
+        whipIn('#sma', 3.3333);
+        streak(3.3333);
+        tl.fromTo('#sma .wordmark',
+          { opacity: 0, scale: 0.93, filter: 'blur(12px)' },
+          { opacity: 1, scale: 1, filter: 'blur(0px)', duration: f(0.5333), ease: 'expo.out' }, f(3.4667));
+        tl.to('#sma .wordmark', { scale: 1.025, duration: f(1.0667), ease: 'sine.inOut' }, f(4.0));
+        whipOut('#sma', 5.2);
+        streak(5.2);
 
         /* ---- G1 · ONE CHANNEL — on "one channel" -------------------------- */
         whipIn('#g1', 7.1667);
@@ -393,19 +358,13 @@
         whipOut('#g2', 14.0333);
         streak(14.0333);
 
-        /* ---- G3 · 1 -> 4 — on "four paid channels" ------------------------ */
-        whipIn('#g3', 14.0333);
-        tl.fromTo('#g3-eyebrow', { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: f(0.2667), ease: 'power2.out' }, f(14.1667));
-        tl.fromTo('#g3-figure', { opacity: 0, scale: 0.84 },
-          { opacity: 1, scale: 1, duration: f(0.4667), ease: 'back.out(1.35)' }, f(14.2333));
-        // Four dots light in sequence as "four paid channels" is spoken.
-        tl.fromTo('#g3-dots .dot', { opacity: 0.22, scale: 0.5, backgroundColor: '#9CD4FF' },
-          { opacity: 1, scale: 1, backgroundColor: '#FF4C32',
-            duration: f(0.2667), ease: 'back.out(2)', stagger: 0.1 }, f(14.5333));
-        tl.fromTo('#g3-names', { opacity: 0, y: 18 },
-          { opacity: 1, y: 0, duration: f(0.3333), ease: 'power2.out' }, f(15.0333));
-        whipOut('#g3', 16.3667);
+        /* ---- Product b-roll over "four paid channels instead of one" ------- */
+        // No push on either: they are landscape sources, inset rather than cropped.
+        whipIn('#b4', 14.0333);
+        whipOut('#b4', 15.3333);
+        whipIn('#b5', 15.3333);
+        streak(15.3333);
+        whipOut('#b5', 16.3667);
         streak(16.3667);
 
         /* ---- Social-proof b-roll run — 24.9 -> 29.9 ----------------------- */

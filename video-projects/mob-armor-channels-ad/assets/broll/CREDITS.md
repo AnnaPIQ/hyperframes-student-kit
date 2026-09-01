@@ -46,12 +46,13 @@ in a pause between spoken words**, never mid-word.
 - Native 2160×3840 / 2160×2700 → **0.5× downscale**. No text.
 
 ### sp3 · Mobnetic Claw — `sp3-claw-9x16.mp4` / `-4x5.mp4`
+*(now placed over "four paid channels", in place of the former "1 → 4" card)*
 - **Source:** Drive `1mTbhx6wkCHZmaG8sQtiUKkntSdIPboTM` — "MOBNETIC CLAW.mp4", 66.7 MB,
   1920×1080, 23.976 fps, 52.67 s. Client "MP4 Product Videos" folder
   (`1_SQ5A_MTjNzzzBp5wByRBDWEC0uFpvot`). Pulled 2026-09-01.
 - **Shot boundaries (full-file scene detect):** cuts at 21.81 / 23.94 → the shot spans
-  **21.81 – 23.94**. **In / out used: 22.00 → 23.00**, safely inside it. No text.
-- **Placed:** 28.900 → 29.900, on "not theory."
+  **21.81 – 23.94**. **In / out used: 21.90 → 23.20**, safely inside it. No text.
+- **Placed:** 14.033 → 15.333, over "four paid **channels**"
 - **This is the one landscape source, and it is handled per the standing rule rather
   than cropped to fit:** a 9:16 window off 1080p would be 608 px wide — a 1.78×
   upscale — so 9:16 plays the *whole frame* at 1080×608 (a **0.5625× downscale**)
@@ -63,6 +64,23 @@ in a pause between spoken words**, never mid-word.
 `tabnetic-discs.mp4` 6.00–7.70 (laser cutting, sparks) was the single insert in the
 previous cut, at 27.4–29.1 on "Real brands,". Replaced by the run above, which occupies
 that span. It remains vetted and usable — see the entry below.
+
+### sp4 · Mobnetic Slim, dash mount — `sp4-slim-dash-9x16.mp4` / `-4x5.mp4`
+### sp5 · Mobnetic Slim, windscreen — `sp5-slim-screen-9x16.mp4` / `-4x5.mp4`
+- **Source (both):** Drive `1qRd8uYasQBRbbqo6NJRkpG33NnvgUN1i` — "MOBNETIC SLIM.mp4",
+  93.2 MB, 1920×1080, 24 fps, 73.37 s. Client "MP4 Product Videos" folder
+  (`1_SQ5A_MTjNzzzBp5wByRBDWEC0uFpvot`). Pulled 2026-09-01.
+- **The requested 38–41 s window crosses a cut.** Full-file scene detect puts cuts at
+  37.79 / 39.88 / 43.04, so 38–41 spans two different shots — taken whole it would have
+  jumped mid-beat. Split into two clips instead, each cut safely inside its own shot,
+  with a blur-whip between them:
+  | clip | shot boundaries | in / out used | placed |
+  |---|---|---|---|
+  | sp4 · dash mount | 37.79 – 39.88 | **38.00 → 39.85** | 15.333 → 16.367, over "**instead of one**" |
+  | sp5 · windscreen | 39.88 – 43.04 | **39.95 → 41.00** | 28.900 → 29.900, on "not **theory**." |
+- No burned-in text in either. Both landscape, so both take the same treatment as sp3:
+  9:16 insets the whole frame at 1080×608 (0.5625× down) on navy with no push; 4:5 takes
+  its own 864×1080 window at x=528 scaled to 1080×1350 (1.25×), full-bleed.
 
 ---
 

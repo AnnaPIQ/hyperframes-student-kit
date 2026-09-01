@@ -67,8 +67,10 @@ absolute positioning — so the same markup re-centres correctly at both sizes a
   place warmth appears without being applied.
 - Never recolour, stretch, split or crowd either logo. The Mob Armor lockup is used
   white, intact, side-by-side, on plain navy (its brand guide allows white or black
-  only). It appears **only as the opening screen** — the end card is EcomIQ's
-  standing one (lockup, one line, flame pill) and carries no client mark.
+  only). It appears **only on the spoken name** at 3.333 — the piece is audio-led,
+  so the client's mark lands when the client is named, not as a title card. The
+  opener is EcomIQ's own bumper and the end card is EcomIQ's standing one (lockup,
+  one line, flame pill); neither carries a client mark.
 - No graphic on a beat with no spoken figure. No figure that isn't in the case study.
 - No content below the subtitle-safe line — not even a rule or a dot.
 - No hard cut on the A-roll: it is one uncut take running the whole piece.

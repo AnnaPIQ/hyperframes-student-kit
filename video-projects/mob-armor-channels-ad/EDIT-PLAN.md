@@ -84,17 +84,19 @@ is no A-roll cut anywhere in the piece — and keeps lip-sync locked by construc
 
 | # | Layer | In | Out | Lands on | Content |
 |---|---|---|---|---|---|
-| S0 | Mob Armor card | 0.000 | 1.750 | — | White wordmark alone on navy, centred. Holds 1.75 s. |
+| S0 | EcomIQ bumper | 0.000 | 0.933 | — | EcomIQ lockup on navy. Covers the top of the take — he is looking down, settling, until ~0.70 — and stamps whose ad this is. |
 | — | A-roll revealed | 1.750 | — | mid "One of the brands…" | blur-whip out of S0 |
-| L | EcomIQ logo | 1.900 | 38.000 | — | white lockup, pinned top-left, rest of runtime |
+| L | EcomIQ logo | 1.033 | 32.367 | — | the bumper mark takes its corner; pinned top-left until the end card |
+| SMA | **Mob Armor card** | 3.333 | 5.200 | "**Mob Armor**" (3.318–3.578) | the client's white wordmark, landing on the spoken name |
 | G1 | **ONE CHANNEL** | 7.178 | 9.478 | "**one** channel" (7.178) | eyebrow `PAID CHANNELS`; big `1`; 4 dots — 1 flame-lit, 3 dark; sub `FACEBOOK ADS` |
 | — | A-roll | 9.478 | 12.538 | "Now, 12 months later, their total sales are up over" | |
 | G2 | **+500%** | 12.538 | 14.038 | "**500**" (12.538) | eyebrow `TOTAL SALES · 12 MONTHS`; `+500%`; flame rule |
-| G3 | **1 → 4** | 14.038 | 16.378 | "**four** paid channels" (14.038) | `1 → 4 PAID CHANNELS`; 4 dots lighting; Meta · Google · TikTok · TikTok Shop |
+| B4 | b-roll — Mobnetic Claw | 14.033 | 15.333 | "**four** paid channels" (14.038) | client's product in use, in place of the former "1 → 4" card |
+| B5 | b-roll — Slim, dash | 15.333 | 16.367 | "instead of **one**" | client's product in use |
 | — | A-roll | 16.378 | 24.900 | "And we didn't do that with a magic tactic…" | longest held A-roll stretch |
 | B1 | b-roll — Sweet E's | 24.900 | 27.000 | "And that's what EcomIQ **does**" | real portfolio brand, in store |
 | B2 | b-roll — Dryft Sleep | 27.000 | 28.900 | pause + "**Real brands,** real numbers," | real portfolio brand, on shelf |
-| B3 | b-roll — Mobnetic Claw | 28.900 | 29.900 | "not **theory**." | back to the client's own product |
+| B3 | b-roll — Slim, windscreen | 28.900 | 29.900 | "not **theory**." | back to the client's own product |
 | — | A-roll | 29.900 | 32.358 | "Want to see if we can do the same for you?" | |
 | S9 | Outro / CTA | 32.358 | 38.000 | "**Tap** the link" (32.358) | Standing EcomIQ end card: lockup, "See if it will work for you.", flame `Learn More` pill. 5.64 s hold. The pinned top-left lockup fades at 32.2 and hands off to this one. |
 
@@ -117,8 +119,11 @@ Aug 2025 → Aug 2026; absolute revenue withheld):
 | `1` paid channel · `FACEBOOK ADS` | 7.178 | "almost all of the brand revenue was coming from a single paid channel… growth was heavily reliant on **Facebook ads**" |
 | `TOTAL SALES · 12 MONTHS` | 10.038 | "TIMEFRAME **12 months**" |
 | `+500%` | 12.538 | "TOTAL SALES YOY **+500%**"; "grew total sales by **over 500% year on year**" |
-| `1 → 4` paid channels | 14.038 | "PAID CHANNELS **1 to 4**"; "Grew from one primary paid channel to four" |
-| `Meta · Google · TikTok · TikTok Shop` | 14.898 | "scaling of multiple marketing channels including **Google, TikTok, TikTok Shop, and Meta**" |
+
+> The "1 → 4" card and the four channel names were **cut** at the client's request and
+> replaced with product b-roll. Both figures remain spoken and both were verified
+> ("PAID CHANNELS 1 to 4"; "including Google, TikTok, TikTok Shop, and Meta") — they
+> simply no longer carry an on-screen graphic.
 
 ---
 
