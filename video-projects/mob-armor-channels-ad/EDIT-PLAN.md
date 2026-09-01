@@ -94,7 +94,7 @@ is no A-roll cut anywhere in the piece — and keeps lip-sync locked by construc
 | — | A-roll | 16.378 | 27.398 | "And we didn't do that with a magic tactic…" → "…that's what EcomIQ does." | longest held A-roll stretch |
 | B1 | b-roll — sparks | 27.398 | 29.100 | "**Real brands,**" (27.398) | Mob Armor laser-cutting, real manufacturing |
 | — | A-roll | 29.100 | 32.358 | "not theory. Want to see if we can do the same for you?" | |
-| S9 | Outro / CTA | 32.358 | 38.000 | "**Tap** the link" (32.358) | EcomIQ lockup, flame rule, `TAP THE LINK`. 5.64 s hold. |
+| S9 | Outro / CTA | 32.358 | 38.000 | "**Tap** the link" (32.358) | Standing EcomIQ end card: lockup, "See if it will work for you.", flame `Learn More` pill. 5.64 s hold. The pinned top-left lockup fades at 32.2 and hands off to this one. |
 
 G2 → G3 is a single card container with an internal blur-whip at 14.038 (they abut;
 a 0.09 s gap between two separate cards would not read).
@@ -137,15 +137,22 @@ artefacts on the mouth).
 
 ## 7. Audio
 
-- Pre-roll breath at 0.48–0.68 s (media) — peak −46.7 dBFS, RMS −57.0, against a
-  −76 dB room-tone floor. **Ducked, not trimmed** (the A-roll is time-locked to the
-  audio; trimming the head would shift every beat): ramped `volume` expression,
-  `eval=frame`, trapezoid over 0.30–0.95 s, −14 dB in the middle.
-- **ebur128 verification** — only sub-−45 dB material moved:
-  | | I | LRA |
-  |---|---|---|
-  | before duck | −33.6 LUFS | 3.8 LU |
-  | after duck | −33.7 LUFS | 3.9 LU |
+- Setup noise runs across the whole head, not just one breath — peaks at 0.40
+  (−42.5), 0.90 (−43.4) and 1.10 (−33.6) dBFS. The head is **silenced, not trimmed**
+  (the A-roll is time-locked to the audio; trimming would shift every beat):
+  ramped `volume`, `eval=frame`, full mute to 1.20 s then a 120 ms ramp to unity at
+  1.32 s. Measured speech onset is 1.36 s, so no phoneme is touched.
+- **ebur128 verification** — only sub-−45 dB material moved; I/LRA/true-peak land
+  on target either way:
+  | | I | LRA | TP |
+  |---|---|---|---|
+  | source | −33.6 LUFS | 3.8 LU | −15.1 dBFS |
+  | shipped VO | −17.0 LUFS | 3.5 LU | −1.5 dBFS |
+- **The composition VO is PCM built straight from the source** — no AAC anywhere in
+  the chain. An earlier build went source → AAC → WAV and the decode did not strip
+  the encoder's 1024-sample priming, putting the whole VO 21.33 ms late. Caught by
+  cross-correlating against the raw source audio: the shipped file now sits at
+  exactly **+3742 samples, zero error**.
 - Delivery loudness matched to the previous ad in this series (measured off the prior
   render: I −17.3 LUFS, TP −1.4 dBFS): two-pass `loudnorm` → **I −17.0 LUFS,
   TP −1.3 dBFS, LRA 3.6**.

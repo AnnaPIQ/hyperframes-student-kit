@@ -16,6 +16,7 @@
         --logo-w: 300px;
         --wordmark-w: 780px;
         --pad-top: 120px;
+        --endmark-w: 620px;
       }
       /* --------------------------------------------------------------------- */
 
@@ -103,10 +104,19 @@
       }
 
       #s0 .wordmark { width: var(--wordmark-w); height: auto; display: block; }
-      #s9 .credit-mark { width: 430px; height: auto; display: block; }
-      #s9 .credit-label {
-        font-size: 24px; font-weight: 600; letter-spacing: 0.34em;
-        text-transform: uppercase; color: var(--brand-white);
+
+      /* End card follows the standing EcomIQ pattern: lockup, one line, flame pill. */
+      #s9 .endmark { width: var(--endmark-w); height: auto; display: block; }
+      #s9 .endline {
+        font-size: 62px; font-weight: 800; line-height: 1.1;
+        letter-spacing: -0.02em; color: var(--brand-white);
+      }
+      #s9 .cta {
+        display: inline-flex; align-items: center; justify-content: center;
+        font-size: 42px; font-weight: 700; letter-spacing: -0.01em;
+        color: var(--brand-white); background: var(--brand-flame);
+        padding: 28px 62px; border-radius: 999px;
+        box-shadow: 0 18px 64px -10px rgba(255, 76, 50, 0.75);
       }
 
       /* ===== b-roll ======================================================== */
@@ -268,18 +278,16 @@
       <div id="s9" class="card clip" data-start="32.3667" data-duration="5.6333" data-track-index="10">
         <div class="ground"></div>
         <div class="inner">
-          <div class="display" id="s9-display">Tap the link</div>
-          <div class="rule" id="s9-rule" style="margin-top: 46px"></div>
-          <div class="credit-label" id="s9-label" style="margin-top: 96px">Client</div>
-          <img class="credit-mark" id="s9-mark" style="margin-top: 30px"
-               src="assets/mobarmor-wordmark-white-credit.png" alt="Mob Armor" />
+          <img class="endmark" id="s9-mark" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+          <div class="endline" id="s9-line" style="margin-top: 44px">See if it will work for you.</div>
+          <div class="cta" id="s9-cta" style="margin-top: 68px">Learn More</div>
         </div>
       </div>
 
       <div id="streak" class="clip" data-start="0" data-duration="38" data-track-index="11"></div>
 
-      <img id="logo-pin" class="clip" data-start="1.9" data-duration="36.1" data-track-index="12"
-           src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+      <img id="logo-pin" class="clip" data-start="1.9" data-duration="30.4667" data-track-index="12"
+           src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
 
       <div id="vignette" class="clip" data-start="0" data-duration="38" data-track-index="13"></div>
       <div id="grain"    class="clip" data-start="0" data-duration="38" data-track-index="14"></div>
@@ -389,17 +397,20 @@
         /* ---- S9 · outro — on "Tap", holds 5.63s --------------------------- */
         whipIn('#s9', 32.3667);
         streak(32.3667);
-        tl.fromTo('#s9-display', { opacity: 0, scale: 0.88, y: 24 },
-          { opacity: 1, scale: 1, y: 0, duration: f(0.5), ease: 'back.out(1.2)' }, f(32.5));
-        tl.fromTo('#s9-rule', { scaleX: 0 },
-          { scaleX: 1, duration: f(0.4), ease: 'expo.out' }, f(32.8));
-        // Callback: the mark the piece opened on returns to credit the client.
-        tl.fromTo('#s9-label', { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: f(0.3667), ease: 'power2.out' }, f(33.2));
-        tl.fromTo('#s9-mark', { opacity: 0, y: 24, filter: 'blur(10px)' },
-          { opacity: 1, y: 0, filter: 'blur(0px)', duration: f(0.6), ease: 'expo.out' }, f(33.4));
+        tl.fromTo('#s9-mark', { opacity: 0, scale: 0.9, filter: 'blur(12px)' },
+          { opacity: 1, scale: 1, filter: 'blur(0px)', duration: f(0.6), ease: 'expo.out' }, f(32.5));
+        tl.fromTo('#s9-line', { opacity: 0, y: 26 },
+          { opacity: 1, y: 0, duration: f(0.4667), ease: 'power3.out' }, f(32.9));
+        tl.fromTo('#s9-cta', { opacity: 0, scale: 0.86 },
+          { opacity: 1, scale: 1, duration: f(0.4333), ease: 'back.out(1.7)' }, f(33.3));
+        // The pill breathes so the hold never goes fully static.
+        tl.to('#s9-cta', { scale: 1.04, duration: f(0.7333), ease: 'sine.inOut',
+                           yoyo: true, repeat: 3 }, f(34.0));
+        // The pinned lockup hands off to the end card's own, rather than sitting
+        // on top of it; it clips off at 32.3667 so this only has to cover the whip.
+        tl.to('#logo-pin', { opacity: 0, duration: f(0.1667), ease: 'power2.in' }, f(32.2));
         // Final scene is the one place an exit is allowed.
-        tl.to(['#s9-display', '#s9-rule', '#s9-label', '#s9-mark', '#logo-pin'],
+        tl.to(['#s9-mark', '#s9-line', '#s9-cta'],
           { opacity: 0, duration: f(0.5333), ease: 'power2.in' }, f(37.4));
 
         // Law #11 — the timeline must fill its slot or the tail flashes black.

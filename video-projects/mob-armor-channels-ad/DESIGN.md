@@ -8,7 +8,7 @@ EcomIQ's ad, crediting the client. The client's mark opens it; EcomIQ signs it.
 |---|---|---|
 | `#06284C` | `--brand-navy` | the ground. ~85% of every frame. |
 | `#FFFFFF` | `--brand-white` | **all copy, without exception.** Also the two logos. |
-| `#FF4C32` | `--brand-flame` | *an active paid channel.* One lit dot at 7.2s, four at 14.0s, the rule under `+500%`, the outro rule. Nothing else. |
+| `#FF4C32` | `--brand-flame` | *an active paid channel*, and the CTA. One lit dot at 7.2s, four at 14.0s, the rule under `+500%`, the `Learn More` pill. Nothing else. |
 | `#9CD4FF` | `--brand-blue-tint` | **graphic accent only — never type.** The unlit channel dots and the faint upper bloom. |
 
 Four active hues. No fifth.
@@ -66,7 +66,9 @@ absolute positioning — so the same markup re-centres correctly at both sizes a
 - No second hot accent. Flame is the only warm hue; the b-roll's sparks are the one
   place warmth appears without being applied.
 - Never recolour, stretch, split or crowd either logo. The Mob Armor lockup is used
-  white, intact, side-by-side, on plain navy (its brand guide allows white or black only).
+  white, intact, side-by-side, on plain navy (its brand guide allows white or black
+  only). It appears **only as the opening screen** — the end card is EcomIQ's
+  standing one (lockup, one line, flame pill) and carries no client mark.
 - No graphic on a beat with no spoken figure. No figure that isn't in the case study.
 - No content below the subtitle-safe line — not even a rule or a dot.
 - No hard cut on the A-roll: it is one uncut take running the whole piece.

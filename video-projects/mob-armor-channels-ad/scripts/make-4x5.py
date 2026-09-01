@@ -71,6 +71,11 @@ SWAPS: list[tuple[str, str, str]] = [
         "--wordmark-w: 700px;",
     ),
     (
+        "end-card lockup width",
+        "--endmark-w: 620px;",
+        "--endmark-w: 560px;",
+    ),
+    (
         "card padding-top",
         "--pad-top: 120px;",
         "--pad-top: 84px;",
