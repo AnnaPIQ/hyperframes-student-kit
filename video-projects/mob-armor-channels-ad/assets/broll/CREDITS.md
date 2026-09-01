@@ -28,18 +28,24 @@ Three shots under "That's what EcomIQ does. Real brands, real numbers, not theor
 Two real portfolio brands, then back to the client's own product. **Every cut lands
 in a pause between spoken words**, never mid-word.
 
+> **Freeze tails.** sp1 and sp2 are used to the very last frame the source has
+> (2.10 s / 1.90 s — there is no more footage), which left nothing to fade out with.
+> Each therefore carries a 0.35 s cloned final frame (`tpad=stop_mode=clone`). That
+> freeze is only ever on screen underneath a dissolve, so it is not visible, and it
+> is what lets every word landing stay where it is.
+
 ### sp1 · Sweet E's — `sp1-sweetes-9x16.mp4` / `-4x5.mp4`
 - **Source:** `video-projects/my-meta-ad/assets/aug5-broll-sweetes-{9x16,4x5}.mp4` on
   branch `claude/aug-general-ad-5-shortform-59z10c` (commit `59ef7d8`), where it runs
   at 17.85–19.75 s of the Aug-General ad 5. Pulled 2026-09-01.
-- **In / out used:** the whole clip, **0.00 → 2.10 s**. Full-file scene detect: no cuts.
+- **In / out used:** the whole clip, **0.00 → 2.10 s**, plus a 0.35 s freeze tail. Full-file scene detect: no cuts.
 - **Placed:** 24.900 → 27.000, on "And that's what EcomIQ does."
 - Native 2160×3840 / 2160×2700, so both aspects are a **0.5× downscale**. No text.
 
 ### sp2 · Dryft Sleep — `sp2-dryft-9x16.mp4` / `-4x5.mp4`
 - **Source:** same branch, `aug5-broll-dryft-{9x16,4x5}.mp4`, where it runs at
   19.75–21.45 s. Pulled 2026-09-01.
-- **In / out used:** the whole clip, **0.00 → 1.90 s**. Scene detect flagged 0.67 s and
+- **In / out used:** the whole clip, **0.00 → 1.90 s**, plus a 0.35 s freeze tail. Scene detect flagged 0.67 s and
   0.83 s; **checked by eye and they are fast camera movement, not cuts** — the shot is
   continuous. (Recorded because the brief requires the eye-check either way.)
 - **Placed:** 27.000 → 28.900, over the pause and "Real brands, real numbers,"
@@ -51,7 +57,7 @@ in a pause between spoken words**, never mid-word.
   1920×1080, 23.976 fps, 52.67 s. Client "MP4 Product Videos" folder
   (`1_SQ5A_MTjNzzzBp5wByRBDWEC0uFpvot`). Pulled 2026-09-01.
 - **Shot boundaries (full-file scene detect):** cuts at 21.81 / 23.94 → the shot spans
-  **21.81 – 23.94**. **In / out used: 21.90 → 23.20**, safely inside it. No text.
+  **21.81 – 23.94**. **In / out used: 21.85 → 23.50**, safely inside it. No text.
 - **Placed:** 14.033 → 15.333, over "four paid **channels**"
 - **This is the one landscape source, and it is handled per the standing rule rather
   than cropped to fit:** a 9:16 window off 1080p would be 608 px wide — a 1.78×
@@ -77,7 +83,7 @@ that span. It remains vetted and usable — see the entry below.
   | clip | shot boundaries | in / out used | placed |
   |---|---|---|---|
   | sp4 · dash mount | 37.79 – 39.88 | **38.00 → 39.85** | 15.333 → 16.367, over "**instead of one**" |
-  | sp5 · windscreen | 39.88 – 43.04 | **39.95 → 41.00** | 28.900 → 29.900, on "not **theory**." |
+  | sp5 · windscreen | 39.88 – 43.04 | **39.95 → 41.30** | 28.900 → 29.900, on "not **theory**." |
 - No burned-in text in either. Both landscape, so both take the same treatment as sp3:
   9:16 insets the whole frame at 1080×608 (0.5625× down) on navy with no push; 4:5 takes
   its own 864×1080 window at x=528 scaled to 1080×1350 (1.25×), full-bleed.

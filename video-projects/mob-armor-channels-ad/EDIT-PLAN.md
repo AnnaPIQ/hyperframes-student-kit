@@ -172,7 +172,7 @@ artefacts on the mouth).
 ## 8. Style (inherited, not relitigated)
 
 All copy white · display weight 800 · no blue-tint or grey on type (blue-tint is a
-graphic accent only — the channel dots) · blur-whip transitions between beats ·
+graphic accent only — the channel dots) · every cut a 0.2667 s cross-dissolve ·
 vignette + grain · **no grid, no crosshairs** · no burned-in subtitles, bottom ~30 %
 kept clear (9:16 below y=1344, 4:5 below y=945) · full-bleed cards on the navy ground.
 

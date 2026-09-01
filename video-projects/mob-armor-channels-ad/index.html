@@ -107,17 +107,12 @@
          608px wide = a 1.78x upscale, so instead each shot plays whole at 1080x608 —
          a 0.5625x DOWNscale — inset on the navy ground, and takes no push.
          4:5 gets its own 864px crop from source (1.25x) and goes full-bleed. */
-      .inset-bg { position: absolute; inset: 0; background: var(--brand-navy); }
+      .inset-bg, .run-bg { position: absolute; inset: 0; background: var(--brand-navy); }
+      /* The run backdrop sits UNDER the overlays and OVER the A-roll, so when one
+         shot dissolves into the next the frame falls back to the brand ground —
+         never to the presenter. It is the fix for the flick-back after +500%. */
+      .run-bg { z-index: 4; }
       .inset-frame { position: absolute; left: 0; width: 100%; top: var(--inset-top); height: var(--inset-h); overflow: hidden; }
-
-      /* ===== whip streak — the motion blur that hides every cut ============ */
-      #streak {
-        position: absolute; z-index: 8;
-        top: 0; left: 0; width: 46%; height: 100%;
-        background: linear-gradient(90deg,
-          rgba(255, 76, 50, 0) 0%, rgba(255, 76, 50, 0.55) 48%, rgba(255, 76, 50, 0) 100%);
-        filter: blur(26px); opacity: 0;
-      }
 
       /* ===== pinned EcomIQ logo — above the cards, all runtime ============= */
       #logo-pin {
@@ -171,7 +166,7 @@
       <!-- S0 — EcomIQ bumper. It covers the top of the take (he is looking down,
            settling, until ~0.70) and stamps whose ad this is; the A-roll lands at
            0.9333, half a second before the first word. -->
-      <div id="s0" class="card clip" data-start="0" data-duration="0.9333" data-track-index="4">
+      <div id="s0" class="card clip" data-start="0" data-duration="1.2" data-track-index="4">
         <div class="ground"></div>
         <div class="inner">
           <img class="openmark" src="assets/ecomiq-logo-white-open.svg" alt="EcomIQ" />
@@ -180,15 +175,18 @@
 
       <!-- SMA — the client's wordmark, landing on the spoken name.
            "Mob Armor" is said at 3.318-3.578; the card holds to the next phrase. -->
-      <div id="sma" class="card clip" data-start="3.3333" data-duration="1.8667" data-track-index="16">
+      <div id="sma" class="card clip" data-start="3.3333" data-duration="2.1334" data-track-index="16">
         <div class="ground"></div>
         <div class="inner">
           <img class="wordmark" src="assets/mobarmor-wordmark-white.png" alt="Mob Armor" />
         </div>
       </div>
 
+      <div id="runbg-a" class="run-bg clip" data-start="12.5333" data-duration="4.1001" data-track-index="11"></div>
+      <div id="runbg-b" class="run-bg clip" data-start="24.9" data-duration="5.2667" data-track-index="20"></div>
+
       <!-- G1 — lands on "one channel" (7.1667) -->
-      <div id="g1" class="card clip" data-start="7.1667" data-duration="2.3" data-track-index="5">
+      <div id="g1" class="card clip" data-start="7.1667" data-duration="2.5667" data-track-index="5">
         <div class="ground"></div>
         <div class="inner">
           <div class="eyebrow" id="g1-eyebrow">Paid channels</div>
@@ -199,7 +197,7 @@
       </div>
 
       <!-- G2 — lands on "500" (12.5333) -->
-      <div id="g2" class="card clip" data-start="12.5333" data-duration="1.5" data-track-index="6">
+      <div id="g2" class="card clip" data-start="12.5333" data-duration="1.7667" data-track-index="6">
         <div class="ground"></div>
         <div class="inner">
           <div class="eyebrow" id="g2-eyebrow">Total sales &middot; 12 months</div>
@@ -211,17 +209,17 @@
       <!-- Over "four paid channels instead of one" (14.0333 - 16.3667): two shots of
            the client's own product in use, in place of the former "1 -> 4" card. -->
       <div id="b4" class="broll">
-        <div id="b4-bg" class="inset-bg clip" data-start="14.0333" data-duration="1.3" data-track-index="7"></div>
+        <div id="b4-bg" class="inset-bg clip" data-start="14.0333" data-duration="1.5667" data-track-index="7"></div>
         <div class="inset-frame">
-          <video id="b4-vid" data-start="14.0333" data-duration="1.3" data-track-index="17"
+          <video id="b4-vid" data-start="14.0333" data-duration="1.5667" data-track-index="17"
                  src="assets/broll/sp3-claw-9x16.mp4" muted playsinline></video>
         </div>
       </div>
 
       <div id="b5" class="broll">
-        <div id="b5-bg" class="inset-bg clip" data-start="15.3333" data-duration="1.0334" data-track-index="18"></div>
+        <div id="b5-bg" class="inset-bg clip" data-start="15.3333" data-duration="1.3001" data-track-index="18"></div>
         <div class="inset-frame">
-          <video id="b5-vid" data-start="15.3333" data-duration="1.0334" data-track-index="19"
+          <video id="b5-vid" data-start="15.3333" data-duration="1.3001" data-track-index="19"
                  src="assets/broll/sp4-slim-dash-9x16.mp4" muted playsinline></video>
         </div>
       </div>
@@ -232,22 +230,22 @@
            pause between spoken words. -->
       <div id="b1" class="broll">
         <div class="scale" id="b1-scale">
-          <video id="b1-vid" data-start="24.9" data-duration="2.1" data-track-index="8"
+          <video id="b1-vid" data-start="24.9" data-duration="2.3667" data-track-index="8"
                  src="assets/broll/sp1-sweetes-9x16.mp4" muted playsinline></video>
         </div>
       </div>
 
       <div id="b2" class="broll">
         <div class="scale" id="b2-scale">
-          <video id="b2-vid" data-start="27" data-duration="1.9" data-track-index="9"
+          <video id="b2-vid" data-start="27" data-duration="2.1667" data-track-index="9"
                  src="assets/broll/sp2-dryft-9x16.mp4" muted playsinline></video>
         </div>
       </div>
 
       <div id="b3" class="broll">
-        <div id="b3-bg" class="inset-bg clip" data-start="28.9" data-duration="1" data-track-index="10"></div>
+        <div id="b3-bg" class="inset-bg clip" data-start="28.9" data-duration="1.2667" data-track-index="10"></div>
         <div class="inset-frame">
-          <video id="b3-vid" data-start="28.9" data-duration="1" data-track-index="15"
+          <video id="b3-vid" data-start="28.9" data-duration="1.2667" data-track-index="15"
                  src="assets/broll/sp5-slim-screen-9x16.mp4" muted playsinline></video>
         </div>
       </div>
@@ -261,8 +259,6 @@
           <div class="cta" id="s9-cta" style="margin-top: 68px">Learn More</div>
         </div>
       </div>
-
-      <div id="streak" class="clip" data-start="0" data-duration="38" data-track-index="11"></div>
 
       <img id="logo-pin" class="clip" data-start="1" data-duration="31.3667" data-track-index="12"
            src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
@@ -281,26 +277,16 @@
         window.__timelines = window.__timelines || {};
         const tl = gsap.timeline({ paused: true });
 
-        /* ---- blur-whip ---------------------------------------------------
-           The transition IS the exit. Outgoing card whips left under blur;
-           incoming card arrives from the right out of blur; a flame streak
-           crosses beneath the swap so the cut never reads as a cut. */
-        const whipOut = (sel, at) => {
-          tl.to(sel, { xPercent: -13, filter: 'blur(26px)', opacity: 0,
-                       duration: f(0.2), ease: 'expo.in' }, f(at));
-        };
-        const whipIn = (sel, at) => {
-          tl.fromTo(sel,
-            { xPercent: 13, filter: 'blur(26px)', opacity: 0 },
-            { xPercent: 0, filter: 'blur(0px)', opacity: 1,
-              duration: f(0.3833), ease: 'expo.out' }, f(at));
-        };
-        const streak = (at) => {
-          tl.fromTo('#streak',
-            { x: -520, opacity: 0 },
-            { x: 1080, opacity: 0.85, duration: f(0.1667), ease: 'power2.out' }, f(at - 0.05))
-            .to('#streak', { opacity: 0, duration: f(0.1333), ease: 'power2.in' }, f(at + 0.1167));
-        };
+        /* ---- transitions: every cut is a fade ----------------------------
+           Straight opacity cross-dissolves. Inside a run the .run-bg floor keeps
+           the A-roll out of the dissolve; standalone cards dissolve to and from
+           the A-roll on purpose. */
+        const XF = 0.2667;
+        const fadeIn = (sel, at) =>
+          tl.fromTo(sel, { opacity: 0 },
+            { opacity: 1, duration: f(XF), ease: 'power1.inOut' }, f(at));
+        const fadeOut = (sel, at) =>
+          tl.to(sel, { opacity: 0, duration: f(XF), ease: 'power1.inOut' }, f(at));
 
         /* ---- ambient: the camera never sleeps ----------------------------- */
         tl.fromTo('#aroll-wrap', { scale: 1.0 }, { scale: 1.035, duration: DUR, ease: 'none' }, 0);
@@ -313,8 +299,7 @@
         tl.fromTo('#s0 .openmark',
           { opacity: 0, scale: 0.92, filter: 'blur(12px)' },
           { opacity: 1, scale: 1, filter: 'blur(0px)', duration: f(0.4333), ease: 'expo.out' }, f(0.0667));
-        whipOut('#s0', 0.9333);
-        streak(0.9333);
+        fadeOut('#s0', 0.9333);
 
         /* ---- pinned EcomIQ logo — the bumper mark takes its corner --------- */
         tl.fromTo('#logo-pin',
@@ -322,18 +307,15 @@
           { opacity: 1, y: 0, filter: 'blur(0px)', duration: f(0.5333), ease: 'power3.out' }, f(1.0333));
 
         /* ---- SMA · Mob Armor wordmark, on the spoken name (3.318) ---------- */
-        whipIn('#sma', 3.3333);
-        streak(3.3333);
+        fadeIn('#sma', 3.3333);
         tl.fromTo('#sma .wordmark',
           { opacity: 0, scale: 0.93, filter: 'blur(12px)' },
           { opacity: 1, scale: 1, filter: 'blur(0px)', duration: f(0.5333), ease: 'expo.out' }, f(3.4667));
         tl.to('#sma .wordmark', { scale: 1.025, duration: f(1.0667), ease: 'sine.inOut' }, f(4.0));
-        whipOut('#sma', 5.2);
-        streak(5.2);
+        fadeOut('#sma', 5.2);
 
         /* ---- G1 · ONE CHANNEL — on "one channel" -------------------------- */
-        whipIn('#g1', 7.1667);
-        streak(7.1667);
+        fadeIn('#g1', 7.1667);
         tl.fromTo('#g1-eyebrow', { opacity: 0, y: 20 },
           { opacity: 1, y: 0, duration: f(0.3), ease: 'power2.out' }, f(7.3));
         tl.fromTo('#g1-figure', { opacity: 0, scale: 0.86 },
@@ -343,53 +325,48 @@
             duration: f(0.2667), ease: 'expo.out', stagger: 0.05 }, f(7.6667));
         tl.fromTo('#g1-names', { opacity: 0, y: 18 },
           { opacity: 1, y: 0, duration: f(0.3333), ease: 'power2.out' }, f(7.9));
-        whipOut('#g1', 9.4667);
-        streak(9.4667);
+        fadeOut('#g1', 9.4667);
 
         /* ---- G2 · +500% — on "500" ---------------------------------------- */
-        whipIn('#g2', 12.5333);
-        streak(12.5333);
+        fadeIn('#runbg-a', 12.5333);
+        fadeIn('#g2', 12.5333);
         tl.fromTo('#g2-eyebrow', { opacity: 0, y: 20 },
           { opacity: 1, y: 0, duration: f(0.2667), ease: 'power2.out' }, f(12.6667));
         tl.fromTo('#g2-figure', { opacity: 0, scale: 0.82 },
           { opacity: 1, scale: 1, duration: f(0.4667), ease: 'back.out(1.4)' }, f(12.7333));
         tl.fromTo('#g2-rule', { scaleX: 0 },
           { scaleX: 1, duration: f(0.3667), ease: 'expo.out' }, f(13.0333));
-        whipOut('#g2', 14.0333);
-        streak(14.0333);
+
 
         /* ---- Product b-roll over "four paid channels instead of one" ------- */
         // No push on either: they are landscape sources, inset rather than cropped.
-        whipIn('#b4', 14.0333);
-        whipOut('#b4', 15.3333);
-        whipIn('#b5', 15.3333);
-        streak(15.3333);
-        whipOut('#b5', 16.3667);
-        streak(16.3667);
+        fadeOut('#g2', 14.0333);
+        fadeIn('#b4', 14.0333);
+        fadeOut('#b4', 15.3333);
+        fadeIn('#b5', 15.3333);
+        fadeOut('#b5', 16.3667);
+        fadeOut('#runbg-a', 16.3667);
 
         /* ---- Social-proof b-roll run — 24.9 -> 29.9 ----------------------- */
         // sp1 · Sweet E's, on "And that's what EcomIQ does."
-        whipIn('#b1', 24.9);
-        streak(24.9);
+        fadeIn('#runbg-b', 24.9);
+        fadeIn('#b1', 24.9);
         tl.fromTo('#b1-scale', { scale: 1.06 },
           { scale: 1.0, duration: f(2.1), ease: 'none' }, f(24.9));
-        whipOut('#b1', 27.0);
         // sp2 · Dryft Sleep, over the pause and "Real brands, real numbers,"
-        whipIn('#b2', 27.0);
-        streak(27.0);
+        fadeOut('#b1', 27.0);
+        fadeIn('#b2', 27.0);
         tl.fromTo('#b2-scale', { scale: 1.06 },
           { scale: 1.0, duration: f(1.9), ease: 'none' }, f(27.0));
-        whipOut('#b2', 28.9);
         // sp3 · the client's own product, on "not theory." No push: it is the one
         // landscape source, and scaling it up is exactly what we avoided above.
-        whipIn('#b3', 28.9);
-        streak(28.9);
-        whipOut('#b3', 29.9);
-        streak(29.9);
+        fadeOut('#b2', 28.9);
+        fadeIn('#b3', 28.9);
+        fadeOut('#b3', 29.9);
+        fadeOut('#runbg-b', 29.9);
 
         /* ---- S9 · outro — on "Tap", holds 5.63s --------------------------- */
-        whipIn('#s9', 32.3667);
-        streak(32.3667);
+        fadeIn('#s9', 32.3667);
         tl.fromTo('#s9-mark', { opacity: 0, scale: 0.9, filter: 'blur(12px)' },
           { opacity: 1, scale: 1, filter: 'blur(0px)', duration: f(0.6), ease: 'expo.out' }, f(32.5));
         tl.fromTo('#s9-line', { opacity: 0, y: 26 },
@@ -400,7 +377,7 @@
         tl.to('#s9-cta', { scale: 1.04, duration: f(0.7333), ease: 'sine.inOut',
                            yoyo: true, repeat: 3 }, f(34.0));
         // The pinned lockup hands off to the end card's own, rather than sitting
-        // on top of it; it clips off at 32.3667 so this only has to cover the whip.
+        // on top of it; it clips off at 32.3667 so this only covers the dissolve.
         tl.to('#logo-pin', { opacity: 0, duration: f(0.1667), ease: 'power2.in' }, f(32.2));
         // Final scene is the one place an exit is allowed.
         tl.to(['#s9-mark', '#s9-line', '#s9-cta'],

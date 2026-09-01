@@ -32,9 +32,13 @@ display type to weight 800.
 
 ## Motion
 
-- **Blur-whip between every beat.** Out: `expo.in`, 0.20s, blur to 26px, x −140px.
-  In: `expo.out`, 0.38s, blur from 26px, x +140px. A flame streak crosses under the
-  swap. No hard cuts anywhere.
+- **Every cut is a fade.** A straight opacity cross-dissolve, 0.2667s, `power1.inOut`.
+  No whips, no blur, no streak — those were tried and cut. Each overlay overlaps the
+  next by exactly one crossfade, so the dissolve is a true A/B mix rather than a dip.
+- **A run backdrop (`.run-bg`) floors every b-roll run** — opaque navy under the
+  overlays and over the A-roll. Without it a dissolve momentarily reveals the
+  presenter between two shots; with it the frame can only ever fall back to the
+  brand ground. Standalone cards still dissolve to and from the A-roll on purpose.
 - Figures **scale** into place (0.86 → 1) — never a flat fade (anti-pattern #1).
 - Camera never sleeps: the A-roll wrapper drifts 1.000 → 1.035 across the runtime;
   the vignette breathes on a 6s `sine.inOut` cycle.
