@@ -115,6 +115,12 @@ role label, then the payoff line with "team's" in flame. Source photos are in
 `assets/team/`, cropped square and face-checked. **The role labels are read off that
 reference's own grid** — the same ten people appear in it — rather than assigned by
 guesswork, which would mean publishing invented job titles for real named people.
+Two were later corrected on direction: **Creative → Development** and **CRO → Design**.
+
+Role labels are **centred** under their photo, not left-aligned. "DEVELOPMENT" is
+182px against a 150px cell, so left-aligned it overran the gap and landed on
+"DESIGN"; centred it clears by ~29px and every other label gains symmetry, with no
+change to the 19/21px type or its .16em tracking.
 
 **The CTA end card** follows a supplied reference: three elements and a lot of air —
 the full lockup, one line of copy, and a **solid** flame pill (not the gradient used

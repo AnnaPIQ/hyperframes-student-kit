@@ -38,6 +38,23 @@ efficient over time instead of relearning the same lessons.
   the logo inside it.
 - **Never animate `width/height/top/left` on a `<video>`** — the browser freezes the
   frame. Wrap it in a `<div>` and animate the wrapper. (Render contract rule 9.)
+- **A one-word copy change can silently break a fixed-width grid.** Renaming a role
+  label from "Creative" to "Development" pushed it from 138px to 182px in a 150px
+  cell; left-aligned, it overran the 15px gutter and sat on the next label. **Fix:**
+  measure before you render. Load the project's own `.woff2` in headless Chrome and
+  `getBoundingClientRect()` every label at the real size/tracking — five seconds
+  versus a two-minute render. Then centre rather than shrink: centring halves the
+  overhang into both gutters and costs no type change, where shrinking to fit would
+  have meant 16px/.10em across the whole grid.
+
+## Verifying before you re-render
+
+- **Check the file before you believe a bug report about it.** "The 4:5 has black
+  sides" turned out to be a square player pillarboxing a correct 1080×1350 file.
+  `ffmpeg -vf cropdetect=limit=24:round=2:reset=0` reports the active picture area —
+  `crop=1080:1350:0:0` means edge-to-edge, no bars. Back it up with a frame grab that
+  has `drawbox=0:0:iw:ih:magenta:t=8` marking the true file edge; it settles the
+  question in one look and saves a 45MB re-render.
 
 ## Footage & A/V sync
 
