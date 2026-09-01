@@ -391,6 +391,12 @@
   text-transform: uppercase;
   color: #6f8db3;
   text-align: center;
+  /* DEVELOPMENT is 176px against a 164px tile (137 vs 120 at 1:1), so the
+     longest label is allowed to overflow its tile rather than wrap onto a
+     second line or lose tracking. Its neighbours (SEO, DESIGN) are short, so
+     the nearest label edge is still ~37px away even in the square. Measured in
+     Rethink Sans at every ratio, not estimated. */
+  white-space: nowrap;
 }
 /* the stat that closes beat C */
 .statrow { display: flex; align-items: baseline; gap: 18px; }
