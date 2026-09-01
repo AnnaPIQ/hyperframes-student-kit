@@ -1,7 +1,9 @@
 # Deliverables — EcomIQ "How it works" ad
 
 Rendered from `index.html` (9:16) and `compositions/meta45.html` (4:5) at the
-commit these files were added on. All four are 76.433s, 2293 frames, 30 fps CFR,
+commit these files were last updated on. Current cut: beat A opens on "just one
+person" (2.267s), all four montage/graphics boundaries are 0.30s cross-dissolves,
+team tiles read DEVELOPMENT and DESIGN. All four are 76.433s, 2293 frames, 30 fps CFR,
 H.264 High / yuv420p, AAC 48 kHz stereo, `+faststart`. Card trigger at 71.433s.
 
 | file | ratio | size | encode |
