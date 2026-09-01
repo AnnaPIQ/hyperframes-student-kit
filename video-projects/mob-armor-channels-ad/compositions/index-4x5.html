@@ -17,6 +17,8 @@
         --wordmark-w: 700px;
         --pad-top: 84px;
         --endmark-w: 560px;
+        --b3-top: 0px;     /* 4:5 takes its own crop, so sp3 is full-bleed */
+        --b3-h: 1350px;
       }
       /* --------------------------------------------------------------------- */
 
@@ -120,15 +122,25 @@
       }
 
       /* ===== b-roll ======================================================== */
-      /* Non-timed wrapper: only the <video> inside carries timing, so the frame
-         extractor and the visibility window can't disagree. Paints nothing of its
-         own, so it is harmless outside the b-roll beat. */
-      #b1 {
+      /* Non-timed wrappers: only the <video> inside carries timing, so the frame
+         extractor and the visibility window can't disagree. They paint nothing of
+         their own, so they are harmless outside their beat. */
+      .broll {
         position: absolute; inset: 0; z-index: 5;
         overflow: hidden; will-change: transform, filter;
       }
-      #b1-scale { position: absolute; inset: 0; transform-origin: 50% 50%; }
-      #b1 video { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .broll .scale { position: absolute; inset: 0; transform-origin: 50% 50%; }
+      .broll video { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+      /* sp3 is a LANDSCAPE source (1920x1080). A 9:16 window off it would be
+         608px wide = a 1.78x upscale, so instead it plays whole at 1080x608 —
+         a 0.5625x DOWNscale — inset on the navy ground, and takes no push.
+         4:5 gets its own 864px crop from source (1.25x) and goes full-bleed. */
+      #b3-bg { position: absolute; inset: 0; background: var(--brand-navy); }
+      #b3-frame {
+        position: absolute; left: 0; width: 100%;
+        top: var(--b3-top); height: var(--b3-h); overflow: hidden;
+      }
 
       /* ===== whip streak — the motion blur that hides every cut ============ */
       #streak {
@@ -262,19 +274,29 @@
         </div>
       </div>
 
-      <!-- B1 — lands on "Real brands," (27.4). Mob Armor laser-cutting: the one
-           b-roll insert, under the one claim about real brands. -->
-      <div id="b1">
-        <div id="b1-scale">
-          <video
-            id="b1-vid"
-            data-start="27.4"
-            data-duration="1.7"
-            data-track-index="8"
-            src="assets/broll/sparks-4x5.mp4"
-            muted
-            playsinline
-          ></video>
+      <!-- Social-proof b-roll run, 24.9 -> 29.9, under "That's what EcomIQ does.
+           Real brands, real numbers, not theory." Three shots: two real portfolio
+           brands, then back to the client's own product. Every cut lands in a
+           pause between spoken words. -->
+      <div id="b1" class="broll">
+        <div class="scale" id="b1-scale">
+          <video id="b1-vid" data-start="24.9" data-duration="2.1" data-track-index="8"
+                 src="assets/broll/sp1-sweetes-4x5.mp4" muted playsinline></video>
+        </div>
+      </div>
+
+      <div id="b2" class="broll">
+        <div class="scale" id="b2-scale">
+          <video id="b2-vid" data-start="27" data-duration="1.9" data-track-index="9"
+                 src="assets/broll/sp2-dryft-4x5.mp4" muted playsinline></video>
+        </div>
+      </div>
+
+      <div id="b3" class="broll">
+        <div id="b3-bg" class="clip" data-start="28.9" data-duration="1" data-track-index="10"></div>
+        <div id="b3-frame">
+          <video id="b3-vid" data-start="28.9" data-duration="1" data-track-index="15"
+                 src="assets/broll/sp3-claw-4x5.mp4" muted playsinline></video>
         </div>
       </div>
 
@@ -390,13 +412,25 @@
         whipOut('#g3', 16.3667);
         streak(16.3667);
 
-        /* ---- B1 · sparks — on "Real brands," ------------------------------ */
-        whipIn('#b1', 27.4);
-        streak(27.4);
+        /* ---- Social-proof b-roll run — 24.9 -> 29.9 ----------------------- */
+        // sp1 · Sweet E's, on "And that's what EcomIQ does."
+        whipIn('#b1', 24.9);
+        streak(24.9);
         tl.fromTo('#b1-scale', { scale: 1.06 },
-          { scale: 1.0, duration: f(1.7), ease: 'none' }, f(27.4));
-        whipOut('#b1', 29.1);
-        streak(29.1);
+          { scale: 1.0, duration: f(2.1), ease: 'none' }, f(24.9));
+        whipOut('#b1', 27.0);
+        // sp2 · Dryft Sleep, over the pause and "Real brands, real numbers,"
+        whipIn('#b2', 27.0);
+        streak(27.0);
+        tl.fromTo('#b2-scale', { scale: 1.06 },
+          { scale: 1.0, duration: f(1.9), ease: 'none' }, f(27.0));
+        whipOut('#b2', 28.9);
+        // sp3 · the client's own product, on "not theory." No push: it is the one
+        // landscape source, and scaling it up is exactly what we avoided above.
+        whipIn('#b3', 28.9);
+        streak(28.9);
+        whipOut('#b3', 29.9);
+        streak(29.9);
 
         /* ---- S9 · outro — on "Tap", holds 5.63s --------------------------- */
         whipIn('#s9', 32.3667);

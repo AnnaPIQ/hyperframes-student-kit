@@ -91,9 +91,11 @@ is no A-roll cut anywhere in the piece — and keeps lip-sync locked by construc
 | — | A-roll | 9.478 | 12.538 | "Now, 12 months later, their total sales are up over" | |
 | G2 | **+500%** | 12.538 | 14.038 | "**500**" (12.538) | eyebrow `TOTAL SALES · 12 MONTHS`; `+500%`; flame rule |
 | G3 | **1 → 4** | 14.038 | 16.378 | "**four** paid channels" (14.038) | `1 → 4 PAID CHANNELS`; 4 dots lighting; Meta · Google · TikTok · TikTok Shop |
-| — | A-roll | 16.378 | 27.398 | "And we didn't do that with a magic tactic…" → "…that's what EcomIQ does." | longest held A-roll stretch |
-| B1 | b-roll — sparks | 27.398 | 29.100 | "**Real brands,**" (27.398) | Mob Armor laser-cutting, real manufacturing |
-| — | A-roll | 29.100 | 32.358 | "not theory. Want to see if we can do the same for you?" | |
+| — | A-roll | 16.378 | 24.900 | "And we didn't do that with a magic tactic…" | longest held A-roll stretch |
+| B1 | b-roll — Sweet E's | 24.900 | 27.000 | "And that's what EcomIQ **does**" | real portfolio brand, in store |
+| B2 | b-roll — Dryft Sleep | 27.000 | 28.900 | pause + "**Real brands,** real numbers," | real portfolio brand, on shelf |
+| B3 | b-roll — Mobnetic Claw | 28.900 | 29.900 | "not **theory**." | back to the client's own product |
+| — | A-roll | 29.900 | 32.358 | "Want to see if we can do the same for you?" | |
 | S9 | Outro / CTA | 32.358 | 38.000 | "**Tap** the link" (32.358) | Standing EcomIQ end card: lockup, "See if it will work for you.", flame `Learn More` pill. 5.64 s hold. The pinned top-left lockup fades at 32.2 and hands off to this one. |
 
 G2 → G3 is a single card container with an internal blur-whip at 14.038 (they abut;
@@ -127,8 +129,11 @@ Aug 2025 → Aug 2026; absolute revenue withheld):
 | 9:16 · 1080×1920 | `crop=1080:1920:1332:120` | **1.000× (native 1:1)** | zero resampling; face centred on x=1872 |
 | 4:5 · 1080×1350 | `crop=1296:1620:1224:78` | **0.833× (down)** | its own window, not a trim of the 9:16 — native 1:1 was too tight at the top |
 
-B-roll Social Cuts are natively 1080×1920, so 9:16 is 1:1 and 4:5 is a 1080×1350
-crop out of it. **No source is ever upscaled.**
+B-roll: the two portfolio shots are natively 2160×3840 / 2160×2700, so both aspects
+are a 0.5× downscale. The one landscape source (Mobnetic Claw, 1920×1080) is **not**
+cropped to a 9:16 window — that would be 608 px wide, a 1.78× upscale. Instead 9:16
+plays the whole frame at 1080×608 (0.5625× down) inset on the navy ground and takes
+no push, while 4:5 gets its own 864×1080 window at x=374 scaled to 1080×1350 (1.25×).
 
 25 → 30 fps by frame duplication (locked-off tripod shot; no motion interpolation
 artefacts on the mouth).

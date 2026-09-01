@@ -1,7 +1,10 @@
 # B-roll provenance & vetting
 
-**Pulled:** 2026-08-31. **Source:** Mob Armor client Drive, "Social Cuts" subfolder
-`1ArKbSBupieY_R4spsdiF7sJqxYc0qzas` (parent b-roll folder `1DBvZ_8bcxVX9wPEe0a8dUvXZhdftuAgt`).
+**Sources:** the Mob Armor client Drive (b-roll folder `1DBvZ_8bcxVX9wPEe0a8dUvXZhdftuAgt`
+— its "Social Cuts" subfolder `1ArKbSBupieY_R4spsdiF7sJqxYc0qzas` and its "MP4 Product
+Videos" subfolder `1_SQ5A_MTjNzzzBp5wByRBDWEC0uFpvot`), plus two portfolio-brand shots
+carried over from branch `claude/aug-general-ad-5-shortform-59z10c`.
+Pulled 2026-08-31 and 2026-09-01.
 
 First-party client media only. **No stock, no creator/UGC reposts, no customer-review
 footage.** The mobarmor.com product-page video was *not* used — it is Okendo review UGC
@@ -19,23 +22,62 @@ In/out points for used clips were fixed by **full-file scene detection**
 
 ---
 
-## Used
+## Used — the social-proof run, composition 24.9 → 29.9
 
-### `tabnetic-discs.mp4` — laser cutting, sparks
+Three shots under "That's what EcomIQ does. Real brands, real numbers, not theory."
+Two real portfolio brands, then back to the client's own product. **Every cut lands
+in a pause between spoken words**, never mid-word.
+
+### sp1 · Sweet E's — `sp1-sweetes-9x16.mp4` / `-4x5.mp4`
+- **Source:** `video-projects/my-meta-ad/assets/aug5-broll-sweetes-{9x16,4x5}.mp4` on
+  branch `claude/aug-general-ad-5-shortform-59z10c` (commit `59ef7d8`), where it runs
+  at 17.85–19.75 s of the Aug-General ad 5. Pulled 2026-09-01.
+- **In / out used:** the whole clip, **0.00 → 2.10 s**. Full-file scene detect: no cuts.
+- **Placed:** 24.900 → 27.000, on "And that's what EcomIQ does."
+- Native 2160×3840 / 2160×2700, so both aspects are a **0.5× downscale**. No text.
+
+### sp2 · Dryft Sleep — `sp2-dryft-9x16.mp4` / `-4x5.mp4`
+- **Source:** same branch, `aug5-broll-dryft-{9x16,4x5}.mp4`, where it runs at
+  19.75–21.45 s. Pulled 2026-09-01.
+- **In / out used:** the whole clip, **0.00 → 1.90 s**. Scene detect flagged 0.67 s and
+  0.83 s; **checked by eye and they are fast camera movement, not cuts** — the shot is
+  continuous. (Recorded because the brief requires the eye-check either way.)
+- **Placed:** 27.000 → 28.900, over the pause and "Real brands, real numbers,"
+- Native 2160×3840 / 2160×2700 → **0.5× downscale**. No text.
+
+### sp3 · Mobnetic Claw — `sp3-claw-9x16.mp4` / `-4x5.mp4`
+- **Source:** Drive `1mTbhx6wkCHZmaG8sQtiUKkntSdIPboTM` — "MOBNETIC CLAW.mp4", 66.7 MB,
+  1920×1080, 23.976 fps, 52.67 s. Client "MP4 Product Videos" folder
+  (`1_SQ5A_MTjNzzzBp5wByRBDWEC0uFpvot`). Pulled 2026-09-01.
+- **Shot boundaries (full-file scene detect):** cuts at 21.81 / 23.94 → the shot spans
+  **21.81 – 23.94**. **In / out used: 22.00 → 23.00**, safely inside it. No text.
+- **Placed:** 28.900 → 29.900, on "not theory."
+- **This is the one landscape source, and it is handled per the standing rule rather
+  than cropped to fit:** a 9:16 window off 1080p would be 608 px wide — a 1.78×
+  upscale — so 9:16 plays the *whole frame* at 1080×608 (a **0.5625× downscale**)
+  inset on the navy ground, and **takes no push**. 4:5 gets **its own 864×1080 window
+  at x=374** (centred on the mount and hand) scaled to 1080×1350 — **1.25×**, and goes
+  full-bleed. The 4:5 is not a trim of the 9:16.
+
+### Retired
+`tabnetic-discs.mp4` 6.00–7.70 (laser cutting, sparks) was the single insert in the
+previous cut, at 27.4–29.1 on "Real brands,". Replaced by the run above, which occupies
+that span. It remains vetted and usable — see the entry below.
+
+---
+
+## Reviewed and rejected — Mob Armor "Social Cuts"
+
+### `tabnetic-discs.mp4` — laser cutting, sparks *(vetted, currently unused)*
 - **Drive id:** `1sQIRGCsAxMEFB3J7w-BFFTjR-xF7ctJc` · 27.63 s · 1080×1920 · 24 fps
 - **Shot boundaries (scene detect):** cuts at 5.92 / 7.79 → the shot spans **5.92 – 7.79**
 - **In / out used: 6.00 → 7.70** (1.70 s), taken with margin inside the shot so the clip
   never crosses a cut. Verified frame-by-frame at 6.05 / 6.35 / 6.65 / 6.95 / 7.25 / 7.60 —
   continuous, no text.
-- **Placed:** composition 27.398 → 29.100, on "**Real brands,**"
 - **Why:** real Mob Armor manufacturing under a claim about real brands. The orange
   sparks against the dark plate sit naturally with the flame accent on navy.
 - **Rejected ranges in this clip:** `12.28 s` carries burned-in "**65 mm**"; `3.07 s` and
   the surrounding range sit on Mob Armor brand yellow, which clashes with the EcomIQ navy.
-
----
-
-## Reviewed and rejected
 
 | Clip | Drive id | Why rejected |
 |---|---|---|

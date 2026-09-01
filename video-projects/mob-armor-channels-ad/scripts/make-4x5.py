@@ -108,9 +108,31 @@ SWAPS: list[tuple[str, str, str]] = [
         'src="assets/aroll/aroll-4x5.mp4"',
     ),
     (
-        "b-roll source",
-        'src="assets/broll/sparks-9x16.mp4"',
-        'src="assets/broll/sparks-4x5.mp4"',
+        "b-roll sp1 source",
+        'src="assets/broll/sp1-sweetes-9x16.mp4"',
+        'src="assets/broll/sp1-sweetes-4x5.mp4"',
+    ),
+    (
+        "b-roll sp2 source",
+        'src="assets/broll/sp2-dryft-9x16.mp4"',
+        'src="assets/broll/sp2-dryft-4x5.mp4"',
+    ),
+    (
+        # sp3 is the landscape source: 9:16 insets it at 1080x608 on navy, 4:5
+        # takes its own 864px crop and goes full-bleed.
+        "b-roll sp3 source",
+        'src="assets/broll/sp3-claw-9x16.mp4"',
+        'src="assets/broll/sp3-claw-4x5.mp4"',
+    ),
+    (
+        "sp3 inset top",
+        "--b3-top: 428px;   /* landscape inset, centred above the subtitle line */",
+        "--b3-top: 0px;     /* 4:5 takes its own crop, so sp3 is full-bleed */",
+    ),
+    (
+        "sp3 inset height",
+        "--b3-h: 608px;",
+        "--b3-h: 1350px;",
     ),
 ]
 # Deliberately NOT swapped: every font size, horizontal padding, the streak's
