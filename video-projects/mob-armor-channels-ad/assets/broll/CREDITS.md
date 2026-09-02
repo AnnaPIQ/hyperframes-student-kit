@@ -22,11 +22,18 @@ In/out points for used clips were fixed by **full-file scene detection**
 
 ---
 
-## Used — the social-proof run, composition 24.9 → 29.9
+## Used — the social-proof run, composition 24.9 → 30.067
 
-Three shots under "That's what EcomIQ does. Real brands, real numbers, not theory."
-Two real portfolio brands, then back to the client's own product. **Every cut lands
-in a pause between spoken words**, never mid-word.
+Two shots under "That's what EcomIQ does. Real brands, real numbers, not theory."
+**Every cut lands in a pause between spoken words**, never mid-word.
+
+> **Retime.** The two shots are the full extent of what that branch committed
+> (2.10 s / 1.90 s), so running them longer had to come from a retime, not more
+> footage: **Sweet E's 0.85×, Dryft 0.80×**. Both are motion-interpolated to 60 fps
+> first and then resampled, so output frames are distinct rather than 1-in-5
+> duplicated — that took measured frame duplication from 8 % → 3 % and 29 % → 11 %.
+> The residual 11 % on Dryft is duplication already present in the committed export;
+> interpolation cannot invent motion the source does not have.
 
 > **Freeze tails.** sp1 and sp2 are used to the very last frame the source has
 > (2.10 s / 1.90 s — there is no more footage), which left nothing to fade out with.
@@ -55,33 +62,28 @@ in a pause between spoken words**, never mid-word.
 - **Source:** `video-projects/my-meta-ad/assets/aug5-broll-sweetes-{9x16,4x5}.mp4` on
   branch `claude/aug-general-ad-5-shortform-59z10c` (commit `59ef7d8`), where it runs
   at 17.85–19.75 s of the Aug-General ad 5. Pulled 2026-09-01.
-- **In / out used:** the whole clip, **0.00 → 2.10 s**, plus a 0.35 s freeze tail. Full-file scene detect: no cuts.
-- **Placed:** 24.900 → 27.000, on "And that's what EcomIQ does."
+- **In / out used:** the whole clip, **0.00 → 2.10 s**, retimed 0.85× plus a 0.35 s freeze tail. Full-file scene detect: no cuts.
+- **Placed:** 24.900 → 27.400, on "And that's what EcomIQ does."
 - Native 2160×3840 / 2160×2700, so both aspects are a **0.5× downscale**. No text.
 
 ### sp2 · Dryft Sleep — `sp2-dryft-9x16.mp4` / `-4x5.mp4`
 - **Source:** same branch, `aug5-broll-dryft-{9x16,4x5}.mp4`, where it runs at
   19.75–21.45 s. Pulled 2026-09-01.
-- **In / out used:** the whole clip, **0.00 → 1.90 s**, plus a 0.35 s freeze tail. Scene detect flagged 0.67 s and
+- **In / out used:** the whole clip, **0.00 → 1.90 s**, retimed 0.80× plus a 0.35 s freeze tail. Scene detect flagged 0.67 s and
   0.83 s; **checked by eye and they are fast camera movement, not cuts** — the shot is
   continuous. (Recorded because the brief requires the eye-check either way.)
-- **Placed:** 27.000 → 28.900, over the pause and "Real brands, real numbers,"
+- **Placed:** 27.400 → 29.800, over "Real brands, real numbers, not theory."
 - Native 2160×3840 / 2160×2700 → **0.5× downscale**. No text.
 
-### sp3 · Mobnetic Claw — `sp3-claw-9x16.mp4` / `-4x5.mp4`
-*(now placed over "four paid channels", in place of the former "1 → 4" card)*
-- **Source:** Drive `1mTbhx6wkCHZmaG8sQtiUKkntSdIPboTM` — "MOBNETIC CLAW.mp4", 66.7 MB,
-  1920×1080, 23.976 fps, 52.67 s. Client "MP4 Product Videos" folder
-  (`1_SQ5A_MTjNzzzBp5wByRBDWEC0uFpvot`). Pulled 2026-09-01.
-- **Shot boundaries (full-file scene detect):** cuts at 21.81 / 23.94 → the shot spans
-  **21.81 – 23.94**. **In / out used: 21.85 → 23.50**, safely inside it. No text.
-- **Placed:** 14.033 → 15.333, over "four paid **channels**"
-- **This is the one landscape source, and it is handled per the standing rule rather
-  than cropped to fit:** a 9:16 window off 1080p would be 608 px wide — a 1.78×
-  upscale — so 9:16 plays the *whole frame* at 1080×608 (a **0.5625× downscale**)
-  inset on the navy ground, and **takes no push**. 4:5 gets **its own 864×1080 window
-  at x=374** (centred on the mount and hand) scaled to 1080×1350 — **1.25×**, and goes
-  full-bleed. The 4:5 is not a trim of the 9:16.
+### Cut — the three landscape product insets
+`sp3-claw`, `sp4-slim-dash` and `sp5-slim-screen` (Mobnetic Claw 21.85–23.50 from Drive
+`1mTbhx…`; Mobnetic Slim 38.00–39.85 and 39.95–41.30 from Drive `1qRd8u…`) were placed
+over "four paid channels instead of one" and on "not theory." **All three are cut.**
+They were the only landscape sources in the piece and had to be letterboxed at
+1080×608 on navy in 9:16 to avoid a 1.78× upscale; that inset treatment read as a
+format break against the full-bleed shots either side. Their in/out points and shot
+boundaries are recorded here in case they are wanted again — the files are removed
+from `assets/broll/` but recoverable from git history.
 
 ### Retired
 `tabnetic-discs.mp4` 6.00–7.70 (laser cutting, sparks) was the single insert in the

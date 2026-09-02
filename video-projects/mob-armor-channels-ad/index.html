@@ -15,11 +15,8 @@
         --logo-top: 96px;
         --logo-w: 300px;
         --wordmark-w: 780px;   /* Mob Armor card, on the spoken name */
-        --openmark-w: 560px;
         --pad-top: 120px;
         --endmark-w: 620px;
-        --inset-top: 428px;   /* landscape inset, centred above the subtitle line */
-        --inset-h: 608px;
         --sma-top: 354px;   /* Mob Armor mark sits on the clean wall, not the hardware */
         --band-c: 22.4%;
       }
@@ -83,7 +80,6 @@
       .dot.lit { background: var(--brand-flame); opacity: 1; }
       .names { font-size: 27px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brand-white); }
 
-      #s0 .openmark { width: var(--openmark-w); height: auto; display: block; }
       #sma .wordmark { width: var(--wordmark-w); height: auto; display: block; }
       /* Product footage behind the client's wordmark. Mob Armor's brand guide allows
          the logo over an image only when "there needs to be a consistent color or
@@ -124,16 +120,11 @@
       .broll .scale { position: absolute; inset: 0; transform-origin: 50% 50%; }
       .broll video { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-      /* The product b-roll is LANDSCAPE (1920x1080). A 9:16 window off it would be
-         608px wide = a 1.78x upscale, so instead each shot plays whole at 1080x608 —
-         a 0.5625x DOWNscale — inset on the navy ground, and takes no push.
-         4:5 gets its own 864px crop from source (1.25x) and goes full-bleed. */
-      .inset-bg, .run-bg { position: absolute; inset: 0; background: var(--brand-navy); }
+      .run-bg { position: absolute; inset: 0; background: var(--brand-navy); }
       /* The run backdrop sits UNDER the overlays and OVER the A-roll, so when one
          shot dissolves into the next the frame falls back to the brand ground —
          never to the presenter. It is the fix for the flick-back after +500%. */
       .run-bg { z-index: 4; }
-      .inset-frame { position: absolute; left: 0; width: 100%; top: var(--inset-top); height: var(--inset-h); overflow: hidden; }
 
       /* ===== pinned EcomIQ logo — above the cards, all runtime ============= */
       #logo-pin {
@@ -184,16 +175,6 @@
       <audio id="vo" data-start="0" data-duration="37.0667" data-track-index="3"
              src="assets/aroll/vo.wav" data-volume="1"></audio>
 
-      <!-- S0 — EcomIQ bumper. It covers the top of the take (he is looking down,
-           settling, until ~0.70) and stamps whose ad this is; the A-roll lands at
-           0.9333, half a second before the first word. -->
-      <div id="s0" class="card clip" data-start="0" data-duration="1.2" data-track-index="4">
-        <div class="ground"></div>
-        <div class="inner">
-          <img class="openmark" src="assets/ecomiq-logo-white-open.svg" alt="EcomIQ" />
-        </div>
-      </div>
-
       <!-- SMA — the client's wordmark, landing on the spoken name.
            "Mob Armor" is said at 3.318-3.578; the card holds to the next phrase.
            Behind it, the client's own product under a navy scrim (see CSS note). -->
@@ -210,8 +191,7 @@
         </div>
       </div>
 
-      <div id="runbg-a" class="run-bg clip" data-start="12.5333" data-duration="4.1001" data-track-index="11"></div>
-      <div id="runbg-b" class="run-bg clip" data-start="24.9" data-duration="5.2667" data-track-index="20"></div>
+      <div id="runbg-b" class="run-bg clip" data-start="24.9" data-duration="5.1667" data-track-index="20"></div>
 
       <!-- G1 — lands on "one channel" (7.1667) -->
       <div id="g1" class="card clip" data-start="7.1667" data-duration="2.5667" data-track-index="5">
@@ -225,7 +205,7 @@
       </div>
 
       <!-- G2 — lands on "500" (12.5333) -->
-      <div id="g2" class="card clip" data-start="12.5333" data-duration="1.7667" data-track-index="6">
+      <div id="g2" class="card clip" data-start="12.5333" data-duration="3.0667" data-track-index="6">
         <div class="ground"></div>
         <div class="inner">
           <div class="eyebrow" id="g2-eyebrow">Total sales &middot; 12 months</div>
@@ -234,47 +214,21 @@
         </div>
       </div>
 
-      <!-- Over "four paid channels instead of one" (14.0333 - 16.3667): two shots of
-           the client's own product in use, in place of the former "1 -> 4" card. -->
-      <div id="b4" class="broll">
-        <div id="b4-bg" class="inset-bg clip" data-start="14.0333" data-duration="1.5667" data-track-index="7"></div>
-        <div class="inset-frame">
-          <video id="b4-vid" data-start="14.0333" data-duration="1.5667" data-track-index="17"
-                 src="assets/broll/sp3-claw-9x16.mp4" muted playsinline></video>
-        </div>
-      </div>
-
-      <div id="b5" class="broll">
-        <div id="b5-bg" class="inset-bg clip" data-start="15.3333" data-duration="1.3001" data-track-index="18"></div>
-        <div class="inset-frame">
-          <video id="b5-vid" data-start="15.3333" data-duration="1.3001" data-track-index="19"
-                 src="assets/broll/sp4-slim-dash-9x16.mp4" muted playsinline></video>
-        </div>
-      </div>
-
-      <!-- Social-proof b-roll run, 24.9 -> 29.9, under "That's what EcomIQ does.
-           Real brands, real numbers, not theory." Three shots: two real portfolio
-           brands, then back to the client's own product. Every cut lands in a
+      <!-- Social-proof b-roll run, 24.9 -> 30.067, under "That's what EcomIQ does.
+           Real brands, real numbers, not theory." Two real portfolio brands, each
+           retimed slightly slower to carry the whole line. Every cut lands in a
            pause between spoken words. -->
       <div id="b1" class="broll">
         <div class="scale" id="b1-scale">
-          <video id="b1-vid" data-start="24.9" data-duration="2.3667" data-track-index="8"
+          <video id="b1-vid" data-start="24.9" data-duration="2.7667" data-track-index="8"
                  src="assets/broll/sp1-sweetes-9x16.mp4" muted playsinline></video>
         </div>
       </div>
 
       <div id="b2" class="broll">
         <div class="scale" id="b2-scale">
-          <video id="b2-vid" data-start="27" data-duration="2.1667" data-track-index="9"
+          <video id="b2-vid" data-start="27.4" data-duration="2.6667" data-track-index="9"
                  src="assets/broll/sp2-dryft-9x16.mp4" muted playsinline></video>
-        </div>
-      </div>
-
-      <div id="b3" class="broll">
-        <div id="b3-bg" class="inset-bg clip" data-start="28.9" data-duration="1.2667" data-track-index="10"></div>
-        <div class="inset-frame">
-          <video id="b3-vid" data-start="28.9" data-duration="1.2667" data-track-index="15"
-                 src="assets/broll/sp5-slim-screen-9x16.mp4" muted playsinline></video>
         </div>
       </div>
 
@@ -288,7 +242,7 @@
         </div>
       </div>
 
-      <img id="logo-pin" class="clip" data-start="1" data-duration="31.3667" data-track-index="12"
+      <img id="logo-pin" class="clip" data-start="0.5333" data-duration="31.8334" data-track-index="12"
            src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
 
       <div id="vignette" class="clip" data-start="0" data-duration="38" data-track-index="13"></div>
@@ -323,16 +277,11 @@
         tl.to('#grain', { backgroundPosition: '300px 300px', duration: 1,
                           ease: 'steps(10)', repeat: Math.max(0, Math.floor(DUR / 1) - 1) }, 0);
 
-        /* ---- S0 · EcomIQ bumper ------------------------------------------- */
-        tl.fromTo('#s0 .openmark',
-          { opacity: 0, scale: 0.92, filter: 'blur(12px)' },
-          { opacity: 1, scale: 1, filter: 'blur(0px)', duration: f(0.4333), ease: 'expo.out' }, f(0.0667));
-        fadeOut('#s0', 0.9333);
 
-        /* ---- pinned EcomIQ logo — the bumper mark takes its corner --------- */
+        /* ---- pinned EcomIQ logo ------------------------------------------ */
         tl.fromTo('#logo-pin',
           { opacity: 0, y: -22, filter: 'blur(8px)' },
-          { opacity: 1, y: 0, filter: 'blur(0px)', duration: f(0.5333), ease: 'power3.out' }, f(1.0333));
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: f(0.5333), ease: 'power3.out' }, f(0.5333));
 
         /* ---- SMA · Mob Armor wordmark, on the spoken name (3.318) ---------- */
         fadeIn('#smabd', 3.3333);
@@ -360,7 +309,6 @@
         fadeOut('#g1', 9.4667);
 
         /* ---- G2 · +500% — on "500" ---------------------------------------- */
-        fadeIn('#runbg-a', 12.5333);
         fadeIn('#g2', 12.5333);
         tl.fromTo('#g2-eyebrow', { opacity: 0, y: 20 },
           { opacity: 1, y: 0, duration: f(0.2667), ease: 'power2.out' }, f(12.6667));
@@ -368,34 +316,25 @@
           { opacity: 1, scale: 1, duration: f(0.4667), ease: 'back.out(1.4)' }, f(12.7333));
         tl.fromTo('#g2-rule', { scaleX: 0 },
           { scaleX: 1, duration: f(0.3667), ease: 'expo.out' }, f(13.0333));
+        fadeOut('#g2', 15.3333);
 
 
-        /* ---- Product b-roll over "four paid channels instead of one" ------- */
-        // No push on either: they are landscape sources, inset rather than cropped.
-        fadeOut('#g2', 14.0333);
-        fadeIn('#b4', 14.0333);
-        fadeOut('#b4', 15.3333);
-        fadeIn('#b5', 15.3333);
-        fadeOut('#b5', 16.3667);
-        fadeOut('#runbg-a', 16.3667);
 
         /* ---- Social-proof b-roll run — 24.9 -> 29.9 ----------------------- */
         // sp1 · Sweet E's, on "And that's what EcomIQ does."
         fadeIn('#runbg-b', 24.9);
         fadeIn('#b1', 24.9);
         tl.fromTo('#b1-scale', { scale: 1.06 },
-          { scale: 1.0, duration: f(2.1), ease: 'none' }, f(24.9));
+          { scale: 1.0, duration: f(2.7667), ease: 'none' }, f(24.9));
         // sp2 · Dryft Sleep, over the pause and "Real brands, real numbers,"
-        fadeOut('#b1', 27.0);
-        fadeIn('#b2', 27.0);
+        fadeOut('#b1', 27.4);
+        fadeIn('#b2', 27.4);
         tl.fromTo('#b2-scale', { scale: 1.06 },
-          { scale: 1.0, duration: f(1.9), ease: 'none' }, f(27.0));
+          { scale: 1.0, duration: f(2.6667), ease: 'none' }, f(27.4));
         // sp3 · the client's own product, on "not theory." No push: it is the one
         // landscape source, and scaling it up is exactly what we avoided above.
-        fadeOut('#b2', 28.9);
-        fadeIn('#b3', 28.9);
-        fadeOut('#b3', 29.9);
-        fadeOut('#runbg-b', 29.9);
+        fadeOut('#b2', 29.8);
+        fadeOut('#runbg-b', 29.8);
 
         /* ---- S9 · outro — on "Tap", holds 5.63s --------------------------- */
         fadeIn('#s9', 32.3667);

@@ -71,11 +71,6 @@ SWAPS: list[tuple[str, str, str]] = [
         "--wordmark-w: 700px;   /* Mob Armor card, on the spoken name */",
     ),
     (
-        "opening bumper mark width",
-        "--openmark-w: 560px;",
-        "--openmark-w: 500px;",
-    ),
-    (
         "end-card lockup width",
         "--endmark-w: 620px;",
         "--endmark-w: 560px;",
@@ -128,23 +123,6 @@ SWAPS: list[tuple[str, str, str]] = [
         'src="assets/broll/sp2-dryft-4x5.mp4"',
     ),
     (
-        # The product shots are landscape: 9:16 insets them at 1080x608 on navy,
-        # 4:5 takes its own 864px crop and goes full-bleed.
-        "b-roll sp3 source",
-        'src="assets/broll/sp3-claw-9x16.mp4"',
-        'src="assets/broll/sp3-claw-4x5.mp4"',
-    ),
-    (
-        "b-roll sp4 source",
-        'src="assets/broll/sp4-slim-dash-9x16.mp4"',
-        'src="assets/broll/sp4-slim-dash-4x5.mp4"',
-    ),
-    (
-        "b-roll sp5 source",
-        'src="assets/broll/sp5-slim-screen-9x16.mp4"',
-        'src="assets/broll/sp5-slim-screen-4x5.mp4"',
-    ),
-    (
         "Mob Armor mark top offset",
         "--sma-top: 354px;   /* Mob Armor mark sits on the clean wall, not the hardware */",
         "--sma-top: 302px;   /* Mob Armor mark sits on the clean wall, not the hardware */",
@@ -153,16 +131,6 @@ SWAPS: list[tuple[str, str, str]] = [
         "scrim band centre",
         "--band-c: 22.4%;",
         "--band-c: 27.4%;",
-    ),
-    (
-        "landscape inset top",
-        "--inset-top: 428px;   /* landscape inset, centred above the subtitle line */",
-        "--inset-top: 0px;     /* 4:5 takes its own crop, so these go full-bleed */",
-    ),
-    (
-        "landscape inset height",
-        "--inset-h: 608px;",
-        "--inset-h: 1350px;",
     ),
 ]
 # Deliberately NOT swapped: every font size, horizontal padding, the streak's
