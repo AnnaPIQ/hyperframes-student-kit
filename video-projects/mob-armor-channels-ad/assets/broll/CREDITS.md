@@ -34,6 +34,23 @@ in a pause between spoken words**, never mid-word.
 > freeze is only ever on screen underneath a dissolve, so it is not visible, and it
 > is what lets every word landing stay where it is.
 
+### sp0 · Quick Release Tube — `sp0-tube-backdrop-9x16.mp4` / `-4x5.mp4`
+*(backdrop behind the Mob Armor wordmark, 3.333 → 5.467)*
+- **Source:** Mob Armor "Social Cuts" — `quick-release-tube.mp4`
+  (`1_z6gBlfa3vbw3KiXLFopunwjil4M1sls`), 1080×1920, 24 fps.
+- **Shot boundaries (full-file scene detect):** cuts at 2.50 / 6.29 → the shot spans
+  **2.50 – 6.29**. **In / out used: 3.40 → 5.90**, safely inside it. No burned-in text;
+  the only Mob Armor mark in shot is the one embossed on the product itself.
+- Natively vertical, so 9:16 is **1:1 — no upscale behind the logo**. 4:5 is a
+  1080×1350 crop at y=60, chosen to keep the clean upper wall in frame.
+- **Mob Armor's brand guide governs this one.** It says to avoid the logo over images,
+  "the only exception … when you are putting the logo on an image banner. When doing
+  this there needs to be a consistent color or color or texture behind the logo that
+  doesn't conflict with it or hide it." So: the footage is blurred 4px and carried
+  under a radial navy band, and **the wordmark is lifted to the empty wall in the upper
+  third** rather than sitting centred over the hardware. Centred, the mark cut across
+  the tablet and mount — which is exactly what the guide forbids.
+
 ### sp1 · Sweet E's — `sp1-sweetes-9x16.mp4` / `-4x5.mp4`
 - **Source:** `video-projects/my-meta-ad/assets/aug5-broll-sweetes-{9x16,4x5}.mp4` on
   branch `claude/aug-general-ad-5-shortform-59z10c` (commit `59ef7d8`), where it runs

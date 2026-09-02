@@ -20,6 +20,8 @@
         --endmark-w: 620px;
         --inset-top: 428px;   /* landscape inset, centred above the subtitle line */
         --inset-h: 608px;
+        --sma-top: 354px;   /* Mob Armor mark sits on the clean wall, not the hardware */
+        --band-c: 22.4%;
       }
       /* --------------------------------------------------------------------- */
 
@@ -83,6 +85,25 @@
 
       #s0 .openmark { width: var(--openmark-w); height: auto; display: block; }
       #sma .wordmark { width: var(--wordmark-w); height: auto; display: block; }
+      /* Product footage behind the client's wordmark. Mob Armor's brand guide allows
+         the logo over an image only when "there needs to be a consistent color or
+         texture behind the logo that doesn't conflict with it or hide it" — so the
+         footage is blurred and carried under a heavy navy scrim, leaving the mark on
+         what reads as a solid dark ground with motion behind it. */
+      #smabd { position: absolute; inset: 0; z-index: 4; overflow: hidden; }
+      #smabd .scale { position: absolute; inset: -3%; transform-origin: 50% 50%; filter: blur(4px); }
+      #smabd video { display: block; width: 100%; height: 100%; object-fit: cover; }
+      /* A navy band of consistent tone under the mark — radial, not linear, because a
+         full-height linear ramp on this palette bands under H.264. The product stays
+         readable above and below it. */
+      #sma .ground { background:
+        radial-gradient(122% 34% at 50% var(--band-c), rgba(6,40,76,0.90) 0%, rgba(6,40,76,0.26) 100%),
+        rgba(6,40,76,0.26); }
+      /* .card paints opaque navy; this one must not, or it hides its own backdrop. */
+      #sma { background: transparent; }
+      /* This card alone top-aligns: the mark belongs on the empty wall in the upper
+         third of the backdrop, where nothing conflicts with it. */
+      #sma .inner { justify-content: flex-start; padding-top: var(--sma-top); }
 
       /* End card follows the standing EcomIQ pattern: lockup, one line, flame pill. */
       #s9 .endmark { width: var(--endmark-w); height: auto; display: block; }
@@ -174,7 +195,14 @@
       </div>
 
       <!-- SMA — the client's wordmark, landing on the spoken name.
-           "Mob Armor" is said at 3.318-3.578; the card holds to the next phrase. -->
+           "Mob Armor" is said at 3.318-3.578; the card holds to the next phrase.
+           Behind it, the client's own product under a navy scrim (see CSS note). -->
+      <div id="smabd">
+        <div class="scale" id="smabd-scale">
+          <video id="smabd-vid" data-start="3.3333" data-duration="2.1334" data-track-index="21"
+                 src="assets/broll/sp0-tube-backdrop-9x16.mp4" muted playsinline></video>
+        </div>
+      </div>
       <div id="sma" class="card clip" data-start="3.3333" data-duration="2.1334" data-track-index="16">
         <div class="ground"></div>
         <div class="inner">
@@ -307,11 +335,15 @@
           { opacity: 1, y: 0, filter: 'blur(0px)', duration: f(0.5333), ease: 'power3.out' }, f(1.0333));
 
         /* ---- SMA · Mob Armor wordmark, on the spoken name (3.318) ---------- */
+        fadeIn('#smabd', 3.3333);
         fadeIn('#sma', 3.3333);
+        tl.fromTo('#smabd-scale', { scale: 1.0 },
+          { scale: 1.06, duration: f(2.1334), ease: 'none' }, f(3.3333));
         tl.fromTo('#sma .wordmark',
           { opacity: 0, scale: 0.93, filter: 'blur(12px)' },
           { opacity: 1, scale: 1, filter: 'blur(0px)', duration: f(0.5333), ease: 'expo.out' }, f(3.4667));
         tl.to('#sma .wordmark', { scale: 1.025, duration: f(1.0667), ease: 'sine.inOut' }, f(4.0));
+        fadeOut('#smabd', 5.2);
         fadeOut('#sma', 5.2);
 
         /* ---- G1 · ONE CHANNEL — on "one channel" -------------------------- */

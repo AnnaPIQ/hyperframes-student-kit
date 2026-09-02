@@ -113,6 +113,11 @@ SWAPS: list[tuple[str, str, str]] = [
         'src="assets/aroll/aroll-4x5.mp4"',
     ),
     (
+        "logo-backdrop source",
+        'src="assets/broll/sp0-tube-backdrop-9x16.mp4"',
+        'src="assets/broll/sp0-tube-backdrop-4x5.mp4"',
+    ),
+    (
         "b-roll sp1 source",
         'src="assets/broll/sp1-sweetes-9x16.mp4"',
         'src="assets/broll/sp1-sweetes-4x5.mp4"',
@@ -138,6 +143,16 @@ SWAPS: list[tuple[str, str, str]] = [
         "b-roll sp5 source",
         'src="assets/broll/sp5-slim-screen-9x16.mp4"',
         'src="assets/broll/sp5-slim-screen-4x5.mp4"',
+    ),
+    (
+        "Mob Armor mark top offset",
+        "--sma-top: 354px;   /* Mob Armor mark sits on the clean wall, not the hardware */",
+        "--sma-top: 302px;   /* Mob Armor mark sits on the clean wall, not the hardware */",
+    ),
+    (
+        "scrim band centre",
+        "--band-c: 22.4%;",
+        "--band-c: 27.4%;",
     ),
     (
         "landscape inset top",

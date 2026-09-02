@@ -87,7 +87,7 @@ is no A-roll cut anywhere in the piece — and keeps lip-sync locked by construc
 | S0 | EcomIQ bumper | 0.000 | 0.933 | — | EcomIQ lockup on navy. Covers the top of the take — he is looking down, settling, until ~0.70 — and stamps whose ad this is. |
 | — | A-roll revealed | 1.750 | — | mid "One of the brands…" | blur-whip out of S0 |
 | L | EcomIQ logo | 1.033 | 32.367 | — | the bumper mark takes its corner; pinned top-left until the end card |
-| SMA | **Mob Armor card** | 3.333 | 5.200 | "**Mob Armor**" (3.318–3.578) | the client's white wordmark, landing on the spoken name |
+| SMA | **Mob Armor card** | 3.333 | 5.200 | "**Mob Armor**" (3.318–3.578) | the client's white wordmark on the spoken name, over the client's own product under a navy band (see `assets/broll/CREDITS.md` for the brand-guide constraint) |
 | G1 | **ONE CHANNEL** | 7.178 | 9.478 | "**one** channel" (7.178) | eyebrow `PAID CHANNELS`; big `1`; 4 dots — 1 flame-lit, 3 dark; sub `FACEBOOK ADS` |
 | — | A-roll | 9.478 | 12.538 | "Now, 12 months later, their total sales are up over" | |
 | G2 | **+500%** | 12.538 | 14.038 | "**500**" (12.538) | eyebrow `TOTAL SALES · 12 MONTHS`; `+500%`; flame rule |
