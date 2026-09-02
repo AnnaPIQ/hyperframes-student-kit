@@ -77,6 +77,64 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## Fonts & glyphs
+
+- **The EcomIQ brand fonts are latin-only: `→` (U+2192) is MISSING from both
+  `RethinkSans.woff2` and `HedvigLettersSerif.woff2`** (222 / 219 codepoints). A right
+  arrow in copy silently falls back to a system face or renders as tofu. **Fix:** draw
+  arrows in CSS (a rotated two-border chevron on an `::after`) or use words ("rises 1.92
+  to 2.61"). `↓` `−` `×` `·` `–` ARE present. **Check before you ship any glyph beyond
+  basic latin:** `pip install fonttools brotli` then read the cmap, don't assume.
+
+## Transitions & cut timing
+
+- **A scene whose content tweens start *after* its `data-start` renders an empty frame on
+  the cut.** A 0.1–0.2s lead-in feels harmless in code and reads as a dead frame on
+  screen. **Fix:** fire each scene's first entrance AT the clip's `data-start` and let the
+  blur+scale arrival carry the momentum.
+- **`power2.in` on a whip streak leaves it off-frame when the cut lands.** An "in" ease
+  spends its first 60% barely moving, so the streak crosses *after* the cut and reads as a
+  hard cut with a late flick. **Fix:** start the sweep ~0.2s early with `power1.inOut` so
+  the streak is mid-frame on the cut frame itself.
+- **`power3.inOut` on a hero move barely advances over the first few frames.** Same trap as
+  above: the end-card logo flight looked frozen at the most important cut in the piece.
+  **Fix:** `power3.out` for any move that must read immediately at a cut.
+
+## Layout & assets
+
+- **"White background" product renders usually are not white, and are not cut-outs.**
+  Sampling gave `#EEEEEF` (tool spread) and `#FDFDFE` (cover mockup), so on a pure-white
+  canvas their frame edges showed as grey boxes. **Fix:** sample the corner
+  (`convert img.png -crop 6x6+2+2 +repage -resize 1x1 -format "%[hex:p{0,0}]" info:`) and
+  either match the canvas exactly or, better, present the shot as a deliberate rounded card
+  with a shadow. Keying the background to alpha is a trap: `-transparent` also eats white
+  text inside the product, and floodfill leaves a halo on the soft shadow.
+- **`-trim` (uniform-border crop) is the safe way to tighten a mockup's margins** — no
+  keying, no halo. It stops at the drop shadow, which is what you want.
+
+## Two aspect ratios from one edit
+
+- **Two root-level HTML files with `data-composition-id` is a lint ERROR**
+  (`multiple_root_compositions`, plus duplicate-audio risk). **Fix:** keep `index.html` as
+  the only root and put the second ratio in `compositions/`, rendered with
+  `-c compositions/square.html`. Generate it from `index.html` with a small sed script so
+  the two cannot drift, and keep all layout deltas in `body.r-<ratio>` CSS blocks.
+- **Asset paths in a `compositions/` file stay ROOT-relative (`assets/...`), NOT
+  `../assets/...`** — compositions are served with the project root as base URL, so `../`
+  404s in Studio (lint: `invalid_parent_traversal_in_asset_path`).
+- **Lint `missing_timeline_registry` fires if the timeline lives in an external `.js`.** The
+  linter statically scans the HTML, so `window.__timelines[...]` must be inline in the
+  composition file. Shared CSS in an external file is fine.
+
+## Audio levels
+
+- **Raw A-roll VO can be far below social delivery loudness.** This source measured
+  **-33.3 LUFS** integrated, ~17 dB under target, which would have played near-silent next
+  to other feed content. **Fix:** two-pass `loudnorm=I=-16:TP=-1.5:LRA=11` (measure, then
+  pass `measured_*` back in). Verify the finished render with
+  `ffmpeg -i out.mp4 -af ebur128=framelog=quiet -f null -` — this also catches accidentally
+  layered audio tracks, which show up as roughly +6 dB.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

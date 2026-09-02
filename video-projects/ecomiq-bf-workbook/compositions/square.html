@@ -1,0 +1,533 @@
+<!doctype html>
+<!-- GENERATED FILE - do not edit. Source: index.html - regenerate with: bash scripts/gen-square.sh -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1080" />
+    <title>EcomIQ, Black Friday workbook (1:1)</title>
+    <!-- GSAP vendored locally: a CDN <script> cert-fails in the render env and
+         freezes the render (docs/LESSONS.md). -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <link rel="stylesheet" href="assets/ad.css" />
+  </head>
+  <body class="r-1x1">
+    <!-- =====================================================================
+         Render contract: root carries id, data-composition-id, data-start="0",
+         data-duration, data-width, data-height. Timed visible children carry
+         class="clip" + data-start / data-duration / data-track-index, except
+         <video> and <audio>, which take the data-* but never class="clip".
+         Every clip gets its own track index so nothing can collide.
+
+         square.html is generated from this file, see scripts/gen-square.sh.
+         Edit THIS file, then regenerate.
+         ===================================================================== -->
+    <div
+      id="root"
+      data-composition-id="ecomiq-bf-workbook-1x1"
+      data-start="0"
+      data-duration="19.6"
+      data-width="1080"
+      data-height="1080"
+    >
+      <!-- ---------------------------------------------------------------
+           A-roll spine, Sean, cover-cropped, muted. One continuous clip so
+           playback (and lip sync) never restarts. The non-timed wrapper
+           carries the slow push-in; the <video> is never transformed.
+           --------------------------------------------------------------- -->
+      <div id="aroll-wrap">
+        <video
+          id="aroll"
+          data-start="0"
+          data-duration="15.0333"
+          data-track-index="0"
+          src="assets/aroll-1x1.mp4"
+          muted
+          playsinline
+        ></video>
+      </div>
+      <div id="aroll-scrim"></div>
+
+      <div id="bf-chip">Black Friday</div>
+
+      <!-- ---------------------------------------------------------------
+           S2 · GFX-1, record revenue, thin profit  (1.90 → 4.8333)
+           --------------------------------------------------------------- -->
+      <div
+        id="gfx1"
+        class="clip scene scene-navy"
+        data-start="1.9"
+        data-duration="2.9333"
+        data-track-index="1"
+      >
+        <div class="bloom"></div>
+        <div class="sc">
+          <div class="sc-mid">
+            <div id="g1-eyebrow" class="eyebrow">Black Friday 2026</div>
+            <div id="g1-title" class="title">
+              <div>Record revenue.</div>
+              <div><span class="hot">Thin</span> profit.</div>
+            </div>
+            <div id="g1-chart">
+              <div id="g1-base"></div>
+              <div class="g1-col">
+                <div id="g1-bar-rev" class="g1-bar"></div>
+                <div id="g1-lab-rev" class="g1-label">Revenue</div>
+              </div>
+              <div class="g1-col">
+                <div id="g1-bar-pro" class="g1-bar"></div>
+                <div id="g1-lab-pro" class="g1-label">Profit</div>
+              </div>
+            </div>
+          </div>
+          <div id="g1-foot" class="foot">Illustrative &middot; your numbers decide the answer</div>
+        </div>
+      </div>
+
+      <!-- ---------------------------------------------------------------
+           S4 · GFX-2, contribution per order  (6.50 → 8.8333)
+           Figures are the workbook's own worked example (Part 01, page 8).
+           --------------------------------------------------------------- -->
+      <div
+        id="gfx2"
+        class="clip scene scene-navy"
+        data-start="6.5"
+        data-duration="2.3333"
+        data-track-index="2"
+      >
+        <div class="bloom"></div>
+        <div class="sc">
+          <div class="sc-mid">
+            <div id="g2-eyebrow" class="eyebrow">What one order contributes</div>
+            <div id="g2-aov">
+              <div class="v num">$114.70</div>
+              <div class="k">Average order value</div>
+            </div>
+            <div id="g2-rows">
+              <div class="g2-row">
+                <div class="k">Refunds &amp; discounts</div>
+                <div class="v num">&minus;$4.59</div>
+              </div>
+              <div class="g2-row">
+                <div class="k">Landed product cost</div>
+                <div class="v num">&minus;$34.00</div>
+              </div>
+              <div class="g2-row">
+                <div class="k">Fulfilment &amp; delivery</div>
+                <div class="v num">&minus;$13.10</div>
+              </div>
+              <div class="g2-row">
+                <div class="k">Payment &amp; commission fees</div>
+                <div class="v num">&minus;$3.30</div>
+              </div>
+            </div>
+            <div id="g2-result">
+              <div id="g2-value" class="v num">$114.70</div>
+              <div class="k">Contribution per order</div>
+            </div>
+            <div id="g2-chip" class="chip">52.1% contribution margin</div>
+          </div>
+          <div id="g2-foot" class="foot">
+            Example &middot; $114.70 = Shopify BFCM 2025 average order value
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------------------------------------------------------------
+           S5 · GFX-3, what 25% off costs  (9.0667 → 11.9667)
+           Callback: the $59.71 from S4 returns, struck through.
+           The dial is a 270deg gauge (0–100%) landing on 25%.
+           --------------------------------------------------------------- -->
+      <div
+        id="gfx3"
+        class="clip scene scene-navy"
+        data-start="9.0667"
+        data-duration="2.9"
+        data-track-index="3"
+      >
+        <div class="bloom"></div>
+        <div class="sc">
+          <div class="sc-mid">
+            <div id="g3-eyebrow" class="eyebrow">What 25% off costs you</div>
+            <div id="g3-dial">
+              <svg viewBox="0 0 400 400" aria-hidden="true">
+                <g transform="rotate(135 200 200)">
+                  <circle id="g3-track" cx="200" cy="200" r="170"
+                          stroke-dasharray="801.1062 1068.1416"></circle>
+                  <circle id="g3-arc" cx="200" cy="200" r="170"
+                          stroke-dasharray="801.1062 1068.1416"
+                          stroke-dashoffset="801.1062"></circle>
+                </g>
+              </svg>
+              <div class="mid">
+                <div id="g3-pct" class="num">0%</div>
+                <div id="g3-cap" class="cap">Discount depth</div>
+              </div>
+            </div>
+            <div id="g3-swap">
+              <div id="g3-was" class="num">$59.71</div>
+              <div id="g3-arrow"></div>
+              <div id="g3-now" class="num">$33.00</div>
+            </div>
+            <div id="g3-cap2">Contribution per order</div>
+            <div id="g3-roas" class="num">Breakeven ROAS rises 1.92 to 2.61</div>
+            <div id="g3-units" class="num">and 1.81&times; the units just to stand still</div>
+          </div>
+          <div id="g3-foot" class="foot">
+            Example &middot; 25% = 2025 apparel discount depth, Adobe Analytics
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------------------------------------------------------------
+           S7 · GFX-4, the workbook  (12.6667 → 15.0333)
+           The one light beat. Canvas is pure WHITE so the product renders'
+           own white backgrounds blend seamlessly (they are not cut-outs).
+           --------------------------------------------------------------- -->
+      <div
+        id="gfx4"
+        class="clip scene"
+        data-start="12.6667"
+        data-duration="2.3667"
+        data-track-index="4"
+      >
+        <div id="g4-wash"></div>
+        <div class="sc">
+          <div class="sc-mid">
+            <div id="g4-eyebrow">Free workbook</div>
+            <div id="g4-rule"></div>
+            <img id="g4-spread" src="assets/workbook-spread-discount.png"
+                 alt="The Black Friday Profit Plan workbook with its worksheets and tools" />
+            <div id="g4-lower">
+              <img id="g4-cover" src="assets/workbook-cover-trim.png"
+                   alt="The Black Friday Profit Plan workbook cover" />
+              <div id="g4-stats">
+                <div class="g4-stat"><span class="v num">8</span><span class="k">Parts</span></div>
+                <div class="g4-stat"><span class="v num">32</span><span class="k">Worksheets</span></div>
+                <div class="g4-stat"><span class="v num">19</span><span class="k">Tools</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------------------------------------------------------------
+           S8 · END CARD  (15.0333 → 19.60)
+           The corner watermark flies in and becomes the hero lockup, so the
+           card's logo and the persistent watermark are the same element.
+           VO ends at 15.70; the card holds in silence to 19.60.
+           --------------------------------------------------------------- -->
+      <div
+        id="endcard"
+        class="clip scene scene-navy"
+        data-start="15.0333"
+        data-duration="4.5667"
+        data-track-index="5"
+      >
+        <div class="bloom"></div>
+        <div class="sc">
+          <div id="ec-head">
+            <div class="ec-line">Get your <span class="em em-tint">free</span></div>
+            <div class="ec-line">Black Friday</div>
+            <div class="ec-line">workbook</div>
+          </div>
+          <div id="ec-cta">Get the workbook</div>
+          <div id="ec-chev">&darr;</div>
+        </div>
+      </div>
+
+      <!-- Cut-hiding whip streaks. Non-timed decoratives driven by GSAP. -->
+      <div id="whip1" class="whip"></div>
+      <div id="whip2" class="whip"></div>
+      <div id="whip3" class="whip"></div>
+      <div id="whip4" class="whip"></div>
+      <div id="whip5" class="whip"></div>
+      <div id="whip6" class="whip"></div>
+      <div id="whip7" class="whip"></div>
+
+      <!-- Persistent logo watermark. Positioned NON-clip wrapper (the render
+           engine repositions class="clip" elements, which makes the logo
+           drift). White lockup on navy, navy lockup on the light beat. -->
+      <div id="logo-wrap">
+        <img id="logo-w" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <img id="logo-n" src="assets/ecomiq-logo-navy.svg" alt="" />
+      </div>
+
+      <!-- Unifying texture, on top of every scene. -->
+      <div id="vignette"></div>
+      <div id="grain"></div>
+
+      <!-- ---------------------------------------------------------------
+           Audio. Sean's VO is the spine, normalised to −16 LUFS.
+           The music bed is a SILENT PLACEHOLDER, pre-split at the end-card
+           cut so the duck is already wired: swap the src on both clips for
+           the real bed and it sits under Sean at 0.10 and lifts to 0.18 on
+           the card. B-roll audio is a non-issue (stills, and both A-roll
+           encodes are -an).
+           --------------------------------------------------------------- -->
+      <audio
+        id="vo"
+        data-start="0"
+        data-duration="16.1333"
+        data-track-index="12"
+        src="assets/sean-vo.m4a"
+        data-volume="1"
+      ></audio>
+      <audio
+        id="bed-under"
+        data-start="0"
+        data-duration="15.0333"
+        data-track-index="13"
+        src="assets/music-bed-placeholder.m4a"
+        data-volume="0.1"
+      ></audio>
+      <audio
+        id="bed-card"
+        data-start="15.0333"
+        data-duration="4.5667"
+        data-track-index="14"
+        src="assets/music-bed-placeholder.m4a"
+        data-volume="0.18"
+      ></audio>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var root = document.querySelector("[data-composition-id]");
+        var COMP = root.getAttribute("data-composition-id");
+        var END = 19.6;
+        var SQUARE = document.body.classList.contains("r-1x1");
+
+        /* --- cut points (edit time = A-roll source time - 1.95s) ---------------- */
+        var T = {
+          gfx1: 1.9,        // "...can still leave you with very little profit."
+          s3:   4.8333,     // back to Sean, "So before you set your offer,"
+          gfx2: 6.5,        // "work out what each order contributes"
+          gfx3: 9.0667,     // "and the biggest discount your margin can afford."
+          s6:   11.9667,    // back to Sean, his breath
+          gfx4: 12.6667,    // "Our free workbook walks you through all of it."
+          ec:   15.0333     // "The link is below."
+        };
+
+        /* --- dial geometry: a 270deg gauge, 0-100%, landing on 25% ------------- */
+        var DIAL_ARC = 801.1062;             // 0.75 x circumference at r=170
+        var DIAL_25 = DIAL_ARC * 0.25;
+
+        window.__timelines = window.__timelines || {};
+        var tl = gsap.timeline({ paused: true });
+
+        /* -----------------------------------------------------------------------
+           Helpers
+           ----------------------------------------------------------------------- */
+
+        /* A motion-blurred streak that hides the cut. It must be MID-FRAME on the
+           cut frame itself, so it starts 0.20s early and eases inOut: an "in" ease
+           leaves the streak still off-screen left when the cut lands, which reads
+           as a hard cut with a late flick. Three non-overlapping tweens so no
+           property is driven twice. */
+        function whip(sel, t) {
+          tl.fromTo(sel, { xPercent: -170 },
+            { xPercent: 260, duration: 0.34, ease: "power1.inOut" }, t - 0.2);
+          tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, t - 0.2);
+          tl.to(sel, { opacity: 0, duration: 0.16, ease: "none" }, t - 0.02);
+        }
+
+        /* Scene arrives carrying the cut's momentum. Its own content tweens start
+           ON the cut (never after it) so the incoming frame is never empty. */
+        function sceneIn(sel, t) {
+          tl.fromTo(sel + " .sc",
+            { scale: 1.05, filter: "blur(24px)" },
+            { scale: 1, filter: "blur(0px)", duration: 0.36, ease: "power2.out" }, t);
+        }
+
+        /* Deterministic count-up: tween a plain object, write the text on update.
+           Seek-safe, no Math.random, no Date.now. */
+        function countUp(sel, from, to, t, d, fmt) {
+          var el = document.querySelector(sel);
+          var o = { v: from };
+          el.textContent = fmt(from);
+          tl.to(o, {
+            v: to, duration: d, ease: "power2.out",
+            onUpdate: function () { el.textContent = fmt(o.v); }
+          }, t);
+        }
+        function money(v) { return "$" + v.toFixed(2); }
+        function pct(v) { return Math.round(v) + "%"; }
+
+        /* -----------------------------------------------------------------------
+           Persistent layers
+           ----------------------------------------------------------------------- */
+
+        /* Logo watermark, top-left on every frame. */
+        tl.fromTo("#logo-wrap", { opacity: 0, y: -18 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.2);
+
+        /* Slow continuous push on Sean, the camera never sleeps. Wrapper only; the
+           <video> itself is never transformed. */
+        tl.fromTo("#aroll-wrap", { scale: 1 },
+          { scale: 1.06, duration: T.ec, ease: "none" }, 0);
+
+        /* Vignette breathes through the navy act, steps aside for the light product
+           beat, and returns for the card. Finite repeats only. */
+        tl.to("#vignette", { opacity: 0.82, duration: 3.1, yoyo: true, repeat: 3, ease: "sine.inOut" }, 0);
+        tl.to("#vignette", { opacity: 0.12, duration: 0.3, ease: "power2.out" }, T.gfx4);
+        tl.to("#vignette", { opacity: 1, duration: 0.28, ease: "power2.in" }, 14.9);
+
+        /* Lockup swaps to the navy variant on the white beat (brand rule: navy logo
+           on light grounds) and back to white for the card. Two frames, landing
+           exactly on the cut, so it is never caught half-faded on either ground. */
+        tl.to("#logo-n", { opacity: 1, duration: 0.06, ease: "none" }, T.gfx4);
+        tl.to("#logo-w", { opacity: 0, duration: 0.06, ease: "none" }, T.gfx4);
+        tl.to("#logo-n", { opacity: 0, duration: 0.06, ease: "none" }, T.ec);
+        tl.to("#logo-w", { opacity: 1, duration: 0.06, ease: "none" }, T.ec);
+
+        /* -----------------------------------------------------------------------
+           S1 · Sean, the hook  (0 -> 1.90)
+           ----------------------------------------------------------------------- */
+        tl.fromTo("#bf-chip", { opacity: 0, y: 14, scale: 0.9 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.5)" }, 0.62);
+
+        /* -----------------------------------------------------------------------
+           S2 · GFX-1 · record revenue, thin profit  (1.90 -> 4.8333)
+           The flame sliver lands on "very little profit".
+           ----------------------------------------------------------------------- */
+        whip("#whip1", T.gfx1);
+        sceneIn("#gfx1", T.gfx1);
+        tl.fromTo("#gfx1 .bloom", { opacity: 0.16, yPercent: 6 },
+          { opacity: 0.3, yPercent: 0, duration: 2.4, ease: "sine.out" }, T.gfx1);
+        tl.fromTo("#g1-base", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "power3.out" }, T.gfx1);
+        tl.fromTo("#g1-eyebrow", { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.34, ease: "power2.out" }, 1.93);
+        tl.fromTo("#g1-title", { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.97);
+        tl.fromTo("#g1-bar-rev", { scaleY: 0 }, { scaleY: 1, duration: 0.62, ease: "expo.out" }, 2.03);
+        tl.fromTo("#g1-lab-rev", { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 2.4);
+        tl.fromTo("#g1-bar-pro", { scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: "power3.out" }, 3.23);
+        tl.fromTo("#g1-lab-pro", { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.28, ease: "power2.out" }, 3.4);
+        tl.to("#g1-bar-pro", { scaleY: 1.26, duration: 0.22, yoyo: true, repeat: 1, ease: "sine.inOut" }, 3.7);
+        tl.fromTo("#g1-foot", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 3.8);
+
+        /* -----------------------------------------------------------------------
+           S3 · Sean  (4.8333 -> 6.50)
+           ----------------------------------------------------------------------- */
+        whip("#whip2", T.s3);
+
+        /* -----------------------------------------------------------------------
+           S4 · GFX-2 · contribution per order  (6.50 -> 8.8333)
+           Every figure is the workbook's own worked example, Part 01 page 8.
+           ----------------------------------------------------------------------- */
+        whip("#whip3", T.gfx2);
+        sceneIn("#gfx2", T.gfx2);
+        tl.fromTo("#gfx2 .bloom", { opacity: 0.16, yPercent: 6 },
+          { opacity: 0.3, yPercent: 0, duration: 2.1, ease: "sine.out" }, T.gfx2);
+        tl.fromTo("#g2-eyebrow", { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, T.gfx2);
+        tl.fromTo("#g2-aov", { opacity: 0, y: 24, scale: 0.94 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.44, ease: "expo.out" }, 6.55);
+        tl.fromTo(".g2-row", { opacity: 0, x: -26 },
+          { opacity: 1, x: 0, duration: 0.34, ease: "power2.out", stagger: 0.155 }, 6.8);
+        tl.fromTo("#g2-result", { opacity: 0, y: 26 },
+          { opacity: 1, y: 0, duration: 0.44, ease: "power3.out" }, 7.5);
+        countUp("#g2-value", 114.7, 59.71, 7.56, 0.6, money);
+        tl.fromTo("#g2-chip", { opacity: 0, scale: 0.86 },
+          { opacity: 1, scale: 1, duration: 0.34, ease: "back.out(1.6)" }, 8.16);
+        tl.fromTo("#g2-foot", { opacity: 0 }, { opacity: 1, duration: 0.28, ease: "none" }, 8.26);
+
+        /* -----------------------------------------------------------------------
+           S5 · GFX-3 · what 25% off costs  (9.0667 -> 11.9667)
+           Callback: the $59.71 from S4 returns and is struck through.
+           ----------------------------------------------------------------------- */
+        whip("#whip4", T.gfx3);
+        sceneIn("#gfx3", T.gfx3);
+        tl.fromTo("#gfx3 .bloom", { opacity: 0.16, yPercent: 6 },
+          { opacity: 0.3, yPercent: 0, duration: 2.4, ease: "sine.out" }, T.gfx3);
+        tl.fromTo("#g3-eyebrow", { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, T.gfx3);
+        tl.fromTo("#g3-dial", { opacity: 0, scale: 0.9 },
+          { opacity: 1, scale: 1, duration: 0.42, ease: "power3.out" }, 9.1);
+        tl.fromTo("#g3-arc", { strokeDashoffset: DIAL_ARC },
+          { strokeDashoffset: DIAL_ARC - DIAL_25, duration: 0.7, ease: "power2.out" }, 9.18);
+        countUp("#g3-pct", 0, 25, 9.18, 0.7, pct);
+        tl.fromTo("#g3-cap", { opacity: 0 }, { opacity: 1, duration: 0.28, ease: "none" }, 9.64);
+        tl.to("#g3-dial", { scale: 1.018, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, 10.06);
+        tl.fromTo("#g3-was", { opacity: 0, x: -30 },
+          { opacity: 1, x: 0, duration: 0.34, ease: "power2.out" }, 10.3);
+        tl.fromTo("#g3-arrow", { opacity: 0 }, { opacity: 1, duration: 0.22, ease: "none" }, 10.48);
+        tl.fromTo("#g3-now", { opacity: 0, x: 26, scale: 0.82 },
+          { opacity: 1, x: 0, scale: 1, duration: 0.42, ease: "back.out(1.5)" }, 10.56);
+        tl.fromTo("#g3-cap2", { opacity: 0 }, { opacity: 1, duration: 0.26, ease: "none" }, 10.86);
+        tl.fromTo("#g3-roas", { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.32, ease: "power2.out" }, 11.06);
+        tl.fromTo("#g3-units", { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 11.26);
+        tl.fromTo("#g3-foot", { opacity: 0 }, { opacity: 1, duration: 0.26, ease: "none" }, 11.42);
+
+        /* -----------------------------------------------------------------------
+           S6 · Sean, the rest beat  (11.9667 -> 12.6667)
+           ----------------------------------------------------------------------- */
+        whip("#whip5", T.s6);
+
+        /* -----------------------------------------------------------------------
+           S7 · GFX-4 · the workbook  (12.6667 -> 15.0333)
+           The piece's one light beat. The navy-to-white cut is itself the flash,
+           so it takes the same streak as every other cut, not a brighter one: a
+           full-width white wash here just blows the frame out.
+           ----------------------------------------------------------------------- */
+        whip("#whip6", T.gfx4);
+        sceneIn("#gfx4", T.gfx4);
+        tl.fromTo("#g4-eyebrow", { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, T.gfx4);
+        tl.fromTo("#g4-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "power3.out" }, 12.7);
+        tl.fromTo("#g4-spread", { opacity: 0, scale: 1.06, y: 20 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.62, ease: "power3.out" }, 12.7);
+        tl.fromTo("#g4-wash", { scale: 1 }, { scale: 1.1, duration: 2.2, ease: "none" }, 12.7);
+        tl.fromTo("#g4-cover", { opacity: 0, y: 90, scale: 0.92 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.56, ease: "back.out(1.2)" }, 13.26);
+        tl.to("#g4-spread", { y: -14, duration: 1.5, ease: "sine.out" }, 13.36);
+        tl.fromTo(".g4-stat", { opacity: 0, x: 24 },
+          { opacity: 1, x: 0, duration: 0.3, ease: "power2.out", stagger: 0.13 }, 13.62);
+
+        /* -----------------------------------------------------------------------
+           S8 · END CARD  (15.0333 -> 19.60)
+           The corner watermark flies out and becomes the hero lockup, so the card's
+           logo and the persistent watermark are one element. VO ends 15.70; the
+           card then holds in silence to the end.
+           ----------------------------------------------------------------------- */
+        whip("#whip7", T.ec);
+        sceneIn("#endcard", T.ec);
+        tl.fromTo("#endcard .bloom", { opacity: 0, yPercent: 14 },
+          { opacity: 0.34, yPercent: 0, duration: 1.2, ease: "sine.out" }, T.ec);
+        /* power3.out, not inOut: an inOut ease barely moves the lockup over the
+           first few frames, which left the most important cut in the piece
+           sitting on an empty navy frame. */
+        tl.to("#logo-wrap", {
+          x: SQUARE ? 326 : 266,
+          y: SQUARE ? 236 : 536,
+          scale: SQUARE ? 1.5 : 2.1965,
+          duration: 0.52, ease: "power3.out"
+        }, T.ec);
+        /* Headline builds from the cut frame itself, alongside the lockup. */
+        tl.fromTo(".ec-line", { opacity: 0, y: 34 },
+          { opacity: 1, y: 0, duration: 0.52, ease: "power3.out", stagger: 0.12 }, T.ec);
+        tl.fromTo("#ec-cta", { opacity: 0, scale: 0.84 },
+          { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 15.66);
+        tl.fromTo("#ec-chev", { opacity: 0, y: -10 },
+          { opacity: 1, y: 0, duration: 0.32, ease: "power2.out" }, 16.02);
+        /* Finite repeats: repeat:-1 breaks the capture engine. Both loops land
+           before the timeline end so tl.duration() stays exactly 19.6. */
+        tl.to("#ec-cta", { scale: 1.035, duration: 0.72, yoyo: true, repeat: 3, ease: "sine.inOut" }, 16.3);
+        tl.to("#ec-chev", { y: 14, duration: 0.58, yoyo: true, repeat: 4, ease: "sine.inOut" }, 16.44);
+
+        /* Duration anchor: pins tl.duration() to the root data-duration so no beat
+           tail can flash black (docs/LESSONS.md, render contract 7). */
+        tl.to({}, { duration: END }, 0);
+
+        window.__timelines[COMP] = tl;
+      })();
+    </script>
+  </body>
+</html>

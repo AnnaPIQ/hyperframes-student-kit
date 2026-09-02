@@ -1,0 +1,186 @@
+# EcomIQ, Black Friday Profit Plan workbook ad · EDIT PLAN
+
+**Status:** APPROVED and delivered. Renders in `renders/`.
+**Deliverables:** 9:16 (1080×1920) + 1:1 (1080×1080), H.264/AAC MP4, faststart, 30fps.
+**Runtime:** 19.60s (588 frames @ 30fps).
+
+---
+
+## 1 · Source audit
+
+| Source | What it actually is | Notes |
+|---|---|---|
+| A-roll `2a: Ad/Social - Black Friday…mov` | **ProRes 4444, 3840×2160, 25fps, 20.68s**, PCM 24-bit stereo | Landscape 16:9. Sean centre-framed, blue-lit studio (near-brand navy). |
+| B-roll folder | **No video.** 4 AI product stills + the workbook PDF + 19 companion tools (xlsx/PDF) | 3 stills usable; 1 excluded (garbled AI text). |
+| Workbook PDF | `The Black Friday Profit Plan`, 8 parts / 32 worksheets / 19 tools | Source of every on-screen figure. |
+
+### A-roll audio map (silence analysis, source timeline)
+
+| Source in | Source out | Content |
+|---|---|---|
+| 0.00 | 2.29 | **dead air** (2.22s), trimmed |
+| 2.29 | 6.35 | "A record Black Friday can still leave you with very little profit." |
+| 6.77 | 8.46 | "So before you set your offer," |
+| 8.46 | 10.80 | "work out what each order contributes" |
+| 11.01 | 13.91 | "and the biggest discount your margin can actually afford." |
+| 14.62 | 16.60 | "Our free workbook walks you through all of it." |
+| 17.00 | 17.63 | "The link is below." |
+| 17.63 | 20.68 | **out-take tail** (3.05s, Sean looks down), trimmed |
+
+**Edit time = source time − 1.95s.** 100% of speech is kept; only head dead-air and the tail out-take are removed.
+
+---
+
+## 2 · Media normalisation (done, real ffmpeg)
+
+| Asset | Spec |
+|---|---|
+| `assets/aroll-916.mp4` | 1080×1920, centre **cover-crop** from 3840×2160, 30fps CFR, CRF 19, muted |
+| `assets/aroll-1x1.mp4` | 1080×1080, centre cover-crop, 30fps CFR, CRF 19, muted |
+| `assets/sean-vo.m4a` | 16.15s AAC 192k @48k, **loudnorm −33.3 → −16.1 LUFS** (source was 17 dB under social delivery loudness) |
+| `assets/music-bed-placeholder.m4a` | 20s digital silence, swap-in point for the real bed |
+| `assets/workbook-cover.png` | Portrait cover mockup (1122×1402) |
+| `assets/workbook-spread.png` | Full tool spread, clean text (1535×1024) |
+| `assets/workbook-spread-discount.png` | Spread with "Calculate how much you can afford to discount…" subline |
+
+**Crop, not pad.** Pillarboxing a 16:9 head into 9:16 leaves a 1080×608 strip in a sea of navy. Cover-crop keeps Sean's face full-frame; his hands clip slightly at the vertical edges, which reads as normal social framing. 1:1 crop is comfortable with nothing lost.
+
+---
+
+## 3 · Shot list (edit time, snapped to 1/30s frame boundaries)
+
+| # | In | Out | Dur | Shot | On screen |
+|---|---|---|---|---|---|
+| S1 | 0.000 | 1.900 | 1.90 | **Sean** full-bleed | Logo watermark in @0.20. Flame `BLACK FRIDAY` chip @0.60. VO: "A record Black Friday can still leave you…" |
+| S2 | 1.900 | 4.833 | 2.93 | **GFX-1 · Revenue vs Profit** | Whip-in. Axis draws @2.05. `REVENUE` bar (blue-tint) rockets to 100% @2.13–2.80. `PROFIT` sliver (flame) crawls to ~8% @3.23–3.63, **lands on "very little profit"**. Flame underline flick @3.70. |
+| S3 | 4.833 | 6.500 | 1.67 | **Sean** | VO: "So before you set your offer," |
+| S4 | 6.500 | 8.833 | 2.33 | **GFX-2 · Contribution per order** | Eyebrow `ONE ORDER`. `$114.70` scales in @6.63. Deduction rows stagger 0.16s from @6.90: `−$4.59 refunds & discounts` · `−$34.00 product` · `−$13.10 fulfilment & delivery` · `−$3.30 fees`. Count-up to **`$59.71`** @7.60–8.20. Flame chip `52.1% CONTRIBUTION` @8.20. |
+| -- | 8.833 | 9.067 | 0.23 | **Whip** | Transition sits inside Sean's natural 0.21s pause. |
+| S5 | 9.067 | 11.967 | 2.90 | **GFX-3 · Discount dial** | Arc track draws. Flame arc sweeps 0→**25%** with centre count-up @9.20–9.90. Label `DISCOUNT DEPTH` @10.10. **Callback:** the `$59.71` chip from S4 flies in and morphs → **`$33.00`** ↓ @10.30–10.90. Chip `BREAKEVEN ROAS 1.92 → 2.61` @11.05. Micro-line `…and 1.81× the units to stand still` @11.25. |
+| S6 | 11.967 | 12.667 | 0.70 | **Sean** | The rest beat, his breath before the offer. |
+| S7 | 12.667 | 15.033 | 2.37 | **Workbook hero (light beat)** | Flash to white/sky. `workbook-spread-discount.png` scales 1.06→1.00 w/ drift @12.80. `workbook-cover.png` slides up front-left, `back.out(1.2)` @13.30. Flame chip `8 PARTS · 32 WORKSHEETS · 19 TOOLS` @13.80. Slow push-in to out. |
+| S8 | 15.033 | 19.600 | 4.57 | **END CARD** | Light→navy wipe. Corner watermark **flies to centre and scales up** (logo callback) @15.033–15.30. Headline rises @15.30. Flame pill @15.90 `back.out(1.7)`. Bobbing ↓ chevron @16.30. VO ends 15.70; card holds 3.9s in silence. |
+
+**Mid-section average scene length: 2.15s.** Slightly over the ≤2s house guideline because Sean's VO cadence owns the timing, not the graphics.
+
+### Sean on screen
+4 appearances, 5.94s of 19.60s. His voice runs the whole way. Graphics and product carry the visual.
+
+---
+
+## 4 · On-screen figures, all from the workbook's own worked example
+
+Nothing here is invented. Part 01 of the workbook, pages 8 and 10:
+
+```
+$114.70   Shopify BFCM 2025 average order value        (Shopify, Dec 2025)
+−  4%     discounts and refunds        → $110.11 retained
+− $34.00  landed product cost
+− $ 4.50  fulfilment  ┐
+− $ 8.60  delivery    ┘ → shown combined as −$13.10
+− $ 3.30  payment and commission charges
+= $59.71  contribution per order  =  52.1%
+```
+
+```
+Same order at 25% off → customer pays $86.03
+Contribution falls   $59.71 → $33.00
+Breakeven ROAS       1.92   → 2.61
+Volume needed        1.81× to preserve total contribution
+```
+
+Every numeric beat carries an `EXAMPLE` label plus its source in micro-type
+(`Shopify, Dec 2025` / `Adobe Analytics, Dec 2025`).
+
+**Honesty note on S5.** The workbook's 25% is the *2025 apparel discount depth benchmark* used in its worked example, it is **not** a claim that 25% is the maximum any store can afford. So S5 is framed as **"what 25% off costs you"**, which serves the VO line ("the biggest discount your margin can actually afford") by making the trade-off concrete, without inventing a universal maximum.
+
+---
+
+## 5 · Brand system (reused, nothing invented)
+
+| Element | Source |
+|---|---|
+| Palette | `assets/brand-tokens.css`, `--brand-navy #06284C`, `--brand-blue-tint #9CD4FF`, `--brand-sky #DEEEFE`, `--brand-flame #FF4C32`, `--brand-white`, `--brand-text-dim` |
+| Type | Local `assets/fonts/RethinkSans.woff2` (400–800) + `HedvigLettersSerif.woff2`, named literally in CSS per the fonts README |
+| Logo | `assets/ecomiq-logo-white.svg` (1671×286, 5.84:1) on navy |
+| Active hues | 4: navy (canvas) · blue-tint (revenue / neutral figures) · flame (the cost of discounting, CTA) · sky/white (the product beat). Each owns one meaning. |
+| Texture | Navy canvas + brand-gradient-2 bloom + breathing vignette + CSS film grain on every scene |
+| Motion | GSAP vendored locally (`assets/vendor/gsap.min.js`). Every cut hidden under a motion-blurred whip or a light wipe. No hard cuts, no captions. |
+
+Logo watermark sits **top-left on every frame**, subtle drop shadow, and is the same element that becomes the end-card hero.
+
+---
+
+## 6 · Audio
+
+| Track | Element | Start | Dur | Volume |
+|---|---|---|---|---|
+| VO | `sean-vo.m4a` | 0.000 | 16.15 | 1.0 |
+| Bed (under VO) | `music-bed-placeholder.m4a` | 0.000 | 15.033 | **0.10** |
+| Bed (end card) | `music-bed-placeholder.m4a` | 15.033 | 4.567 | **0.18** |
+
+The bed is pre-split at the end-card cut, so the duck is already wired: swap the
+`src` on both clips for the real bed and it ducks under Sean and lifts on the card.
+B-roll audio is a non-issue, the stills have none and both A-roll MP4s are encoded `-an`.
+
+---
+
+## 7 · Build & render approach
+
+One project, two roots sharing one timeline source so the ratios cannot drift:
+
+```
+video-projects/ecomiq-bf-workbook/
+├── index.html      ← 9:16 root  (1080×1920)
+├── square.html     ← 1:1 root   (1080×1080)
+├── assets/ad.css   ← shared design system + per-ratio layout blocks
+└── assets/ad.js    ← shared GSAP timeline builder
+```
+
+```bash
+npx hyperframes lint
+npx hyperframes render --quality standard --output renders/ecomiq-bf-workbook-916.mp4
+npx hyperframes render -c square.html --quality standard --output renders/ecomiq-bf-workbook-1x1.mp4
+```
+
+Then frame-verify every beat (`ffmpeg -ss` + `Read` on each PNG) before delivery.
+
+---
+
+## 8 · Decisions, as approved
+
+1. **Trim** — head dead-air (2.22s) and tail out-take (3.05s) removed, 100% of speech kept. Approved.
+2. **Crop, not pad**, on the A-roll. Approved.
+3. **Sean/graphics balance** — the hybrid: he is on screen 4 times, 5.94s of 19.60s, voice throughout. Approved.
+4. **Logo watermark at 16% width** (173×30px 9:16, 200×34px 1:1) rather than the briefed 8–10%, which rendered the wordmark illegible on mobile. Approved.
+5. **End card** — headline "Get your *free* Black Friday workbook" + pill **"Get the workbook"**, dropping the second "free". Approved.
+6. **19.60s runtime** with a 4.57s end-card hold. Approved.
+
+---
+
+## 9 · What changed during the build
+
+Everything in §3 shipped as planned. These are the deltas, all found by looking at rendered frames:
+
+- **S7 light beat, canvas and card treatment.** The product renders are photographs on an off-white studio ground (`#EEEEEF` and `#FDFDFE`), not cut-outs, so on the planned pure-white canvas their frame edges showed as grey boxes. The canvas is now a sky-to-white wash and each shot is a deliberate rounded card with a navy shadow. The cover was tightened with a uniform-border `-trim` (1122×1402 → 953×1131) so its card sits close around the book.
+- **S7 in 1:1.** A stacked spread-plus-cover overflowed the square frame by ~180px. The square cut runs the spread as the hero with a horizontal `8 / 32 / 19` stat row beneath; the standalone cover is hidden (the spread already shows the cover front and centre).
+- **Transition mechanics.** Whips now start 0.2s before the cut on a `power1.inOut` ease so the streak is mid-frame on the cut, and every scene's first entrance fires on its `data-start`. Both were landing on empty frames before.
+- **End card entrance.** The logo flight moved from `power3.inOut` to `power3.out` and the headline now builds from the cut frame, which removed a ~6-frame empty navy card at 15.03s.
+- **No `→` anywhere.** U+2192 is absent from both brand font subsets; the S5 arrow is drawn in CSS and the ROAS chip reads "rises 1.92 to 2.61".
+- **Footnote contrast** raised to `#c3d5ea`; at `--brand-text-dim` under the vignette the attribution lines were close to unreadable.
+- **1:1 dial caption** wrapped to two lines inside the gauge; a single line overlapped the arc strokes at 250px.
+
+## 10 · Delivered
+
+| File | Spec |
+|---|---|
+| `renders/ecomiq-bf-workbook-916.mp4` | 1080×1920, 19.60s, H.264 yuv420p / AAC 48k stereo, faststart, −16.1 LUFS, 12.8 MB |
+| `renders/ecomiq-bf-workbook-1x1.mp4` | 1080×1080, 19.60s, H.264 yuv420p / AAC 48k stereo, faststart, −16.1 LUFS, 7.4 MB |
+
+Lint: 0 errors (2 benign `composition_file_too_large` warnings). Frame-verified at
+every beat and every cut in both ratios.
+
+## 11 · Still open for you
+
+- **The music bed is silent.** `assets/music-bed-placeholder.m4a` is 20s of digital silence, wired as two clips (0.10 under the VO, 0.18 on the card). Drop in a real bed and swap the `src` on both `<audio>` elements; the duck is already in place.
+- **The CTA pill is not a link.** It reads "Get the workbook"; the destination lives in the ad's own link field.

@@ -1,0 +1,518 @@
+/* ===========================================================================
+   EcomIQ, Black Friday Profit Plan workbook ad
+   Shared design system for BOTH ratios. Layout differences live in the
+   body.r-916 / body.r-1x1 override blocks so the two roots cannot drift.
+
+   Colors come from brand-tokens.css (--brand-*). Fonts are local .woff2 and
+   are named LITERALLY here (the linter doesn't resolve CSS variables).
+
+   Colour semantics for this piece, 4 active hues, each owns one meaning:
+     navy       canvas
+     blue-tint  neutral / the figure that matters
+     flame      money leaving the business, and the CTA
+     white/sky  the product beat
+   =========================================================================== */
+
+@font-face {
+  font-family: 'Rethink Sans';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: block;
+  src: url(fonts/RethinkSans.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Hedvig Letters Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(fonts/HedvigLettersSerif.woff2) format('woff2');
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 1080px;
+  overflow: hidden;
+  background: var(--brand-navy);
+  font-family: 'Rethink Sans', system-ui, sans-serif;
+  color: var(--brand-white);
+  -webkit-font-smoothing: antialiased;
+}
+body.r-916 { height: 1920px; }
+body.r-1x1 { height: 1080px; }
+
+#root { position: relative; width: 100%; height: 100%; overflow: hidden; }
+
+/* ---------------------------------------------------------------------------
+   1 · A-roll spine, Sean, cover-cropped to the ratio.
+   The <video> is never animated directly (render contract 9); the non-timed
+   wrapper carries the slow push-in.
+   --------------------------------------------------------------------------- */
+#aroll-wrap { position: absolute; inset: 0; z-index: 1; overflow: hidden; }
+#aroll {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Navy scrim top + bottom so the watermark and chips always separate cleanly
+   from the studio background. */
+#aroll-scrim {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(6,40,76,.78) 0%, rgba(6,40,76,0) 26%),
+    linear-gradient(0deg, rgba(6,40,76,.72) 0%, rgba(6,40,76,0) 22%);
+}
+
+/* ---------------------------------------------------------------------------
+   2 · Persistent logo watermark, top-left on every frame.
+   Wrapped in a positioned, NON-clip div (LESSONS: the render engine
+   repositions class="clip" elements, so the logo drifts without this).
+   Two stacked lockups: white for navy scenes, navy for the light product
+   beat. Same element becomes the end-card hero.
+   --------------------------------------------------------------------------- */
+#logo-wrap { position: absolute; z-index: 100; opacity: 0; transform-origin: 0 0; }
+body.r-916 #logo-wrap { top: 84px;  left: 84px;  width: 173px; }
+body.r-1x1 #logo-wrap { top: 64px;  left: 64px;  width: 200px; }
+#logo-wrap img {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: auto; display: block;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .55));
+}
+#logo-n { opacity: 0; filter: drop-shadow(0 6px 18px rgba(6, 40, 76, .22)) !important; }
+
+/* ---------------------------------------------------------------------------
+   3 · Unifying texture, vignette + deterministic CSS film grain, on top of
+   every scene. Not decoration; this is what makes the piece one piece.
+   --------------------------------------------------------------------------- */
+#vignette {
+  position: absolute; inset: 0; z-index: 90; pointer-events: none;
+  background: radial-gradient(ellipse 80% 64% at 50% 46%,
+    rgba(0,0,0,0) 36%, rgba(2,12,24,.60) 100%);
+}
+#grain {
+  position: absolute; inset: 0; z-index: 91; pointer-events: none;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,.030) .5px, transparent .6px),
+    radial-gradient(circle at 2px 3px, rgba(255,255,255,.020) .5px, transparent .6px),
+    radial-gradient(circle at 4px 2px, rgba(255,255,255,.015) .5px, transparent .6px);
+  background-size: 3px 3px, 5px 5px, 7px 7px;
+}
+
+/* ---------------------------------------------------------------------------
+   3b · Black Friday chip, sits above the A-roll but below the scene layers,
+   so it reads as a persistent hook badge on every Sean beat and is simply
+   covered by the graphic takeovers.
+   --------------------------------------------------------------------------- */
+#bf-chip {
+  position: absolute; z-index: 5;
+  display: inline-flex; align-items: center;
+  font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--brand-white); background: var(--brand-flame);
+  border-radius: 999px;
+  box-shadow: 0 18px 52px -14px rgba(255, 76, 50, .70);
+  opacity: 0;
+}
+body.r-916 #bf-chip { top: 152px; left: 84px; font-size: 26px; padding: 13px 30px; }
+body.r-1x1 #bf-chip { top: 124px; left: 64px; font-size: 22px; padding: 11px 26px; }
+
+/* ---------------------------------------------------------------------------
+   4 · Whip streaks, one per cut. Motion blur is the transition; hard cuts
+   read cheap. Non-timed decoratives: they live at opacity 0 and are driven
+   entirely by GSAP, so there is no clip window to mis-align with a cut.
+   --------------------------------------------------------------------------- */
+.whip {
+  position: absolute; z-index: 80; pointer-events: none;
+  top: -12%; left: 0; width: 46%; height: 124%;
+  background: linear-gradient(100deg,
+    rgba(156,212,255,0) 0%, rgba(156,212,255,.30) 38%,
+    rgba(255,255,255,.86) 50%, rgba(156,212,255,.30) 62%,
+    rgba(156,212,255,0) 100%);
+  filter: blur(26px);
+  opacity: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   5 · Scene shell. Scenes are opaque full-frame layers whose clip window is
+   the cut. .sc fills the scene and uses padding + flex for layout, never
+   absolute-positioned content containers.
+   --------------------------------------------------------------------------- */
+.scene { position: absolute; inset: 0; z-index: 10; }
+.scene-navy {
+  background:
+    radial-gradient(92% 56% at 50% 16%, rgba(156,212,255,.11) 0%, rgba(6,40,76,0) 58%),
+    var(--brand-navy);
+}
+.bloom {
+  position: absolute; left: -12%; bottom: -26%;
+  width: 124%; height: 62%;
+  background: var(--brand-gradient-2);
+  filter: blur(96px);
+  opacity: .30;
+  pointer-events: none;
+}
+.sc {
+  position: relative; z-index: 2;
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  box-sizing: border-box;
+}
+body.r-916 .sc { padding: 250px 88px 110px; }
+body.r-1x1 .sc { padding: 176px 72px 76px; }
+
+/* Content block: takes the space above the footnote and centres in it, so
+   both ratios balance without hardcoded offsets. */
+.sc-mid {
+  flex: 1 1 auto; min-height: 0;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+/* Shared type atoms ------------------------------------------------------- */
+.eyebrow {
+  font-weight: 600;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: var(--brand-blue-tint);
+  opacity: 0;
+}
+body.r-916 .eyebrow { font-size: 30px; }
+body.r-1x1 .eyebrow { font-size: 25px; }
+
+.title {
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1.0;
+  color: var(--brand-white);
+}
+body.r-916 .title { font-size: 96px; }
+body.r-1x1 .title { font-size: 74px; }
+
+/* The EcomIQ signature: exactly ONE italic-serif emphasis word per card. */
+.em {
+  font-family: 'Hedvig Letters Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -.01em;
+}
+.em-flame { color: var(--brand-flame); }
+.em-tint  { color: var(--brand-blue-tint); }
+
+/* Flame emphasis in the sans face. The italic-serif signature is reserved
+   for exactly one word in the whole piece, "free" on the end card. */
+.hot { color: var(--brand-flame); }
+
+.foot {
+  flex: 0 0 auto;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #c3d5ea;
+  opacity: 0;
+}
+body.r-916 .foot { font-size: 22px; margin-top: 40px; }
+body.r-1x1 .foot { font-size: 19px; margin-top: 26px; }
+
+.num { font-variant-numeric: tabular-nums; }
+
+/* ---------------------------------------------------------------------------
+   S2 · GFX-1, record revenue vs the profit that is actually left
+   --------------------------------------------------------------------------- */
+#g1-title { opacity: 0; }
+body.r-916 #g1-title { margin-top: 26px; }
+body.r-1x1 #g1-title { margin-top: 18px; }
+#g1-chart {
+  position: relative;
+  display: flex; align-items: flex-end; justify-content: center;
+  width: 100%;
+}
+body.r-916 #g1-chart { margin-top: 96px; height: 620px; gap: 132px; }
+body.r-1x1 #g1-chart { margin-top: 54px; height: 330px; gap: 96px; }
+
+/* Baseline rule sits exactly under the bars, offset = label height + margin. */
+#g1-base {
+  position: absolute; left: 0; right: 0;
+  height: 3px; background: var(--brand-border);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+body.r-916 #g1-base { bottom: 65px; }
+body.r-1x1 #g1-base { bottom: 59px; }
+.g1-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+.g1-bar { border-radius: 10px 10px 0 0; transform-origin: bottom center; transform: scaleY(0); }
+body.r-916 .g1-bar { width: 196px; }
+body.r-1x1 .g1-bar { width: 150px; }
+
+#g1-bar-rev {
+  height: 542px;
+  background: linear-gradient(180deg, var(--brand-blue-tint) 0%, #4f93cf 100%);
+  box-shadow: 0 0 62px -8px rgba(156, 212, 255, .45);
+}
+#g1-bar-pro {
+  height: 44px;
+  background: var(--brand-flame);
+  box-shadow: 0 0 52px -6px rgba(255, 76, 50, .70);
+}
+body.r-1x1 #g1-bar-rev { height: 252px; }
+body.r-1x1 #g1-bar-pro { height: 22px; }
+
+.g1-label {
+  opacity: 0;
+  margin-top: 30px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--brand-text-dim);
+}
+body.r-916 .g1-label { font-size: 29px; }
+body.r-1x1 .g1-label { font-size: 24px; }
+#g1-lab-pro { color: var(--brand-flame); }
+
+/* ---------------------------------------------------------------------------
+   S4 · GFX-2, what one order actually contributes
+   --------------------------------------------------------------------------- */
+#g2-aov { display: flex; align-items: baseline; opacity: 0; }
+body.r-916 #g2-aov { margin-top: 34px; gap: 26px; }
+body.r-1x1 #g2-aov { margin-top: 22px; gap: 20px; }
+#g2-aov .v { font-weight: 800; letter-spacing: -.03em; color: var(--brand-white); }
+body.r-916 #g2-aov .v { font-size: 104px; }
+body.r-1x1 #g2-aov .v { font-size: 78px; }
+#g2-aov .k {
+  font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--brand-text-dim); max-width: 260px; line-height: 1.24;
+}
+body.r-916 #g2-aov .k { font-size: 22px; }
+body.r-1x1 #g2-aov .k { font-size: 19px; }
+
+#g2-rows { width: 100%; }
+body.r-916 #g2-rows { margin-top: 44px; }
+body.r-1x1 #g2-rows { margin-top: 26px; }
+.g2-row {
+  display: flex; align-items: baseline; justify-content: space-between;
+  border-bottom: 1px solid var(--brand-border);
+  opacity: 0;
+}
+body.r-916 .g2-row { padding: 17px 4px; }
+body.r-1x1 .g2-row { padding: 10px 4px; }
+.g2-row .k { font-weight: 500; color: var(--brand-text-dim); letter-spacing: -.01em; }
+.g2-row .v { font-weight: 700; color: var(--brand-flame); }
+body.r-916 .g2-row .k { font-size: 38px; }
+body.r-916 .g2-row .v { font-size: 42px; }
+body.r-1x1 .g2-row .k { font-size: 30px; }
+body.r-1x1 .g2-row .v { font-size: 33px; }
+
+#g2-result { display: flex; align-items: baseline; opacity: 0; }
+body.r-916 #g2-result { margin-top: 48px; gap: 28px; }
+body.r-1x1 #g2-result { margin-top: 28px; gap: 22px; }
+#g2-result .v {
+  font-weight: 800; letter-spacing: -.03em;
+  color: var(--brand-blue-tint);
+  text-shadow: 0 0 46px rgba(156, 212, 255, .40);
+}
+body.r-916 #g2-result .v { font-size: 132px; }
+body.r-1x1 #g2-result .v { font-size: 96px; }
+#g2-result .k {
+  font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--brand-text-dim); max-width: 250px; line-height: 1.24;
+}
+body.r-916 #g2-result .k { font-size: 22px; }
+body.r-1x1 #g2-result .k { font-size: 19px; }
+
+.chip {
+  align-self: flex-start;
+  display: inline-flex; align-items: center;
+  font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  border-radius: 999px;
+  border: 2px solid var(--brand-blue-tint);
+  color: var(--brand-blue-tint);
+  background: rgba(156, 212, 255, .08);
+  opacity: 0;
+}
+body.r-916 .chip { margin-top: 30px; font-size: 27px; padding: 15px 34px; }
+body.r-1x1 .chip { margin-top: 18px; font-size: 22px; padding: 11px 26px; }
+
+/* ---------------------------------------------------------------------------
+   S5 · GFX-3, what a 25% discount costs
+   --------------------------------------------------------------------------- */
+#g3-dial { position: relative; align-self: center; opacity: 0; }
+body.r-916 #g3-dial { margin-top: 40px; width: 400px; height: 400px; }
+body.r-1x1 #g3-dial { margin-top: 18px; width: 250px; height: 250px; }
+#g3-dial svg { width: 100%; height: 100%; display: block; overflow: visible; }
+#g3-track { fill: none; stroke: var(--brand-border); stroke-width: 24; stroke-linecap: round; }
+#g3-arc {
+  fill: none; stroke: var(--brand-flame); stroke-width: 24; stroke-linecap: round;
+  filter: drop-shadow(0 0 18px rgba(255, 76, 50, .55));
+}
+#g3-dial .mid {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+#g3-pct { font-weight: 800; letter-spacing: -.04em; color: var(--brand-white); }
+body.r-916 #g3-pct { font-size: 124px; }
+body.r-1x1 #g3-pct { font-size: 78px; }
+#g3-dial .cap {
+  opacity: 0;
+  margin-top: 6px;
+  font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--brand-text-dim); text-align: center;
+}
+body.r-916 #g3-dial .cap { font-size: 21px; }
+/* At 250px the single-line caption overlapped the gauge strokes, so the
+   square cut wraps it inside the dial's clear inner width. */
+body.r-1x1 #g3-dial .cap {
+  font-size: 16px; letter-spacing: .18em; line-height: 1.24; max-width: 150px;
+}
+
+#g3-swap { display: flex; align-items: center; justify-content: center; width: 100%; }
+body.r-916 #g3-swap { margin-top: 44px; gap: 32px; }
+body.r-1x1 #g3-swap { margin-top: 22px; gap: 22px; }
+#g3-was {
+  font-weight: 700; color: var(--brand-text-dim);
+  text-decoration: line-through; text-decoration-thickness: 3px;
+  opacity: 0;
+}
+/* Drawn arrow, NOT the "\2192" glyph: U+2192 is absent from the Rethink Sans
+   and Hedvig subsets and would fall back to a system face (or tofu). */
+#g3-arrow { position: relative; flex: 0 0 auto; background: var(--brand-text-dim); opacity: 0; }
+#g3-arrow::after {
+  content: ""; position: absolute; right: 0; top: 50%;
+  border-top: 4px solid var(--brand-text-dim);
+  border-right: 4px solid var(--brand-text-dim);
+  transform: translate(2px, -50%) rotate(45deg);
+}
+#g3-now {
+  font-weight: 800; letter-spacing: -.03em; color: var(--brand-flame);
+  text-shadow: 0 0 48px rgba(255, 76, 50, .45);
+  opacity: 0;
+}
+body.r-916 #g3-was { font-size: 58px; }
+body.r-916 #g3-arrow { width: 74px; height: 4px; }
+body.r-916 #g3-arrow::after { width: 18px; height: 18px; }
+body.r-916 #g3-now { font-size: 108px; }
+body.r-1x1 #g3-was { font-size: 42px; }
+body.r-1x1 #g3-arrow { width: 54px; height: 3px; }
+body.r-1x1 #g3-arrow::after { width: 13px; height: 13px; border-top-width: 3px; border-right-width: 3px; }
+body.r-1x1 #g3-now { font-size: 78px; }
+
+#g3-cap2 {
+  align-self: center; text-align: center;
+  font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--brand-text-dim); opacity: 0;
+}
+body.r-916 #g3-cap2 { margin-top: 10px; font-size: 23px; }
+body.r-1x1 #g3-cap2 { margin-top: 6px; font-size: 19px; }
+
+#g3-roas {
+  align-self: center;
+  display: inline-flex; align-items: center;
+  font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  border-radius: 999px; border: 2px solid var(--brand-border);
+  color: var(--brand-white); background: rgba(29, 74, 122, .30);
+  opacity: 0;
+}
+body.r-916 #g3-roas { margin-top: 34px; font-size: 25px; padding: 14px 30px; }
+body.r-1x1 #g3-roas { margin-top: 18px; font-size: 20px; padding: 10px 22px; }
+
+#g3-units {
+  align-self: center; text-align: center;
+  font-weight: 500; color: var(--brand-blue-tint); opacity: 0;
+}
+body.r-916 #g3-units { margin-top: 22px; font-size: 32px; }
+body.r-1x1 #g3-units { margin-top: 14px; font-size: 25px; }
+
+/* ---------------------------------------------------------------------------
+   S7 · GFX-4, the workbook itself. The one LIGHT beat.
+   Canvas is pure WHITE so the product renders' own white backgrounds blend
+   seamlessly (they are not cut-outs).
+   --------------------------------------------------------------------------- */
+#gfx4 {
+  background:
+    radial-gradient(120% 80% at 50% 8%, #FFFFFF 0%, rgba(255,255,255,0) 62%),
+    radial-gradient(110% 70% at 50% 104%, var(--brand-sky) 0%, rgba(222,238,254,0) 70%),
+    #F4F9FF;
+}
+#g4-wash {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(78% 46% at 50% 92%,
+    rgba(156, 212, 255, .26) 0%, rgba(244, 249, 255, 0) 66%);
+}
+#gfx4 .sc-mid { justify-content: center; }
+#g4-eyebrow {
+  font-weight: 700; letter-spacing: .34em; text-transform: uppercase;
+  color: var(--brand-navy); opacity: 0;
+}
+body.r-916 #g4-eyebrow { font-size: 28px; }
+body.r-1x1 #g4-eyebrow { font-size: 23px; }
+#g4-rule {
+  height: 6px; background: var(--brand-flame); border-radius: 3px;
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+body.r-916 #g4-rule { margin-top: 20px; width: 132px; }
+body.r-1x1 #g4-rule { margin-top: 14px; width: 108px; }
+
+#g4-spread {
+  align-self: center; height: auto; opacity: 0;
+  border-radius: 20px;
+  box-shadow: 0 30px 72px -22px rgba(6, 40, 76, .34);
+}
+body.r-916 #g4-spread { margin-top: 54px; width: 1010px; }
+body.r-1x1 #g4-spread { margin-top: 30px; width: 880px; }
+
+#g4-lower { display: flex; align-items: center; width: 100%; }
+body.r-916 #g4-lower { margin-top: 44px; gap: 56px; }
+body.r-1x1 #g4-lower { margin-top: 22px; gap: 40px; }
+#g4-cover {
+  height: auto; flex: 0 0 auto; opacity: 0;
+  border-radius: 14px;
+  box-shadow: 0 28px 64px -20px rgba(6, 40, 76, .34);
+}
+body.r-916 #g4-cover { width: 400px; }
+body.r-1x1 #g4-cover { display: none; }
+body.r-1x1 #g4-lower { flex-direction: row; justify-content: space-between; }
+body.r-1x1 #g4-stats { flex-direction: row; align-items: baseline; gap: 44px; width: 100%; justify-content: space-between; }
+
+#g4-stats { display: flex; flex-direction: column; }
+body.r-916 #g4-stats { gap: 26px; }
+body.r-1x1 #g4-stats { gap: 14px; }
+.g4-stat { display: flex; align-items: baseline; opacity: 0; }
+body.r-916 .g4-stat { gap: 18px; }
+body.r-1x1 .g4-stat { gap: 13px; }
+.g4-stat .v { font-weight: 800; letter-spacing: -.03em; color: var(--brand-flame); }
+.g4-stat .k {
+  font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--brand-navy);
+}
+body.r-916 .g4-stat .v { font-size: 78px; }
+body.r-916 .g4-stat .k { font-size: 26px; }
+body.r-1x1 .g4-stat .v { font-size: 54px; }
+body.r-1x1 .g4-stat .k { font-size: 20px; }
+
+/* ---------------------------------------------------------------------------
+   S8 · END CARD, the logo watermark flies in and becomes the hero.
+   --------------------------------------------------------------------------- */
+#endcard .sc { align-items: center; justify-content: flex-start; text-align: center; }
+body.r-916 #endcard .sc { padding: 820px 96px 140px; }
+body.r-1x1 #endcard .sc { padding: 470px 80px 90px; }
+
+#ec-head { font-weight: 800; letter-spacing: -.03em; line-height: 1.04; }
+body.r-916 #ec-head { font-size: 104px; }
+body.r-1x1 #ec-head { font-size: 76px; }
+.ec-line { opacity: 0; }
+
+#ec-cta {
+  display: inline-flex; align-items: center;
+  font-weight: 700; letter-spacing: -.01em;
+  color: var(--brand-white); background: var(--brand-flame);
+  border-radius: 999px;
+  box-shadow: 0 26px 78px -18px rgba(255, 76, 50, .72);
+  opacity: 0;
+}
+body.r-916 #ec-cta { margin-top: 88px; font-size: 44px; padding: 34px 68px; }
+body.r-1x1 #ec-cta { margin-top: 54px; font-size: 34px; padding: 26px 52px; }
+
+#ec-chev {
+  font-weight: 800; color: var(--brand-blue-tint); line-height: 1;
+  opacity: 0;
+}
+body.r-916 #ec-chev { margin-top: 44px; font-size: 52px; }
+body.r-1x1 #ec-chev { margin-top: 28px; font-size: 40px; }
