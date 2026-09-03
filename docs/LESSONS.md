@@ -149,6 +149,24 @@ efficient over time instead of relearning the same lessons.
   half-faded ground and reads as muddy. Give it the same start and duration as the scene
   crossfade underneath.
 
+## Reserving space for later subtitles
+
+- **Reserve it as a CSS variable inside the scene's own padding, not by nudging each
+  element.** `body.r-916 { --sub-safe: 340px }` plus
+  `.sc { padding-bottom: calc(90px + var(--sub-safe)) }` makes every scene rebalance from
+  one value, and a flex `.sc-mid` re-centres the content automatically. Nudging elements
+  individually guarantees one gets missed.
+- **Count an element's ANIMATED travel against the band, not its resting position.** A
+  bobbing CTA chevron sat 12px clear at rest but its 14px `yoyo` loop pushed it 2px into
+  the reserved strip. Check the extreme of every loop: grab a frame at
+  `loopStart + duration` and measure, don't eyeball the hero frame.
+- **Shrinking the reserve out of the top padding too keeps scenes centred.** Taking it all
+  off the bottom shoves content upward into the logo; splitting the loss (e.g. top
+  250→230) keeps the optical balance.
+- **Re-check text that was already near a wrap boundary.** Reflowing the box can tip a
+  one-line footnote into two. Tightening `letter-spacing` (.16em → .12em) buys ~7% width
+  without touching the copy or the font size.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

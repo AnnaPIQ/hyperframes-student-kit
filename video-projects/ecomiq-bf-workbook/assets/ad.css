@@ -30,8 +30,17 @@ html, body {
   color: var(--brand-white);
   -webkit-font-smoothing: antialiased;
 }
-body.r-916 { height: 1920px; }
-body.r-1x1 { height: 1080px; }
+/* --sub-safe reserves a clear strip along the bottom of every graphic scene
+   for subtitles added by hand after delivery. Nothing in a scene's content
+   flow (including the footnote attributions) enters it; only full-bleed
+   decoratives -- the bloom, the light wash, the A-roll scrim -- pass through,
+   and those sit behind text without hurting legibility.
+     9:16  340px -> band is y 1580-1920 (17.7% of frame)
+     1:1   200px -> band is y  880-1080 (18.5% of frame)
+   Both fit two lines of subtitle with room to spare. Change the value here
+   and every scene rebalances. */
+body.r-916 { height: 1920px; --sub-safe: 340px; }
+body.r-1x1 { height: 1080px; --sub-safe: 200px; }
 
 #root { position: relative; width: 100%; height: 100%; overflow: hidden; }
 
@@ -135,8 +144,8 @@ body.r-1x1 #bf-chip { top: 124px; left: 64px; font-size: 22px; padding: 11px 26p
   display: flex; flex-direction: column;
   box-sizing: border-box;
 }
-body.r-916 .sc { padding: 250px 88px 110px; }
-body.r-1x1 .sc { padding: 176px 72px 76px; }
+body.r-916 .sc { padding: 230px 88px calc(90px + var(--sub-safe)); }
+body.r-1x1 .sc { padding: 150px 72px calc(56px + var(--sub-safe)); }
 
 /* Content block: takes the space above the footnote and centres in it, so
    both ratios balance without hardcoded offsets. */
@@ -170,10 +179,12 @@ body.r-1x1 .title { font-size: 74px; }
    so the end-card headline reads as one flat white statement. */
 .hot { color: var(--brand-flame); }
 
+/* .12em, not .16em: the longest attribution ("...DISCOUNT DEPTH, ADOBE
+   ANALYTICS", 58 chars) wraps to two lines at wider tracking in 9:16. */
 .foot {
   flex: 0 0 auto;
   font-weight: 500;
-  letter-spacing: .16em;
+  letter-spacing: .12em;
   text-transform: uppercase;
   color: #c3d5ea;
   opacity: 0;
@@ -424,8 +435,8 @@ body.r-1x1 #g4-rule { margin-top: 14px; width: 108px; }
   border-radius: 20px;
   box-shadow: 0 30px 72px -22px rgba(6, 40, 76, .34);
 }
-body.r-916 #g4-spread { margin-top: 54px; width: 1010px; }
-body.r-1x1 #g4-spread { margin-top: 30px; width: 880px; }
+body.r-916 #g4-spread { margin-top: 54px; width: 940px; }
+body.r-1x1 #g4-spread { margin-top: 30px; width: 740px; }
 
 #g4-lower { display: flex; align-items: center; width: 100%; }
 body.r-916 #g4-lower { margin-top: 44px; gap: 56px; }
@@ -435,7 +446,7 @@ body.r-1x1 #g4-lower { margin-top: 22px; gap: 40px; }
   border-radius: 14px;
   box-shadow: 0 28px 64px -20px rgba(6, 40, 76, .34);
 }
-body.r-916 #g4-cover { width: 400px; }
+body.r-916 #g4-cover { width: 370px; }
 body.r-1x1 #g4-cover { display: none; }
 body.r-1x1 #g4-lower { flex-direction: row; justify-content: space-between; }
 body.r-1x1 #g4-stats { flex-direction: row; align-items: baseline; gap: 44px; width: 100%; justify-content: space-between; }
@@ -461,7 +472,7 @@ body.r-1x1 .g4-stat .k { font-size: 20px; }
    --------------------------------------------------------------------------- */
 #endcard .sc { align-items: center; justify-content: flex-start; text-align: center; }
 body.r-916 #endcard .sc { padding: 820px 96px 140px; }
-body.r-1x1 #endcard .sc { padding: 470px 80px 90px; }
+body.r-1x1 #endcard .sc { padding: 400px 80px 90px; }
 
 #ec-head { font-weight: 800; letter-spacing: -.03em; line-height: 1.04; }
 body.r-916 #ec-head { font-size: 104px; }
@@ -477,11 +488,11 @@ body.r-1x1 #ec-head { font-size: 76px; }
   opacity: 0;
 }
 body.r-916 #ec-cta { margin-top: 88px; font-size: 44px; padding: 34px 68px; }
-body.r-1x1 #ec-cta { margin-top: 54px; font-size: 34px; padding: 26px 52px; }
+body.r-1x1 #ec-cta { margin-top: 48px; font-size: 34px; padding: 26px 52px; }
 
 #ec-chev {
   font-weight: 800; color: var(--brand-blue-tint); line-height: 1;
   opacity: 0;
 }
 body.r-916 #ec-chev { margin-top: 44px; font-size: 52px; }
-body.r-1x1 #ec-chev { margin-top: 28px; font-size: 40px; }
+body.r-1x1 #ec-chev { margin-top: 20px; font-size: 40px; }

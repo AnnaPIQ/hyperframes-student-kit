@@ -51,6 +51,26 @@ cannot drift. Edit `index.html`, run the generator, lint, render both.
 - Vignette + deterministic CSS film grain over every scene: that texture is what makes it one piece.
 - Finite repeats only (`repeat: -1` breaks the capture engine), and every tween ends at or before 19.6s so `tl.duration()` matches `data-duration`.
 
+## Subtitle safe band
+
+The bottom of every graphic scene is kept clear so subtitles can be added by
+hand after delivery. Reserved via `--sub-safe` in `assets/ad.css`, taken out of
+`.sc`'s bottom padding, so changing the one value rebalances every scene.
+
+| Ratio | Reserve | Clear band | Share of frame |
+|---|---|---|---|
+| 9:16 | 340px | y **1580–1920** | 17.7% |
+| 1:1 | 200px | y **880–1080** | 18.5% |
+
+Nothing in a scene's content flow enters it, including the footnote
+attributions and the end card's bobbing chevron (its 14px travel is counted
+against the band, not just its resting position). Only full-bleed decoratives
+pass through: the bloom, the light wash, and the A-roll's bottom scrim, and
+that scrim actually helps subtitle legibility over Sean.
+
+Sean's own beats are full-bleed video and need no reserve; subtitles simply
+overlay him.
+
 ## Numbers on screen
 
 Every figure is the workbook's own worked example (Part 01, pages 8 and 10),

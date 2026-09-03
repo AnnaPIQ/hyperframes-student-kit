@@ -201,3 +201,30 @@ One note for the record: the house motion guide (`MOTION_PHILOSOPHY.md`) prefers
 motion-blurred whips over fades, and the `/hyperframes` skill bans exit animations
 outside the final scene. Fades require both. This is a deliberate, instructed
 departure, documented here so a future session doesn't "fix" it back.
+
+---
+
+## 13 · Revision, subtitle space
+
+Bottom of every graphic scene is now reserved for subtitles you will add by hand.
+
+| Ratio | Reserve | Clear band |
+|---|---|---|
+| 9:16 | 340px | y **1580–1920** |
+| 1:1 | 200px | y **880–1080** |
+
+It is one CSS variable (`--sub-safe`) subtracted from each scene's bottom
+padding, so the whole piece rebalances from a single value if you want the band
+deeper or shallower. What moved to make room:
+
+- All scene content shifted up; the footnote attributions now sit just above the band rather than at the frame edge.
+- The light beat is the tallest scene, so the product shots came down a little: spread 1010→940px (9:16) and 880→740px (1:1), cover 400→370px (9:16).
+- The 1:1 end card lifted 70px. Its chevron **bobs 14px**, and at the old position the bottom of that loop crossed into the band by ~2px; measured on the render, its lowest point now sits at y 848, clear by 32px.
+- Footnote tracking tightened .16em → .12em: the longest attribution had started wrapping to two lines in 9:16 after the earlier contrast bump.
+
+Sean's beats are full-bleed video and needed no change; subtitles overlay him,
+and the A-roll's bottom scrim already helps them read.
+
+Verified by overlaying the band on rendered frames for every scene in both
+ratios, and by measuring the chevron's lowest pixel across its bob cycle.
+Runtime, specs and loudness unchanged.
