@@ -35,14 +35,14 @@
       /* ---- lower graphics cards over Sean ------------------------------ */
       .card {
         position: absolute; left: 0; bottom: 0; width: 1080px;
-        z-index: 10; padding: 0 72px 96px;
+        z-index: 10; padding: 0 72px 84px;
         display: flex; flex-direction: column; justify-content: flex-end;
         background: linear-gradient(to bottom,
           rgba(6, 40, 76, 0) 0%, rgba(6, 40, 76, 0.72) 18%,
           rgba(6, 40, 76, 0.96) 38%, var(--brand-navy) 58%);
       }
       .card--std { height: 470px; }   /* 43% */
-      .card--tall { height: 620px; }  /* 57% */
+      .card--tall { height: 560px; }  /* 52% — keeps the scrim off Sean's chin */
 
       /* ---- full-frame graphic scenes (replace Sean) --------------------- */
       .scene { position: absolute; inset: 0; width: 1080px; height: 1080px;
@@ -75,11 +75,11 @@
 
       /* ---- 2 · cost stack + 5 · comparison bars ------------------------ */
       .revrow { display: flex; align-items: baseline; justify-content: space-between;
-        margin-bottom: 16px; }
-      .revrow .figure { font-size: 48px; color: var(--brand-white); }
-      .bar { position: relative; width: 936px; height: 22px; border-radius: 11px;
+        margin-bottom: 12px; }
+      .revrow .figure { font-size: 42px; color: var(--brand-white); }
+      .bar { position: relative; width: 936px; height: 20px; border-radius: 10px;
         overflow: hidden; background: #0a325f; }
-      .seg { position: absolute; top: 0; height: 22px; transform-origin: left center; }
+      .seg { position: absolute; top: 0; height: 20px; transform-origin: left center; }
       #seg-base { background: var(--brand-border); }
       #seg-disc { background: var(--brand-flame); }
       #seg-ads  { background: rgba(255, 76, 50, 0.86); }
@@ -87,16 +87,16 @@
       #seg-ret  { background: rgba(255, 76, 50, 0.58); }
       #seg-left { background: var(--brand-blue-tint); transform-origin: right center; }
       .leftrow { display: flex; align-items: flex-end; justify-content: space-between;
-        margin-top: 20px; }
-      #cost-left-fig { font-size: 68px; color: var(--brand-flame); }
-      .chips { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+        margin-top: 14px; }
+      #cost-left-fig { font-size: 56px; color: var(--brand-flame); }
+      .chips { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
       .chip { display: flex; align-items: center; justify-content: space-between;
-        height: 44px; padding: 0 20px; border-radius: 8px;
+        height: 40px; padding: 0 20px; border-radius: 8px;
         background: rgba(255, 76, 50, 0.13);
         border-left: 4px solid var(--brand-flame); }
-      .chip span:first-child { font-size: 23px; font-weight: 700; letter-spacing: 0.06em;
+      .chip span:first-child { font-size: 21px; font-weight: 700; letter-spacing: 0.06em;
         text-transform: uppercase; color: var(--brand-white); }
-      .chip span:last-child { font-size: 27px; font-weight: 800;
+      .chip span:last-child { font-size: 24px; font-weight: 800;
         color: var(--brand-flame); font-variant-numeric: tabular-nums; }
 
       /* ---- 3 · two figures --------------------------------------------- */
@@ -150,7 +150,8 @@
         box-shadow: 0 30px 90px -24px rgba(0, 0, 0, 0.75); }
       .panel img { display: block; width: 100%; height: 100%; object-fit: contain; }
       .scene .eyebrow { margin-bottom: 24px; }
-      #hero-panel { height: 600px; }
+      /* portrait panel so the cover fills it instead of floating in white */
+      #hero-panel { width: 620px; height: 764px; }
       #page-panel { height: 600px; background: var(--brand-sky); }
       #free-panel { height: 380px; }
       #page-callout { margin-top: 28px; display: flex; align-items: baseline; gap: 18px;
@@ -216,7 +217,7 @@
 
       <!-- 2 · COST STACK — discounts, ads, fulfilment, returns eat the order -->
       <div id="cost" class="clip card card--tall" data-start="4.15" data-duration="8.60" data-track-index="23">
-        <div class="eyebrow" style="margin-bottom: 16px">One Black Friday order</div>
+        <div class="eyebrow" style="margin-bottom: 10px">One Black Friday order</div>
         <div class="revrow">
           <span class="label">Revenue</span>
           <span class="figure">$114.70</span>
