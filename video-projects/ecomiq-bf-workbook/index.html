@@ -4,195 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
     <title>EcomIQ — Black Friday Profit Plan workbook (9:16)</title>
-    <!-- GSAP vendored locally — a CDN tag cert-fails in the render env and freezes renders -->
+    <!-- GSAP vendored locally — a CDN tag cert-fails in the render env and
+         freezes renders (docs/LESSONS.md). -->
     <script src="assets/vendor/gsap.min.js"></script>
     <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <link rel="stylesheet" href="assets/ad.css" />
     <style>
-      /* LOCAL fonts — no network at render time. Named literally, not via var(),
-         because the linter doesn't resolve CSS variables. */
+      /* LOCAL fonts — no network at render time. Named literally, not via
+         var(), because the linter doesn't resolve CSS variables. */
       @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
         font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
       @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
         font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
-
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body {
-        width: 1080px; height: 1920px; overflow: hidden;
-        background: var(--brand-navy);
-        font-family: 'Rethink Sans', system-ui, sans-serif;
-        color: var(--brand-white);
-      }
-
-      /* ---- base A-roll ------------------------------------------------- */
-      #aroll { position: absolute; inset: 0; width: 1080px; height: 1920px;
-        object-fit: cover; object-position: 50% 50%; z-index: 0; }
-
-      /* ---- persistent logo (non-clip wrapper: `clip` makes it drift) ---- */
-      #logo-wrap { position: absolute; top: 96px; left: 108px; z-index: 100; }
-      #logo-wrap img { display: block; width: 108px; height: auto;
-        filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55)); }
-
-      /* ---- lower graphics cards over Sean ------------------------------ */
-      .card {
-        position: absolute; left: 0; bottom: 0; width: 1080px;
-        z-index: 10; padding: 0 108px 310px;  /* 260px subtitle band + 50px headroom,
-           so entrance offsets (max +48px) never dip into the band */
-        display: flex; flex-direction: column; justify-content: flex-end;
-        background: linear-gradient(to bottom,
-          rgba(6, 40, 76, 0) 0%, rgba(6, 40, 76, 0.72) 20%,
-          rgba(6, 40, 76, 0.96) 42%, var(--brand-navy) 62%);
-      }
-      .card--std { height: 768px; }   /* 40% */
-      .card--tall { height: 922px; }  /* 48% */
-
-      /* ---- full-frame graphic scenes (replace Sean) --------------------- */
-      /* bottom padding keeps centred scene content clear of the subtitle band too */
-      .scene { position: absolute; inset: 0; width: 1080px; height: 1920px;
-        z-index: 20; background: var(--brand-navy);
-        display: flex; flex-direction: column; align-items: center;
-        justify-content: center; padding: 240px 108px 280px; }
-
-      /* ---- shared type ------------------------------------------------- */
-      .eyebrow { font-size: 26px; font-weight: 700; letter-spacing: 0.32em;
-        text-transform: uppercase; color: var(--brand-blue-tint); }
-      .eyebrow--flame { color: var(--brand-flame); }
-      .label { font-size: 27px; font-weight: 600; letter-spacing: 0.16em;
-        text-transform: uppercase; color: var(--brand-text-dim); }
-      .figure { font-weight: 800; letter-spacing: -0.02em; line-height: 1;
-        font-variant-numeric: tabular-nums; }
-
-      /* ---- 1 · hook ---------------------------------------------------- */
-      #hook-l1 { font-size: 104px; font-weight: 800; line-height: 1;
-        letter-spacing: -0.02em; color: var(--brand-white); }
-      /* align-self keeps the wrapper hugging its text — as a stretched flex item
-         the strike-through would run the full card width. */
-      #hook-l2wrap { position: relative; display: inline-block; align-self: flex-start;
-        margin-top: 14px; }
-      #hook-l2 { font-size: 104px; font-weight: 800; line-height: 1;
-        letter-spacing: -0.02em; color: var(--brand-flame); }
-      #hook-strike { position: absolute; left: -8px; top: 52%; height: 11px;
-        width: calc(100% + 16px); background: var(--brand-flame);
-        border-radius: 6px; transform-origin: left center; }
-      #hook-eyebrow { margin-bottom: 26px; }
-
-      /* ---- 2 · cost stack + 5 · comparison bars ------------------------ */
-      .revrow { display: flex; align-items: baseline; justify-content: space-between;
-        margin-bottom: 20px; }
-      .revrow .figure { font-size: 62px; color: var(--brand-white); }
-      .bar { position: relative; width: 864px; height: 26px; border-radius: 13px;
-        overflow: hidden; background: #0a325f; }
-      .seg { position: absolute; top: 0; height: 26px; transform-origin: left center; }
-      /* left/width come from the dollar figures at runtime — see the geometry
-         block in the script, so the bar stays honest at any width. */
-      #seg-base { background: var(--brand-border); }
-      #seg-disc { background: var(--brand-flame); }
-      #seg-ads  { background: rgba(255, 76, 50, 0.86); }
-      #seg-ful  { background: rgba(255, 76, 50, 0.72); }
-      #seg-ret  { background: rgba(255, 76, 50, 0.58); }
-      #seg-left { background: var(--brand-blue-tint); transform-origin: right center; }
-      .leftrow { display: flex; align-items: flex-end; justify-content: space-between;
-        margin-top: 26px; }
-      #cost-left-fig { font-size: 92px; color: var(--brand-flame); }
-      .chips { margin-top: 30px; display: flex; flex-direction: column; gap: 13px; }
-      .chip { display: flex; align-items: center; justify-content: space-between;
-        height: 54px; padding: 0 26px; border-radius: 10px;
-        background: rgba(255, 76, 50, 0.13);
-        border-left: 5px solid var(--brand-flame); }
-      .chip span:first-child { font-size: 28px; font-weight: 700; letter-spacing: 0.06em;
-        text-transform: uppercase; color: var(--brand-white); }
-      .chip span:last-child { font-size: 32px; font-weight: 800;
-        color: var(--brand-flame); font-variant-numeric: tabular-nums; }
-
-      /* ---- 3 · two figures --------------------------------------------- */
-      .stats { display: flex; gap: 34px; }
-      .stat { flex: 1; padding: 34px 32px 38px; border-radius: 18px;
-        background: rgba(156, 212, 255, 0.09);
-        border: 1px solid rgba(156, 212, 255, 0.22); }
-      .stat .label { font-size: 24px; line-height: 1.3; }
-      .stat .figure { font-size: 96px; color: var(--brand-white); margin-top: 16px; }
-      .stat .rule { height: 7px; width: 96px; border-radius: 4px;
-        background: var(--brand-flame); margin-top: 22px; transform-origin: left center; }
-
-      /* ---- 4 · contrast (arrows only) ---------------------------------- */
-      .contrast { display: flex; align-items: stretch; }
-      .contrast > div { flex: 1; display: flex; flex-direction: column;
-        align-items: center; gap: 22px; }
-      .contrast .divider { flex: 0 0 1px; background: rgba(156, 212, 255, 0.3);
-        margin: 0 20px; }
-      .contrast .cname { font-size: 40px; font-weight: 800; letter-spacing: 0.12em;
-        text-transform: uppercase; }
-
-      /* ---- 5 · comparison --------------------------------------------- */
-      .cmp { display: flex; flex-direction: column; gap: 34px; }
-      .cmprow { display: flex; flex-direction: column; gap: 14px; }
-      .cmprow .top { display: flex; align-items: baseline; justify-content: space-between; }
-      .cmprow .figure { font-size: 66px; }
-      .cmpbar { height: 24px; border-radius: 12px; transform-origin: left center; }
-
-      /* ---- 8 · dial ---------------------------------------------------- */
-      .dialwrap { display: flex; align-items: center; gap: 46px; }
-      .dial { position: relative; width: 260px; height: 260px; flex: 0 0 260px; }
-      .dial svg { transform: rotate(-90deg); }
-      .dial .inner { position: absolute; inset: 0; display: flex;
-        align-items: center; justify-content: center; }
-      #dial-fig { font-size: 78px; color: var(--brand-white); }
-      .dialtext .label { font-size: 30px; line-height: 1.32; max-width: 460px; }
-
-      /* ---- 9 · checklist ----------------------------------------------- */
-      .checks { display: flex; flex-direction: column; gap: 20px; margin-top: 30px; }
-      .checkrow { display: flex; align-items: center; gap: 26px; }
-      .box { position: relative; flex: 0 0 62px; width: 62px; height: 62px;
-        border-radius: 12px; border: 3px solid rgba(156, 212, 255, 0.45);
-        background: rgba(156, 212, 255, 0.07); }
-      .box svg { position: absolute; inset: 0; }
-      .checkrow .ctext { font-size: 44px; font-weight: 700; letter-spacing: 0.02em;
-        text-transform: uppercase; color: var(--brand-white); }
-
-      /* ---- 6/7/10 · product scenes ------------------------------------- */
-      .panel { width: 864px; border-radius: 28px; background: var(--brand-white);
-        overflow: hidden; display: flex; align-items: center; justify-content: center;
-        box-shadow: 0 40px 120px -30px rgba(0, 0, 0, 0.75); }
-      .panel img { display: block; width: 100%; height: 100%; object-fit: contain; }
-      .scene .eyebrow { margin-bottom: 34px; }
-      #hero-panel { height: 1080px; }
-      #page-panel { height: 1080px; background: var(--brand-sky); }
-      #free-panel { height: 620px; }
-      #page-callout { margin-top: 40px; display: flex; align-items: baseline; gap: 22px;
-        padding: 26px 40px; border-radius: 16px; background: var(--brand-navy);
-        border-left: 7px solid var(--brand-flame); }
-      #page-callout .figure { font-size: 82px; color: var(--brand-flame); }
-      #page-callout .label { font-size: 25px; max-width: 260px; line-height: 1.25; }
-      #free-word { margin-top: 54px; font-size: 200px; font-weight: 800;
-        letter-spacing: -0.03em; line-height: 1; color: var(--brand-flame);
-        text-shadow: 0 24px 70px rgba(255, 76, 50, 0.45); }
-
-      /* ---- 11 · end card ----------------------------------------------- */
-      #endcard { justify-content: center; padding: 240px 108px 320px; }
-      /* max-width sets the measure so the line breaks fall either side of the
-         emphasis, keeping "Black Friday" whole on its own line. */
-      #end-head { font-size: 104px; font-weight: 800; line-height: 1.06;
-        letter-spacing: -0.03em; text-align: center; color: var(--brand-white);
-        max-width: 700px; margin: 0 auto; }
-      #end-head .em { font-family: 'Hedvig Letters Serif', Georgia, serif;
-        font-style: italic; font-weight: 400; letter-spacing: -0.01em;
-        margin-right: 0.06em; color: var(--brand-blue-tint); }
-      #end-pill { margin-top: 68px; font-size: 46px; font-weight: 800;
-        color: var(--brand-white); background: var(--brand-flame);
-        padding: 36px 84px; border-radius: 999px;
-        box-shadow: 0 28px 84px -18px rgba(255, 76, 50, 0.7); }
-      #end-stats { margin-top: 46px; font-size: 30px; font-weight: 600;
-        letter-spacing: 0.14em; text-transform: uppercase;
-        color: var(--brand-text-dim); }
-      #end-glow { position: absolute; left: -12%; bottom: -20%; width: 124%; height: 56%;
-        background: var(--brand-gradient-2); filter: blur(100px); opacity: 0.3; }
     </style>
   </head>
-  <body>
-    <!-- Render contract: root carries id, data-composition-id, data-start=0,
-         data-width, data-height. Timed visible children get class="clip" plus
-         data-start / data-duration / data-track-index. <video>/<audio> must NOT
-         carry class="clip". Source is trimmed 2.75s via data-media-start, which
-         drops the dead air before Sean's first word. -->
+  <body class="r-916">
+    <!-- =====================================================================
+         Render contract: root carries id, data-composition-id, data-start="0",
+         data-duration, data-width, data-height. Timed visible children carry
+         class="clip" + data-start / data-duration / data-track-index, except
+         <video> and <audio>, which take the data-* but never class="clip".
+
+         compositions/square.html is GENERATED from this file — run
+         scripts/gen-square.sh after editing, never hand-edit the square cut.
+
+         Source is trimmed 2.75s via data-media-start on the video AND the
+         audio equally, dropping the dead air before Sean's first word without
+         breaking lip sync.
+         ===================================================================== -->
     <div
       id="root"
       data-composition-id="ecomiq-bf-workbook"
@@ -201,194 +40,208 @@
       data-width="1080"
       data-height="1920"
     >
-      <!-- base A-roll: centre-cropped 9:16, silent by contract -->
-      <video id="aroll" data-start="0" data-duration="45.17" data-track-index="0"
-             data-media-start="2.75" src="assets/aroll-916.mp4" muted playsinline></video>
+      <!-- A-roll spine. Non-timed wrapper so the <video> is never transformed. -->
+      <div id="aroll-wrap">
+        <video id="aroll" data-start="0" data-duration="45.20" data-track-index="0"
+               data-media-start="2.75" src="assets/aroll-916-wide.mp4" muted playsinline></video>
+      </div>
+      <div id="aroll-scrim"></div>
 
-      <!-- the audio spine: full take, same 2.75s trim so lips stay in sync -->
+      <!-- the audio spine: full take, same trim so lips stay in sync -->
       <audio id="vo" data-start="0" data-duration="52.33" data-track-index="1"
              data-media-start="2.75" src="assets/aroll-audio.m4a" data-volume="1"></audio>
 
       <!-- 1 · HOOK — "a record Black Friday can still be an unprofitable one" -->
-      <div id="hook" class="clip card card--std" data-start="0.20" data-duration="3.95" data-track-index="2">
-        <div id="hook-eyebrow" class="eyebrow eyebrow--flame">Black Friday</div>
-        <div id="hook-l1">Record sales.</div>
-        <div id="hook-l2wrap">
-          <div id="hook-l2">Record profit.</div>
-          <div id="hook-strike"></div>
-        </div>
+      <div id="hook" class="clip scene" data-start="1.20" data-duration="3.25" data-track-index="2">
+        <div class="bloom"></div>
+        <div class="sc"><div class="sc-mid">
+          <div id="hook-eyebrow" class="eyebrow eyebrow--flame">Black Friday</div>
+          <div id="hook-l1">Record sales.</div>
+          <div id="hook-l2wrap">
+            <div id="hook-l2">Record profit.</div>
+            <div id="hook-strike"></div>
+          </div>
+        </div></div>
       </div>
 
       <!-- 2 · COST STACK — discounts, ads, fulfilment, returns eat the order -->
-      <div id="cost" class="clip card card--tall" data-start="4.15" data-duration="8.60" data-track-index="3">
-        <div class="eyebrow" style="margin-bottom: 22px">One Black Friday order</div>
-        <div class="revrow">
-          <span class="label">Revenue</span>
-          <span class="figure">$114.70</span>
-        </div>
-        <div class="bar">
-          <div id="seg-base" class="seg"></div>
-          <div id="seg-disc" class="seg"></div>
-          <div id="seg-ads" class="seg"></div>
-          <div id="seg-ful" class="seg"></div>
-          <div id="seg-ret" class="seg"></div>
-          <div id="seg-left" class="seg"></div>
-        </div>
-        <div class="leftrow">
-          <span class="label">Left per order</span>
-          <span id="cost-left-fig" class="figure">$77.40</span>
-        </div>
-        <div class="chips">
-          <div id="chip-disc" class="chip"><span>Discounts</span><span>&minus;$28.68</span></div>
-          <div id="chip-ads" class="chip"><span>Advertising</span><span>&minus;$18.00</span></div>
-          <div id="chip-ful" class="chip"><span>Fulfilment + delivery</span><span>&minus;$13.10</span></div>
-          <div id="chip-ret" class="chip"><span>Returns</span><span>&minus;$8.00</span></div>
-        </div>
+      <div id="cost" class="clip scene" data-start="4.15" data-duration="8.55" data-track-index="3">
+        <div class="bloom"></div>
+        <div class="sc"><div class="sc-mid">
+          <div class="eyebrow" style="margin-bottom: 22px">One Black Friday order</div>
+          <div class="revrow">
+            <span class="label">Revenue</span>
+            <span class="figure">$114.70</span>
+          </div>
+          <div class="bar">
+            <div id="seg-base" class="seg"></div>
+            <div id="seg-disc" class="seg"></div>
+            <div id="seg-ads" class="seg"></div>
+            <div id="seg-ful" class="seg"></div>
+            <div id="seg-ret" class="seg"></div>
+            <div id="seg-left" class="seg"></div>
+          </div>
+          <div class="leftrow">
+            <span class="label">Left per order</span>
+            <span id="cost-left-fig" class="figure">$77.40</span>
+          </div>
+          <div class="chips">
+            <div id="chip-disc" class="chip"><span>Discounts</span><span>&minus;$28.68</span></div>
+            <div id="chip-ads" class="chip"><span>Advertising</span><span>&minus;$18.00</span></div>
+            <div id="chip-ful" class="chip"><span>Fulfilment + delivery</span><span>&minus;$13.10</span></div>
+            <div id="chip-ret" class="chip"><span>Returns</span><span>&minus;$8.00</span></div>
+          </div>
+        </div></div>
       </div>
 
-      <!-- 3 · TWO FIGURES — contribution margin + break-even ROAS -->
-      <div id="figs" class="clip card card--std" data-start="12.81" data-duration="6.20" data-track-index="4">
-        <div class="eyebrow" style="margin-bottom: 28px">Work these out first</div>
-        <div class="stats">
-          <div id="stat-1" class="stat">
-            <div class="label">Contribution<br />margin</div>
-            <div id="fig-margin" class="figure">52.1%</div>
-            <div class="rule"></div>
-          </div>
-          <div id="stat-2" class="stat">
-            <div class="label">Break-even<br />ROAS</div>
-            <div id="fig-roas" class="figure">1.9&times;</div>
-            <div class="rule"></div>
-          </div>
-        </div>
-      </div>
+      <!-- Sean carries 12.4–19.1 on camera: the contribution-margin and
+           break-even ROAS line. Its graphic was cut at Anna's request. -->
 
-      <!-- 4 · CONTRAST — sales up, profit down. Arrows only, no percentages. -->
-      <div id="contrast" class="clip card card--std" data-start="19.08" data-duration="3.80" data-track-index="5">
-        <div class="eyebrow" style="margin-bottom: 34px">Sell more, keep less</div>
-        <div class="contrast">
-          <div>
-            <svg id="arrow-up" width="118" height="150" viewBox="0 0 118 150" fill="none" aria-hidden="true">
-              <path d="M59 146V16M59 8l44 48H15L59 8z" stroke="#9CD4FF" stroke-width="13"
-                    stroke-linecap="round" stroke-linejoin="round" fill="#9CD4FF" />
-            </svg>
-            <div class="cname" style="color: var(--brand-blue-tint)">Sales</div>
-          </div>
-          <div class="divider"></div>
-          <div>
-            <svg id="arrow-down" width="118" height="150" viewBox="0 0 118 150" fill="none" aria-hidden="true">
-              <path d="M59 4v130M59 142l44-48H15l44 48z" stroke="#FF4C32" stroke-width="13"
-                    stroke-linecap="round" stroke-linejoin="round" fill="#FF4C32" />
-            </svg>
-            <div class="cname" style="color: var(--brand-flame)">Profit</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5 · NOTHING LEFT — normal month vs this Black Friday -->
-      <div id="cmp" class="clip card card--std" data-start="22.96" data-duration="3.40" data-track-index="6">
-        <div class="eyebrow eyebrow--flame" style="margin-bottom: 30px">Nothing left</div>
-        <div class="cmp">
-          <div class="cmprow">
-            <div class="top">
-              <span class="label">Normal month</span>
-              <span class="figure" style="color: var(--brand-blue-tint)">$59.71</span>
+      <!-- 3 · CONTRAST — sales up, profit down. Arrows only, no percentages. -->
+      <div id="contrast" class="clip scene" data-start="19.10" data-duration="4.05" data-track-index="4">
+        <div class="bloom"></div>
+        <div class="sc"><div class="sc-mid sc-mid--center">
+          <div class="eyebrow" style="margin-bottom: 34px">Sell more, keep less</div>
+          <div class="contrast">
+            <div>
+              <svg id="arrow-up" viewBox="0 0 118 150" fill="none" aria-hidden="true">
+                <path d="M59 146V16M59 8l44 48H15L59 8z" stroke="#9CD4FF" stroke-width="13"
+                      stroke-linecap="round" stroke-linejoin="round" fill="#9CD4FF" />
+              </svg>
+              <div class="cname" style="color: var(--brand-blue-tint)">Sales</div>
             </div>
-            <div id="cmp-bar-1" class="cmpbar" style="width: 864px; background: var(--brand-blue-tint)"></div>
-          </div>
-          <div class="cmprow">
-            <div class="top">
-              <span class="label">This Black Friday</span>
-              <span id="cmp-fig-2" class="figure" style="color: var(--brand-flame)">$9.62</span>
+            <div class="divider"></div>
+            <div>
+              <svg id="arrow-down" viewBox="0 0 118 150" fill="none" aria-hidden="true">
+                <path d="M59 4v130M59 142l44-48H15l44 48z" stroke="#FF4C32" stroke-width="13"
+                      stroke-linecap="round" stroke-linejoin="round" fill="#FF4C32" />
+              </svg>
+              <div class="cname" style="color: var(--brand-flame)">Profit</div>
             </div>
-            <div id="cmp-bar-2" class="cmpbar" style="width: 139px; background: var(--brand-flame)"></div>
           </div>
-        </div>
+        </div></div>
       </div>
 
-      <!-- 6 · WORKBOOK HERO — "I've put together a free workbook" -->
-      <div id="hero" class="clip scene" data-start="26.23" data-duration="4.37" data-track-index="7">
-        <div class="eyebrow eyebrow--flame">Free workbook</div>
-        <div id="hero-panel" class="panel">
-          <img src="assets/workbook-hero.png" alt="The Black Friday Profit Plan workbook" />
-        </div>
+      <!-- 4 · NOTHING LEFT — normal month vs this Black Friday -->
+      <div id="cmp" class="clip scene" data-start="22.85" data-duration="3.65" data-track-index="5">
+        <div class="bloom"></div>
+        <div class="sc"><div class="sc-mid">
+          <div class="eyebrow eyebrow--flame" style="margin-bottom: 30px">Nothing left</div>
+          <div class="cmp">
+            <div class="cmprow">
+              <div class="top">
+                <span class="label">Normal month</span>
+                <span class="figure" style="color: var(--brand-blue-tint)">$59.71</span>
+              </div>
+              <div id="cmp-bar-1" class="cmpbar" style="width: 100%; background: var(--brand-blue-tint)"></div>
+            </div>
+            <div class="cmprow">
+              <div class="top">
+                <span class="label">This Black Friday</span>
+                <span id="cmp-fig-2" class="figure" style="color: var(--brand-flame)">$9.62</span>
+              </div>
+              <div id="cmp-bar-2" class="cmpbar" style="width: 16.1%; background: var(--brand-flame)"></div>
+            </div>
+          </div>
+        </div></div>
       </div>
 
-      <!-- 7 · REAL PAGE + PER-ORDER CONTRIBUTION -->
-      <div id="page" class="clip scene" data-start="30.30" data-duration="2.15" data-track-index="8">
-        <div id="page-panel" class="panel">
-          <img src="assets/wb-page-08.png" alt="Calculate your contribution margin" />
-        </div>
-        <div id="page-callout">
-          <span id="page-fig" class="figure">$59.71</span>
-          <span class="label">Contribution per order</span>
-        </div>
+      <!-- 5 · WORKBOOK HERO — "I've put together a free workbook" -->
+      <div id="hero" class="clip scene" data-start="26.20" data-duration="4.35" data-track-index="6">
+        <div class="bloom"></div>
+        <div class="sc"><div class="sc-mid sc-mid--center">
+          <div class="eyebrow eyebrow--flame">Free workbook</div>
+          <img id="hero-shot" class="shot" src="assets/workbook-hero-trim.png"
+               alt="The Black Friday Profit Plan workbook" />
+        </div></div>
       </div>
 
-      <!-- 8 · MAX DISCOUNT DIAL -->
-      <div id="dial" class="clip card card--std" data-start="32.15" data-duration="5.00" data-track-index="9">
-        <div class="eyebrow" style="margin-bottom: 34px">The ceiling</div>
-        <div class="dialwrap">
-          <div class="dial">
-            <svg width="260" height="260" viewBox="0 0 260 260" aria-hidden="true">
-              <circle cx="130" cy="130" r="112" fill="none"
-                      stroke="rgba(156,212,255,0.20)" stroke-width="22" />
-              <circle id="dial-arc" cx="130" cy="130" r="112" fill="none"
-                      stroke="#FF4C32" stroke-width="22" stroke-linecap="round" />
-            </svg>
-            <div class="inner"><span id="dial-fig" class="figure">25%</span></div>
+      <!-- 6 · REAL PAGE + per-order contribution -->
+      <div id="page" class="clip scene" data-start="30.25" data-duration="2.35" data-track-index="7">
+        <div class="bloom"></div>
+        <div class="sc"><div class="sc-mid sc-mid--center">
+          <img id="page-shot" class="shot" src="assets/wb-page-08.png"
+               alt="Calculate your contribution margin" />
+          <div id="page-callout">
+            <span id="page-fig" class="figure">$59.71</span>
+            <span class="label">Contribution per order</span>
           </div>
-          <div class="dialtext">
-            <div class="label">Max discount<br />your margin<br />can support</div>
-          </div>
-        </div>
+        </div></div>
       </div>
 
-      <!-- 9 · FOUR-ITEM CHECKLIST — offer / inventory / marketing / email -->
-      <div id="checklist" class="clip card card--tall" data-start="37.88" data-duration="5.81" data-track-index="10">
-        <div class="eyebrow" style="margin-bottom: 10px">Then it walks you through</div>
-        <div class="checks">
-          <div class="checkrow" id="row-1">
-            <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
-              d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
-              stroke-linecap="round" stroke-linejoin="round" /></svg></div>
-            <div class="ctext">Offer</div>
+      <!-- 7 · MAX DISCOUNT DIAL -->
+      <div id="dial" class="clip scene" data-start="32.30" data-duration="4.95" data-track-index="8">
+        <div class="bloom"></div>
+        <div class="sc"><div class="sc-mid">
+          <div class="eyebrow" style="margin-bottom: 34px">The ceiling</div>
+          <div class="dialwrap">
+            <div class="dial">
+              <svg viewBox="0 0 260 260" aria-hidden="true">
+                <circle cx="130" cy="130" r="112" fill="none"
+                        stroke="rgba(156,212,255,0.20)" stroke-width="22" />
+                <circle id="dial-arc" cx="130" cy="130" r="112" fill="none"
+                        stroke="#FF4C32" stroke-width="22" stroke-linecap="round" />
+              </svg>
+              <div class="inner"><span id="dial-fig" class="figure">25%</span></div>
+            </div>
+            <div class="dialtext">
+              <div class="label">Max discount<br />your margin<br />can support</div>
+            </div>
           </div>
-          <div class="checkrow" id="row-2">
-            <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
-              d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
-              stroke-linecap="round" stroke-linejoin="round" /></svg></div>
-            <div class="ctext">Inventory</div>
-          </div>
-          <div class="checkrow" id="row-3">
-            <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
-              d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
-              stroke-linecap="round" stroke-linejoin="round" /></svg></div>
-            <div class="ctext">Marketing</div>
-          </div>
-          <div class="checkrow" id="row-4">
-            <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
-              d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
-              stroke-linecap="round" stroke-linejoin="round" /></svg></div>
-            <div class="ctext">Email follow-up</div>
-          </div>
-        </div>
+        </div></div>
       </div>
 
-      <!-- 10 · "IT'S COMPLETELY FREE" -->
-      <div id="free" class="clip scene" data-start="43.39" data-duration="2.08" data-track-index="11">
-        <div id="free-panel" class="panel">
-          <img src="assets/toolkit-spread.png" alt="The full EcomIQ Black Friday toolkit" />
-        </div>
-        <div id="free-word">Free</div>
+      <!-- 8 · FOUR-ITEM CHECKLIST — offer / inventory / marketing / email -->
+      <div id="checklist" class="clip scene" data-start="37.95" data-duration="5.70" data-track-index="9">
+        <div class="bloom"></div>
+        <div class="sc"><div class="sc-mid">
+          <div class="eyebrow" style="margin-bottom: 10px">Then it walks you through</div>
+          <div class="checks">
+            <div class="checkrow" id="row-1">
+              <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
+                d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
+                stroke-linecap="round" stroke-linejoin="round" /></svg></div>
+              <div class="ctext">Offer</div>
+            </div>
+            <div class="checkrow" id="row-2">
+              <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
+                d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
+                stroke-linecap="round" stroke-linejoin="round" /></svg></div>
+              <div class="ctext">Inventory</div>
+            </div>
+            <div class="checkrow" id="row-3">
+              <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
+                d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
+                stroke-linecap="round" stroke-linejoin="round" /></svg></div>
+              <div class="ctext">Marketing</div>
+            </div>
+            <div class="checkrow" id="row-4">
+              <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
+                d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
+                stroke-linecap="round" stroke-linejoin="round" /></svg></div>
+              <div class="ctext">Email follow-up</div>
+            </div>
+          </div>
+        </div></div>
       </div>
 
-      <!-- 11 · END CARD — fires on "links below", holds past the last word -->
-      <div id="endcard" class="clip scene" data-start="45.17" data-duration="7.16" data-track-index="12">
-        <div id="end-glow"></div>
-        <div id="end-head">Get your free <span class="em">Black Friday</span> workbook</div>
-        <div id="end-pill">Sign up free</div>
-        <div id="end-stats">8 parts &middot; 32 worksheets &middot; 19 free tools</div>
+      <!-- 9 · "IT'S COMPLETELY FREE" -->
+      <div id="free" class="clip scene" data-start="43.35" data-duration="2.15" data-track-index="10">
+        <div class="bloom"></div>
+        <div class="sc"><div class="sc-mid sc-mid--center">
+          <img id="free-shot" class="shot" src="assets/toolkit-spread-trim.png"
+               alt="The full EcomIQ Black Friday toolkit" />
+          <div id="free-word">Free</div>
+        </div></div>
+      </div>
+
+      <!-- 10 · END CARD — fires on "links below", holds past the last word -->
+      <div id="endcard" class="clip scene" data-start="45.20" data-duration="7.13" data-track-index="11">
+        <div class="bloom"></div>
+        <div class="sc"><div class="sc-mid sc-mid--center">
+          <div id="end-head">Get your free Black Friday workbook</div>
+          <div id="end-pill">Sign up free</div>
+        </div></div>
       </div>
 
       <!-- persistent logo, top-left on every frame. Non-clip wrapper on purpose. -->
@@ -396,19 +249,16 @@
     </div>
 
     <script>
-      // ---- the only three values that differ between the 9:16 and 1:1 cuts ----
-      const BAR_W = 864;    // cost-stack bar width (1080 minus 2x108 padding)
-      const DIAL_R = 112;   // max-discount dial radius
-      const TICK_LEN = 46;  // checkmark path length, for the dash draw
-
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
       /* ---- cost-stack bar geometry ------------------------------------
-         Laid out from the dollar figures rather than hardcoded pixels, so
-         the bar stays honest at any width and both cuts share the math.
-         Revenue is the 2025 Shopify BFCM AOV the workbook cites; the costs
-         are the workbook's own worked example, scaled for Black Friday. */
+         Laid out from the dollar figures rather than hardcoded pixels, and
+         measured off the live element, so the same script drives both cuts
+         with no ratio constants to keep in sync. Revenue is the 2025 Shopify
+         BFCM AOV the workbook cites; the costs are the workbook's own worked
+         example (Part 01, page 8), scaled for Black Friday. */
+      const BAR_W = document.querySelector(".bar").clientWidth;
       const AOV = 114.7;
       const COST_ROWS = [
         { id: "base", usd: 37.3 },   // landed product + payment charges
@@ -432,9 +282,9 @@
       segLeft.style.left = LEFT_X + "px";
       segLeft.style.width = LEFT_W + "px";
 
-      // Card/scene crossfades. Each element fades up over FADE and, when
-      // something follows it, fades out across its 0.30s overlap tail, so the
-      // incoming card is already up before the outgoing one clears.
+      // Scene crossfades. Each scene fades up over FADE and fades out across
+      // its 0.30s overlap tail, so the incoming scene is already visible
+      // before the outgoing one clears — a real crossfade, not a pop.
       const FADE = 0.3;
       function fadeIn(sel, at, dur) {
         tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: dur || FADE, ease: "sine.out" }, at);
@@ -453,20 +303,20 @@
       const usd = (v) => "$" + v.toFixed(2);
       const pct = (v) => Math.round(v) + "%";
 
-      /* ---- 1 · HOOK  0.20 → 4.15 ------------------------------------- */
-      fadeIn("#hook", 0.2);
+      /* ---- 1 · HOOK  1.20 → 4.45 ------------------------------------- */
+      fadeIn("#hook", 1.2);
       tl.fromTo("#hook-eyebrow", { opacity: 0, x: -24 },
-        { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 0.35);
+        { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 1.35);
       tl.fromTo("#hook-l1", { opacity: 0, y: 44 },
-        { opacity: 1, y: 0, duration: 0.62, ease: "power3.out" }, 0.55);
+        { opacity: 1, y: 0, duration: 0.62, ease: "power3.out" }, 1.5);
       tl.fromTo("#hook-l2", { opacity: 0, y: 44 },
-        { opacity: 1, y: 0, duration: 0.62, ease: "power3.out" }, 1.15);
+        { opacity: 1, y: 0, duration: 0.62, ease: "power3.out" }, 1.95);
       // the strike lands on "unprofitable"
       tl.fromTo("#hook-strike", { scaleX: 0 },
-        { scaleX: 1, duration: 0.42, ease: "power4.out" }, 1.95);
-      fadeOut("#hook", 3.85);
+        { scaleX: 1, duration: 0.42, ease: "power4.out" }, 2.55);
+      fadeOut("#hook", 4.15);
 
-      /* ---- 2 · COST STACK  4.15 → 12.75 ------------------------------ */
+      /* ---- 2 · COST STACK  4.15 → 12.70 ------------------------------ */
       fadeIn("#cost", 4.15);
       tl.fromTo("#cost .eyebrow", { opacity: 0, x: -22 },
         { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 4.3);
@@ -497,101 +347,93 @@
         countTo("#cost-left-fig", t, 0.42, prevLeft, left, usd);
         prevLeft = left;
       });
-      fadeOut("#cost", 12.45);
+      fadeOut("#cost", 12.4);
 
-      /* ---- 3 · TWO FIGURES  12.81 → 19.01 ---------------------------- */
-      fadeIn("#figs", 12.81);
-      tl.fromTo("#figs .eyebrow", { opacity: 0, x: -22 },
-        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 12.95);
-      tl.fromTo("#stat-1", { opacity: 0, y: 48, scale: 0.94 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.3)" }, 13.15);
-      tl.fromTo("#stat-2", { opacity: 0, y: 48, scale: 0.94 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.3)" }, 13.5);
-      countTo("#fig-margin", 13.4, 0.9, 0, 52.1, (v) => v.toFixed(1) + "%");
-      countTo("#fig-roas", 13.75, 0.9, 0, 1.92, (v) => v.toFixed(1) + "×");
-      tl.fromTo("#stat-1 .rule", { scaleX: 0 },
-        { scaleX: 1, duration: 0.45, ease: "power3.out" }, 14.35);
-      tl.fromTo("#stat-2 .rule", { scaleX: 0 },
-        { scaleX: 1, duration: 0.45, ease: "power3.out" }, 14.6);
-      fadeOut("#figs", 18.71);
+      /* ---- Sean on camera 12.40 → 19.10 ------------------------------
+         He carries the contribution-margin / break-even ROAS line himself. */
 
-      /* ---- 4 · CONTRAST  19.08 → 22.88 ------------------------------- */
-      fadeIn("#contrast", 19.08);
+      /* ---- 3 · CONTRAST  19.10 → 23.15 ------------------------------- */
+      fadeIn("#contrast", 19.1);
       tl.fromTo("#contrast .eyebrow", { opacity: 0, x: -22 },
-        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 19.2);
+        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 19.25);
       tl.fromTo("#contrast .divider", { opacity: 0, scaleY: 0 },
-        { opacity: 1, scaleY: 1, duration: 0.5, ease: "power2.out" }, 19.3);
+        { opacity: 1, scaleY: 1, duration: 0.5, ease: "power2.out" }, 19.35);
       tl.fromTo("#arrow-up", { opacity: 0, y: 66 },
-        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 19.4);
+        { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 19.45);
       tl.fromTo("#contrast .contrast > div:first-child .cname", { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 19.7);
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 19.75);
       tl.fromTo("#arrow-down", { opacity: 0, y: -66 },
-        { opacity: 1, y: 0, duration: 0.7, ease: "power3.in" }, 20.2);
+        { opacity: 1, y: 0, duration: 0.7, ease: "power3.in" }, 20.25);
       tl.fromTo("#contrast .contrast > div:last-child .cname", { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 20.5);
-      fadeOut("#contrast", 22.58);
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 20.55);
+      fadeOut("#contrast", 22.85);
 
-      /* ---- 5 · NOTHING LEFT  22.96 → 26.36 --------------------------- */
-      fadeIn("#cmp", 22.96);
+      /* ---- 4 · NOTHING LEFT  22.85 → 26.50 --------------------------- */
+      fadeIn("#cmp", 22.85);
       tl.fromTo("#cmp .eyebrow", { opacity: 0, x: -22 },
-        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 23.08);
+        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 23.0);
       tl.fromTo("#cmp .cmprow:first-child", { opacity: 0, y: 26 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 23.2);
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 23.1);
       tl.fromTo("#cmp-bar-1", { scaleX: 0 },
-        { scaleX: 1, duration: 0.62, ease: "power2.out" }, 23.3);
+        { scaleX: 1, duration: 0.62, ease: "power2.out" }, 23.2);
       tl.fromTo("#cmp .cmprow:last-child", { opacity: 0, y: 26 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 23.75);
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 23.65);
       // the Black Friday bar barely registers next to it
       tl.fromTo("#cmp-bar-2", { scaleX: 0 },
-        { scaleX: 1, duration: 0.55, ease: "power4.out" }, 23.9);
-      countTo("#cmp-fig-2", 23.9, 0.6, 59.71, 9.62, usd);
+        { scaleX: 1, duration: 0.55, ease: "power4.out" }, 23.8);
+      countTo("#cmp-fig-2", 23.8, 0.6, 59.71, 9.62, usd);
       tl.to("#cmp-bar-2", { scaleY: 1.5, duration: 0.16, ease: "power2.out",
-        yoyo: true, repeat: 1 }, 24.5);
-      fadeOut("#cmp", 26.06);
+        yoyo: true, repeat: 1 }, 24.4);
+      fadeOut("#cmp", 26.2);
 
-      /* ---- 6 · WORKBOOK HERO  26.23 → 30.60 -------------------------- */
-      fadeIn("#hero", 26.23, 0.42);
+      /* ---- 5 · WORKBOOK HERO  26.20 → 30.55 -------------------------- */
+      fadeIn("#hero", 26.2, 0.42);
       tl.fromTo("#hero .eyebrow", { opacity: 0, y: -22 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 26.5);
-      tl.fromTo("#hero-panel", { opacity: 0, y: 90, scale: 0.93 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.85, ease: "power3.out" }, 26.45);
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 26.45);
+      tl.fromTo("#hero-shot", { opacity: 0, y: 40, scale: 0.93 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.85, ease: "power3.out" }, 26.4);
       // slow push-in so the hold never feels static
-      tl.to("#hero-panel", { scale: 1.03, duration: 3.2, ease: "sine.inOut" }, 27.3);
-      fadeOut("#hero", 30.3);
+      tl.to("#hero-shot", { scale: 1.04, duration: 3.2, ease: "sine.inOut" }, 27.25);
+      fadeOut("#hero", 30.25);
 
-      /* ---- 7 · REAL PAGE  30.30 → 32.45 ------------------------------ */
-      fadeIn("#page", 30.3, 0.32);
-      tl.fromTo("#page-panel", { opacity: 0, y: 60 },
-        { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 30.38);
+      /* ---- 6 · REAL PAGE  30.25 → 32.60 ------------------------------ */
+      fadeIn("#page", 30.25, 0.32);
+      tl.fromTo("#page-shot", { opacity: 0, y: 60 },
+        { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 30.33);
       tl.fromTo("#page-callout", { opacity: 0, y: 40, scale: 0.9 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 30.62);
-      countTo("#page-fig", 30.68, 0.75, 0, 59.71, usd);
-      fadeOut("#page", 32.15);
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 30.57);
+      countTo("#page-fig", 30.63, 0.75, 0, 59.71, usd);
+      fadeOut("#page", 32.3);
 
-      /* ---- 8 · MAX DISCOUNT DIAL  32.15 → 37.15 ---------------------- */
-      const C = 2 * Math.PI * DIAL_R;
-      tl.set("#dial-arc", { strokeDasharray: C, strokeDashoffset: C }, 32.15);
-      fadeIn("#dial", 32.15);
+      /* ---- 7 · MAX DISCOUNT DIAL  32.30 → 37.25 ---------------------- */
+      const arc = document.getElementById("dial-arc");
+      const C = 2 * Math.PI * arc.r.baseVal.value;
+      tl.set("#dial-arc", { strokeDasharray: C, strokeDashoffset: C }, 32.3);
+      fadeIn("#dial", 32.3);
       tl.fromTo("#dial .eyebrow", { opacity: 0, x: -22 },
-        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 32.3);
+        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 32.45);
       tl.fromTo("#dial .dial", { opacity: 0, scale: 0.86 },
-        { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.4)" }, 32.4);
+        { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.4)" }, 32.55);
       tl.fromTo("#dial .dialtext", { opacity: 0, x: 40 },
-        { opacity: 1, x: 0, duration: 0.55, ease: "power2.out" }, 32.7);
+        { opacity: 1, x: 0, duration: 0.55, ease: "power2.out" }, 32.85);
       // arc sweeps to 25% and the figure counts with it
-      tl.to("#dial-arc", { strokeDashoffset: C * 0.75, duration: 1.5, ease: "power2.inOut" }, 32.85);
-      countTo("#dial-fig", 32.85, 1.5, 0, 25, pct);
-      fadeOut("#dial", 36.85);
+      tl.to("#dial-arc", { strokeDashoffset: C * 0.75, duration: 1.5, ease: "power2.inOut" }, 33.0);
+      countTo("#dial-fig", 33.0, 1.5, 0, 25, pct);
+      fadeOut("#dial", 36.95);
 
-      /* ---- 9 · CHECKLIST  37.88 → 43.69 ------------------------------ */
-      fadeIn("#checklist", 37.88);
+      /* ---- Sean on camera 36.95 → 37.95 ------------------------------ */
+
+      /* ---- 8 · CHECKLIST  37.95 → 43.65 ------------------------------ */
+      fadeIn("#checklist", 37.95);
       tl.fromTo("#checklist .eyebrow", { opacity: 0, x: -22 },
-        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 38.0);
+        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 38.07);
       // rows build empty first, then tick as he names each one
       [1, 2, 3, 4].forEach((n, i) => {
+        const tick = document.querySelector("#row-" + n + " .tick");
+        const len = tick.getTotalLength();
         tl.fromTo("#row-" + n, { opacity: 0, x: -40 },
-          { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }, 38.2 + i * 0.14);
-        tl.set("#row-" + n + " .tick", { strokeDasharray: TICK_LEN, strokeDashoffset: TICK_LEN }, 38.2);
+          { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }, 38.27 + i * 0.14);
+        tl.set("#row-" + n + " .tick", { strokeDasharray: len, strokeDashoffset: len }, 38.27);
       });
       const TICKS = [40.09, 40.72, 41.35, 41.75];
       TICKS.forEach((t, i) => {
@@ -604,29 +446,23 @@
         tl.to(row + " .box", { scale: 1.14, duration: 0.13, ease: "power2.out",
           yoyo: true, repeat: 1 }, t);
       });
-      fadeOut("#checklist", 43.39);
+      fadeOut("#checklist", 43.35);
 
-      /* ---- 10 · FREE  43.39 → 45.47 ---------------------------------- */
-      fadeIn("#free", 43.39, 0.26);
-      tl.fromTo("#free-panel", { opacity: 0, scale: 0.94 },
-        { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 43.45);
+      /* ---- 9 · FREE  43.35 → 45.50 ----------------------------------- */
+      fadeIn("#free", 43.35, 0.26);
+      tl.fromTo("#free-shot", { opacity: 0, scale: 0.94 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 43.42);
       // slams in hard, one beat
       tl.fromTo("#free-word", { opacity: 0, scale: 1.9 },
-        { opacity: 1, scale: 1, duration: 0.34, ease: "power4.out" }, 43.72);
-      fadeOut("#free", 45.17);
+        { opacity: 1, scale: 1, duration: 0.34, ease: "power4.out" }, 43.7);
+      fadeOut("#free", 45.2);
 
-      /* ---- 11 · END CARD  45.17 → 52.33 ------------------------------ */
-      fadeIn("#endcard", 45.17, 0.4);
-      tl.fromTo("#end-glow", { opacity: 0 },
-        { opacity: 0.3, duration: 1.1, ease: "sine.out" }, 45.2);
+      /* ---- 10 · END CARD  45.20 → 52.33 ------------------------------ */
+      fadeIn("#endcard", 45.2, 0.4);
       tl.fromTo("#end-head", { opacity: 0, y: 46 },
-        { opacity: 1, y: 0, duration: 0.75, ease: "power3.out" }, 45.4);
-      tl.fromTo("#end-head .em", { opacity: 0, x: -26 },
-        { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 45.6);
+        { opacity: 1, y: 0, duration: 0.75, ease: "power3.out" }, 45.45);
       tl.fromTo("#end-pill", { opacity: 0, scale: 0.82 },
         { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" }, 46.15);
-      tl.fromTo("#end-stats", { opacity: 0, y: 22 },
-        { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" }, 46.6);
       // the pill breathes through the hold, finite repeats only
       tl.to("#end-pill", { scale: 1.045, duration: 0.85, ease: "sine.inOut",
         yoyo: true, repeat: 5 }, 47.4);

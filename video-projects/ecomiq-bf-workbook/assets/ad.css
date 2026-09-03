@@ -1,0 +1,241 @@
+/* ===========================================================================
+   EcomIQ — Black Friday workbook ad. Shared stylesheet for both cuts.
+
+   index.html (9:16) and compositions/square.html (1:1) carry IDENTICAL markup
+   and identical timeline JS; the only difference is the <body> ratio class and
+   the A-roll source. Everything that changes between them is a custom property
+   defined once under body.r-916 / body.r-1x1, so a change lands in both cuts
+   at once instead of drifting.
+
+   Graphics are FULL-SCREEN scenes, not overlays on Sean. Each graphic beat
+   replaces him for its duration; he carries the beats between them.
+   =========================================================================== */
+
+/* --sub-safe reserves a clear strip along the bottom of every scene for
+   subtitles added by hand after delivery. Nothing in a scene's content flow
+   enters it — only full-bleed decoratives (the bloom, the A-roll scrim) pass
+   through, and those sit behind type without hurting legibility.
+     9:16  340px → band is y 1580–1920 (17.7% of frame)
+     1:1   200px → band is y  880–1080 (18.5% of frame)
+   Change the value here and every scene rebalances. Verify with
+   scripts/check-subtitle-band.mjs. */
+body.r-916 { height: 1920px; --sub-safe: 340px; }
+body.r-1x1 { height: 1080px; --sub-safe: 200px; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  width: 1080px; overflow: hidden;
+  background: var(--brand-navy);
+  font-family: 'Rethink Sans', system-ui, sans-serif;
+  color: var(--brand-white);
+}
+#root { position: relative; width: 100%; height: 100%; overflow: hidden; }
+
+/* ---------------------------------------------------------------------------
+   Ratio tokens. One markup, two sizes.
+   --------------------------------------------------------------------------- */
+body.r-916 {
+  --pad-x: 88px;   --pad-top: 230px;  --pad-bot: 90px;
+  --eyebrow: 26px; --label: 27px;     --h1: 104px;
+  --fig-lg: 96px;  --fig-md: 66px;    --fig-sm: 62px;
+  --gap: 34px;
+  --bar-h: 26px;   --chip-h: 54px;    --chip-k: 28px;  --chip-v: 32px;
+  --arrow-w: 118px; --arrow-h: 150px; --cname: 40px;
+  --dial: 260px;   --dial-fig: 78px;
+  --box: 62px;     --ctext: 44px;     --check-gap: 20px;
+  --cover-w: 840px; --page-w: 760px;  --spread-w: 904px; --free-word: 200px;
+  --pill: 46px;    --end-head: 104px;
+}
+body.r-1x1 {
+  --pad-x: 72px;   --pad-top: 110px;  --pad-bot: 40px;
+  --eyebrow: 22px; --label: 23px;     --h1: 76px;
+  --fig-lg: 72px;  --fig-md: 50px;    --fig-sm: 42px;
+  --gap: 26px;
+  --bar-h: 20px;   --chip-h: 40px;    --chip-k: 21px;  --chip-v: 24px;
+  --arrow-w: 92px; --arrow-h: 118px;  --cname: 32px;
+  --dial: 200px;   --dial-fig: 60px;
+  --box: 50px;     --ctext: 34px;     --check-gap: 15px;
+  --cover-w: 530px; --page-w: 400px;  --spread-w: 700px; --free-word: 150px;
+  --pill: 38px;    --end-head: 76px;
+}
+
+/* ---------------------------------------------------------------------------
+   1 · A-roll spine. Deliberately NOT full-bleed: the source is 16:9 landscape,
+   so a full-height 9:16 crop is already the widest possible framing and Sean
+   reads very tight in it. Pulling back means a wider crop shown at less than
+   full frame height, with brand navy above and below. The <video> is never
+   animated (render contract 9).
+   --------------------------------------------------------------------------- */
+#aroll-wrap { position: absolute; inset: 0; z-index: 1;
+  background: var(--brand-navy); overflow: hidden; }
+#aroll { position: absolute; left: 0; width: 1080px; display: block; }
+body.r-916 #aroll { top: 130px; height: 1440px; }
+body.r-1x1 #aroll { top: 0;     height: 868px; }
+
+/* Navy at the top so the logo separates, and navy through the subtitle band so
+   the video's lower edge dissolves into it instead of ending on a hard line. */
+#aroll-scrim {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(6, 40, 76, 0.92) 0%, rgba(6, 40, 76, 0) 13%),
+    linear-gradient(0deg, var(--brand-navy) 0%, var(--brand-navy) 17%,
+      rgba(6, 40, 76, 0) 31%);
+}
+
+/* ---------------------------------------------------------------------------
+   2 · Persistent logo, top-left on every frame. Wrapped in a positioned,
+   NON-clip div — the render engine repositions class="clip" elements, so the
+   logo drifts without this (docs/LESSONS.md).
+   --------------------------------------------------------------------------- */
+#logo-wrap { position: absolute; z-index: 100; }
+body.r-916 #logo-wrap { top: 96px; left: 88px; }
+body.r-1x1 #logo-wrap { top: 56px; left: 72px; }
+#logo-wrap img { display: block; width: 108px; height: auto;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55)); }
+body.r-1x1 #logo-wrap img { width: 97px; }
+
+/* ---------------------------------------------------------------------------
+   3 · Full-screen graphic scenes.
+   .sc fills the scene and lays out with padding + flex — never an
+   absolute-positioned content container, which overflows when content grows.
+   --------------------------------------------------------------------------- */
+.scene { position: absolute; inset: 0; z-index: 10;
+  background:
+    radial-gradient(92% 56% at 50% 16%, rgba(156, 212, 255, 0.11) 0%,
+      rgba(6, 40, 76, 0) 58%),
+    var(--brand-navy); }
+.bloom { position: absolute; left: -12%; bottom: -26%; width: 124%; height: 62%;
+  background: var(--brand-gradient-2); filter: blur(96px); opacity: 0.3;
+  pointer-events: none; }
+.sc { position: relative; z-index: 2; width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  padding: var(--pad-top) var(--pad-x) calc(var(--pad-bot) + var(--sub-safe)); }
+/* Centres content in whatever space is left above the subtitle band, so both
+   ratios balance without hardcoded offsets. */
+.sc-mid { flex: 1 1 auto; min-height: 0;
+  display: flex; flex-direction: column; justify-content: center; }
+.sc-mid--center { align-items: center; text-align: center; }
+
+/* ---- shared type atoms --------------------------------------------------- */
+.eyebrow { font-size: var(--eyebrow); font-weight: 700; letter-spacing: 0.32em;
+  text-transform: uppercase; color: var(--brand-blue-tint); }
+.eyebrow--flame { color: var(--brand-flame); }
+.label { font-size: var(--label); font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--brand-text-dim); }
+.figure { font-weight: 800; letter-spacing: -0.02em; line-height: 1;
+  font-variant-numeric: tabular-nums; }
+
+/* ---- 1 · hook ------------------------------------------------------------ */
+#hook-eyebrow { margin-bottom: 26px; }
+#hook-l1, #hook-l2 { font-size: var(--h1); font-weight: 800; line-height: 1;
+  letter-spacing: -0.02em; }
+#hook-l1 { color: var(--brand-white); }
+#hook-l2 { color: var(--brand-flame); }
+/* align-self keeps the wrapper hugging its text — as a stretched flex item the
+   strike-through would run the full scene width. */
+#hook-l2wrap { position: relative; display: inline-block; align-self: flex-start;
+  margin-top: 14px; }
+#hook-strike { position: absolute; left: -8px; top: 52%; height: 11px;
+  width: calc(100% + 16px); background: var(--brand-flame); border-radius: 6px;
+  transform-origin: left center; }
+
+/* ---- 2 · cost stack ------------------------------------------------------ */
+.revrow { display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 20px; }
+.revrow .figure { font-size: var(--fig-sm); color: var(--brand-white); }
+.bar { position: relative; width: 100%; height: var(--bar-h);
+  border-radius: calc(var(--bar-h) / 2); overflow: hidden; background: #0a325f; }
+/* left/width are computed from the dollar figures at runtime — see the geometry
+   block in the timeline script, so the bar stays honest at any width. */
+.seg { position: absolute; top: 0; height: var(--bar-h);
+  transform-origin: left center; }
+#seg-base { background: var(--brand-border); }
+#seg-disc { background: var(--brand-flame); }
+#seg-ads  { background: rgba(255, 76, 50, 0.86); }
+#seg-ful  { background: rgba(255, 76, 50, 0.72); }
+#seg-ret  { background: rgba(255, 76, 50, 0.58); }
+#seg-left { background: var(--brand-blue-tint); transform-origin: right center; }
+.leftrow { display: flex; align-items: flex-end; justify-content: space-between;
+  margin-top: 26px; }
+#cost-left-fig { font-size: var(--fig-lg); color: var(--brand-flame); }
+.chips { margin-top: 30px; display: flex; flex-direction: column; gap: 13px; }
+.chip { display: flex; align-items: center; justify-content: space-between;
+  height: var(--chip-h); padding: 0 26px; border-radius: 10px;
+  background: rgba(255, 76, 50, 0.13); border-left: 5px solid var(--brand-flame); }
+.chip span:first-child { font-size: var(--chip-k); font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--brand-white); }
+.chip span:last-child { font-size: var(--chip-v); font-weight: 800;
+  color: var(--brand-flame); font-variant-numeric: tabular-nums; }
+
+/* ---- 3 · contrast (arrows only, no percentages) -------------------------- */
+.contrast { display: flex; align-items: stretch; width: 100%; }
+.contrast > div { flex: 1; display: flex; flex-direction: column;
+  align-items: center; gap: 22px; }
+.contrast .divider { flex: 0 0 1px; background: rgba(156, 212, 255, 0.3);
+  margin: 0 20px; }
+.contrast .cname { font-size: var(--cname); font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase; }
+.contrast svg { width: var(--arrow-w); height: var(--arrow-h); }
+
+/* ---- 4 · nothing left ---------------------------------------------------- */
+.cmp { display: flex; flex-direction: column; gap: var(--gap); width: 100%; }
+.cmprow { display: flex; flex-direction: column; gap: 14px; }
+.cmprow .top { display: flex; align-items: baseline; justify-content: space-between; }
+.cmprow .figure { font-size: var(--fig-md); }
+.cmpbar { height: 24px; border-radius: 12px; transform-origin: left center; }
+
+/* ---- 5 · max-discount dial ----------------------------------------------- */
+.dialwrap { display: flex; align-items: center; gap: 46px; }
+.dial { position: relative; width: var(--dial); height: var(--dial);
+  flex: 0 0 var(--dial); }
+.dial svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.dial .inner { position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center; }
+#dial-fig { font-size: var(--dial-fig); color: var(--brand-white); }
+.dialtext .label { font-size: calc(var(--label) * 1.1); line-height: 1.32; }
+
+/* ---- 6 · checklist ------------------------------------------------------- */
+.checks { display: flex; flex-direction: column; gap: var(--check-gap);
+  margin-top: 30px; }
+.checkrow { display: flex; align-items: center; gap: 26px; }
+.box { position: relative; flex: 0 0 var(--box); width: var(--box);
+  height: var(--box); border-radius: 12px;
+  border: 3px solid rgba(156, 212, 255, 0.45);
+  background: rgba(156, 212, 255, 0.07); }
+.box svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.checkrow .ctext { font-size: var(--ctext); font-weight: 700;
+  letter-spacing: 0.02em; text-transform: uppercase; color: var(--brand-white); }
+
+/* ---- 7 · product stills --------------------------------------------------
+   Sources are trimmed to the product's bounding box, so the artwork fills its
+   box instead of floating inside the mockup's white margin. Sat straight on
+   navy with a drop shadow — no white card, which lets the cover run much
+   larger in frame. */
+.shot { display: block; height: auto;
+  filter: drop-shadow(0 46px 90px rgba(0, 0, 0, 0.6)); }
+#hero-shot { width: var(--cover-w); }
+#page-shot { width: var(--page-w); border-radius: 10px; }
+#free-shot { width: var(--spread-w); }
+.scene .eyebrow { margin-bottom: 34px; }
+#page-callout { margin-top: 40px; display: flex; align-items: baseline; gap: 22px;
+  padding: 26px 40px; border-radius: 16px; background: #0a325f;
+  border-left: 7px solid var(--brand-flame); }
+#page-callout .figure { font-size: calc(var(--fig-lg) * 0.86);
+  color: var(--brand-flame); }
+#page-callout .label { max-width: 260px; line-height: 1.25; text-align: left; }
+body.r-1x1 #free-word { margin-top: 26px; }
+#free-word { margin-top: 54px; font-size: var(--free-word); font-weight: 800;
+  letter-spacing: -0.03em; line-height: 1; color: var(--brand-flame);
+  text-shadow: 0 24px 70px rgba(255, 76, 50, 0.45); }
+
+/* ---- 8 · end card -------------------------------------------------------- */
+#endcard .sc { justify-content: center; }
+#end-head { font-size: var(--end-head); font-weight: 800; line-height: 1.06;
+  letter-spacing: -0.03em; text-align: center; color: var(--brand-white);
+  max-width: 700px; }
+body.r-1x1 #end-head { max-width: 520px; }
+#end-pill { margin-top: 68px; font-size: var(--pill); font-weight: 800;
+  color: var(--brand-white); background: var(--brand-flame);
+  padding: 36px 84px; border-radius: 999px;
+  box-shadow: 0 28px 84px -18px rgba(255, 76, 50, 0.7); }
+body.r-1x1 #end-pill { margin-top: 46px; padding: 28px 64px; }

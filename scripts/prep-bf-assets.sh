@@ -75,8 +75,27 @@ prep_aroll() { # prep_aroll <crop> <scale> <out>
   ok "$(basename "$3")"
 }
 
-prep_aroll "1215:2160:1312:0" "1080:1920" "$DEST/aroll-916.mp4"   # 9:16
-prep_aroll "2160:2160:840:0"  "1080:1080" "$DEST/aroll-1x1.mp4"   # 1:1
+# The source is 16:9 LANDSCAPE, so a full-height crop is already the widest
+# possible framing for a portrait/square deliverable — there is no way to pull
+# back further and still fill the frame. The "-wide" renditions therefore take a
+# wider crop and are shown at LESS than full frame height, with brand navy above
+# and below (see assets/ad.css). Those are the ones the compositions use; the
+# full-bleed pair is kept for reference.
+prep_aroll "1215:2160:1312:0" "1080:1920" "$DEST/aroll-916.mp4"        # 9:16 full-bleed
+prep_aroll "2160:2160:840:0"  "1080:1080" "$DEST/aroll-1x1.mp4"        # 1:1  full-bleed
+prep_aroll "1620:2160:1110:0" "1080:1440" "$DEST/aroll-916-wide.mp4"   # 9:16 pulled back (+33% FOV)
+prep_aroll "2688:2160:576:0"  "1080:868"  "$DEST/aroll-1x1-wide.mp4"   # 1:1  pulled back (+24% FOV)
+
+# Product stills ship with a wide white margin baked into the mockup, which
+# makes the artwork look small however large its container is. Trim to the
+# bounding box so the cover fills its frame.
+for shot in workbook-hero toolkit-spread; do
+  if [ -f "$DEST/$shot.png" ]; then
+    convert "$DEST/$shot.png" -fuzz 3% -trim +repage "$DEST/$shot-trim.png" 2>/dev/null \
+      || magick "$DEST/$shot.png" -fuzz 3% -trim +repage "$DEST/$shot-trim.png"
+    echo "  ✓ $shot-trim.png"
+  fi
+done
 
 # ---- 4. stills ------------------------------------------------------------
 # broll-1 is deliberately NOT used: its AI-generated microtext is garbled
