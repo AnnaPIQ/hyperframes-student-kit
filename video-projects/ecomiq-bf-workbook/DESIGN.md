@@ -56,6 +56,16 @@ navy" direction.
 - Vignette + deterministic CSS film grain over every scene: that texture is what makes it one piece.
 - Finite repeats only (`repeat: -1` breaks the capture engine), and every tween ends at or before 19.6s so `tl.duration()` matches `data-duration`.
 
+## A-roll framing
+
+The source is 16:9 in a 9:16 frame, so the crop already uses **100% of the
+source height**: there is nothing above Sean's head or below his chest left to
+reveal. "Zoom out" therefore means scaling him down, not cropping wider. He is
+rendered at **88% of cover scale**, with the gap top and bottom filled by a
+blurred, darkened copy of the same frame (`boxblur=30:2`, `eq=brightness=-0.06`).
+His backdrop is a smooth blue gradient, so that fill is invisible in motion.
+Both ratios use the same treatment; see `EDIT-PLAN.md` §2 for the ffmpeg recipe.
+
 ## Subtitle safe band
 
 The bottom of every graphic scene is kept clear so subtitles can be added by

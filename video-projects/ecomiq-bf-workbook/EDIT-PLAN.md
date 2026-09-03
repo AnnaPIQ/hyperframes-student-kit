@@ -35,8 +35,8 @@
 
 | Asset | Spec |
 |---|---|
-| `assets/aroll-916.mp4` | 1080×1920, centre **cover-crop** from 3840×2160, 30fps CFR, CRF 19, muted |
-| `assets/aroll-1x1.mp4` | 1080×1080, centre cover-crop, 30fps CFR, CRF 19, muted |
+| `assets/aroll-916.mp4` | 1080×1920, Sean at **88% of cover scale** from 3840×2160 with a blurred fill top/bottom, 30fps CFR, CRF 19, muted |
+| `assets/aroll-1x1.mp4` | 1080×1080, same 88% pull-back and blurred fill, 30fps CFR, CRF 19, muted |
 | `assets/sean-vo.m4a` | 16.15s AAC 192k @48k, **loudnorm −33.3 → −16.1 LUFS** (source was 17 dB under social delivery loudness) |
 | `assets/music-bed-placeholder.m4a` | 20s digital silence, swap-in point for the real bed |
 | `assets/workbook-cover.png` | Portrait cover mockup (1122×1402) |
@@ -252,3 +252,18 @@ matters for review, the no-cost fix is to fold the word into an eyebrow, e.g.
 Verified: 0 lint errors, resolved duration 17.0s, both renders 17.000s at
 −16.1 LUFS, last frame is the card (not black), and every scene still clears
 the subtitle band.
+
+---
+
+## 15 · Revision, review pass 4
+
+- **Sean pulled back 12%.** Worth knowing why this needed a re-encode rather than a CSS tweak: the A-roll is 16:9 inside a 9:16 frame, so the crop was already using **100% of the source height**. There is no more picture above his head or below his chest to reveal, and zooming out can only mean scaling him down. He is now rendered at 88% of cover scale, and the resulting gap top and bottom is filled with a blurred, slightly darkened copy of the same frame. Against his smooth blue backdrop the seam does not read. Same treatment in both ratios.
+- **"8 Parts" deleted** from the workbook stats.
+- **32 and 19 much bigger**: 78 → 132px in 9:16, 54 → 92px in 1:1, labels up to match. With two stats left they are centred on a fixed gap rather than pushed to the frame edges.
+- **"Free workbook" bigger**: 28 → 40px in 9:16, 23 → 32px in 1:1, with the flame rule scaled up to match (132 → 186px, 8px tall).
+- The 1:1 spread came down 700 → 640px to pay for the taller eyebrow and stat row.
+
+Verified: 0 lint errors, both renders 17.000s at −16.1 LUFS, and every scene
+still clears the subtitle band.
+
+**Still open:** the numeric beats remain unattributed on screen (see §14).

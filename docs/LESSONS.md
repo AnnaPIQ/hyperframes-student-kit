@@ -167,6 +167,20 @@ efficient over time instead of relearning the same lessons.
   one-line footnote into two. Tightening `letter-spacing` (.16em → .12em) buys ~7% width
   without touching the copy or the font size.
 
+## Reframing a talking head between aspect ratios
+
+- **A 16:9 source cover-cropped into 9:16 is ALREADY showing 100% of its height.** So
+  "zoom out on the speaker" cannot be done by cropping wider or by scaling the wrapper
+  below 1 — there is no more picture above or below, and the frame just empties. **Fix:**
+  scale the subject down to a fraction of cover scale and fill the resulting gap with a
+  blurred, slightly darkened copy of the same frame:
+  `[0:v]crop=...,scale=W:H,boxblur=30:2,eq=brightness=-0.06[bg]; [0:v]scale=-2:<0.88*H>,crop=W:...[fg]; [bg][fg]overlay=(W-w)/2:(H-h)/2`.
+  On a smooth studio backdrop the seam is invisible. Say this out loud to the client:
+  it is a real constraint of the source, not a preference.
+- **Keep the original 4K source around for the whole edit.** Every reframe is a re-encode
+  from it; re-deriving from the already-cropped delivery file compounds quality loss and
+  cannot widen the frame at all.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

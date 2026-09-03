@@ -393,15 +393,15 @@ body.r-1x1 #g3-units { margin-top: 14px; font-size: 25px; }
   font-weight: 700; letter-spacing: .34em; text-transform: uppercase;
   color: var(--brand-blue-tint); opacity: 0;
 }
-body.r-916 #g4-eyebrow { font-size: 28px; }
-body.r-1x1 #g4-eyebrow { font-size: 23px; }
+body.r-916 #g4-eyebrow { font-size: 40px; }
+body.r-1x1 #g4-eyebrow { font-size: 32px; }
 #g4-rule {
-  height: 6px; background: var(--brand-flame); border-radius: 3px;
+  height: 8px; background: var(--brand-flame); border-radius: 4px;
   transform-origin: left center;
   transform: scaleX(0);
 }
-body.r-916 #g4-rule { margin-top: 20px; width: 132px; }
-body.r-1x1 #g4-rule { margin-top: 14px; width: 108px; }
+body.r-916 #g4-rule { margin-top: 24px; width: 186px; }
+body.r-1x1 #g4-rule { margin-top: 16px; width: 150px; }
 
 #g4-spread {
   align-self: center; height: auto; opacity: 0;
@@ -409,28 +409,28 @@ body.r-1x1 #g4-rule { margin-top: 14px; width: 108px; }
   box-shadow: 0 34px 80px -24px rgba(0, 0, 0, .62);
 }
 body.r-916 #g4-spread { margin-top: 54px; width: 980px; }
-body.r-1x1 #g4-spread { margin-top: 30px; width: 700px; }
+body.r-1x1 #g4-spread { margin-top: 30px; width: 640px; }
 
 /* One horizontal stat row in both ratios now that the second product shot is
    gone and the spread is the single hero. */
 #g4-stats {
-  display: flex; align-items: baseline; justify-content: space-between;
+  display: flex; align-items: baseline; justify-content: center;
   width: 100%;
 }
-body.r-916 #g4-stats { margin-top: 52px; }
-body.r-1x1 #g4-stats { margin-top: 26px; }
+body.r-916 #g4-stats { margin-top: 54px; gap: 110px; }
+body.r-1x1 #g4-stats { margin-top: 28px; gap: 78px; }
 .g4-stat { display: flex; align-items: baseline; opacity: 0; }
-body.r-916 .g4-stat { gap: 18px; }
-body.r-1x1 .g4-stat { gap: 13px; }
+body.r-916 .g4-stat { gap: 22px; }
+body.r-1x1 .g4-stat { gap: 16px; }
 .g4-stat .v { font-weight: 800; letter-spacing: -.03em; color: var(--brand-flame); }
 .g4-stat .k {
   font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
   color: var(--brand-white);
 }
-body.r-916 .g4-stat .v { font-size: 78px; }
-body.r-916 .g4-stat .k { font-size: 26px; }
-body.r-1x1 .g4-stat .v { font-size: 54px; }
-body.r-1x1 .g4-stat .k { font-size: 20px; }
+body.r-916 .g4-stat .v { font-size: 132px; }
+body.r-916 .g4-stat .k { font-size: 36px; }
+body.r-1x1 .g4-stat .v { font-size: 92px; }
+body.r-1x1 .g4-stat .k { font-size: 27px; }
 
 /* ---------------------------------------------------------------------------
    S8 · END CARD, the logo watermark flies in and becomes the hero.
