@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1080, height=1920" />
-    <title>EcomIQ — Black Friday Profit Plan workbook (9:16)</title>
+    <meta name="viewport" content="width=1080, height=1080" />
+    <title>EcomIQ — Black Friday Profit Plan workbook (1:1)</title>
     <!-- GSAP vendored locally — a CDN tag cert-fails in the render env and freezes renders -->
     <script src="assets/vendor/gsap.min.js"></script>
     <link rel="stylesheet" href="assets/brand-tokens.css" />
@@ -17,71 +17,69 @@
 
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body {
-        width: 1080px; height: 1920px; overflow: hidden;
+        width: 1080px; height: 1080px; overflow: hidden;
         background: var(--brand-navy);
         font-family: 'Rethink Sans', system-ui, sans-serif;
         color: var(--brand-white);
       }
 
       /* ---- base A-roll ------------------------------------------------- */
-      #aroll { position: absolute; inset: 0; width: 1080px; height: 1920px;
-        object-fit: cover; object-position: 50% 50%; z-index: 0; }
+      #aroll { position: absolute; inset: 0; width: 1080px; height: 1080px;
+        object-fit: cover; object-position: 50% 42%; z-index: 0; }
 
       /* ---- persistent logo (non-clip wrapper: `clip` makes it drift) ---- */
-      #logo-wrap { position: absolute; top: 96px; left: 108px; z-index: 100; }
-      #logo-wrap img { display: block; width: 108px; height: auto;
+      #logo-wrap { position: absolute; top: 56px; left: 72px; z-index: 100; }
+      #logo-wrap img { display: block; width: 97px; height: auto;
         filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55)); }
 
       /* ---- lower graphics cards over Sean ------------------------------ */
       .card {
         position: absolute; left: 0; bottom: 0; width: 1080px;
-        z-index: 10; padding: 0 108px 180px;
+        z-index: 10; padding: 0 72px 96px;
         display: flex; flex-direction: column; justify-content: flex-end;
         background: linear-gradient(to bottom,
-          rgba(6, 40, 76, 0) 0%, rgba(6, 40, 76, 0.72) 20%,
-          rgba(6, 40, 76, 0.96) 42%, var(--brand-navy) 62%);
+          rgba(6, 40, 76, 0) 0%, rgba(6, 40, 76, 0.72) 18%,
+          rgba(6, 40, 76, 0.96) 38%, var(--brand-navy) 58%);
       }
-      .card--std { height: 768px; }   /* 40% */
-      .card--tall { height: 922px; }  /* 48% */
+      .card--std { height: 470px; }   /* 43% */
+      .card--tall { height: 620px; }  /* 57% */
 
       /* ---- full-frame graphic scenes (replace Sean) --------------------- */
-      .scene { position: absolute; inset: 0; width: 1080px; height: 1920px;
+      .scene { position: absolute; inset: 0; width: 1080px; height: 1080px;
         z-index: 20; background: var(--brand-navy);
         display: flex; flex-direction: column; align-items: center;
-        justify-content: center; padding: 240px 108px 200px; }
+        justify-content: center; padding: 120px 72px 100px; }
 
       /* ---- shared type ------------------------------------------------- */
-      .eyebrow { font-size: 26px; font-weight: 700; letter-spacing: 0.32em;
+      .eyebrow { font-size: 22px; font-weight: 700; letter-spacing: 0.3em;
         text-transform: uppercase; color: var(--brand-blue-tint); }
       .eyebrow--flame { color: var(--brand-flame); }
-      .label { font-size: 27px; font-weight: 600; letter-spacing: 0.16em;
+      .label { font-size: 23px; font-weight: 600; letter-spacing: 0.15em;
         text-transform: uppercase; color: var(--brand-text-dim); }
       .figure { font-weight: 800; letter-spacing: -0.02em; line-height: 1;
         font-variant-numeric: tabular-nums; }
 
       /* ---- 1 · hook ---------------------------------------------------- */
-      #hook-l1 { font-size: 104px; font-weight: 800; line-height: 1;
+      #hook-l1 { font-size: 76px; font-weight: 800; line-height: 1;
         letter-spacing: -0.02em; color: var(--brand-white); }
       /* align-self keeps the wrapper hugging its text — as a stretched flex item
          the strike-through would run the full card width. */
       #hook-l2wrap { position: relative; display: inline-block; align-self: flex-start;
-        margin-top: 14px; }
-      #hook-l2 { font-size: 104px; font-weight: 800; line-height: 1;
+        margin-top: 10px; }
+      #hook-l2 { font-size: 76px; font-weight: 800; line-height: 1;
         letter-spacing: -0.02em; color: var(--brand-flame); }
-      #hook-strike { position: absolute; left: -8px; top: 52%; height: 11px;
-        width: calc(100% + 16px); background: var(--brand-flame);
-        border-radius: 6px; transform-origin: left center; }
-      #hook-eyebrow { margin-bottom: 26px; }
+      #hook-strike { position: absolute; left: -6px; top: 52%; height: 9px;
+        width: calc(100% + 12px); background: var(--brand-flame);
+        border-radius: 5px; transform-origin: left center; }
+      #hook-eyebrow { margin-bottom: 20px; }
 
       /* ---- 2 · cost stack + 5 · comparison bars ------------------------ */
       .revrow { display: flex; align-items: baseline; justify-content: space-between;
-        margin-bottom: 20px; }
-      .revrow .figure { font-size: 62px; color: var(--brand-white); }
-      .bar { position: relative; width: 864px; height: 26px; border-radius: 13px;
+        margin-bottom: 16px; }
+      .revrow .figure { font-size: 48px; color: var(--brand-white); }
+      .bar { position: relative; width: 936px; height: 22px; border-radius: 11px;
         overflow: hidden; background: #0a325f; }
-      .seg { position: absolute; top: 0; height: 26px; transform-origin: left center; }
-      /* left/width come from the dollar figures at runtime — see the geometry
-         block in the script, so the bar stays honest at any width. */
+      .seg { position: absolute; top: 0; height: 22px; transform-origin: left center; }
       #seg-base { background: var(--brand-border); }
       #seg-disc { background: var(--brand-flame); }
       #seg-ads  { background: rgba(255, 76, 50, 0.86); }
@@ -89,126 +87,125 @@
       #seg-ret  { background: rgba(255, 76, 50, 0.58); }
       #seg-left { background: var(--brand-blue-tint); transform-origin: right center; }
       .leftrow { display: flex; align-items: flex-end; justify-content: space-between;
-        margin-top: 26px; }
-      #cost-left-fig { font-size: 92px; color: var(--brand-flame); }
-      .chips { margin-top: 30px; display: flex; flex-direction: column; gap: 13px; }
+        margin-top: 20px; }
+      #cost-left-fig { font-size: 68px; color: var(--brand-flame); }
+      .chips { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
       .chip { display: flex; align-items: center; justify-content: space-between;
-        height: 54px; padding: 0 26px; border-radius: 10px;
+        height: 44px; padding: 0 20px; border-radius: 8px;
         background: rgba(255, 76, 50, 0.13);
-        border-left: 5px solid var(--brand-flame); }
-      .chip span:first-child { font-size: 28px; font-weight: 700; letter-spacing: 0.06em;
+        border-left: 4px solid var(--brand-flame); }
+      .chip span:first-child { font-size: 23px; font-weight: 700; letter-spacing: 0.06em;
         text-transform: uppercase; color: var(--brand-white); }
-      .chip span:last-child { font-size: 32px; font-weight: 800;
+      .chip span:last-child { font-size: 27px; font-weight: 800;
         color: var(--brand-flame); font-variant-numeric: tabular-nums; }
 
       /* ---- 3 · two figures --------------------------------------------- */
-      .stats { display: flex; gap: 34px; }
-      .stat { flex: 1; padding: 34px 32px 38px; border-radius: 18px;
+      .stats { display: flex; gap: 26px; }
+      .stat { flex: 1; padding: 26px 24px 28px; border-radius: 15px;
         background: rgba(156, 212, 255, 0.09);
         border: 1px solid rgba(156, 212, 255, 0.22); }
-      .stat .label { font-size: 24px; line-height: 1.3; }
-      .stat .figure { font-size: 96px; color: var(--brand-white); margin-top: 16px; }
-      .stat .rule { height: 7px; width: 96px; border-radius: 4px;
-        background: var(--brand-flame); margin-top: 22px; transform-origin: left center; }
+      .stat .label { font-size: 21px; line-height: 1.3; }
+      .stat .figure { font-size: 72px; color: var(--brand-white); margin-top: 12px; }
+      .stat .rule { height: 6px; width: 80px; border-radius: 3px;
+        background: var(--brand-flame); margin-top: 18px; transform-origin: left center; }
 
       /* ---- 4 · contrast (arrows only) ---------------------------------- */
       .contrast { display: flex; align-items: stretch; }
       .contrast > div { flex: 1; display: flex; flex-direction: column;
-        align-items: center; gap: 22px; }
+        align-items: center; gap: 16px; }
       .contrast .divider { flex: 0 0 1px; background: rgba(156, 212, 255, 0.3);
-        margin: 0 20px; }
-      .contrast .cname { font-size: 40px; font-weight: 800; letter-spacing: 0.12em;
+        margin: 0 16px; }
+      .contrast .cname { font-size: 32px; font-weight: 800; letter-spacing: 0.12em;
         text-transform: uppercase; }
 
       /* ---- 5 · comparison --------------------------------------------- */
-      .cmp { display: flex; flex-direction: column; gap: 34px; }
-      .cmprow { display: flex; flex-direction: column; gap: 14px; }
+      .cmp { display: flex; flex-direction: column; gap: 26px; }
+      .cmprow { display: flex; flex-direction: column; gap: 11px; }
       .cmprow .top { display: flex; align-items: baseline; justify-content: space-between; }
-      .cmprow .figure { font-size: 66px; }
-      .cmpbar { height: 24px; border-radius: 12px; transform-origin: left center; }
+      .cmprow .figure { font-size: 50px; }
+      .cmpbar { height: 20px; border-radius: 10px; transform-origin: left center; }
 
       /* ---- 8 · dial ---------------------------------------------------- */
-      .dialwrap { display: flex; align-items: center; gap: 46px; }
-      .dial { position: relative; width: 260px; height: 260px; flex: 0 0 260px; }
+      .dialwrap { display: flex; align-items: center; gap: 36px; }
+      .dial { position: relative; width: 200px; height: 200px; flex: 0 0 200px; }
       .dial svg { transform: rotate(-90deg); }
       .dial .inner { position: absolute; inset: 0; display: flex;
         align-items: center; justify-content: center; }
-      #dial-fig { font-size: 78px; color: var(--brand-white); }
-      .dialtext .label { font-size: 30px; line-height: 1.32; max-width: 460px; }
+      #dial-fig { font-size: 60px; color: var(--brand-white); }
+      .dialtext .label { font-size: 25px; line-height: 1.32; max-width: 400px; }
 
       /* ---- 9 · checklist ----------------------------------------------- */
-      .checks { display: flex; flex-direction: column; gap: 20px; margin-top: 30px; }
-      .checkrow { display: flex; align-items: center; gap: 26px; }
-      .box { position: relative; flex: 0 0 62px; width: 62px; height: 62px;
-        border-radius: 12px; border: 3px solid rgba(156, 212, 255, 0.45);
+      .checks { display: flex; flex-direction: column; gap: 15px; margin-top: 22px; }
+      .checkrow { display: flex; align-items: center; gap: 20px; }
+      .box { position: relative; flex: 0 0 50px; width: 50px; height: 50px;
+        border-radius: 10px; border: 3px solid rgba(156, 212, 255, 0.45);
         background: rgba(156, 212, 255, 0.07); }
       .box svg { position: absolute; inset: 0; }
-      .checkrow .ctext { font-size: 44px; font-weight: 700; letter-spacing: 0.02em;
+      .checkrow .ctext { font-size: 34px; font-weight: 700; letter-spacing: 0.02em;
         text-transform: uppercase; color: var(--brand-white); }
 
       /* ---- 6/7/10 · product scenes ------------------------------------- */
-      .panel { width: 864px; border-radius: 28px; background: var(--brand-white);
+      .panel { width: 936px; border-radius: 22px; background: var(--brand-white);
         overflow: hidden; display: flex; align-items: center; justify-content: center;
-        box-shadow: 0 40px 120px -30px rgba(0, 0, 0, 0.75); }
+        box-shadow: 0 30px 90px -24px rgba(0, 0, 0, 0.75); }
       .panel img { display: block; width: 100%; height: 100%; object-fit: contain; }
-      .scene .eyebrow { margin-bottom: 34px; }
-      #hero-panel { height: 1080px; }
-      #page-panel { height: 1080px; background: var(--brand-sky); }
-      #free-panel { height: 620px; }
-      #page-callout { margin-top: 40px; display: flex; align-items: baseline; gap: 22px;
-        padding: 26px 40px; border-radius: 16px; background: var(--brand-navy);
-        border-left: 7px solid var(--brand-flame); }
-      #page-callout .figure { font-size: 82px; color: var(--brand-flame); }
-      #page-callout .label { font-size: 25px; max-width: 260px; line-height: 1.25; }
-      #free-word { margin-top: 54px; font-size: 200px; font-weight: 800;
+      .scene .eyebrow { margin-bottom: 24px; }
+      #hero-panel { height: 600px; }
+      #page-panel { height: 600px; background: var(--brand-sky); }
+      #free-panel { height: 380px; }
+      #page-callout { margin-top: 28px; display: flex; align-items: baseline; gap: 18px;
+        padding: 20px 30px; border-radius: 13px; background: var(--brand-navy);
+        border-left: 6px solid var(--brand-flame); }
+      #page-callout .figure { font-size: 62px; color: var(--brand-flame); }
+      #page-callout .label { font-size: 22px; max-width: 230px; line-height: 1.25; }
+      #free-word { margin-top: 34px; font-size: 150px; font-weight: 800;
         letter-spacing: -0.03em; line-height: 1; color: var(--brand-flame);
-        text-shadow: 0 24px 70px rgba(255, 76, 50, 0.45); }
+        text-shadow: 0 18px 54px rgba(255, 76, 50, 0.45); }
 
       /* ---- 11 · end card ----------------------------------------------- */
-      #endcard { justify-content: center; padding: 240px 108px 240px; }
+      #endcard { justify-content: center; padding: 140px 72px 140px; }
       /* max-width sets the measure so the line breaks fall either side of the
          emphasis, keeping "Black Friday" whole on its own line. */
-      #end-head { font-size: 104px; font-weight: 800; line-height: 1.06;
+      #end-head { font-size: 76px; font-weight: 800; line-height: 1.07;
         letter-spacing: -0.03em; text-align: center; color: var(--brand-white);
-        max-width: 700px; margin: 0 auto; }
+        max-width: 520px; margin: 0 auto; }
       #end-head .em { font-family: 'Hedvig Letters Serif', Georgia, serif;
         font-style: italic; font-weight: 400; letter-spacing: -0.01em;
         margin-right: 0.06em; color: var(--brand-blue-tint); }
-      #end-pill { margin-top: 68px; font-size: 46px; font-weight: 800;
+      #end-pill { margin-top: 46px; font-size: 38px; font-weight: 800;
         color: var(--brand-white); background: var(--brand-flame);
-        padding: 36px 84px; border-radius: 999px;
-        box-shadow: 0 28px 84px -18px rgba(255, 76, 50, 0.7); }
-      #end-stats { margin-top: 46px; font-size: 30px; font-weight: 600;
-        letter-spacing: 0.14em; text-transform: uppercase;
+        padding: 28px 64px; border-radius: 999px;
+        box-shadow: 0 22px 66px -16px rgba(255, 76, 50, 0.7); }
+      #end-stats { margin-top: 32px; font-size: 24px; font-weight: 600;
+        letter-spacing: 0.13em; text-transform: uppercase;
         color: var(--brand-text-dim); }
-      #end-glow { position: absolute; left: -12%; bottom: -20%; width: 124%; height: 56%;
-        background: var(--brand-gradient-2); filter: blur(100px); opacity: 0.3; }
+      #end-glow { position: absolute; left: -12%; bottom: -22%; width: 124%; height: 60%;
+        background: var(--brand-gradient-2); filter: blur(90px); opacity: 0.3; }
     </style>
   </head>
   <body>
-    <!-- Render contract: root carries id, data-composition-id, data-start=0,
-         data-width, data-height. Timed visible children get class="clip" plus
-         data-start / data-duration / data-track-index. <video>/<audio> must NOT
-         carry class="clip". Source is trimmed 2.75s via data-media-start, which
-         drops the dead air before Sean's first word. -->
+    <!-- 1:1 cut of the same edit. Identical timings and identical timeline JS as
+         index.html; only the layout CSS and the three geometry constants differ.
+         Source is trimmed 2.75s via data-media-start, dropping the dead air
+         before Sean's first word. -->
     <div
       id="root"
-      data-composition-id="ecomiq-bf-workbook"
+      data-composition-id="ecomiq-bf-workbook-square"
       data-start="0"
       data-duration="52.33"
       data-width="1080"
-      data-height="1920"
+      data-height="1080"
     >
-      <!-- base A-roll: centre-cropped 9:16, silent by contract -->
-      <video id="aroll" data-start="0" data-duration="45.17" data-track-index="0"
-             data-media-start="2.75" src="assets/aroll-916.mp4" muted playsinline></video>
+      <!-- base A-roll: centre-cropped 1:1, silent by contract -->
+      <video id="aroll" data-start="0" data-duration="45.17" data-track-index="20"
+             data-media-start="2.75" src="assets/aroll-1x1.mp4" muted playsinline></video>
 
       <!-- the audio spine: full take, same 2.75s trim so lips stay in sync -->
-      <audio id="vo" data-start="0" data-duration="52.33" data-track-index="1"
+      <audio id="vo" data-start="0" data-duration="52.33" data-track-index="21"
              data-media-start="2.75" src="assets/aroll-audio.m4a" data-volume="1"></audio>
 
       <!-- 1 · HOOK — "a record Black Friday can still be an unprofitable one" -->
-      <div id="hook" class="clip card card--std" data-start="0.20" data-duration="3.95" data-track-index="2">
+      <div id="hook" class="clip card card--std" data-start="0.20" data-duration="3.95" data-track-index="22">
         <div id="hook-eyebrow" class="eyebrow eyebrow--flame">Black Friday</div>
         <div id="hook-l1">Record sales.</div>
         <div id="hook-l2wrap">
@@ -218,8 +215,8 @@
       </div>
 
       <!-- 2 · COST STACK — discounts, ads, fulfilment, returns eat the order -->
-      <div id="cost" class="clip card card--tall" data-start="4.15" data-duration="8.60" data-track-index="3">
-        <div class="eyebrow" style="margin-bottom: 22px">One Black Friday order</div>
+      <div id="cost" class="clip card card--tall" data-start="4.15" data-duration="8.60" data-track-index="23">
+        <div class="eyebrow" style="margin-bottom: 16px">One Black Friday order</div>
         <div class="revrow">
           <span class="label">Revenue</span>
           <span class="figure">$114.70</span>
@@ -245,8 +242,8 @@
       </div>
 
       <!-- 3 · TWO FIGURES — contribution margin + break-even ROAS -->
-      <div id="figs" class="clip card card--std" data-start="12.81" data-duration="6.20" data-track-index="4">
-        <div class="eyebrow" style="margin-bottom: 28px">Work these out first</div>
+      <div id="figs" class="clip card card--std" data-start="12.81" data-duration="6.20" data-track-index="24">
+        <div class="eyebrow" style="margin-bottom: 22px">Work these out first</div>
         <div class="stats">
           <div id="stat-1" class="stat">
             <div class="label">Contribution<br />margin</div>
@@ -262,11 +259,11 @@
       </div>
 
       <!-- 4 · CONTRAST — sales up, profit down. Arrows only, no percentages. -->
-      <div id="contrast" class="clip card card--std" data-start="19.08" data-duration="3.80" data-track-index="5">
-        <div class="eyebrow" style="margin-bottom: 34px">Sell more, keep less</div>
+      <div id="contrast" class="clip card card--std" data-start="19.08" data-duration="3.80" data-track-index="25">
+        <div class="eyebrow" style="margin-bottom: 24px">Sell more, keep less</div>
         <div class="contrast">
           <div>
-            <svg id="arrow-up" width="118" height="150" viewBox="0 0 118 150" fill="none" aria-hidden="true">
+            <svg id="arrow-up" width="92" height="118" viewBox="0 0 118 150" fill="none" aria-hidden="true">
               <path d="M59 146V16M59 8l44 48H15L59 8z" stroke="#9CD4FF" stroke-width="13"
                     stroke-linecap="round" stroke-linejoin="round" fill="#9CD4FF" />
             </svg>
@@ -274,7 +271,7 @@
           </div>
           <div class="divider"></div>
           <div>
-            <svg id="arrow-down" width="118" height="150" viewBox="0 0 118 150" fill="none" aria-hidden="true">
+            <svg id="arrow-down" width="92" height="118" viewBox="0 0 118 150" fill="none" aria-hidden="true">
               <path d="M59 4v130M59 142l44-48H15l44 48z" stroke="#FF4C32" stroke-width="13"
                     stroke-linecap="round" stroke-linejoin="round" fill="#FF4C32" />
             </svg>
@@ -284,28 +281,28 @@
       </div>
 
       <!-- 5 · NOTHING LEFT — normal month vs this Black Friday -->
-      <div id="cmp" class="clip card card--std" data-start="22.96" data-duration="3.40" data-track-index="6">
-        <div class="eyebrow eyebrow--flame" style="margin-bottom: 30px">Nothing left</div>
+      <div id="cmp" class="clip card card--std" data-start="22.96" data-duration="3.40" data-track-index="26">
+        <div class="eyebrow eyebrow--flame" style="margin-bottom: 22px">Nothing left</div>
         <div class="cmp">
           <div class="cmprow">
             <div class="top">
               <span class="label">Normal month</span>
               <span class="figure" style="color: var(--brand-blue-tint)">$59.71</span>
             </div>
-            <div id="cmp-bar-1" class="cmpbar" style="width: 864px; background: var(--brand-blue-tint)"></div>
+            <div id="cmp-bar-1" class="cmpbar" style="width: 936px; background: var(--brand-blue-tint)"></div>
           </div>
           <div class="cmprow">
             <div class="top">
               <span class="label">This Black Friday</span>
               <span id="cmp-fig-2" class="figure" style="color: var(--brand-flame)">$9.62</span>
             </div>
-            <div id="cmp-bar-2" class="cmpbar" style="width: 139px; background: var(--brand-flame)"></div>
+            <div id="cmp-bar-2" class="cmpbar" style="width: 151px; background: var(--brand-flame)"></div>
           </div>
         </div>
       </div>
 
       <!-- 6 · WORKBOOK HERO — "I've put together a free workbook" -->
-      <div id="hero" class="clip scene" data-start="26.23" data-duration="4.37" data-track-index="7">
+      <div id="hero" class="clip scene" data-start="26.23" data-duration="4.37" data-track-index="27">
         <div class="eyebrow eyebrow--flame">Free workbook</div>
         <div id="hero-panel" class="panel">
           <img src="assets/workbook-hero.png" alt="The Black Friday Profit Plan workbook" />
@@ -313,7 +310,7 @@
       </div>
 
       <!-- 7 · REAL PAGE + PER-ORDER CONTRIBUTION -->
-      <div id="page" class="clip scene" data-start="30.30" data-duration="2.15" data-track-index="8">
+      <div id="page" class="clip scene" data-start="30.30" data-duration="2.15" data-track-index="28">
         <div id="page-panel" class="panel">
           <img src="assets/wb-page-08.png" alt="Calculate your contribution margin" />
         </div>
@@ -324,15 +321,15 @@
       </div>
 
       <!-- 8 · MAX DISCOUNT DIAL -->
-      <div id="dial" class="clip card card--std" data-start="32.15" data-duration="5.00" data-track-index="9">
-        <div class="eyebrow" style="margin-bottom: 34px">The ceiling</div>
+      <div id="dial" class="clip card card--std" data-start="32.15" data-duration="5.00" data-track-index="29">
+        <div class="eyebrow" style="margin-bottom: 24px">The ceiling</div>
         <div class="dialwrap">
           <div class="dial">
-            <svg width="260" height="260" viewBox="0 0 260 260" aria-hidden="true">
-              <circle cx="130" cy="130" r="112" fill="none"
-                      stroke="rgba(156,212,255,0.20)" stroke-width="22" />
-              <circle id="dial-arc" cx="130" cy="130" r="112" fill="none"
-                      stroke="#FF4C32" stroke-width="22" stroke-linecap="round" />
+            <svg width="200" height="200" viewBox="0 0 200 200" aria-hidden="true">
+              <circle cx="100" cy="100" r="86" fill="none"
+                      stroke="rgba(156,212,255,0.20)" stroke-width="18" />
+              <circle id="dial-arc" cx="100" cy="100" r="86" fill="none"
+                      stroke="#FF4C32" stroke-width="18" stroke-linecap="round" />
             </svg>
             <div class="inner"><span id="dial-fig" class="figure">25%</span></div>
           </div>
@@ -343,30 +340,30 @@
       </div>
 
       <!-- 9 · FOUR-ITEM CHECKLIST — offer / inventory / marketing / email -->
-      <div id="checklist" class="clip card card--tall" data-start="37.88" data-duration="5.81" data-track-index="10">
-        <div class="eyebrow" style="margin-bottom: 10px">Then it walks you through</div>
+      <div id="checklist" class="clip card card--tall" data-start="37.88" data-duration="5.81" data-track-index="30">
+        <div class="eyebrow" style="margin-bottom: 6px">Then it walks you through</div>
         <div class="checks">
           <div class="checkrow" id="row-1">
-            <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
-              d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
+            <div class="box"><svg viewBox="0 0 50 50" aria-hidden="true"><path class="tick"
+              d="M13 26l8 8 16-18" fill="none" stroke="#FFFFFF" stroke-width="6"
               stroke-linecap="round" stroke-linejoin="round" /></svg></div>
             <div class="ctext">Offer</div>
           </div>
           <div class="checkrow" id="row-2">
-            <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
-              d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
+            <div class="box"><svg viewBox="0 0 50 50" aria-hidden="true"><path class="tick"
+              d="M13 26l8 8 16-18" fill="none" stroke="#FFFFFF" stroke-width="6"
               stroke-linecap="round" stroke-linejoin="round" /></svg></div>
             <div class="ctext">Inventory</div>
           </div>
           <div class="checkrow" id="row-3">
-            <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
-              d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
+            <div class="box"><svg viewBox="0 0 50 50" aria-hidden="true"><path class="tick"
+              d="M13 26l8 8 16-18" fill="none" stroke="#FFFFFF" stroke-width="6"
               stroke-linecap="round" stroke-linejoin="round" /></svg></div>
             <div class="ctext">Marketing</div>
           </div>
           <div class="checkrow" id="row-4">
-            <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
-              d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
+            <div class="box"><svg viewBox="0 0 50 50" aria-hidden="true"><path class="tick"
+              d="M13 26l8 8 16-18" fill="none" stroke="#FFFFFF" stroke-width="6"
               stroke-linecap="round" stroke-linejoin="round" /></svg></div>
             <div class="ctext">Email follow-up</div>
           </div>
@@ -374,7 +371,7 @@
       </div>
 
       <!-- 10 · "IT'S COMPLETELY FREE" -->
-      <div id="free" class="clip scene" data-start="43.39" data-duration="2.08" data-track-index="11">
+      <div id="free" class="clip scene" data-start="43.39" data-duration="2.08" data-track-index="31">
         <div id="free-panel" class="panel">
           <img src="assets/toolkit-spread.png" alt="The full EcomIQ Black Friday toolkit" />
         </div>
@@ -382,7 +379,7 @@
       </div>
 
       <!-- 11 · END CARD — fires on "links below", holds past the last word -->
-      <div id="endcard" class="clip scene" data-start="45.17" data-duration="7.16" data-track-index="12">
+      <div id="endcard" class="clip scene" data-start="45.17" data-duration="7.16" data-track-index="32">
         <div id="end-glow"></div>
         <div id="end-head">Get your free <span class="em">Black Friday</span> workbook</div>
         <div id="end-pill">Sign up free</div>
@@ -395,9 +392,9 @@
 
     <script>
       // ---- the only three values that differ between the 9:16 and 1:1 cuts ----
-      const BAR_W = 864;    // cost-stack bar width (1080 minus 2x108 padding)
-      const DIAL_R = 112;   // max-discount dial radius
-      const TICK_LEN = 46;  // checkmark path length, for the dash draw
+      const BAR_W = 936;    // cost-stack bar width (1080 minus 2x72 padding)
+      const DIAL_R = 86;    // max-discount dial radius
+      const TICK_LEN = 40;  // checkmark path length, for the dash draw
 
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
@@ -631,7 +628,7 @@
 
       // Pad to the root data-duration.
       tl.to({}, { duration: 52.33 }, 0);
-      window.__timelines["ecomiq-bf-workbook"] = tl;
+      window.__timelines["ecomiq-bf-workbook-square"] = tl;
     </script>
   </body>
 </html>
