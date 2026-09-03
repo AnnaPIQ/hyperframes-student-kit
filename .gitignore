@@ -40,3 +40,7 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Prepped A-roll renditions — regenerate with scripts/prep-bf-assets.sh
+# (75 MB of H.264 derived from a 3.4 GB Drive master; not worth committing)
+video-projects/*/assets/aroll-*.mp4
