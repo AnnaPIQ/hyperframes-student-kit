@@ -69,11 +69,25 @@ may be laid into it:
 | 1:1 | bottom **150px** | 13.9% |
 
 Sized for two lines of ~48px subtitle plus leading (~130px) with margin either
-side. It is enforced by `padding-bottom` on `.card` (bottom-anchored graphics
-pad up off it) and on `.scene` / `#endcard` (centred content shifts up clear of
-it). **If you add or grow a card, check the band is still clear** — verify with
-`scripts/check-subtitle-band.py`, which samples the band every 0.5s across the
-whole timeline and fails if anything intrudes.
+side. Enforced by `padding-bottom` on `.card` (bottom-anchored graphics pad up
+off it) and on `.scene` / `#endcard` (centred content shifts up clear of it).
+The padding carries **50px more than the band** as animation headroom, because
+GSAP entrance tweens offset elements downward before they settle (max +48px);
+without it, text dips into the band while fading in even though the resting
+layout looks correct.
+
+**If you add or grow a card, re-check the band:**
+
+```bash
+node scripts/check-subtitle-band.mjs video-projects/ecomiq-bf-workbook/index.html 1920 260
+node scripts/check-subtitle-band.mjs video-projects/ecomiq-bf-workbook/compositions/square.html 1080 150
+```
+
+It measures the DOM rather than pixels, because pixel sampling cannot tell a
+graphic in the band from video showing through during a crossfade. It reads
+bottom edges at page load, when GSAP has applied the entrance FROM-state, so
+the numbers are worst case rather than resting. Current clearance: **6px**
+(9:16) and **38px** (1:1).
 
 The card scrim reaches solid navy before the band starts, so subtitles land on
 flat navy for most of the timeline, which is ideal for legibility. The one

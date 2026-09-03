@@ -35,14 +35,17 @@
       /* ---- lower graphics cards over Sean ------------------------------ */
       .card {
         position: absolute; left: 0; bottom: 0; width: 1080px;
-        z-index: 10; padding: 0 72px 150px;  /* 150px = reserved subtitle band */
+        z-index: 10; padding: 0 72px 200px;  /* 150px subtitle band + 50px headroom,
+           so entrance offsets (max +48px) never dip into the band */
         display: flex; flex-direction: column; justify-content: flex-end;
         background: linear-gradient(to bottom,
           rgba(6, 40, 76, 0) 0%, rgba(6, 40, 76, 0.72) 18%,
           rgba(6, 40, 76, 0.96) 38%, var(--brand-navy) 58%);
       }
-      .card--std { height: 470px; }   /* 43% */
-      .card--tall { height: 560px; }  /* 52% — keeps the scrim off Sean's chin */
+      /* grown to absorb the headroom while keeping the scrim off Sean's chin,
+         which sits at ~50% of frame height in the square crop */
+      .card--std { height: 500px; }   /* 46% */
+      .card--tall { height: 590px; }  /* 55% */
 
       /* ---- full-frame graphic scenes (replace Sean) --------------------- */
       /* bottom padding keeps centred scene content clear of the subtitle band too */
