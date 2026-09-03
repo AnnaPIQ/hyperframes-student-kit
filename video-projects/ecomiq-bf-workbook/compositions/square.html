@@ -35,7 +35,7 @@
       /* ---- lower graphics cards over Sean ------------------------------ */
       .card {
         position: absolute; left: 0; bottom: 0; width: 1080px;
-        z-index: 10; padding: 0 72px 84px;
+        z-index: 10; padding: 0 72px 150px;  /* 150px = reserved subtitle band */
         display: flex; flex-direction: column; justify-content: flex-end;
         background: linear-gradient(to bottom,
           rgba(6, 40, 76, 0) 0%, rgba(6, 40, 76, 0.72) 18%,
@@ -45,10 +45,11 @@
       .card--tall { height: 560px; }  /* 52% — keeps the scrim off Sean's chin */
 
       /* ---- full-frame graphic scenes (replace Sean) --------------------- */
+      /* bottom padding keeps centred scene content clear of the subtitle band too */
       .scene { position: absolute; inset: 0; width: 1080px; height: 1080px;
         z-index: 20; background: var(--brand-navy);
         display: flex; flex-direction: column; align-items: center;
-        justify-content: center; padding: 120px 72px 100px; }
+        justify-content: center; padding: 120px 72px 170px; }
 
       /* ---- shared type ------------------------------------------------- */
       .eyebrow { font-size: 22px; font-weight: 700; letter-spacing: 0.3em;
@@ -151,7 +152,7 @@
       .panel img { display: block; width: 100%; height: 100%; object-fit: contain; }
       .scene .eyebrow { margin-bottom: 24px; }
       /* portrait panel so the cover fills it instead of floating in white */
-      #hero-panel { width: 620px; height: 764px; }
+      #hero-panel { width: 580px; height: 700px; }
       #page-panel { height: 600px; background: var(--brand-sky); }
       #free-panel { height: 380px; }
       #page-callout { margin-top: 28px; display: flex; align-items: baseline; gap: 18px;
@@ -164,7 +165,7 @@
         text-shadow: 0 18px 54px rgba(255, 76, 50, 0.45); }
 
       /* ---- 11 · end card ----------------------------------------------- */
-      #endcard { justify-content: center; padding: 140px 72px 140px; }
+      #endcard { justify-content: center; padding: 140px 72px 200px; }
       /* max-width sets the measure so the line breaks fall either side of the
          emphasis, keeping "Black Friday" whole on its own line. */
       #end-head { font-size: 76px; font-weight: 800; line-height: 1.07;

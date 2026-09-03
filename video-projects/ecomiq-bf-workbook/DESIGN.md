@@ -49,16 +49,39 @@ scrim gradient, so type always has contrast over his dark shirt and the mic. His
 face stays clear throughout; the scrim covers the hand and mic. Product beats
 (`.scene`) take the full frame and replace Sean.
 
-**1:1.** Same structure, re-laid-out rather than squashed: cards are 470/620px,
-type steps down about 22%, and the A-roll uses `object-position: 50% 42%` to keep
-his eyeline high in the tighter square.
+**1:1.** Same structure, re-laid-out rather than squashed: cards are 470/560px
+(the tall card is capped at 560 so the scrim stays off Sean's chin, which sits at
+about 50% of frame height in the square crop) and type steps down about 22%.
 
 Logo: `ecomiq-logo-white.svg`, top-left on **every** frame, 9–10% width, inside
 the 10% safe margin, in a **positioned non-`clip` wrapper** — `clip` makes the
 render engine reposition it (`docs/LESSONS.md`).
 
-Bottom padding is ~10% of frame height (180px on 9:16) so the last row of a card
-clears the Reels/Stories platform chrome.
+## Reserved subtitle band (do not fill)
+
+Subtitles are added **manually, downstream** — this composition deliberately
+renders none. A clear band is reserved at the bottom of both cuts and nothing
+may be laid into it:
+
+| Cut | Band | % of height |
+|---|---|---|
+| 9:16 | bottom **260px** | 13.5% |
+| 1:1 | bottom **150px** | 13.9% |
+
+Sized for two lines of ~48px subtitle plus leading (~130px) with margin either
+side. It is enforced by `padding-bottom` on `.card` (bottom-anchored graphics
+pad up off it) and on `.scene` / `#endcard` (centred content shifts up clear of
+it). **If you add or grow a card, check the band is still clear** — verify with
+`scripts/check-subtitle-band.py`, which samples the band every 0.5s across the
+whole timeline and fails if anything intrudes.
+
+The card scrim reaches solid navy before the band starts, so subtitles land on
+flat navy for most of the timeline, which is ideal for legibility. The one
+exception is the ~0.7s gap at 37.2–37.9s where no card is up and the band shows
+Sean's shirt.
+
+Bottom padding also keeps the last row of a card clear of the Reels/Stories
+platform chrome.
 
 ## Motion
 
@@ -95,7 +118,8 @@ root. The prepped A-roll renditions are gitignored (75 MB of H.264 derived from 
 
 ## What NOT to do
 
-- Don't add captions — the brief is explicit, the A-roll carries the words.
+- Don't add captions or subtitles — they go on manually downstream, and the
+  bottom band is reserved for them.
 - Don't invent performance claims. Every figure traces to the workbook's page-8
   worked example or is derived from it, and `EDIT-PLAN.md` §3 records which.
 - Don't use `toolkit-spread-alt.png` or the fourth Drive still for tight crops —
