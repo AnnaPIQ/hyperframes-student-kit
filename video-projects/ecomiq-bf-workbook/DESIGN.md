@@ -5,7 +5,7 @@ Sean's A-roll is the audio spine; motion-graphic number beats and a product
 hero carry the visual; a branded end card closes it.
 
 **Formats:** 9:16 (1080×1920) `index.html` · 1:1 (1080×1080) `compositions/square.html`
-**Runtime:** 19.60s @ 30fps (588 frames) · Safe area ~10% margins.
+**Runtime:** 17.00s @ 30fps (510 frames) · Safe area ~10% margins.
 
 Brand kit copied from `assets/ecomiq/`. Full reference: `assets/ecomiq/BRAND.md`.
 Tokens in `assets/brand-tokens.css`; local fonts in `assets/fonts/`.
@@ -31,7 +31,12 @@ cannot drift. Edit `index.html`, run the generator, lint, render both.
 | `--brand-navy` | `#06284C` | canvas |
 | `--brand-blue-tint` | `#9CD4FF` | neutral figures, the number that matters |
 | `--brand-flame` | `#FF4C32` | money leaving the business, and the CTA |
-| `--brand-sky` / white | `#DEEEFE` / `#FFFFFF` | the product beat, the one light scene |
+| white | `#FFFFFF` | headline and label type |
+
+Every scene is navy: there is no light beat. The workbook's product render is
+an off-white studio photograph, not a cut-out, so it sits on navy as a rounded
+photo card with a dark lift, which is the brand's "product photography against
+navy" direction.
 
 ## Type
 
@@ -47,7 +52,7 @@ cannot drift. Edit `index.html`, run the generator, lint, render both.
 - **Workbook → end card overlaps.** It is the one boundary with no A-roll beneath (the video ends at 15.0333), so the card fades up on top while the workbook holds opaque under it, and `#gfx4`'s clip runs on to 15.1667. Fading out with nothing underneath would reveal bare canvas.
 - Each scene's first entrance fires **on** its `data-start`, never after, or the dissolve lands on an empty frame.
 - The logo lockup swap and the vignette ramp run over the **same windows** as the dissolves beneath them, so they track together instead of flipping against a half-faded ground.
-- Persistent logo watermark top-left (16% width) in a positioned **non-clip** wrapper; it flies to centre and scales up to become the end-card hero. White lockup on navy, navy lockup on the light beat.
+- Persistent logo watermark top-left (16% width) in a positioned **non-clip** wrapper; it flies to centre and scales up to become the end-card hero. One white lockup throughout, since every scene is navy.
 - Vignette + deterministic CSS film grain over every scene: that texture is what makes it one piece.
 - Finite repeats only (`repeat: -1` breaks the capture engine), and every tween ends at or before 19.6s so `tl.duration()` matches `data-duration`.
 
@@ -62,20 +67,24 @@ hand after delivery. Reserved via `--sub-safe` in `assets/ad.css`, taken out of
 | 9:16 | 340px | y **1580–1920** | 17.7% |
 | 1:1 | 200px | y **880–1080** | 18.5% |
 
-Nothing in a scene's content flow enters it, including the footnote
-attributions and the end card's bobbing chevron (its 14px travel is counted
-against the band, not just its resting position). Only full-bleed decoratives
-pass through: the bloom, the light wash, and the A-roll's bottom scrim, and
-that scrim actually helps subtitle legibility over Sean.
+Nothing in a scene's content flow enters it. Only full-bleed decoratives pass
+through: the bloom and the A-roll's bottom scrim, and that scrim actually helps
+subtitle legibility over Sean.
 
 Sean's own beats are full-bleed video and need no reserve; subtitles simply
 overlay him.
 
 ## Numbers on screen
 
-Every figure is the workbook's own worked example (Part 01, pages 8 and 10),
-labelled `EXAMPLE` with its source in micro-type. Nothing is invented, and no
-performance claim is made. See `EDIT-PLAN.md` §4.
+Every figure is the workbook's own worked example (Part 01, pages 8 and 10).
+Nothing is invented, and no performance claim is made. See `EDIT-PLAN.md` §4.
+
+**The on-screen `EXAMPLE` labels and source lines were removed by direction.**
+The figures ($114.70, $59.71, 52.1%, 25%, $33.00, ROAS 1.92 to 2.61) now appear
+unqualified. If a reviewer ever asks where they came from, the answer is the
+workbook itself, but nothing on screen says so. Cheapest way to put that back
+without costing layout: fold the word into an eyebrow, e.g. "What one order
+contributes · example".
 
 ## What NOT to do
 
@@ -84,4 +93,5 @@ performance claim is made. See `EDIT-PLAN.md` §4.
 - Don't reset big-headline tracking to 0 (brand is −2%, this piece uses −3% on display sizes).
 - Don't use `→` (U+2192): it is **absent** from both brand font subsets and falls back or renders as tofu. The `#g3-arrow` arrow is drawn in CSS. `↓ − × ·` are all present.
 - Don't hand-edit `compositions/square.html`; regenerate it.
-- Don't place the product renders on a pure-white canvas: they are photographs on an off-white ground (`#EEEEEF` / `#FDFDFE`), not cut-outs, so their frame edges show as grey boxes. They are presented as rounded cards with a navy shadow.
+- Don't try to drop the product renders straight onto a background: they are photographs on an off-white ground (`#EEEEEF` / `#FDFDFE`), not cut-outs, so their frame edge always shows. Present them as a rounded card with a shadow, which is what `#g4-spread` does.
+- Don't reintroduce a light/white scene; the piece is navy end to end.

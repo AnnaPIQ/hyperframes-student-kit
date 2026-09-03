@@ -25,7 +25,7 @@
       id="root"
       data-composition-id="ecomiq-bf-workbook"
       data-start="0"
-      data-duration="19.6"
+      data-duration="17"
       data-width="1080"
       data-height="1920"
     >
@@ -65,7 +65,7 @@
             <div id="g1-eyebrow" class="eyebrow">Black Friday 2026</div>
             <div id="g1-title" class="title">
               <div>Record revenue.</div>
-              <div><span class="hot">Thin</span> profit.</div>
+              <div>Thin profit.</div>
             </div>
             <div id="g1-chart">
               <div id="g1-base"></div>
@@ -79,7 +79,6 @@
               </div>
             </div>
           </div>
-          <div id="g1-foot" class="foot">Illustrative &middot; your numbers decide the answer</div>
         </div>
       </div>
 
@@ -126,9 +125,6 @@
             </div>
             <div id="g2-chip" class="chip">52.1% contribution margin</div>
           </div>
-          <div id="g2-foot" class="foot">
-            Example &middot; $114.70 = Shopify BFCM 2025 average order value
-          </div>
         </div>
       </div>
 
@@ -172,55 +168,49 @@
             <div id="g3-roas" class="num">Breakeven ROAS rises 1.92 to 2.61</div>
             <div id="g3-units" class="num">and 1.81&times; the units just to stand still</div>
           </div>
-          <div id="g3-foot" class="foot">
-            Example &middot; 25% = 2025 apparel discount depth, Adobe Analytics
-          </div>
         </div>
       </div>
 
       <!-- ---------------------------------------------------------------
            S7 · GFX-4, the workbook  (12.6667 → 15.1667, holds under the dissolve)
-           The one light beat. Canvas is pure WHITE so the product renders'
-           own white backgrounds blend seamlessly (they are not cut-outs).
+           Navy like every other graphic beat. The product render is an
+           off-white photograph, not a cut-out, so it is shown as a rounded
+           photo card, which reads as deliberate against navy.
            --------------------------------------------------------------- -->
       <div
         id="gfx4"
-        class="clip scene"
+        class="clip scene scene-navy"
         data-start="12.6667"
         data-duration="2.5"
         data-track-index="4"
       >
-        <div id="g4-wash"></div>
+        <div class="bloom"></div>
         <div class="sc">
           <div class="sc-mid">
             <div id="g4-eyebrow">Free workbook</div>
             <div id="g4-rule"></div>
             <img id="g4-spread" src="assets/workbook-spread-discount.png"
                  alt="The Black Friday Profit Plan workbook with its worksheets and tools" />
-            <div id="g4-lower">
-              <img id="g4-cover" src="assets/workbook-cover-trim.png"
-                   alt="The Black Friday Profit Plan workbook cover" />
-              <div id="g4-stats">
-                <div class="g4-stat"><span class="v num">8</span><span class="k">Parts</span></div>
-                <div class="g4-stat"><span class="v num">32</span><span class="k">Worksheets</span></div>
-                <div class="g4-stat"><span class="v num">19</span><span class="k">Tools</span></div>
-              </div>
+            <div id="g4-stats">
+              <div class="g4-stat"><span class="v num">8</span><span class="k">Parts</span></div>
+              <div class="g4-stat"><span class="v num">32</span><span class="k">Worksheets</span></div>
+              <div class="g4-stat"><span class="v num">19</span><span class="k">Tools</span></div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- ---------------------------------------------------------------
-           S8 · END CARD  (15.0333 → 19.60)
+           S8 · END CARD  (14.8667 → 17.00)
            The corner watermark flies in and becomes the hero lockup, so the
            card's logo and the persistent watermark are the same element.
-           VO ends at 15.70; the card holds in silence to 19.60.
+           VO ends at 15.70; the card holds in silence to 17.00.
            --------------------------------------------------------------- -->
       <div
         id="endcard"
         class="clip scene scene-navy"
         data-start="14.8667"
-        data-duration="4.7333"
+        data-duration="2.1333"
         data-track-index="5"
       >
         <div class="bloom"></div>
@@ -231,17 +221,15 @@
             <div class="ec-line">workbook</div>
           </div>
           <div id="ec-cta">Get the workbook</div>
-          <div id="ec-chev">&darr;</div>
         </div>
       </div>
 
 
       <!-- Persistent logo watermark. Positioned NON-clip wrapper (the render
            engine repositions class="clip" elements, which makes the logo
-           drift). White lockup on navy, navy lockup on the light beat. -->
+           drift). It also becomes the end-card hero lockup. -->
       <div id="logo-wrap">
         <img id="logo-w" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-        <img id="logo-n" src="assets/ecomiq-logo-navy.svg" alt="" />
       </div>
 
       <!-- Unifying texture, on top of every scene. -->
@@ -275,7 +263,7 @@
       <audio
         id="bed-card"
         data-start="15.0333"
-        data-duration="4.5667"
+        data-duration="1.9667"
         data-track-index="14"
         src="assets/music-bed-placeholder.m4a"
         data-volume="0.18"
@@ -288,7 +276,7 @@
 
           var root = document.querySelector("[data-composition-id]");
           var COMP = root.getAttribute("data-composition-id");
-          var END = 19.6;
+          var END = 17;
           var SQUARE = document.body.classList.contains("r-1x1");
 
           /* --- cut points (edit time = A-roll source time - 1.95s) ---------------- */
@@ -368,20 +356,9 @@
           tl.fromTo("#aroll-wrap", { scale: 1 },
             { scale: 1.06, duration: 15.0333, ease: "none" }, 0);
 
-          /* Vignette breathes through the navy act, steps aside for the light product
-             beat, and returns across the end-card dissolve. Finite repeats only. */
+          /* Vignette breathes across the piece. Every scene is navy now, so it no
+             longer has to step aside for a light beat. Finite repeats only. */
           tl.to("#vignette", { opacity: 0.82, duration: 3.1, yoyo: true, repeat: 3, ease: "sine.inOut" }, 0);
-          tl.to("#vignette", { opacity: 0.12, duration: FADE_IN, ease: "power1.inOut" }, T.gfx4);
-          tl.to("#vignette", { opacity: 1, duration: EC_XF, ease: "power1.inOut" }, EC_IN);
-
-          /* Lockup swaps to the navy variant on the white beat (brand rule: navy logo
-             on light grounds) and back to white for the card. Each swap runs over the
-             SAME window as the scene dissolve beneath it, so the two track together
-             instead of the logo flipping against a half-faded ground. */
-          tl.to("#logo-n", { opacity: 1, duration: FADE_IN, ease: "power1.inOut" }, T.gfx4);
-          tl.to("#logo-w", { opacity: 0, duration: FADE_IN, ease: "power1.inOut" }, T.gfx4);
-          tl.to("#logo-n", { opacity: 0, duration: EC_XF, ease: "power1.inOut" }, EC_IN);
-          tl.to("#logo-w", { opacity: 1, duration: EC_XF, ease: "power1.inOut" }, EC_IN);
 
           /* -----------------------------------------------------------------------
              S1 · Sean, the hook  (0 -> 1.90)
@@ -408,8 +385,7 @@
           tl.fromTo("#g1-lab-pro", { opacity: 0, y: 14 },
             { opacity: 1, y: 0, duration: 0.28, ease: "power2.out" }, 3.4);
           tl.to("#g1-bar-pro", { scaleY: 1.26, duration: 0.22, yoyo: true, repeat: 1, ease: "sine.inOut" }, 3.7);
-          tl.fromTo("#g1-foot", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 3.8);
-          fadeOut("#gfx1", T.s3);
+            fadeOut("#gfx1", T.s3);
 
           /* -----------------------------------------------------------------------
              S4 · GFX-2 · contribution per order  (6.50 -> 8.8333)
@@ -472,9 +448,8 @@
           tl.fromTo("#g4-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "power3.out" }, 12.7);
           tl.fromTo("#g4-spread", { opacity: 0, scale: 1.06, y: 20 },
             { opacity: 1, scale: 1, y: 0, duration: 0.62, ease: "power3.out" }, 12.7);
-          tl.fromTo("#g4-wash", { scale: 1 }, { scale: 1.1, duration: 2.2, ease: "none" }, 12.7);
-          tl.fromTo("#g4-cover", { opacity: 0, y: 90, scale: 0.92 },
-            { opacity: 1, y: 0, scale: 1, duration: 0.56, ease: "back.out(1.2)" }, 13.26);
+          tl.fromTo("#gfx4 .bloom", { opacity: 0.16, yPercent: 6 },
+            { opacity: 0.3, yPercent: 0, duration: 2.4, ease: "sine.out" }, T.gfx4);
           tl.to("#g4-spread", { y: -14, duration: 1.5, ease: "sine.out" }, 13.36);
           tl.fromTo(".g4-stat", { opacity: 0, x: 24 },
             { opacity: 1, x: 0, duration: 0.3, ease: "power2.out", stagger: 0.13 }, 13.62);
@@ -501,12 +476,10 @@
             { opacity: 1, y: 0, duration: 0.52, ease: "power3.out", stagger: 0.12 }, T.ec);
           tl.fromTo("#ec-cta", { opacity: 0, scale: 0.84 },
             { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 15.66);
-          tl.fromTo("#ec-chev", { opacity: 0, y: -10 },
-            { opacity: 1, y: 0, duration: 0.32, ease: "power2.out" }, 16.02);
-          /* Finite repeats: repeat:-1 breaks the capture engine. Both loops land
-             before the timeline end so tl.duration() stays exactly 19.6. */
-          tl.to("#ec-cta", { scale: 1.035, duration: 0.72, yoyo: true, repeat: 3, ease: "sine.inOut" }, 16.3);
-          tl.to("#ec-chev", { y: 14, duration: 0.58, yoyo: true, repeat: 4, ease: "sine.inOut" }, 16.44);
+          /* One gentle pulse: the card only holds ~1.3s after the CTA lands now.
+             Finite repeats (repeat:-1 breaks the capture engine), and it ends
+             exactly on 17.00 so tl.duration() matches the root data-duration. */
+          tl.to("#ec-cta", { scale: 1.035, duration: 0.42, yoyo: true, repeat: 1, ease: "sine.inOut" }, 16.16);
 
           /* Duration anchor: pins tl.duration() to the root data-duration so no beat
              tail can flash black (docs/LESSONS.md, render contract 7). */

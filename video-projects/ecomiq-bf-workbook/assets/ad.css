@@ -6,11 +6,10 @@
    Colors come from brand-tokens.css (--brand-*). Rethink Sans is local .woff2
    and is named LITERALLY here (the linter doesn't resolve CSS variables).
 
-   Colour semantics for this piece, 4 active hues, each owns one meaning:
-     navy       canvas
+   Colour semantics for this piece, 3 active hues, each owns one meaning:
+     navy       canvas, every scene
      blue-tint  neutral / the figure that matters
      flame      money leaving the business, and the CTA
-     white/sky  the product beat
    =========================================================================== */
 
 @font-face {
@@ -32,9 +31,9 @@ html, body {
 }
 /* --sub-safe reserves a clear strip along the bottom of every graphic scene
    for subtitles added by hand after delivery. Nothing in a scene's content
-   flow (including the footnote attributions) enters it; only full-bleed
-   decoratives -- the bloom, the light wash, the A-roll scrim -- pass through,
-   and those sit behind text without hurting legibility.
+   flow enters it; only full-bleed decoratives -- the bloom and the A-roll
+   scrim -- pass through, and those sit behind text without hurting
+   legibility.
      9:16  340px -> band is y 1580-1920 (17.7% of frame)
      1:1   200px -> band is y  880-1080 (18.5% of frame)
    Both fit two lines of subtitle with room to spare. Change the value here
@@ -69,8 +68,7 @@ body.r-1x1 { height: 1080px; --sub-safe: 200px; }
    2 · Persistent logo watermark, top-left on every frame.
    Wrapped in a positioned, NON-clip div (LESSONS: the render engine
    repositions class="clip" elements, so the logo drifts without this).
-   Two stacked lockups: white for navy scenes, navy for the light product
-   beat. Same element becomes the end-card hero.
+   Same element becomes the end-card hero lockup.
    --------------------------------------------------------------------------- */
 #logo-wrap { position: absolute; z-index: 100; opacity: 0; transform-origin: 0 0; }
 body.r-916 #logo-wrap { top: 84px;  left: 84px;  width: 173px; }
@@ -80,7 +78,6 @@ body.r-1x1 #logo-wrap { top: 64px;  left: 64px;  width: 200px; }
   width: 100%; height: auto; display: block;
   filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .55));
 }
-#logo-n { opacity: 0; filter: drop-shadow(0 6px 18px rgba(6, 40, 76, .22)) !important; }
 
 /* ---------------------------------------------------------------------------
    3 · Unifying texture, vignette + deterministic CSS film grain, on top of
@@ -174,23 +171,9 @@ body.r-1x1 .eyebrow { font-size: 25px; }
 body.r-916 .title { font-size: 96px; }
 body.r-1x1 .title { font-size: 74px; }
 
-/* Flame emphasis, in the sans face. This cut uses no italic-serif emphasis
-   word at all: the brand's Hedvig signature is deliberately not applied here,
-   so the end-card headline reads as one flat white statement. */
-.hot { color: var(--brand-flame); }
-
-/* .12em, not .16em: the longest attribution ("...DISCOUNT DEPTH, ADOBE
-   ANALYTICS", 58 chars) wraps to two lines at wider tracking in 9:16. */
-.foot {
-  flex: 0 0 auto;
-  font-weight: 500;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: #c3d5ea;
-  opacity: 0;
-}
-body.r-916 .foot { font-size: 22px; margin-top: 40px; }
-body.r-1x1 .foot { font-size: 19px; margin-top: 26px; }
+/* No type-level emphasis colour in this cut: the brand's italic-serif
+   signature is deliberately not applied, and headline words stay flat white.
+   Flame is carried by graphic elements only, the profit bar and the CTA pill. */
 
 .num { font-variant-numeric: tabular-nums; }
 
@@ -400,25 +383,15 @@ body.r-916 #g3-units { margin-top: 22px; font-size: 32px; }
 body.r-1x1 #g3-units { margin-top: 14px; font-size: 25px; }
 
 /* ---------------------------------------------------------------------------
-   S7 · GFX-4, the workbook itself. The one LIGHT beat.
-   Canvas is pure WHITE so the product renders' own white backgrounds blend
-   seamlessly (they are not cut-outs).
+   S7 · GFX-4, the workbook. Navy like every other graphic beat.
+   The product render is an off-white studio photograph, not a cut-out, so it
+   is presented as a rounded photo card with a dark lift. That reads as a
+   deliberate product card against navy and matches the brand's "product
+   photography set against navy or white" direction.
    --------------------------------------------------------------------------- */
-#gfx4 {
-  background:
-    radial-gradient(120% 80% at 50% 8%, #FFFFFF 0%, rgba(255,255,255,0) 62%),
-    radial-gradient(110% 70% at 50% 104%, var(--brand-sky) 0%, rgba(222,238,254,0) 70%),
-    #F4F9FF;
-}
-#g4-wash {
-  position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(78% 46% at 50% 92%,
-    rgba(156, 212, 255, .26) 0%, rgba(244, 249, 255, 0) 66%);
-}
-#gfx4 .sc-mid { justify-content: center; }
 #g4-eyebrow {
   font-weight: 700; letter-spacing: .34em; text-transform: uppercase;
-  color: var(--brand-navy); opacity: 0;
+  color: var(--brand-blue-tint); opacity: 0;
 }
 body.r-916 #g4-eyebrow { font-size: 28px; }
 body.r-1x1 #g4-eyebrow { font-size: 23px; }
@@ -433,34 +406,26 @@ body.r-1x1 #g4-rule { margin-top: 14px; width: 108px; }
 #g4-spread {
   align-self: center; height: auto; opacity: 0;
   border-radius: 20px;
-  box-shadow: 0 30px 72px -22px rgba(6, 40, 76, .34);
+  box-shadow: 0 34px 80px -24px rgba(0, 0, 0, .62);
 }
-body.r-916 #g4-spread { margin-top: 54px; width: 940px; }
-body.r-1x1 #g4-spread { margin-top: 30px; width: 740px; }
+body.r-916 #g4-spread { margin-top: 54px; width: 980px; }
+body.r-1x1 #g4-spread { margin-top: 30px; width: 700px; }
 
-#g4-lower { display: flex; align-items: center; width: 100%; }
-body.r-916 #g4-lower { margin-top: 44px; gap: 56px; }
-body.r-1x1 #g4-lower { margin-top: 22px; gap: 40px; }
-#g4-cover {
-  height: auto; flex: 0 0 auto; opacity: 0;
-  border-radius: 14px;
-  box-shadow: 0 28px 64px -20px rgba(6, 40, 76, .34);
+/* One horizontal stat row in both ratios now that the second product shot is
+   gone and the spread is the single hero. */
+#g4-stats {
+  display: flex; align-items: baseline; justify-content: space-between;
+  width: 100%;
 }
-body.r-916 #g4-cover { width: 370px; }
-body.r-1x1 #g4-cover { display: none; }
-body.r-1x1 #g4-lower { flex-direction: row; justify-content: space-between; }
-body.r-1x1 #g4-stats { flex-direction: row; align-items: baseline; gap: 44px; width: 100%; justify-content: space-between; }
-
-#g4-stats { display: flex; flex-direction: column; }
-body.r-916 #g4-stats { gap: 26px; }
-body.r-1x1 #g4-stats { gap: 14px; }
+body.r-916 #g4-stats { margin-top: 52px; }
+body.r-1x1 #g4-stats { margin-top: 26px; }
 .g4-stat { display: flex; align-items: baseline; opacity: 0; }
 body.r-916 .g4-stat { gap: 18px; }
 body.r-1x1 .g4-stat { gap: 13px; }
 .g4-stat .v { font-weight: 800; letter-spacing: -.03em; color: var(--brand-flame); }
 .g4-stat .k {
   font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--brand-navy);
+  color: var(--brand-white);
 }
 body.r-916 .g4-stat .v { font-size: 78px; }
 body.r-916 .g4-stat .k { font-size: 26px; }
@@ -490,9 +455,3 @@ body.r-1x1 #ec-head { font-size: 76px; }
 body.r-916 #ec-cta { margin-top: 88px; font-size: 44px; padding: 34px 68px; }
 body.r-1x1 #ec-cta { margin-top: 48px; font-size: 34px; padding: 26px 52px; }
 
-#ec-chev {
-  font-weight: 800; color: var(--brand-blue-tint); line-height: 1;
-  opacity: 0;
-}
-body.r-916 #ec-chev { margin-top: 44px; font-size: 52px; }
-body.r-1x1 #ec-chev { margin-top: 20px; font-size: 40px; }

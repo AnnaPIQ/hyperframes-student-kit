@@ -2,7 +2,7 @@
 
 **Status:** APPROVED and delivered. Renders in `renders/`.
 **Deliverables:** 9:16 (1080×1920) + 1:1 (1080×1080), H.264/AAC MP4, faststart, 30fps.
-**Runtime:** 19.60s (588 frames @ 30fps).
+**Runtime:** 17.00s (510 frames @ 30fps).
 
 ---
 
@@ -228,3 +228,27 @@ and the A-roll's bottom scrim already helps them read.
 Verified by overlaying the band on rendered frames for every scene in both
 ratios, and by measuring the chevron's lowest pixel across its bob cycle.
 Runtime, specs and loudness unchanged.
+
+---
+
+## 14 · Revision, review pass 3
+
+Six changes on Anna's notes:
+
+1. **"Thin" is white**, not flame. The revenue/profit headline is now flat white throughout; flame is carried by the profit bar alone. No type-level emphasis colour is left in the piece, so the `.hot` rule came out.
+2. **All three footnote attributions deleted** (`Illustrative · your numbers decide the answer`, and both `Example · …` source lines). `.foot` is gone from the stylesheet.
+3. **The workbook beat is navy**, matching every other graphic scene. There is no longer a light beat, which also retires the navy logo lockup variant (one white lockup throughout) and the vignette's dip that existed only to avoid darkening a white frame. The product spread is now a rounded photo card with a dark lift on navy, which is the brand's "product photography against navy" direction.
+4. **The standalone cover shot deleted.** The spread is the single hero, so it grew (940 → 980px in 9:16, 740 → 700px in 1:1) and the `8 / 32 / 19` stats became one horizontal row in both ratios.
+5. **End-card down arrow removed.**
+6. **Runtime 19.60s → 17.00s** (510 frames). The end card now holds 1.97s after the dissolve, and 1.30s after the VO ends at 15.70. The CTA's breathe was retimed to a single 0.42s pulse landing exactly on 17.00 so `tl.duration()` still matches the root `data-duration`, and the end-card music-bed clip shortened to 1.9667s to match.
+
+**Flag on (2).** Those footnotes were what labelled the numeric beats as an
+example and cited Shopify / Adobe. Without them, `$114.70`, `$59.71`, `52.1%`,
+`25%`, `$33.00` and `ROAS 1.92 to 2.61` read as unqualified figures rather than
+the workbook's worked example. Nothing on screen now attributes them. If that
+matters for review, the no-cost fix is to fold the word into an eyebrow, e.g.
+"What one order contributes · example", rather than bring the footnotes back.
+
+Verified: 0 lint errors, resolved duration 17.0s, both renders 17.000s at
+−16.1 LUFS, last frame is the card (not black), and every scene still clears
+the subtitle band.
