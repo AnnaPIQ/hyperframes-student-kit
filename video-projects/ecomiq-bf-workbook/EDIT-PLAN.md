@@ -105,7 +105,7 @@ Every numeric beat carries an `EXAMPLE` label plus its source in micro-type
 | Logo | `assets/ecomiq-logo-white.svg` (1671×286, 5.84:1) on navy |
 | Active hues | 4: navy (canvas) · blue-tint (revenue / neutral figures) · flame (the cost of discounting, CTA) · sky/white (the product beat). Each owns one meaning. |
 | Texture | Navy canvas + brand-gradient-2 bloom + breathing vignette + CSS film grain on every scene |
-| Motion | GSAP vendored locally (`assets/vendor/gsap.min.js`). Every cut hidden under a motion-blurred whip or a light wipe. No hard cuts, no captions. |
+| Motion | GSAP vendored locally (`assets/vendor/gsap.min.js`). Every beat change is a crossfade (0.30s in / 0.27s out). No captions. |
 
 Logo watermark sits **top-left on every frame**, subtle drop shadow, and is the same element that becomes the end-card hero.
 
@@ -184,3 +184,20 @@ every beat and every cut in both ratios.
 
 - **The music bed is silent.** `assets/music-bed-placeholder.m4a` is 20s of digital silence, wired as two clips (0.10 under the VO, 0.18 on the card). Drop in a real bed and swap the `src` on both `<audio>` elements; the duck is already in place.
 - **The CTA pill is not a link.** It reads "Get the workbook"; the destination lives in the ad's own link field.
+
+---
+
+## 12 · Revision, after first review
+
+Two changes on Anna's note:
+
+- **Cuts are now fades.** The whip-streak-plus-blur cuts are gone; every beat change is a plain opacity crossfade. Because the graphic scenes are opaque panels sitting over the A-roll, fading one up dissolves Sean into it and fading one down dissolves back to him, so most boundaries needed no structural change. The exception is **workbook → end card**, which had no A-roll beneath it (the video ends at 15.0333): those two clips now overlap, with the card fading up from **14.8667** over a workbook that holds opaque until **15.1667**. Card content still lands on "the link is below" at 15.0333.
+- **End card "free" is white and upright**, not blue italic serif. That removes the last use of Hedvig Letters Serif from the piece, so its `@font-face` and the `.em` rules came out of `assets/ad.css` rather than embedding an unused font in every render. The `.woff2` stays in `assets/fonts/` for future variants.
+
+Re-rendered and re-verified both ratios: mid-dissolve frames at every boundary, the
+end card, and the 1:1 reflows. Runtime, specs and loudness unchanged.
+
+One note for the record: the house motion guide (`MOTION_PHILOSOPHY.md`) prefers
+motion-blurred whips over fades, and the `/hyperframes` skill bans exit animations
+outside the final scene. Fades require both. This is a deliberate, instructed
+departure, documented here so a future session doesn't "fix" it back.

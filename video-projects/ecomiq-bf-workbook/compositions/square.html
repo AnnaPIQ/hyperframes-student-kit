@@ -180,7 +180,7 @@
       </div>
 
       <!-- ---------------------------------------------------------------
-           S7 · GFX-4, the workbook  (12.6667 → 15.0333)
+           S7 · GFX-4, the workbook  (12.6667 → 15.1667, holds under the dissolve)
            The one light beat. Canvas is pure WHITE so the product renders'
            own white backgrounds blend seamlessly (they are not cut-outs).
            --------------------------------------------------------------- -->
@@ -188,7 +188,7 @@
         id="gfx4"
         class="clip scene"
         data-start="12.6667"
-        data-duration="2.3667"
+        data-duration="2.5"
         data-track-index="4"
       >
         <div id="g4-wash"></div>
@@ -220,14 +220,14 @@
       <div
         id="endcard"
         class="clip scene scene-navy"
-        data-start="15.0333"
-        data-duration="4.5667"
+        data-start="14.8667"
+        data-duration="4.7333"
         data-track-index="5"
       >
         <div class="bloom"></div>
         <div class="sc">
           <div id="ec-head">
-            <div class="ec-line">Get your <span class="em em-tint">free</span></div>
+            <div class="ec-line">Get your free</div>
             <div class="ec-line">Black Friday</div>
             <div class="ec-line">workbook</div>
           </div>
@@ -236,14 +236,6 @@
         </div>
       </div>
 
-      <!-- Cut-hiding whip streaks. Non-timed decoratives driven by GSAP. -->
-      <div id="whip1" class="whip"></div>
-      <div id="whip2" class="whip"></div>
-      <div id="whip3" class="whip"></div>
-      <div id="whip4" class="whip"></div>
-      <div id="whip5" class="whip"></div>
-      <div id="whip6" class="whip"></div>
-      <div id="whip7" class="whip"></div>
 
       <!-- Persistent logo watermark. Positioned NON-clip wrapper (the render
            engine repositions class="clip" elements, which makes the logo
@@ -292,242 +284,237 @@
     </div>
 
     <script>
-      (function () {
-        "use strict";
+        (function () {
+          "use strict";
 
-        var root = document.querySelector("[data-composition-id]");
-        var COMP = root.getAttribute("data-composition-id");
-        var END = 19.6;
-        var SQUARE = document.body.classList.contains("r-1x1");
+          var root = document.querySelector("[data-composition-id]");
+          var COMP = root.getAttribute("data-composition-id");
+          var END = 19.6;
+          var SQUARE = document.body.classList.contains("r-1x1");
 
-        /* --- cut points (edit time = A-roll source time - 1.95s) ---------------- */
-        var T = {
-          gfx1: 1.9,        // "...can still leave you with very little profit."
-          s3:   4.8333,     // back to Sean, "So before you set your offer,"
-          gfx2: 6.5,        // "work out what each order contributes"
-          gfx3: 9.0667,     // "and the biggest discount your margin can afford."
-          s6:   11.9667,    // back to Sean, his breath
-          gfx4: 12.6667,    // "Our free workbook walks you through all of it."
-          ec:   15.0333     // "The link is below."
-        };
+          /* --- cut points (edit time = A-roll source time - 1.95s) ---------------- */
+          var T = {
+            gfx1: 1.9,        // "...can still leave you with very little profit."
+            s3:   4.8333,     // back to Sean, "So before you set your offer,"
+            gfx2: 6.5,        // "work out what each order contributes"
+            gfx3: 9.0667,     // "and the biggest discount your margin can afford."
+            s6:   11.9667,    // back to Sean, his breath
+            gfx4: 12.6667,    // "Our free workbook walks you through all of it."
+            ec:   15.0333     // "The link is below." -- when the card's CONTENT lands
+          };
 
-        /* --- dial geometry: a 270deg gauge, 0-100%, landing on 25% ------------- */
-        var DIAL_ARC = 801.1062;             // 0.75 x circumference at r=170
-        var DIAL_25 = DIAL_ARC * 0.25;
+          /* Every beat change is a crossfade. The graphic scenes are opaque panels
+             sitting over the A-roll, so fading one up dissolves Sean into it and
+             fading one down dissolves back to him: no cut, nothing to hide.
+             FADE_OUT starts before the clip's own end so the dissolve finishes on
+             the last frame the clip exists. */
+          var FADE_IN = 0.3;
+          var FADE_OUT = 0.2667;
 
-        window.__timelines = window.__timelines || {};
-        var tl = gsap.timeline({ paused: true });
+          /* Workbook -> end card is the one boundary with no A-roll underneath (the
+             video ends at 15.0333), so the two scenes OVERLAP instead: the card fades
+             up on top while the workbook holds fully opaque beneath it, and the
+             workbook's clip runs on to the end of the dissolve. Without the overlap
+             the fade would reveal bare canvas. */
+          var EC_IN = 14.8667;     // end-card clip start + crossfade start
+          var EC_XF = 0.3;         // ends 15.1667, where gfx4's clip ends
 
-        /* -----------------------------------------------------------------------
-           Helpers
-           ----------------------------------------------------------------------- */
+          /* --- dial geometry: a 270deg gauge, 0-100%, landing on 25% ------------- */
+          var DIAL_ARC = 801.1062;             // 0.75 x circumference at r=170
+          var DIAL_25 = DIAL_ARC * 0.25;
 
-        /* A motion-blurred streak that hides the cut. It must be MID-FRAME on the
-           cut frame itself, so it starts 0.20s early and eases inOut: an "in" ease
-           leaves the streak still off-screen left when the cut lands, which reads
-           as a hard cut with a late flick. Three non-overlapping tweens so no
-           property is driven twice. */
-        function whip(sel, t) {
-          tl.fromTo(sel, { xPercent: -170 },
-            { xPercent: 260, duration: 0.34, ease: "power1.inOut" }, t - 0.2);
-          tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, t - 0.2);
-          tl.to(sel, { opacity: 0, duration: 0.16, ease: "none" }, t - 0.02);
-        }
+          window.__timelines = window.__timelines || {};
+          var tl = gsap.timeline({ paused: true });
 
-        /* Scene arrives carrying the cut's momentum. Its own content tweens start
-           ON the cut (never after it) so the incoming frame is never empty. */
-        function sceneIn(sel, t) {
-          tl.fromTo(sel + " .sc",
-            { scale: 1.05, filter: "blur(24px)" },
-            { scale: 1, filter: "blur(0px)", duration: 0.36, ease: "power2.out" }, t);
-        }
+          /* -----------------------------------------------------------------------
+             Helpers
+             ----------------------------------------------------------------------- */
 
-        /* Deterministic count-up: tween a plain object, write the text on update.
-           Seek-safe, no Math.random, no Date.now. */
-        function countUp(sel, from, to, t, d, fmt) {
-          var el = document.querySelector(sel);
-          var o = { v: from };
-          el.textContent = fmt(from);
-          tl.to(o, {
-            v: to, duration: d, ease: "power2.out",
-            onUpdate: function () { el.textContent = fmt(o.v); }
-          }, t);
-        }
-        function money(v) { return "$" + v.toFixed(2); }
-        function pct(v) { return Math.round(v) + "%"; }
+          /* Dissolve a scene up over whatever is beneath it. */
+          function fadeIn(sel, t, d) {
+            tl.fromTo(sel, { opacity: 0 },
+              { opacity: 1, duration: d || FADE_IN, ease: "power1.inOut" }, t);
+          }
 
-        /* -----------------------------------------------------------------------
-           Persistent layers
-           ----------------------------------------------------------------------- */
+          /* Dissolve a scene back down, finishing as its clip window closes. */
+          function fadeOut(sel, clipEnd) {
+            tl.to(sel, { opacity: 0, duration: FADE_OUT, ease: "power1.inOut" },
+              clipEnd - FADE_OUT);
+          }
 
-        /* Logo watermark, top-left on every frame. */
-        tl.fromTo("#logo-wrap", { opacity: 0, y: -18 },
-          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.2);
+          /* Deterministic count-up: tween a plain object, write the text on update.
+             Seek-safe, no Math.random, no Date.now. */
+          function countUp(sel, from, to, t, d, fmt) {
+            var el = document.querySelector(sel);
+            var o = { v: from };
+            el.textContent = fmt(from);
+            tl.to(o, {
+              v: to, duration: d, ease: "power2.out",
+              onUpdate: function () { el.textContent = fmt(o.v); }
+            }, t);
+          }
+          function money(v) { return "$" + v.toFixed(2); }
+          function pct(v) { return Math.round(v) + "%"; }
 
-        /* Slow continuous push on Sean, the camera never sleeps. Wrapper only; the
-           <video> itself is never transformed. */
-        tl.fromTo("#aroll-wrap", { scale: 1 },
-          { scale: 1.06, duration: T.ec, ease: "none" }, 0);
+          /* -----------------------------------------------------------------------
+             Persistent layers
+             ----------------------------------------------------------------------- */
 
-        /* Vignette breathes through the navy act, steps aside for the light product
-           beat, and returns for the card. Finite repeats only. */
-        tl.to("#vignette", { opacity: 0.82, duration: 3.1, yoyo: true, repeat: 3, ease: "sine.inOut" }, 0);
-        tl.to("#vignette", { opacity: 0.12, duration: 0.3, ease: "power2.out" }, T.gfx4);
-        tl.to("#vignette", { opacity: 1, duration: 0.28, ease: "power2.in" }, 14.9);
+          /* Logo watermark, top-left on every frame. */
+          tl.fromTo("#logo-wrap", { opacity: 0, y: -18 },
+            { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.2);
 
-        /* Lockup swaps to the navy variant on the white beat (brand rule: navy logo
-           on light grounds) and back to white for the card. Two frames, landing
-           exactly on the cut, so it is never caught half-faded on either ground. */
-        tl.to("#logo-n", { opacity: 1, duration: 0.06, ease: "none" }, T.gfx4);
-        tl.to("#logo-w", { opacity: 0, duration: 0.06, ease: "none" }, T.gfx4);
-        tl.to("#logo-n", { opacity: 0, duration: 0.06, ease: "none" }, T.ec);
-        tl.to("#logo-w", { opacity: 1, duration: 0.06, ease: "none" }, T.ec);
+          /* Slow continuous push on Sean, the camera never sleeps. Wrapper only; the
+             <video> itself is never transformed. */
+          tl.fromTo("#aroll-wrap", { scale: 1 },
+            { scale: 1.06, duration: 15.0333, ease: "none" }, 0);
 
-        /* -----------------------------------------------------------------------
-           S1 · Sean, the hook  (0 -> 1.90)
-           ----------------------------------------------------------------------- */
-        tl.fromTo("#bf-chip", { opacity: 0, y: 14, scale: 0.9 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.5)" }, 0.62);
+          /* Vignette breathes through the navy act, steps aside for the light product
+             beat, and returns across the end-card dissolve. Finite repeats only. */
+          tl.to("#vignette", { opacity: 0.82, duration: 3.1, yoyo: true, repeat: 3, ease: "sine.inOut" }, 0);
+          tl.to("#vignette", { opacity: 0.12, duration: FADE_IN, ease: "power1.inOut" }, T.gfx4);
+          tl.to("#vignette", { opacity: 1, duration: EC_XF, ease: "power1.inOut" }, EC_IN);
 
-        /* -----------------------------------------------------------------------
-           S2 · GFX-1 · record revenue, thin profit  (1.90 -> 4.8333)
-           The flame sliver lands on "very little profit".
-           ----------------------------------------------------------------------- */
-        whip("#whip1", T.gfx1);
-        sceneIn("#gfx1", T.gfx1);
-        tl.fromTo("#gfx1 .bloom", { opacity: 0.16, yPercent: 6 },
-          { opacity: 0.3, yPercent: 0, duration: 2.4, ease: "sine.out" }, T.gfx1);
-        tl.fromTo("#g1-base", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "power3.out" }, T.gfx1);
-        tl.fromTo("#g1-eyebrow", { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.34, ease: "power2.out" }, 1.93);
-        tl.fromTo("#g1-title", { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.97);
-        tl.fromTo("#g1-bar-rev", { scaleY: 0 }, { scaleY: 1, duration: 0.62, ease: "expo.out" }, 2.03);
-        tl.fromTo("#g1-lab-rev", { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 2.4);
-        tl.fromTo("#g1-bar-pro", { scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: "power3.out" }, 3.23);
-        tl.fromTo("#g1-lab-pro", { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.28, ease: "power2.out" }, 3.4);
-        tl.to("#g1-bar-pro", { scaleY: 1.26, duration: 0.22, yoyo: true, repeat: 1, ease: "sine.inOut" }, 3.7);
-        tl.fromTo("#g1-foot", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 3.8);
+          /* Lockup swaps to the navy variant on the white beat (brand rule: navy logo
+             on light grounds) and back to white for the card. Each swap runs over the
+             SAME window as the scene dissolve beneath it, so the two track together
+             instead of the logo flipping against a half-faded ground. */
+          tl.to("#logo-n", { opacity: 1, duration: FADE_IN, ease: "power1.inOut" }, T.gfx4);
+          tl.to("#logo-w", { opacity: 0, duration: FADE_IN, ease: "power1.inOut" }, T.gfx4);
+          tl.to("#logo-n", { opacity: 0, duration: EC_XF, ease: "power1.inOut" }, EC_IN);
+          tl.to("#logo-w", { opacity: 1, duration: EC_XF, ease: "power1.inOut" }, EC_IN);
 
-        /* -----------------------------------------------------------------------
-           S3 · Sean  (4.8333 -> 6.50)
-           ----------------------------------------------------------------------- */
-        whip("#whip2", T.s3);
+          /* -----------------------------------------------------------------------
+             S1 · Sean, the hook  (0 -> 1.90)
+             ----------------------------------------------------------------------- */
+          tl.fromTo("#bf-chip", { opacity: 0, y: 14, scale: 0.9 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.5)" }, 0.62);
 
-        /* -----------------------------------------------------------------------
-           S4 · GFX-2 · contribution per order  (6.50 -> 8.8333)
-           Every figure is the workbook's own worked example, Part 01 page 8.
-           ----------------------------------------------------------------------- */
-        whip("#whip3", T.gfx2);
-        sceneIn("#gfx2", T.gfx2);
-        tl.fromTo("#gfx2 .bloom", { opacity: 0.16, yPercent: 6 },
-          { opacity: 0.3, yPercent: 0, duration: 2.1, ease: "sine.out" }, T.gfx2);
-        tl.fromTo("#g2-eyebrow", { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, T.gfx2);
-        tl.fromTo("#g2-aov", { opacity: 0, y: 24, scale: 0.94 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.44, ease: "expo.out" }, 6.55);
-        tl.fromTo(".g2-row", { opacity: 0, x: -26 },
-          { opacity: 1, x: 0, duration: 0.34, ease: "power2.out", stagger: 0.155 }, 6.8);
-        tl.fromTo("#g2-result", { opacity: 0, y: 26 },
-          { opacity: 1, y: 0, duration: 0.44, ease: "power3.out" }, 7.5);
-        countUp("#g2-value", 114.7, 59.71, 7.56, 0.6, money);
-        tl.fromTo("#g2-chip", { opacity: 0, scale: 0.86 },
-          { opacity: 1, scale: 1, duration: 0.34, ease: "back.out(1.6)" }, 8.16);
-        tl.fromTo("#g2-foot", { opacity: 0 }, { opacity: 1, duration: 0.28, ease: "none" }, 8.26);
+          /* -----------------------------------------------------------------------
+             S2 · GFX-1 · record revenue, thin profit  (1.90 -> 4.8333)
+             The flame sliver lands on "very little profit".
+             ----------------------------------------------------------------------- */
+          fadeIn("#gfx1", T.gfx1);
+          tl.fromTo("#gfx1 .bloom", { opacity: 0.16, yPercent: 6 },
+            { opacity: 0.3, yPercent: 0, duration: 2.4, ease: "sine.out" }, T.gfx1);
+          tl.fromTo("#g1-base", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "power3.out" }, T.gfx1);
+          tl.fromTo("#g1-eyebrow", { opacity: 0, y: 16 },
+            { opacity: 1, y: 0, duration: 0.34, ease: "power2.out" }, 1.93);
+          tl.fromTo("#g1-title", { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.97);
+          tl.fromTo("#g1-bar-rev", { scaleY: 0 }, { scaleY: 1, duration: 0.62, ease: "expo.out" }, 2.03);
+          tl.fromTo("#g1-lab-rev", { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 2.4);
+          tl.fromTo("#g1-bar-pro", { scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: "power3.out" }, 3.23);
+          tl.fromTo("#g1-lab-pro", { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.28, ease: "power2.out" }, 3.4);
+          tl.to("#g1-bar-pro", { scaleY: 1.26, duration: 0.22, yoyo: true, repeat: 1, ease: "sine.inOut" }, 3.7);
+          tl.fromTo("#g1-foot", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 3.8);
+          fadeOut("#gfx1", T.s3);
 
-        /* -----------------------------------------------------------------------
-           S5 · GFX-3 · what 25% off costs  (9.0667 -> 11.9667)
-           Callback: the $59.71 from S4 returns and is struck through.
-           ----------------------------------------------------------------------- */
-        whip("#whip4", T.gfx3);
-        sceneIn("#gfx3", T.gfx3);
-        tl.fromTo("#gfx3 .bloom", { opacity: 0.16, yPercent: 6 },
-          { opacity: 0.3, yPercent: 0, duration: 2.4, ease: "sine.out" }, T.gfx3);
-        tl.fromTo("#g3-eyebrow", { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, T.gfx3);
-        tl.fromTo("#g3-dial", { opacity: 0, scale: 0.9 },
-          { opacity: 1, scale: 1, duration: 0.42, ease: "power3.out" }, 9.1);
-        tl.fromTo("#g3-arc", { strokeDashoffset: DIAL_ARC },
-          { strokeDashoffset: DIAL_ARC - DIAL_25, duration: 0.7, ease: "power2.out" }, 9.18);
-        countUp("#g3-pct", 0, 25, 9.18, 0.7, pct);
-        tl.fromTo("#g3-cap", { opacity: 0 }, { opacity: 1, duration: 0.28, ease: "none" }, 9.64);
-        tl.to("#g3-dial", { scale: 1.018, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, 10.06);
-        tl.fromTo("#g3-was", { opacity: 0, x: -30 },
-          { opacity: 1, x: 0, duration: 0.34, ease: "power2.out" }, 10.3);
-        tl.fromTo("#g3-arrow", { opacity: 0 }, { opacity: 1, duration: 0.22, ease: "none" }, 10.48);
-        tl.fromTo("#g3-now", { opacity: 0, x: 26, scale: 0.82 },
-          { opacity: 1, x: 0, scale: 1, duration: 0.42, ease: "back.out(1.5)" }, 10.56);
-        tl.fromTo("#g3-cap2", { opacity: 0 }, { opacity: 1, duration: 0.26, ease: "none" }, 10.86);
-        tl.fromTo("#g3-roas", { opacity: 0, y: 18 },
-          { opacity: 1, y: 0, duration: 0.32, ease: "power2.out" }, 11.06);
-        tl.fromTo("#g3-units", { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 11.26);
-        tl.fromTo("#g3-foot", { opacity: 0 }, { opacity: 1, duration: 0.26, ease: "none" }, 11.42);
+          /* -----------------------------------------------------------------------
+             S4 · GFX-2 · contribution per order  (6.50 -> 8.8333)
+             Every figure is the workbook's own worked example, Part 01 page 8.
+             ----------------------------------------------------------------------- */
+          fadeIn("#gfx2", T.gfx2);
+          tl.fromTo("#gfx2 .bloom", { opacity: 0.16, yPercent: 6 },
+            { opacity: 0.3, yPercent: 0, duration: 2.1, ease: "sine.out" }, T.gfx2);
+          tl.fromTo("#g2-eyebrow", { opacity: 0, y: 16 },
+            { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, T.gfx2);
+          tl.fromTo("#g2-aov", { opacity: 0, y: 24, scale: 0.94 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.44, ease: "expo.out" }, 6.55);
+          tl.fromTo(".g2-row", { opacity: 0, x: -26 },
+            { opacity: 1, x: 0, duration: 0.34, ease: "power2.out", stagger: 0.155 }, 6.8);
+          tl.fromTo("#g2-result", { opacity: 0, y: 26 },
+            { opacity: 1, y: 0, duration: 0.44, ease: "power3.out" }, 7.46);
+          countUp("#g2-value", 114.7, 59.71, 7.52, 0.52, money);
+          tl.fromTo("#g2-chip", { opacity: 0, scale: 0.86 },
+            { opacity: 1, scale: 1, duration: 0.34, ease: "back.out(1.6)" }, 8.04);
+          tl.fromTo("#g2-foot", { opacity: 0 }, { opacity: 1, duration: 0.28, ease: "none" }, 8.12);
+          fadeOut("#gfx2", 8.8333);
 
-        /* -----------------------------------------------------------------------
-           S6 · Sean, the rest beat  (11.9667 -> 12.6667)
-           ----------------------------------------------------------------------- */
-        whip("#whip5", T.s6);
+          /* -----------------------------------------------------------------------
+             S5 · GFX-3 · what 25% off costs  (9.0667 -> 11.9667)
+             Callback: the $59.71 from S4 returns and is struck through.
+             ----------------------------------------------------------------------- */
+          fadeIn("#gfx3", T.gfx3);
+          tl.fromTo("#gfx3 .bloom", { opacity: 0.16, yPercent: 6 },
+            { opacity: 0.3, yPercent: 0, duration: 2.4, ease: "sine.out" }, T.gfx3);
+          tl.fromTo("#g3-eyebrow", { opacity: 0, y: 16 },
+            { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, T.gfx3);
+          tl.fromTo("#g3-dial", { opacity: 0, scale: 0.9 },
+            { opacity: 1, scale: 1, duration: 0.42, ease: "power3.out" }, 9.1);
+          tl.fromTo("#g3-arc", { strokeDashoffset: DIAL_ARC },
+            { strokeDashoffset: DIAL_ARC - DIAL_25, duration: 0.7, ease: "power2.out" }, 9.18);
+          countUp("#g3-pct", 0, 25, 9.18, 0.7, pct);
+          tl.fromTo("#g3-cap", { opacity: 0 }, { opacity: 1, duration: 0.28, ease: "none" }, 9.64);
+          tl.to("#g3-dial", { scale: 1.018, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, 10.06);
+          tl.fromTo("#g3-was", { opacity: 0, x: -30 },
+            { opacity: 1, x: 0, duration: 0.34, ease: "power2.out" }, 10.3);
+          tl.fromTo("#g3-arrow", { opacity: 0 }, { opacity: 1, duration: 0.22, ease: "none" }, 10.48);
+          tl.fromTo("#g3-now", { opacity: 0, x: 26, scale: 0.82 },
+            { opacity: 1, x: 0, scale: 1, duration: 0.42, ease: "back.out(1.5)" }, 10.56);
+          tl.fromTo("#g3-cap2", { opacity: 0 }, { opacity: 1, duration: 0.26, ease: "none" }, 10.86);
+          tl.fromTo("#g3-roas", { opacity: 0, y: 18 },
+            { opacity: 1, y: 0, duration: 0.32, ease: "power2.out" }, 11.02);
+          tl.fromTo("#g3-units", { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 11.2);
+          tl.fromTo("#g3-foot", { opacity: 0 }, { opacity: 1, duration: 0.26, ease: "none" }, 11.32);
+          fadeOut("#gfx3", T.s6);
 
-        /* -----------------------------------------------------------------------
-           S7 · GFX-4 · the workbook  (12.6667 -> 15.0333)
-           The piece's one light beat. The navy-to-white cut is itself the flash,
-           so it takes the same streak as every other cut, not a brighter one: a
-           full-width white wash here just blows the frame out.
-           ----------------------------------------------------------------------- */
-        whip("#whip6", T.gfx4);
-        sceneIn("#gfx4", T.gfx4);
-        tl.fromTo("#g4-eyebrow", { opacity: 0, y: 14 },
-          { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, T.gfx4);
-        tl.fromTo("#g4-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "power3.out" }, 12.7);
-        tl.fromTo("#g4-spread", { opacity: 0, scale: 1.06, y: 20 },
-          { opacity: 1, scale: 1, y: 0, duration: 0.62, ease: "power3.out" }, 12.7);
-        tl.fromTo("#g4-wash", { scale: 1 }, { scale: 1.1, duration: 2.2, ease: "none" }, 12.7);
-        tl.fromTo("#g4-cover", { opacity: 0, y: 90, scale: 0.92 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.56, ease: "back.out(1.2)" }, 13.26);
-        tl.to("#g4-spread", { y: -14, duration: 1.5, ease: "sine.out" }, 13.36);
-        tl.fromTo(".g4-stat", { opacity: 0, x: 24 },
-          { opacity: 1, x: 0, duration: 0.3, ease: "power2.out", stagger: 0.13 }, 13.62);
+          /* -----------------------------------------------------------------------
+             S7 · GFX-4 · the workbook  (12.6667 -> 15.1667)
+             The piece's one light beat. No fade-out: the end card dissolves up over
+             it, and this clip holds opaque underneath until that dissolve completes.
+             ----------------------------------------------------------------------- */
+          fadeIn("#gfx4", T.gfx4);
+          tl.fromTo("#g4-eyebrow", { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, T.gfx4);
+          tl.fromTo("#g4-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.34, ease: "power3.out" }, 12.7);
+          tl.fromTo("#g4-spread", { opacity: 0, scale: 1.06, y: 20 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.62, ease: "power3.out" }, 12.7);
+          tl.fromTo("#g4-wash", { scale: 1 }, { scale: 1.1, duration: 2.2, ease: "none" }, 12.7);
+          tl.fromTo("#g4-cover", { opacity: 0, y: 90, scale: 0.92 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.56, ease: "back.out(1.2)" }, 13.26);
+          tl.to("#g4-spread", { y: -14, duration: 1.5, ease: "sine.out" }, 13.36);
+          tl.fromTo(".g4-stat", { opacity: 0, x: 24 },
+            { opacity: 1, x: 0, duration: 0.3, ease: "power2.out", stagger: 0.13 }, 13.62);
 
-        /* -----------------------------------------------------------------------
-           S8 · END CARD  (15.0333 -> 19.60)
-           The corner watermark flies out and becomes the hero lockup, so the card's
-           logo and the persistent watermark are one element. VO ends 15.70; the
-           card then holds in silence to the end.
-           ----------------------------------------------------------------------- */
-        whip("#whip7", T.ec);
-        sceneIn("#endcard", T.ec);
-        tl.fromTo("#endcard .bloom", { opacity: 0, yPercent: 14 },
-          { opacity: 0.34, yPercent: 0, duration: 1.2, ease: "sine.out" }, T.ec);
-        /* power3.out, not inOut: an inOut ease barely moves the lockup over the
-           first few frames, which left the most important cut in the piece
-           sitting on an empty navy frame. */
-        tl.to("#logo-wrap", {
-          x: SQUARE ? 326 : 266,
-          y: SQUARE ? 236 : 536,
-          scale: SQUARE ? 1.5 : 2.1965,
-          duration: 0.52, ease: "power3.out"
-        }, T.ec);
-        /* Headline builds from the cut frame itself, alongside the lockup. */
-        tl.fromTo(".ec-line", { opacity: 0, y: 34 },
-          { opacity: 1, y: 0, duration: 0.52, ease: "power3.out", stagger: 0.12 }, T.ec);
-        tl.fromTo("#ec-cta", { opacity: 0, scale: 0.84 },
-          { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 15.66);
-        tl.fromTo("#ec-chev", { opacity: 0, y: -10 },
-          { opacity: 1, y: 0, duration: 0.32, ease: "power2.out" }, 16.02);
-        /* Finite repeats: repeat:-1 breaks the capture engine. Both loops land
-           before the timeline end so tl.duration() stays exactly 19.6. */
-        tl.to("#ec-cta", { scale: 1.035, duration: 0.72, yoyo: true, repeat: 3, ease: "sine.inOut" }, 16.3);
-        tl.to("#ec-chev", { y: 14, duration: 0.58, yoyo: true, repeat: 4, ease: "sine.inOut" }, 16.44);
+          /* -----------------------------------------------------------------------
+             S8 · END CARD  (14.8667 -> 19.60)
+             The card dissolves up over the workbook, then its content lands on "the
+             link is below" at 15.0333. The corner watermark flies out and becomes the
+             hero lockup, so the card's logo and the persistent watermark are one
+             element. VO ends 15.70; the card holds in silence to the end.
+             ----------------------------------------------------------------------- */
+          fadeIn("#endcard", EC_IN, EC_XF);
+          tl.fromTo("#endcard .bloom", { opacity: 0, yPercent: 14 },
+            { opacity: 0.34, yPercent: 0, duration: 1.2, ease: "sine.out" }, T.ec);
+          /* power3.out, not inOut: an inOut ease barely moves the lockup over the
+             first few frames, which left the cut sitting on an empty navy frame. */
+          tl.to("#logo-wrap", {
+            x: SQUARE ? 326 : 266,
+            y: SQUARE ? 236 : 536,
+            scale: SQUARE ? 1.5 : 2.1965,
+            duration: 0.52, ease: "power3.out"
+          }, T.ec);
+          tl.fromTo(".ec-line", { opacity: 0, y: 34 },
+            { opacity: 1, y: 0, duration: 0.52, ease: "power3.out", stagger: 0.12 }, T.ec);
+          tl.fromTo("#ec-cta", { opacity: 0, scale: 0.84 },
+            { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 15.66);
+          tl.fromTo("#ec-chev", { opacity: 0, y: -10 },
+            { opacity: 1, y: 0, duration: 0.32, ease: "power2.out" }, 16.02);
+          /* Finite repeats: repeat:-1 breaks the capture engine. Both loops land
+             before the timeline end so tl.duration() stays exactly 19.6. */
+          tl.to("#ec-cta", { scale: 1.035, duration: 0.72, yoyo: true, repeat: 3, ease: "sine.inOut" }, 16.3);
+          tl.to("#ec-chev", { y: 14, duration: 0.58, yoyo: true, repeat: 4, ease: "sine.inOut" }, 16.44);
 
-        /* Duration anchor: pins tl.duration() to the root data-duration so no beat
-           tail can flash black (docs/LESSONS.md, render contract 7). */
-        tl.to({}, { duration: END }, 0);
+          /* Duration anchor: pins tl.duration() to the root data-duration so no beat
+             tail can flash black (docs/LESSONS.md, render contract 7). */
+          tl.to({}, { duration: END }, 0);
 
-        window.__timelines[COMP] = tl;
-      })();
+          window.__timelines[COMP] = tl;
+        })();
     </script>
   </body>
 </html>

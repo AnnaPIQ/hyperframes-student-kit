@@ -135,6 +135,20 @@ efficient over time instead of relearning the same lessons.
   `ffmpeg -i out.mp4 -af ebur128=framelog=quiet -f null -` — this also catches accidentally
   layered audio tracks, which show up as roughly +6 dB.
 
+## Crossfades between clips
+
+- **A fade-out only crossfades if something is underneath.** Graphic panels layered over a
+  talking-head video crossfade for free (fade up = dissolve into the graphic, fade down =
+  dissolve back to the face). But at a boundary where the underlying media has ended, a
+  fade-out reveals **bare canvas** instead of the next scene. **Fix:** overlap the two
+  clips on different `data-track-index` values — extend the outgoing clip's
+  `data-duration` past the dissolve and start the incoming clip early, so the incoming
+  scene fades up on top while the outgoing one holds fully opaque beneath it.
+- **Ride companion tweens on the same window as the dissolve they sit over.** A logo
+  variant swap or vignette ramp timed independently gets caught half-faded against a
+  half-faded ground and reads as muddy. Give it the same start and duration as the scene
+  crossfade underneath.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

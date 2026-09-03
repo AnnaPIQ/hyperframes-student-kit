@@ -3,8 +3,8 @@
    Shared design system for BOTH ratios. Layout differences live in the
    body.r-916 / body.r-1x1 override blocks so the two roots cannot drift.
 
-   Colors come from brand-tokens.css (--brand-*). Fonts are local .woff2 and
-   are named LITERALLY here (the linter doesn't resolve CSS variables).
+   Colors come from brand-tokens.css (--brand-*). Rethink Sans is local .woff2
+   and is named LITERALLY here (the linter doesn't resolve CSS variables).
 
    Colour semantics for this piece, 4 active hues, each owns one meaning:
      navy       canvas
@@ -20,14 +20,6 @@
   font-display: block;
   src: url(fonts/RethinkSans.woff2) format('woff2');
 }
-@font-face {
-  font-family: 'Hedvig Letters Serif';
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url(fonts/HedvigLettersSerif.woff2) format('woff2');
-}
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
@@ -117,24 +109,10 @@ body.r-916 #bf-chip { top: 152px; left: 84px; font-size: 26px; padding: 13px 30p
 body.r-1x1 #bf-chip { top: 124px; left: 64px; font-size: 22px; padding: 11px 26px; }
 
 /* ---------------------------------------------------------------------------
-   4 · Whip streaks, one per cut. Motion blur is the transition; hard cuts
-   read cheap. Non-timed decoratives: they live at opacity 0 and are driven
-   entirely by GSAP, so there is no clip window to mis-align with a cut.
-   --------------------------------------------------------------------------- */
-.whip {
-  position: absolute; z-index: 80; pointer-events: none;
-  top: -12%; left: 0; width: 46%; height: 124%;
-  background: linear-gradient(100deg,
-    rgba(156,212,255,0) 0%, rgba(156,212,255,.30) 38%,
-    rgba(255,255,255,.86) 50%, rgba(156,212,255,.30) 62%,
-    rgba(156,212,255,0) 100%);
-  filter: blur(26px);
-  opacity: 0;
-}
-
-/* ---------------------------------------------------------------------------
-   5 · Scene shell. Scenes are opaque full-frame layers whose clip window is
-   the cut. .sc fills the scene and uses padding + flex for layout, never
+   4 · Scene shell. Scenes are opaque full-frame layers over the A-roll, and
+   every beat change is a CROSSFADE: fading a scene up dissolves Sean into it,
+   fading it down dissolves back to him, so there is no cut to hide.
+   .sc fills the scene and uses padding + flex for layout, never
    absolute-positioned content containers.
    --------------------------------------------------------------------------- */
 .scene { position: absolute; inset: 0; z-index: 10; }
@@ -187,18 +165,9 @@ body.r-1x1 .eyebrow { font-size: 25px; }
 body.r-916 .title { font-size: 96px; }
 body.r-1x1 .title { font-size: 74px; }
 
-/* The EcomIQ signature: exactly ONE italic-serif emphasis word per card. */
-.em {
-  font-family: 'Hedvig Letters Serif', Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -.01em;
-}
-.em-flame { color: var(--brand-flame); }
-.em-tint  { color: var(--brand-blue-tint); }
-
-/* Flame emphasis in the sans face. The italic-serif signature is reserved
-   for exactly one word in the whole piece, "free" on the end card. */
+/* Flame emphasis, in the sans face. This cut uses no italic-serif emphasis
+   word at all: the brand's Hedvig signature is deliberately not applied here,
+   so the end-card headline reads as one flat white statement. */
 .hot { color: var(--brand-flame); }
 
 .foot {

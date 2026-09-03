@@ -36,15 +36,17 @@ cannot drift. Edit `index.html`, run the generator, lint, render both.
 ## Type
 
 - **Rethink Sans** (local `.woff2`, weights 400–800). Headlines at −3% tracking, ~1.0 leading.
-- **Hedvig Letters Serif** italic on exactly **one** word in the whole piece: *free*, on the end card.
+- **No italic-serif emphasis word.** The brand's Hedvig signature is deliberately not used in this cut, so the end-card headline reads as one flat white statement. The `.woff2` stays in `assets/fonts/` for other variants, but its `@font-face` is not declared here (no point embedding an unused face in every render).
 - Named literally in CSS (`font-family: 'Rethink Sans'`), never via `var()`, or the linter false-warns.
 - Figures use `font-variant-numeric: tabular-nums`.
 
 ## Motion
 
 - GSAP vendored locally (`assets/vendor/gsap.min.js`). No CDN, no render-time fetches.
-- Every cut is hidden under a motion-blurred whip streak plus a blur/scale scene arrival. No hard cuts.
-- Each scene's first entrance fires **on** its `data-start`, never after, or the cut lands on an empty frame.
+- **Every beat change is a crossfade.** A graphic scene is an opaque panel over the A-roll, so fading it up dissolves Sean into it and fading it down dissolves back to him: no cut, nothing to hide. 0.30s in, 0.27s out, ending on the last frame the clip exists.
+- **Workbook → end card overlaps.** It is the one boundary with no A-roll beneath (the video ends at 15.0333), so the card fades up on top while the workbook holds opaque under it, and `#gfx4`'s clip runs on to 15.1667. Fading out with nothing underneath would reveal bare canvas.
+- Each scene's first entrance fires **on** its `data-start`, never after, or the dissolve lands on an empty frame.
+- The logo lockup swap and the vignette ramp run over the **same windows** as the dissolves beneath them, so they track together instead of flipping against a half-faded ground.
 - Persistent logo watermark top-left (16% width) in a positioned **non-clip** wrapper; it flies to centre and scales up to become the end-card hero. White lockup on navy, navy lockup on the light beat.
 - Vignette + deterministic CSS film grain over every scene: that texture is what makes it one piece.
 - Finite repeats only (`repeat: -1` breaks the capture engine), and every tween ends at or before 19.6s so `tl.duration()` matches `data-duration`.
@@ -57,7 +59,7 @@ performance claim is made. See `EDIT-PLAN.md` §4.
 
 ## What NOT to do
 
-- Don't add a second italic-serif emphasis word; *free* is the only one.
+- Don't reintroduce the italic-serif emphasis word; the end-card headline is flat white sans by direction.
 - Don't introduce a hot accent other than flame orange.
 - Don't reset big-headline tracking to 0 (brand is −2%, this piece uses −3% on display sizes).
 - Don't use `→` (U+2192): it is **absent** from both brand font subsets and falls back or renders as tofu. The `#g3-arrow` arrow is drawn in CSS. `↓ − × ·` are all present.
