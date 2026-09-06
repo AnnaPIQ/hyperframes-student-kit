@@ -35,8 +35,8 @@
 
 | Asset | Spec |
 |---|---|
-| `assets/aroll-916.mp4` | 1080×1920, Sean at **88% of cover scale** from 3840×2160 with a blurred fill top/bottom, 30fps CFR, CRF 19, muted |
-| `assets/aroll-1x1.mp4` | 1080×1080, same 88% pull-back and blurred fill, 30fps CFR, CRF 19, muted |
+| `assets/aroll-916.mp4` | 1080×1920, Sean at **72% of frame height**, bottom-anchored, backdrop stretched up to fill above him, 30fps CFR, CRF 19, muted |
+| `assets/aroll-1x1.mp4` | 1080×1080, same 72% pull-back and backdrop fill, 30fps CFR, CRF 19, muted |
 | `assets/sean-vo.m4a` | 16.15s AAC 192k @48k, **loudnorm −33.3 → −16.1 LUFS** (source was 17 dB under social delivery loudness) |
 | `assets/music-bed-placeholder.m4a` | 20s digital silence, swap-in point for the real bed |
 | `assets/workbook-cover.png` | Portrait cover mockup (1122×1402) |
@@ -267,3 +267,34 @@ Verified: 0 lint errors, both renders 17.000s at −16.1 LUFS, and every scene
 still clears the subtitle band.
 
 **Still open:** the numeric beats remain unattributed on screen (see §14).
+
+---
+
+## 16 · Revision, review pass 5
+
+**Sean pulled back further: 88% → 72% of frame height**, and the fill technique
+changed with it.
+
+At 88% a centred frame with a blurred copy of itself behind was invisible.
+Pushing to the low 70s broke that: the gap grows top *and* bottom, and the
+blurred fill starts showing recognisable smears of his own face above and his
+torso below, with a hard seam.
+
+The fix was to change the geometry rather than the blur. He is now
+**bottom-anchored**, so there is only one gap, above him, and that is the one
+region where the source is plain studio backdrop. The gap is filled by
+stretching the top 20px of his own frame to full height with a light blur,
+which continues the gradient seamlessly. No band is visible at any point.
+
+```
+[0:v]scale=-2:1382,crop=1080:1382:(iw-1080)/2:0,setsar=1[fg];
+[fg]split=2[fga][fgb];
+[fgb]crop=1080:20:0:0,scale=1080:1920:flags=bicubic,boxblur=10:1[fill];
+[fill][fga]overlay=0:538
+```
+
+Both ratios use 72% of their own frame height, so Sean occupies the same share
+of each frame and reads at a consistent size across the two deliverables.
+
+Verified: both renders 17.000s at −16.1 LUFS, 0 lint errors, subtitle band
+still clear.

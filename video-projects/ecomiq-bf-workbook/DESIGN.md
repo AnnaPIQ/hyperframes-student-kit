@@ -60,11 +60,18 @@ navy" direction.
 
 The source is 16:9 in a 9:16 frame, so the crop already uses **100% of the
 source height**: there is nothing above Sean's head or below his chest left to
-reveal. "Zoom out" therefore means scaling him down, not cropping wider. He is
-rendered at **88% of cover scale**, with the gap top and bottom filled by a
-blurred, darkened copy of the same frame (`boxblur=30:2`, `eq=brightness=-0.06`).
-His backdrop is a smooth blue gradient, so that fill is invisible in motion.
-Both ratios use the same treatment; see `EDIT-PLAN.md` §2 for the ffmpeg recipe.
+reveal. "Zoom out" therefore means scaling him down, not cropping wider.
+
+He is rendered at **72% of frame height in both ratios** (so he reads the same
+size in each), **bottom-anchored**, with the gap above him filled by stretching
+the top 20px of his own frame, which is smooth studio backdrop, up to full
+height and blurring it lightly. That continues the gradient seamlessly and
+leaves no visible band.
+
+Bottom-anchoring matters: centring him opens a gap below as well, and the fill
+there would be a blurred smear of his torso and hands. Anchored to the bottom
+there is only one gap, and it is the one place the source happens to be plain
+backdrop. See `EDIT-PLAN.md` §2 for the ffmpeg recipe.
 
 ## Subtitle safe band
 
