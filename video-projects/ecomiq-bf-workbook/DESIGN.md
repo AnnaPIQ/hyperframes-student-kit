@@ -52,7 +52,7 @@ navy" direction.
 - **Workbook → end card overlaps.** It is the one boundary with no A-roll beneath (the video ends at 15.0333), so the card fades up on top while the workbook holds opaque under it, and `#gfx4`'s clip runs on to 15.1667. Fading out with nothing underneath would reveal bare canvas.
 - Each scene's first entrance fires **on** its `data-start`, never after, or the dissolve lands on an empty frame.
 - The logo lockup swap and the vignette ramp run over the **same windows** as the dissolves beneath them, so they track together instead of flipping against a half-faded ground.
-- Persistent logo watermark top-left (16% width) in a positioned **non-clip** wrapper; it flies to centre and scales up to become the end-card hero. One white lockup throughout, since every scene is navy.
+- Persistent logo watermark top-left (**20% width in 9:16, 227px / 22.7% in 1:1**) in a positioned **non-clip** wrapper; it flies to centre and scales up to become the end-card hero. Because it is the same element, changing the watermark width means re-deriving the fly-in `scale` so the hero lockup still lands at 380px (9:16) / 300px (1:1). One white lockup throughout, since every scene is navy.
 - Vignette + deterministic CSS film grain over every scene: that texture is what makes it one piece.
 - Finite repeats only (`repeat: -1` breaks the capture engine), and every tween ends at or before 19.6s so `tl.duration()` matches `data-duration`.
 
@@ -60,18 +60,11 @@ navy" direction.
 
 The source is 16:9 in a 9:16 frame, so the crop already uses **100% of the
 source height**: there is nothing above Sean's head or below his chest left to
-reveal. "Zoom out" therefore means scaling him down, not cropping wider.
-
-He is rendered at **72% of frame height in both ratios** (so he reads the same
-size in each), **bottom-anchored**, with the gap above him filled by stretching
-the top 20px of his own frame, which is smooth studio backdrop, up to full
-height and blurring it lightly. That continues the gradient seamlessly and
-leaves no visible band.
-
-Bottom-anchoring matters: centring him opens a gap below as well, and the fill
-there would be a blurred smear of his torso and hands. Anchored to the bottom
-there is only one gap, and it is the one place the source happens to be plain
-backdrop. See `EDIT-PLAN.md` §2 for the ffmpeg recipe.
+reveal. "Zoom out" therefore means scaling him down, not cropping wider. He is
+rendered at **88% of cover scale**, with the gap top and bottom filled by a
+blurred, darkened copy of the same frame (`boxblur=30:2`, `eq=brightness=-0.06`).
+His backdrop is a smooth blue gradient, so that fill is invisible in motion.
+Both ratios use the same treatment; see `EDIT-PLAN.md` §2 for the ffmpeg recipe.
 
 ## Subtitle safe band
 

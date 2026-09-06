@@ -177,21 +177,23 @@ efficient over time instead of relearning the same lessons.
   `[0:v]crop=...,scale=W:H,boxblur=30:2,eq=brightness=-0.06[bg]; [0:v]scale=-2:<0.88*H>,crop=W:...[fg]; [bg][fg]overlay=(W-w)/2:(H-h)/2`.
   On a smooth studio backdrop the seam is invisible. Say this out loud to the client:
   it is a real constraint of the source, not a preference.
-- **Bottom-anchor the subject and continue the backdrop, don't centre-and-blur.** A
-  blurred copy of the frame behind itself is invisible for a small pull-back (~12%) but
-  falls apart further out: centring opens a gap top AND bottom, and the fill becomes a
-  recognisable smear of the subject's own face above and torso below, with a hard seam.
-  Anchor the subject to the bottom so there is only ONE gap, above them, which is the one
-  region where a talking-head source is plain backdrop, then fill it by stretching the top
-  ~20px of the subject's own frame to full height with a light blur. That continues the
-  studio gradient seamlessly and holds at 72% of frame height and beyond:
+- **The blurred-copy fill has a range: it works to about 12% pull-back, not beyond.**
+  Centring the subject with a blurred copy of the frame behind is invisible at ~88% of
+  cover scale. Push further and it breaks: the gap opens top AND bottom, and the fill
+  becomes a recognisable smear of the subject's own face above and torso below, with a
+  hard seam. **Fix for bigger pull-backs is geometry, not more blur:** bottom-anchor the
+  subject so there is only ONE gap, above them, which is the one region where a
+  talking-head source is plain backdrop, then fill it by stretching the top ~20px of the
+  subject's own frame to full height with a light blur:
   `[fg]split[fga][fgb]; [fgb]crop=W:20:0:0,scale=W:H:flags=bicubic,boxblur=10:1[fill]; [fill][fga]overlay=0:<gap>`
 - **Size the subject as a percentage of FRAME height, not of cover scale**, when the same
-  person appears in two aspect ratios. 72% of frame height in both 9:16 and 1:1 makes them
-  read at the same size; matching cover-scale percentages does not.
+  person appears in two aspect ratios. The same percentage of frame height makes them read
+  at the same size in both; matching cover-scale percentages does not.
 - **Keep the original 4K source around for the whole edit.** Every reframe is a re-encode
   from it; re-deriving from the already-cropped delivery file compounds quality loss and
-  cannot widen the frame at all.
+  cannot widen the frame at all. It also makes reverting a reframe a one-command job:
+  `git revert` restores the previous encode's bytes exactly, since the prepped MP4s are
+  tracked.
 
 ---
 

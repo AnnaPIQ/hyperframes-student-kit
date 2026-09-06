@@ -71,8 +71,8 @@ body.r-1x1 { height: 1080px; --sub-safe: 200px; }
    Same element becomes the end-card hero lockup.
    --------------------------------------------------------------------------- */
 #logo-wrap { position: absolute; z-index: 100; opacity: 0; transform-origin: 0 0; }
-body.r-916 #logo-wrap { top: 84px;  left: 84px;  width: 173px; }
-body.r-1x1 #logo-wrap { top: 64px;  left: 64px;  width: 200px; }
+body.r-916 #logo-wrap { top: 84px;  left: 84px;  width: 215px; }
+body.r-1x1 #logo-wrap { top: 64px;  left: 64px;  width: 245px; }
 #logo-wrap img {
   position: absolute; top: 0; left: 0;
   width: 100%; height: auto; display: block;
@@ -112,7 +112,7 @@ body.r-1x1 #logo-wrap { top: 64px;  left: 64px;  width: 200px; }
   opacity: 0;
 }
 body.r-916 #bf-chip { top: 152px; left: 84px; font-size: 26px; padding: 13px 30px; }
-body.r-1x1 #bf-chip { top: 124px; left: 64px; font-size: 22px; padding: 11px 26px; }
+body.r-1x1 #bf-chip { top: 134px; left: 64px; font-size: 22px; padding: 11px 26px; }
 
 /* ---------------------------------------------------------------------------
    4 · Scene shell. Scenes are opaque full-frame layers over the A-roll, and

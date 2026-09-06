@@ -35,8 +35,8 @@
 
 | Asset | Spec |
 |---|---|
-| `assets/aroll-916.mp4` | 1080×1920, Sean at **72% of frame height**, bottom-anchored, backdrop stretched up to fill above him, 30fps CFR, CRF 19, muted |
-| `assets/aroll-1x1.mp4` | 1080×1080, same 72% pull-back and backdrop fill, 30fps CFR, CRF 19, muted |
+| `assets/aroll-916.mp4` | 1080×1920, Sean at **88% of cover scale** from 3840×2160 with a blurred fill top/bottom, 30fps CFR, CRF 19, muted |
+| `assets/aroll-1x1.mp4` | 1080×1080, same 88% pull-back and blurred fill, 30fps CFR, CRF 19, muted |
 | `assets/sean-vo.m4a` | 16.15s AAC 192k @48k, **loudnorm −33.3 → −16.1 LUFS** (source was 17 dB under social delivery loudness) |
 | `assets/music-bed-placeholder.m4a` | 20s digital silence, swap-in point for the real bed |
 | `assets/workbook-cover.png` | Portrait cover mockup (1122×1402) |
@@ -270,21 +270,17 @@ still clears the subtitle band.
 
 ---
 
-## 16 · Revision, review pass 5
+## 16 · Revision, review pass 5 (tried, then reverted)
 
-**Sean pulled back further: 88% → 72% of frame height**, and the fill technique
-changed with it.
+Sean was pushed further back, 88% → 72% of frame height, bottom-anchored with
+his backdrop stretched up to fill above him. Reviewed and **reverted**: the
+88% framing is the keeper.
 
-At 88% a centred frame with a blurred copy of itself behind was invisible.
-Pushing to the low 70s broke that: the gap grows top *and* bottom, and the
-blurred fill starts showing recognisable smears of his own face above and his
-torso below, with a hard seam.
+Kept here because the technique is worth knowing if this ever comes up again:
 
-The fix was to change the geometry rather than the blur. He is now
-**bottom-anchored**, so there is only one gap, above him, and that is the one
-region where the source is plain studio backdrop. The gap is filled by
-stretching the top 20px of his own frame to full height with a light blur,
-which continues the gradient seamlessly. No band is visible at any point.
+- Below roughly 12% pull-back, centring him with a blurred copy of the frame behind is invisible.
+- Further out that breaks, the gap opens top *and* bottom and the fill shows recognisable smears of his own face above and torso below, with a hard seam.
+- The fix is geometry, not blur: bottom-anchor him so there is only one gap, above, which is the one region where the source is plain backdrop, then fill it by stretching the top 20px of his own frame to full height with a light blur.
 
 ```
 [0:v]scale=-2:1382,crop=1080:1382:(iw-1080)/2:0,setsar=1[fg];
@@ -293,8 +289,5 @@ which continues the gradient seamlessly. No band is visible at any point.
 [fill][fga]overlay=0:538
 ```
 
-Both ratios use 72% of their own frame height, so Sean occupies the same share
-of each frame and reads at a consistent size across the two deliverables.
-
-Verified: both renders 17.000s at −16.1 LUFS, 0 lint errors, subtitle band
-still clear.
+Current delivery is back on the §15 framing: **88% of cover scale, centred,
+blurred fill top and bottom**.
