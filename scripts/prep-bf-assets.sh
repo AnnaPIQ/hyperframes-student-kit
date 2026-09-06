@@ -89,13 +89,39 @@ prep_aroll "2688:2160:576:0"  "1080:868"  "$DEST/aroll-1x1-wide.mp4"   # 1:1  pu
 # Product stills ship with a wide white margin baked into the mockup, which
 # makes the artwork look small however large its container is. Trim to the
 # bounding box so the cover fills its frame.
-for shot in workbook-hero toolkit-spread; do
-  if [ -f "$DEST/$shot.png" ]; then
-    convert "$DEST/$shot.png" -fuzz 3% -trim +repage "$DEST/$shot-trim.png" 2>/dev/null \
-      || magick "$DEST/$shot.png" -fuzz 3% -trim +repage "$DEST/$shot-trim.png"
-    echo "  ✓ $shot-trim.png"
-  fi
-done
+#
+# The two stills need DIFFERENT treatment, and swapping them looks broken:
+#
+#   workbook-hero  A dark navy book on white, shot at an angle. -trim alone
+#                  only strips uniform border rows/columns, so wedges of white
+#                  survive inside the bounding box and render as a hard white
+#                  rectangle beside the book. Flood-fill from each corner
+#                  clears only background CONNECTED to the edge, leaving the
+#                  book's own white page edges intact. It then sits directly
+#                  on navy with a CSS drop shadow.
+#
+#   toolkit-spread White worksheets TOUCHING the white backdrop. A flood-fill
+#                  runs straight through the page edges and erodes the pages
+#                  themselves, leaving them torn. It keeps its backdrop and is
+#                  presented as a rounded white photo card instead.
+#
+im() { convert "$@" 2>/dev/null || magick "$@"; }
+
+if [ -f "$DEST/workbook-hero.png" ]; then
+  read -r W H < <(identify -format '%w %h' "$DEST/workbook-hero.png")
+  im "$DEST/workbook-hero.png" -alpha set -fuzz 12% \
+    -fill none -floodfill "+0+0" white \
+    -fill none -floodfill "+$((W-1))+0" white \
+    -fill none -floodfill "+0+$((H-1))" white \
+    -fill none -floodfill "+$((W-1))+$((H-1))" white \
+    -trim +repage "$DEST/workbook-hero-trim.png"
+  echo "  ✓ workbook-hero-trim.png (background knocked out)"
+fi
+
+if [ -f "$DEST/toolkit-spread.png" ]; then
+  im "$DEST/toolkit-spread.png" -fuzz 3% -trim +repage "$DEST/toolkit-spread-trim.png"
+  echo "  ✓ toolkit-spread-trim.png (backdrop kept, shown as a photo card)"
+fi
 
 # ---- 4. stills ------------------------------------------------------------
 # broll-1 is deliberately NOT used: its AI-generated microtext is garbled

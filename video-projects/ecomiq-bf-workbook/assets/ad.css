@@ -215,7 +215,10 @@ body.r-1x1 #logo-wrap img { width: 97px; }
   filter: drop-shadow(0 46px 90px rgba(0, 0, 0, 0.6)); }
 #hero-shot { width: var(--cover-w); }
 #page-shot { width: var(--page-w); border-radius: 10px; }
-#free-shot { width: var(--spread-w); }
+/* The toolkit spread's worksheets are white paper touching the white
+   backdrop, so knocking the background out erodes the pages themselves.
+   It keeps its backdrop and reads as a photo card instead. */
+#free-shot { width: var(--spread-w); background: #fff; border-radius: 18px; }
 .scene .eyebrow { margin-bottom: 34px; }
 #page-callout { margin-top: 40px; display: flex; align-items: baseline; gap: 22px;
   padding: 26px 40px; border-radius: 16px; background: #0a325f;
