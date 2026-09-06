@@ -24,7 +24,7 @@ sed \
   -e 's|<body class="r-916">|<body class="r-1x1">|' \
   -e 's|data-composition-id="ecomiq-bf-workbook"|data-composition-id="ecomiq-bf-workbook-square"|' \
   -e 's|data-height="1920"|data-height="1080"|' \
-  -e 's|assets/aroll-916-wide.mp4|assets/aroll-1x1-wide.mp4|' \
+  -e 's|assets/aroll-916.mp4|assets/aroll-1x1.mp4|' \
   -e 's|window.__timelines\["ecomiq-bf-workbook"\]|window.__timelines["ecomiq-bf-workbook-square"]|' \
   "$SRC" > "$DEST"
 
