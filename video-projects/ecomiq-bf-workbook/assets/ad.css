@@ -1,7 +1,8 @@
 /* ===========================================================================
    EcomIQ, Black Friday Profit Plan workbook ad
    Shared design system for BOTH ratios. Layout differences live in the
-   body.r-916 / body.r-1x1 override blocks so the two roots cannot drift.
+   body.r-916 / body.r-45 / body.r-1x1 override blocks so the three roots
+   cannot drift.
 
    Colors come from brand-tokens.css (--brand-*). Rethink Sans is local .woff2
    and is named LITERALLY here (the linter doesn't resolve CSS variables).
@@ -35,10 +36,12 @@ html, body {
    scrim -- pass through, and those sit behind text without hurting
    legibility.
      9:16  340px -> band is y 1580-1920 (17.7% of frame)
+     4:5   250px -> band is y 1100-1350 (18.5% of frame)
      1:1   200px -> band is y  880-1080 (18.5% of frame)
    Both fit two lines of subtitle with room to spare. Change the value here
    and every scene rebalances. */
 body.r-916 { height: 1920px; --sub-safe: 340px; }
+body.r-45  { height: 1350px; --sub-safe: 250px; }
 body.r-1x1 { height: 1080px; --sub-safe: 200px; }
 
 #root { position: relative; width: 100%; height: 100%; overflow: hidden; }
@@ -455,3 +458,60 @@ body.r-1x1 #ec-head { font-size: 76px; }
 body.r-916 #ec-cta { margin-top: 88px; font-size: 44px; padding: 34px 68px; }
 body.r-1x1 #ec-cta { margin-top: 48px; font-size: 34px; padding: 26px 52px; }
 
+/* ===========================================================================
+   4:5 (1080x1350), Meta feed. Values sit between the 1:1 and 9:16 blocks:
+   the frame is the same width as both, so horizontal type stays close to the
+   9:16 sizes, while vertical rhythm interpolates toward the square.
+   Kept as one consolidated block rather than interleaved so the three ratios
+   stay easy to compare.
+   =========================================================================== */
+body.r-45 #logo-wrap { top: 76px; left: 76px; width: 232px; }
+body.r-45 #bf-chip { top: 142px; left: 76px; font-size: 24px; padding: 12px 28px; }
+body.r-45 .sc { padding: 180px 84px calc(70px + var(--sub-safe)); }
+
+body.r-45 .eyebrow { font-size: 27px; }
+body.r-45 .title { font-size: 84px; }
+
+body.r-45 #g1-title { margin-top: 22px; }
+body.r-45 #g1-chart { margin-top: 70px; height: 430px; gap: 112px; }
+body.r-45 #g1-base { bottom: 61px; }
+body.r-45 .g1-bar { width: 172px; }
+body.r-45 #g1-bar-rev { height: 358px; }
+body.r-45 #g1-bar-pro { height: 30px; }
+body.r-45 .g1-label { font-size: 26px; }
+
+body.r-45 #g2-aov { margin-top: 28px; gap: 23px; }
+body.r-45 #g2-aov .v { font-size: 90px; }
+body.r-45 #g2-aov .k { font-size: 20px; }
+body.r-45 #g2-rows { margin-top: 34px; }
+body.r-45 .g2-row { padding: 13px 4px; }
+body.r-45 .g2-row .k { font-size: 34px; }
+body.r-45 .g2-row .v { font-size: 37px; }
+body.r-45 #g2-result { margin-top: 36px; gap: 25px; }
+body.r-45 #g2-result .v { font-size: 112px; }
+body.r-45 #g2-result .k { font-size: 20px; }
+body.r-45 .chip { margin-top: 24px; font-size: 24px; padding: 13px 30px; }
+
+body.r-45 #g3-dial { margin-top: 26px; width: 320px; height: 320px; }
+body.r-45 #g3-pct { font-size: 98px; }
+body.r-45 #g3-dial .cap { font-size: 18px; letter-spacing: .18em; line-height: 1.24; max-width: 190px; }
+body.r-45 #g3-swap { margin-top: 30px; gap: 26px; }
+body.r-45 #g3-was { font-size: 48px; }
+body.r-45 #g3-arrow { width: 62px; height: 4px; }
+body.r-45 #g3-arrow::after { width: 15px; height: 15px; }
+body.r-45 #g3-now { font-size: 90px; }
+body.r-45 #g3-cap2 { margin-top: 8px; font-size: 21px; }
+body.r-45 #g3-roas { margin-top: 24px; font-size: 22px; padding: 12px 26px; }
+body.r-45 #g3-units { margin-top: 18px; font-size: 28px; }
+
+body.r-45 #g4-eyebrow { font-size: 35px; }
+body.r-45 #g4-rule { margin-top: 20px; width: 166px; }
+body.r-45 #g4-spread { margin-top: 40px; width: 800px; }
+body.r-45 #g4-stats { margin-top: 38px; gap: 92px; }
+body.r-45 .g4-stat { gap: 19px; }
+body.r-45 .g4-stat .v { font-size: 110px; }
+body.r-45 .g4-stat .k { font-size: 31px; }
+
+body.r-45 #endcard .sc { padding: 545px 88px 110px; }
+body.r-45 #ec-head { font-size: 88px; }
+body.r-45 #ec-cta { margin-top: 62px; font-size: 38px; padding: 30px 58px; }

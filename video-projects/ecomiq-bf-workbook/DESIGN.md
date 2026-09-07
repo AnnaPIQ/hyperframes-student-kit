@@ -4,7 +4,7 @@ Black Friday ad promoting the free **Black Friday Profit Plan** workbook.
 Sean's A-roll is the audio spine; motion-graphic number beats and a product
 hero carry the visual; a branded end card closes it.
 
-**Formats:** 9:16 (1080×1920) `index.html` · 1:1 (1080×1080) `compositions/square.html`
+**Formats:** 9:16 (1080×1920) `index.html` · 4:5 (1080×1350) `compositions/meta45.html` · 1:1 (1080×1080) `compositions/square.html`
 **Runtime:** 17.00s @ 30fps (510 frames) · Safe area ~10% margins.
 
 Brand kit copied from `assets/ecomiq/`. Full reference: `assets/ecomiq/BRAND.md`.
@@ -75,6 +75,7 @@ hand after delivery. Reserved via `--sub-safe` in `assets/ad.css`, taken out of
 | Ratio | Reserve | Clear band | Share of frame |
 |---|---|---|---|
 | 9:16 | 340px | y **1580–1920** | 17.7% |
+| 4:5 | 250px | y **1100–1350** | 18.5% |
 | 1:1 | 200px | y **880–1080** | 18.5% |
 
 Nothing in a scene's content flow enters it. Only full-bleed decoratives pass
@@ -102,6 +103,6 @@ contributes · example".
 - Don't introduce a hot accent other than flame orange.
 - Don't reset big-headline tracking to 0 (brand is −2%, this piece uses −3% on display sizes).
 - Don't use `→` (U+2192): it is **absent** from both brand font subsets and falls back or renders as tofu. The `#g3-arrow` arrow is drawn in CSS. `↓ − × ·` are all present.
-- Don't hand-edit `compositions/square.html`; regenerate it.
+- Don't hand-edit `compositions/meta45.html` or `compositions/square.html`; regenerate both with `bash scripts/gen-ratios.sh`.
 - Don't try to drop the product renders straight onto a background: they are photographs on an off-white ground (`#EEEEEF` / `#FDFDFE`), not cut-outs, so their frame edge always shows. Present them as a rounded card with a shadow, which is what `#g4-spread` does.
 - Don't reintroduce a light/white scene; the piece is navy end to end.

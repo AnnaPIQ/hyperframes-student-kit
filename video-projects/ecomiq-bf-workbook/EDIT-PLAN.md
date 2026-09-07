@@ -1,7 +1,7 @@
 # EcomIQ, Black Friday Profit Plan workbook ad · EDIT PLAN
 
 **Status:** APPROVED and delivered. Renders in `renders/`.
-**Deliverables:** 9:16 (1080×1920) + 1:1 (1080×1080), H.264/AAC MP4, faststart, 30fps.
+**Deliverables:** 9:16 (1080×1920) + 4:5 (1080×1350) + 1:1 (1080×1080), H.264/AAC MP4, faststart, 30fps.
 **Runtime:** 17.00s (510 frames @ 30fps).
 
 ---
@@ -291,3 +291,37 @@ Kept here because the technique is worth knowing if this ever comes up again:
 
 Current delivery is back on the §15 framing: **88% of cover scale, centred,
 blurred fill top and bottom**.
+
+---
+
+## 17 · Final delivery
+
+A **4:5 (1080×1350)** cut was added at this point. The original brief specified
+9:16 + 1:1; 4:5 is the size the brand spec names for Meta feed, so it is a new
+deliverable rather than a relabel of the square.
+
+Adding it was three things, no timeline changes:
+
+1. `assets/aroll-45.mp4`, the same 88%-of-cover treatment with blurred fill, cover-cropped to 4:5.
+2. A consolidated `body.r-45` block in `assets/ad.css`. Values sit between the 1:1 and 9:16 blocks: all three frames are 1080 wide, so horizontal type stays close to the 9:16 sizes while vertical rhythm interpolates toward the square.
+3. `scripts/gen-square.sh` became `scripts/gen-ratios.sh`, emitting **both** derived roots (`compositions/meta45.html` and `compositions/square.html`) from `index.html`. The end-card hero tween is now ratio-aware (`RATIO` / `HERO`) instead of a two-way `SQUARE` boolean, with a per-ratio fly-in target so the hero lockup lands at 380 / 340 / 300px respectively.
+
+### Shipped files
+
+| File | Spec |
+|---|---|
+| `renders/ecomiq-bf-workbook-9x16.mp4` | 1080×1920, 17.000s, H.264 High yuv420p @ 8.82 Mbps, AAC-LC 48k stereo 184 kbps, faststart, −16.1 LUFS, 18.3 MB |
+| `renders/ecomiq-bf-workbook-4x5.mp4` | 1080×1350, 17.000s, H.264 High yuv420p @ 6.12 Mbps, AAC-LC 48k stereo 184 kbps, faststart, −16.1 LUFS, 12.8 MB |
+
+Both rendered at `--quality high` (CRF 15, visually lossless) at native size.
+
+**On resolution.** 1080×1920 and 1080×1350 are Meta's own recommended upload
+sizes; Meta re-encodes and downscales anything larger, so native 1080-wide at
+CRF 15 is the correct high-resolution deliverable, not a compromise. A 2×
+master is possible for 9:16 (`--resolution portrait-4k`, 2160×3840) but the CLI
+takes only named presets and has **no 4:5 preset** (`--resolution 2160x2700`
+returns "Invalid resolution"), so both were kept at matching native spec rather
+than shipping one ratio at 2× and the other not.
+
+The 1:1 cut still builds from the same source if it is ever wanted:
+`npx hyperframes render -c compositions/square.html --quality high`.

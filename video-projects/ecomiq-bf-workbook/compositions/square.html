@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- GENERATED FILE - do not edit. Source: index.html - regenerate with: bash scripts/gen-square.sh -->
+<!-- GENERATED FILE - do not edit. Source: index.html - regenerate with: bash scripts/gen-ratios.sh -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -19,8 +19,8 @@
          <video> and <audio>, which take the data-* but never class="clip".
          Every clip gets its own track index so nothing can collide.
 
-         square.html is generated from this file, see scripts/gen-square.sh.
-         Edit THIS file, then regenerate.
+         The 4:5 and 1:1 roots are generated from this file, see
+         scripts/gen-ratios.sh. Edit THIS file, then regenerate.
          ===================================================================== -->
     <div
       id="root"
@@ -277,7 +277,9 @@
           var root = document.querySelector("[data-composition-id]");
           var COMP = root.getAttribute("data-composition-id");
           var END = 17;
-          var SQUARE = document.body.classList.contains("r-1x1");
+          var RATIO = document.body.classList.contains("r-1x1") ? "1x1"
+                    : document.body.classList.contains("r-45")  ? "45"
+                    : "916";
 
           /* --- cut points (edit time = A-roll source time - 1.95s) ---------------- */
           var T = {
@@ -466,10 +468,15 @@
             { opacity: 0.34, yPercent: 0, duration: 1.2, ease: "sine.out" }, T.ec);
           /* power3.out, not inOut: an inOut ease barely moves the lockup over the
              first few frames, which left the cut sitting on an empty navy frame. */
+          /* The watermark IS the end-card hero, so each ratio carries its own
+             fly-in target and its own scale, re-derived from that ratio's
+             watermark width so the hero lockup lands at the intended size:
+             380px in 9:16, 340px in 4:5, 300px in 1:1. */
+          var HERO = RATIO === "1x1" ? { x: 326, y: 236, scale: 1.2245 }
+                   : RATIO === "45"  ? { x: 294, y: 354, scale: 1.4655 }
+                   :                   { x: 266, y: 536, scale: 1.7674 };
           tl.to("#logo-wrap", {
-            x: SQUARE ? 326 : 266,
-            y: SQUARE ? 236 : 536,
-            scale: SQUARE ? 1.2245 : 1.7674,
+            x: HERO.x, y: HERO.y, scale: HERO.scale,
             duration: 0.52, ease: "power3.out"
           }, T.ec);
           tl.fromTo(".ec-line", { opacity: 0, y: 34 },
