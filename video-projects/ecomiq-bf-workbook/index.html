@@ -122,29 +122,8 @@
         </div></div>
       </div>
 
-      <!-- 4 · NOTHING LEFT — normal month vs this Black Friday -->
-      <div id="cmp" class="clip scene" data-start="22.85" data-duration="3.65" data-track-index="5">
-        <div class="bloom"></div>
-        <div class="sc"><div class="sc-mid">
-          <div class="eyebrow eyebrow--flame" style="margin-bottom: 30px">Nothing left</div>
-          <div class="cmp">
-            <div class="cmprow">
-              <div class="top">
-                <span class="label">Normal month</span>
-                <span class="figure" style="color: var(--brand-blue-tint)">$59.71</span>
-              </div>
-              <div id="cmp-bar-1" class="cmpbar" style="width: 100%; background: var(--brand-blue-tint)"></div>
-            </div>
-            <div class="cmprow">
-              <div class="top">
-                <span class="label">This Black Friday</span>
-                <span id="cmp-fig-2" class="figure" style="color: var(--brand-flame)">$9.62</span>
-              </div>
-              <div id="cmp-bar-2" class="cmpbar" style="width: 16.1%; background: var(--brand-flame)"></div>
-            </div>
-          </div>
-        </div></div>
-      </div>
+      <!-- Sean carries 23.15–26.20 on camera: "you can have nothing left".
+           Its comparison graphic was cut at Anna's request. -->
 
       <!-- 5 · WORKBOOK HERO — "I've put together a free workbook" -->
       <div id="hero" class="clip scene" data-start="26.20" data-duration="4.35" data-track-index="6">
@@ -367,24 +346,6 @@
       tl.fromTo("#contrast .contrast > div:last-child .cname", { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 20.55);
       fadeOut("#contrast", 22.85);
-
-      /* ---- 4 · NOTHING LEFT  22.85 → 26.50 --------------------------- */
-      fadeIn("#cmp", 22.85);
-      tl.fromTo("#cmp .eyebrow", { opacity: 0, x: -22 },
-        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 23.0);
-      tl.fromTo("#cmp .cmprow:first-child", { opacity: 0, y: 26 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 23.1);
-      tl.fromTo("#cmp-bar-1", { scaleX: 0 },
-        { scaleX: 1, duration: 0.62, ease: "power2.out" }, 23.2);
-      tl.fromTo("#cmp .cmprow:last-child", { opacity: 0, y: 26 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 23.65);
-      // the Black Friday bar barely registers next to it
-      tl.fromTo("#cmp-bar-2", { scaleX: 0 },
-        { scaleX: 1, duration: 0.55, ease: "power4.out" }, 23.8);
-      countTo("#cmp-fig-2", 23.8, 0.6, 59.71, 9.62, usd);
-      tl.to("#cmp-bar-2", { scaleY: 1.5, duration: 0.16, ease: "power2.out",
-        yoyo: true, repeat: 1 }, 24.4);
-      fadeOut("#cmp", 26.2);
 
       /* ---- 5 · WORKBOOK HERO  26.20 → 30.55 -------------------------- */
       fadeIn("#hero", 26.2, 0.42);
