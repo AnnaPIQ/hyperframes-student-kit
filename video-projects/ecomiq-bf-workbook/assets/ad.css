@@ -71,14 +71,16 @@ body.r-1x1 {
 #aroll { position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; display: block; }
 
-/* Navy at the top so the logo separates, and navy through the subtitle band so
-   the video's lower edge dissolves into it instead of ending on a hard line. */
+/* Navy at the TOP only, so the logo separates from the studio background.
+   There is deliberately no bottom gradient: it existed to dissolve the video's
+   lower edge into the navy band while the A-roll was letterboxed, and once the
+   A-roll went back to full-bleed it had nothing to blend — it just tinted the
+   bottom of the shot. Subtitles are added downstream and bring their own
+   treatment, so they don't need a scrim here either. */
 #aroll-scrim {
   position: absolute; inset: 0; z-index: 2; pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(6, 40, 76, 0.92) 0%, rgba(6, 40, 76, 0) 13%),
-    linear-gradient(0deg, var(--brand-navy) 0%, var(--brand-navy) 17%,
-      rgba(6, 40, 76, 0) 31%);
+  background: linear-gradient(180deg, rgba(6, 40, 76, 0.92) 0%,
+    rgba(6, 40, 76, 0) 13%);
 }
 
 /* ---------------------------------------------------------------------------
