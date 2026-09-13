@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>EcomIQ — Black Friday Profit Plan (9:16)</title>
+    <!-- GSAP vendored locally — a CDN script cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network at render time */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-text);
+      }
+
+      /* ---- ratio-tunable knobs (the 4:5 cut overrides these) ---------------- */
+      :root {
+        --pad: 72px;          /* side safe-area gutter            */
+        --logo-w: 200px;      /* persistent top-left mark         */
+        --panel-bottom: 132px;
+        --row-fs: 38px;
+        --title-fs: 112px;
+      }
+
+      #bg { position: absolute; inset: 0;
+        background: radial-gradient(90% 55% at 50% 18%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
+
+      /* A-roll spine. The <video> itself is never transformed (rule 9) — any
+         motion goes on this wrapper. */
+      #aroll-wrap { position: absolute; inset: 0; overflow: hidden; }
+      #aroll { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+      /* Persistent logo. Non-`clip`, positioned wrapper so it never drifts. */
+      #logo-wrap { position: absolute; top: 62px; left: var(--pad); z-index: 90; }
+      #logo-wrap img { display: block; width: var(--logo-w); height: auto;
+        filter: drop-shadow(0 6px 18px rgba(0,0,0,.55)); }
+
+      /* ---- shared card furniture -------------------------------------------- */
+      .card { position: absolute; inset: 0; z-index: 40;
+        background: radial-gradient(80% 50% at 50% 14%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 60%), var(--brand-navy);
+        padding: 0 var(--pad); display: flex; flex-direction: column; justify-content: center; }
+      .eyebrow { font-size: 27px; font-weight: 600; letter-spacing: .30em;
+        text-transform: uppercase; color: var(--brand-blue-tint); }
+      .rule { width: 104px; height: 6px; background: var(--brand-flame);
+        border-radius: 3px; transform-origin: left center; margin: 22px 0 34px; }
+
+      /* ---- S2/S3 lower panel over Sean --------------------------------------- */
+      .panel { position: absolute; left: var(--pad); right: var(--pad);
+        bottom: var(--panel-bottom); z-index: 50;
+        background: rgba(6,40,76,.94); border: 1px solid var(--brand-border);
+        border-radius: 34px; padding: 44px 46px 40px;
+        box-shadow: 0 40px 110px -30px rgba(0,0,0,.85); }
+      .panel .eyebrow { font-size: 25px; letter-spacing: .26em; }
+      .panel-rule { width: 84px; height: 5px; background: var(--brand-flame);
+        border-radius: 3px; transform-origin: left center; margin: 18px 0 26px; }
+
+      .row { display: flex; justify-content: space-between; align-items: baseline;
+        font-size: var(--row-fs); font-weight: 500; padding: 9px 0; color: var(--brand-text-dim); }
+      .row .v { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--brand-sky); }
+      .row.top { color: var(--brand-white); }
+      .row.top .v { color: var(--brand-white); }
+      .divider { height: 1px; background: var(--brand-border); margin: 16px 0 6px; transform-origin: left center; }
+      .result { display: flex; justify-content: space-between; align-items: baseline; padding-top: 12px; }
+      .result .l { font-size: 34px; font-weight: 700; letter-spacing: -.01em; }
+      .result .v { font-size: 66px; font-weight: 800; letter-spacing: -.03em;
+        color: var(--brand-flame); font-variant-numeric: tabular-nums; }
+      .result .pct { font-size: 30px; font-weight: 700; color: var(--brand-blue-tint); margin-left: 14px; }
+
+      /* ---- S3 count-up tiles -------------------------------------------------- */
+      .tiles { display: flex; gap: 22px; }
+      .tile { flex: 1; background: rgba(16,61,111,.62); border: 1px solid var(--brand-border);
+        border-radius: 24px; padding: 28px 26px 26px; }
+      .tile .k { font-size: 22px; font-weight: 600; letter-spacing: .16em;
+        text-transform: uppercase; color: var(--brand-blue-tint); line-height: 1.25; min-height: 56px; }
+      .tile .n { font-size: 76px; font-weight: 800; letter-spacing: -.04em;
+        margin-top: 12px; font-variant-numeric: tabular-nums; }
+      .tile.hot .n { color: var(--brand-flame); }
+
+      /* ---- S4 contrast card --------------------------------------------------- */
+      #card-contrast h2 { font-size: 88px; font-weight: 800; line-height: .98;
+        letter-spacing: -.035em; margin-bottom: 44px; }
+      #card-contrast h2 .em { font-family: 'Hedvig Letters Serif', Georgia, serif;
+        font-style: italic; font-weight: 400; color: var(--brand-blue-tint); letter-spacing: -.01em; }
+      .cols { display: flex; gap: 24px; }
+      .col { flex: 1; border-radius: 28px; padding: 34px 30px 30px;
+        background: rgba(16,61,111,.55); border: 1px solid var(--brand-border); }
+      .col.hot { background: rgba(255,76,50,.13); border-color: rgba(255,76,50,.45); }
+      .col .h { font-size: 27px; font-weight: 700; letter-spacing: .16em;
+        text-transform: uppercase; color: var(--brand-blue-tint); }
+      .col.hot .h { color: var(--brand-flame); }
+      .col .big { font-size: 72px; font-weight: 800; letter-spacing: -.04em; margin: 14px 0 22px;
+        font-variant-numeric: tabular-nums; }
+      .col .kv { display: flex; justify-content: space-between; align-items: baseline;
+        font-size: 30px; font-weight: 500; color: var(--brand-text-dim); padding: 9px 0; }
+      .col .kv b { font-size: 41px; font-weight: 800; color: var(--brand-sky);
+        font-variant-numeric: tabular-nums; }
+      .col.hot .kv b { color: var(--brand-flame); }
+      #contrast-foot { margin-top: 46px; font-size: 40px; font-weight: 700; letter-spacing: -.01em;
+        color: var(--brand-white); display: flex; align-items: center; gap: 16px; }
+      #contrast-foot i { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
+        font-weight: 400; color: var(--brand-flame); font-size: 46px; }
+
+      /* ---- S6 checklist ------------------------------------------------------- */
+      #card-checklist h2 { font-size: 90px; font-weight: 800; line-height: 1.0;
+        letter-spacing: -.035em; margin-bottom: 52px; }
+      #card-checklist h2 .em { font-family: 'Hedvig Letters Serif', Georgia, serif;
+        font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
+      .item { display: flex; align-items: center; gap: 28px; padding: 26px 0; }
+      .tick { flex: none; width: 76px; height: 76px; border-radius: 20px;
+        background: rgba(156,212,255,.14); border: 1px solid var(--brand-border);
+        display: flex; align-items: center; justify-content: center; }
+      .tick svg { width: 39px; height: 39px; }
+      .tick path { stroke: var(--brand-blue-tint); stroke-width: 3.4; fill: none;
+        stroke-linecap: round; stroke-linejoin: round; }
+      .item .t { font-size: 48px; font-weight: 600; letter-spacing: -.015em; line-height: 1.14; }
+      .item.hot .tick { background: rgba(255,76,50,.18); border-color: rgba(255,76,50,.5); }
+      .item.hot .tick path { stroke: var(--brand-flame); }
+      .item.hot .t { font-weight: 800; color: var(--brand-flame); }
+
+      /* ---- B-roll stills ------------------------------------------------------ */
+      .still { position: absolute; inset: 0; z-index: 30; overflow: hidden;
+        background: radial-gradient(70% 45% at 50% 42%, rgba(156,212,255,.13) 0%, rgba(6,40,76,0) 62%), var(--brand-navy);
+        display: flex; align-items: center; justify-content: center; }
+      .still img { display: block; will-change: transform; }
+      /* landscape suite shots: fit the width, let them sit centred on navy */
+      #still-suite img, #still-whip img { width: 92%; height: auto;
+        border-radius: 30px; box-shadow: 0 44px 110px -34px rgba(0,0,0,.8); }
+      #whip-inner { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+      /* portrait cover: fit the height */
+      /* background keyed out by scripts/prep-stills.sh, so it floats on navy */
+      #still-cover img { height: 72%; width: auto;
+        filter: drop-shadow(0 46px 84px rgba(0,0,0,.55)); }
+      #cover-tag { position: absolute; left: var(--pad); right: var(--pad); bottom: 168px;
+        text-align: center; font-size: 27px; font-weight: 700; letter-spacing: .18em;
+        text-transform: uppercase; color: var(--brand-blue-tint); }
+
+      /* ---- S10 end card -------------------------------------------------------- */
+      #endcard { z-index: 70; align-items: center; text-align: center; }
+      #ec-logo { width: 420px; height: auto; margin-bottom: 54px; }
+      #ec-eyebrow { font-size: 27px; font-weight: 600; letter-spacing: .30em;
+        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 30px; }
+      #ec-head { font-size: var(--title-fs); font-weight: 800; line-height: .96;
+        letter-spacing: -.035em; max-width: 100%; }
+      #ec-head .em { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
+        font-weight: 400; color: var(--brand-blue-tint); letter-spacing: -.01em; }
+      #ec-sub { margin-top: 34px; font-size: 36px; font-weight: 500; line-height: 1.3;
+        color: var(--brand-text-dim); max-width: 80%; }
+      #ec-pill { margin-top: 58px; font-size: 42px; font-weight: 800; letter-spacing: -.01em;
+        color: var(--brand-white); background: var(--brand-flame);
+        padding: 34px 78px; border-radius: 999px;
+        box-shadow: 0 26px 80px -18px rgba(255,76,50,.75); }
+      #ec-bloom { position: absolute; left: -12%; bottom: -26%; width: 124%; height: 58%;
+        background: var(--brand-gradient-2); filter: blur(96px); opacity: .30; z-index: -1; }
+    </style>
+  </head>
+  <body>
+    <!-- =====================================================================
+         EcomIQ — Black Friday Profit Plan · 9:16 (1080x1920 @30fps) · 44.0s
+
+         A-roll spine: assets/aroll-916.mp4 (muted, rule 5) + assets/aroll-audio.m4a.
+         Source trimmed at 1.14s; every cut below sits on a silence-detected
+         phrase gap, so nothing lands mid-word.
+
+         All on-screen figures are the worked example from Part 01 of
+         "The Black Friday Profit Plan" workbook — nothing invented.
+         ===================================================================== -->
+    <div id="root"
+         data-composition-id="ecomiq-black-friday"
+         data-start="0" data-duration="44"
+         data-width="1080" data-height="1920" data-fps="30">
+
+      <div id="bg" class="clip" data-start="0" data-duration="44" data-track-index="0"></div>
+
+      <!-- A-roll: never gets class="clip" (rule 2) and stays muted (rule 5). -->
+      <div id="aroll-wrap">
+        <video id="aroll" src="assets/aroll-916.mp4" muted
+               data-start="0" data-duration="39.4" data-track-index="1"></video>
+      </div>
+
+      <!-- Sean's voice — the spine of the edit, full and uncut. -->
+      <audio id="vo" src="assets/aroll-audio.m4a"
+             data-start="0" data-duration="39.4" data-track-index="2"></audio>
+
+      <!-- Duckable music bed. Silent placeholder — drop a licensed track in at
+           the same path. Ducking is baked into the element volume below. -->
+      <audio id="music" src="assets/music-bed-placeholder.m4a"
+             data-start="0" data-duration="44" data-track-index="3"></audio>
+
+      <!-- S1 · 0.00–5.12 · Sean, hook -->
+      <div id="s1-eyebrow" class="clip" data-start="2.9" data-duration="2.2" data-track-index="4"
+           style="position:absolute;left:var(--pad);bottom:250px;z-index:50;">
+        <div class="eyebrow">Ask these 3 questions</div>
+        <div class="rule" style="margin:20px 0 0;"></div>
+      </div>
+
+      <!-- S2 · 5.12–8.15 · Q1 "how much do you want to make from an order?" -->
+      <div id="panel-stack" class="panel clip" data-start="5.12" data-duration="3.03" data-track-index="5">
+        <div class="eyebrow">What you actually keep</div>
+        <div class="panel-rule"></div>
+        <div class="row top"><span>Order value</span><span class="v">$114.70</span></div>
+        <div class="row"><span>Discounts &amp; refunds</span><span class="v">&minus;$4.59</span></div>
+        <div class="row"><span>Landed product cost</span><span class="v">&minus;$34.00</span></div>
+        <div class="row"><span>Fulfilment</span><span class="v">&minus;$4.50</span></div>
+        <div class="row"><span>Delivery</span><span class="v">&minus;$8.60</span></div>
+        <div class="row"><span>Payment charges</span><span class="v">&minus;$3.30</span></div>
+        <div class="divider"></div>
+        <div class="result">
+          <span class="l">Contribution</span>
+          <span><span class="v" id="stack-num">$59.71</span><span class="pct">52.1%</span></span>
+        </div>
+      </div>
+
+      <!-- S3 · 8.15–10.55 · Q2 "how much can you afford to spend?" -->
+      <div id="panel-roas" class="panel clip" data-start="8.15" data-duration="2.4" data-track-index="6">
+        <div class="eyebrow">What an order can fund</div>
+        <div class="panel-rule"></div>
+        <div class="tiles">
+          <div class="tile">
+            <div class="k">Most you can pay<br />per order</div>
+            <div class="n" id="cu-cac">$0.00</div>
+          </div>
+          <div class="tile hot">
+            <div class="k">Breakeven<br />ROAS</div>
+            <div class="n" id="cu-roas">0.00&times;</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S4 · 11.15–15.45 · Q3 "how far can you discount?" -->
+      <div id="card-contrast" class="card clip" data-start="11.15" data-duration="4.3" data-track-index="7">
+        <div class="eyebrow">Question three</div>
+        <div class="rule"></div>
+        <h2>How far can you <span class="em">discount</span>?</h2>
+        <div class="cols">
+          <div class="col" id="col-full">
+            <div class="h">Full price</div>
+            <div class="big">$114.70</div>
+            <div class="kv"><span>You keep</span><b>$59.71</b></div>
+            <div class="kv"><span>Breakeven ROAS</span><b>1.92&times;</b></div>
+          </div>
+          <div class="col hot" id="col-off">
+            <div class="h">25% off</div>
+            <div class="big">$86.03</div>
+            <div class="kv"><span>You keep</span><b>$33.00</b></div>
+            <div class="kv"><span>Breakeven ROAS</span><b>2.61&times;</b></div>
+          </div>
+        </div>
+        <div id="contrast-foot"><i>1.81&times;</i><span>the units, just to stand still.</span></div>
+      </div>
+
+      <!-- S5 · 16.06–21.20 · product suite, carries the 1.4s pause -->
+      <div id="still-suite" class="still clip" data-start="16.06" data-duration="5.14" data-track-index="8">
+        <img src="assets/product-suite.png" alt="The Black Friday Profit Plan workbook and companion tools" />
+      </div>
+
+      <!-- S6 · 21.13–29.05 · the four-item plan -->
+      <div id="card-checklist" class="card clip" data-start="21.13" data-duration="7.92" data-track-index="9">
+        <div class="eyebrow">Once you know your numbers</div>
+        <div class="rule"></div>
+        <h2>The rest gets <span class="em">easy</span>.</h2>
+        <div class="item" id="ck1">
+          <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.6" /></svg></div>
+          <div class="t">Choose an offer your margin supports</div>
+        </div>
+        <div class="item" id="ck2">
+          <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.6" /></svg></div>
+          <div class="t">Order the right amount of stock</div>
+        </div>
+        <div class="item" id="ck3">
+          <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.6" /></svg></div>
+          <div class="t">Set clear advertising limits</div>
+        </div>
+        <div class="item hot" id="ck4">
+          <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.6" /></svg></div>
+          <div class="t">Stop guessing</div>
+        </div>
+      </div>
+
+      <!-- S8 · 33.40–34.20 · fast whip insert into the workbook beat -->
+      <div id="still-whip" class="still clip" data-start="33.4" data-duration="0.8" data-track-index="10">
+        <div id="whip-inner"><img src="assets/product-suite-wide.png" alt="" /></div>
+      </div>
+
+      <!-- S9 · 34.17–37.95 · the workbook itself -->
+      <div id="still-cover" class="still clip" data-start="34.17" data-duration="3.78" data-track-index="11">
+        <img src="assets/workbook-cover-float.png" alt="The Black Friday Profit Plan workbook cover" />
+        <div id="cover-tag">8 Parts &middot; 32 Worksheets &middot; 19 Free Tools</div>
+      </div>
+
+      <!-- S10 · 38.20–44.00 · end card. Lands on "Link is below" (38.37),
+           Sean's audio finishes over it at 39.18, then it holds 4.8s. -->
+      <div id="endcard" class="card clip" data-start="38.2" data-duration="5.8" data-track-index="12">
+        <div id="ec-bloom"></div>
+        <img id="ec-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+        <div id="ec-eyebrow">Free workbook</div>
+        <div id="ec-head">Get your <span class="em">free</span><br />Black Friday workbook</div>
+        <div id="ec-sub">Plan your numbers before you build the ad.</div>
+        <div id="ec-pill">Sign up free</div>
+      </div>
+
+      <!-- Persistent mark — top-left on every frame. Non-`clip` positioned
+           wrapper so it never drifts (LESSONS.md). -->
+      <div id="logo-wrap"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      /* ---- audio mix -------------------------------------------------------
+         Sean sits at unity. The bed ducks to -16dB-ish under speech and lifts
+         in the 19.75s pause and again once the voice ends over the end card. */
+      gsap.set('#music', { volume: 0.16 });
+      tl.to('#music', { volume: 0.40, duration: 0.5, ease: 'sine.inOut' }, 19.75)
+        .to('#music', { volume: 0.16, duration: 0.5, ease: 'sine.inOut' }, 20.85)
+        .to('#music', { volume: 0.42, duration: 0.9, ease: 'sine.out' }, 39.0);
+
+      /* ---- S1 · hook -------------------------------------------------------- */
+      tl.fromTo('#s1-eyebrow .eyebrow', { opacity: 0, y: 22 },
+               { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, 2.90)
+        .fromTo('#s1-eyebrow .rule', { scaleX: 0 },
+               { scaleX: 1, duration: .45, ease: 'power3.out' }, 3.05);
+
+      /* ---- S2 · cost stack --------------------------------------------------
+         Rows stagger down the stack, then the contribution locks in flame. */
+      tl.fromTo('#panel-stack', { opacity: 0, y: 60 },
+               { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, 5.12)
+        .fromTo('#panel-stack .panel-rule', { scaleX: 0 },
+               { scaleX: 1, duration: .4, ease: 'power3.out' }, 5.30)
+        .fromTo('#panel-stack .row', { opacity: 0, x: -26 },
+               { opacity: 1, x: 0, duration: .30, stagger: .105, ease: 'power2.out' }, 5.40)
+        .fromTo('#panel-stack .divider', { scaleX: 0 },
+               { scaleX: 1, duration: .35, ease: 'power2.out' }, 6.16)
+        .fromTo('#panel-stack .result', { opacity: 0, y: 18 },
+               { opacity: 1, y: 0, duration: .40, ease: 'back.out(1.6)' }, 6.30)
+        .fromTo('#stack-num', { scale: .86 },
+               { scale: 1, duration: .45, ease: 'back.out(2.2)' }, 6.34)
+        .to('#panel-stack', { opacity: 0, y: -26, duration: .30, ease: 'power2.in' }, 7.90);
+
+      /* ---- S3 · count-ups ---------------------------------------------------
+         Deterministic: a tweened proxy object, no Date.now / no randomness. */
+      const cac = { v: 0 }, roas = { v: 0 };
+      tl.fromTo('#panel-roas', { opacity: 0, y: 60 },
+               { opacity: 1, y: 0, duration: .40, ease: 'power3.out' }, 8.15)
+        .fromTo('#panel-roas .panel-rule', { scaleX: 0 },
+               { scaleX: 1, duration: .35, ease: 'power3.out' }, 8.30)
+        .fromTo('#panel-roas .tile', { opacity: 0, y: 28 },
+               { opacity: 1, y: 0, duration: .35, stagger: .14, ease: 'power2.out' }, 8.38)
+        .to(cac, { v: 59.71, duration: 1.05, ease: 'power2.out',
+                   onUpdate: () => { document.getElementById('cu-cac').textContent
+                     = '$' + cac.v.toFixed(2); } }, 8.55)
+        .to(roas, { v: 1.92, duration: 1.05, ease: 'power2.out',
+                    onUpdate: () => { document.getElementById('cu-roas').textContent
+                      = roas.v.toFixed(2) + '×'; } }, 8.70)
+        .to('#panel-roas', { opacity: 0, y: -26, duration: .28, ease: 'power2.in' }, 10.27);
+
+      /* ---- S4 · contrast ----------------------------------------------------- */
+      tl.fromTo('#card-contrast', { opacity: 0 },
+               { opacity: 1, duration: .32, ease: 'power2.out' }, 11.15)
+        .fromTo('#card-contrast .eyebrow', { opacity: 0, y: 18 },
+               { opacity: 1, y: 0, duration: .35, ease: 'power2.out' }, 11.28)
+        .fromTo('#card-contrast .rule', { scaleX: 0 },
+               { scaleX: 1, duration: .40, ease: 'power3.out' }, 11.38)
+        .fromTo('#card-contrast h2', { opacity: 0, y: 30 },
+               { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, 11.46)
+        .fromTo('#col-full', { opacity: 0, x: -34 },
+               { opacity: 1, x: 0, duration: .45, ease: 'power3.out' }, 11.95)
+        .fromTo('#col-off', { opacity: 0, x: 34 },
+               { opacity: 1, x: 0, duration: .45, ease: 'power3.out' }, 12.65)
+        .fromTo('#col-off', { boxShadow: '0 0 0 0 rgba(255,76,50,0)' },
+               { boxShadow: '0 26px 80px -26px rgba(255,76,50,.75)', duration: .5,
+                 ease: 'sine.out', immediateRender: false }, 13.05)
+        .fromTo('#contrast-foot', { opacity: 0, y: 22 },
+               { opacity: 1, y: 0, duration: .45, ease: 'back.out(1.5)' }, 14.20)
+        .to('#card-contrast', { opacity: 0, duration: .30, ease: 'power2.in' }, 15.15);
+
+      /* ---- S5 · product suite, slow push --------------------------------------- */
+      tl.fromTo('#still-suite', { opacity: 0 },
+               { opacity: 1, duration: .34, ease: 'power2.out' }, 16.06)
+        .fromTo('#still-suite img', { scale: 1.0 },
+               { scale: 1.07, duration: 5.14, ease: 'none' }, 16.06)
+        .to('#still-suite', { opacity: 0, duration: .30, ease: 'power2.in' }, 20.90);
+
+      /* ---- S6 · checklist, one tick per spoken line ------------------------------ */
+      tl.fromTo('#card-checklist', { opacity: 0 },
+               { opacity: 1, duration: .34, ease: 'power2.out' }, 21.13)
+        .fromTo('#card-checklist .eyebrow', { opacity: 0, y: 18 },
+               { opacity: 1, y: 0, duration: .35, ease: 'power2.out' }, 21.26)
+        .fromTo('#card-checklist .rule', { scaleX: 0 },
+               { scaleX: 1, duration: .40, ease: 'power3.out' }, 21.36)
+        .fromTo('#card-checklist h2', { opacity: 0, y: 28 },
+               { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, 21.44);
+      [['#ck1', 22.30], ['#ck2', 24.70], ['#ck3', 27.30], ['#ck4', 29.30 - 1.10]]
+        .forEach(([sel, t]) => {
+          tl.fromTo(sel, { opacity: 0, x: -30 },
+                   { opacity: 1, x: 0, duration: .40, ease: 'power3.out' }, t)
+            .fromTo(sel + ' .tick', { scale: .6 },
+                   { scale: 1, duration: .42, ease: 'back.out(2.4)' }, t + .06);
+        });
+      tl.to('#card-checklist', { opacity: 0, duration: .30, ease: 'power2.in' }, 28.75);
+
+      /* ---- S8 · whip insert ------------------------------------------------------ */
+      tl.fromTo('#whip-inner', { opacity: 0, scale: 1.22, filter: 'blur(22px)' },
+               { opacity: 1, scale: 1.06, filter: 'blur(0px)', duration: .30, ease: 'power3.out' }, 33.40)
+        .to('#whip-inner', { opacity: 0, scale: .96, filter: 'blur(18px)',
+                             duration: .26, ease: 'power2.in' }, 33.96)
+        .set('#whip-inner', { opacity: 0 }, 34.17);
+
+      /* ---- S9 · the workbook ------------------------------------------------------ */
+      tl.fromTo('#still-cover', { opacity: 0 },
+               { opacity: 1, duration: .30, ease: 'power2.out' }, 34.17)
+        .fromTo('#still-cover img', { y: 70, scale: .95, rotationZ: -2.5 },
+               { y: 0, scale: 1, rotationZ: 0, duration: 1.15, ease: 'power3.out' }, 34.20)
+        .fromTo('#cover-tag', { opacity: 0, y: 20 },
+               { opacity: 1, y: 0, duration: .45, ease: 'power2.out' }, 35.10)
+        .to('#still-cover', { opacity: 0, duration: .30, ease: 'power2.in' }, 37.65);
+
+      /* ---- S10 · end card ---------------------------------------------------------- */
+      tl.fromTo('#endcard', { opacity: 0 },
+               { opacity: 1, duration: .34, ease: 'power2.out' }, 38.20)
+        .fromTo('#ec-logo', { opacity: 0, y: -22 },
+               { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, 38.32)
+        .fromTo('#ec-eyebrow', { opacity: 0, y: 16 },
+               { opacity: 1, y: 0, duration: .40, ease: 'power2.out' }, 38.46)
+        .fromTo('#ec-head', { opacity: 0, y: 34 },
+               { opacity: 1, y: 0, duration: .55, ease: 'power3.out' }, 38.56)
+        .fromTo('#ec-sub', { opacity: 0, y: 20 },
+               { opacity: 1, y: 0, duration: .45, ease: 'power2.out' }, 38.92)
+        .fromTo('#ec-pill', { opacity: 0, scale: .84 },
+               { opacity: 1, scale: 1, duration: .50, ease: 'back.out(1.8)' }, 39.15)
+        /* soft breathe so the CTA stays alive through the hold */
+        .to('#ec-pill', { scale: 1.035, duration: .85, ease: 'sine.inOut',
+                          yoyo: true, repeat: 3 }, 40.10)
+        /* the persistent mark steps back so the hero lockup leads the card */
+        .to('#logo-wrap', { opacity: .30, duration: .45, ease: 'sine.out' }, 38.30);
+
+      /* Duration is the contract (rule 7): pin the timeline to exactly 44.0s. */
+      tl.set({}, {}, 44);
+      window.__timelines['ecomiq-black-friday'] = tl;
+    </script>
+  </body>
+</html>

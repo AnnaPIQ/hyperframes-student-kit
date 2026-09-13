@@ -1,0 +1,6 @@
+# Prepped A-roll intermediates — 63MB, and fully regenerable:
+#   bash scripts/prep-media.sh <raw-aroll.mov>
+# The raw source is the 2.6GB Drive .mov; the shipped cuts are final-*.mp4.
+assets/aroll-916.mp4
+assets/aroll-45.mp4
+assets/aroll-audio.m4a
