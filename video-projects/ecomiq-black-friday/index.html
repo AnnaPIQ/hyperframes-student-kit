@@ -22,12 +22,16 @@
         color: var(--brand-text);
       }
 
-      /* ---- ratio-tunable knobs (the 4:5 cut overrides these) ---------------- */
+      /* ---- ratio-tunable knobs (the 4:5 cut overrides these) ----------------
+         --safe-bottom is the reserved subtitle band. NOTHING is drawn inside it:
+         every bottom-anchored element and every centred card is held above it,
+         so burned-in captions can be dropped in later without a collision.
+         Change this one value to resize the band. */
       :root {
         --pad: 72px;          /* side safe-area gutter            */
         --logo-w: 200px;      /* persistent top-left mark         */
-        --panel-bottom: 132px;
-        --row-fs: 38px;
+        --safe-bottom: 230px; /* reserved subtitle band (12% of height) */
+        --row-fs: 34px;
         --title-fs: 112px;
       }
 
@@ -44,45 +48,47 @@
       #logo-wrap img { display: block; width: var(--logo-w); height: auto;
         filter: drop-shadow(0 6px 18px rgba(0,0,0,.55)); }
 
-      /* ---- shared card furniture -------------------------------------------- */
+      /* ---- shared card furniture --------------------------------------------
+         padding-bottom keeps centred card content out of the subtitle band. */
       .card { position: absolute; inset: 0; z-index: 40;
         background: radial-gradient(80% 50% at 50% 14%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 60%), var(--brand-navy);
-        padding: 0 var(--pad); display: flex; flex-direction: column; justify-content: center; }
+        padding: 0 var(--pad) var(--safe-bottom);
+        display: flex; flex-direction: column; justify-content: center; }
       .eyebrow { font-size: 27px; font-weight: 600; letter-spacing: .30em;
         text-transform: uppercase; color: var(--brand-blue-tint); }
       .rule { width: 104px; height: 6px; background: var(--brand-flame);
         border-radius: 3px; transform-origin: left center; margin: 22px 0 34px; }
 
-      /* ---- S2/S3 lower panel over Sean --------------------------------------- */
+      /* ---- S2/S3 lower panel over Sean, sitting on top of the band ----------- */
       .panel { position: absolute; left: var(--pad); right: var(--pad);
-        bottom: var(--panel-bottom); z-index: 50;
-        background: rgba(6,40,76,.94); border: 1px solid var(--brand-border);
-        border-radius: 34px; padding: 44px 46px 40px;
+        bottom: calc(var(--safe-bottom) + 20px); z-index: 50; }
+      .panel-inner { background: rgba(6,40,76,.94); border: 1px solid var(--brand-border);
+        border-radius: 34px; padding: 36px 42px 32px;
         box-shadow: 0 40px 110px -30px rgba(0,0,0,.85); }
       .panel .eyebrow { font-size: 25px; letter-spacing: .26em; }
       .panel-rule { width: 84px; height: 5px; background: var(--brand-flame);
-        border-radius: 3px; transform-origin: left center; margin: 18px 0 26px; }
+        border-radius: 3px; transform-origin: left center; margin: 14px 0 20px; }
 
       .row { display: flex; justify-content: space-between; align-items: baseline;
-        font-size: var(--row-fs); font-weight: 500; padding: 9px 0; color: var(--brand-text-dim); }
+        font-size: var(--row-fs); font-weight: 500; padding: 6px 0; color: var(--brand-text-dim); }
       .row .v { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--brand-sky); }
       .row.top { color: var(--brand-white); }
       .row.top .v { color: var(--brand-white); }
-      .divider { height: 1px; background: var(--brand-border); margin: 16px 0 6px; transform-origin: left center; }
+      .divider { height: 1px; background: var(--brand-border); margin: 12px 0 4px; transform-origin: left center; }
       .result { display: flex; justify-content: space-between; align-items: baseline; padding-top: 12px; }
-      .result .l { font-size: 34px; font-weight: 700; letter-spacing: -.01em; }
-      .result .v { font-size: 66px; font-weight: 800; letter-spacing: -.03em;
+      .result .l { font-size: 31px; font-weight: 700; letter-spacing: -.01em; }
+      .result .v { font-size: 58px; font-weight: 800; letter-spacing: -.03em;
         color: var(--brand-flame); font-variant-numeric: tabular-nums; }
-      .result .pct { font-size: 30px; font-weight: 700; color: var(--brand-blue-tint); margin-left: 14px; }
+      .result .pct { font-size: 28px; font-weight: 700; color: var(--brand-blue-tint); margin-left: 14px; }
 
       /* ---- S3 count-up tiles -------------------------------------------------- */
       .tiles { display: flex; gap: 22px; }
       .tile { flex: 1; background: rgba(16,61,111,.62); border: 1px solid var(--brand-border);
-        border-radius: 24px; padding: 28px 26px 26px; }
+        border-radius: 24px; padding: 24px 22px 22px; }
       .tile .k { font-size: 22px; font-weight: 600; letter-spacing: .16em;
-        text-transform: uppercase; color: var(--brand-blue-tint); line-height: 1.25; min-height: 56px; }
-      .tile .n { font-size: 76px; font-weight: 800; letter-spacing: -.04em;
-        margin-top: 12px; font-variant-numeric: tabular-nums; }
+        text-transform: uppercase; color: var(--brand-blue-tint); line-height: 1.25; min-height: 50px; }
+      .tile .n { font-size: 66px; font-weight: 800; letter-spacing: -.04em;
+        margin-top: 10px; font-variant-numeric: tabular-nums; }
       .tile.hot .n { color: var(--brand-flame); }
 
       /* ---- S4 contrast card --------------------------------------------------- */
@@ -129,17 +135,19 @@
       /* ---- B-roll stills ------------------------------------------------------ */
       .still { position: absolute; inset: 0; z-index: 30; overflow: hidden;
         background: radial-gradient(70% 45% at 50% 42%, rgba(156,212,255,.13) 0%, rgba(6,40,76,0) 62%), var(--brand-navy);
-        display: flex; align-items: center; justify-content: center; }
+        display: flex; align-items: center; justify-content: center;
+        padding-bottom: var(--safe-bottom); }
       .still img { display: block; will-change: transform; }
-      /* landscape suite shots: fit the width, let them sit centred on navy */
+      /* landscape suite shots framed as deliberate rounded cards on the navy field */
       #still-suite img, #still-whip img { width: 92%; height: auto;
         border-radius: 30px; box-shadow: 0 44px 110px -34px rgba(0,0,0,.8); }
-      #whip-inner { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-      /* portrait cover: fit the height */
+      #whip-inner, #suite-inner { position: absolute; inset: 0; display: flex; align-items: center;
+        justify-content: center; padding-bottom: var(--safe-bottom); }
       /* background keyed out by scripts/prep-stills.sh, so it floats on navy */
       #still-cover img { height: 72%; width: auto;
         filter: drop-shadow(0 46px 84px rgba(0,0,0,.55)); }
-      #cover-tag { position: absolute; left: var(--pad); right: var(--pad); bottom: 168px;
+      #cover-tag { position: absolute; left: var(--pad); right: var(--pad);
+        bottom: calc(var(--safe-bottom) + 18px);
         text-align: center; font-size: 27px; font-weight: 700; letter-spacing: .18em;
         text-transform: uppercase; color: var(--brand-blue-tint); }
 
@@ -164,46 +172,51 @@
   </head>
   <body>
     <!-- =====================================================================
-         EcomIQ — Black Friday Profit Plan · 9:16 (1080x1920 @30fps) · 44.0s
+         EcomIQ — Black Friday Profit Plan · 9:16 (1080x1920 @30fps) · 39.0s
 
          A-roll spine: assets/aroll-916.mp4 (muted, rule 5) + assets/aroll-audio.m4a.
-         Source trimmed at 1.14s; every cut below sits on a silence-detected
-         phrase gap, so nothing lands mid-word.
+         scripts/prep-media.sh trims the head/tail AND splices ~3.8s of dead air
+         out from between the phrases, so the A-roll runs 35.52s. Every beat
+         below is on that tightened timeline.
+
+         The bottom --safe-bottom band is deliberately kept empty for subtitles
+         to be added later — no element is drawn inside it in any scene.
 
          All on-screen figures are the worked example from Part 01 of
          "The Black Friday Profit Plan" workbook — nothing invented.
          ===================================================================== -->
     <div id="root"
          data-composition-id="ecomiq-black-friday"
-         data-start="0" data-duration="44"
+         data-start="0" data-duration="39"
          data-width="1080" data-height="1920" data-fps="30">
 
-      <div id="bg" class="clip" data-start="0" data-duration="44" data-track-index="0"></div>
+      <div id="bg" class="clip" data-start="0" data-duration="39" data-track-index="0"></div>
 
       <!-- A-roll: never gets class="clip" (rule 2) and stays muted (rule 5). -->
       <div id="aroll-wrap">
         <video id="aroll" src="assets/aroll-916.mp4" muted
-               data-start="0" data-duration="39.4" data-track-index="1"></video>
+               data-start="0" data-duration="35.5" data-track-index="1"></video>
       </div>
 
-      <!-- Sean's voice — the spine of the edit, full and uncut. -->
+      <!-- Sean's voice — every word, with the silences between them removed. -->
       <audio id="vo" src="assets/aroll-audio.m4a"
-             data-start="0" data-duration="39.4" data-track-index="2"></audio>
+             data-start="0" data-duration="35.5" data-track-index="2"></audio>
 
       <!-- Duckable music bed. Silent placeholder — drop a licensed track in at
            the same path. Ducking is baked into the element volume below. -->
       <audio id="music" src="assets/music-bed-placeholder.m4a"
-             data-start="0" data-duration="44" data-track-index="3"></audio>
+             data-start="0" data-duration="39" data-track-index="3"></audio>
 
       <!-- S1 · 0.00–5.12 · Sean, hook -->
-      <div id="s1-eyebrow" class="clip" data-start="2.9" data-duration="2.2" data-track-index="4"
-           style="position:absolute;left:var(--pad);bottom:250px;z-index:50;">
+      <div id="s1-eyebrow" class="clip" data-start="2.9" data-duration="2.15" data-track-index="4"
+           style="position:absolute;left:var(--pad);bottom:calc(var(--safe-bottom) + 40px);z-index:50;">
         <div class="eyebrow">Ask these 3 questions</div>
         <div class="rule" style="margin:20px 0 0;"></div>
       </div>
 
-      <!-- S2 · 5.12–8.15 · Q1 "how much do you want to make from an order?" -->
-      <div id="panel-stack" class="panel clip" data-start="5.12" data-duration="3.03" data-track-index="5">
+      <!-- S2 · 5.12–7.85 · Q1 "how much do you want to make from an order?" -->
+      <div id="panel-stack" class="panel clip" data-start="5.12" data-duration="2.73" data-track-index="5">
+        <div class="panel-inner" id="stack-inner">
         <div class="eyebrow">What you actually keep</div>
         <div class="panel-rule"></div>
         <div class="row top"><span>Order value</span><span class="v">$114.70</span></div>
@@ -217,10 +230,12 @@
           <span class="l">Contribution</span>
           <span><span class="v" id="stack-num">$59.71</span><span class="pct">52.1%</span></span>
         </div>
+        </div>
       </div>
 
-      <!-- S3 · 8.15–10.55 · Q2 "how much can you afford to spend?" -->
-      <div id="panel-roas" class="panel clip" data-start="8.15" data-duration="2.4" data-track-index="6">
+      <!-- S3 · 7.85–10.40 · Q2 "how much can you afford to spend?" -->
+      <div id="panel-roas" class="panel clip" data-start="7.85" data-duration="2.55" data-track-index="6">
+        <div class="panel-inner" id="roas-inner">
         <div class="eyebrow">What an order can fund</div>
         <div class="panel-rule"></div>
         <div class="tiles">
@@ -233,10 +248,11 @@
             <div class="n" id="cu-roas">0.00&times;</div>
           </div>
         </div>
+        </div>
       </div>
 
-      <!-- S4 · 11.15–15.45 · Q3 "how far can you discount?" -->
-      <div id="card-contrast" class="card clip" data-start="11.15" data-duration="4.3" data-track-index="7">
+      <!-- S4 · 10.43–14.78 · Q3 "how far can you discount?" -->
+      <div id="card-contrast" class="card clip" data-start="10.43" data-duration="4.35" data-track-index="7">
         <div class="eyebrow">Question three</div>
         <div class="rule"></div>
         <h2>How far can you <span class="em">discount</span>?</h2>
@@ -257,13 +273,13 @@
         <div id="contrast-foot"><i>1.81&times;</i><span>the units, just to stand still.</span></div>
       </div>
 
-      <!-- S5 · 16.06–21.20 · product suite, carries the 1.4s pause -->
-      <div id="still-suite" class="still clip" data-start="16.06" data-duration="5.14" data-track-index="8">
-        <img src="assets/product-suite.png" alt="The Black Friday Profit Plan workbook and companion tools" />
+      <!-- S5 · 14.84–18.92 · product suite, carries the held beat before the list -->
+      <div id="still-suite" class="still clip" data-start="14.84" data-duration="4.08" data-track-index="8">
+        <div id="suite-inner"><img src="assets/product-suite.png" alt="The Black Friday Profit Plan workbook and companion tools" /></div>
       </div>
 
-      <!-- S6 · 21.13–29.05 · the four-item plan -->
-      <div id="card-checklist" class="card clip" data-start="21.13" data-duration="7.92" data-track-index="9">
+      <!-- S6 · 18.88–26.28 · the four-item plan -->
+      <div id="card-checklist" class="card clip" data-start="18.88" data-duration="7.4" data-track-index="9">
         <div class="eyebrow">Once you know your numbers</div>
         <div class="rule"></div>
         <h2>The rest gets <span class="em">easy</span>.</h2>
@@ -285,20 +301,20 @@
         </div>
       </div>
 
-      <!-- S8 · 33.40–34.20 · fast whip insert into the workbook beat -->
-      <div id="still-whip" class="still clip" data-start="33.4" data-duration="0.8" data-track-index="10">
+      <!-- S8 · 30.42–31.05 · fast whip insert into the workbook beat -->
+      <div id="still-whip" class="still clip" data-start="30.42" data-duration="0.63" data-track-index="10">
         <div id="whip-inner"><img src="assets/product-suite-wide.png" alt="" /></div>
       </div>
 
-      <!-- S9 · 34.17–37.95 · the workbook itself -->
-      <div id="still-cover" class="still clip" data-start="34.17" data-duration="3.78" data-track-index="11">
+      <!-- S9 · 30.98–34.50 · the workbook itself -->
+      <div id="still-cover" class="still clip" data-start="30.98" data-duration="3.52" data-track-index="11">
         <img src="assets/workbook-cover-float.png" alt="The Black Friday Profit Plan workbook cover" />
         <div id="cover-tag">8 Parts &middot; 32 Worksheets &middot; 19 Free Tools</div>
       </div>
 
-      <!-- S10 · 38.20–44.00 · end card. Lands on "Link is below" (38.37),
-           Sean's audio finishes over it at 39.18, then it holds 4.8s. -->
-      <div id="endcard" class="card clip" data-start="38.2" data-duration="5.8" data-track-index="12">
+      <!-- S10 · 34.40–39.00 · end card. Lands on "Link is below" (34.55),
+           Sean's audio finishes over it at 35.36, then it holds to the end. -->
+      <div id="endcard" class="card clip" data-start="34.4" data-duration="4.6" data-track-index="12">
         <div id="ec-bloom"></div>
         <img id="ec-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
         <div id="ec-eyebrow">Free workbook</div>
@@ -317,12 +333,10 @@
       const tl = gsap.timeline({ paused: true });
 
       /* ---- audio mix -------------------------------------------------------
-         Sean sits at unity. The bed ducks to -16dB-ish under speech and lifts
-         in the 19.75s pause and again once the voice ends over the end card. */
+         Sean sits at unity. The bed stays under the voice and lifts once he
+         finishes, so the end card is not silent. */
       gsap.set('#music', { volume: 0.16 });
-      tl.to('#music', { volume: 0.40, duration: 0.5, ease: 'sine.inOut' }, 19.75)
-        .to('#music', { volume: 0.16, duration: 0.5, ease: 'sine.inOut' }, 20.85)
-        .to('#music', { volume: 0.42, duration: 0.9, ease: 'sine.out' }, 39.0);
+      tl.to('#music', { volume: 0.42, duration: 0.9, ease: 'sine.out' }, 35.20);
 
       /* ---- S1 · hook -------------------------------------------------------- */
       tl.fromTo('#s1-eyebrow .eyebrow', { opacity: 0, y: 22 },
@@ -332,119 +346,122 @@
 
       /* ---- S2 · cost stack --------------------------------------------------
          Rows stagger down the stack, then the contribution locks in flame. */
-      tl.fromTo('#panel-stack', { opacity: 0, y: 60 },
-               { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, 5.12)
+      tl.fromTo('#stack-inner', { opacity: 0, y: 60 },
+               { opacity: 1, y: 0, duration: .42, ease: 'power3.out' }, 5.12)
         .fromTo('#panel-stack .panel-rule', { scaleX: 0 },
-               { scaleX: 1, duration: .4, ease: 'power3.out' }, 5.30)
+               { scaleX: 1, duration: .38, ease: 'power3.out' }, 5.28)
         .fromTo('#panel-stack .row', { opacity: 0, x: -26 },
-               { opacity: 1, x: 0, duration: .30, stagger: .105, ease: 'power2.out' }, 5.40)
+               { opacity: 1, x: 0, duration: .28, stagger: .095, ease: 'power2.out' }, 5.38)
         .fromTo('#panel-stack .divider', { scaleX: 0 },
-               { scaleX: 1, duration: .35, ease: 'power2.out' }, 6.16)
+               { scaleX: 1, duration: .32, ease: 'power2.out' }, 6.06)
         .fromTo('#panel-stack .result', { opacity: 0, y: 18 },
-               { opacity: 1, y: 0, duration: .40, ease: 'back.out(1.6)' }, 6.30)
+               { opacity: 1, y: 0, duration: .38, ease: 'back.out(1.6)' }, 6.18)
         .fromTo('#stack-num', { scale: .86 },
-               { scale: 1, duration: .45, ease: 'back.out(2.2)' }, 6.34)
-        .to('#panel-stack', { opacity: 0, y: -26, duration: .30, ease: 'power2.in' }, 7.90);
+               { scale: 1, duration: .42, ease: 'back.out(2.2)' }, 6.22)
+        .to('#stack-inner', { opacity: 0, y: -26, duration: .26, ease: 'power2.in' }, 7.59)
+        .set('#stack-inner', { opacity: 0 }, 7.85);
 
       /* ---- S3 · count-ups ---------------------------------------------------
          Deterministic: a tweened proxy object, no Date.now / no randomness. */
       const cac = { v: 0 }, roas = { v: 0 };
-      tl.fromTo('#panel-roas', { opacity: 0, y: 60 },
-               { opacity: 1, y: 0, duration: .40, ease: 'power3.out' }, 8.15)
+      tl.fromTo('#roas-inner', { opacity: 0, y: 60 },
+               { opacity: 1, y: 0, duration: .38, ease: 'power3.out' }, 7.85)
         .fromTo('#panel-roas .panel-rule', { scaleX: 0 },
-               { scaleX: 1, duration: .35, ease: 'power3.out' }, 8.30)
+               { scaleX: 1, duration: .33, ease: 'power3.out' }, 7.98)
         .fromTo('#panel-roas .tile', { opacity: 0, y: 28 },
-               { opacity: 1, y: 0, duration: .35, stagger: .14, ease: 'power2.out' }, 8.38)
-        .to(cac, { v: 59.71, duration: 1.05, ease: 'power2.out',
+               { opacity: 1, y: 0, duration: .33, stagger: .13, ease: 'power2.out' }, 8.06)
+        .to(cac, { v: 59.71, duration: 1.0, ease: 'power2.out',
                    onUpdate: () => { document.getElementById('cu-cac').textContent
-                     = '$' + cac.v.toFixed(2); } }, 8.55)
-        .to(roas, { v: 1.92, duration: 1.05, ease: 'power2.out',
+                     = '$' + cac.v.toFixed(2); } }, 8.22)
+        .to(roas, { v: 1.92, duration: 1.0, ease: 'power2.out',
                     onUpdate: () => { document.getElementById('cu-roas').textContent
-                      = roas.v.toFixed(2) + '×'; } }, 8.70)
-        .to('#panel-roas', { opacity: 0, y: -26, duration: .28, ease: 'power2.in' }, 10.27);
+                      = roas.v.toFixed(2) + '×'; } }, 8.36)
+        .to('#roas-inner', { opacity: 0, y: -26, duration: .26, ease: 'power2.in' }, 10.14)
+        .set('#roas-inner', { opacity: 0 }, 10.43);
 
       /* ---- S4 · contrast ----------------------------------------------------- */
       tl.fromTo('#card-contrast', { opacity: 0 },
-               { opacity: 1, duration: .32, ease: 'power2.out' }, 11.15)
+               { opacity: 1, duration: .30, ease: 'power2.out' }, 10.43)
         .fromTo('#card-contrast .eyebrow', { opacity: 0, y: 18 },
-               { opacity: 1, y: 0, duration: .35, ease: 'power2.out' }, 11.28)
+               { opacity: 1, y: 0, duration: .33, ease: 'power2.out' }, 10.54)
         .fromTo('#card-contrast .rule', { scaleX: 0 },
-               { scaleX: 1, duration: .40, ease: 'power3.out' }, 11.38)
+               { scaleX: 1, duration: .38, ease: 'power3.out' }, 10.63)
         .fromTo('#card-contrast h2', { opacity: 0, y: 30 },
-               { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, 11.46)
+               { opacity: 1, y: 0, duration: .42, ease: 'power3.out' }, 10.70)
         .fromTo('#col-full', { opacity: 0, x: -34 },
-               { opacity: 1, x: 0, duration: .45, ease: 'power3.out' }, 11.95)
+               { opacity: 1, x: 0, duration: .42, ease: 'power3.out' }, 11.16)
         .fromTo('#col-off', { opacity: 0, x: 34 },
-               { opacity: 1, x: 0, duration: .45, ease: 'power3.out' }, 12.65)
+               { opacity: 1, x: 0, duration: .42, ease: 'power3.out' }, 11.82)
         .fromTo('#col-off', { boxShadow: '0 0 0 0 rgba(255,76,50,0)' },
                { boxShadow: '0 26px 80px -26px rgba(255,76,50,.75)', duration: .5,
-                 ease: 'sine.out', immediateRender: false }, 13.05)
+                 ease: 'sine.out', immediateRender: false }, 12.20)
         .fromTo('#contrast-foot', { opacity: 0, y: 22 },
-               { opacity: 1, y: 0, duration: .45, ease: 'back.out(1.5)' }, 14.20)
-        .to('#card-contrast', { opacity: 0, duration: .30, ease: 'power2.in' }, 15.15);
+               { opacity: 1, y: 0, duration: .42, ease: 'back.out(1.5)' }, 13.30)
+        .to('#card-contrast', { opacity: 0, duration: .28, ease: 'power2.in' }, 14.50);
 
       /* ---- S5 · product suite, slow push --------------------------------------- */
-      tl.fromTo('#still-suite', { opacity: 0 },
-               { opacity: 1, duration: .34, ease: 'power2.out' }, 16.06)
+      tl.fromTo('#suite-inner', { opacity: 0 },
+               { opacity: 1, duration: .32, ease: 'power2.out' }, 14.84)
         .fromTo('#still-suite img', { scale: 1.0 },
-               { scale: 1.07, duration: 5.14, ease: 'none' }, 16.06)
-        .to('#still-suite', { opacity: 0, duration: .30, ease: 'power2.in' }, 20.90);
+               { scale: 1.06, duration: 4.08, ease: 'none' }, 14.84)
+        .to('#suite-inner', { opacity: 0, duration: .28, ease: 'power2.in' }, 18.64)
+        .set('#suite-inner', { opacity: 0 }, 18.88);
 
       /* ---- S6 · checklist, one tick per spoken line ------------------------------ */
       tl.fromTo('#card-checklist', { opacity: 0 },
-               { opacity: 1, duration: .34, ease: 'power2.out' }, 21.13)
+               { opacity: 1, duration: .32, ease: 'power2.out' }, 18.88)
         .fromTo('#card-checklist .eyebrow', { opacity: 0, y: 18 },
-               { opacity: 1, y: 0, duration: .35, ease: 'power2.out' }, 21.26)
+               { opacity: 1, y: 0, duration: .33, ease: 'power2.out' }, 18.99)
         .fromTo('#card-checklist .rule', { scaleX: 0 },
-               { scaleX: 1, duration: .40, ease: 'power3.out' }, 21.36)
+               { scaleX: 1, duration: .38, ease: 'power3.out' }, 19.08)
         .fromTo('#card-checklist h2', { opacity: 0, y: 28 },
-               { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, 21.44);
-      [['#ck1', 22.30], ['#ck2', 24.70], ['#ck3', 27.30], ['#ck4', 29.30 - 1.10]]
+               { opacity: 1, y: 0, duration: .42, ease: 'power3.out' }, 19.15);
+      [['#ck1', 19.60], ['#ck2', 21.31], ['#ck3', 23.91], ['#ck4', 25.55]]
         .forEach(([sel, t]) => {
           tl.fromTo(sel, { opacity: 0, x: -30 },
-                   { opacity: 1, x: 0, duration: .40, ease: 'power3.out' }, t)
+                   { opacity: 1, x: 0, duration: .38, ease: 'power3.out' }, t)
             .fromTo(sel + ' .tick', { scale: .6 },
-                   { scale: 1, duration: .42, ease: 'back.out(2.4)' }, t + .06);
+                   { scale: 1, duration: .40, ease: 'back.out(2.4)' }, t + .06);
         });
-      tl.to('#card-checklist', { opacity: 0, duration: .30, ease: 'power2.in' }, 28.75);
+      tl.to('#card-checklist', { opacity: 0, duration: .28, ease: 'power2.in' }, 26.00);
 
       /* ---- S8 · whip insert ------------------------------------------------------ */
       tl.fromTo('#whip-inner', { opacity: 0, scale: 1.22, filter: 'blur(22px)' },
-               { opacity: 1, scale: 1.06, filter: 'blur(0px)', duration: .30, ease: 'power3.out' }, 33.40)
+               { opacity: 1, scale: 1.06, filter: 'blur(0px)', duration: .26, ease: 'power3.out' }, 30.42)
         .to('#whip-inner', { opacity: 0, scale: .96, filter: 'blur(18px)',
-                             duration: .26, ease: 'power2.in' }, 33.96)
-        .set('#whip-inner', { opacity: 0 }, 34.17);
+                             duration: .24, ease: 'power2.in' }, 30.80)
+        .set('#whip-inner', { opacity: 0 }, 30.98);
 
       /* ---- S9 · the workbook ------------------------------------------------------ */
       tl.fromTo('#still-cover', { opacity: 0 },
-               { opacity: 1, duration: .30, ease: 'power2.out' }, 34.17)
+               { opacity: 1, duration: .28, ease: 'power2.out' }, 30.98)
         .fromTo('#still-cover img', { y: 70, scale: .95, rotationZ: -2.5 },
-               { y: 0, scale: 1, rotationZ: 0, duration: 1.15, ease: 'power3.out' }, 34.20)
+               { y: 0, scale: 1, rotationZ: 0, duration: 1.10, ease: 'power3.out' }, 31.00)
         .fromTo('#cover-tag', { opacity: 0, y: 20 },
-               { opacity: 1, y: 0, duration: .45, ease: 'power2.out' }, 35.10)
-        .to('#still-cover', { opacity: 0, duration: .30, ease: 'power2.in' }, 37.65);
+               { opacity: 1, y: 0, duration: .42, ease: 'power2.out' }, 31.80)
+        .to('#still-cover', { opacity: 0, duration: .28, ease: 'power2.in' }, 34.22);
 
       /* ---- S10 · end card ---------------------------------------------------------- */
       tl.fromTo('#endcard', { opacity: 0 },
-               { opacity: 1, duration: .34, ease: 'power2.out' }, 38.20)
+               { opacity: 1, duration: .32, ease: 'power2.out' }, 34.40)
         .fromTo('#ec-logo', { opacity: 0, y: -22 },
-               { opacity: 1, y: 0, duration: .45, ease: 'power3.out' }, 38.32)
+               { opacity: 1, y: 0, duration: .42, ease: 'power3.out' }, 34.50)
         .fromTo('#ec-eyebrow', { opacity: 0, y: 16 },
-               { opacity: 1, y: 0, duration: .40, ease: 'power2.out' }, 38.46)
+               { opacity: 1, y: 0, duration: .38, ease: 'power2.out' }, 34.62)
         .fromTo('#ec-head', { opacity: 0, y: 34 },
-               { opacity: 1, y: 0, duration: .55, ease: 'power3.out' }, 38.56)
+               { opacity: 1, y: 0, duration: .52, ease: 'power3.out' }, 34.72)
         .fromTo('#ec-sub', { opacity: 0, y: 20 },
-               { opacity: 1, y: 0, duration: .45, ease: 'power2.out' }, 38.92)
+               { opacity: 1, y: 0, duration: .42, ease: 'power2.out' }, 35.06)
         .fromTo('#ec-pill', { opacity: 0, scale: .84 },
-               { opacity: 1, scale: 1, duration: .50, ease: 'back.out(1.8)' }, 39.15)
+               { opacity: 1, scale: 1, duration: .48, ease: 'back.out(1.8)' }, 35.26)
         /* soft breathe so the CTA stays alive through the hold */
         .to('#ec-pill', { scale: 1.035, duration: .85, ease: 'sine.inOut',
-                          yoyo: true, repeat: 3 }, 40.10)
+                          yoyo: true, repeat: 2 }, 36.10)
         /* the persistent mark steps back so the hero lockup leads the card */
-        .to('#logo-wrap', { opacity: .30, duration: .45, ease: 'sine.out' }, 38.30);
+        .to('#logo-wrap', { opacity: .30, duration: .42, ease: 'sine.out' }, 34.48);
 
-      /* Duration is the contract (rule 7): pin the timeline to exactly 44.0s. */
-      tl.set({}, {}, 44);
+      /* Duration is the contract (rule 7): pin the timeline to exactly 39.0s. */
+      tl.set({}, {}, 39);
       window.__timelines['ecomiq-black-friday'] = tl;
     </script>
   </body>

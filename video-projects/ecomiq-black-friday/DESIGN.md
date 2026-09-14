@@ -5,10 +5,14 @@ Plan** workbook. Sean's A-roll is the spine; motion graphics carry the three
 questions; a workbook CTA end card closes.
 
 **Formats:** 9:16 Story/Reels · 1080×1920 (`index.html`) and 4:5 Meta feed ·
-1080×1350 (`compositions/bf-45.html`). 30 fps, 44.0s, safe area ~10% margins.
+1080×1350 (`compositions/bf-45.html`). 30 fps, 39.0s, safe area ~10% margins.
 
 Brand kit copied from `assets/ecomiq/`. Full reference: `assets/ecomiq/BRAND.md`.
 Tokens in `assets/brand-tokens.css`; local fonts in `assets/fonts/`.
+
+**Runtime 39.0s.** Dead air is spliced out of the A-roll by `scripts/prep-media.sh`,
+and `--safe-bottom` reserves an empty band at the bottom of every frame (230px in
+9:16, 150px in 4:5) for subtitles to be added later.
 
 ## This project's idea
 - **Hook:** "Before you plan a single Black Friday ad, ask yourself these three questions."

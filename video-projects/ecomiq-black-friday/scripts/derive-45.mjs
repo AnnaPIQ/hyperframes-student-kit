@@ -12,7 +12,8 @@
  * Why the overrides: 4:5 has 1350px of height against 9:16's 1920 — 70% of the
  * vertical budget — so the type steps down and the lower panel tightens. In the
  * 4:5 crop Sean's face sits between roughly 10% and 50% of frame height, so the
- * panel is anchored to start below 58% and never covers him.
+ * panel is anchored below 58% and never covers him. --safe-bottom is the
+ * reserved subtitle band; nothing is drawn inside it in either ratio.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -25,7 +26,7 @@ const swaps = [
   ['width=1080, height=1920', 'width=1080, height=1350'],
   ['Black Friday Profit Plan (9:16)', 'Black Friday Profit Plan (4:5)'],
   ['width: 1080px; height: 1920px;', 'width: 1080px; height: 1350px;'],
-  ['· 9:16 (1080x1920 @30fps) · 44.0s', '· 4:5 (1080x1350 @30fps) · 44.0s'],
+  ['· 9:16 (1080x1920 @30fps) · 39.0s', '· 4:5 (1080x1350 @30fps) · 39.0s'],
   ['assets/aroll-916.mp4', 'assets/aroll-45.mp4'],
   ['data-composition-id="ecomiq-black-friday"', 'data-composition-id="ecomiq-black-friday-45"'],
   ['data-height="1920"', 'data-height="1350"'],
@@ -46,26 +47,28 @@ const overrides = `
       :root {
         --pad: 64px;
         --logo-w: 176px;
-        --panel-bottom: 84px;
-        --row-fs: 31px;
+        --safe-bottom: 150px;   /* reserved subtitle band — 11% of 1350 */
+        --row-fs: 28px;
         --title-fs: 88px;
       }
       #logo-wrap { top: 52px; }
       .eyebrow { font-size: 23px; }
       .rule { width: 88px; height: 5px; margin: 18px 0 26px; }
 
-      .panel { border-radius: 28px; padding: 32px 36px 30px; }
+      /* 4:5 has far less height, and the subtitle band takes 150 of it, so the
+         panel is compacted again to stay clear of Sean's face (~50% of frame). */
+      .panel-inner { border-radius: 26px; padding: 26px 34px 24px; }
       .panel .eyebrow { font-size: 21px; }
-      .panel-rule { margin: 14px 0 18px; }
-      .row { padding: 6px 0; }
-      .divider { margin: 12px 0 4px; }
-      .result .l { font-size: 28px; }
-      .result .v { font-size: 54px; }
-      .result .pct { font-size: 25px; }
+      .panel-rule { margin: 12px 0 16px; }
+      .row { padding: 4px 0; }
+      .divider { margin: 10px 0 3px; }
+      .result .l { font-size: 26px; }
+      .result .v { font-size: 48px; }
+      .result .pct { font-size: 23px; }
 
-      .tile { padding: 22px 20px 20px; border-radius: 20px; }
-      .tile .k { font-size: 19px; min-height: 46px; }
-      .tile .n { font-size: 60px; margin-top: 8px; }
+      .tile { padding: 20px 18px 18px; border-radius: 18px; }
+      .tile .k { font-size: 18px; min-height: 44px; }
+      .tile .n { font-size: 52px; margin-top: 8px; }
 
       #card-contrast h2 { font-size: 60px; margin-bottom: 32px; }
       .col { padding: 26px 24px 24px; border-radius: 22px; }
@@ -83,7 +86,7 @@ const overrides = `
       .item .t { font-size: 34px; }
 
       #still-cover img { height: 66%; }
-      #cover-tag { bottom: 104px; font-size: 23px; }
+      #cover-tag { font-size: 23px; }
 
       #ec-logo { width: 330px; margin-bottom: 38px; }
       #ec-eyebrow { font-size: 23px; margin-bottom: 22px; }
