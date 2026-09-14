@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>d04-tick</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Rethink Sans";
+        font-style: normal;
+        font-weight: 400 800;
+        font-display: block;
+        src: url(assets/fonts/RethinkSans.woff2) format("woff2");
+      }
+      @font-face {
+        font-family: "Hedvig Letters Serif";
+        font-style: normal;
+        font-weight: 400;
+        font-display: block;
+        src: url(assets/fonts/HedvigLettersSerif.woff2) format("woff2");
+      }
+      [data-composition-id="d04-tick"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="d04-tick"] {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        font-family: "Rethink Sans", system-ui, sans-serif;
+      }
+      [data-composition-id="d04-tick"] .cam { position: absolute; inset: 0; perspective: 2600px; }
+      [data-composition-id="d04-tick"] .plane {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 0;
+        height: 0;
+        transform-style: preserve-3d;
+        transform: rotateX(8deg) rotateZ(-1.6deg);
+      }
+      /* The sheet, big enough that we are reading it, not looking at it */
+      [data-composition-id="d04-tick"] .sheet {
+        position: absolute;
+        left: -770px;
+        top: -560px;
+        width: 1540px;
+        height: 1120px;
+        padding: 64px 78px;
+        background: #ffffff;
+        border-radius: 3px;
+        box-shadow:
+          0 26px 50px -18px rgba(1, 8, 18, 0.8),
+          0 90px 150px -50px rgba(1, 8, 18, 0.9);
+      }
+      [data-composition-id="d04-tick"] .lit {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          114deg,
+          rgba(226, 240, 255, 0.17) 0%,
+          rgba(226, 240, 255, 0.02) 34%,
+          rgba(3, 16, 32, 0.06) 74%,
+          rgba(3, 16, 32, 0.2) 100%
+        );
+      }
+      [data-composition-id="d04-tick"] .eyebrow {
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: #ff4c32;
+      }
+      [data-composition-id="d04-tick"] .head {
+        margin-top: 14px;
+        font-family: "Hedvig Letters Serif", Georgia, serif;
+        font-size: 66px;
+        line-height: 1.04;
+        color: #06284c;
+      }
+      [data-composition-id="d04-tick"] .head em {
+        font-style: italic;
+        color: #ff4c32;
+      }
+      [data-composition-id="d04-tick"] .colhead {
+        margin-top: 44px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #ff4c32;
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: #7d9bbd;
+      }
+      [data-composition-id="d04-tick"] .row {
+        display: flex;
+        align-items: flex-start;
+        gap: 30px;
+        padding: 30px 0 28px;
+        border-bottom: 1px solid #e6eef7;
+      }
+      [data-composition-id="d04-tick"] .box {
+        position: relative;
+        flex: none;
+        width: 40px;
+        height: 40px;
+        margin-top: 4px;
+        border: 2px solid #9fb6d4;
+        border-radius: 2px;
+        background: #ffffff;
+      }
+      [data-composition-id="d04-tick"] .tick {
+        position: absolute;
+        left: -8px;
+        top: -12px;
+        width: 60px;
+        height: 60px;
+        overflow: visible;
+      }
+      [data-composition-id="d04-tick"] .tick path {
+        fill: none;
+        stroke: #ff4c32;
+        stroke-width: 7;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      [data-composition-id="d04-tick"] .label {
+        font-weight: 700;
+        font-size: 37px;
+        line-height: 1.16;
+        color: #06284c;
+      }
+      [data-composition-id="d04-tick"] .sub {
+        margin-top: 9px;
+        font-weight: 400;
+        font-size: 25px;
+        line-height: 1.3;
+        color: #6f8bab;
+      }
+      /* Focal plane: the rows at the edges of the sheet fall off */
+      [data-composition-id="d04-tick"] .soft-a { filter: blur(2.6px); opacity: 0.9; }
+      [data-composition-id="d04-tick"] .soft-b { filter: blur(5px); opacity: 0.8; }
+
+      /* ── The pen. Origin of .pen is the nib tip. ──────────────────────────── */
+      [data-composition-id="d04-tick"] .pen {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        z-index: 20;
+      }
+      [data-composition-id="d04-tick"] .pen-body {
+        position: absolute;
+        left: -30px;
+        top: -516px;
+        transform-origin: 30px 516px;
+        transform: rotate(33deg);
+      }
+      [data-composition-id="d04-tick"] .pen-shadow {
+        position: absolute;
+        left: 6px;
+        top: -330px;
+        width: 250px;
+        height: 400px;
+        border-radius: 40%;
+        background: rgba(1, 8, 18, 0.5);
+        filter: blur(30px);
+        transform: rotate(33deg);
+      }
+      /* Out-of-focus paper along the bottom edge of frame */
+      [data-composition-id="d04-tick"] .fg {
+        position: absolute;
+        left: -6%;
+        bottom: -12%;
+        width: 118%;
+        height: 24%;
+        background: linear-gradient(180deg, rgba(214, 228, 244, 0) 0%, rgba(206, 222, 240, 0.75) 60%);
+        filter: blur(22px);
+        z-index: 30;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="d04-tick" data-width="1920" data-height="1080" data-duration="3.3">
+      <div class="cam" id="d04-cam">
+        <div class="plane" id="d04-plane">
+          <div class="sheet" id="d04-sheet">
+            <div class="eyebrow">The ten minute test</div>
+            <div class="head">Mobile checkout checklist.<br /><em>Nine checks, on your own phone.</em></div>
+            <div class="colhead">The check</div>
+
+            <div class="row soft-a">
+              <div class="box">
+                <svg class="tick" viewBox="0 0 60 60"><path id="d04-t0" d="M12 31 L25 44 L48 14" /></svg>
+              </div>
+              <div>
+                <div class="label">Guest checkout is available</div>
+                <div class="sub">Requiring an account adds another step before payment.</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="box">
+                <svg class="tick" viewBox="0 0 60 60"><path id="d04-t1" d="M12 31 L25 44 L48 14" /></svg>
+              </div>
+              <div>
+                <div class="label">Shop Pay is active</div>
+                <div class="sub">Saved details mean checkout completes without typing them again.</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="box">
+                <svg class="tick" viewBox="0 0 60 60"><path id="d04-t2" d="M12 31 L25 44 L48 14" /></svg>
+              </div>
+              <div>
+                <div class="label">Apple Pay and Google Pay are enabled</div>
+                <div class="sub">Eligible customers pay with saved payment and shipping details.</div>
+              </div>
+            </div>
+
+            <div class="row soft-b">
+              <div class="box">
+                <svg class="tick" viewBox="0 0 60 60"><path d="M12 31 L25 44 L48 14" /></svg>
+              </div>
+              <div>
+                <div class="label">Checkout is easy to reach from a product page</div>
+                <div class="sub">Unnecessary steps add friction before checkout begins.</div>
+              </div>
+            </div>
+
+            <div class="lit"></div>
+          </div>
+
+          <!-- Pen. GSAP moves .pen; the nib tip is its origin. -->
+          <div class="pen" id="d04-pen">
+            <div class="pen-shadow"></div>
+            <svg class="pen-body" viewBox="0 0 60 520" width="60" height="520">
+              <defs>
+                <linearGradient id="d04-barrel" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#0d3a68" />
+                  <stop offset="26%" stop-color="#1b5590" />
+                  <stop offset="60%" stop-color="#06284c" />
+                  <stop offset="100%" stop-color="#031a33" />
+                </linearGradient>
+                <linearGradient id="d04-nib" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#eef3f9" />
+                  <stop offset="45%" stop-color="#b9c8da" />
+                  <stop offset="100%" stop-color="#7d90a6" />
+                </linearGradient>
+              </defs>
+              <rect x="14" y="4" width="32" height="392" rx="15" fill="url(#d04-barrel)" />
+              <rect x="14" y="250" width="32" height="17" fill="#ff4c32" />
+              <rect x="19" y="16" width="5" height="360" rx="3" fill="rgba(255,255,255,0.22)" />
+              <path d="M14 396 L46 396 L41 468 L19 468 Z" fill="#031a33" />
+              <path d="M19 468 L41 468 L33 506 L27 506 Z" fill="url(#d04-nib)" />
+              <rect x="28" y="490" width="4" height="22" rx="2" fill="#5d7089" />
+            </svg>
+          </div>
+        </div>
+        <div class="fg"></div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="d04-tick"] ';
+        const SLOT = 3.3;
+        const tl = gsap.timeline({ paused: true });
+
+        // Ticks start undrawn.
+        tl.set(S + ".tick path", { strokeDasharray: 74, strokeDashoffset: 74 }, 0);
+
+        tl.fromTo(S + "#d04-cam",
+          { opacity: 0, yPercent: 2.4 },
+          { opacity: 1, yPercent: 0, duration: 0.36, ease: "power2.out" }, 0);
+
+        // Camera pushes in from the headline down onto the rows.
+        tl.fromTo(S + "#d04-cam",
+          { scale: 0.96, yPercent: 0 },
+          { scale: 1.2, yPercent: -7, duration: SLOT, ease: "sine.inOut" }, 0);
+        tl.fromTo(S + "#d04-plane",
+          { rotateX: 10, rotateZ: -2.4 },
+          { rotateX: 6, rotateZ: -0.6, duration: SLOT, ease: "sine.inOut" }, 0);
+
+        // The pen comes in from off-frame lower-right and settles on box 2.
+        tl.fromTo(S + "#d04-pen",
+          { x: 520, y: 760, opacity: 0, rotate: 6 },
+          { x: -672, y: -29, opacity: 1, rotate: 0, duration: 0.62, ease: "power3.out" }, 0.38);
+
+        // Press, and the tick draws with it.
+        tl.to(S + "#d04-pen", { y: -19, scale: 0.985, duration: 0.09, ease: "power3.in" }, 1.0);
+        tl.to(S + "#d04-pen", { y: -29, scale: 1, duration: 0.2, ease: "back.out(2.4)" }, 1.09);
+        tl.to(S + "#d04-t1", { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" }, 1.04);
+
+        // Across to the next box.
+        tl.to(S + "#d04-pen", { x: -672, y: 115, duration: 0.42, ease: "power2.inOut" }, 1.5);
+        tl.to(S + "#d04-pen", { y: 125, scale: 0.985, duration: 0.09, ease: "power3.in" }, 1.94);
+        tl.to(S + "#d04-pen", { y: 115, scale: 1, duration: 0.2, ease: "back.out(2.4)" }, 2.03);
+        tl.to(S + "#d04-t2", { strokeDashoffset: 0, duration: 0.3, ease: "power2.out" }, 1.98);
+
+        // The first row was already ticked before we arrived.
+        tl.to(S + "#d04-t0", { strokeDashoffset: 0, duration: 0.01 }, 0);
+
+        // Pen lifts away and drifts as the shot holds.
+        tl.to(S + "#d04-pen", { x: -560, y: 300, rotate: 3, duration: 0.8, ease: "power2.inOut" }, 2.4);
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["d04-tick"] = tl;
+      })();
+    </script>
+  </body>
+</html>

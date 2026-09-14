@@ -147,6 +147,41 @@ efficient over time instead of relearning the same lessons.
   with one regex instead of the override file having to fight the JS.
 
 
+## CSS 3D page turns (and tactile "real object" looks)
+
+- **Real page turns work in the headless renderer.** A leaf with
+  `transform-style: preserve-3d`, two `.face` children with
+  `backface-visibility: hidden` (the back one pre-rotated `rotateY(180deg)`),
+  and `transform-origin: left center`, tweened `rotateY: 0 → -172`. Front face =
+  page N, back face = page N+1.
+- **Never put a `filter` on an ancestor of a 3D turn.** It flattens the
+  transform and the leaf stops rotating. This kills the usual blur-rise scene
+  entrance — use opacity + y only on scenes that contain a turn.
+- **z-index cannot tween, but a turning leaf has to change stacking order.** On
+  the right of the spread it must be above its siblings; once it lands on the
+  left it must be below the next one. Flip it with `tl.set(el, {zIndex: n}, t)`
+  at the halfway point of each turn.
+- **A shadow directly behind an opaque object is invisible.** Offset every cast
+  shadow down-and-right of its object (matching the key light) or it does
+  nothing at all. Symptom: the object looks like it is floating, or pasted on.
+- **Two shadows per object, not one** — a tight dark contact shadow (~20-35px
+  blur) plus a wide soft ambient one (~90px). The pair is what reads as weight.
+- **Solid offset box-shadows make convincing page edges**:
+  `box-shadow: 5px 6px 0 -1px #dde6f1, 11px 12px 0 -2px #b9c9db` turns a single
+  sheet into a book block with no extra DOM.
+- **Navy artwork on a navy surface disappears.** Add a 1px rim
+  (`0 0 0 1px rgba(156,212,255,.18)`) to every sheet so its edge separates from
+  the desk.
+- **A flat page render reads as pasted-on until you light it.** An absolutely
+  positioned gradient overlay across each sheet (light at the key-light corner,
+  dark at the opposite one) is what turns an image into paper.
+- **Position a prop by its point of contact.** For a pen, make the wrapper a
+  zero-size div at the nib tip and offset the artwork up-and-right from it, so
+  moving the prop means moving the nib to a target's coordinates — not guessing
+  at an offset. Work those coordinates out from the layout maths; eyeballing
+  them put the first pen a full frame-width away from the checkbox.
+
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

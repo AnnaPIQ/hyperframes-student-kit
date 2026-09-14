@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>d07-close</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      [data-composition-id="d07-close"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="d07-close"] { position: absolute; inset: 0; overflow: hidden; }
+
+      [data-composition-id="d07-close"] .cam { position: absolute; inset: 0; perspective: 2000px; }
+      [data-composition-id="d07-close"] .plane {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 0;
+        height: 0;
+        transform-style: preserve-3d;
+        transform: rotateX(25deg) rotateZ(-4deg);
+      }
+      [data-composition-id="d07-close"] .spread {
+        position: absolute;
+        left: -520px;
+        top: -392px;
+        width: 1040px;
+        height: 673px;
+        transform-style: preserve-3d;
+      }
+      [data-composition-id="d07-close"] .cast {
+        position: absolute;
+        left: 548px;
+        top: 42px;
+        width: 520px;
+        height: 673px;
+        border-radius: 14px;
+        background: rgba(1, 8, 18, 0.72);
+        filter: blur(34px);
+        transform-origin: left center;
+      }
+      [data-composition-id="d07-close"] .half {
+        position: absolute;
+        top: 0;
+        width: 520px;
+        height: 673px;
+        overflow: hidden;
+        border-radius: 2px;
+        background: #ffffff;
+        box-shadow: 0 0 0 1px rgba(156, 212, 255, 0.18);
+      }
+      [data-composition-id="d07-close"] .r {
+        left: 520px;
+        box-shadow:
+          5px 6px 0 -1px #dde6f1,
+          11px 12px 0 -2px #b9c9db,
+          0 0 0 1px rgba(156, 212, 255, 0.18);
+      }
+      [data-composition-id="d07-close"] .half img,
+      [data-composition-id="d07-close"] .face img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      [data-composition-id="d07-close"] .lit {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          116deg,
+          rgba(226, 240, 255, 0.2) 0%,
+          rgba(226, 240, 255, 0.03) 32%,
+          rgba(3, 16, 32, 0.07) 70%,
+          rgba(3, 16, 32, 0.2) 100%
+        );
+      }
+      [data-composition-id="d07-close"] .under-shadow {
+        position: absolute;
+        inset: 0;
+        transform-origin: left center;
+        background: linear-gradient(90deg, rgba(1, 8, 18, 0.72) 0%, rgba(1, 8, 18, 0.34) 55%, rgba(1, 8, 18, 0.12) 100%);
+        opacity: 0;
+      }
+      [data-composition-id="d07-close"] .land-shadow {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 520px;
+        height: 673px;
+        transform-origin: right center;
+        border-radius: 12px;
+        background: rgba(1, 8, 18, 0.55);
+        filter: blur(36px);
+      }
+      [data-composition-id="d07-close"] .leaf {
+        position: absolute;
+        left: 520px;
+        top: 0;
+        width: 520px;
+        height: 673px;
+        transform-style: preserve-3d;
+        transform-origin: left center;
+      }
+      [data-composition-id="d07-close"] .face {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border-radius: 2px;
+        background: #ffffff;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        box-shadow: 0 10px 30px -10px rgba(1, 8, 18, 0.7), 0 0 0 1px rgba(156, 212, 255, 0.18);
+      }
+      [data-composition-id="d07-close"] .face.back { transform: rotateY(180deg); }
+      [data-composition-id="d07-close"] .shade {
+        position: absolute;
+        inset: 0;
+        background: #03101f;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="d07-close" data-width="1920" data-height="1080" data-duration="2.7">
+      <div class="cam" id="d07-cam">
+        <div class="plane" id="d07-plane">
+          <div class="spread" id="d07-spread">
+            <div class="cast" id="d07-cast"></div>
+            <div class="land-shadow" id="d07-land"></div>
+
+            <div class="half r">
+              <img src="assets/pages/p03.png" alt="" />
+              <div class="lit"></div>
+              <div class="under-shadow" id="d07-under"></div>
+            </div>
+
+            <!-- The cover swings back over -->
+            <div class="leaf" id="d07-leaf">
+              <div class="face front">
+                <img src="assets/pages/p01.png" alt="The Black Friday Profit Plan" />
+                <div class="lit"></div>
+                <div class="shade" id="d07-shade-f"></div>
+              </div>
+              <div class="face back">
+                <img src="assets/pages/p02.png" alt="Contents" />
+                <div class="lit"></div>
+                <div class="shade" id="d07-shade-b"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="d07-close"] ';
+        const SLOT = 2.7;
+        const T0 = 0.24;
+        const TD = 1.2;
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo(S + "#d07-cam",
+          { opacity: 0, yPercent: 2.4 },
+          { opacity: 1, yPercent: 0, duration: 0.34, ease: "power2.out" }, 0);
+
+        // Everything runs backwards from shot 02 — the book closes on itself.
+        tl.fromTo(S + "#d07-spread", { x: 0 }, { x: -260, duration: TD, ease: "power2.inOut" }, T0);
+        tl.fromTo(S + "#d07-leaf", { rotateY: -172 }, { rotateY: 0, duration: TD, ease: "power2.inOut" }, T0);
+        tl.fromTo(S + "#d07-shade-f", { opacity: 0.52 }, { opacity: 0, duration: TD * 0.6, ease: "power1.out" }, T0 + TD * 0.4);
+        tl.fromTo(S + "#d07-shade-b", { opacity: 0.05 }, { opacity: 0.74, duration: TD, ease: "power2.in" }, T0);
+        tl.fromTo(S + "#d07-under", { scaleX: 0.04, opacity: 0 }, { scaleX: 1, opacity: 1, duration: TD * 0.8, ease: "power2.in" }, T0 + TD * 0.2);
+        tl.fromTo(S + "#d07-land", { scaleX: 1, opacity: 0.55 }, { scaleX: 0.1, opacity: 0, duration: TD * 0.7, ease: "power2.out" }, T0);
+        tl.fromTo(S + "#d07-cast", { scaleX: 2, x: -520 }, { scaleX: 1, x: 0, duration: TD, ease: "power2.inOut" }, T0);
+
+        // It lands with weight: a small settle, and the shadow snaps in under it.
+        tl.fromTo(S + "#d07-spread", { y: 0 }, { y: -9, duration: 0.1, ease: "power2.out" }, T0 + TD - 0.1);
+        tl.to(S + "#d07-spread", { y: 0, duration: 0.26, ease: "bounce.out" }, T0 + TD);
+        tl.fromTo(S + "#d07-cast", { scale: 1.05, opacity: 0.7 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" }, T0 + TD);
+
+        // Camera eases back as the book settles.
+        tl.fromTo(S + "#d07-cam",
+          { scale: 1.02, xPercent: -1 },
+          { scale: 1.12, xPercent: 1.4, duration: SLOT, ease: "sine.inOut" }, 0);
+        tl.fromTo(S + "#d07-plane",
+          { rotateX: 22, rotateZ: -2.4 },
+          { rotateX: 27, rotateZ: -5.5, duration: SLOT, ease: "sine.inOut" }, 0);
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["d07-close"] = tl;
+      })();
+    </script>
+  </body>
+</html>

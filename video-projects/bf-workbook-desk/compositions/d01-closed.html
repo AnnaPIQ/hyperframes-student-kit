@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>d01-closed</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      [data-composition-id="d01-closed"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="d01-closed"] { position: absolute; inset: 0; overflow: hidden; }
+
+      /* Camera: never axis-aligned, always drifting */
+      [data-composition-id="d01-closed"] .cam {
+        position: absolute;
+        inset: 0;
+        perspective: 1700px;
+      }
+      /* The desk plane the book lies on */
+      [data-composition-id="d01-closed"] .plane {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 0;
+        height: 0;
+        transform-style: preserve-3d;
+        transform: rotateX(26deg) rotateZ(-7deg);
+      }
+      /* Shadow sits on the plane, so it foreshortens with it */
+      [data-composition-id="d01-closed"] .cast {
+        position: absolute;
+        left: -300px;
+        top: -370px;
+        width: 620px;
+        height: 790px;
+        border-radius: 16px;
+        background: rgba(1, 8, 18, 0.82);
+        filter: blur(38px);
+        transform: translate(34px, 44px);
+      }
+      [data-composition-id="d01-closed"] .book {
+        position: absolute;
+        left: -302px;
+        top: -388px;
+        width: 604px;
+        height: 782px;
+        transform-style: preserve-3d;
+      }
+      /* Page block: a few slivers of paper edge under the cover */
+      [data-composition-id="d01-closed"] .edge {
+        position: absolute;
+        inset: 0;
+        border-radius: 3px;
+      }
+      [data-composition-id="d01-closed"] .e1 { transform: translate(14px, 11px); background: #b9c9db; }
+      [data-composition-id="d01-closed"] .e2 { transform: translate(9px, 7px);   background: #d4dfec; }
+      [data-composition-id="d01-closed"] .e3 { transform: translate(4px, 3px);   background: #edf2f8; }
+
+      [data-composition-id="d01-closed"] .paper {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border-radius: 3px;
+        background: #ffffff;
+        box-shadow:
+          0 12px 26px -10px rgba(1, 8, 18, 0.8),
+          0 0 0 1px rgba(156, 212, 255, 0.14);
+      }
+      [data-composition-id="d01-closed"] .paper img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      /* Light falling across the sheet — this is what turns a flat render into paper */
+      [data-composition-id="d01-closed"] .lit {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          116deg,
+          rgba(226, 240, 255, 0.22) 0%,
+          rgba(226, 240, 255, 0.04) 30%,
+          rgba(3, 16, 32, 0.07) 68%,
+          rgba(3, 16, 32, 0.22) 100%
+        );
+      }
+      /* A single specular sweep travelling across the cover */
+      [data-composition-id="d01-closed"] .sweep {
+        position: absolute;
+        top: -40%;
+        left: 0;
+        width: 46%;
+        height: 180%;
+        background: linear-gradient(
+          104deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.11) 42%,
+          rgba(255, 255, 255, 0.22) 52%,
+          rgba(255, 255, 255, 0.11) 62%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        filter: blur(5px);
+      }
+      /* Out-of-focus paper in the near foreground — sells the lens */
+      [data-composition-id="d01-closed"] .fg {
+        position: absolute;
+        left: -8%;
+        bottom: -16%;
+        width: 62%;
+        height: 26%;
+        border-radius: 8px;
+        background: linear-gradient(170deg, rgba(232, 240, 250, 0.5) 0%, rgba(150, 175, 205, 0.28) 100%);
+        filter: blur(26px);
+        transform: rotate(-5deg);
+        opacity: 0.55;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="d01-closed" data-width="1920" data-height="1080" data-duration="2.8">
+      <div class="cam" id="d01-cam">
+        <div class="plane" id="d01-plane">
+          <div class="cast" id="d01-cast"></div>
+          <div class="book" id="d01-book">
+            <div class="edge e1"></div>
+            <div class="edge e2"></div>
+            <div class="edge e3"></div>
+            <div class="paper">
+              <img src="assets/pages/p01.png" alt="The Black Friday Profit Plan" />
+              <div class="lit"></div>
+              <div class="sweep" id="d01-sweep"></div>
+            </div>
+          </div>
+        </div>
+        <div class="fg" id="d01-fg"></div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="d01-closed"] ';
+        const SLOT = 2.8;
+        const tl = gsap.timeline({ paused: true });
+
+        // The book settles onto the desk — it lands, it does not fly in.
+        tl.fromTo(S + "#d01-book",
+          { y: -26, scale: 1.035, opacity: 0 },
+          { y: 0, scale: 1, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.05);
+        // Its shadow tightens as it comes to rest — the weight cue
+        tl.fromTo(S + "#d01-cast",
+          { scale: 1.09, opacity: 0.35 },
+          { scale: 1, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.05);
+
+        // Camera drift. Slow, unhurried, never still.
+        tl.fromTo(S + "#d01-cam",
+          { scale: 1.02, xPercent: 1.2, yPercent: 0.6 },
+          { scale: 1.09, xPercent: -1, yPercent: -0.8, duration: SLOT, ease: "sine.inOut" }, 0);
+        // The desk plane rolls a degree or two under it
+        tl.fromTo(S + "#d01-plane",
+          { rotateX: 28, rotateZ: -8.5 },
+          { rotateX: 23, rotateZ: -5, duration: SLOT, ease: "sine.inOut" }, 0);
+
+        // Specular sweep rakes across the cover once.
+        tl.fromTo(S + "#d01-sweep",
+          { xPercent: -190 },
+          { xPercent: 330, duration: 1.5, ease: "power2.inOut" }, 0.5);
+
+        // Foreground paper drifts out of focus in the near field.
+        tl.fromTo(S + "#d01-fg",
+          { xPercent: -6, opacity: 0.38 },
+          { xPercent: 4, opacity: 0.62, duration: SLOT, ease: "sine.inOut" }, 0);
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["d01-closed"] = tl;
+      })();
+    </script>
+  </body>
+</html>

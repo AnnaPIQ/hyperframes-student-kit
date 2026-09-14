@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>d06-sheets</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      [data-composition-id="d06-sheets"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="d06-sheets"] { position: absolute; inset: 0; overflow: hidden; }
+
+      [data-composition-id="d06-sheets"] .cam { position: absolute; inset: 0; perspective: 1900px; }
+      [data-composition-id="d06-sheets"] .plane {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 0;
+        height: 0;
+        transform-style: preserve-3d;
+        transform: rotateX(30deg) rotateZ(-4deg);
+      }
+      /* Each sheet is a slot (static placement) + a card (animated) */
+      [data-composition-id="d06-sheets"] .slot {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 456px;
+        height: 590px;
+        margin: -295px 0 0 -228px;
+      }
+      [data-composition-id="d06-sheets"] .s1 { transform: translate(-352px, 34px) rotate(-11deg); z-index: 3; }
+      [data-composition-id="d06-sheets"] .s2 { transform: translate(6px, -14px) rotate(2.5deg); z-index: 5; }
+      [data-composition-id="d06-sheets"] .s3 { transform: translate(358px, 46px) rotate(11.5deg); z-index: 4; }
+
+      [data-composition-id="d06-sheets"] .card {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border-radius: 2px;
+        background: #ffffff;
+        box-shadow:
+          0 14px 26px -10px rgba(1, 8, 18, 0.85),
+          0 54px 92px -34px rgba(1, 8, 18, 0.9),
+          0 0 0 1px rgba(156, 212, 255, 0.2);
+      }
+      [data-composition-id="d06-sheets"] .card img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      [data-composition-id="d06-sheets"] .lit {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          116deg,
+          rgba(226, 240, 255, 0.22) 0%,
+          rgba(226, 240, 255, 0.03) 32%,
+          rgba(3, 16, 32, 0.07) 70%,
+          rgba(3, 16, 32, 0.22) 100%
+        );
+      }
+      /* Out-of-focus paper edge in the near field */
+      [data-composition-id="d06-sheets"] .fg {
+        position: absolute;
+        right: -10%;
+        bottom: -18%;
+        width: 70%;
+        height: 30%;
+        border-radius: 10px;
+        background: linear-gradient(170deg, rgba(232, 240, 250, 0.42) 0%, rgba(150, 175, 205, 0.24) 100%);
+        filter: blur(30px);
+        transform: rotate(7deg);
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="d06-sheets" data-width="1920" data-height="1080" data-duration="2.8">
+      <div class="cam" id="d06-cam">
+        <div class="plane" id="d06-plane">
+          <div class="slot s1">
+            <div class="card sh"><img src="assets/pages/print-fulfilment.png" alt="Fulfilment questions" /><div class="lit"></div></div>
+          </div>
+          <div class="slot s3">
+            <div class="card sh"><img src="assets/pages/print-repeat.png" alt="Repeat customer questions" /><div class="lit"></div></div>
+          </div>
+          <div class="slot s2">
+            <div class="card sh"><img src="assets/pages/print-mobile.png" alt="Mobile checkout checklist" /><div class="lit"></div></div>
+          </div>
+        </div>
+        <div class="fg" id="d06-fg"></div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="d06-sheets"] ';
+        const SLOT = 2.8;
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo(S + "#d06-cam",
+          { opacity: 0, yPercent: 2.6, filter: "blur(16px)" },
+          { opacity: 1, yPercent: 0, filter: "blur(0px)", duration: 0.38, ease: "power2.out" }, 0);
+
+        // The sheets are dealt across the desk, not faded in. Each slides from
+        // off-frame right and settles, the way paper pushed across a table does.
+        tl.fromTo(S + ".sh",
+          { x: 980, y: 150, rotate: 9, opacity: 0 },
+          { x: 0, y: 0, rotate: 0, opacity: 1,
+            duration: 0.78, ease: "power3.out", stagger: 0.14 }, 0.14);
+
+        // Camera drifts across them.
+        tl.fromTo(S + "#d06-cam",
+          { scale: 1.1, xPercent: 2.2 },
+          { scale: 1, xPercent: -2, duration: SLOT, ease: "sine.inOut" }, 0);
+        tl.fromTo(S + "#d06-plane",
+          { rotateX: 33, rotateZ: -6 },
+          { rotateX: 27, rotateZ: -2, duration: SLOT, ease: "sine.inOut" }, 0);
+        tl.fromTo(S + "#d06-fg",
+          { xPercent: 6, opacity: 0.3 },
+          { xPercent: -4, opacity: 0.58, duration: SLOT, ease: "sine.inOut" }, 0);
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["d06-sheets"] = tl;
+      })();
+    </script>
+  </body>
+</html>

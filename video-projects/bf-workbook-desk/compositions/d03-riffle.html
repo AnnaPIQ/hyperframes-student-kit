@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>d03-riffle</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      [data-composition-id="d03-riffle"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="d03-riffle"] { position: absolute; inset: 0; overflow: hidden; }
+
+      [data-composition-id="d03-riffle"] .cam { position: absolute; inset: 0; perspective: 2100px; }
+      [data-composition-id="d03-riffle"] .plane {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 0;
+        height: 0;
+        transform-style: preserve-3d;
+        transform: rotateX(23deg) rotateZ(-3deg);
+      }
+      [data-composition-id="d03-riffle"] .spread {
+        position: absolute;
+        left: -520px;
+        top: -392px;
+        width: 1040px;
+        height: 673px;
+        transform-style: preserve-3d;
+      }
+      [data-composition-id="d03-riffle"] .cast {
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 1040px;
+        height: 673px;
+        border-radius: 16px;
+        background: rgba(1, 8, 18, 0.82);
+        filter: blur(34px);
+      }
+      [data-composition-id="d03-riffle"] .half {
+        position: absolute;
+        top: 0;
+        width: 520px;
+        height: 673px;
+        overflow: hidden;
+        border-radius: 2px;
+        background: #ffffff;
+        box-shadow: 0 0 0 1px rgba(156, 212, 255, 0.18);
+      }
+      [data-composition-id="d03-riffle"] .l { left: 0; }
+      [data-composition-id="d03-riffle"] .r {
+        left: 520px;
+        box-shadow:
+          5px 6px 0 -1px #dde6f1,
+          11px 12px 0 -2px #b9c9db,
+          0 0 0 1px rgba(156, 212, 255, 0.18);
+      }
+      [data-composition-id="d03-riffle"] .half img,
+      [data-composition-id="d03-riffle"] .face img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      [data-composition-id="d03-riffle"] .lit {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          116deg,
+          rgba(226, 240, 255, 0.2) 0%,
+          rgba(226, 240, 255, 0.03) 32%,
+          rgba(3, 16, 32, 0.07) 70%,
+          rgba(3, 16, 32, 0.2) 100%
+        );
+      }
+      /* Gutter shadow down the spine — the crease where the two halves meet */
+      [data-composition-id="d03-riffle"] .gutter {
+        position: absolute;
+        left: 470px;
+        top: 0;
+        width: 100px;
+        height: 673px;
+        background: linear-gradient(
+          90deg,
+          rgba(1, 8, 18, 0) 0%,
+          rgba(1, 8, 18, 0.34) 46%,
+          rgba(1, 8, 18, 0.34) 54%,
+          rgba(1, 8, 18, 0) 100%
+        );
+      }
+      [data-composition-id="d03-riffle"] .leaf {
+        position: absolute;
+        left: 520px;
+        top: 0;
+        width: 520px;
+        height: 673px;
+        transform-style: preserve-3d;
+        transform-origin: left center;
+      }
+      [data-composition-id="d03-riffle"] .face {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border-radius: 2px;
+        background: #ffffff;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        box-shadow: 0 8px 26px -10px rgba(1, 8, 18, 0.65), 0 0 0 1px rgba(156, 212, 255, 0.18);
+      }
+      [data-composition-id="d03-riffle"] .face.back { transform: rotateY(180deg); }
+      [data-composition-id="d03-riffle"] .shade {
+        position: absolute;
+        inset: 0;
+        background: #03101f;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="d03-riffle" data-width="1920" data-height="1080" data-duration="2.8">
+      <div class="cam" id="d03-cam">
+        <div class="plane" id="d03-plane">
+          <div class="spread" id="d03-spread">
+            <div class="cast"></div>
+
+            <!-- The spread the leaves are turning across -->
+            <div class="half l"><img src="assets/pages/p02.png" alt="" /><div class="lit"></div></div>
+            <div class="half r"><img src="assets/pages/p18.png" alt="" /><div class="lit"></div></div>
+
+            <!-- Three leaves, stacked on the right, turned in sequence -->
+            <div class="leaf lf" id="d03-l1" style="z-index: 30">
+              <div class="face front"><img src="assets/pages/p03.png" alt="" /><div class="lit"></div><div class="shade sh-f"></div></div>
+              <div class="face back"><img src="assets/pages/p07.png" alt="" /><div class="lit"></div><div class="shade sh-b"></div></div>
+            </div>
+            <div class="leaf lf" id="d03-l2" style="z-index: 29">
+              <div class="face front"><img src="assets/pages/p08.png" alt="" /><div class="lit"></div><div class="shade sh-f"></div></div>
+              <div class="face back"><img src="assets/pages/p09.png" alt="" /><div class="lit"></div><div class="shade sh-b"></div></div>
+            </div>
+            <div class="leaf lf" id="d03-l3" style="z-index: 28">
+              <div class="face front"><img src="assets/pages/p12.png" alt="" /><div class="lit"></div><div class="shade sh-f"></div></div>
+              <div class="face back"><img src="assets/pages/p13.png" alt="" /><div class="lit"></div><div class="shade sh-b"></div></div>
+            </div>
+
+            <div class="gutter" style="z-index: 40"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="d03-riffle"] ';
+        const SLOT = 2.8;
+        const tl = gsap.timeline({ paused: true });
+
+        // No blur on the way in — a filter on an ancestor flattens the 3D turns.
+        tl.fromTo(S + "#d03-cam",
+          { opacity: 0, yPercent: 2.5 },
+          { opacity: 1, yPercent: 0, duration: 0.36, ease: "power2.out" }, 0);
+
+        // Three leaves go over in sequence. Each turn is quick; the overlap is
+        // what makes it read as riffling rather than three separate page turns.
+        const LEAVES = [
+          { id: "#d03-l1", at: 0.28, d: 0.66, z: 20 },
+          { id: "#d03-l2", at: 0.6,  d: 0.66, z: 21 },
+          { id: "#d03-l3", at: 0.92, d: 0.7,  z: 22 },
+        ];
+        LEAVES.forEach((L) => {
+          tl.fromTo(S + L.id, { rotateY: 0 }, { rotateY: -174, duration: L.d, ease: "power2.inOut" }, L.at);
+          tl.fromTo(S + L.id + " .sh-f", { opacity: 0 },    { opacity: 0.5, duration: L.d * 0.55, ease: "power1.in" }, L.at);
+          tl.fromTo(S + L.id + " .sh-b", { opacity: 0.72 }, { opacity: 0.06, duration: L.d, ease: "power2.out" }, L.at);
+          // Past the halfway point the leaf belongs to the left-hand stack, so
+          // its stacking order has to flip. z-index cannot tween — set it.
+          tl.set(S + L.id, { zIndex: L.z }, L.at + L.d * 0.5);
+        });
+
+        // Camera pulls back a little across the riffle.
+        tl.fromTo(S + "#d03-cam",
+          { scale: 1.12, xPercent: 1.5, yPercent: -1 },
+          { scale: 1, xPercent: -1.5, yPercent: 1, duration: SLOT, ease: "sine.inOut" }, 0);
+        tl.fromTo(S + "#d03-plane",
+          { rotateX: 26, rotateZ: -4.5 },
+          { rotateX: 20, rotateZ: -1.5, duration: SLOT, ease: "sine.inOut" }, 0);
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["d03-riffle"] = tl;
+      })();
+    </script>
+  </body>
+</html>

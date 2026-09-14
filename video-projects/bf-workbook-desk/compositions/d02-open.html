@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>d02-open</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      [data-composition-id="d02-open"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="d02-open"] { position: absolute; inset: 0; overflow: hidden; }
+
+      [data-composition-id="d02-open"] .cam { position: absolute; inset: 0; perspective: 2000px; }
+      [data-composition-id="d02-open"] .plane {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 0;
+        height: 0;
+        transform-style: preserve-3d;
+        transform: rotateX(24deg) rotateZ(-4deg);
+      }
+      /* Spread is two page-widths; the closed book starts on its right half */
+      [data-composition-id="d02-open"] .spread {
+        position: absolute;
+        left: -520px;
+        top: -392px;
+        width: 1040px;
+        height: 673px;
+        transform-style: preserve-3d;
+      }
+      [data-composition-id="d02-open"] .cast {
+        position: absolute;
+        left: 548px;
+        top: 42px;
+        width: 520px;
+        height: 673px;
+        border-radius: 14px;
+        background: rgba(1, 8, 18, 0.72);
+        filter: blur(34px);
+        transform-origin: left center;
+      }
+      [data-composition-id="d02-open"] .half {
+        position: absolute;
+        top: 0;
+        width: 520px;
+        height: 673px;
+        overflow: hidden;
+        border-radius: 2px;
+        background: #ffffff;
+        box-shadow: 0 0 0 1px rgba(156, 212, 255, 0.18);
+      }
+      [data-composition-id="d02-open"] .half img,
+      [data-composition-id="d02-open"] .face img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      [data-composition-id="d02-open"] .r {
+        left: 520px;
+        box-shadow:
+          5px 6px 0 -1px #dde6f1,
+          11px 12px 0 -2px #b9c9db,
+          0 0 0 1px rgba(156, 212, 255, 0.18);
+      }
+      /* Raking light, baked into every sheet */
+      [data-composition-id="d02-open"] .lit {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          116deg,
+          rgba(226, 240, 255, 0.2) 0%,
+          rgba(226, 240, 255, 0.03) 32%,
+          rgba(3, 16, 32, 0.07) 70%,
+          rgba(3, 16, 32, 0.2) 100%
+        );
+      }
+      /* Shadow the closed cover throws on the page beneath it */
+      [data-composition-id="d02-open"] .under-shadow {
+        position: absolute;
+        inset: 0;
+        transform-origin: left center;
+        background: linear-gradient(90deg, rgba(1, 8, 18, 0.72) 0%, rgba(1, 8, 18, 0.34) 55%, rgba(1, 8, 18, 0.12) 100%);
+      }
+      /* Shadow the turning leaf throws where it is about to land */
+      [data-composition-id="d02-open"] .land-shadow {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 520px;
+        height: 673px;
+        transform-origin: right center;
+        border-radius: 12px;
+        background: rgba(1, 8, 18, 0.55);
+        filter: blur(36px);
+        opacity: 0;
+      }
+
+      /* ── The turning leaf ─────────────────────────────────────────────────── */
+      [data-composition-id="d02-open"] .leaf {
+        position: absolute;
+        left: 520px;
+        top: 0;
+        width: 520px;
+        height: 673px;
+        transform-style: preserve-3d;
+        transform-origin: left center;
+      }
+      [data-composition-id="d02-open"] .face {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border-radius: 2px;
+        background: #ffffff;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        box-shadow: 0 10px 30px -10px rgba(1, 8, 18, 0.7), 0 0 0 1px rgba(156, 212, 255, 0.18);
+      }
+      [data-composition-id="d02-open"] .face.back { transform: rotateY(180deg); }
+      /* Per-face shading, driven by the turn angle */
+      [data-composition-id="d02-open"] .shade {
+        position: absolute;
+        inset: 0;
+        background: #03101f;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="d02-open" data-width="1920" data-height="1080" data-duration="2.7">
+      <div class="cam" id="d02-cam">
+        <div class="plane" id="d02-plane">
+          <div class="spread" id="d02-spread">
+            <div class="cast" id="d02-cast"></div>
+            <div class="land-shadow" id="d02-land"></div>
+
+            <!-- Right page, revealed as the cover lifts off it -->
+            <div class="half r">
+              <img src="assets/pages/p03.png" alt="" />
+              <div class="lit"></div>
+              <div class="under-shadow" id="d02-under"></div>
+            </div>
+
+            <!-- The cover: front is the cover, back is the contents page -->
+            <div class="leaf" id="d02-leaf">
+              <div class="face front">
+                <img src="assets/pages/p01.png" alt="The Black Friday Profit Plan" />
+                <div class="lit"></div>
+                <div class="shade" id="d02-shade-f"></div>
+              </div>
+              <div class="face back">
+                <img src="assets/pages/p02.png" alt="Contents" />
+                <div class="lit"></div>
+                <div class="shade" id="d02-shade-b"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="d02-open"] ';
+        const SLOT = 2.7;
+        const T0 = 0.3;    // the turn starts
+        const TD = 1.3;    // and takes this long
+        const tl = gsap.timeline({ paused: true });
+
+        // Arrives without blur: a filter on an ancestor flattens the 3D turn.
+        tl.fromTo(S + "#d02-cam",
+          { opacity: 0, yPercent: 3 },
+          { opacity: 1, yPercent: 0, duration: 0.36, ease: "power2.out" }, 0);
+
+        // Closed book sits on the right half; the spread slides left as it opens
+        // so the book stays centred on its own mass, the way a real one does.
+        tl.fromTo(S + "#d02-spread",
+          { x: -260 },
+          { x: 0, duration: TD, ease: "power2.inOut" }, T0);
+
+        // The turn itself.
+        tl.fromTo(S + "#d02-leaf",
+          { rotateY: 0 },
+          { rotateY: -172, duration: TD, ease: "power2.inOut" }, T0);
+
+        // Cover face darkens as it goes edge-on; contents face lightens as it lands.
+        tl.fromTo(S + "#d02-shade-f", { opacity: 0 }, { opacity: 0.52, duration: TD * 0.55, ease: "power1.in" }, T0);
+        tl.fromTo(S + "#d02-shade-b", { opacity: 0.74 }, { opacity: 0.05, duration: TD, ease: "power2.out" }, T0);
+
+        // The shadow the cover was throwing on the right page retreats to the spine.
+        tl.fromTo(S + "#d02-under",
+          { scaleX: 1, opacity: 1 },
+          { scaleX: 0.04, opacity: 0, duration: TD * 0.8, ease: "power2.out" }, T0);
+
+        // A new shadow grows where the leaf is about to come down.
+        tl.fromTo(S + "#d02-land",
+          { scaleX: 0.1, opacity: 0 },
+          { scaleX: 1, opacity: 0.55, duration: TD * 0.7, ease: "power2.in" }, T0 + TD * 0.3);
+
+        // The cast shadow doubles in width as one page becomes two.
+        tl.fromTo(S + "#d02-cast",
+          { scaleX: 1, x: 0 },
+          { scaleX: 2, x: -520, duration: TD, ease: "power2.inOut" }, T0);
+
+        // Camera keeps moving through the whole shot.
+        tl.fromTo(S + "#d02-cam",
+          { scale: 1.16, xPercent: -2 },
+          { scale: 1.02, xPercent: 1, duration: SLOT, ease: "sine.inOut" }, 0);
+        tl.fromTo(S + "#d02-plane",
+          { rotateX: 27, rotateZ: -5.5 },
+          { rotateX: 21, rotateZ: -2, duration: SLOT, ease: "sine.inOut" }, 0);
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["d02-open"] = tl;
+      })();
+    </script>
+  </body>
+</html>

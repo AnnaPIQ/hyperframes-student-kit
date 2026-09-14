@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>The Black Friday Profit Plan — desk b-roll</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face {
+        font-family: "Rethink Sans";
+        font-style: normal;
+        font-weight: 400 800;
+        font-display: block;
+        src: url(assets/fonts/RethinkSans.woff2) format("woff2");
+      }
+      @font-face {
+        font-family: "Hedvig Letters Serif";
+        font-style: normal;
+        font-weight: 400;
+        font-display: block;
+        src: url(assets/fonts/HedvigLettersSerif.woff2) format("woff2");
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #071d35;
+        font-family: "Rethink Sans", system-ui, sans-serif;
+        color: #ffffff;
+      }
+      .beat-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1920px;
+        height: 1080px;
+      }
+
+      /* ── The desk: one matte surface, one light, everything else is shadow ── */
+      #desk {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: #071d35;
+      }
+      /* Key light — a single soft pool from the upper left. It drifts all piece. */
+      #keylight {
+        position: absolute;
+        left: -14%;
+        top: -26%;
+        width: 118%;
+        height: 118%;
+        z-index: 2;
+        background: radial-gradient(
+          46% 42% at 36% 26%,
+          rgba(200, 228, 255, 0.28) 0%,
+          rgba(124, 174, 228, 0.12) 38%,
+          rgba(7, 29, 53, 0) 66%
+        );
+      }
+      /* Warm bounce off the desk, lower right — keeps the shadow side from dying */
+      #bounce {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: radial-gradient(52% 44% at 76% 92%, rgba(255, 128, 86, 0.1) 0%, rgba(7, 29, 53, 0) 64%);
+      }
+      /* Corner fall-off — the surface runs out of light before it runs out of frame */
+      #falloff {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        pointer-events: none;
+        background: radial-gradient(86% 96% at 42% 34%, rgba(2, 12, 24, 0) 46%, rgba(2, 12, 24, 0.72) 100%);
+      }
+
+      /* ── Exposure bloom: the seam between shots reads as a light change ────── */
+      .bloom {
+        position: absolute;
+        inset: 0;
+        z-index: 30;
+        opacity: 0;
+        pointer-events: none;
+        background: radial-gradient(64% 60% at 38% 30%, rgba(214, 234, 255, 0.5) 0%, rgba(214, 234, 255, 0) 72%);
+      }
+
+      /* ── Lens grade ────────────────────────────────────────────────────────── */
+      #vignette {
+        position: absolute;
+        inset: 0;
+        z-index: 40;
+        pointer-events: none;
+        background: radial-gradient(72% 76% at 46% 44%, rgba(1, 8, 18, 0) 42%, rgba(1, 8, 18, 0.72) 100%);
+      }
+      /* Deterministic CSS grain — denser and a touch warm, so paper reads as paper */
+      #grain {
+        position: absolute;
+        inset: 0;
+        z-index: 41;
+        pointer-events: none;
+        background-image:
+          radial-gradient(rgba(255, 246, 236, 0.05) 1px, rgba(255, 255, 255, 0) 1px),
+          radial-gradient(rgba(255, 255, 255, 0.035) 1px, rgba(255, 255, 255, 0) 1px),
+          radial-gradient(rgba(0, 0, 0, 0.07) 1px, rgba(0, 0, 0, 0) 1px);
+        background-size: 3px 3px, 4px 4px, 6px 6px;
+        background-position: 0 0, 1px 2px, 2px 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="bf-workbook-desk"
+      data-start="0"
+      data-duration="21.4"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- ═══ The surface and its light ═══ -->
+      <div id="desk"></div>
+      <div id="keylight"></div>
+      <div id="bounce"></div>
+      <div id="falloff"></div>
+
+      <!-- ═══ Shot 01 — Closed on the desk (0.0 → 2.8) ═══ -->
+      <div class="beat-layer" id="beat-d01" style="z-index: 11"
+        data-composition-id="d01-closed"
+        data-composition-src="compositions/d01-closed.html"
+        data-start="0" data-duration="2.8" data-track-index="1"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 02 — The cover opens (2.4 → 5.1) ═══ -->
+      <div class="beat-layer" id="beat-d02" style="z-index: 12"
+        data-composition-id="d02-open"
+        data-composition-src="compositions/d02-open.html"
+        data-start="2.4" data-duration="2.7" data-track-index="2"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 03 — Riffling through (4.7 → 7.5) ═══ -->
+      <div class="beat-layer" id="beat-d03" style="z-index: 13"
+        data-composition-id="d03-riffle"
+        data-composition-src="compositions/d03-riffle.html"
+        data-start="4.7" data-duration="2.8" data-track-index="3"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 04 — Macro: ticking the checklist (7.1 → 10.4) ═══ -->
+      <div class="beat-layer" id="beat-d04" style="z-index: 14"
+        data-composition-id="d04-tick"
+        data-composition-src="compositions/d04-tick.html"
+        data-start="7.1" data-duration="3.3" data-track-index="4"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 05 — Macro: the answer (10.0 → 12.9) ═══ -->
+      <div class="beat-layer" id="beat-d05" style="z-index: 15"
+        data-composition-id="d05-answer"
+        data-composition-src="compositions/d05-answer.html"
+        data-start="10" data-duration="2.9" data-track-index="5"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 06 — The printed sheets (12.5 → 15.3) ═══ -->
+      <div class="beat-layer" id="beat-d06" style="z-index: 16"
+        data-composition-id="d06-sheets"
+        data-composition-src="compositions/d06-sheets.html"
+        data-start="12.5" data-duration="2.8" data-track-index="6"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 07 — The book closes (14.9 → 17.6) ═══ -->
+      <div class="beat-layer" id="beat-d07" style="z-index: 17"
+        data-composition-id="d07-close"
+        data-composition-src="compositions/d07-close.html"
+        data-start="14.9" data-duration="2.7" data-track-index="7"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 08 — Overhead end card (17.2 → 21.4) ═══ -->
+      <div class="beat-layer" id="beat-d08" style="z-index: 18"
+        data-composition-id="d08-card"
+        data-composition-src="compositions/d08-card.html"
+        data-start="17.2" data-duration="4.2" data-track-index="8"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Exposure blooms — one per cut ═══ -->
+      <div class="bloom" id="bl-1"></div>
+      <div class="bloom" id="bl-2"></div>
+      <div class="bloom" id="bl-3"></div>
+      <div class="bloom" id="bl-4"></div>
+      <div class="bloom" id="bl-5"></div>
+      <div class="bloom" id="bl-6"></div>
+      <div class="bloom" id="bl-7"></div>
+
+      <div id="vignette"></div>
+      <div id="grain"></div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const DUR = 21.4;
+        const tl = gsap.timeline({ paused: true });
+
+        // The key light drifts across the desk for the whole piece, so even a
+        // held frame is changing. This is the camera-never-sleeps rule, done
+        // with light instead of movement.
+        tl.fromTo("#keylight",
+          { xPercent: -3, yPercent: -2, scale: 1.04 },
+          { xPercent: 4, yPercent: 3, scale: 1.12, duration: DUR, ease: "sine.inOut" }, 0);
+        tl.fromTo("#bounce",
+          { opacity: 0.75 },
+          { opacity: 1, duration: DUR, ease: "sine.inOut" }, 0);
+
+        // Vignette breathes like an iris.
+        tl.to("#vignette", { opacity: 0.88, duration: 4.4, ease: "sine.inOut", yoyo: true, repeat: 4 }, 0);
+
+        // Exposure bloom over each seam — a light change, not a graphic wipe.
+        const CUTS = [2.4, 4.7, 7.1, 10.0, 12.5, 14.9, 17.2];
+        CUTS.forEach((cut, i) => {
+          const sel = "#bl-" + (i + 1);
+          tl.fromTo(sel, { opacity: 0, scale: 0.94 },
+            { opacity: 1, scale: 1.04, duration: 0.16, ease: "power2.out" }, cut - 0.12);
+          tl.to(sel, { opacity: 0, scale: 1.1, duration: 0.26, ease: "power2.in" }, cut + 0.04);
+        });
+
+        tl.to({}, { duration: DUR }, 0); // Law #11 anchor
+        window.__timelines["bf-workbook-desk"] = tl;
+      })();
+    </script>
+  </body>
+</html>
