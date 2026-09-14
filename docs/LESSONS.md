@@ -72,6 +72,53 @@ efficient over time instead of relearning the same lessons.
   `kling3.0_pro`, `veo3.1`, `seedance2`, `gen4.5`, etc. via `npm run gen --model <id>`.
   Keep Runway as the single integration; pick the model per shot.
 
+## Playwright screen-recording real web assets (b-roll capture)
+
+- **Chromium version mismatch → "Executable doesn't exist".** The container provisions
+  a browser at `/opt/pw-browsers/chromium`, but the npm `playwright` package pins a
+  newer build number and looks for that instead. Fix: pass
+  `executablePath: '/opt/pw-browsers/chromium'` to `chromium.launch()`. Never run
+  `playwright install` — it is not needed and the browser is already there.
+- **Every https:// navigation dies with `ERR_CONNECTION_RESET` (curl works fine).**
+  The agent proxy's relay cannot carry Chromium's TLS 1.3 ClientHello; the tunnel
+  closes mid-handshake. Fix: launch with `--ssl-version-max=tls1.2` **and**
+  `proxy: { server: process.env.https_proxy }`. Verify with example.com before
+  blaming the target site.
+- **`page.mouse.wheel()` does nothing in Chromium's PDF viewer.** The viewer is an
+  out-of-process plugin frame. Fix: click the document to focus it, then scroll with
+  `keyboard.press('ArrowDown')` (~40px per press, at any zoom).
+- **The recorded video has no mouse pointer.** Playwright's screencast never draws the
+  OS cursor, so "move the cursor" beats are invisible. Fix: inject a fixed-position
+  SVG arrow with `pointer-events:none` and move it in lockstep with the real
+  `page.mouse`, so the real clicks still land where the arrow is drawn.
+- **`innerHTML` throws `This document requires 'TrustedHTML' assignment`** when
+  injecting into Google Sheets (Trusted Types CSP). Fix: build injected nodes with
+  `createElement` / `createElementNS` and `setAttribute`.
+- **Fixed-step animation loops overshoot their duration ~2x.** Each `mouse.move` or
+  `evaluate` costs a CDP round-trip, so a 60-step "700ms" glide lands near 1.5s. Fix:
+  pace loops against `Date.now()` (drive `fn(elapsed/ms)`) rather than stepping a
+  fixed count with a fixed delay.
+- **Playwright writes VFR VP8 `.webm`, and the take is much longer than the clip.**
+  Have the capture script stamp in/out marks from a clock started at page creation
+  (they align with video time), then trim with `ffmpeg -ss <in> -t <length>` and
+  `-vf fps=30` to get CFR. Trim to the *declared* clip length, not the marked window,
+  so every deliverable is exactly the duration the composition was built for.
+- **Google Sheets `/preview` vs `/edit` for b-roll.** `/preview` is a clean Drive
+  viewer but reads as a document; `/edit` keeps menus, formula bar, row/column headers
+  and the sheet tab, which is what makes it read instantly as a spreadsheet. A sheet
+  shared "anyone with the link can view" opens `/edit` anonymously in View-only mode —
+  cells can still be selected (selection box + formula bar update), but **nothing can
+  be typed**. Use a real interactive web tool for any "type a value, watch it
+  recalculate" beat.
+- **Hyperframes lint: `video_nested_in_timed_element`.** Don't put `data-start` on both
+  a `<video>` and its wrapper — the frame extractor and the visibility window then
+  disagree. Time one of them; leave the card wrapper untimed.
+- **Hyperframes lint: `invalid_parent_traversal_in_asset_path`.** Asset paths inside
+  `compositions/*.html` must be root-relative (`assets/x.png`), not `../assets/x.png`,
+  because compositions are served with the project root as their base URL.
+- **Render UI recordings with `--video-frame-format png`.** JPEG frame extraction
+  softens small UI text and rings high-contrast edges.
+
 ## Housekeeping
 
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat

@@ -17,7 +17,13 @@ node scripts/prep-captures.mjs        # trim to the marked ~3s window -> assets/
 node scripts/build-compositions.mjs   # generate compositions/<clip>-<ratio>.html (+ index.html)
 node scripts/lint-all.mjs             # hyperframes lint over every generated composition
 node scripts/render-all.mjs           # render every clip x ratio -> renders/broll/<clip>/<ratio>.mp4
+node scripts/build-index.mjs          # write broll-index.json from clips.json + the real renders
 ```
+
+`clips.json` is the manifest: it declares each clip's name, what it shows, the
+shipped duration and its source URL. `prep-captures` trims to the declared
+duration and `build-compositions` builds to the same number, so a clip and its
+composition can never disagree about length.
 
 `broll-index.json` at the project root describes what each clip shows, its
 duration, its ratios and its source URL.

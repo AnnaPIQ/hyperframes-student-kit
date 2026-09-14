@@ -2,8 +2,25 @@
   {
     "name": "workbook",
     "title": "The Black Friday Profit Plan workbook",
-    "shows": "The real Black Friday Profit Plan PDF open in a browser PDF viewer — cover page, then a smooth scroll through the contents into the 2026 Black Friday calendar spread.",
+    "shows": "The real Black Friday Profit Plan PDF open in a browser PDF viewer at 150% — holding on the cover, then a smooth scroll into the Contents spread showing all 8 parts across 51 pages.",
     "duration": 3.0,
-    "sourceUrl": "https://drive.google.com/file/d/1QJvDX6G023N6vwAcHqS6dth7tarrAMOj/view"
+    "sourceUrl": "https://drive.google.com/file/d/1QJvDX6G023N6vwAcHqS6dth7tarrAMOj/view",
+    "capture": "scripts/capture-workbook.mjs"
+  },
+  {
+    "name": "dashboard",
+    "title": "Profitability Dashboard sheet",
+    "shows": "The real EcomIQ Profitability Dashboard Google Sheet — the cursor tracks down the measures column selecting live cells (the selection box and formula bar follow), then the sheet scrolls through the annual rows into the Direction of Travel summary.",
+    "duration": 3.0,
+    "sourceUrl": "https://docs.google.com/spreadsheets/d/1TyUKGPZ5Y3MBfZ7-iOFyM_Bxd7oUcbK8hQTYguUmueM",
+    "capture": "scripts/capture-dashboard.mjs"
+  },
+  {
+    "name": "calculator",
+    "title": "True CAC Calculator",
+    "shows": "The real EcomIQ True CAC Calculator — the cursor selects the New customer ad spend field and types 42000, and the live result panel recalculates on every keystroke, landing on a true CAC of $77.48 against a reported $52.50.",
+    "duration": 3.0,
+    "sourceUrl": "https://page.ecomiq.com/cac-calculator-page",
+    "capture": "scripts/capture-calculator.mjs"
   }
 ]
