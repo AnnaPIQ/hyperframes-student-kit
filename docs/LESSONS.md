@@ -77,6 +77,51 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## Source media & footage prep
+
+- **Google Drive files over ~100MB can't come through the Drive connector.**
+  `download_file_content` returns base64, so a 2.6GB `.mov` is a non-starter. **Fix:**
+  for an "anyone with link" file, `curl` the interstitial
+  (`https://drive.google.com/uc?export=download&id=<ID>&confirm=t`), parse the
+  virus-scan form for its `uuid`, then fetch
+  `https://drive.usercontent.google.com/download?id=<ID>&export=download&confirm=t&uuid=<UUID>`.
+  Verify with a `-r 0-500000` range request before pulling gigabytes.
+- **Never trust a brief's stated runtime — probe the file.** A "~50s" A-roll was 43.08s
+  with a 1.4s silent lead-in and an off-take tail, which moved every downstream beat and
+  made the briefed end-card timing unreachable. **Fix:** `ffprobe` duration + a
+  `silencedetect` pass before writing any timings, and raise the delta before building.
+- **`ffmpeg -v error` silently suppresses `silencedetect`/`volumedetect` output** — those
+  filters log at info level, so you get an empty result and assume "no silence found".
+  **Fix:** drop `-v error` (or use `-loglevel info`) when reading filter metadata.
+- **`silencedetect` is the cheapest way to cut on speech.** Map phrase gaps once
+  (`-af silencedetect=noise=-45dB:d=0.3`), align them to the transcript, and place every
+  cut in a gap. Nothing lands mid-word and the edit stays in sync for free.
+- **A 16:9 talking head scaled+padded into 9:16 is an unusable letterbox strip.**
+  **Fix:** centre-crop instead. From a 4K source neither 9:16 (1215×2160) nor 4:5
+  (1728×2160) upscales, so cropping costs no resolution. Check where the subject sits
+  before assuming a centre crop works.
+- **Studio product shots on a white sweep read as a white box pasted on a navy canvas.**
+  **Fix:** floodfill the background out (`convert in.png -fuzz 14% -fill none -floodfill
+  +0+0 white`) so the product floats — but only when the subject has no white interior
+  elements. On a shot full of white worksheets the fill bleeds through and eats holes in
+  the paper; frame those as rounded white cards with a shadow instead.
+
+## Multi-ratio deliverables
+
+- **A second root-level composition file fails lint** (`multiple_root_compositions` — the
+  runtime discovers both entry points and double-plays audio). **Fix:** keep one
+  `index.html`, put the alternate ratio in `compositions/`, and render it with
+  `--composition compositions/<name>.html`. Asset paths there resolve from the *project
+  root*, so `assets/…` references carry over unchanged.
+- **Don't hand-maintain two ratios.** Generate the second from the master with a script
+  that swaps frame size, composition id and media source, then appends a geometry-only
+  override block. Structure, timings and copy can then never drift apart.
+- **Lint catches two GSAP traps worth knowing:** a second `fromTo` on the same target
+  needs `immediateRender: false` (otherwise the last-authored "from" becomes the resting
+  state for earlier seeks), and an exit tween that ends exactly on the next clip's start
+  boundary needs an inner non-`clip` wrapper carrying the tween plus a `tl.set(...)` hard
+  kill.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
