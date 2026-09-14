@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>EcomIQ B-roll — The Black Friday Profit Plan workbook (16x9)</title>
+    <!-- GSAP is vendored locally: a CDN cert failure freezes renders. -->
+    <script src="assets/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--brand-navy);
+        font-family: var(--font-sans);
+      }
+      /* Brand ground: navy with a cool bloom high and a warm one low, so the
+         white card separates from the background on every ratio. */
+      #bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(70% 42% at 50% 14%, rgba(156, 212, 255, 0.085) 0%, rgba(6, 40, 76, 0) 62%),
+          var(--brand-navy);
+      }
+      #bloom {
+        position: absolute;
+        left: -15%;
+        bottom: -28%;
+        width: 130%;
+        height: 55%;
+        background: var(--brand-gradient-2);
+        filter: blur(110px);
+        opacity: 0.10;
+      }
+      /* Vignette keeps the frame from reading flat-lit. Kept light so the clip
+         stays clean for compositing. */
+      #vignette {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(120% 80% at 50% 50%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.42) 100%);
+        pointer-events: none;
+      }
+      /* The card. Transform-only animation — never width/height/top/left, which
+         freezes video frames in Chrome. */
+      #card {
+        position: absolute;
+        left: 168px;
+        top: 45px;
+        width: 1584px;
+        height: 990px;
+        border-radius: 22px;
+        overflow: hidden;
+        background: #1b1b1b;
+        border: 1px solid rgba(156, 212, 255, 0.22);
+        box-shadow:
+          0 2px 0 rgba(255, 255, 255, 0.06) inset,
+          0 38px 90px rgba(0, 0, 0, 0.55),
+          0 8px 24px rgba(0, 0, 0, 0.4);
+        will-change: transform;
+      }
+      #shot {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="workbook-16x9"
+      data-composition-id="workbook-16x9"
+      data-start="0"
+      data-width="1920"
+      data-height="1080"
+      data-fps="30"
+    >
+      <div id="bg" class="clip" data-start="0" data-duration="3" data-track-index="0">
+        <div id="bloom"></div>
+      </div>
+
+      <!-- The card is an untimed visual container: timing a wrapper AND the
+           <video> inside it desynchronises the frame extractor from visibility.
+           No class="clip" on <video> either — it breaks playback. -->
+      <div id="card">
+        <video
+          id="shot"
+          src="assets/clips/workbook.mp4"
+          muted
+          data-start="0"
+          data-duration="3"
+          data-track-index="1"
+        ></video>
+      </div>
+
+      <div id="vignette" class="clip" data-start="0" data-duration="3" data-track-index="2"></div>
+    </div>
+
+    <script>
+      const SLOT = 3;
+      const tl = gsap.timeline({ paused: true });
+
+      // Slow push on the card — the "camera never sleeps" beat. No fade in or
+      // out, so this clip can be cut into an edit on any frame.
+      tl.fromTo(
+        "#card",
+        { scale: 0.985 },
+        { scale: 1.015, duration: SLOT, ease: "none" },
+        0
+      );
+
+      // Background bloom drifts against the push so the ground isn't static.
+      tl.fromTo(
+        "#bloom",
+        { xPercent: -2, yPercent: 2 },
+        { xPercent: 2, yPercent: -2, duration: SLOT, ease: "none" },
+        0
+      );
+
+      // Law 11: the timeline must fill its slot or the last frames go black.
+      tl.to({}, { duration: SLOT }, 0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["workbook-16x9"] = tl;
+    </script>
+  </body>
+</html>

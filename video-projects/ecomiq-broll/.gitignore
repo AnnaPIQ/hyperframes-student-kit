@@ -1,0 +1,4 @@
+# Raw Playwright takes — regenerable with scripts/capture-*.mjs, and only the
+# trimmed result in assets/clips/ is needed to render. The marks are kept so a
+# re-capture can be compared against the window that was actually shipped.
+captures/*.webm
