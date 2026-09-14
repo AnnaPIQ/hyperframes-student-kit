@@ -10,7 +10,8 @@
  *   2.767  the contribution-margin worksheet flies in, its total lights up
  *   3.733  the 2026 Black Friday calendar pushes in, Black Friday lights up
  *
- * Every cut is hidden inside a motion-blurred whip streak; nothing hard-cuts.
+ * Beats hand over on motion alone: the outgoing beat blows out through blur and
+ * scale as the next one resolves in. No streaks, no flashes, no hard cuts.
  * No logo, no captions, no end card — this stays a building block.
  */
 import fs from 'node:fs';
@@ -192,13 +193,6 @@ function template(ratioKey) {
         opacity: 0;
       }
 
-      /* ---- whip streaks --------------------------------------------------- */
-      .whip {
-        position: absolute; left: -60%; top: 50%; width: 220%; height: 26px;
-        margin-top: -13px; opacity: 0;
-        background: linear-gradient(90deg, transparent 0%, rgba(156,212,255,.95) 38%, #ffffff 50%, rgba(255,76,50,.95) 62%, transparent 100%);
-        filter: blur(13px);
-      }
     </style>
   </head>
   <body>
@@ -266,10 +260,6 @@ function template(ratioKey) {
           </div>
         </div>
 
-        <div class="whip w0"></div>
-        <div class="whip w1"></div>
-        <div class="whip w2"></div>
-        <div class="whip w3"></div>
       </div>
 
       <div id="vignette" class="clip" data-start="0" data-duration="${DUR}" data-track-index="3"></div>
@@ -282,7 +272,6 @@ function template(ratioKey) {
 
       // Beat marks, all on frame boundaries at ${FPS}fps.
       const B = { book: ${f(0)}, fan: ${f(28 / 30)}, stats: ${f(55 / 30)}, margin: ${f(83 / 30)}, cal: ${f(112 / 30)} };
-      const W = [${f(25 / 30)}, ${f(52 / 30)}, ${f(80 / 30)}, ${f(109 / 30)}];
 
       /* ---- the ground never sleeps (law 4) ---------------------------------- */
       tl.fromTo("#grid-floor", { yPercent: 0 }, { yPercent: -7, duration: SLOT, ease: "none" }, 0)
@@ -315,7 +304,7 @@ function template(ratioKey) {
         { r: 13, x: 166, y: 10 },
         { r: 26, x: 312, y: 44 },
       ];
-      tl.fromTo("#b-fan", { opacity: 0 }, { opacity: 1, duration: ${f(2 / 30)}, ease: "none" }, B.fan);
+      tl.fromTo("#b-fan", { opacity: 0 }, { opacity: 1, duration: ${f(5 / 30)}, ease: "none" }, B.fan);
       FAN.forEach((p, i) => {
         tl.fromTo("#b-fan .f" + i,
           { rotate: 0, x: 0, y: 0, scale: .72, opacity: 0, filter: "blur(14px)" },
@@ -328,7 +317,7 @@ function template(ratioKey) {
         .to("#b-fan", { opacity: 0, scale: 1.3, filter: "blur(20px)", duration: ${f(5 / 30)}, ease: "power3.in" }, ${f(52 / 30)});
 
       /* ---- beat 3 · 8 / 32 / 19 -------------------------------------------- */
-      tl.fromTo("#b-stats", { opacity: 0 }, { opacity: 1, duration: ${f(2 / 30)}, ease: "none" }, B.stats)
+      tl.fromTo("#b-stats", { opacity: 0 }, { opacity: 1, duration: ${f(5 / 30)}, ease: "none" }, B.stats)
         .fromTo("#stats .eyebrow", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: ${f(7 / 30)}, ease: "power3.out" }, B.stats)
         .fromTo("#stats .rule", { scaleX: 0 }, { scaleX: 1, duration: ${f(7 / 30)}, ease: "power3.out" }, B.stats + ${f(2 / 30)})
         .fromTo("#stats .sep", { scaleY: 0, opacity: 0 }, { scaleY: 1, opacity: 1, duration: ${f(9 / 30)}, ease: "power3.out" }, B.stats + ${f(4 / 30)});
@@ -345,7 +334,7 @@ function template(ratioKey) {
         .to("#b-stats", { opacity: 0, scale: 1.22, filter: "blur(18px)", duration: ${f(5 / 30)}, ease: "power3.in" }, ${f(80 / 30)});
 
       /* ---- beat 4 · the worksheet that does the maths ----------------------- */
-      tl.fromTo("#b-margin", { opacity: 0 }, { opacity: 1, duration: ${f(2 / 30)}, ease: "none" }, B.margin)
+      tl.fromTo("#b-margin", { opacity: 0 }, { opacity: 1, duration: ${f(5 / 30)}, ease: "none" }, B.margin)
         .fromTo("#doc-margin",
           { x: 520, rotateY: 34, scale: .9, filter: "blur(18px)" },
           { x: 0, rotateY: -5, scale: 1, filter: "blur(0px)", duration: ${f(15 / 30)}, ease: "power4.out" },
@@ -355,7 +344,7 @@ function template(ratioKey) {
         .to("#b-margin", { opacity: 0, scale: 1.16, filter: "blur(16px)", duration: ${f(5 / 30)}, ease: "power3.in" }, ${f(109 / 30)});
 
       /* ---- beat 5 · the date it all runs at --------------------------------- */
-      tl.fromTo("#b-cal", { opacity: 0 }, { opacity: 1, duration: ${f(2 / 30)}, ease: "none" }, B.cal)
+      tl.fromTo("#b-cal", { opacity: 0 }, { opacity: 1, duration: ${f(5 / 30)}, ease: "none" }, B.cal)
         .fromTo("#doc-cal",
           { x: -480, rotateY: -32, scale: .92, filter: "blur(16px)" },
           { x: 0, rotateY: 4, scale: 1, filter: "blur(0px)", duration: ${f(14 / 30)}, ease: "power4.out" },
@@ -364,13 +353,6 @@ function template(ratioKey) {
         .to("#doc-cal", { rotateY: -2, scale: 1.06, duration: ${f(24 / 30)}, ease: "sine.inOut" }, B.cal + ${f(14 / 30)})
         .fromTo("#hl-cal", { opacity: 0, scaleX: .6 }, { opacity: 1, scaleX: 1, duration: ${f(6 / 30)}, ease: "power3.out" }, B.cal + ${f(8 / 30)});
 
-      /* ---- whips hide every cut (law 5) ------------------------------------- */
-      W.forEach((t, i) => {
-        tl.fromTo(".whip.w" + i,
-          { opacity: 0, xPercent: -46, scaleX: .5, scaleY: .6, rotate: i % 2 ? -7 : 7 },
-          { opacity: 1, xPercent: 0, scaleX: 1.35, scaleY: 2.4, duration: ${f(3 / 30)}, ease: "power2.out" }, t)
-          .to(".whip.w" + i, { opacity: 0, xPercent: 46, scaleX: .6, duration: ${f(4 / 30)}, ease: "power2.in" }, t + ${f(3 / 30)});
-      });
 
       // Law 11: the timeline must fill its slot or the tail goes black.
       tl.to({}, { duration: SLOT }, 0);

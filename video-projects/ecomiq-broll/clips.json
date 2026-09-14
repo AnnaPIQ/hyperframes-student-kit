@@ -44,7 +44,7 @@
   {
     "name": "bf-workbook-hero",
     "title": "Black Friday Profit Plan — hero (motion graphics)",
-    "shows": "A five-beat motion-graphics cut built from the REAL workbook pages: the 3D workbook slams in from depth, its pages whip out into a fan, 8 / 32 / 19 punch in, the contribution-margin worksheet flies in with its total lit in flame, and the 2026 Black Friday calendar lands with Black Friday lit. Deep navy ground with perspective grid, crosshair marks, vignette and grain; every cut hidden inside a motion-blurred whip.",
+    "shows": "A five-beat motion-graphics cut built from the REAL workbook pages: the 3D workbook slams in from depth, its pages whip out into a fan, 8 / 32 / 19 punch in, the contribution-margin worksheet flies in with its total lit in flame, and the 2026 Black Friday calendar lands with Black Friday lit. Deep navy ground with perspective grid, crosshair marks, vignette and grain; beats hand over on blur and scale alone, with no streaks or flashes.",
     "duration": 5.0,
     "sourceUrl": "https://drive.google.com/file/d/1QJvDX6G023N6vwAcHqS6dth7tarrAMOj/view",
     "capture": "scripts/build-hero.mjs (rendered from assets/pages/*.png — no screen recording)",

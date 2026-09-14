@@ -137,13 +137,6 @@
         opacity: 0;
       }
 
-      /* ---- whip streaks --------------------------------------------------- */
-      .whip {
-        position: absolute; left: -60%; top: 50%; width: 220%; height: 26px;
-        margin-top: -13px; opacity: 0;
-        background: linear-gradient(90deg, transparent 0%, rgba(156,212,255,.95) 38%, #ffffff 50%, rgba(255,76,50,.95) 62%, transparent 100%);
-        filter: blur(13px);
-      }
     </style>
   </head>
   <body>
@@ -215,10 +208,6 @@
           </div>
         </div>
 
-        <div class="whip w0"></div>
-        <div class="whip w1"></div>
-        <div class="whip w2"></div>
-        <div class="whip w3"></div>
       </div>
 
       <div id="vignette" class="clip" data-start="0" data-duration="5" data-track-index="3"></div>
@@ -231,7 +220,6 @@
 
       // Beat marks, all on frame boundaries at 30fps.
       const B = { book: 0, fan: 0.9333333333333333, stats: 1.8333333333333333, margin: 2.7666666666666666, cal: 3.7333333333333334 };
-      const W = [0.8333333333333334, 1.7333333333333334, 2.6666666666666665, 3.6333333333333333];
 
       /* ---- the ground never sleeps (law 4) ---------------------------------- */
       tl.fromTo("#grid-floor", { yPercent: 0 }, { yPercent: -7, duration: SLOT, ease: "none" }, 0)
@@ -264,7 +252,7 @@
         { r: 13, x: 166, y: 10 },
         { r: 26, x: 312, y: 44 },
       ];
-      tl.fromTo("#b-fan", { opacity: 0 }, { opacity: 1, duration: 0.06666666666666667, ease: "none" }, B.fan);
+      tl.fromTo("#b-fan", { opacity: 0 }, { opacity: 1, duration: 0.16666666666666666, ease: "none" }, B.fan);
       FAN.forEach((p, i) => {
         tl.fromTo("#b-fan .f" + i,
           { rotate: 0, x: 0, y: 0, scale: .72, opacity: 0, filter: "blur(14px)" },
@@ -277,7 +265,7 @@
         .to("#b-fan", { opacity: 0, scale: 1.3, filter: "blur(20px)", duration: 0.16666666666666666, ease: "power3.in" }, 1.7333333333333334);
 
       /* ---- beat 3 · 8 / 32 / 19 -------------------------------------------- */
-      tl.fromTo("#b-stats", { opacity: 0 }, { opacity: 1, duration: 0.06666666666666667, ease: "none" }, B.stats)
+      tl.fromTo("#b-stats", { opacity: 0 }, { opacity: 1, duration: 0.16666666666666666, ease: "none" }, B.stats)
         .fromTo("#stats .eyebrow", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.23333333333333334, ease: "power3.out" }, B.stats)
         .fromTo("#stats .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.23333333333333334, ease: "power3.out" }, B.stats + 0.06666666666666667)
         .fromTo("#stats .sep", { scaleY: 0, opacity: 0 }, { scaleY: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, B.stats + 0.13333333333333333);
@@ -294,7 +282,7 @@
         .to("#b-stats", { opacity: 0, scale: 1.22, filter: "blur(18px)", duration: 0.16666666666666666, ease: "power3.in" }, 2.6666666666666665);
 
       /* ---- beat 4 · the worksheet that does the maths ----------------------- */
-      tl.fromTo("#b-margin", { opacity: 0 }, { opacity: 1, duration: 0.06666666666666667, ease: "none" }, B.margin)
+      tl.fromTo("#b-margin", { opacity: 0 }, { opacity: 1, duration: 0.16666666666666666, ease: "none" }, B.margin)
         .fromTo("#doc-margin",
           { x: 520, rotateY: 34, scale: .9, filter: "blur(18px)" },
           { x: 0, rotateY: -5, scale: 1, filter: "blur(0px)", duration: 0.5, ease: "power4.out" },
@@ -304,7 +292,7 @@
         .to("#b-margin", { opacity: 0, scale: 1.16, filter: "blur(16px)", duration: 0.16666666666666666, ease: "power3.in" }, 3.6333333333333333);
 
       /* ---- beat 5 · the date it all runs at --------------------------------- */
-      tl.fromTo("#b-cal", { opacity: 0 }, { opacity: 1, duration: 0.06666666666666667, ease: "none" }, B.cal)
+      tl.fromTo("#b-cal", { opacity: 0 }, { opacity: 1, duration: 0.16666666666666666, ease: "none" }, B.cal)
         .fromTo("#doc-cal",
           { x: -480, rotateY: -32, scale: .92, filter: "blur(16px)" },
           { x: 0, rotateY: 4, scale: 1, filter: "blur(0px)", duration: 0.4666666666666667, ease: "power4.out" },
@@ -313,13 +301,6 @@
         .to("#doc-cal", { rotateY: -2, scale: 1.06, duration: 0.8, ease: "sine.inOut" }, B.cal + 0.4666666666666667)
         .fromTo("#hl-cal", { opacity: 0, scaleX: .6 }, { opacity: 1, scaleX: 1, duration: 0.2, ease: "power3.out" }, B.cal + 0.26666666666666666);
 
-      /* ---- whips hide every cut (law 5) ------------------------------------- */
-      W.forEach((t, i) => {
-        tl.fromTo(".whip.w" + i,
-          { opacity: 0, xPercent: -46, scaleX: .5, scaleY: .6, rotate: i % 2 ? -7 : 7 },
-          { opacity: 1, xPercent: 0, scaleX: 1.35, scaleY: 2.4, duration: 0.1, ease: "power2.out" }, t)
-          .to(".whip.w" + i, { opacity: 0, xPercent: 46, scaleX: .6, duration: 0.13333333333333333, ease: "power2.in" }, t + 0.1);
-      });
 
       // Law 11: the timeline must fill its slot or the tail goes black.
       tl.to({}, { duration: SLOT }, 0);

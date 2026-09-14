@@ -52,7 +52,8 @@ Two things this container needs that a local machine does not:
   out of the PDF (`assets/pages/*.png`), in the EcomIQ motion language: deep navy
   ground, perspective grid, crosshair marks, vignette and grain, a CSS-3D book,
   a page fan, kinetic numerals, and flame-orange highlights on the rows that
-  matter. Energy first. 5s, at 9:16 / 4:5.
+  matter. Beats hand over on blur and scale alone — no streaks or flashes over
+  the seams. Energy first. 5s, at 9:16 / 4:5.
 
 Both use the real workbook. The hero never invents a figure — every number on
 screen is a page out of the PDF.
