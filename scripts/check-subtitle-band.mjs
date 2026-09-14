@@ -76,7 +76,7 @@ const res = await page.evaluate(() => {
   const probe = getComputedStyle(document.body).getPropertyValue('--sub-safe').trim();
   const items = [];
   const DECOR = new Set(['bloom', 'aroll-scrim', 'end-glow']);
-  for (const holder of document.querySelectorAll('.scene, .card')) {
+  for (const holder of document.querySelectorAll('.scene, .card, .brollwrap')) {
     for (const el of holder.querySelectorAll('*')) {
       if (el.children.length && el.tagName !== 'IMG' && el.tagName !== 'SVG') continue; // leaves only
       if (DECOR.has(el.id) || el.classList?.contains('bloom')) continue;

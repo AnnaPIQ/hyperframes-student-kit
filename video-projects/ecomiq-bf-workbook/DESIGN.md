@@ -74,6 +74,20 @@ the studio background. There is deliberately no bottom gradient — it existed t
 blend the video's lower edge into the navy while letterboxed, and once the
 A-roll went back to full-bleed it just tinted the bottom of the shot.
 
+**The workbook b-roll** (26.20–45.20) is the one thing that does not fill the
+frame. It is EcomIQ's own 16:9 piece and every board in it, the margin
+worksheet, the Black Friday calendar, the 8-tile spreadsheet grid, is laid out
+edge to edge with about 2% side margin, so a portrait crop cuts columns off. It
+plays full-width instead and floats in the navy field, centred at 54.5% of the
+space above the subtitle band (dead centre reads top-heavy once the persistent
+logo is in). That is not the rejected A-roll letterbox: nothing is being pulled
+back from a fuller framing, and two details keep it from reading as one. The
+backdrop is tuned to the b-roll's own field rather than `--brand-navy` (its
+corners sit near `#021833`, clearly darker than the brand navy, so flat navy
+behind it shows a seam), and the wrapper's top and bottom edges are feathered so
+the video dissolves into that field instead of ending on a line. The feather is
+shallow on purpose: the calendar board runs its header row to the frame edge.
+
 **Graphic scenes** (`.scene`) are full-screen navy, `z-index: 10`, and replace
 Sean entirely for their duration. `.sc` lays out with padding + flex, never an
 absolute-positioned content container; `.sc-mid` centres content in whatever
@@ -105,7 +119,8 @@ node scripts/check-subtitle-band.mjs video-projects/ecomiq-bf-workbook/index.htm
 node scripts/check-subtitle-band.mjs video-projects/ecomiq-bf-workbook/compositions/feed-45.html 1350 240
 ```
 
-Current clearance: **103px** (9:16), **23px** (4:5).
+Current clearance: **415px** (9:16), **201px** (4:5) — the b-roll sets the
+lowest edge in both cuts now, and `.brollwrap` is in the checker's sweep.
 
 Two things that checker gets right, both of which produced false passes before:
 
@@ -146,6 +161,14 @@ A-roll renditions are gitignored (derived from a 3.4 GB ProRes master).
 - `aroll-audio.m4a` — the full take. Every cut trims 2.75s via `data-media-start`
   on the video **and** the audio equally, dropping the dead air before Sean's
   first word without breaking lip sync.
+- `workbook-broll.mp4` — EcomIQ's own 30s workbook b-roll, 1920×1080 silent,
+  conformed to 1080×608 at CRF 20 (4.1 MB, small enough to commit, unlike the
+  A-roll renditions). Source came from the `claude/wonderful-curie-brnfzl`
+  branch. Its running order happens to track Sean's script almost exactly, which
+  is why one continuous trim covers 31.00–44.75 with no cut of mine in it.
+- The four product stills below are **no longer referenced** by either cut. They
+  are kept in `assets/` because they came from the Drive folder and are the only
+  copies here, not because anything uses them.
 - `workbook-hero-trim.png` / `toolkit-spread-trim.png` — **both keep the
   mockup's white backdrop and sit on a white card** (`.shot`). Knocking the
   background out was tried on the cover and reverted: these products are shot at
@@ -169,9 +192,16 @@ rather than commented out:
 - **Normal month $59.71 vs this Black Friday $9.62** — Sean carries "you can
   have nothing left" on camera instead (23.15–26.20s).
 
-Nine scenes remain: hook, cost stack, sales-up/profit-down, workbook cover, real
-page, max-discount dial, four-item checklist, FREE, end card. Sean is on camera
-roughly 12s of the 52s.
+Four more went in the same direction at once: **workbook cover**,
+**max-discount dial**, **four-item checklist** and the **FREE slam** all ran
+between 26.20 and 45.20, and Anna replaced the whole stretch with EcomIQ's own
+workbook b-roll. Their markup, timeline blocks and CSS are deleted, along with
+the `--dial` / `--box` / `--cover-w` / `--spread-w` / `--free-word` tokens they
+owned. The `25%` max-discount figure is gone with the dial, so §3 of
+`EDIT-PLAN.md` now over-lists what is on screen.
+
+Four scenes remain, plus the b-roll: hook, cost stack, sales-up/profit-down,
+workbook b-roll, end card. Sean is on camera roughly 12s of the 52s.
 
 ## What NOT to do
 
@@ -180,7 +210,9 @@ roughly 12s of the 52s.
 - Don't hand-edit `compositions/square.html`; edit `index.html` and regenerate.
 - Don't invent performance claims. Every figure traces to the workbook's page-8
   worked example or is derived from it, and `EDIT-PLAN.md` §3 records which.
-- Don't letterbox the A-roll to "zoom out" — built, reviewed, rejected.
+- Don't letterbox the A-roll to "zoom out" — built, reviewed, rejected. The
+  workbook b-roll is a separate case and is argued in Layout above.
+- Don't crop the workbook b-roll to fill a portrait frame; it loses columns.
 - Don't knock the background out of either product still; they belong on the
   white card. See the Media section for why.
 - Don't rescale one ratio's A-roll into another aspect; re-crop from the master.

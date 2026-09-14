@@ -116,6 +116,38 @@ efficient over time instead of relearning the same lessons.
   `kling3.0_pro`, `veo3.1`, `seedance2`, `gen4.5`, etc. via `npm run gen --model <id>`.
   Keep Runway as the single integration; pick the model per shot.
 
+## Dropping a landscape b-roll into a portrait cut
+
+- **Symptom:** a 16:9 brand b-roll cropped to 9:16 loses the ends of every board
+  (table columns, tile grids, two-column lockups). **Fix:** measure the side
+  margins on the tightest board first — if they are only 2–5% of frame width
+  there is no crop worth having, so play it full-width and float it in the
+  canvas colour instead. A crop that "nearly" fits still cuts a column off.
+- **Symptom:** the letterbox reads as a mistake, with a visible seam top and
+  bottom. **Fix:** two things, both needed. Sample the b-roll's own corner
+  colour (`ffmpeg -vf crop=6:6:0:0` then `convert -format '%[pixel:p{0,0}]'`) and
+  paint the backdrop that, not the brand navy — a near-match is what makes the
+  seam obvious. Then feather the wrapper's top and bottom edges with a
+  `mask-image` linear-gradient. Keep the feather shallow (~5% of the video's
+  height): boards that run text to the frame edge get ghosted by a deep one.
+- **Symptom:** the clip's own end lockup bleeds in under your CTA card, two
+  logos fighting. **Fix:** find where the lockup starts in the source and end the
+  clip before it, not at the card boundary. A beat of clean backdrop before the
+  CTA reads as a breath.
+- **Centre a floating insert at ~54.5% of the space above the subtitle band**,
+  not 50%. A persistent top-left logo eats the top of the frame, so true centre
+  leaves a visibly bigger gap below than above.
+- **Symptom:** `check-subtitle-band.mjs` passes but an element is in the band.
+  **Fix:** it only sweeps `.scene, .card, .brollwrap`. Any new top-level visual
+  holder must be added to that selector or it is simply not measured.
+- **`media_missing_id`** — a `<video>` with `data-start` and no `id` renders
+  **frozen**. Lint catches it; it is an error, not a warning, for good reason.
+- **Trimming one source into several beats** costs nothing: several `<video>`
+  elements can share one `src` with different `data-media-start`. Check first
+  whether the segments you want are contiguous — if they are, one element with a
+  longer `data-duration` keeps the source's own cuts and transitions intact,
+  which always looks better than re-cutting them yourself.
+
 ## Housekeeping
 
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat

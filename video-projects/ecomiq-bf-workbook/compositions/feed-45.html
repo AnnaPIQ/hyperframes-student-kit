@@ -125,89 +125,32 @@
       <!-- Sean carries 23.15–26.20 on camera: "you can have nothing left".
            Its comparison graphic was cut at Anna's request. -->
 
-      <!-- 5 · WORKBOOK HERO — "a free workbook" through "what each order
-           contributes". One continuous cover shot: the worksheet page that ran
-           30.25–32.60 was replaced with the cover at Anna's request (it was a
-           wall of unreadable microtext at this scale), and cutting from the
-           cover to an identical cover would read as a glitch, so the beats are
-           merged and the callout lands on the cover instead. -->
-      <div id="hero" class="clip scene" data-start="26.20" data-duration="6.40" data-track-index="26">
-        <div class="bloom"></div>
-        <div class="sc"><div class="sc-mid sc-mid--center">
-          <div class="eyebrow eyebrow--flame">Free workbook</div>
-          <img id="hero-shot" class="shot" src="assets/workbook-hero-trim.png"
-               alt="The Black Friday Profit Plan workbook" />
-          <div id="page-callout">
-            <span id="page-fig" class="figure">$59.71</span>
-            <span class="label">Contribution per order</span>
-          </div>
-        </div></div>
-      </div>
+      <!-- 5 · WORKBOOK B-ROLL — 26.20 → 45.20, the whole workbook stretch.
+           Four graphic scenes (cover, max-discount dial, checklist, FREE) were
+           replaced with EcomIQ's own 30s workbook b-roll at Anna's request. It
+           is 16:9, so it plays full-width and floats in the navy field rather
+           than being cropped: every board in it (the margin worksheet, the
+           calendar, the spreadsheet grid) is laid out edge to edge and a
+           portrait crop would cut columns off. Its edges are feathered into the
+           backdrop so it reads as one navy field, not a letterbox.
 
-      <!-- 7 · MAX DISCOUNT DIAL -->
-      <div id="dial" class="clip scene" data-start="32.30" data-duration="4.95" data-track-index="28">
-        <div class="bloom"></div>
-        <div class="sc"><div class="sc-mid">
-          <div class="eyebrow" style="margin-bottom: 34px">The ceiling</div>
-          <div class="dialwrap">
-            <div class="dial">
-              <svg viewBox="0 0 260 260" aria-hidden="true">
-                <circle cx="130" cy="130" r="112" fill="none"
-                        stroke="rgba(156,212,255,0.20)" stroke-width="22" />
-                <circle id="dial-arc" cx="130" cy="130" r="112" fill="none"
-                        stroke="#FF4C32" stroke-width="22" stroke-linecap="round" />
-              </svg>
-              <div class="inner"><span id="dial-fig" class="figure">25%</span></div>
-            </div>
-            <div class="dialtext">
-              <div class="label">Max discount<br />your margin<br />can support</div>
-            </div>
-          </div>
-        </div></div>
+           Two trims of one source, cut on Sean's lines:
+             bw1  b-roll 0.30– 5.40  cover lifts in, pages fan out
+             bw2  b-roll 10.65–25.30 contribution worksheet → $59.43 →
+                                     Black Friday calendar → companion
+                                     spreadsheets → free tools
+           bw2 runs continuously, so every internal cut is the b-roll's own. -->
+      <div id="broll-bg" class="clip scene" data-start="26.20" data-duration="19.30"
+           data-track-index="26"><div class="bloom"></div></div>
+      <!-- non-clip wrappers: the render engine repositions class="clip"
+           elements, and a <video> must never be transformed directly. -->
+      <div id="bw1" class="brollwrap">
+        <video id="bwv1" data-start="26.20" data-duration="5.10" data-track-index="28"
+               data-media-start="0.30" src="assets/workbook-broll.mp4" muted playsinline></video>
       </div>
-
-      <!-- 8 · FOUR-ITEM CHECKLIST — offer / inventory / marketing / email -->
-      <div id="checklist" class="clip scene" data-start="37.95" data-duration="5.70" data-track-index="29">
-        <div class="bloom"></div>
-        <div class="sc"><div class="sc-mid">
-          <div class="eyebrow" style="margin-bottom: 10px">Then it walks you through</div>
-          <div class="checks">
-            <div class="checkrow" id="row-1">
-              <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
-                d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
-                stroke-linecap="round" stroke-linejoin="round" /></svg></div>
-              <div class="ctext">Offer</div>
-            </div>
-            <div class="checkrow" id="row-2">
-              <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
-                d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
-                stroke-linecap="round" stroke-linejoin="round" /></svg></div>
-              <div class="ctext">Inventory</div>
-            </div>
-            <div class="checkrow" id="row-3">
-              <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
-                d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
-                stroke-linecap="round" stroke-linejoin="round" /></svg></div>
-              <div class="ctext">Marketing</div>
-            </div>
-            <div class="checkrow" id="row-4">
-              <div class="box"><svg viewBox="0 0 62 62" aria-hidden="true"><path class="tick"
-                d="M16 32l10 10 20-22" fill="none" stroke="#FFFFFF" stroke-width="7"
-                stroke-linecap="round" stroke-linejoin="round" /></svg></div>
-              <div class="ctext">Email follow-up</div>
-            </div>
-          </div>
-        </div></div>
-      </div>
-
-      <!-- 9 · "IT'S COMPLETELY FREE" -->
-      <div id="free" class="clip scene" data-start="43.35" data-duration="2.15" data-track-index="30">
-        <div class="bloom"></div>
-        <div class="sc"><div class="sc-mid sc-mid--center">
-          <img id="free-shot" class="shot" src="assets/toolkit-spread-trim.png"
-               alt="The full EcomIQ Black Friday toolkit" />
-          <div id="free-word">Free</div>
-        </div></div>
+      <div id="bw2" class="brollwrap">
+        <video id="bwv2" data-start="30.85" data-duration="14.65" data-track-index="29"
+               data-media-start="10.65" src="assets/workbook-broll.mp4" muted playsinline></video>
       </div>
 
       <!-- 10 · END CARD — fires on "links below", holds past the last word -->
@@ -343,71 +286,21 @@
         { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 20.55);
       fadeOut("#contrast", 22.85);
 
-      /* ---- 5 · WORKBOOK HERO  26.20 → 32.60 -------------------------- */
-      fadeIn("#hero", 26.2, 0.42);
-      tl.fromTo("#hero .eyebrow", { opacity: 0, y: -22 },
-        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 26.45);
-      tl.fromTo("#hero-shot", { opacity: 0, y: 40, scale: 0.93 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.85, ease: "power3.out" }, 26.4);
-      // slow push-in across the whole hold so a 6.4s shot never feels static
-      tl.to("#hero-shot", { scale: 1.05, duration: 5.0, ease: "sine.inOut" }, 27.25);
-      // the callout lands on "what each order actually contributes"
-      tl.fromTo("#page-callout", { opacity: 0, y: 40, scale: 0.9 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 30.6);
-      countTo("#page-fig", 30.66, 0.75, 0, 59.71, usd);
-      fadeOut("#hero", 32.3);
-
-      /* ---- 7 · MAX DISCOUNT DIAL  32.30 → 37.25 ---------------------- */
-      const arc = document.getElementById("dial-arc");
-      const C = 2 * Math.PI * arc.r.baseVal.value;
-      tl.set("#dial-arc", { strokeDasharray: C, strokeDashoffset: C }, 32.3);
-      fadeIn("#dial", 32.3);
-      tl.fromTo("#dial .eyebrow", { opacity: 0, x: -22 },
-        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 32.45);
-      tl.fromTo("#dial .dial", { opacity: 0, scale: 0.86 },
-        { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.4)" }, 32.55);
-      tl.fromTo("#dial .dialtext", { opacity: 0, x: 40 },
-        { opacity: 1, x: 0, duration: 0.55, ease: "power2.out" }, 32.85);
-      // arc sweeps to 25% and the figure counts with it
-      tl.to("#dial-arc", { strokeDashoffset: C * 0.75, duration: 1.5, ease: "power2.inOut" }, 33.0);
-      countTo("#dial-fig", 33.0, 1.5, 0, 25, pct);
-      fadeOut("#dial", 36.95);
-
-      /* ---- Sean on camera 36.95 → 37.95 ------------------------------ */
-
-      /* ---- 8 · CHECKLIST  37.95 → 43.65 ------------------------------ */
-      fadeIn("#checklist", 37.95);
-      tl.fromTo("#checklist .eyebrow", { opacity: 0, x: -22 },
-        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" }, 38.07);
-      // rows build empty first, then tick as he names each one
-      [1, 2, 3, 4].forEach((n, i) => {
-        const tick = document.querySelector("#row-" + n + " .tick");
-        const len = tick.getTotalLength();
-        tl.fromTo("#row-" + n, { opacity: 0, x: -40 },
-          { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }, 38.27 + i * 0.14);
-        tl.set("#row-" + n + " .tick", { strokeDasharray: len, strokeDashoffset: len }, 38.27);
-      });
-      const TICKS = [40.09, 40.72, 41.35, 41.75];
-      TICKS.forEach((t, i) => {
-        const row = "#row-" + (i + 1);
-        tl.to(row + " .box", {
-          backgroundColor: "#FF4C32", borderColor: "#FF4C32",
-          duration: 0.22, ease: "power2.out",
-        }, t);
-        tl.to(row + " .tick", { strokeDashoffset: 0, duration: 0.26, ease: "power2.out" }, t + 0.06);
-        tl.to(row + " .box", { scale: 1.14, duration: 0.13, ease: "power2.out",
-          yoyo: true, repeat: 1 }, t);
-      });
-      fadeOut("#checklist", 43.35);
-
-      /* ---- 9 · FREE  43.35 → 45.50 ----------------------------------- */
-      fadeIn("#free", 43.35, 0.26);
-      tl.fromTo("#free-shot", { opacity: 0, scale: 0.94 },
-        { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 43.42);
-      // slams in hard, one beat
-      tl.fromTo("#free-word", { opacity: 0, scale: 1.9 },
-        { opacity: 1, scale: 1, duration: 0.34, ease: "power4.out" }, 43.7);
-      fadeOut("#free", 45.2);
+      /* ---- 5 · WORKBOOK B-ROLL  26.20 → 45.20 -----------------------
+         Backdrop fades up under both trims; the trims crossfade into each
+         other at 31.00, which is the only cut I make — every other cut in this
+         stretch is the b-roll's own. Opacity only: these wrappers carry a
+         centring transform that a y-tween would clobber. */
+      fadeIn("#broll-bg", 26.2, 0.42);
+      fadeIn("#bw1", 26.2, 0.42);
+      // cover/page-fan hands off to the worksheet on "calculate the numbers"
+      fadeIn("#bw2", 30.87, 0.26);
+      fadeOut("#bw1", 30.87, 0.26);
+      // Out by 45.05: the b-roll carries its own end lockup from ~24.8s of
+      // source, and a second EcomIQ logo bleeding in under ours would fight
+      // the CTA. The 0.15s of clean backdrop it leaves is a breath, not a gap.
+      fadeOut("#bw2", 44.75, 0.3);
+      fadeOut("#broll-bg", 45.2);
 
       /* ---- 10 · END CARD  45.20 → 52.33 ------------------------------ */
       fadeIn("#endcard", 45.2, 0.4);

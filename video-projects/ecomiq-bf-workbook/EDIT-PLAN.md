@@ -72,15 +72,14 @@ Final duration **52.3 s**. `TC` is final cut. Logo top-left on every frame.
 | **12.81–18.54** | "if you haven't worked out your contribution margin and break-even ROAS…" | Sean plus two-figure card | **TWO FIGURES** animate in side by side, `CONTRIBUTION MARGIN 52.1%` and `BREAK-EVEN ROAS 1.9×`. Count-up on both, flame underline sweeps in. |
 | **19.08–22.96** | "you might sell more… but make far less money" | Sean plus contrast card | **CONTRAST.** `SALES ↑` (blue tint, arrow rises) beside `PROFIT ↓` (flame, arrow drops), split by a hairline rule. |
 | **22.96–25.41** | "You can have nothing left." | Sean, the bar returns | **DRAIN.** The revenue bar from the cost stack comes back and the contribution segment drains to **$9.62**, visibly nothing. Bar pulses once on the landing. |
-| **26.23–30.03** | "I've put together a free workbook…" | **B-roll: `workbook-hero.png`** | Workbook cover lifts in on navy with a soft floor shadow and a slow 3% push-in. Flame eyebrow `FREE WORKBOOK`. |
-| **30.30–32.01** | "…what each order actually contributes" | **B-roll: `wb-page-08.png`**, the real contribution-margin page | **COUNT-UP** `$59.71` over the page, label `CONTRIBUTION PER ORDER`, with the actual worksheet behind it. |
-| **32.15–37.16** | "…and the maximum discount your margin can actually support" | Sean plus dial card | **MAX DISCOUNT DIAL.** Arc sweeps to **25%**, number counts up, `MAX DISCOUNT YOUR MARGIN SUPPORTS` beneath. Figure lands at 34.4 on "maximum discount", arc completes by 36.6. |
-| **37.88–42.61** | "your offer, your inventory, your marketing, your email follow-up plan" | Sean plus checklist card | **4-ITEM CHECKLIST** builds at 37.9, then ticks flame one at a time: |
-| ↳ 40.09 | "your offer" | | ✓ OFFER |
-| ↳ 40.72 | "your inventory" | | ✓ INVENTORY |
-| ↳ 41.35 | "your marketing" | | ✓ MARKETING |
-| ↳ 41.75 | "your email follow-up plan" | | ✓ EMAIL FOLLOW-UP |
-| **43.39–44.63** | "It's completely free." | **B-roll: `toolkit-spread.png`** | Spread of the whole toolkit, and **FREE** slams in oversized flame over it. One beat, hard. |
+| **26.23–45.17** | "I've put together a free workbook… It's completely free." | **B-roll: `workbook-broll.mp4`** | **WORKBOOK B-ROLL.** EcomIQ's own 30s workbook piece carries the whole stretch, replacing the four graphic scenes that were built here (cover, max-discount dial, checklist, FREE). It plays full-width in the navy field, edges feathered. Two trims of one source, one cut, at 31.00: |
+| ↳ 26.20 | "I've put together a free workbook…" | source 0.30–5.40 | Cover lifts in and rotates, then the pages fan out. |
+| ↳ 31.00 | "…what each order actually contributes" | source 10.65→ | `Calculate your contribution margin` worksheet flies in and fills row by row. |
+| ↳ ~33.4 | "…and the maximum discount your margin can actually support" | | **`$59.71` CONTRIBUTION PER ORDER** lands in the worksheet's total row, the same page-8 figure §3 cites. |
+| ↳ ~35.3 | | | `Your 2026 Black Friday calendar`, Black Friday row ringed in flame. |
+| ↳ ~38.5 | "your offer, your inventory, your marketing, your email follow-up plan" | | `COMPANION SPREADSHEETS`, the 8-tile grid. |
+| ↳ ~41.5 | "It's completely free." | …source 24.55 | `FREE TOOLS ON OUR SITE`, the 7 pills. |
+| ↳ 44.75 | | | B-roll out over 0.30s. Its own end lockup starts at ~24.8s of source and is deliberately never reached: a second EcomIQ logo would fight the CTA. 0.15s of clean backdrop, then the end card. |
 | **45.17–52.33** | "Links below if you want to build your Black Friday plan before you lock in anything else." | **END CARD** | Full navy card, logo, headline, flame pill. Audio finishes at 50.5 and the card holds to **52.33**, a 7.2 s card with about 1.8 s of clean hold after the last word. |
 
 ### End card (wording to confirm)

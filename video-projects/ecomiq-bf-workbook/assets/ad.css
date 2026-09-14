@@ -42,9 +42,7 @@ body.r-916 {
   --fig-lg: 96px;  --fig-sm: 62px;
   --bar-h: 26px;   --chip-h: 54px;    --chip-k: 28px;  --chip-v: 32px;
   --arrow-w: 118px; --arrow-h: 150px; --cname: 40px;
-  --dial: 260px;   --dial-fig: 78px;
-  --box: 62px;     --ctext: 44px;     --check-gap: 20px;
-  --cover-w: 730px; --spread-w: 904px; --free-word: 200px;
+  --broll-fade: 34px;
   --pill: 46px;    --end-head: 104px;
 }
 /* 4:5 is the EcomIQ house Meta feed format. All three cuts are 1080 wide, so
@@ -56,9 +54,7 @@ body.r-45 {
   --fig-lg: 96px;  --fig-sm: 62px;
   --bar-h: 26px;   --chip-h: 54px;    --chip-k: 28px;  --chip-v: 32px;
   --arrow-w: 118px; --arrow-h: 150px; --cname: 40px;
-  --dial: 260px;   --dial-fig: 78px;
-  --box: 62px;     --ctext: 44px;     --check-gap: 20px;
-  --cover-w: 470px; --spread-w: 820px; --free-word: 200px;
+  --broll-fade: 30px;
   --pill: 46px;    --end-head: 104px;
 }
 body.r-1x1 {
@@ -67,9 +63,7 @@ body.r-1x1 {
   --fig-lg: 72px;  --fig-sm: 42px;
   --bar-h: 20px;   --chip-h: 40px;    --chip-k: 21px;  --chip-v: 24px;
   --arrow-w: 92px; --arrow-h: 118px;  --cname: 32px;
-  --dial: 200px;   --dial-fig: 60px;
-  --box: 50px;     --ctext: 34px;     --check-gap: 15px;
-  --cover-w: 400px; --spread-w: 700px; --free-word: 150px;
+  --broll-fade: 26px;
   --pill: 38px;    --end-head: 76px;
 }
 
@@ -195,51 +189,49 @@ body.r-1x1 #logo-wrap img { width: 168px; }
   letter-spacing: 0.12em; text-transform: uppercase; }
 .contrast svg { width: var(--arrow-w); height: var(--arrow-h); }
 
-/* ---- 5 · max-discount dial ----------------------------------------------- */
-.dialwrap { display: flex; align-items: center; gap: 46px; }
-.dial { position: relative; width: var(--dial); height: var(--dial);
-  flex: 0 0 var(--dial); }
-.dial svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-.dial .inner { position: absolute; inset: 0; display: flex;
-  align-items: center; justify-content: center; }
-#dial-fig { font-size: var(--dial-fig); color: var(--brand-white); }
-.dialtext .label { font-size: calc(var(--label) * 1.1); line-height: 1.32; }
+/* ---- 5 · workbook b-roll ------------------------------------------------
+   EcomIQ's own 30s workbook b-roll carries 26.20–45.20. It is 16:9 and every
+   board in it (the margin worksheet, the Black Friday calendar, the 8-tile
+   spreadsheet grid, the end lockup) is laid out edge to edge, so a portrait
+   crop would cut columns off. It plays full-width instead and floats in the
+   navy field, vertically centred in whatever space sits above the subtitle
+   band, so the same wrapper balances in every ratio off --sub-safe alone.
 
-/* ---- 6 · checklist ------------------------------------------------------- */
-.checks { display: flex; flex-direction: column; gap: var(--check-gap);
-  margin-top: 30px; }
-.checkrow { display: flex; align-items: center; gap: 26px; }
-.box { position: relative; flex: 0 0 var(--box); width: var(--box);
-  height: var(--box); border-radius: 12px;
-  border: 3px solid rgba(156, 212, 255, 0.45);
-  background: rgba(156, 212, 255, 0.07); }
-.box svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.checkrow .ctext { font-size: var(--ctext); font-weight: 700;
-  letter-spacing: 0.02em; text-transform: uppercase; color: var(--brand-white); }
+   Two things stop that reading as a letterbox. The backdrop is tuned to the
+   b-roll's own field rather than --brand-navy (its corners sit around #021833,
+   noticeably darker than the brand navy, so a flat navy behind it would show a
+   seam), and the wrapper's top and bottom edges are feathered so the video
+   dissolves into that field instead of ending on a hard line. The feather is
+   deliberately shallow — the calendar board runs its header row right to the
+   frame edge, and a deeper fade would ghost it.
 
-/* ---- 7 · product stills --------------------------------------------------
-   Both stills keep the mockup's white backdrop and sit on a white card.
-   Knocking the background out was tried and reverted: these products are shot
-   at an angle with soft drop shadows, so an alpha cut leaves ragged edges on
-   the page block and strands the shadow as a floating grey blob — and a navy
-   book on a navy canvas has no separation anyway. On a white card the
-   backdrop simply disappears into the card, which is why the wedges of white
-   a plain -trim leaves inside the bounding box cost nothing here. */
-.shot { display: block; height: auto; background: #fff; border-radius: 18px;
-  box-shadow: 0 46px 90px -20px rgba(0, 0, 0, 0.6); }
-#hero-shot { width: var(--cover-w); }
-#free-shot { width: var(--spread-w); }
+   Wrappers are NON-clip and positioned (the render engine repositions
+   class="clip" elements), and only their opacity is ever animated: the
+   centring translate would be clobbered by a y-tween, and a <video> must never
+   be transformed directly (render contract 9). */
+#broll-bg {
+  background:
+    radial-gradient(74% 32% at 50% 45%, rgba(48, 102, 158, 0.26) 0%,
+      rgba(4, 27, 54, 0) 64%),
+    #041b36;
+}
+#broll-bg .bloom { opacity: 0.16; }
+.brollwrap {
+  position: absolute; z-index: 20; left: 0; width: 1080px; opacity: 0;
+  /* 0.545 rather than dead-centre of the content area: the persistent logo
+     eats the top of the frame, so a true centre leaves a bigger gap below
+     the b-roll than above it. This balances the two in every ratio. */
+  top: calc((100% - var(--sub-safe)) * 0.545); transform: translateY(-50%);
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000 var(--broll-fade),
+    #000 calc(100% - var(--broll-fade)), rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000 var(--broll-fade),
+    #000 calc(100% - var(--broll-fade)), rgba(0, 0, 0, 0) 100%);
+}
+.brollwrap video { display: block; width: 1080px; height: auto; }
+
+/* ---- 6 · shared scene spacing -------------------------------------------- */
 .scene .eyebrow { margin-bottom: 34px; }
-#page-callout { margin-top: 40px; display: flex; align-items: baseline; gap: 22px;
-  padding: 26px 40px; border-radius: 16px; background: #0a325f;
-  border-left: 7px solid var(--brand-flame); }
-#page-callout .figure { font-size: calc(var(--fig-lg) * 0.86);
-  color: var(--brand-flame); }
-#page-callout .label { max-width: 260px; line-height: 1.25; text-align: left; }
-body.r-1x1 #free-word { margin-top: 26px; }
-#free-word { margin-top: 54px; font-size: var(--free-word); font-weight: 800;
-  letter-spacing: -0.03em; line-height: 1; color: var(--brand-flame);
-  text-shadow: 0 24px 70px rgba(255, 76, 50, 0.45); }
 
 /* ---- 8 · end card -------------------------------------------------------- */
 #endcard .sc { justify-content: center; }
