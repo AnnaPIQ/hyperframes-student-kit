@@ -5,7 +5,13 @@
     "shows": "The real Black Friday Profit Plan PDF open in a browser PDF viewer at 150% — holding on the cover, then a smooth scroll into the Contents spread showing all 8 parts across 51 pages.",
     "duration": 3.0,
     "sourceUrl": "https://drive.google.com/file/d/1QJvDX6G023N6vwAcHqS6dth7tarrAMOj/view",
-    "capture": "scripts/capture-workbook.mjs"
+    "capture": "scripts/capture-workbook.mjs",
+    "builder": "frame",
+    "ratios": [
+      "9x16",
+      "1x1",
+      "16x9"
+    ]
   },
   {
     "name": "dashboard",
@@ -13,7 +19,13 @@
     "shows": "The real EcomIQ Profitability Dashboard Google Sheet — the cursor tracks down the measures column selecting live cells (the selection box and formula bar follow), then the sheet scrolls through the annual rows into the Direction of Travel summary.",
     "duration": 3.0,
     "sourceUrl": "https://docs.google.com/spreadsheets/d/1TyUKGPZ5Y3MBfZ7-iOFyM_Bxd7oUcbK8hQTYguUmueM",
-    "capture": "scripts/capture-dashboard.mjs"
+    "capture": "scripts/capture-dashboard.mjs",
+    "builder": "frame",
+    "ratios": [
+      "9x16",
+      "1x1",
+      "16x9"
+    ]
   },
   {
     "name": "calculator",
@@ -21,6 +33,25 @@
     "shows": "The real EcomIQ True CAC Calculator — the cursor selects the New customer ad spend field and types 42000, and the live result panel recalculates on every keystroke, landing on a true CAC of $77.48 against a reported $52.50.",
     "duration": 3.0,
     "sourceUrl": "https://page.ecomiq.com/cac-calculator-page",
-    "capture": "scripts/capture-calculator.mjs"
+    "capture": "scripts/capture-calculator.mjs",
+    "builder": "frame",
+    "ratios": [
+      "9x16",
+      "1x1",
+      "16x9"
+    ]
+  },
+  {
+    "name": "bf-workbook-hero",
+    "title": "Black Friday Profit Plan — hero (motion graphics)",
+    "shows": "A five-beat motion-graphics cut built from the REAL workbook pages: the 3D workbook slams in from depth, its pages whip out into a fan, 8 / 32 / 19 punch in, the contribution-margin worksheet flies in with its total lit in flame, and the 2026 Black Friday calendar lands with Black Friday lit. Deep navy ground with perspective grid, crosshair marks, vignette and grain; every cut hidden inside a motion-blurred whip.",
+    "duration": 5.0,
+    "sourceUrl": "https://drive.google.com/file/d/1QJvDX6G023N6vwAcHqS6dth7tarrAMOj/view",
+    "capture": "scripts/build-hero.mjs (rendered from assets/pages/*.png — no screen recording)",
+    "builder": "hero",
+    "ratios": [
+      "9x16",
+      "4x5"
+    ]
   }
 ]

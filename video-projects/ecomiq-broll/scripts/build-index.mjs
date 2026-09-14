@@ -7,7 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { RATIOS } from './build-compositions.mjs';
+
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CLIPS = JSON.parse(fs.readFileSync(path.join(ROOT, 'clips.json'), 'utf8'));
@@ -57,8 +57,8 @@ const index = {
     shows: clip.shows,
     durationSeconds: clip.duration,
     sourceUrl: clip.sourceUrl,
-    captureScript: clip.capture,
-    ratios: Object.fromEntries(Object.keys(RATIOS).map((r) => {
+    builtBy: clip.capture,
+    ratios: Object.fromEntries(clip.ratios.map((r) => {
       const rel = `renders/broll/${clip.name}/${r}.mp4`;
       return [r, { file: rel, ...probe(path.join(ROOT, rel)) }];
     })),
@@ -66,4 +66,5 @@ const index = {
 };
 
 fs.writeFileSync(path.join(ROOT, 'broll-index.json'), JSON.stringify(index, null, 2) + '\n');
-console.log('wrote broll-index.json —', index.clips.length, 'clips x', Object.keys(RATIOS).length, 'ratios');
+console.log('wrote broll-index.json —', index.clips.length, 'clips,',
+  index.clips.reduce((n, c) => n + Object.keys(c.ratios).length, 0), 'files');

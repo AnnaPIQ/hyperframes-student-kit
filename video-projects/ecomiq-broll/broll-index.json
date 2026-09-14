@@ -18,7 +18,7 @@
       "shows": "The real Black Friday Profit Plan PDF open in a browser PDF viewer at 150% — holding on the cover, then a smooth scroll into the Contents spread showing all 8 parts across 51 pages.",
       "durationSeconds": 3,
       "sourceUrl": "https://drive.google.com/file/d/1QJvDX6G023N6vwAcHqS6dth7tarrAMOj/view",
-      "captureScript": "scripts/capture-workbook.mjs",
+      "builtBy": "scripts/capture-workbook.mjs",
       "ratios": {
         "9x16": {
           "file": "renders/broll/workbook/9x16.mp4",
@@ -55,7 +55,7 @@
       "shows": "The real EcomIQ Profitability Dashboard Google Sheet — the cursor tracks down the measures column selecting live cells (the selection box and formula bar follow), then the sheet scrolls through the annual rows into the Direction of Travel summary.",
       "durationSeconds": 3,
       "sourceUrl": "https://docs.google.com/spreadsheets/d/1TyUKGPZ5Y3MBfZ7-iOFyM_Bxd7oUcbK8hQTYguUmueM",
-      "captureScript": "scripts/capture-dashboard.mjs",
+      "builtBy": "scripts/capture-dashboard.mjs",
       "ratios": {
         "9x16": {
           "file": "renders/broll/dashboard/9x16.mp4",
@@ -92,7 +92,7 @@
       "shows": "The real EcomIQ True CAC Calculator — the cursor selects the New customer ad spend field and types 42000, and the live result panel recalculates on every keystroke, landing on a true CAC of $77.48 against a reported $52.50.",
       "durationSeconds": 3,
       "sourceUrl": "https://page.ecomiq.com/cac-calculator-page",
-      "captureScript": "scripts/capture-calculator.mjs",
+      "builtBy": "scripts/capture-calculator.mjs",
       "ratios": {
         "9x16": {
           "file": "renders/broll/calculator/9x16.mp4",
@@ -120,6 +120,34 @@
           "fps": 30,
           "duration": 3,
           "bytes": 2300992
+        }
+      }
+    },
+    {
+      "name": "bf-workbook-hero",
+      "title": "Black Friday Profit Plan — hero (motion graphics)",
+      "shows": "A five-beat motion-graphics cut built from the REAL workbook pages: the 3D workbook slams in from depth, its pages whip out into a fan, 8 / 32 / 19 punch in, the contribution-margin worksheet flies in with its total lit in flame, and the 2026 Black Friday calendar lands with Black Friday lit. Deep navy ground with perspective grid, crosshair marks, vignette and grain; every cut hidden inside a motion-blurred whip.",
+      "durationSeconds": 5,
+      "sourceUrl": "https://drive.google.com/file/d/1QJvDX6G023N6vwAcHqS6dth7tarrAMOj/view",
+      "builtBy": "scripts/build-hero.mjs (rendered from assets/pages/*.png — no screen recording)",
+      "ratios": {
+        "9x16": {
+          "file": "renders/broll/bf-workbook-hero/9x16.mp4",
+          "width": 1080,
+          "height": 1920,
+          "codec": "h264",
+          "fps": 30,
+          "duration": 5,
+          "bytes": 3640888
+        },
+        "4x5": {
+          "file": "renders/broll/bf-workbook-hero/4x5.mp4",
+          "width": 1080,
+          "height": 1350,
+          "codec": "h264",
+          "fps": 30,
+          "duration": 5,
+          "bytes": 3219084
         }
       }
     }

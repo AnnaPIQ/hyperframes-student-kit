@@ -8,7 +8,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { RATIOS } from './build-compositions.mjs';
+
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CLIPS = JSON.parse(fs.readFileSync(path.join(ROOT, 'clips.json'), 'utf8'));
@@ -16,7 +16,7 @@ const only = process.argv.slice(2);
 
 for (const clip of CLIPS) {
   if (only.length && !only.includes(clip.name)) continue;
-  for (const ratio of Object.keys(RATIOS)) {
+  for (const ratio of clip.ratios) {
     const out = path.join('renders/broll', clip.name, `${ratio}.mp4`);
     fs.mkdirSync(path.join(ROOT, path.dirname(out)), { recursive: true });
     console.log(`\n=== ${clip.name} ${ratio} ===`);

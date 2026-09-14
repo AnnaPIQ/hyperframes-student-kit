@@ -175,8 +175,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const only = process.argv.slice(2);
   let n = 0;
   for (const clip of CLIPS) {
+    if (clip.builder !== 'frame') continue;            // the hero has its own builder
     if (only.length && !only.includes(clip.name)) continue;
-    for (const ratioKey of Object.keys(RATIOS)) {
+    for (const ratioKey of clip.ratios) {
       const file = path.join(ROOT, 'compositions', `${clip.name}-${ratioKey}.html`);
       fs.writeFileSync(file, template({ clip, ratioKey }));
       console.log('wrote', path.relative(ROOT, file));
@@ -185,7 +186,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   }
   // The CLI needs an index.html to treat this folder as a project. The first
   // clip's 9:16 build doubles as that default entry point.
-  const first = CLIPS.find((c) => !only.length || only.includes(c.name)) || CLIPS[0];
+  const first = CLIPS.find((c) => c.builder === 'frame' && (!only.length || only.includes(c.name)));
   fs.writeFileSync(
     path.join(ROOT, 'index.html'),
     template({ clip: first, ratioKey: '9x16' }),

@@ -119,6 +119,15 @@ efficient over time instead of relearning the same lessons.
 - **Render UI recordings with `--video-frame-format png`.** JPEG frame extraction
   softens small UI text and rings high-contrast edges.
 
+## CSS 3D in HyperFrames compositions
+
+- **A GSAP `filter: blur()` tween silently kills `transform-style: preserve-3d`.**
+  A filter forces the element to `flat`, so its rotated 3D children collapse into the
+  parent plane — a CSS-3D book loses its spine and fore-edge with no error anywhere.
+  Fix: animate the blur on a *wrapper* and keep the filter off the preserve-3d element
+  itself. (Perspective inherited from a parent is unaffected, so a flat card that only
+  rotates itself can be blurred freely.)
+
 ## Housekeeping
 
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
