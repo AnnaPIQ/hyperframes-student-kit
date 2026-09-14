@@ -125,22 +125,18 @@
       <!-- Sean carries 23.15–26.20 on camera: "you can have nothing left".
            Its comparison graphic was cut at Anna's request. -->
 
-      <!-- 5 · WORKBOOK HERO — "I've put together a free workbook" -->
-      <div id="hero" class="clip scene" data-start="26.20" data-duration="4.35" data-track-index="6">
+      <!-- 5 · WORKBOOK HERO — "a free workbook" through "what each order
+           contributes". One continuous cover shot: the worksheet page that ran
+           30.25–32.60 was replaced with the cover at Anna's request (it was a
+           wall of unreadable microtext at this scale), and cutting from the
+           cover to an identical cover would read as a glitch, so the beats are
+           merged and the callout lands on the cover instead. -->
+      <div id="hero" class="clip scene" data-start="26.20" data-duration="6.40" data-track-index="6">
         <div class="bloom"></div>
         <div class="sc"><div class="sc-mid sc-mid--center">
           <div class="eyebrow eyebrow--flame">Free workbook</div>
           <img id="hero-shot" class="shot" src="assets/workbook-hero-trim.png"
                alt="The Black Friday Profit Plan workbook" />
-        </div></div>
-      </div>
-
-      <!-- 6 · REAL PAGE + per-order contribution -->
-      <div id="page" class="clip scene" data-start="30.25" data-duration="2.35" data-track-index="7">
-        <div class="bloom"></div>
-        <div class="sc"><div class="sc-mid sc-mid--center">
-          <img id="page-shot" class="shot" src="assets/wb-page-08.png"
-               alt="Calculate your contribution margin" />
           <div id="page-callout">
             <span id="page-fig" class="figure">$59.71</span>
             <span class="label">Contribution per order</span>
@@ -347,24 +343,19 @@
         { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 20.55);
       fadeOut("#contrast", 22.85);
 
-      /* ---- 5 · WORKBOOK HERO  26.20 → 30.55 -------------------------- */
+      /* ---- 5 · WORKBOOK HERO  26.20 → 32.60 -------------------------- */
       fadeIn("#hero", 26.2, 0.42);
       tl.fromTo("#hero .eyebrow", { opacity: 0, y: -22 },
         { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 26.45);
       tl.fromTo("#hero-shot", { opacity: 0, y: 40, scale: 0.93 },
         { opacity: 1, y: 0, scale: 1, duration: 0.85, ease: "power3.out" }, 26.4);
-      // slow push-in so the hold never feels static
-      tl.to("#hero-shot", { scale: 1.04, duration: 3.2, ease: "sine.inOut" }, 27.25);
-      fadeOut("#hero", 30.25);
-
-      /* ---- 6 · REAL PAGE  30.25 → 32.60 ------------------------------ */
-      fadeIn("#page", 30.25, 0.32);
-      tl.fromTo("#page-shot", { opacity: 0, y: 60 },
-        { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 30.33);
+      // slow push-in across the whole hold so a 6.4s shot never feels static
+      tl.to("#hero-shot", { scale: 1.05, duration: 5.0, ease: "sine.inOut" }, 27.25);
+      // the callout lands on "what each order actually contributes"
       tl.fromTo("#page-callout", { opacity: 0, y: 40, scale: 0.9 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 30.57);
-      countTo("#page-fig", 30.63, 0.75, 0, 59.71, usd);
-      fadeOut("#page", 32.3);
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 30.6);
+      countTo("#page-fig", 30.66, 0.75, 0, 59.71, usd);
+      fadeOut("#hero", 32.3);
 
       /* ---- 7 · MAX DISCOUNT DIAL  32.30 → 37.25 ---------------------- */
       const arc = document.getElementById("dial-arc");
