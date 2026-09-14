@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1920, height=1080" />
+    <meta name="viewport" content="width=1080, height=1920" />
     <title>s02-deck</title>
     <script src="assets/vendor/gsap.min.js"></script>
     <style>
@@ -72,10 +72,21 @@
       [data-composition-id="s02-deck"] .s02-slot[data-depth="0"] .s02-card::after { background: rgba(6, 40, 76, 0); }
       [data-composition-id="s02-deck"] .s02-slot[data-depth="1"] .s02-card::after { background: rgba(6, 40, 76, 0.16); }
       [data-composition-id="s02-deck"] .s02-slot[data-depth="2"] .s02-card::after { background: rgba(6, 40, 76, 0.3); }
+
+      /* ── format overrides (generated) ─────────────────────── */
+      [data-composition-id="s02-deck"] .s02-slot { width: 300px; height: 389px; margin: -194px 0 0 -150px; }
+      [data-composition-id="s02-deck"] .s02-p1 { transform: translateX(-330px) translateY(150px) rotate(-26deg) scale(0.85); }
+      [data-composition-id="s02-deck"] .s02-p2 { transform: translateX(-215px) translateY(66px)  rotate(-17deg) scale(0.9); }
+      [data-composition-id="s02-deck"] .s02-p3 { transform: translateX(-105px) translateY(16px)  rotate(-8.5deg) scale(0.95); }
+      [data-composition-id="s02-deck"] .s02-p4 { transform: translateX(0px)    translateY(0px)   rotate(0deg) scale(1); }
+      [data-composition-id="s02-deck"] .s02-p5 { transform: translateX(105px)  translateY(16px)  rotate(8.5deg) scale(0.95); }
+      [data-composition-id="s02-deck"] .s02-p6 { transform: translateX(215px)  translateY(66px)  rotate(17deg) scale(0.9); }
+      [data-composition-id="s02-deck"] .s02-p7 { transform: translateX(330px)  translateY(150px) rotate(26deg) scale(0.85); }
+      [data-composition-id="s02-deck"] .s02-pool { width: 1040px; height: 520px; margin: -260px 0 0 -520px; }
     </style>
   </head>
   <body>
-    <div data-composition-id="s02-deck" data-width="1920" data-height="1080" data-duration="2.7">
+    <div data-composition-id="s02-deck" data-width="1080" data-height="1920" data-duration="2.7">
       <div class="s02-enter" id="s02-enter">
       <div class="s02-stage" id="s02-stage">
         <div class="s02-pool" id="s02-pool"></div>

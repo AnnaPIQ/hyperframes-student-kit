@@ -1,0 +1,102 @@
+/* 4:5 — 1080x1350 (Meta / Instagram feed). Layout deltas only; scene
+   structure, copy and timing all come from the 16:9 master. */
+
+/* == index == */
+#stage {
+  background:
+    radial-gradient(92% 38% at 50% 13%, rgba(156, 212, 255, 0.14) 0%, rgba(6, 40, 76, 0) 60%),
+    radial-gradient(74% 30% at 50% 102%, rgba(255, 76, 50, 0.17) 0%, rgba(6, 40, 76, 0) 64%),
+    #06284c;
+}
+#grid-wrap {
+  top: 50%;
+  -webkit-mask-image: radial-gradient(72% 96% at 50% 96%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 78%);
+  mask-image: radial-gradient(72% 96% at 50% 96%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 78%);
+}
+#grid { left: -110%; width: 320%; transform: perspective(800px) rotateX(71deg); }
+#crosshairs .xh1 { left: 128px; top: 250px; }
+#crosshairs .xh2 { left: 932px; top: 250px; }
+#crosshairs .xh3 { left: 128px; top: 1090px; }
+#crosshairs .xh4 { left: 932px; top: 1090px; }
+#crosshairs .xh5 { left: 530px; top: 120px; }
+#crosshairs .xh6 { left: 530px; top: 1215px; }
+.streak { width: 104%; }
+#vignette { background: radial-gradient(78% 70% at 50% 47%, rgba(2, 16, 32, 0) 46%, rgba(2, 16, 32, 0.82) 100%); }
+
+/* == s01-cover == */
+[data-composition-id="s01-cover"] .s01-book { width: 600px; height: 777px; }
+[data-composition-id="s01-cover"] .s01-pool { width: 940px; height: 500px; margin: -195px 0 0 -470px; }
+[data-composition-id="s01-cover"] .s01-halo { width: 900px; height: 900px; margin: -450px 0 0 -450px; }
+
+/* == s02-deck == */
+[data-composition-id="s02-deck"] .s02-slot { width: 276px; height: 358px; margin: -179px 0 0 -138px; }
+[data-composition-id="s02-deck"] .s02-p1 { transform: translateX(-300px) translateY(128px) rotate(-25deg) scale(0.85); }
+[data-composition-id="s02-deck"] .s02-p2 { transform: translateX(-196px) translateY(56px)  rotate(-16.5deg) scale(0.9); }
+[data-composition-id="s02-deck"] .s02-p3 { transform: translateX(-98px)  translateY(14px)  rotate(-8deg) scale(0.95); }
+[data-composition-id="s02-deck"] .s02-p4 { transform: translateX(0px)    translateY(0px)   rotate(0deg) scale(1); }
+[data-composition-id="s02-deck"] .s02-p5 { transform: translateX(98px)   translateY(14px)  rotate(8deg) scale(0.95); }
+[data-composition-id="s02-deck"] .s02-p6 { transform: translateX(196px)  translateY(56px)  rotate(16.5deg) scale(0.9); }
+[data-composition-id="s02-deck"] .s02-p7 { transform: translateX(300px)  translateY(128px) rotate(25deg) scale(0.85); }
+[data-composition-id="s02-deck"] .s02-pool { width: 980px; height: 480px; margin: -240px 0 0 -490px; }
+
+/* == s03-stats == */
+[data-composition-id="s03-stats"] .s03-stage { padding: 110px 108px; }
+[data-composition-id="s03-stats"] .s03-row { flex-direction: column; align-items: center; gap: 32px; margin-top: 46px; }
+[data-composition-id="s03-stats"] .s03-col { width: auto; }
+[data-composition-id="s03-stats"] .s03-num { font-size: 158px; }
+[data-composition-id="s03-stats"] .s03-label { margin-top: 10px; font-size: 24px; }
+[data-composition-id="s03-stats"] .s03-div { display: none; }
+[data-composition-id="s03-stats"] .s03-glow { width: 980px; height: 760px; margin: -380px 0 0 -490px; }
+
+/* == s04-margin == */
+[data-composition-id="s04-margin"] .s04-page { width: 912px; padding: 36px 44px 40px; }
+[data-composition-id="s04-margin"] .s04-eyebrow { font-size: 15px; }
+[data-composition-id="s04-margin"] .s04-title { font-size: 50px; max-width: 580px; margin-top: 12px; }
+[data-composition-id="s04-margin"] .s04-chip { margin-top: 22px; padding: 11px 17px; gap: 12px; }
+[data-composition-id="s04-margin"] .s04-chip .k { font-size: 15px; }
+[data-composition-id="s04-margin"] .s04-chip .v { font-size: 21px; }
+[data-composition-id="s04-margin"] .s04-kicker { margin-top: 22px; font-size: 15px; }
+[data-composition-id="s04-margin"] .s04-row { height: 52px; }
+[data-composition-id="s04-margin"] .s04-op { width: 50px; font-size: 21px; }
+[data-composition-id="s04-margin"] .s04-name { font-size: 22px; padding-left: 18px; }
+[data-composition-id="s04-margin"] .s04-field { width: 200px; height: 35px; padding: 0 13px; }
+[data-composition-id="s04-margin"] .s04-val { font-size: 22px; }
+[data-composition-id="s04-margin"] .s04-total { height: 62px; }
+[data-composition-id="s04-margin"] .s04-total .s04-name { font-size: 24px; }
+[data-composition-id="s04-margin"] .s04-total .s04-field { height: 41px; }
+[data-composition-id="s04-margin"] .s04-total .s04-val { font-size: 26px; }
+[data-composition-id="s04-margin"] .s04-pool { width: 1000px; height: 520px; margin: -260px 0 0 -500px; }
+
+/* == s05-calendar == */
+[data-composition-id="s05-calendar"] .s05-page { width: 1160px; margin-left: -580px; }
+[data-composition-id="s05-calendar"] .s05-pool { width: 1060px; height: 760px; margin: -380px 0 0 -530px; }
+[data-composition-id="s05-calendar"] .s05-fade-t,
+[data-composition-id="s05-calendar"] .s05-fade-b { height: 180px; }
+
+/* == s06-sheets == */
+[data-composition-id="s06-sheets"] .s06-stage { padding: 100px 108px; }
+[data-composition-id="s06-sheets"] .s06-grid { grid-template-columns: repeat(2, 400px); gap: 32px 56px; margin-top: 40px; }
+[data-composition-id="s06-sheets"] .s06-card { width: 400px; }
+[data-composition-id="s06-sheets"] .s06-name { min-height: 48px; font-size: 19px; }
+[data-composition-id="s06-sheets"] .s06-bar { height: 20px; }
+[data-composition-id="s06-sheets"] .s06-hdr { height: 20px; }
+[data-composition-id="s06-sheets"] .s06-line { height: 22px; }
+[data-composition-id="s06-sheets"] .s06-glow { width: 1000px; height: 900px; margin: -450px 0 0 -500px; }
+
+/* == s07-tools == */
+[data-composition-id="s07-tools"] .s07-stage { padding: 110px 108px; }
+[data-composition-id="s07-tools"] .s07-cloud { max-width: 860px; gap: 20px; margin-top: 44px; }
+[data-composition-id="s07-tools"] .s07-pill { font-size: 24px; padding: 16px 30px; gap: 13px; }
+[data-composition-id="s07-tools"] .s07-dot { width: 11px; height: 11px; }
+[data-composition-id="s07-tools"] .s07-glow { width: 1000px; height: 760px; margin: -380px 0 0 -500px; }
+
+/* == s08-outro == */
+[data-composition-id="s08-outro"] .s08-stage { flex-direction: column; gap: 52px; padding: 110px 108px; }
+[data-composition-id="s08-outro"] .s08-book { width: 360px; height: 466px; }
+[data-composition-id="s08-outro"] .s08-lockup { align-items: center; text-align: center; max-width: 864px; }
+[data-composition-id="s08-outro"] .s08-logo { width: 264px; }
+[data-composition-id="s08-outro"] .s08-rule { margin-top: 28px; transform-origin: 50% 50%; }
+[data-composition-id="s08-outro"] .s08-title { margin-top: 20px; font-size: 50px; }
+[data-composition-id="s08-outro"] .s08-sub { margin-top: 16px; font-size: 24px; }
+[data-composition-id="s08-outro"] .s08-meta { margin-top: 24px; padding-top: 20px; font-size: 17px; }
+[data-composition-id="s08-outro"] .s08-pool { left: 50%; top: 36%; width: 940px; height: 560px; margin: -280px 0 0 -470px; }

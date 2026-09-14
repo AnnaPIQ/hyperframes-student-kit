@@ -4,8 +4,13 @@
 shots an editor can pull individually and lay under narration in any future
 EcomIQ video.
 
-Format: 16:9 landscape · 1920x1080 @ 30fps · 30.0s · no audio track.
-Safe area ~10% margins (192px sides).
+Formats: **16:9** 1920x1080 (master) · **9:16** 1080x1920 · **4:5** 1080x1350.
+All three: 30fps, **21.4s**, no audio track. Safe area ~10% margins.
+
+The 16:9 project is the source of truth for structure, copy and timing. The two
+vertical projects are generated from it by `scripts/build-variants.mjs`, which
+appends the per-format layout deltas in `scripts/overrides/*.css`. Never
+hand-edit a variant.
 
 Subject: **The Black Friday Profit Plan** — EcomIQ's free workbook for US
 Shopify brands (2026 edition). 51 pages · 8 parts · 32 worksheets · 19 free tools.
@@ -41,11 +46,12 @@ because a raster crop can't do that and a seam between crop and overlay would sh
 - Unifying texture on every frame: perspective grid + crosshairs + vignette +
   CSS grain, all in the root so it runs continuously under every scene.
 - Camera never sleeps — every shot has a slow push, drift or parallax.
-- Scenes overlap by 0.3s on ascending z-index; the incoming scene rises and
+- Scenes overlap by 0.4s on ascending z-index; the incoming scene rises and
   un-blurs over the outgoing one, and a flame light-streak crosses the seam.
   No hard cuts, no exit animations (the transition is the exit).
-- Shots run 3.4–4.1s — longer than an ad beat on purpose, so each one is usable
-  standalone. The outro holds 5.6s.
+- Shots run 2.3–2.9s; the outro holds 4.2s. Faster than the first cut, but still
+  longer than a 1.5s ad beat on purpose: a shot has to survive being lifted on
+  its own. Under a voiceover the piece now rolls rather than dwells.
 - Callbacks: the flame hairline rule (shots 1, 3, 4, 8) and the cover itself
   (shot 1 → shot 8).
 
@@ -53,13 +59,24 @@ because a raster crop can't do that and a seam between crop and overlay would sh
 | # | t | Shot |
 |---|---|---|
 | 01 | 0.0 | Cover rises and settles on the grid, glint sweep, slow push-in |
-| 02 | 3.6 | Seven pages fan into an arc and drift |
-| 03 | 7.0 | 8 PARTS · 32 WORKSHEETS · 19 FREE TOOLS count up |
-| 04 | 10.4 | Contribution-margin worksheet: fields fill, the answer lands in flame |
-| 05 | 14.2 | The 2026 calendar page, push-in, Black Friday row lights |
-| 06 | 17.6 | Eight companion spreadsheets deal into a stack |
-| 07 | 21.0 | Seven free tools snap into a grid |
-| 08 | 24.4 | Cover + EcomIQ lockup, 5.6s hold |
+| 02 | 2.4 | Seven pages fan into an arc and drift |
+| 03 | 4.7 | 8 PARTS · 32 WORKSHEETS · 19 FREE TOOLS count up |
+| 04 | 7.1 | Contribution-margin worksheet: fields fill, the answer lands in flame |
+| 05 | 10.0 | The 2026 calendar page, push-in, Black Friday row lights |
+| 06 | 12.5 | Eight companion spreadsheets deal into a grid |
+| 07 | 14.9 | Seven free tools snap into a cloud |
+| 08 | 17.2 | Cover + EcomIQ lockup, 4.2s hold |
+
+## What changes per format, and what must not
+Only **layout** changes: type scale, grid columns, the fan's arc, and whether the
+outro sits side-by-side or stacked. Timing, copy, palette, the order of the
+shots and every animation curve stay identical, so the three cuts stay in sync
+and an editor can swap formats without re-timing anything.
+
+Anything positional that a variant needs to move lives in a CSS class, never an
+inline `style` attribute — inline styles beat a stylesheet, so the fan's arc
+(`.s02-p1`…`.s02-p7`) and the crosshair positions (`.xh1`…`.xh6`) are classes
+for exactly that reason.
 
 ## What NOT to do
 - No second hot accent. Flame orange is the only warm colour on screen.

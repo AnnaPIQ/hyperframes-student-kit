@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1920, height=1080" />
+    <meta name="viewport" content="width=1080, height=1350" />
     <title>s05-calendar</title>
     <script src="assets/vendor/gsap.min.js"></script>
     <style>
@@ -89,10 +89,16 @@
         bottom: 0;
         background: linear-gradient(0deg, rgba(6, 40, 76, 0.95) 0%, rgba(6, 40, 76, 0) 100%);
       }
+
+      /* ── format overrides (generated) ─────────────────────── */
+      [data-composition-id="s05-calendar"] .s05-page { width: 1160px; margin-left: -580px; }
+      [data-composition-id="s05-calendar"] .s05-pool { width: 1060px; height: 760px; margin: -380px 0 0 -530px; }
+      [data-composition-id="s05-calendar"] .s05-fade-t,
+      [data-composition-id="s05-calendar"] .s05-fade-b { height: 180px; }
     </style>
   </head>
   <body>
-    <div data-composition-id="s05-calendar" data-width="1920" data-height="1080" data-duration="2.9">
+    <div data-composition-id="s05-calendar" data-width="1080" data-height="1350" data-duration="2.9">
       <div class="s05-enter" id="s05-enter">
       <div class="s05-pool" id="s05-pool"></div>
       <div class="s05-view" id="s05-view">
@@ -112,8 +118,8 @@
         window.__timelines = window.__timelines || {};
         const S = '[data-composition-id="s05-calendar"] ';
         const SLOT = 2.9;
-        const PAN_FROM = -120;   // page y at the headline
-        const PAN_TO = -660;     // page y on the Black Friday row
+        const PAN_FROM = 40;   // page y at the headline
+        const PAN_TO = -160;     // page y on the Black Friday row
         const tl = gsap.timeline({ paused: true });
 
         // Scene arrives over the outgoing shot — blur-rise, never a hard cut.

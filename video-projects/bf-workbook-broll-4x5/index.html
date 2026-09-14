@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1920, height=1080" />
+    <meta name="viewport" content="width=1080, height=1350" />
     <title>The Black Friday Profit Plan — b-roll</title>
     <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
     <script src="assets/vendor/gsap.min.js"></script>
@@ -26,8 +26,8 @@
 
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body {
-        width: 1920px;
-        height: 1080px;
+        width: 1080px;
+        height: 1350px;
         overflow: hidden;
         background: #06284c;
         font-family: "Rethink Sans", system-ui, sans-serif;
@@ -39,8 +39,8 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 1920px;
-        height: 1080px;
+        width: 1080px;
+        height: 1350px;
       }
 
       /* ── Unifying texture (untimed — always on, runs under every scene) ───── */
@@ -146,6 +146,28 @@
         background-size: 3px 3px, 5px 5px, 7px 7px;
         background-position: 0 0, 1px 2px, 2px 1px;
       }
+
+      /* ── format overrides (generated) ─────────────────────── */
+      #stage {
+        background:
+          radial-gradient(92% 38% at 50% 13%, rgba(156, 212, 255, 0.14) 0%, rgba(6, 40, 76, 0) 60%),
+          radial-gradient(74% 30% at 50% 102%, rgba(255, 76, 50, 0.17) 0%, rgba(6, 40, 76, 0) 64%),
+          #06284c;
+      }
+      #grid-wrap {
+        top: 50%;
+        -webkit-mask-image: radial-gradient(72% 96% at 50% 96%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 78%);
+        mask-image: radial-gradient(72% 96% at 50% 96%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 78%);
+      }
+      #grid { left: -110%; width: 320%; transform: perspective(800px) rotateX(71deg); }
+      #crosshairs .xh1 { left: 128px; top: 250px; }
+      #crosshairs .xh2 { left: 932px; top: 250px; }
+      #crosshairs .xh3 { left: 128px; top: 1090px; }
+      #crosshairs .xh4 { left: 932px; top: 1090px; }
+      #crosshairs .xh5 { left: 530px; top: 120px; }
+      #crosshairs .xh6 { left: 530px; top: 1215px; }
+      .streak { width: 104%; }
+      #vignette { background: radial-gradient(78% 70% at 50% 47%, rgba(2, 16, 32, 0) 46%, rgba(2, 16, 32, 0.82) 100%); }
     </style>
   </head>
   <body>
@@ -154,8 +176,8 @@
       data-composition-id="bf-workbook-broll"
       data-start="0"
       data-duration="21.4"
-      data-width="1920"
-      data-height="1080"
+      data-width="1080"
+      data-height="1350"
     >
       <!-- ═══ Persistent stage: navy + perspective grid + crosshairs ═══ -->
       <div id="stage"></div>
@@ -174,56 +196,56 @@
         data-composition-id="s01-cover"
         data-composition-src="compositions/s01-cover.html"
         data-start="0" data-duration="2.8" data-track-index="1"
-        data-width="1920" data-height="1080"></div>
+        data-width="1080" data-height="1350"></div>
 
       <!-- ═══ Shot 02 — Page fan (3.6 → 7.3) ═══ -->
       <div class="beat-layer" id="beat-s02-deck" style="z-index: 12"
         data-composition-id="s02-deck"
         data-composition-src="compositions/s02-deck.html"
         data-start="2.4" data-duration="2.7" data-track-index="2"
-        data-width="1920" data-height="1080"></div>
+        data-width="1080" data-height="1350"></div>
 
       <!-- ═══ Shot 03 — Stat triad (7.0 → 10.7) ═══ -->
       <div class="beat-layer" id="beat-s03-stats" style="z-index: 13"
         data-composition-id="s03-stats"
         data-composition-src="compositions/s03-stats.html"
         data-start="4.7" data-duration="2.8" data-track-index="3"
-        data-width="1920" data-height="1080"></div>
+        data-width="1080" data-height="1350"></div>
 
       <!-- ═══ Shot 04 — Contribution-margin worksheet (10.4 → 14.5) ═══ -->
       <div class="beat-layer" id="beat-s04-margin" style="z-index: 14"
         data-composition-id="s04-margin"
         data-composition-src="compositions/s04-margin.html"
         data-start="7.1" data-duration="3.3" data-track-index="4"
-        data-width="1920" data-height="1080"></div>
+        data-width="1080" data-height="1350"></div>
 
       <!-- ═══ Shot 05 — 2026 calendar page (14.2 → 17.9) ═══ -->
       <div class="beat-layer" id="beat-s05-calendar" style="z-index: 15"
         data-composition-id="s05-calendar"
         data-composition-src="compositions/s05-calendar.html"
         data-start="10" data-duration="2.9" data-track-index="5"
-        data-width="1920" data-height="1080"></div>
+        data-width="1080" data-height="1350"></div>
 
       <!-- ═══ Shot 06 — Companion spreadsheets (17.6 → 21.3) ═══ -->
       <div class="beat-layer" id="beat-s06-sheets" style="z-index: 16"
         data-composition-id="s06-sheets"
         data-composition-src="compositions/s06-sheets.html"
         data-start="12.5" data-duration="2.8" data-track-index="6"
-        data-width="1920" data-height="1080"></div>
+        data-width="1080" data-height="1350"></div>
 
       <!-- ═══ Shot 07 — Free tools (21.0 → 24.7) ═══ -->
       <div class="beat-layer" id="beat-s07-tools" style="z-index: 17"
         data-composition-id="s07-tools"
         data-composition-src="compositions/s07-tools.html"
         data-start="14.9" data-duration="2.7" data-track-index="7"
-        data-width="1920" data-height="1080"></div>
+        data-width="1080" data-height="1350"></div>
 
       <!-- ═══ Shot 08 — Outro hold (24.4 → 30.0) ═══ -->
       <div class="beat-layer" id="beat-s08-outro" style="z-index: 18"
         data-composition-id="s08-outro"
         data-composition-src="compositions/s08-outro.html"
         data-start="17.2" data-duration="4.2" data-track-index="8"
-        data-width="1920" data-height="1080"></div>
+        data-width="1080" data-height="1350"></div>
 
       <!-- ═══ Whip streaks — one per cut, hides the seam ═══ -->
       <div class="streak" id="wk-1"></div>

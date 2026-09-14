@@ -1,0 +1,99 @@
+/* 9:16 — 1080x1920 (Stories / Reels / Shorts). Layout deltas only; scene
+   structure, copy and timing all come from the 16:9 master. */
+
+/* == index == */
+#stage {
+  background:
+    radial-gradient(92% 30% at 50% 12%, rgba(156, 212, 255, 0.14) 0%, rgba(6, 40, 76, 0) 60%),
+    radial-gradient(74% 22% at 50% 101%, rgba(255, 76, 50, 0.17) 0%, rgba(6, 40, 76, 0) 64%),
+    #06284c;
+}
+#grid-wrap {
+  top: 58%;
+  -webkit-mask-image: radial-gradient(74% 96% at 50% 96%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 78%);
+  mask-image: radial-gradient(74% 96% at 50% 96%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 78%);
+}
+#grid { left: -110%; width: 320%; transform: perspective(760px) rotateX(72deg); }
+#crosshairs .xh1 { left: 120px;  top: 330px; }
+#crosshairs .xh2 { left: 940px;  top: 330px; }
+#crosshairs .xh3 { left: 120px;  top: 1580px; }
+#crosshairs .xh4 { left: 940px;  top: 1580px; }
+#crosshairs .xh5 { left: 530px;  top: 150px; }
+#crosshairs .xh6 { left: 530px;  top: 1770px; }
+.streak { width: 104%; }
+#vignette { background: radial-gradient(78% 64% at 50% 47%, rgba(2, 16, 32, 0) 46%, rgba(2, 16, 32, 0.82) 100%); }
+
+/* == s01-cover == */
+[data-composition-id="s01-cover"] .s01-book { width: 700px; height: 906px; }
+[data-composition-id="s01-cover"] .s01-pool { width: 1000px; height: 540px; margin: -210px 0 0 -500px; }
+[data-composition-id="s01-cover"] .s01-halo { width: 1000px; height: 1000px; margin: -500px 0 0 -500px; }
+
+/* == s02-deck == */
+[data-composition-id="s02-deck"] .s02-slot { width: 300px; height: 389px; margin: -194px 0 0 -150px; }
+[data-composition-id="s02-deck"] .s02-p1 { transform: translateX(-330px) translateY(150px) rotate(-26deg) scale(0.85); }
+[data-composition-id="s02-deck"] .s02-p2 { transform: translateX(-215px) translateY(66px)  rotate(-17deg) scale(0.9); }
+[data-composition-id="s02-deck"] .s02-p3 { transform: translateX(-105px) translateY(16px)  rotate(-8.5deg) scale(0.95); }
+[data-composition-id="s02-deck"] .s02-p4 { transform: translateX(0px)    translateY(0px)   rotate(0deg) scale(1); }
+[data-composition-id="s02-deck"] .s02-p5 { transform: translateX(105px)  translateY(16px)  rotate(8.5deg) scale(0.95); }
+[data-composition-id="s02-deck"] .s02-p6 { transform: translateX(215px)  translateY(66px)  rotate(17deg) scale(0.9); }
+[data-composition-id="s02-deck"] .s02-p7 { transform: translateX(330px)  translateY(150px) rotate(26deg) scale(0.85); }
+[data-composition-id="s02-deck"] .s02-pool { width: 1040px; height: 520px; margin: -260px 0 0 -520px; }
+
+/* == s03-stats == */
+[data-composition-id="s03-stats"] .s03-stage { padding: 150px 108px; }
+[data-composition-id="s03-stats"] .s03-row { flex-direction: column; align-items: center; gap: 40px; margin-top: 54px; }
+[data-composition-id="s03-stats"] .s03-col { width: auto; }
+[data-composition-id="s03-stats"] .s03-num { font-size: 186px; }
+[data-composition-id="s03-stats"] .s03-label { margin-top: 12px; font-size: 26px; }
+[data-composition-id="s03-stats"] .s03-div { display: none; }
+[data-composition-id="s03-stats"] .s03-glow { width: 1000px; height: 900px; margin: -450px 0 0 -500px; }
+
+/* == s04-margin == */
+[data-composition-id="s04-margin"] .s04-page { width: 912px; padding: 40px 44px 44px; }
+[data-composition-id="s04-margin"] .s04-eyebrow { font-size: 15px; }
+[data-composition-id="s04-margin"] .s04-title { font-size: 52px; max-width: 600px; margin-top: 14px; }
+[data-composition-id="s04-margin"] .s04-chip { margin-top: 24px; padding: 12px 18px; gap: 12px; }
+[data-composition-id="s04-margin"] .s04-chip .k { font-size: 15px; }
+[data-composition-id="s04-margin"] .s04-chip .v { font-size: 22px; }
+[data-composition-id="s04-margin"] .s04-kicker { margin-top: 26px; font-size: 15px; }
+[data-composition-id="s04-margin"] .s04-row { height: 54px; }
+[data-composition-id="s04-margin"] .s04-op { width: 50px; font-size: 21px; }
+[data-composition-id="s04-margin"] .s04-name { font-size: 22px; padding-left: 18px; }
+[data-composition-id="s04-margin"] .s04-field { width: 200px; height: 36px; padding: 0 13px; }
+[data-composition-id="s04-margin"] .s04-val { font-size: 22px; }
+[data-composition-id="s04-margin"] .s04-total { height: 64px; }
+[data-composition-id="s04-margin"] .s04-total .s04-name { font-size: 24px; }
+[data-composition-id="s04-margin"] .s04-total .s04-field { height: 42px; }
+[data-composition-id="s04-margin"] .s04-total .s04-val { font-size: 26px; }
+[data-composition-id="s04-margin"] .s04-pool { width: 1040px; height: 560px; margin: -280px 0 0 -520px; }
+
+/* == s05-calendar == */
+[data-composition-id="s05-calendar"] .s05-page { width: 1160px; margin-left: -580px; }
+[data-composition-id="s05-calendar"] .s05-pool { width: 1100px; height: 900px; margin: -450px 0 0 -550px; }
+[data-composition-id="s05-calendar"] .s05-fade-t,
+[data-composition-id="s05-calendar"] .s05-fade-b { height: 230px; }
+
+/* == s06-sheets == */
+[data-composition-id="s06-sheets"] .s06-stage { padding: 150px 108px; }
+[data-composition-id="s06-sheets"] .s06-grid { grid-template-columns: repeat(2, 400px); gap: 40px 56px; margin-top: 48px; }
+[data-composition-id="s06-sheets"] .s06-card { width: 400px; }
+[data-composition-id="s06-sheets"] .s06-name { font-size: 21px; }
+[data-composition-id="s06-sheets"] .s06-glow { width: 1040px; height: 1100px; margin: -550px 0 0 -520px; }
+
+/* == s07-tools == */
+[data-composition-id="s07-tools"] .s07-stage { padding: 150px 108px; }
+[data-composition-id="s07-tools"] .s07-cloud { max-width: 880px; gap: 22px; margin-top: 50px; }
+[data-composition-id="s07-tools"] .s07-pill { font-size: 26px; padding: 18px 34px; gap: 14px; }
+[data-composition-id="s07-tools"] .s07-dot { width: 11px; height: 11px; }
+[data-composition-id="s07-tools"] .s07-glow { width: 1040px; height: 900px; margin: -450px 0 0 -520px; }
+
+/* == s08-outro == */
+[data-composition-id="s08-outro"] .s08-stage { flex-direction: column; gap: 76px; padding: 150px 108px; }
+[data-composition-id="s08-outro"] .s08-book { width: 420px; height: 544px; }
+[data-composition-id="s08-outro"] .s08-lockup { align-items: center; text-align: center; max-width: 864px; }
+[data-composition-id="s08-outro"] .s08-logo { width: 300px; }
+[data-composition-id="s08-outro"] .s08-rule { margin-top: 34px; transform-origin: 50% 50%; }
+[data-composition-id="s08-outro"] .s08-title { margin-top: 24px; font-size: 58px; }
+[data-composition-id="s08-outro"] .s08-sub { margin-top: 20px; font-size: 26px; }
+[data-composition-id="s08-outro"] .s08-meta { margin-top: 30px; padding-top: 22px; font-size: 18px; }
+[data-composition-id="s08-outro"] .s08-pool { left: 50%; top: 38%; width: 1000px; height: 660px; margin: -330px 0 0 -500px; }
