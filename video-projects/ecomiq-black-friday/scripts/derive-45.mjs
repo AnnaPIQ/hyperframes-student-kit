@@ -28,6 +28,8 @@ const swaps = [
   ['width: 1080px; height: 1920px;', 'width: 1080px; height: 1350px;'],
   ['· 9:16 (1080x1920 @30fps) · 39.0s', '· 4:5 (1080x1350 @30fps) · 39.0s'],
   ['assets/aroll-916.mp4', 'assets/aroll-45.mp4'],
+  ['assets/broll-a-916.mp4', 'assets/broll-a-45.mp4'],
+  ['assets/broll-b-916.mp4', 'assets/broll-b-45.mp4'],
   ['data-composition-id="ecomiq-black-friday"', 'data-composition-id="ecomiq-black-friday-45"'],
   ['data-height="1920"', 'data-height="1350"'],
   ["window.__timelines['ecomiq-black-friday']", "window.__timelines['ecomiq-black-friday-45']"],
@@ -79,14 +81,13 @@ const overrides = `
       #contrast-foot { margin-top: 30px; font-size: 30px; gap: 12px; }
       #contrast-foot i { font-size: 38px; }
 
+      #checklist-panel { border-radius: 26px; padding: 30px 34px 26px; }
       #card-checklist h2 { font-size: 62px; margin-bottom: 36px; }
       .item { padding: 15px 0; gap: 20px; }
       .tick { width: 54px; height: 54px; border-radius: 15px; }
       .tick svg { width: 28px; height: 28px; }
       .item .t { font-size: 34px; }
 
-      #still-cover img { height: 66%; }
-      #cover-tag { font-size: 23px; }
 
       #ec-logo { width: 330px; margin-bottom: 38px; }
       #ec-eyebrow { font-size: 23px; margin-bottom: 22px; }

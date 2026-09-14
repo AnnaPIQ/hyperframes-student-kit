@@ -115,41 +115,38 @@
       #contrast-foot i { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
         font-weight: 400; color: var(--brand-flame); font-size: 46px; }
 
-      /* ---- S6 checklist ------------------------------------------------------- */
-      #card-checklist h2 { font-size: 90px; font-weight: 800; line-height: 1.0;
-        letter-spacing: -.035em; margin-bottom: 52px; }
+      /* ---- S6 checklist ------------------------------------------------------
+         Overlaid on the workbook b-roll, so the opaque card background is
+         replaced by a navy scrim — the footage still reads underneath. */
+      #card-checklist { background: linear-gradient(180deg,
+        rgba(6,40,76,.58) 0%, rgba(6,40,76,.42) 40%,
+        rgba(6,40,76,.50) 70%, rgba(6,40,76,.66) 100%); }
+      #checklist-panel { background: rgba(6,40,76,.95);
+        border: 1px solid var(--brand-border); border-radius: 34px;
+        padding: 40px 38px 34px;
+        box-shadow: 0 44px 120px -30px rgba(0,0,0,.9); }
+      #card-checklist h2 { font-size: 82px; font-weight: 800; line-height: 1.0;
+        letter-spacing: -.035em; margin-bottom: 40px; }
       #card-checklist h2 .em { font-family: 'Hedvig Letters Serif', Georgia, serif;
         font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
-      .item { display: flex; align-items: center; gap: 28px; padding: 26px 0; }
-      .tick { flex: none; width: 76px; height: 76px; border-radius: 20px;
+      .item { display: flex; align-items: center; gap: 24px; padding: 19px 0; }
+      .tick { flex: none; width: 68px; height: 68px; border-radius: 18px;
         background: rgba(156,212,255,.14); border: 1px solid var(--brand-border);
         display: flex; align-items: center; justify-content: center; }
-      .tick svg { width: 39px; height: 39px; }
+      .tick svg { width: 35px; height: 35px; }
       .tick path { stroke: var(--brand-blue-tint); stroke-width: 3.4; fill: none;
         stroke-linecap: round; stroke-linejoin: round; }
-      .item .t { font-size: 48px; font-weight: 600; letter-spacing: -.015em; line-height: 1.14; }
+      .item .t { font-size: 42px; font-weight: 600; letter-spacing: -.015em; line-height: 1.14; }
       .item.hot .tick { background: rgba(255,76,50,.18); border-color: rgba(255,76,50,.5); }
       .item.hot .tick path { stroke: var(--brand-flame); }
       .item.hot .t { font-weight: 800; color: var(--brand-flame); }
 
-      /* ---- B-roll stills ------------------------------------------------------ */
-      .still { position: absolute; inset: 0; z-index: 30; overflow: hidden;
-        background: radial-gradient(70% 45% at 50% 42%, rgba(156,212,255,.13) 0%, rgba(6,40,76,0) 62%), var(--brand-navy);
-        display: flex; align-items: center; justify-content: center;
-        padding-bottom: var(--safe-bottom); }
-      .still img { display: block; will-change: transform; }
-      /* landscape suite shots framed as deliberate rounded cards on the navy field */
-      #still-suite img, #still-whip img { width: 92%; height: auto;
-        border-radius: 30px; box-shadow: 0 44px 110px -34px rgba(0,0,0,.8); }
-      #whip-inner, #suite-inner { position: absolute; inset: 0; display: flex; align-items: center;
-        justify-content: center; padding-bottom: var(--safe-bottom); }
-      /* background keyed out by scripts/prep-stills.sh, so it floats on navy */
-      #still-cover img { height: 72%; width: auto;
-        filter: drop-shadow(0 46px 84px rgba(0,0,0,.55)); }
-      #cover-tag { position: absolute; left: var(--pad); right: var(--pad);
-        bottom: calc(var(--safe-bottom) + 18px);
-        text-align: center; font-size: 27px; font-weight: 700; letter-spacing: .18em;
-        text-transform: uppercase; color: var(--brand-blue-tint); }
+      /* ---- B-roll: the EcomIQ workbook film ----------------------------------
+         Plain non-`clip` wrappers (the <video> inside carries the timing, rule 2),
+         so the fades live on the wrapper and never touch the video box (rule 9). */
+      .broll-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 25; }
+      .broll-wrap video { position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; }
 
       /* ---- S10 end card -------------------------------------------------------- */
       #endcard { z-index: 70; align-items: center; text-align: center; }
@@ -273,13 +270,17 @@
         <div id="contrast-foot"><i>1.81&times;</i><span>the units, just to stand still.</span></div>
       </div>
 
-      <!-- S5 · 14.84–18.92 · product suite, carries the held beat before the list -->
-      <div id="still-suite" class="still clip" data-start="14.84" data-duration="4.08" data-track-index="8">
-        <div id="suite-inner"><img src="assets/product-suite.png" alt="The Black Friday Profit Plan workbook and companion tools" /></div>
+      <!-- S5 · 14.84–26.36 · workbook b-roll, slot A. Runs under "Once you know
+           these numbers…" and stays under the checklist, which scrims over it.
+           Beats: worksheets deck, 8/32/19, calendar, spreadsheets, tools. -->
+      <div id="broll-a-wrap" class="broll-wrap">
+        <video id="broll-a" src="assets/broll-a-916.mp4" muted
+               data-start="14.84" data-duration="11.52" data-track-index="8"></video>
       </div>
 
       <!-- S6 · 18.88–26.28 · the four-item plan -->
       <div id="card-checklist" class="card clip" data-start="18.88" data-duration="7.4" data-track-index="9">
+        <div id="checklist-panel">
         <div class="eyebrow">Once you know your numbers</div>
         <div class="rule"></div>
         <h2>The rest gets <span class="em">easy</span>.</h2>
@@ -299,17 +300,14 @@
           <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.6" /></svg></div>
           <div class="t">Stop guessing</div>
         </div>
+        </div>
       </div>
 
-      <!-- S8 · 30.42–31.05 · fast whip insert into the workbook beat -->
-      <div id="still-whip" class="still clip" data-start="30.42" data-duration="0.63" data-track-index="10">
-        <div id="whip-inner"><img src="assets/product-suite-wide.png" alt="" /></div>
-      </div>
-
-      <!-- S9 · 30.98–34.50 · the workbook itself -->
-      <div id="still-cover" class="still clip" data-start="30.98" data-duration="3.52" data-track-index="11">
-        <img src="assets/workbook-cover-float.png" alt="The Black Friday Profit Plan workbook cover" />
-        <div id="cover-tag">8 Parts &middot; 32 Worksheets &middot; 19 Free Tools</div>
+      <!-- S8 · 30.42–34.40 · workbook b-roll, slot B: the cover itself, under
+           "We've put the full process into a free Black Friday workbook." -->
+      <div id="broll-b-wrap" class="broll-wrap">
+        <video id="broll-b" src="assets/broll-b-916.mp4" muted
+               data-start="30.42" data-duration="3.98" data-track-index="10"></video>
       </div>
 
       <!-- S10 · 34.40–39.00 · end card. Lands on "Link is below" (34.55),
@@ -399,13 +397,17 @@
                { opacity: 1, y: 0, duration: .42, ease: 'back.out(1.5)' }, 13.30)
         .to('#card-contrast', { opacity: 0, duration: .28, ease: 'power2.in' }, 14.50);
 
-      /* ---- S5 · product suite, slow push --------------------------------------- */
-      tl.fromTo('#suite-inner', { opacity: 0 },
-               { opacity: 1, duration: .32, ease: 'power2.out' }, 14.84)
-        .fromTo('#still-suite img', { scale: 1.0 },
-               { scale: 1.06, duration: 4.08, ease: 'none' }, 14.84)
-        .to('#suite-inner', { opacity: 0, duration: .28, ease: 'power2.in' }, 18.64)
-        .set('#suite-inner', { opacity: 0 }, 18.88);
+      /* ---- S5/S8 · workbook b-roll ------------------------------------------
+         tl.set at 0 gives both wrappers a stable baseline, so a seek to any
+         point before the fade-in can't inherit a stale opacity. */
+      tl.set('#broll-a-wrap', { opacity: 0 }, 0)
+        .set('#broll-b-wrap', { opacity: 0 }, 0)
+        .to('#broll-a-wrap', { opacity: 1, duration: .32, ease: 'power2.out' }, 14.84)
+        .to('#broll-a-wrap', { opacity: 0, duration: .30, ease: 'power2.in' }, 26.06)
+        .set('#broll-a-wrap', { opacity: 0 }, 26.36)
+        .to('#broll-b-wrap', { opacity: 1, duration: .30, ease: 'power2.out' }, 30.42)
+        .to('#broll-b-wrap', { opacity: 0, duration: .30, ease: 'power2.in' }, 34.18)
+        .set('#broll-b-wrap', { opacity: 0 }, 34.40);
 
       /* ---- S6 · checklist, one tick per spoken line ------------------------------ */
       tl.fromTo('#card-checklist', { opacity: 0 },
@@ -423,23 +425,7 @@
             .fromTo(sel + ' .tick', { scale: .6 },
                    { scale: 1, duration: .40, ease: 'back.out(2.4)' }, t + .06);
         });
-      tl.to('#card-checklist', { opacity: 0, duration: .28, ease: 'power2.in' }, 26.00);
-
-      /* ---- S8 · whip insert ------------------------------------------------------ */
-      tl.fromTo('#whip-inner', { opacity: 0, scale: 1.22, filter: 'blur(22px)' },
-               { opacity: 1, scale: 1.06, filter: 'blur(0px)', duration: .26, ease: 'power3.out' }, 30.42)
-        .to('#whip-inner', { opacity: 0, scale: .96, filter: 'blur(18px)',
-                             duration: .24, ease: 'power2.in' }, 30.80)
-        .set('#whip-inner', { opacity: 0 }, 30.98);
-
-      /* ---- S9 · the workbook ------------------------------------------------------ */
-      tl.fromTo('#still-cover', { opacity: 0 },
-               { opacity: 1, duration: .28, ease: 'power2.out' }, 30.98)
-        .fromTo('#still-cover img', { y: 70, scale: .95, rotationZ: -2.5 },
-               { y: 0, scale: 1, rotationZ: 0, duration: 1.10, ease: 'power3.out' }, 31.00)
-        .fromTo('#cover-tag', { opacity: 0, y: 20 },
-               { opacity: 1, y: 0, duration: .42, ease: 'power2.out' }, 31.80)
-        .to('#still-cover', { opacity: 0, duration: .28, ease: 'power2.in' }, 34.22);
+      tl.to('#card-checklist', { opacity: 0, duration: .30, ease: 'power2.in' }, 26.06);
 
       /* ---- S10 · end card ---------------------------------------------------------- */
       tl.fromTo('#endcard', { opacity: 0 },

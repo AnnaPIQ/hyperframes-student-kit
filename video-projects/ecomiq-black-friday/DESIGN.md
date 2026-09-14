@@ -28,14 +28,15 @@ and `--safe-bottom` reserves an empty band at the bottom of every frame (230px i
 - Rethink Sans throughout; Hedvig Letters Serif italic for the one emphasis word
   per headline ("*discount*", "*easy*", "*free*") — the EcomIQ signature.
 - Data panels sit over Sean in the lower third; the bigger ideas take the full frame.
-- Product stills: the workbook cover is keyed and floats on navy; the suite
-  shots are framed as rounded white cards.
+- The back half runs on the EcomIQ workbook b-roll; the checklist sits on its own
+  panel over it, matching the cost-stack treatment used over Sean.
 
 ## Build
 
 ```bash
 bash scripts/prep-media.sh <raw-aroll.mov>   # crop/trim A-roll to both ratios + audio
-bash scripts/prep-stills.sh                  # key the workbook cover
+bash scripts/prep-stills.sh                  # key the workbook cover (stills, now unused)
+bash scripts/prep-broll.sh                   # cut the workbook b-roll into its two slots
 node scripts/derive-45.mjs                   # regenerate the 4:5 cut from index.html
 npx hyperframes lint
 npx hyperframes render --quality standard --output renders/ecomiq-black-friday-9x16.mp4
