@@ -43,6 +43,8 @@ body.r-916 {
   --bar-h: 26px;   --chip-h: 54px;    --chip-k: 28px;  --chip-v: 32px;
   --arrow-w: 118px; --arrow-h: 150px; --cname: 40px;
   --broll-fade: 34px;
+  /* only 9:16 zooms the cover beat — see #bw1 below */
+  --broll-zoom-in: 1.95; --broll-zoom-out: 1.62; --broll-fade-1: 22px;
   --pill: 46px;    --end-head: 104px;
 }
 /* 4:5 is the EcomIQ house Meta feed format. All three cuts are 1080 wide, so
@@ -55,6 +57,7 @@ body.r-45 {
   --bar-h: 26px;   --chip-h: 54px;    --chip-k: 28px;  --chip-v: 32px;
   --arrow-w: 118px; --arrow-h: 150px; --cname: 40px;
   --broll-fade: 30px;
+  --broll-zoom-in: 1; --broll-zoom-out: 1; --broll-fade-1: 30px;
   --pill: 46px;    --end-head: 104px;
 }
 body.r-1x1 {
@@ -64,6 +67,7 @@ body.r-1x1 {
   --bar-h: 20px;   --chip-h: 40px;    --chip-k: 21px;  --chip-v: 24px;
   --arrow-w: 92px; --arrow-h: 118px;  --cname: 32px;
   --broll-fade: 26px;
+  --broll-zoom-in: 1; --broll-zoom-out: 1; --broll-fade-1: 26px;
   --pill: 38px;    --end-head: 76px;
 }
 
@@ -220,8 +224,11 @@ body.r-1x1 #logo-wrap img { width: 168px; }
   position: absolute; z-index: 20; left: 0; width: 1080px; opacity: 0;
   /* 0.545 rather than dead-centre of the content area: the persistent logo
      eats the top of the frame, so a true centre leaves a bigger gap below
-     the b-roll than above it. This balances the two in every ratio. */
-  top: calc((100% - var(--sub-safe)) * 0.545); transform: translateY(-50%);
+     the b-roll than above it. This balances the two in every ratio. The 304px
+     is half the asset's own height (1080x608) — centring with top/left rather
+     than translateY(-50%) leaves `transform` free for the zoom below, instead
+     of GSAP having to preserve a translate it did not set. */
+  top: calc((100% - var(--sub-safe)) * 0.545 - 304px);
   pointer-events: none;
   -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000 var(--broll-fade),
     #000 calc(100% - var(--broll-fade)), rgba(0, 0, 0, 0) 100%);
@@ -229,6 +236,20 @@ body.r-1x1 #logo-wrap img { width: 168px; }
     #000 calc(100% - var(--broll-fade)), rgba(0, 0, 0, 0) 100%);
 }
 .brollwrap video { display: block; width: 1080px; height: auto; }
+/* The cover beat is the one place the b-roll can be pushed in: the book and the
+   page fan sit well inside the 16:9 field, where every later board runs edge to
+   edge. 9:16 needs it most, the book reading small against a 1920-tall frame,
+   so that ratio opens at --broll-zoom-in on the cover and eases back to
+   --broll-zoom-out as the pages fan out, a motivated pull-back rather than a
+   static crop. The outer pages of the fan bleed off frame at that scale, which
+   reads as the spread continuing past the edge. Both tokens are 1 in the other
+   ratios, where the book is already large against the frame, and the timeline
+   skips the tween entirely when they match. #bw1 also feathers less, so the
+   scale-up doesn't turn a ~34px edge fade into a ~66px veil across the base of
+   The scale itself lives entirely in the timeline (a `tl.set` at 0 pins it in
+   every ratio, zooming or not): a CSS transform here would be silently
+   discarded the moment GSAP tweened scale. */
+#bw1 { --broll-fade: var(--broll-fade-1); }
 
 /* ---- 6 · shared scene spacing -------------------------------------------- */
 .scene .eyebrow { margin-bottom: 34px; }

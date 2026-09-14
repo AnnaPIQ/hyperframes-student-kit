@@ -73,7 +73,7 @@ Final duration **52.3 s**. `TC` is final cut. Logo top-left on every frame.
 | **19.08–22.96** | "you might sell more… but make far less money" | Sean plus contrast card | **CONTRAST.** `SALES ↑` (blue tint, arrow rises) beside `PROFIT ↓` (flame, arrow drops), split by a hairline rule. |
 | **22.96–25.41** | "You can have nothing left." | Sean, the bar returns | **DRAIN.** The revenue bar from the cost stack comes back and the contribution segment drains to **$9.62**, visibly nothing. Bar pulses once on the landing. |
 | **26.23–45.17** | "I've put together a free workbook… It's completely free." | **B-roll: `workbook-broll.mp4`** | **WORKBOOK B-ROLL.** EcomIQ's own 30s workbook piece carries the whole stretch, replacing the four graphic scenes that were built here (cover, max-discount dial, checklist, FREE). It plays full-width in the navy field, edges feathered. Two trims of one source, one cut, at 31.00: |
-| ↳ 26.20 | "I've put together a free workbook…" | source 0.30–5.40 | Cover lifts in and rotates, then the pages fan out. |
+| ↳ 26.20 | "I've put together a free workbook…" | source 0.30–5.40 | Cover lifts in and rotates, then the pages fan out. **9:16 only:** pushed in to 1.95 on the cover, easing back to 1.62 over 4.4s as the fan opens, so the cover's own copy reads. 4:5 plays it at 1. |
 | ↳ 31.00 | "…what each order actually contributes" | source 10.65→ | `Calculate your contribution margin` worksheet flies in and fills row by row. |
 | ↳ ~33.4 | "…and the maximum discount your margin can actually support" | | **`$59.71` CONTRIBUTION PER ORDER** lands in the worksheet's total row, the same page-8 figure §3 cites. |
 | ↳ ~35.3 | | | `Your 2026 Black Friday calendar`, Black Friday row ringed in flame. |

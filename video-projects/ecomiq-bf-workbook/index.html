@@ -292,7 +292,23 @@
          stretch is the b-roll's own. Opacity only: these wrappers carry a
          centring transform that a y-tween would clobber. */
       fadeIn("#broll-bg", 26.2, 0.42);
+      // Cover push-in, read off the ratio tokens rather than hardcoded here, so
+      // this stays the one script that drives every cut. Equal tokens mean the
+      // ratio does not zoom and the tween is skipped outright.
+      const bz = getComputedStyle(document.getElementById("bw1"));
+      const Z_IN = parseFloat(bz.getPropertyValue("--broll-zoom-in")) || 1;
+      const Z_OUT = parseFloat(bz.getPropertyValue("--broll-zoom-out")) || 1;
+      // #bw1 carries two fromTo tweens, and GSAP applies fromTo from-values at
+      // authoring time, so whichever was authored last would otherwise decide
+      // the resting state for any seek before 26.20. This pins it explicitly.
+      // It is also the widest the b-roll ever gets, which is what makes the
+      // band check read worst case rather than resting.
+      tl.set("#bw1", { opacity: 0, scale: Z_IN }, 0);
       fadeIn("#bw1", 26.2, 0.42);
+      if (Z_IN !== Z_OUT) {
+        tl.fromTo("#bw1", { scale: Z_IN },
+          { scale: Z_OUT, duration: 4.4, ease: "sine.inOut" }, 26.2);
+      }
       // cover/page-fan hands off to the worksheet on "calculate the numbers"
       fadeIn("#bw2", 30.87, 0.26);
       fadeOut("#bw1", 30.87, 0.26);

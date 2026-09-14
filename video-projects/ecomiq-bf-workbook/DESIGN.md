@@ -80,7 +80,13 @@ worksheet, the Black Friday calendar, the 8-tile spreadsheet grid, is laid out
 edge to edge with about 2% side margin, so a portrait crop cuts columns off. It
 plays full-width instead and floats in the navy field, centred at 54.5% of the
 space above the subtitle band (dead centre reads top-heavy once the persistent
-logo is in). That is not the rejected A-roll letterbox: nothing is being pulled
+logo is in). The **cover beat is the exception**: the book and the page fan sit
+well inside the 16:9 field, so 9:16 pushes in to 1.95 on the cover and eases
+back to 1.62 as the pages fan out, a motivated pull-back rather than a static
+crop. That is as far as it goes before the fan's outer pages leave the frame,
+and it is enough to make the cover's own copy legible. 4:5 does not zoom at all,
+the book already reading large there, and the timeline skips the tween whenever
+`--broll-zoom-in` and `--broll-zoom-out` match. That is not the rejected A-roll letterbox: nothing is being pulled
 back from a fuller framing, and two details keep it from reading as one. The
 backdrop is tuned to the b-roll's own field rather than `--brand-navy` (its
 corners sit near `#021833`, clearly darker than the brand navy, so flat navy
@@ -119,7 +125,8 @@ node scripts/check-subtitle-band.mjs video-projects/ecomiq-bf-workbook/index.htm
 node scripts/check-subtitle-band.mjs video-projects/ecomiq-bf-workbook/compositions/feed-45.html 1350 240
 ```
 
-Current clearance: **415px** (9:16), **201px** (4:5) — the b-roll sets the
+Current clearance: **127px** (9:16, measured at the cover's full 1.95 zoom,
+which is the widest the b-roll ever gets), **202px** (4:5) — the b-roll sets the
 lowest edge in both cuts now, and `.brollwrap` is in the checker's sweep.
 
 Two things that checker gets right, both of which produced false passes before:

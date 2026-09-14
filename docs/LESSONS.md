@@ -130,6 +130,22 @@ efficient over time instead of relearning the same lessons.
   seam obvious. Then feather the wrapper's top and bottom edges with a
   `mask-image` linear-gradient. Keep the feather shallow (~5% of the video's
   height): boards that run text to the frame edge get ghosted by a deep one.
+- **Want a landscape clip bigger in a portrait cut?** Zoom only the beats whose
+  content is centred with margin (a product hero, a title card), never the ones
+  that run edge to edge. Measure the safe limit by simulating the crop straight
+  off the asset — `ffmpeg -vf "crop=W:H:X:0,scale=1080:-2"` at several zoom
+  levels — and eyeballing the widest frame of the beat. It costs seconds; a
+  render costs minutes. Animating the zoom (push in, ease back out) hides the
+  scale mismatch with the un-zoomed beat that follows far better than a constant.
+- **Two `fromTo` tweens on one element need an explicit baseline.** GSAP applies
+  fromTo from-values at *authoring* time, so whichever was written last silently
+  becomes the resting state for every seek before the first tween. `tl.set(sel,
+  {...}, 0)` before both pins it. Lint flags this as
+  `gsap_repeated_fromto_without_baseline`.
+- **Never set a CSS `transform` on an element GSAP tweens a transform property
+  on** (`gsap_css_transform_conflict`). GSAP overwrites the whole transform, so
+  a `translateY(-50%)` centring or a CSS scale vanishes the moment it runs. Centre
+  with `top`/`left` arithmetic instead and leave `transform` to the timeline.
 - **Symptom:** the clip's own end lockup bleeds in under your CTA card, two
   logos fighting. **Fix:** find where the lockup starts in the source and end the
   clip before it, not at the card boundary. A beat of clean backdrop before the
