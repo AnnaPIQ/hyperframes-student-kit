@@ -77,6 +77,49 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## Multi-scene compositions (overlapping scene slots)
+
+- **A GSAP-animated wrapper silently re-anchors its absolutely-positioned children.**
+  Any transform on an element makes it the containing block for `position:absolute`
+  descendants, so children with `top:50%; left:50%` jump to the wrapper's own
+  (often zero-height) box instead of the stage. Symptom: a carefully centred
+  layout renders jammed against the top edge. **Fix:** give every wrapper you
+  animate an explicit `position: absolute; inset: 0;`.
+- **A scene is invisible before its entrance tween starts, so overlapping slots
+  can show nothing.** `gsap.fromTo` defaults to `immediateRender: true`, which
+  applies the "from" state at build time. If the incoming scene's first tween
+  starts 0.3s into its slot, the whole overlap window is empty and the cut reads
+  as a hard cut anyway. **Fix:** wrap each scene in an `.enter` div and tween it
+  (`y` + `blur` + `opacity`) from position `0` of the scene timeline; let the
+  inner elements stagger on top. Keep the outgoing slot alive until the incoming
+  `.enter` tween has finished (overlap ≥ entrance duration).
+- **Sub-composition asset paths are parent-relative, not folder-relative.** From
+  `compositions/x.html` write `src="assets/…"` (and `assets/vendor/gsap.min.js`),
+  never `../assets/…`.
+- **A whip streak on `power3.in` over 0.24s is invisible.** Steep-in easing keeps
+  it off-frame until the last two frames. **Fix:** `power1.inOut` over ~0.44s,
+  centred on the cut (start at `cut − duration/2`), with opacity ramped in over
+  ~0.14s and out over the last ~0.16s.
+- **Never use `repeat: -1`** (breaks the capture engine) — compute a finite count,
+  e.g. `repeat: Math.ceil(duration / cycle) - 1`. And avoid GSAP's
+  `stagger.from: "random"` / `ease: "random(...)"`: they call `Math.random()` and
+  break determinism. `from: "center"` / `"start"` / `"end"` are safe.
+
+## Highlighting / glow
+
+- **A blurred colour overlay placed over content washes the content out.** A
+  `filter: blur()` div with a tinted background sitting on a table row tints the
+  text too. **Fix:** glow outward only — an overlay div with a transparent
+  background and `box-shadow: 0 0 44px 7px rgba(...)`. Keep any interior fill
+  under ~0.07 alpha.
+
+## Environment
+
+- **`npx hyperframes doctor` reports FFmpeg as "Failed to run" in the cloud
+  container even when FFmpeg is fine** (`/usr/bin/ffmpeg -version` returns 0 and
+  renders + frame grabs both work). Treat that one red check as a false negative;
+  don't reinstall anything.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>s05-calendar</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      [data-composition-id="s05-calendar"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="s05-calendar"] {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      [data-composition-id="s05-calendar"] .s05-enter { position: absolute; inset: 0; }
+      [data-composition-id="s05-calendar"] .s05-view {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      [data-composition-id="s05-calendar"] .s05-pool {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 1700px;
+        height: 900px;
+        margin: -450px 0 0 -850px;
+        border-radius: 50%;
+        background: radial-gradient(50% 50% at 50% 50%, rgba(156, 212, 255, 0.24) 0%, rgba(156, 212, 255, 0) 70%);
+        filter: blur(34px);
+      }
+      /* The page travels vertically — the camera pans down it */
+      [data-composition-id="s05-calendar"] .s05-page {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 1500px;
+        margin-left: -750px;
+        border-radius: 3px;
+        box-shadow: 0 60px 120px -30px rgba(1, 10, 22, 0.9);
+      }
+      [data-composition-id="s05-calendar"] .s05-page img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      /* Highlight sits on the "Fri 27 November — Black Friday" row,
+         positioned as a percentage of the page so it tracks the pan. */
+      [data-composition-id="s05-calendar"] .s05-hl {
+        position: absolute;
+        left: 8.4%;
+        top: 52.5%;
+        width: 82.4%;
+        height: 5.9%;
+        border: 3px solid #ff4c32;
+        background: rgba(255, 76, 50, 0.06);
+        transform-origin: 0% 50%;
+      }
+      [data-composition-id="s05-calendar"] .s05-hl-glow {
+        position: absolute;
+        inset: 0;
+        box-shadow: 0 0 44px 7px rgba(255, 76, 50, 0.7);
+        opacity: 0;
+      }
+      [data-composition-id="s05-calendar"] .s05-tab {
+        position: absolute;
+        left: 8.4%;
+        top: 52.5%;
+        width: 10px;
+        height: 5.9%;
+        margin-left: -22px;
+        background-color: #ff4c32;
+        transform-origin: 50% 50%;
+      }
+      /* Top and bottom feathers so the page reads as a moving surface */
+      [data-composition-id="s05-calendar"] .s05-fade-t,
+      [data-composition-id="s05-calendar"] .s05-fade-b {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 190px;
+        pointer-events: none;
+      }
+      [data-composition-id="s05-calendar"] .s05-fade-t {
+        top: 0;
+        background: linear-gradient(180deg, rgba(6, 40, 76, 0.95) 0%, rgba(6, 40, 76, 0) 100%);
+      }
+      [data-composition-id="s05-calendar"] .s05-fade-b {
+        bottom: 0;
+        background: linear-gradient(0deg, rgba(6, 40, 76, 0.95) 0%, rgba(6, 40, 76, 0) 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="s05-calendar" data-width="1920" data-height="1080" data-duration="3.95">
+      <div class="s05-enter" id="s05-enter">
+      <div class="s05-pool" id="s05-pool"></div>
+      <div class="s05-view" id="s05-view">
+        <div class="s05-page" id="s05-page">
+          <img src="assets/pages/calendar.png" alt="Your 2026 Black Friday calendar" />
+          <div class="s05-hl" id="s05-hl"><span class="s05-hl-glow" id="s05-hl-glow"></span></div>
+          <div class="s05-tab" id="s05-tab"></div>
+        </div>
+        <div class="s05-fade-t"></div>
+        <div class="s05-fade-b"></div>
+      </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="s05-calendar"] ';
+        const SLOT = 3.95;
+        const tl = gsap.timeline({ paused: true });
+
+        // Scene arrives over the outgoing shot — blur-rise, never a hard cut.
+        tl.fromTo(S + "#s05-enter",
+          { y: 110, opacity: 0, filter: "blur(20px)" },
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power2.out" }, 0);
+
+
+        // Page rises into frame on its headline.
+        tl.fromTo(S + "#s05-page",
+          { y: -30, opacity: 0, filter: "blur(20px)" },
+          { y: -120, opacity: 1, filter: "blur(0px)", duration: 0.9, ease: "expo.out" }, 0.08);
+
+        tl.fromTo(S + "#s05-pool",
+          { scale: 0.7, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1.1, ease: "power2.out" }, 0.15);
+
+        // Camera pans down the page, from the headline to the weekend itself.
+        tl.to(S + "#s05-page", { y: -660, duration: 1.95, ease: "power2.inOut" }, 0.95);
+
+        // Slow push runs under the whole pan.
+        tl.fromTo(S + "#s05-view",
+          { scale: 1 },
+          { scale: 1.06, duration: SLOT, ease: "none" }, 0);
+
+        // Black Friday row lights as the pan settles.
+        tl.fromTo(S + "#s05-tab",
+          { scaleY: 0, opacity: 0 },
+          { scaleY: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, 2.25);
+        tl.fromTo(S + "#s05-hl",
+          { scaleX: 0, opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: 0.44, ease: "power3.out" }, 2.34);
+        tl.fromTo(S + "#s05-hl-glow",
+          { opacity: 0 },
+          { opacity: 1, duration: 0.3, ease: "power2.out" }, 2.62);
+        tl.to(S + "#s05-hl-glow", { opacity: 0.4, duration: 0.6, ease: "sine.inOut" }, 2.92);
+        tl.to(S + "#s05-hl-glow", { opacity: 0.9, duration: 0.5, ease: "sine.inOut" }, 3.2);
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["s05-calendar"] = tl;
+      })();
+    </script>
+  </body>
+</html>

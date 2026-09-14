@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>s03-stats</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Rethink Sans";
+        font-style: normal;
+        font-weight: 400 800;
+        font-display: block;
+        src: url(assets/fonts/RethinkSans.woff2) format("woff2");
+      }
+      @font-face {
+        font-family: "Hedvig Letters Serif";
+        font-style: normal;
+        font-weight: 400;
+        font-display: block;
+        src: url(assets/fonts/HedvigLettersSerif.woff2) format("woff2");
+      }
+      [data-composition-id="s03-stats"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="s03-stats"] {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        font-family: "Rethink Sans", system-ui, sans-serif;
+      }
+      [data-composition-id="s03-stats"] .s03-enter { position: absolute; inset: 0; }
+      [data-composition-id="s03-stats"] .s03-stage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 140px 192px;
+        gap: 0;
+        box-sizing: border-box;
+      }
+      [data-composition-id="s03-stats"] .s03-rule {
+        width: 132px;
+        height: 4px;
+        background-color: #ff4c32;
+        transform-origin: 50% 50%;
+      }
+      [data-composition-id="s03-stats"] .s03-eyebrow {
+        margin-top: 34px;
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: #9cd4ff;
+      }
+      [data-composition-id="s03-stats"] .s03-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        margin-top: 66px;
+      }
+      [data-composition-id="s03-stats"] .s03-col {
+        width: 340px;
+        text-align: center;
+      }
+      [data-composition-id="s03-stats"] .s03-num {
+        font-family: "Hedvig Letters Serif", Georgia, serif;
+        font-weight: 400;
+        font-size: 196px;
+        line-height: 0.96;
+        color: #ff4c32;
+        font-variant-numeric: tabular-nums;
+      }
+      [data-composition-id="s03-stats"] .s03-label {
+        margin-top: 22px;
+        font-weight: 700;
+        font-size: 25px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: #9cd4ff;
+      }
+      [data-composition-id="s03-stats"] .s03-div {
+        width: 2px;
+        height: 186px;
+        margin-top: 18px;
+        background-color: rgba(156, 212, 255, 0.32);
+        transform-origin: 50% 0%;
+      }
+      [data-composition-id="s03-stats"] .s03-glow {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 1400px;
+        height: 620px;
+        margin: -310px 0 0 -700px;
+        border-radius: 50%;
+        background: radial-gradient(50% 50% at 50% 50%, rgba(255, 76, 50, 0.2) 0%, rgba(255, 76, 50, 0) 70%);
+        filter: blur(30px);
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="s03-stats" data-width="1920" data-height="1080" data-duration="3.95">
+      <div class="s03-enter" id="s03-enter">
+      <div class="s03-glow" id="s03-glow"></div>
+      <div class="s03-stage" id="s03-stage">
+        <div class="s03-rule" id="s03-rule"></div>
+        <div class="s03-eyebrow" id="s03-eyebrow">Inside the workbook</div>
+        <div class="s03-row">
+          <div class="s03-col">
+            <div class="s03-num" id="s03-n1">0</div>
+            <div class="s03-label s03-lab">Parts</div>
+          </div>
+          <div class="s03-div s03-divider"></div>
+          <div class="s03-col">
+            <div class="s03-num" id="s03-n2">0</div>
+            <div class="s03-label s03-lab">Worksheets</div>
+          </div>
+          <div class="s03-div s03-divider"></div>
+          <div class="s03-col">
+            <div class="s03-num" id="s03-n3">0</div>
+            <div class="s03-label s03-lab">Free tools</div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="s03-stats"] ';
+        const SLOT = 3.95;
+        const tl = gsap.timeline({ paused: true });
+        const q = (sel) => document.querySelector(S + sel);
+
+        // Scene arrives over the outgoing shot — blur-rise, never a hard cut.
+        tl.fromTo(S + "#s03-enter",
+          { y: 110, opacity: 0, filter: "blur(20px)" },
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power2.out" }, 0);
+
+
+        // Flame rule wipes in first — the callback element from the cover.
+        tl.fromTo(S + "#s03-rule",
+          { scaleX: 0, opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.12);
+
+        tl.fromTo(S + "#s03-eyebrow",
+          { y: 18, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" }, 0.3);
+
+        tl.fromTo(S + "#s03-glow",
+          { scale: 0.7, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1.3, ease: "sine.out" }, 0.2);
+
+        // Numerals rise, then tick up to their values.
+        tl.fromTo(S + ".s03-num",
+          { y: 56, opacity: 0, filter: "blur(14px)" },
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7, ease: "expo.out",
+            stagger: { each: 0.11, from: "start" } }, 0.42);
+
+        const COUNTS = [
+          { el: "#s03-n1", to: 8,  at: 0.52, d: 0.85 },
+          { el: "#s03-n2", to: 32, at: 0.63, d: 0.95 },
+          { el: "#s03-n3", to: 19, at: 0.74, d: 0.9 },
+        ];
+        COUNTS.forEach((c) => {
+          const proxy = { v: 0 };
+          tl.to(proxy, {
+            v: c.to,
+            duration: c.d,
+            ease: "power2.out",
+            onUpdate: () => {
+              const node = q(c.el);
+              if (node) node.textContent = String(Math.round(proxy.v));
+            },
+          }, c.at);
+        });
+
+        // Dividers draw down between the columns.
+        tl.fromTo(S + ".s03-divider",
+          { scaleY: 0, opacity: 0 },
+          { scaleY: 1, opacity: 1, duration: 0.65, ease: "power2.out", stagger: 0.1 }, 0.6);
+
+        tl.fromTo(S + ".s03-lab",
+          { y: 22, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, ease: "power2.out", stagger: 0.09 }, 0.86);
+
+        // Slow push so the type block never sits still.
+        tl.fromTo(S + "#s03-stage",
+          { scale: 1 },
+          { scale: 1.05, duration: SLOT, ease: "none" }, 0);
+
+        // Glow breathes under the numbers.
+        tl.to(S + "#s03-glow", { opacity: 0.6, duration: 1.5, ease: "sine.inOut" }, 1.6);
+        tl.to(S + "#s03-glow", { opacity: 1, duration: 0.85, ease: "sine.inOut" }, 3.1);
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["s03-stats"] = tl;
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>s01-cover</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      [data-composition-id="s01-cover"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="s01-cover"] {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      [data-composition-id="s01-cover"] .s01-stage {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        perspective: 1800px;
+      }
+      /* Light pool the book sits in */
+      [data-composition-id="s01-cover"] .s01-pool {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 1180px;
+        height: 620px;
+        margin: -240px 0 0 -590px;
+        border-radius: 50%;
+        background: radial-gradient(50% 50% at 50% 50%, rgba(255, 76, 50, 0.4) 0%, rgba(255, 76, 50, 0) 70%);
+        filter: blur(28px);
+      }
+      [data-composition-id="s01-cover"] .s01-halo {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 900px;
+        height: 900px;
+        margin: -450px 0 0 -450px;
+        border-radius: 50%;
+        background: radial-gradient(50% 50% at 50% 50%, rgba(156, 212, 255, 0.3) 0%, rgba(156, 212, 255, 0) 68%);
+        filter: blur(18px);
+      }
+      /* The book */
+      [data-composition-id="s01-cover"] .s01-book {
+        position: relative;
+        width: 604px;
+        height: 782px;
+        transform-style: preserve-3d;
+      }
+      [data-composition-id="s01-cover"] .s01-leaf {
+        position: absolute;
+        inset: 0;
+        border-radius: 3px;
+      }
+      [data-composition-id="s01-cover"] .s01-leaf-1 { transform: translate(13px, 10px); background: #c3d2e2; }
+      [data-composition-id="s01-cover"] .s01-leaf-2 { transform: translate(9px, 7px);  background: #d7e1ec; }
+      [data-composition-id="s01-cover"] .s01-leaf-3 { transform: translate(5px, 4px);  background: #eef3f9; }
+      [data-composition-id="s01-cover"] .s01-face {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border-radius: 3px;
+        box-shadow:
+          0 60px 120px -30px rgba(1, 10, 22, 0.85),
+          0 0 0 1px rgba(156, 212, 255, 0.22);
+      }
+      [data-composition-id="s01-cover"] .s01-face img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      /* Chrome glint travelling across the cover */
+      [data-composition-id="s01-cover"] .s01-glint {
+        position: absolute;
+        top: -30%;
+        left: 0;
+        width: 42%;
+        height: 160%;
+        background: linear-gradient(
+          100deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.14) 44%,
+          rgba(255, 255, 255, 0.3) 52%,
+          rgba(255, 255, 255, 0.14) 60%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        filter: blur(3px);
+      }
+      /* Spine shade so the left edge reads as a fold */
+      [data-composition-id="s01-cover"] .s01-spine {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 34px;
+        height: 100%;
+        background: linear-gradient(90deg, rgba(1, 10, 22, 0.55) 0%, rgba(1, 10, 22, 0) 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="s01-cover" data-width="1920" data-height="1080" data-duration="4.15">
+      <div class="s01-stage" id="s01-stage">
+        <div class="s01-halo" id="s01-halo"></div>
+        <div class="s01-pool" id="s01-pool"></div>
+        <div class="s01-book" id="s01-book">
+          <div class="s01-leaf s01-leaf-1"></div>
+          <div class="s01-leaf s01-leaf-2"></div>
+          <div class="s01-leaf s01-leaf-3"></div>
+          <div class="s01-face">
+            <img src="assets/pages/cover.png" alt="The Black Friday Profit Plan" />
+            <div class="s01-spine"></div>
+            <div class="s01-glint" id="s01-glint"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="s01-cover"] ';
+        const SLOT = 4.15;
+        const tl = gsap.timeline({ paused: true });
+
+        // Book rises out of the grid, un-blurs and settles into its three-quarter view.
+        tl.fromTo(S + "#s01-book",
+          { y: 210, scale: 0.86, rotateY: -30, rotateX: 9, opacity: 0, filter: "blur(26px)" },
+          { y: 0, scale: 1, rotateY: -13, rotateX: 4, opacity: 1, filter: "blur(0px)",
+            duration: 1.2, ease: "expo.out" }, 0.1);
+
+        // Light pool and halo bloom in behind it.
+        tl.fromTo(S + "#s01-pool",
+          { scale: 0.55, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1.1, ease: "power2.out" }, 0.25);
+        tl.fromTo(S + "#s01-halo",
+          { scale: 0.7, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1.4, ease: "sine.out" }, 0.15);
+
+        // Camera keeps pushing for the whole shot.
+        tl.fromTo(S + "#s01-stage",
+          { scale: 1 },
+          { scale: 1.07, duration: SLOT, ease: "none" }, 0);
+
+        // Slow parallax turn — the cover keeps rotating toward the lens.
+        tl.to(S + "#s01-book", { rotateY: -5, rotateX: 2, duration: 2.5, ease: "sine.inOut" }, 1.3);
+
+        // Chrome glint sweeps the cover once it has landed.
+        tl.fromTo(S + "#s01-glint",
+          { xPercent: -180 },
+          { xPercent: 330, duration: 1.15, ease: "power2.inOut" }, 1.5);
+
+        // Pool breathes so the "still" back half of the shot stays alive.
+        tl.to(S + "#s01-pool", { opacity: 0.72, scale: 1.06, duration: 1.3, ease: "sine.inOut" }, 1.4);
+        tl.to(S + "#s01-pool", { opacity: 1, scale: 1, duration: 1.2, ease: "sine.inOut" }, 2.7);
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["s01-cover"] = tl;
+      })();
+    </script>
+  </body>
+</html>

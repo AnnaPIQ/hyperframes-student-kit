@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>The Black Friday Profit Plan — b-roll</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time */
+      @font-face {
+        font-family: "Rethink Sans";
+        font-style: normal;
+        font-weight: 400 800;
+        font-display: block;
+        src: url(assets/fonts/RethinkSans.woff2) format("woff2");
+      }
+      @font-face {
+        font-family: "Hedvig Letters Serif";
+        font-style: normal;
+        font-weight: 400;
+        font-display: block;
+        src: url(assets/fonts/HedvigLettersSerif.woff2) format("woff2");
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #06284c;
+        font-family: "Rethink Sans", system-ui, sans-serif;
+        color: #ffffff;
+      }
+
+      /* Every scene sits on this full-bleed layer */
+      .beat-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1920px;
+        height: 1080px;
+      }
+
+      /* ── Unifying texture (untimed — always on, runs under every scene) ───── */
+      #stage {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background:
+          radial-gradient(78% 46% at 50% 14%, rgba(156, 212, 255, 0.13) 0%, rgba(6, 40, 76, 0) 62%),
+          radial-gradient(56% 40% at 50% 104%, rgba(255, 76, 50, 0.16) 0%, rgba(6, 40, 76, 0) 66%),
+          #06284c;
+      }
+      #grid-wrap {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 42%;
+        bottom: 0;
+        z-index: 2;
+        overflow: hidden;
+        -webkit-mask-image: radial-gradient(64% 96% at 50% 96%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 78%);
+        mask-image: radial-gradient(64% 96% at 50% 96%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 78%);
+      }
+      #grid {
+        position: absolute;
+        left: -60%;
+        top: 0;
+        width: 220%;
+        height: 260%;
+        transform: perspective(900px) rotateX(70deg);
+        transform-origin: 50% 0%;
+        background-image:
+          repeating-linear-gradient(0deg, rgba(156, 212, 255, 0.16) 0 2px, rgba(156, 212, 255, 0) 2px 96px),
+          repeating-linear-gradient(90deg, rgba(156, 212, 255, 0.16) 0 2px, rgba(156, 212, 255, 0) 2px 96px);
+      }
+      #crosshairs {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        pointer-events: none;
+      }
+      #crosshairs .xh {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        opacity: 0.22;
+      }
+      #crosshairs .xh::before,
+      #crosshairs .xh::after {
+        content: "";
+        position: absolute;
+        background: #9cd4ff;
+      }
+      #crosshairs .xh::before { left: 9px; top: 0; width: 2px; height: 20px; }
+      #crosshairs .xh::after  { top: 9px; left: 0; height: 2px; width: 20px; }
+
+      /* ── Transition streaks (fire across each cut) ────────────────────────── */
+      .streak {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 52%;
+        height: 6px;
+        z-index: 30;
+        opacity: 0;
+        border-radius: 6px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 76, 50, 0) 0%,
+          rgba(255, 76, 50, 0.55) 28%,
+          rgba(255, 255, 255, 0.95) 52%,
+          rgba(156, 212, 255, 0.5) 74%,
+          rgba(156, 212, 255, 0) 100%
+        );
+        filter: blur(7px);
+        pointer-events: none;
+      }
+
+      /* ── Vignette + grain (always on top of the scenes) ───────────────────── */
+      #vignette {
+        position: absolute;
+        inset: 0;
+        z-index: 40;
+        pointer-events: none;
+        background: radial-gradient(74% 76% at 50% 48%, rgba(2, 16, 32, 0) 44%, rgba(2, 16, 32, 0.82) 100%);
+      }
+      /* Deterministic CSS grain — three offset dot tiles, no image, no PRNG */
+      #grain {
+        position: absolute;
+        inset: 0;
+        z-index: 41;
+        pointer-events: none;
+        background-image:
+          radial-gradient(rgba(255, 255, 255, 0.035) 1px, rgba(255, 255, 255, 0) 1px),
+          radial-gradient(rgba(255, 255, 255, 0.025) 1px, rgba(255, 255, 255, 0) 1px),
+          radial-gradient(rgba(0, 0, 0, 0.05) 1px, rgba(0, 0, 0, 0) 1px);
+        background-size: 3px 3px, 5px 5px, 7px 7px;
+        background-position: 0 0, 1px 2px, 2px 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="bf-workbook-broll"
+      data-start="0"
+      data-duration="30"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- ═══ Persistent stage: navy + perspective grid + crosshairs ═══ -->
+      <div id="stage"></div>
+      <div id="grid-wrap"><div id="grid"></div></div>
+      <div id="crosshairs">
+        <div class="xh" style="left: 236px;  top: 178px"></div>
+        <div class="xh" style="left: 1664px; top: 178px"></div>
+        <div class="xh" style="left: 236px;  top: 880px"></div>
+        <div class="xh" style="left: 1664px; top: 880px"></div>
+        <div class="xh" style="left: 950px;  top: 96px"></div>
+        <div class="xh" style="left: 950px;  top: 962px"></div>
+      </div>
+
+      <!-- ═══ Shot 01 — Cover reveal (0.0 → 3.9) ═══ -->
+      <div class="beat-layer" id="beat-s01-cover" style="z-index: 11"
+        data-composition-id="s01-cover"
+        data-composition-src="compositions/s01-cover.html"
+        data-start="0" data-duration="4.15" data-track-index="1"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 02 — Page fan (3.6 → 7.3) ═══ -->
+      <div class="beat-layer" id="beat-s02-deck" style="z-index: 12"
+        data-composition-id="s02-deck"
+        data-composition-src="compositions/s02-deck.html"
+        data-start="3.6" data-duration="3.95" data-track-index="2"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 03 — Stat triad (7.0 → 10.7) ═══ -->
+      <div class="beat-layer" id="beat-s03-stats" style="z-index: 13"
+        data-composition-id="s03-stats"
+        data-composition-src="compositions/s03-stats.html"
+        data-start="7" data-duration="3.95" data-track-index="3"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 04 — Contribution-margin worksheet (10.4 → 14.5) ═══ -->
+      <div class="beat-layer" id="beat-s04-margin" style="z-index: 14"
+        data-composition-id="s04-margin"
+        data-composition-src="compositions/s04-margin.html"
+        data-start="10.4" data-duration="4.35" data-track-index="4"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 05 — 2026 calendar page (14.2 → 17.9) ═══ -->
+      <div class="beat-layer" id="beat-s05-calendar" style="z-index: 15"
+        data-composition-id="s05-calendar"
+        data-composition-src="compositions/s05-calendar.html"
+        data-start="14.2" data-duration="3.95" data-track-index="5"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 06 — Companion spreadsheets (17.6 → 21.3) ═══ -->
+      <div class="beat-layer" id="beat-s06-sheets" style="z-index: 16"
+        data-composition-id="s06-sheets"
+        data-composition-src="compositions/s06-sheets.html"
+        data-start="17.6" data-duration="3.95" data-track-index="6"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 07 — Free tools (21.0 → 24.7) ═══ -->
+      <div class="beat-layer" id="beat-s07-tools" style="z-index: 17"
+        data-composition-id="s07-tools"
+        data-composition-src="compositions/s07-tools.html"
+        data-start="21" data-duration="3.95" data-track-index="7"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Shot 08 — Outro hold (24.4 → 30.0) ═══ -->
+      <div class="beat-layer" id="beat-s08-outro" style="z-index: 18"
+        data-composition-id="s08-outro"
+        data-composition-src="compositions/s08-outro.html"
+        data-start="24.4" data-duration="5.6" data-track-index="8"
+        data-width="1920" data-height="1080"></div>
+
+      <!-- ═══ Whip streaks — one per cut, hides the seam ═══ -->
+      <div class="streak" id="wk-1"></div>
+      <div class="streak" id="wk-2"></div>
+      <div class="streak" id="wk-3"></div>
+      <div class="streak" id="wk-4"></div>
+      <div class="streak" id="wk-5"></div>
+      <div class="streak" id="wk-6"></div>
+      <div class="streak" id="wk-7"></div>
+
+      <!-- ═══ Always-on grade ═══ -->
+      <div id="vignette"></div>
+      <div id="grain"></div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const DUR = 30;
+        const tl = gsap.timeline({ paused: true });
+
+        // Camera never sleeps: the grid floor creeps toward the viewer for the
+        // whole piece, so even a "still" frame is moving.
+        tl.fromTo("#grid",
+          { backgroundPosition: "0px 0px, 0px 0px" },
+          { backgroundPosition: "0px 576px, 0px 576px", duration: DUR, ease: "none" }, 0);
+
+        // Vignette breath — 5s half-cycle, yoyo, finite repeat covers 30s.
+        tl.to("#vignette", { opacity: 0.82, duration: 5, ease: "sine.inOut", yoyo: true, repeat: 5 }, 0);
+
+        // Registration marks twinkle (ordered stagger — no PRNG).
+        tl.to("#crosshairs .xh",
+          { opacity: 0.46, duration: 2.5, ease: "sine.inOut", yoyo: true, repeat: 11,
+            stagger: { each: 0.42, from: "center" } }, 0);
+
+        // Whip streak across every cut. The streak is timed so its brightest
+        // point crosses frame centre exactly on the seam.
+        const CUTS = [3.6, 7.0, 10.4, 14.2, 17.6, 21.0, 24.4];
+        const TRAVEL = 0.44;
+        CUTS.forEach((cut, i) => {
+          const sel = "#wk-" + (i + 1);
+          const t = cut - TRAVEL / 2;
+          const down = i % 2 === 0;
+          tl.fromTo(sel,
+            { xPercent: -135, yPercent: down ? -900 : 900, rotate: down ? -7 : 7, scaleX: 0.6 },
+            { xPercent: 145, yPercent: down ? 900 : -900, scaleX: 1.5,
+              duration: TRAVEL, ease: "power1.inOut" }, t);
+          tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.out" }, t);
+          tl.to(sel, { opacity: 0, duration: 0.16, ease: "power2.in" }, t + TRAVEL - 0.16);
+        });
+
+        // Law #11 anchor — keeps the composition alive for its full slot.
+        tl.to({}, { duration: DUR }, 0);
+        window.__timelines["bf-workbook-broll"] = tl;
+      })();
+    </script>
+  </body>
+</html>

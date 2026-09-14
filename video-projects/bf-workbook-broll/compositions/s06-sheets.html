@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>s06-sheets</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Rethink Sans";
+        font-style: normal;
+        font-weight: 400 800;
+        font-display: block;
+        src: url(assets/fonts/RethinkSans.woff2) format("woff2");
+      }
+      [data-composition-id="s06-sheets"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="s06-sheets"] {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        font-family: "Rethink Sans", system-ui, sans-serif;
+      }
+      [data-composition-id="s06-sheets"] .s06-enter { position: absolute; inset: 0; }
+      [data-composition-id="s06-sheets"] .s06-stage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 120px 192px;
+        box-sizing: border-box;
+        perspective: 2200px;
+      }
+      [data-composition-id="s06-sheets"] .s06-rule {
+        width: 104px;
+        height: 4px;
+        background-color: #ff4c32;
+        transform-origin: 50% 50%;
+      }
+      [data-composition-id="s06-sheets"] .s06-eyebrow {
+        margin-top: 26px;
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: #9cd4ff;
+      }
+      [data-composition-id="s06-sheets"] .s06-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 354px);
+        gap: 46px 40px;
+        margin-top: 58px;
+        transform-style: preserve-3d;
+      }
+      [data-composition-id="s06-sheets"] .s06-card { width: 354px; }
+      [data-composition-id="s06-sheets"] .s06-name {
+        min-height: 52px;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 1.25;
+        letter-spacing: -0.005em;
+        color: #ffffff;
+      }
+      [data-composition-id="s06-sheets"] .s06-thumb {
+        margin-top: 10px;
+        background: #0a325f;
+        border: 1px solid rgba(156, 212, 255, 0.26);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      [data-composition-id="s06-sheets"] .s06-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        height: 22px;
+        padding: 0 10px;
+        background: rgba(156, 212, 255, 0.14);
+        border-bottom: 1px solid rgba(156, 212, 255, 0.2);
+      }
+      [data-composition-id="s06-sheets"] .s06-bar span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(156, 212, 255, 0.5);
+      }
+      [data-composition-id="s06-sheets"] .s06-hdr,
+      [data-composition-id="s06-sheets"] .s06-line {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 10px;
+      }
+      [data-composition-id="s06-sheets"] .s06-hdr { height: 24px; background: rgba(156, 212, 255, 0.09); }
+      [data-composition-id="s06-sheets"] .s06-line { height: 26px; }
+      [data-composition-id="s06-sheets"] .s06-line:nth-child(odd) { background: rgba(156, 212, 255, 0.04); }
+      [data-composition-id="s06-sheets"] .s06-hdr i,
+      [data-composition-id="s06-sheets"] .s06-line i {
+        display: block;
+        height: 9px;
+        border-radius: 1px;
+        background: rgba(156, 212, 255, 0.3);
+      }
+      [data-composition-id="s06-sheets"] .s06-hdr i { height: 10px; background: rgba(156, 212, 255, 0.6); }
+      [data-composition-id="s06-sheets"] .c1 { flex: 0 0 36%; }
+      [data-composition-id="s06-sheets"] .c2 { flex: 0 0 20%; }
+      [data-composition-id="s06-sheets"] .c3 { flex: 0 0 22%; }
+      [data-composition-id="s06-sheets"] .c4 { flex: 1 1 auto; }
+      [data-composition-id="s06-sheets"] i.hot {
+        background: #ff4c32;
+        transform-origin: 0% 50%;
+      }
+      [data-composition-id="s06-sheets"] .s06-glow {
+        position: absolute;
+        left: 50%;
+        top: 54%;
+        width: 1700px;
+        height: 720px;
+        margin: -360px 0 0 -850px;
+        border-radius: 50%;
+        background: radial-gradient(50% 50% at 50% 50%, rgba(156, 212, 255, 0.2) 0%, rgba(156, 212, 255, 0) 70%);
+        filter: blur(32px);
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="s06-sheets" data-width="1920" data-height="1080" data-duration="3.95">
+      <div class="s06-enter" id="s06-enter">
+      <div class="s06-glow" id="s06-glow"></div>
+      <div class="s06-stage" id="s06-stage">
+        <div class="s06-rule" id="s06-rule"></div>
+        <div class="s06-eyebrow" id="s06-eyebrow">Companion spreadsheets</div>
+        <div class="s06-grid" id="s06-grid">
+          <div class="s06-card">
+            <div class="s06-name">Price Change Calculator</div>
+            <div class="s06-thumb">
+              <div class="s06-bar"><span></span><span></span><span></span></div>
+              <div class="s06-hdr"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3 hot"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+            </div>
+          </div>
+          <div class="s06-card">
+            <div class="s06-name">Profitability Dashboard</div>
+            <div class="s06-thumb">
+              <div class="s06-bar"><span></span><span></span><span></span></div>
+              <div class="s06-hdr"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4 hot"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+            </div>
+          </div>
+          <div class="s06-card">
+            <div class="s06-name">Total Discount Rate Tracker</div>
+            <div class="s06-thumb">
+              <div class="s06-bar"><span></span><span></span><span></span></div>
+              <div class="s06-hdr"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2 hot"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+            </div>
+          </div>
+          <div class="s06-card">
+            <div class="s06-name">Landed Product Cost Calculator</div>
+            <div class="s06-thumb">
+              <div class="s06-bar"><span></span><span></span><span></span></div>
+              <div class="s06-hdr"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3 hot"></i><i class="c4"></i></div>
+            </div>
+          </div>
+          <div class="s06-card">
+            <div class="s06-name">Welcome Discount Worksheet</div>
+            <div class="s06-thumb">
+              <div class="s06-bar"><span></span><span></span><span></span></div>
+              <div class="s06-hdr"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2 hot"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+            </div>
+          </div>
+          <div class="s06-card">
+            <div class="s06-name">Free Shipping Threshold Test</div>
+            <div class="s06-thumb">
+              <div class="s06-bar"><span></span><span></span><span></span></div>
+              <div class="s06-hdr"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4 hot"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+            </div>
+          </div>
+          <div class="s06-card">
+            <div class="s06-name">Delivery Cost Sheet</div>
+            <div class="s06-thumb">
+              <div class="s06-bar"><span></span><span></span><span></span></div>
+              <div class="s06-hdr"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3 hot"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+            </div>
+          </div>
+          <div class="s06-card">
+            <div class="s06-name">Repeat Rate Tracker</div>
+            <div class="s06-thumb">
+              <div class="s06-bar"><span></span><span></span><span></span></div>
+              <div class="s06-hdr"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+              <div class="s06-line"><i class="c1"></i><i class="c2 hot"></i><i class="c3"></i><i class="c4"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="s06-sheets"] ';
+        const SLOT = 3.95;
+        const tl = gsap.timeline({ paused: true });
+
+        // Scene arrives over the outgoing shot — blur-rise, never a hard cut.
+        tl.fromTo(S + "#s06-enter",
+          { y: 110, opacity: 0, filter: "blur(20px)" },
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power2.out" }, 0);
+
+
+        tl.fromTo(S + "#s06-rule",
+          { scaleX: 0, opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: 0.45, ease: "power3.out" }, 0.1);
+        tl.fromTo(S + "#s06-eyebrow",
+          { y: 16, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.42, ease: "power2.out" }, 0.24);
+        tl.fromTo(S + "#s06-glow",
+          { scale: 0.7, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1.2, ease: "sine.out" }, 0.2);
+
+        // Cards land from the middle of the grid outwards.
+        tl.fromTo(S + ".s06-card",
+          { y: 62, scale: 0.9, opacity: 0, filter: "blur(12px)" },
+          { y: 0, scale: 1, opacity: 1, filter: "blur(0px)",
+            duration: 0.62, ease: "back.out(1.25)",
+            stagger: { each: 0.06, from: "center" } }, 0.38);
+
+        // The flame cells fill last — the figure each sheet is really for.
+        tl.fromTo(S + "i.hot",
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.34, ease: "power3.out", stagger: 0.05 }, 1.1);
+
+        // Grid holds a slight tilt and keeps pushing.
+        tl.fromTo(S + "#s06-grid",
+          { rotateX: 9, y: 16 },
+          { rotateX: 2, y: 0, duration: 2.2, ease: "power2.out" }, 0.38);
+        tl.fromTo(S + "#s06-stage",
+          { scale: 0.99 },
+          { scale: 1.03, duration: SLOT, ease: "none" }, 0);
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["s06-sheets"] = tl;
+      })();
+    </script>
+  </body>
+</html>

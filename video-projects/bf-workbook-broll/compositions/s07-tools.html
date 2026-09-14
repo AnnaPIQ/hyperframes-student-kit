@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>s07-tools</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Rethink Sans";
+        font-style: normal;
+        font-weight: 400 800;
+        font-display: block;
+        src: url(assets/fonts/RethinkSans.woff2) format("woff2");
+      }
+      [data-composition-id="s07-tools"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="s07-tools"] {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        font-family: "Rethink Sans", system-ui, sans-serif;
+      }
+      [data-composition-id="s07-tools"] .s07-enter { position: absolute; inset: 0; }
+      [data-composition-id="s07-tools"] .s07-stage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 130px 192px;
+        box-sizing: border-box;
+      }
+      [data-composition-id="s07-tools"] .s07-rule {
+        width: 104px;
+        height: 4px;
+        background-color: #ff4c32;
+        transform-origin: 50% 50%;
+      }
+      [data-composition-id="s07-tools"] .s07-eyebrow {
+        margin-top: 26px;
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: #9cd4ff;
+      }
+      [data-composition-id="s07-tools"] .s07-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        justify-content: center;
+        gap: 30px;
+        max-width: 1400px;
+        margin-top: 62px;
+      }
+      [data-composition-id="s07-tools"] .s07-pill {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 22px 42px;
+        background: #0a325f;
+        border: 2px solid rgba(156, 212, 255, 0.34);
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 30px;
+        color: #ffffff;
+        white-space: nowrap;
+      }
+      [data-composition-id="s07-tools"] .s07-dot {
+        width: 13px;
+        height: 13px;
+        flex: none;
+        border-radius: 50%;
+        background: #ff4c32;
+        box-shadow: 0 0 16px rgba(255, 76, 50, 0.8);
+      }
+      [data-composition-id="s07-tools"] .s07-glow {
+        position: absolute;
+        left: 50%;
+        top: 54%;
+        width: 1600px;
+        height: 680px;
+        margin: -340px 0 0 -800px;
+        border-radius: 50%;
+        background: radial-gradient(50% 50% at 50% 50%, rgba(255, 76, 50, 0.16) 0%, rgba(255, 76, 50, 0) 70%);
+        filter: blur(32px);
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="s07-tools" data-width="1920" data-height="1080" data-duration="3.95">
+      <div class="s07-enter" id="s07-enter">
+      <div class="s07-glow" id="s07-glow"></div>
+      <div class="s07-stage" id="s07-stage">
+        <div class="s07-rule" id="s07-rule"></div>
+        <div class="s07-eyebrow" id="s07-eyebrow">Free tools on our site</div>
+        <div class="s07-cloud" id="s07-cloud">
+          <div class="s07-pill"><span class="s07-dot"></span>Cash Cycle Calculator</div>
+          <div class="s07-pill"><span class="s07-dot"></span>True CAC Calculator</div>
+          <div class="s07-pill"><span class="s07-dot"></span>Paid Media Audit</div>
+          <div class="s07-pill"><span class="s07-dot"></span>Profit vs Cash Calculator</div>
+          <div class="s07-pill"><span class="s07-dot"></span>Email Marketing Audit</div>
+          <div class="s07-pill"><span class="s07-dot"></span>DTC Founder Pulse Check</div>
+          <div class="s07-pill"><span class="s07-dot"></span>Shopify Plan Cost Calculator</div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="s07-tools"] ';
+        const SLOT = 3.95;
+        const tl = gsap.timeline({ paused: true });
+
+        // Scene arrives over the outgoing shot — blur-rise, never a hard cut.
+        tl.fromTo(S + "#s07-enter",
+          { y: 110, opacity: 0, filter: "blur(20px)" },
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power2.out" }, 0);
+
+
+        tl.fromTo(S + "#s07-rule",
+          { scaleX: 0, opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: 0.45, ease: "power3.out" }, 0.1);
+        tl.fromTo(S + "#s07-eyebrow",
+          { y: 16, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.42, ease: "power2.out" }, 0.24);
+        tl.fromTo(S + "#s07-glow",
+          { scale: 0.7, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1.2, ease: "sine.out" }, 0.2);
+
+        // Pills snap out from the centre of the cloud.
+        tl.fromTo(S + ".s07-pill",
+          { y: 46, scale: 0.84, opacity: 0, filter: "blur(10px)" },
+          { y: 0, scale: 1, opacity: 1, filter: "blur(0px)",
+            duration: 0.58, ease: "back.out(1.45)",
+            stagger: { each: 0.085, from: "center" } }, 0.36);
+
+        // Dots pulse — 0.75s half-cycle, finite repeat covers the shot.
+        tl.to(S + ".s07-dot",
+          { scale: 1.45, opacity: 0.7, duration: 0.75, ease: "sine.inOut",
+            yoyo: true, repeat: 2, stagger: { each: 0.07, from: "start" } }, 1.3);
+
+        tl.fromTo(S + "#s07-stage",
+          { scale: 0.99 },
+          { scale: 1.05, duration: SLOT, ease: "none" }, 0);
+        tl.fromTo(S + "#s07-cloud",
+          { rotate: 0.6, y: 8 },
+          { rotate: -0.5, y: -10, duration: SLOT, ease: "sine.inOut" }, 0);
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["s07-tools"] = tl;
+      })();
+    </script>
+  </body>
+</html>

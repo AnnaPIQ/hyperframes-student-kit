@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>s04-margin</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Rethink Sans";
+        font-style: normal;
+        font-weight: 400 800;
+        font-display: block;
+        src: url(assets/fonts/RethinkSans.woff2) format("woff2");
+      }
+      @font-face {
+        font-family: "Hedvig Letters Serif";
+        font-style: normal;
+        font-weight: 400;
+        font-display: block;
+        src: url(assets/fonts/HedvigLettersSerif.woff2) format("woff2");
+      }
+      [data-composition-id="s04-margin"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="s04-margin"] {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        font-family: "Rethink Sans", system-ui, sans-serif;
+      }
+      [data-composition-id="s04-margin"] .s04-enter { position: absolute; inset: 0; }
+      [data-composition-id="s04-margin"] .s04-stage {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        perspective: 2400px;
+      }
+      [data-composition-id="s04-margin"] .s04-pool {
+        position: absolute;
+        left: 50%;
+        top: 54%;
+        width: 1500px;
+        height: 620px;
+        margin: -310px 0 0 -750px;
+        border-radius: 50%;
+        background: radial-gradient(50% 50% at 50% 50%, rgba(156, 212, 255, 0.28) 0%, rgba(156, 212, 255, 0) 70%);
+        filter: blur(32px);
+      }
+      /* ── The page ─────────────────────────────────────────────────────────── */
+      [data-composition-id="s04-margin"] .s04-page {
+        position: relative;
+        width: 1200px;
+        padding: 48px 64px 50px;
+        background: #ffffff;
+        border-radius: 3px;
+        box-shadow:
+          0 64px 120px -34px rgba(1, 10, 22, 0.9),
+          0 0 0 1px rgba(156, 212, 255, 0.18);
+        transform-style: preserve-3d;
+      }
+      [data-composition-id="s04-margin"] .s04-eyebrow {
+        font-weight: 700;
+        font-size: 17px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: #7d9bbd;
+      }
+      [data-composition-id="s04-margin"] .s04-title {
+        margin-top: 16px;
+        font-family: "Hedvig Letters Serif", Georgia, serif;
+        font-weight: 400;
+        font-size: 60px;
+        line-height: 1.04;
+        max-width: 760px;
+        color: #06284c;
+      }
+      [data-composition-id="s04-margin"] .s04-kicker {
+        margin-top: 34px;
+        font-weight: 700;
+        font-size: 17px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: #7d9bbd;
+      }
+      /* ── The table ────────────────────────────────────────────────────────── */
+      [data-composition-id="s04-margin"] .s04-table {
+        margin-top: 18px;
+        border: 1px solid #dfe9f3;
+        border-radius: 2px;
+      }
+      [data-composition-id="s04-margin"] .s04-row {
+        display: flex;
+        align-items: center;
+        height: 58px;
+        padding: 0 20px 0 0;
+        border-bottom: 1px solid #eaf1f8;
+      }
+      [data-composition-id="s04-margin"] .s04-op {
+        width: 62px;
+        flex: none;
+        text-align: center;
+        font-weight: 600;
+        font-size: 24px;
+        color: #7d9bbd;
+      }
+      [data-composition-id="s04-margin"] .s04-name {
+        flex: 1;
+        font-weight: 500;
+        font-size: 25px;
+        color: #123a63;
+        border-left: 1px solid #eaf1f8;
+        padding-left: 22px;
+      }
+      [data-composition-id="s04-margin"] .s04-field {
+        position: relative;
+        width: 254px;
+        flex: none;
+        height: 40px;
+        background: #deeefe;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 16px;
+      }
+      [data-composition-id="s04-margin"] .s04-val {
+        font-weight: 600;
+        font-size: 25px;
+        color: #06284c;
+        font-variant-numeric: tabular-nums;
+      }
+      [data-composition-id="s04-margin"] .s04-uline {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 3px;
+        background-color: #ff4c32;
+        transform-origin: 0% 50%;
+      }
+      /* Total row */
+      [data-composition-id="s04-margin"] .s04-total {
+        display: flex;
+        align-items: center;
+        height: 70px;
+        padding: 0 20px 0 0;
+        background: #06284c;
+        border-bottom: none;
+        opacity: 0.38;
+      }
+      [data-composition-id="s04-margin"] .s04-total .s04-op { color: #9cd4ff; font-size: 26px; }
+      [data-composition-id="s04-margin"] .s04-total .s04-name {
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 27px;
+        border-left: 1px solid rgba(156, 212, 255, 0.34);
+      }
+      [data-composition-id="s04-margin"] .s04-total .s04-field {
+        height: 46px;
+        background: #ffffff;
+        border: 2px solid #ff4c32;
+      }
+      [data-composition-id="s04-margin"] .s04-total .s04-val { font-size: 29px; font-weight: 700; }
+      [data-composition-id="s04-margin"] .s04-tglow {
+        position: absolute;
+        inset: 0;
+        border-radius: 2px;
+        background: rgba(255, 76, 50, 0);
+        box-shadow: 0 0 34px 5px rgba(255, 76, 50, 0.75);
+        opacity: 0;
+      }
+      /* Benchmark chip — the workbook's own flame-ruled stat block */
+      [data-composition-id="s04-margin"] .s04-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 30px;
+        padding: 14px 22px;
+        background: #eff6fd;
+        border-left: 4px solid #ff4c32;
+      }
+      [data-composition-id="s04-margin"] .s04-chip .k {
+        font-weight: 700;
+        font-size: 17px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #123a63;
+      }
+      [data-composition-id="s04-margin"] .s04-chip .v {
+        font-weight: 700;
+        font-size: 25px;
+        color: #06284c;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="s04-margin" data-width="1920" data-height="1080" data-duration="4.35">
+      <div class="s04-enter" id="s04-enter">
+      <div class="s04-pool" id="s04-pool"></div>
+      <div class="s04-stage" id="s04-stage">
+        <div class="s04-page" id="s04-page">
+          <div class="s04-eyebrow" id="s04-eyebrow">Part 01 / Calculate your Black Friday margin</div>
+          <div class="s04-title" id="s04-title">Calculate your contribution margin</div>
+          <div class="s04-chip" id="s04-chip">
+            <span class="k">2025 Shopify BFCM average order value</span>
+            <span class="v">$114.70</span>
+          </div>
+          <div class="s04-kicker" id="s04-kicker">Work it on one order</div>
+
+          <div class="s04-table" id="s04-table">
+            <div class="s04-row">
+              <div class="s04-op"></div>
+              <div class="s04-name">Selling price, before tax and discount</div>
+              <div class="s04-field">
+                <span class="s04-val s04-v">$114.70</span>
+                <span class="s04-uline s04-u"></span>
+              </div>
+            </div>
+            <div class="s04-row">
+              <div class="s04-op">&minus;</div>
+              <div class="s04-name">Discounts and refunds, percent of revenue</div>
+              <div class="s04-field">
+                <span class="s04-val s04-v">4.0%</span>
+                <span class="s04-uline s04-u"></span>
+              </div>
+            </div>
+            <div class="s04-row">
+              <div class="s04-op">&minus;</div>
+              <div class="s04-name">Landed product cost per unit</div>
+              <div class="s04-field">
+                <span class="s04-val s04-v">$34.00</span>
+                <span class="s04-uline s04-u"></span>
+              </div>
+            </div>
+            <div class="s04-row">
+              <div class="s04-op">&minus;</div>
+              <div class="s04-name">Fulfilment per order, picking and packing</div>
+              <div class="s04-field">
+                <span class="s04-val s04-v">$4.50</span>
+                <span class="s04-uline s04-u"></span>
+              </div>
+            </div>
+            <div class="s04-row">
+              <div class="s04-op">&minus;</div>
+              <div class="s04-name">Delivery per order, net of what the customer paid</div>
+              <div class="s04-field">
+                <span class="s04-val s04-v">$8.60</span>
+                <span class="s04-uline s04-u"></span>
+              </div>
+            </div>
+            <div class="s04-row">
+              <div class="s04-op">&minus;</div>
+              <div class="s04-name">Payment and commission charges, as a percent</div>
+              <div class="s04-field">
+                <span class="s04-val s04-v">$3.30</span>
+                <span class="s04-uline s04-u"></span>
+              </div>
+            </div>
+            <div class="s04-total" id="s04-totalrow">
+              <div class="s04-op">=</div>
+              <div class="s04-name">Contribution per order</div>
+              <div class="s04-field">
+                <span class="s04-tglow" id="s04-tglow"></span>
+                <span class="s04-val" id="s04-answer"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="s04-margin"] ';
+        const SLOT = 4.35;
+        const tl = gsap.timeline({ paused: true });
+
+        // Scene arrives over the outgoing shot — blur-rise, never a hard cut.
+        tl.fromTo(S + "#s04-enter",
+          { y: 110, opacity: 0, filter: "blur(20px)" },
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power2.out" }, 0);
+
+
+        // Page lifts into view and levels off.
+        tl.fromTo(S + "#s04-page",
+          { y: 180, rotateX: 16, rotateY: -10, scale: 0.92, opacity: 0, filter: "blur(20px)" },
+          { y: 0, rotateX: 2, rotateY: -3, scale: 1, opacity: 1, filter: "blur(0px)",
+            duration: 1.05, ease: "expo.out" }, 0.08);
+
+        tl.fromTo(S + "#s04-pool",
+          { scale: 0.62, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1.15, ease: "power2.out" }, 0.15);
+
+        // Header block.
+        tl.fromTo(S + "#s04-eyebrow", { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 0.4);
+        tl.fromTo(S + "#s04-title",   { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: "power3.out" }, 0.5);
+        tl.fromTo(S + "#s04-chip",    { x: -26, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: "power2.out" }, 0.66);
+        tl.fromTo(S + "#s04-kicker",  { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 0.78);
+        tl.fromTo(S + "#s04-table",   { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }, 0.84);
+
+        // Fields fill top to bottom, each with the workbook's flame underline.
+        tl.fromTo(S + ".s04-v",
+          { y: 12, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.26, ease: "power2.out", stagger: 0.135 }, 1.05);
+        tl.fromTo(S + ".s04-u",
+          { scaleX: 0, opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: 0.3, ease: "power3.out", stagger: 0.135 }, 1.02);
+
+        // The answer lands.
+        tl.fromTo(S + "#s04-totalrow",
+          { opacity: 0.38 },
+          { opacity: 1, duration: 0.32, ease: "power2.out" }, 1.9);
+
+        const answer = { v: 0 };
+        tl.to(answer, {
+          v: 59.71,
+          duration: 0.72,
+          ease: "power2.out",
+          onUpdate: () => {
+            const n = document.querySelector(S + "#s04-answer");
+            if (n) n.textContent = "$" + answer.v.toFixed(2);
+          },
+        }, 2.0);
+
+        tl.fromTo(S + "#s04-tglow",
+          { opacity: 0, scale: 0.9 },
+          { opacity: 1, scale: 1, duration: 0.34, ease: "power2.out" }, 2.62);
+        tl.to(S + "#s04-tglow", { opacity: 0.35, duration: 0.9, ease: "sine.inOut" }, 2.96);
+        tl.to(S + "#s04-tglow", { opacity: 0.8, duration: 0.24, ease: "sine.inOut" }, 3.86);
+
+        // Camera keeps moving across the hold.
+        tl.fromTo(S + "#s04-stage",
+          { scale: 0.985 },
+          { scale: 1.045, duration: SLOT, ease: "none" }, 0);
+        tl.to(S + "#s04-page", { rotateY: -1, rotateX: 0.8, duration: 2.6, ease: "sine.inOut" }, 1.2);
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["s04-margin"] = tl;
+      })();
+    </script>
+  </body>
+</html>
