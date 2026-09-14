@@ -25,7 +25,7 @@ const PROJECTS = join(MASTER, "..");
 
 const FORMATS = [
   { slug: "bf-workbook-broll-9x16", w: 1080, h: 1920, css: "9x16.css", label: "9:16 Story/Reels",
-    pan: { from: 230, to: 60 } },
+    pan: { from: 300, to: 20 } },
   { slug: "bf-workbook-broll-4x5",  w: 1080, h: 1350, css: "4x5.css",  label: "4:5 Meta feed",
     pan: { from: 40, to: -160 } },
 ];
@@ -50,14 +50,18 @@ function appendStyle(html, css) {
 
 for (const fmt of FORMATS) {
   const dest = join(PROJECTS, fmt.slug);
-  rmSync(dest, { recursive: true, force: true });
+  // Replace only the generated parts. renders/ is left alone so a rebuild
+  // never destroys an MP4 that took minutes to produce.
+  for (const entry of ["assets", "compositions", "index.html", "hyperframes.json"]) {
+    rmSync(join(dest, entry), { recursive: true, force: true });
+  }
   mkdirSync(dest, { recursive: true });
 
   for (const entry of ["assets", "compositions", "index.html", "hyperframes.json"]) {
     cpSync(join(MASTER, entry), join(dest, entry), { recursive: true });
   }
   mkdirSync(join(dest, "renders"), { recursive: true });
-  writeFileSync(join(dest, "renders/.gitkeep"), "");
+  if (!existsSync(join(dest, "renders/.gitkeep"))) writeFileSync(join(dest, "renders/.gitkeep"), "");
 
   const overrides = parseOverrides(readFileSync(join(HERE, "overrides", fmt.css), "utf8"));
 

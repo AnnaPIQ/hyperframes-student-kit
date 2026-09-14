@@ -120,6 +120,33 @@ efficient over time instead of relearning the same lessons.
   renders + frame grabs both work). Treat that one red check as a false negative;
   don't reinstall anything.
 
+## Multi-format variants (one build, several aspect ratios)
+
+- **Anything a variant needs to reposition must be a CSS class, never an inline
+  `style` attribute.** An inline style beats a stylesheet, so a generated
+  per-format override silently does nothing against `style="transform: …"`.
+  Symptom: the override file looks right, the render ignores it. **Fix:** move
+  the positions into classes in the master (e.g. `.s02-p1`…`.s02-p7` for a card
+  fan, `.xh1`…`.xh6` for crosshairs) and override those.
+- **Don't rely on a `<link>` in a sub-composition's `<head>` for format
+  overrides.** The framework inlines a sub-composition's markup into the parent,
+  so a head-level `<link>` may not survive. **Fix:** have the generator append
+  the override CSS to the end of each file's own `<style>` block, where it wins
+  the cascade for free.
+- **A generator that wipes the whole project folder will delete `renders/`.**
+  Symptom: a final MP4 that took minutes disappears on the next rebuild.
+  **Fix:** remove only the generated entries (`assets`, `compositions`,
+  `index.html`, config) and leave `renders/` alone.
+- **Content sized for 16:9 reads tiny when reused at 9:16.** The same block in a
+  1920-tall frame occupies a quarter of it and looks under-designed rather than
+  deliberate. **Fix:** bump type and element sizes in the vertical override
+  (~10-20%), don't just re-centre. Scaling the stage with CSS is not an option
+  when GSAP already animates that element's transform — it gets clobbered.
+- **Keep per-format values that the timeline reads (e.g. a pan distance) as named
+  constants at the top of the scene's script**, so the generator can rewrite them
+  with one regex instead of the override file having to fight the JS.
+
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

@@ -24,47 +24,47 @@
 #vignette { background: radial-gradient(78% 64% at 50% 47%, rgba(2, 16, 32, 0) 46%, rgba(2, 16, 32, 0.82) 100%); }
 
 /* == s01-cover == */
-[data-composition-id="s01-cover"] .s01-book { width: 700px; height: 906px; }
-[data-composition-id="s01-cover"] .s01-pool { width: 1000px; height: 540px; margin: -210px 0 0 -500px; }
+[data-composition-id="s01-cover"] .s01-book { width: 782px; height: 1012px; }
+[data-composition-id="s01-cover"] .s01-pool { width: 1060px; height: 580px; margin: -225px 0 0 -530px; }
 [data-composition-id="s01-cover"] .s01-halo { width: 1000px; height: 1000px; margin: -500px 0 0 -500px; }
 
 /* == s02-deck == */
-[data-composition-id="s02-deck"] .s02-slot { width: 300px; height: 389px; margin: -194px 0 0 -150px; }
-[data-composition-id="s02-deck"] .s02-p1 { transform: translateX(-330px) translateY(150px) rotate(-26deg) scale(0.85); }
-[data-composition-id="s02-deck"] .s02-p2 { transform: translateX(-215px) translateY(66px)  rotate(-17deg) scale(0.9); }
-[data-composition-id="s02-deck"] .s02-p3 { transform: translateX(-105px) translateY(16px)  rotate(-8.5deg) scale(0.95); }
+[data-composition-id="s02-deck"] .s02-slot { width: 360px; height: 467px; margin: -233px 0 0 -180px; }
+[data-composition-id="s02-deck"] .s02-p1 { transform: translateX(-345px) translateY(172px) rotate(-26deg) scale(0.85); }
+[data-composition-id="s02-deck"] .s02-p2 { transform: translateX(-225px) translateY(76px)  rotate(-17deg) scale(0.9); }
+[data-composition-id="s02-deck"] .s02-p3 { transform: translateX(-110px) translateY(18px)  rotate(-8.5deg) scale(0.95); }
 [data-composition-id="s02-deck"] .s02-p4 { transform: translateX(0px)    translateY(0px)   rotate(0deg) scale(1); }
-[data-composition-id="s02-deck"] .s02-p5 { transform: translateX(105px)  translateY(16px)  rotate(8.5deg) scale(0.95); }
-[data-composition-id="s02-deck"] .s02-p6 { transform: translateX(215px)  translateY(66px)  rotate(17deg) scale(0.9); }
-[data-composition-id="s02-deck"] .s02-p7 { transform: translateX(330px)  translateY(150px) rotate(26deg) scale(0.85); }
+[data-composition-id="s02-deck"] .s02-p5 { transform: translateX(110px)  translateY(18px)  rotate(8.5deg) scale(0.95); }
+[data-composition-id="s02-deck"] .s02-p6 { transform: translateX(225px)  translateY(76px)  rotate(17deg) scale(0.9); }
+[data-composition-id="s02-deck"] .s02-p7 { transform: translateX(345px)  translateY(172px) rotate(26deg) scale(0.85); }
 [data-composition-id="s02-deck"] .s02-pool { width: 1040px; height: 520px; margin: -260px 0 0 -520px; }
 
 /* == s03-stats == */
 [data-composition-id="s03-stats"] .s03-stage { padding: 150px 108px; }
-[data-composition-id="s03-stats"] .s03-row { flex-direction: column; align-items: center; gap: 40px; margin-top: 54px; }
+[data-composition-id="s03-stats"] .s03-row { flex-direction: column; align-items: center; gap: 52px; margin-top: 58px; }
 [data-composition-id="s03-stats"] .s03-col { width: auto; }
-[data-composition-id="s03-stats"] .s03-num { font-size: 186px; }
-[data-composition-id="s03-stats"] .s03-label { margin-top: 12px; font-size: 26px; }
+[data-composition-id="s03-stats"] .s03-num { font-size: 212px; }
+[data-composition-id="s03-stats"] .s03-label { margin-top: 14px; font-size: 28px; }
 [data-composition-id="s03-stats"] .s03-div { display: none; }
 [data-composition-id="s03-stats"] .s03-glow { width: 1000px; height: 900px; margin: -450px 0 0 -500px; }
 
 /* == s04-margin == */
-[data-composition-id="s04-margin"] .s04-page { width: 912px; padding: 40px 44px 44px; }
+[data-composition-id="s04-margin"] .s04-page { width: 960px; padding: 44px 46px 48px; }
 [data-composition-id="s04-margin"] .s04-eyebrow { font-size: 15px; }
-[data-composition-id="s04-margin"] .s04-title { font-size: 52px; max-width: 600px; margin-top: 14px; }
+[data-composition-id="s04-margin"] .s04-title { font-size: 56px; max-width: 640px; margin-top: 15px; }
 [data-composition-id="s04-margin"] .s04-chip { margin-top: 24px; padding: 12px 18px; gap: 12px; }
 [data-composition-id="s04-margin"] .s04-chip .k { font-size: 15px; }
 [data-composition-id="s04-margin"] .s04-chip .v { font-size: 22px; }
 [data-composition-id="s04-margin"] .s04-kicker { margin-top: 26px; font-size: 15px; }
-[data-composition-id="s04-margin"] .s04-row { height: 54px; }
-[data-composition-id="s04-margin"] .s04-op { width: 50px; font-size: 21px; }
-[data-composition-id="s04-margin"] .s04-name { font-size: 22px; padding-left: 18px; }
-[data-composition-id="s04-margin"] .s04-field { width: 200px; height: 36px; padding: 0 13px; }
-[data-composition-id="s04-margin"] .s04-val { font-size: 22px; }
-[data-composition-id="s04-margin"] .s04-total { height: 64px; }
-[data-composition-id="s04-margin"] .s04-total .s04-name { font-size: 24px; }
-[data-composition-id="s04-margin"] .s04-total .s04-field { height: 42px; }
-[data-composition-id="s04-margin"] .s04-total .s04-val { font-size: 26px; }
+[data-composition-id="s04-margin"] .s04-row { height: 58px; }
+[data-composition-id="s04-margin"] .s04-op { width: 54px; font-size: 22px; }
+[data-composition-id="s04-margin"] .s04-name { font-size: 23px; padding-left: 20px; }
+[data-composition-id="s04-margin"] .s04-field { width: 216px; height: 38px; padding: 0 14px; }
+[data-composition-id="s04-margin"] .s04-val { font-size: 23px; }
+[data-composition-id="s04-margin"] .s04-total { height: 70px; }
+[data-composition-id="s04-margin"] .s04-total .s04-name { font-size: 25px; }
+[data-composition-id="s04-margin"] .s04-total .s04-field { height: 45px; }
+[data-composition-id="s04-margin"] .s04-total .s04-val { font-size: 28px; }
 [data-composition-id="s04-margin"] .s04-pool { width: 1040px; height: 560px; margin: -280px 0 0 -520px; }
 
 /* == s05-calendar == */
@@ -75,25 +75,25 @@
 
 /* == s06-sheets == */
 [data-composition-id="s06-sheets"] .s06-stage { padding: 150px 108px; }
-[data-composition-id="s06-sheets"] .s06-grid { grid-template-columns: repeat(2, 400px); gap: 40px 56px; margin-top: 48px; }
-[data-composition-id="s06-sheets"] .s06-card { width: 400px; }
-[data-composition-id="s06-sheets"] .s06-name { font-size: 21px; }
+[data-composition-id="s06-sheets"] .s06-grid { grid-template-columns: repeat(2, 430px); gap: 44px 60px; margin-top: 52px; }
+[data-composition-id="s06-sheets"] .s06-card { width: 430px; }
+[data-composition-id="s06-sheets"] .s06-name { font-size: 22px; }
 [data-composition-id="s06-sheets"] .s06-glow { width: 1040px; height: 1100px; margin: -550px 0 0 -520px; }
 
 /* == s07-tools == */
 [data-composition-id="s07-tools"] .s07-stage { padding: 150px 108px; }
-[data-composition-id="s07-tools"] .s07-cloud { max-width: 880px; gap: 22px; margin-top: 50px; }
-[data-composition-id="s07-tools"] .s07-pill { font-size: 26px; padding: 18px 34px; gap: 14px; }
-[data-composition-id="s07-tools"] .s07-dot { width: 11px; height: 11px; }
+[data-composition-id="s07-tools"] .s07-cloud { max-width: 960px; gap: 24px; margin-top: 54px; }
+[data-composition-id="s07-tools"] .s07-pill { font-size: 29px; padding: 21px 38px; gap: 16px; }
+[data-composition-id="s07-tools"] .s07-dot { width: 12px; height: 12px; }
 [data-composition-id="s07-tools"] .s07-glow { width: 1040px; height: 900px; margin: -450px 0 0 -520px; }
 
 /* == s08-outro == */
-[data-composition-id="s08-outro"] .s08-stage { flex-direction: column; gap: 76px; padding: 150px 108px; }
-[data-composition-id="s08-outro"] .s08-book { width: 420px; height: 544px; }
+[data-composition-id="s08-outro"] .s08-stage { flex-direction: column; gap: 84px; padding: 150px 108px; }
+[data-composition-id="s08-outro"] .s08-book { width: 470px; height: 609px; }
 [data-composition-id="s08-outro"] .s08-lockup { align-items: center; text-align: center; max-width: 864px; }
-[data-composition-id="s08-outro"] .s08-logo { width: 300px; }
+[data-composition-id="s08-outro"] .s08-logo { width: 330px; }
 [data-composition-id="s08-outro"] .s08-rule { margin-top: 34px; transform-origin: 50% 50%; }
-[data-composition-id="s08-outro"] .s08-title { margin-top: 24px; font-size: 58px; }
-[data-composition-id="s08-outro"] .s08-sub { margin-top: 20px; font-size: 26px; }
-[data-composition-id="s08-outro"] .s08-meta { margin-top: 30px; padding-top: 22px; font-size: 18px; }
+[data-composition-id="s08-outro"] .s08-title { margin-top: 26px; font-size: 60px; }
+[data-composition-id="s08-outro"] .s08-sub { margin-top: 22px; font-size: 28px; }
+[data-composition-id="s08-outro"] .s08-meta { margin-top: 32px; padding-top: 24px; font-size: 19px; }
 [data-composition-id="s08-outro"] .s08-pool { left: 50%; top: 38%; width: 1000px; height: 660px; margin: -330px 0 0 -500px; }
