@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1080, height=1080" />
-    <title>EcomIQ — Black Friday Profit Plan workbook (1:1)</title>
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>EcomIQ — Black Friday Profit Plan workbook (4:5)</title>
     <!-- GSAP vendored locally — a CDN tag cert-fails in the render env and
          freezes renders (docs/LESSONS.md). -->
     <script src="assets/vendor/gsap.min.js"></script>
@@ -18,7 +18,7 @@
         font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
     </style>
   </head>
-  <body class="r-1x1">
+  <body class="r-45">
     <!-- =====================================================================
          Render contract: root carries id, data-composition-id, data-start="0",
          data-duration, data-width, data-height. Timed visible children carry
@@ -26,7 +26,7 @@
          <video> and <audio>, which take the data-* but never class="clip".
 
          GENERATED FILE — do not edit. Produced from ../index.html by
-         scripts/gen-square.sh. Edit index.html and re-run that script.
+         scripts/gen-ratio.sh. Edit index.html and re-run that script.
 
          Source is trimmed 2.75s via data-media-start on the video AND the
          audio equally, dropping the dead air before Sean's first word without
@@ -34,16 +34,16 @@
          ===================================================================== -->
     <div
       id="root"
-      data-composition-id="ecomiq-bf-workbook-square"
+      data-composition-id="ecomiq-bf-workbook-45"
       data-start="0"
       data-duration="52.33"
       data-width="1080"
-      data-height="1080"
+      data-height="1350"
     >
       <!-- A-roll spine. Non-timed wrapper so the <video> is never transformed. -->
       <div id="aroll-wrap">
         <video id="aroll" data-start="0" data-duration="45.20" data-track-index="20"
-               data-media-start="2.75" src="assets/aroll-1x1.mp4" muted playsinline></video>
+               data-media-start="2.75" src="assets/aroll-45.mp4" muted playsinline></video>
       </div>
       <div id="aroll-scrim"></div>
 
@@ -430,7 +430,7 @@
 
       // Pad to the root data-duration.
       tl.to({}, { duration: 52.33 }, 0);
-      window.__timelines["ecomiq-bf-workbook-square"] = tl;
+      window.__timelines["ecomiq-bf-workbook-45"] = tl;
     </script>
   </body>
 </html>

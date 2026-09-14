@@ -16,10 +16,12 @@
    enters it — only full-bleed decoratives (the bloom, the A-roll scrim) pass
    through, and those sit behind type without hurting legibility.
      9:16  340px → band is y 1580–1920 (17.7% of frame)
+     4:5   240px → band is y 1110–1350 (17.8% of frame)
      1:1   200px → band is y  880–1080 (18.5% of frame)
    Change the value here and every scene rebalances. Verify with
    scripts/check-subtitle-band.mjs. */
 body.r-916 { height: 1920px; --sub-safe: 340px; }
+body.r-45  { height: 1350px; --sub-safe: 240px; }
 body.r-1x1 { height: 1080px; --sub-safe: 200px; }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -43,6 +45,20 @@ body.r-916 {
   --dial: 260px;   --dial-fig: 78px;
   --box: 62px;     --ctext: 44px;     --check-gap: 20px;
   --cover-w: 840px; --page-w: 760px;  --spread-w: 904px; --free-word: 200px;
+  --pill: 46px;    --end-head: 104px;
+}
+/* 4:5 is the EcomIQ house Meta feed format. All three cuts are 1080 wide, so
+   width-bound type carries the 9:16 sizes unchanged; only the height budget
+   differs, which is why the cover and page shots step down here. */
+body.r-45 {
+  --pad-x: 88px;   --pad-top: 150px;  --pad-bot: 60px;
+  --eyebrow: 26px; --label: 27px;     --h1: 104px;
+  --fig-lg: 96px;  --fig-sm: 62px;
+  --bar-h: 26px;   --chip-h: 54px;    --chip-k: 28px;  --chip-v: 32px;
+  --arrow-w: 118px; --arrow-h: 150px; --cname: 40px;
+  --dial: 260px;   --dial-fig: 78px;
+  --box: 62px;     --ctext: 44px;     --check-gap: 20px;
+  --cover-w: 640px; --page-w: 560px;  --spread-w: 820px; --free-word: 200px;
   --pill: 46px;    --end-head: 104px;
 }
 body.r-1x1 {
@@ -90,6 +106,7 @@ body.r-1x1 {
    --------------------------------------------------------------------------- */
 #logo-wrap { position: absolute; z-index: 100; }
 body.r-916 #logo-wrap { top: 96px; left: 88px; }
+body.r-45  #logo-wrap { top: 80px; left: 88px; }
 body.r-1x1 #logo-wrap { top: 56px; left: 72px; }
 #logo-wrap img { display: block; width: 196px; height: auto;
   filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55)); }
@@ -201,18 +218,18 @@ body.r-1x1 #logo-wrap img { width: 168px; }
   letter-spacing: 0.02em; text-transform: uppercase; color: var(--brand-white); }
 
 /* ---- 7 · product stills --------------------------------------------------
-   Sources are trimmed to the product's bounding box, so the artwork fills its
-   box instead of floating inside the mockup's white margin. Sat straight on
-   navy with a drop shadow — no white card, which lets the cover run much
-   larger in frame. */
-.shot { display: block; height: auto;
-  filter: drop-shadow(0 46px 90px rgba(0, 0, 0, 0.6)); }
+   Both stills keep the mockup's white backdrop and sit on a white card.
+   Knocking the background out was tried and reverted: these products are shot
+   at an angle with soft drop shadows, so an alpha cut leaves ragged edges on
+   the page block and strands the shadow as a floating grey blob — and a navy
+   book on a navy canvas has no separation anyway. On a white card the
+   backdrop simply disappears into the card, which is why the wedges of white
+   a plain -trim leaves inside the bounding box cost nothing here. */
+.shot { display: block; height: auto; background: #fff; border-radius: 18px;
+  box-shadow: 0 46px 90px -20px rgba(0, 0, 0, 0.6); }
 #hero-shot { width: var(--cover-w); }
 #page-shot { width: var(--page-w); border-radius: 10px; }
-/* The toolkit spread's worksheets are white paper touching the white
-   backdrop, so knocking the background out erodes the pages themselves.
-   It keeps its backdrop and reads as a photo card instead. */
-#free-shot { width: var(--spread-w); background: #fff; border-radius: 18px; }
+#free-shot { width: var(--spread-w); }
 .scene .eyebrow { margin-bottom: 34px; }
 #page-callout { margin-top: 40px; display: flex; align-items: baseline; gap: 22px;
   padding: 26px 40px; border-radius: 16px; background: #0a325f;
@@ -231,6 +248,7 @@ body.r-1x1 #free-word { margin-top: 26px; }
   letter-spacing: -0.03em; text-align: center; color: var(--brand-white);
   max-width: 700px; }
 body.r-1x1 #end-head { max-width: 520px; }
+body.r-45 #end-head { max-width: 700px; }
 #end-pill { margin-top: 68px; font-size: var(--pill); font-weight: 800;
   color: var(--brand-white); background: var(--brand-flame);
   padding: 36px 84px; border-radius: 999px;

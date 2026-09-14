@@ -77,50 +77,43 @@ prep_aroll() { # prep_aroll <crop> <scale> <out>
 
 # The source is 16:9 LANDSCAPE, so a full-height crop is already the widest
 # possible framing for a portrait/square deliverable — there is no way to pull
-# back further and still fill the frame. The "-wide" renditions therefore take a
-# wider crop and are shown at LESS than full frame height, with brand navy above
-# and below (see assets/ad.css). Those are the ones the compositions use; the
-# full-bleed pair is kept for reference.
-prep_aroll "1215:2160:1312:0" "1080:1920" "$DEST/aroll-916.mp4"        # 9:16 full-bleed
-prep_aroll "2160:2160:840:0"  "1080:1080" "$DEST/aroll-1x1.mp4"        # 1:1  full-bleed
-prep_aroll "1620:2160:1110:0" "1080:1440" "$DEST/aroll-916-wide.mp4"   # 9:16 pulled back (+33% FOV)
-prep_aroll "2688:2160:576:0"  "1080:868"  "$DEST/aroll-1x1-wide.mp4"   # 1:1  pulled back (+24% FOV)
+# back further and still fill the frame. "Pulled back" renditions were built
+# (a wider crop shown at less than full height, navy above and below); Anna
+# reviewed and rejected the letterboxing, so every cut is FULL-BLEED.
+#
+# Each ratio needs its OWN crop off the master — rescaling one ratio's
+# rendition into another squashes Sean.
+prep_aroll "1215:2160:1312:0" "1080:1920" "$DEST/aroll-916.mp4"   # 9:16 Story/Reels
+prep_aroll "1728:2160:1056:0" "1080:1350" "$DEST/aroll-45.mp4"    # 4:5  Meta feed
+prep_aroll "2160:2160:840:0"  "1080:1080" "$DEST/aroll-1x1.mp4"   # 1:1  square (on demand)
 
 # Product stills ship with a wide white margin baked into the mockup, which
-# makes the artwork look small however large its container is. Trim to the
-# bounding box so the cover fills its frame.
+# makes the artwork look small however large its container is.
 #
-# The two stills need DIFFERENT treatment, and swapping them looks broken:
+# BOTH stills keep the mockup's white backdrop and are shown on a white card
+# (see .shot in assets/ad.css). Knocking the background out was tried on the
+# cover and reverted: these products are shot at an angle with soft drop
+# shadows, so an alpha cut leaves ragged edges along the page block and strands
+# the shadow as a floating grey blob — and a navy book on a navy canvas has no
+# separation anyway. On a white card the backdrop simply disappears into the
+# card, so no cut-out is needed.
 #
-#   workbook-hero  A dark navy book on white, shot at an angle. -trim alone
-#                  only strips uniform border rows/columns, so wedges of white
-#                  survive inside the bounding box and render as a hard white
-#                  rectangle beside the book. Flood-fill from each corner
-#                  clears only background CONNECTED to the edge, leaving the
-#                  book's own white page edges intact. It then sits directly
-#                  on navy with a CSS drop shadow.
-#
-#   toolkit-spread White worksheets TOUCHING the white backdrop. A flood-fill
-#                  runs straight through the page edges and erodes the pages
-#                  themselves, leaving them torn. It keeps its backdrop and is
-#                  presented as a rounded white photo card instead.
+# The cover needs one extra step: the book sits LEFT of centre inside its own
+# mockup frame, so a plain -trim still leaves a slab of dead white beside it.
+# The book body and page block end at x=774 of the 952px trimmed width, so we
+# crop to 812 — keeping the shadow falloff, dropping the empty white.
 #
 im() { convert "$@" 2>/dev/null || magick "$@"; }
 
 if [ -f "$DEST/workbook-hero.png" ]; then
-  read -r W H < <(identify -format '%w %h' "$DEST/workbook-hero.png")
-  im "$DEST/workbook-hero.png" -alpha set -fuzz 12% \
-    -fill none -floodfill "+0+0" white \
-    -fill none -floodfill "+$((W-1))+0" white \
-    -fill none -floodfill "+0+$((H-1))" white \
-    -fill none -floodfill "+$((W-1))+$((H-1))" white \
-    -trim +repage "$DEST/workbook-hero-trim.png"
-  echo "  ✓ workbook-hero-trim.png (background knocked out)"
+  im "$DEST/workbook-hero.png" -fuzz 3% -trim +repage \
+    -crop 812x1128+0+0 +repage "$DEST/workbook-hero-trim.png"
+  echo "  ✓ workbook-hero-trim.png (trimmed + cropped to the book)"
 fi
 
 if [ -f "$DEST/toolkit-spread.png" ]; then
   im "$DEST/toolkit-spread.png" -fuzz 3% -trim +repage "$DEST/toolkit-spread-trim.png"
-  echo "  ✓ toolkit-spread-trim.png (backdrop kept, shown as a photo card)"
+  echo "  ✓ toolkit-spread-trim.png (trimmed to the spread)"
 fi
 
 # ---- 4. stills ------------------------------------------------------------

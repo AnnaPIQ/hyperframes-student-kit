@@ -6,29 +6,32 @@ scenes** that replace him on their beats; he carries the beats between them. The
 ad finishes on a workbook CTA end card. No captions are rendered — they go on
 manually downstream.
 
-## Two cuts, one source of truth
+## The cuts, one source of truth
 
 | Cut | File | Dimensions | Render |
 |---|---|---|---|
 | 9:16 Story/Reels | `index.html` | 1080×1920 @ 30fps | `npx hyperframes render -q standard -o renders/ecomiq-bf-workbook-916.mp4` |
-| 1:1 square feed | `compositions/square.html` | 1080×1080 @ 30fps | `npx hyperframes render -q standard -c compositions/square.html -o renders/ecomiq-bf-workbook-1x1.mp4` |
+| 4:5 Meta feed | `compositions/feed-45.html` | 1080×1350 @ 30fps | `npx hyperframes render -q standard -c compositions/feed-45.html -o renders/ecomiq-bf-workbook-45.mp4` |
 
-**`compositions/square.html` is GENERATED — never hand-edit it.** Edit
-`index.html`, then run `bash scripts/gen-square.sh` from the repo root. The two
-cuts carry identical markup and identical timeline JS; everything that differs
-is a CSS custom property under `body.r-916` / `body.r-1x1` in `assets/ad.css`.
-That is why a change lands in both cuts at once instead of drifting.
+4:5 is the EcomIQ house Meta feed format and is the shipped pair with the 9:16.
+A 1:1 cut also exists on demand (`bash scripts/gen-ratio.sh 1x1`) but is not
+part of the delivery.
+
+**Secondary cuts are GENERATED — never hand-edit them.** Edit `index.html`,
+then run `bash scripts/gen-ratio.sh 45` (or `1x1`) from the repo root. Every
+cut carries identical markup and identical timeline JS; everything that differs
+is a CSS custom property under `body.r-916` / `body.r-45` / `body.r-1x1` in
+`assets/ad.css`. That is why a change lands in every cut at once instead of
+drifting. The generator also offsets each ratio's track indices into its own
+range so static lint never reads two cuts as one timeline.
 
 Two structural rules the linter enforces, learned the hard way:
 
-- Only one root `index.html` may carry a `data-composition-id`, so the square
-  cut lives under `compositions/` and renders with `-c`.
+- Only one root `index.html` may carry a `data-composition-id`, so secondary
+  cuts live under `compositions/` and render with `-c`.
 - Files under `compositions/` use **root-relative** asset paths (`assets/…`,
   never `../assets/…`) — Hyperframes serves every composition with the project
   root as its base URL.
-
-The generator also shifts the square cut's track indices into the 20+ range so
-static lint never reads the two cuts as one timeline with duplicate audio.
 
 Beat-by-beat timings and the provenance of every on-screen figure:
 **`EDIT-PLAN.md`**. Note the plan predates two cuts Anna made in review (see
@@ -74,21 +77,22 @@ A-roll went back to full-bleed it just tinted the bottom of the shot.
 **Graphic scenes** (`.scene`) are full-screen navy, `z-index: 10`, and replace
 Sean entirely for their duration. `.sc` lays out with padding + flex, never an
 absolute-positioned content container; `.sc-mid` centres content in whatever
-space remains above the subtitle band, so both ratios balance without
+space remains above the subtitle band, so every ratio balances without
 hardcoded offsets.
 
 Logo: `ecomiq-logo-white.svg`, top-left on **every** frame, 196px on 9:16 and
-168px on 1:1 (~18% and ~16% of frame width), in a **positioned non-`clip`
+4:5, 168px on 1:1 (~18% and ~16% of frame width), in a **positioned non-`clip`
 wrapper** — `clip` makes the render engine reposition it (`docs/LESSONS.md`).
 
 ## Reserved subtitle band (do not fill)
 
 Subtitles are added **manually, downstream**. A clear band is reserved at the
-bottom of both cuts and nothing may be laid into it:
+bottom of every cut and nothing may be laid into it:
 
 | Cut | `--sub-safe` | Band | % of height |
 |---|---|---|---|
 | 9:16 | `340px` | y 1580–1920 | 17.7% |
+| 4:5 | `240px` | y 1110–1350 | 17.8% |
 | 1:1 | `200px` | y 880–1080 | 18.5% |
 
 Set once in `assets/ad.css`; every scene rebalances off it via
@@ -98,10 +102,10 @@ Set once in `assets/ad.css`; every scene rebalances off it via
 
 ```bash
 node scripts/check-subtitle-band.mjs video-projects/ecomiq-bf-workbook/index.html 1920 340
-node scripts/check-subtitle-band.mjs video-projects/ecomiq-bf-workbook/compositions/square.html 1080 200
+node scripts/check-subtitle-band.mjs video-projects/ecomiq-bf-workbook/compositions/feed-45.html 1350 240
 ```
 
-Current clearance: **119px** (9:16), **22px** (1:1).
+Current clearance: **103px** (9:16), **23px** (4:5).
 
 Two things that checker gets right, both of which produced false passes before:
 
@@ -126,7 +130,7 @@ Two things that checker gets right, both of which produced false passes before:
 - **No ratio constants in the JS.** Bar geometry is computed from the dollar
   figures against the live `.bar` width; the dial circumference reads the SVG's
   own radius; checkmark dash lengths come from `getTotalLength()`. That is what
-  lets one script drive both cuts.
+  lets one script drive every cut.
 - Finite repeats only — `repeat: -1` breaks the capture engine.
 
 ## Media
@@ -134,20 +138,23 @@ Two things that checker gets right, both of which produced false passes before:
 Regenerate with `bash scripts/prep-bf-assets.sh` from the repo root. Prepped
 A-roll renditions are gitignored (derived from a 3.4 GB ProRes master).
 
-- `aroll-916.mp4` / `aroll-1x1.mp4` — centre crops of a 3840×2160 16:9 landscape
-  25fps master, scaled and conformed to 30fps CFR. Silent by contract; audio is
-  the sibling `<audio>`.
-- `aroll-audio.m4a` — the full take. Both cuts trim 2.75s via `data-media-start`
+- `aroll-916.mp4` / `aroll-45.mp4` / `aroll-1x1.mp4` — centre crops of a
+  3840×2160 16:9 landscape 25fps master, scaled and conformed to 30fps CFR.
+  **Each ratio needs its own crop** (1215, 1728 and 2160 px wide respectively);
+  rescaling one rendition into another aspect squashes Sean. Silent by
+  contract; audio is the sibling `<audio>`.
+- `aroll-audio.m4a` — the full take. Every cut trims 2.75s via `data-media-start`
   on the video **and** the audio equally, dropping the dead air before Sean's
   first word without breaking lip sync.
-- `workbook-hero-trim.png` — cover with the mockup's white backdrop **flood-filled
-  from the corners** to transparent, so it sits straight on navy at full size.
-  A plain `-trim` is not enough: the book is shot at an angle, so wedges of white
-  survive inside its bounding box and render as a hard white rectangle beside it.
-- `toolkit-spread-trim.png` — plain `-trim` only, shown on a rounded white photo
-  card. Flood-filling this one **erodes the artwork**: its worksheets are white
-  paper touching the white backdrop, so the fill runs straight through the page
-  edges and leaves them torn.
+- `workbook-hero-trim.png` / `toolkit-spread-trim.png` — **both keep the
+  mockup's white backdrop and sit on a white card** (`.shot`). Knocking the
+  background out was tried on the cover and reverted: these products are shot at
+  an angle with soft drop shadows, so an alpha cut leaves ragged edges along the
+  page block and strands the shadow as a floating grey blob, and a navy book on
+  a navy canvas has no separation anyway. On a white card the backdrop simply
+  disappears into the card. The cover needs one extra step: the book sits left
+  of centre inside its mockup frame, so after `-trim` it is cropped to 812px
+  wide (the book and page block end at x=774 of 952) to drop the dead white.
 - `wb-page-08.png` — a real page from the workbook PDF, the contribution-margin
   worked example every on-screen figure is drawn from.
 
@@ -174,7 +181,9 @@ roughly 12s of the 52s.
 - Don't invent performance claims. Every figure traces to the workbook's page-8
   worked example or is derived from it, and `EDIT-PLAN.md` §3 records which.
 - Don't letterbox the A-roll to "zoom out" — built, reviewed, rejected.
-- Don't flood-fill `toolkit-spread.png`; don't plain-`-trim` `workbook-hero.png`.
+- Don't knock the background out of either product still; they belong on the
+  white card. See the Media section for why.
+- Don't rescale one ratio's A-roll into another aspect; re-crop from the master.
 - Don't use `toolkit-spread-alt.png` or the fourth Drive still for tight crops —
   they are AI mockups with garbled microtext.
 - Don't put a second root composition at the project root.
