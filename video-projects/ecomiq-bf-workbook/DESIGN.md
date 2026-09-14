@@ -169,10 +169,26 @@ A-roll renditions are gitignored (derived from a 3.4 GB ProRes master).
   on the video **and** the audio equally, dropping the dead air before Sean's
   first word without breaking lip sync.
 - `workbook-broll.mp4` — EcomIQ's own 30s workbook b-roll, 1920×1080 silent,
-  conformed to 1080×608 at CRF 20 (4.1 MB, small enough to commit, unlike the
-  A-roll renditions). Source came from the `claude/wonderful-curie-brnfzl`
-  branch. Its running order happens to track Sean's script almost exactly, which
-  is why one continuous trim covers 31.00–44.75 with no cut of mine in it.
+  conformed to 1080×608 at CRF 20 (4.0 MB, small enough to commit, unlike the
+  A-roll renditions). Its running order happens to track Sean's script almost
+  exactly, which is why one continuous trim covers 31.00–44.75 with no cut of
+  mine in it. Rebuild it with **`bash scripts/prep-bf-broll.sh`**, which renders
+  it from source with the perspective floor grid and the corner crosshairs
+  hidden, per Anna's note. Do not try to filter those out of the baked video:
+  the grid lines sit 5–8 luma above the navy field, the same contrast as the
+  small type on the worksheet boards, so median, smartblur and luma-masked blur
+  all erase the page text along with the grid. Going back to source is the only
+  clean route, and removing the grid has the side benefit that the b-roll's
+  field is now plain navy, so its edges disappear into the backdrop.
+  - Source is pinned to **commit `98542c0`** of branch
+    `claude/wonderful-curie-brnfzl`, `video-projects/bf-workbook-broll`. The tip
+    of that branch re-times the piece to 21.4s, which would silently move every
+    beat this ad cuts to.
+  - That branch also carries **native 9:16 and 4:5 builds** of the b-roll
+    (`bf-workbook-broll-9x16`, `-4x5`), added after the pinned revision. Adopting
+    one would drop the letterbox and the cover zoom entirely, since the boards
+    would be laid out for portrait. That is a framing decision for Anna, not a
+    maintenance one, and it would re-time the whole 26.20–45.20 stretch.
 - The four product stills below are **no longer referenced** by either cut. They
   are kept in `assets/` because they came from the Drive folder and are the only
   copies here, not because anything uses them.
@@ -220,6 +236,10 @@ workbook b-roll, end card. Sean is on camera roughly 12s of the 52s.
 - Don't letterbox the A-roll to "zoom out" — built, reviewed, rejected. The
   workbook b-roll is a separate case and is argued in Layout above.
 - Don't crop the workbook b-roll to fill a portrait frame; it loses columns.
+- Don't try to filter the grid off the baked b-roll. Re-render it from source
+  with `scripts/prep-bf-broll.sh`; the Media section says why.
+- Don't unpin `prep-bf-broll.sh` from commit `98542c0` without re-checking
+  every source timing in `EDIT-PLAN.md`.
 - Don't knock the background out of either product still; they belong on the
   white card. See the Media section for why.
 - Don't rescale one ratio's A-roll into another aspect; re-crop from the master.

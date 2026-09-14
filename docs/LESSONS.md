@@ -130,6 +130,19 @@ efficient over time instead of relearning the same lessons.
   seam obvious. Then feather the wrapper's top and bottom edges with a
   `mask-image` linear-gradient. Keep the feather shallow (~5% of the video's
   height): boards that run text to the frame edge get ghosted by a deep one.
+- **Asked to remove something from a supplied clip? Find its source before you
+  reach for a filter.** A brand b-roll's background furniture (perspective grid,
+  crosshairs, vignette) is usually a discrete element in whatever built it, and
+  hiding it there is a one-line override. Filtering it out of the baked video is
+  not: low-contrast thin lines sit at the same contrast as small type, so median,
+  smartblur and luma-masked blur all destroy the on-screen copy while only
+  half-removing the lines (all three were tried; every one was unusable). Check
+  the repo's other branches — `git log --all`, `git ls-tree -r <branch>` — before
+  concluding the pixels are all you have.
+- **Pin the source revision when you rebuild an asset from another branch.** That
+  branch keeps moving: the tip of ours had re-timed the same piece from 30s to
+  21.4s, which would have silently shifted every beat the ad cuts to. Put the
+  commit hash in the prep script with a note on what changed after it.
 - **Want a landscape clip bigger in a portrait cut?** Zoom only the beats whose
   content is centred with margin (a product hero, a title card), never the ones
   that run edge to edge. Measure the safe limit by simulating the crop straight
