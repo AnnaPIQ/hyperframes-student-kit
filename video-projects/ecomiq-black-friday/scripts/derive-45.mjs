@@ -81,9 +81,10 @@ const overrides = `
       #contrast-foot { margin-top: 30px; font-size: 30px; gap: 12px; }
       #contrast-foot i { font-size: 38px; }
 
+      #card-checklist { padding-top: 320px; }
       #checklist-panel { border-radius: 26px; padding: 30px 34px 26px; }
       #card-checklist h2 { font-size: 62px; margin-bottom: 36px; }
-      .item { padding: 15px 0; gap: 20px; }
+      .item-in { padding: 15px 0; gap: 20px; }
       .tick { width: 54px; height: 54px; border-radius: 15px; }
       .tick svg { width: 28px; height: 28px; }
       .item .t { font-size: 34px; }

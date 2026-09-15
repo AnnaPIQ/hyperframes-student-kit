@@ -118,7 +118,8 @@
       /* ---- S6 checklist ------------------------------------------------------
          Overlaid on the workbook b-roll, so the opaque card background is
          replaced by a navy scrim — the footage still reads underneath. */
-      #card-checklist { background: linear-gradient(180deg,
+      #card-checklist { justify-content: flex-start; padding-top: 480px;
+        background: linear-gradient(180deg,
         rgba(6,40,76,.58) 0%, rgba(6,40,76,.42) 40%,
         rgba(6,40,76,.50) 70%, rgba(6,40,76,.66) 100%); }
       #checklist-panel { background: rgba(6,40,76,.95);
@@ -129,7 +130,8 @@
         letter-spacing: -.035em; margin-bottom: 40px; }
       #card-checklist h2 .em { font-family: 'Hedvig Letters Serif', Georgia, serif;
         font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
-      .item { display: flex; align-items: center; gap: 24px; padding: 19px 0; }
+      .item { overflow: hidden; }
+      .item-in { display: flex; align-items: center; gap: 24px; padding: 19px 0; }
       .tick { flex: none; width: 68px; height: 68px; border-radius: 18px;
         background: rgba(156,212,255,.14); border: 1px solid var(--brand-border);
         display: flex; align-items: center; justify-content: center; }
@@ -155,8 +157,9 @@
         text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 30px; }
       #ec-head { font-size: var(--title-fs); font-weight: 800; line-height: .96;
         letter-spacing: -.035em; max-width: 100%; }
-      #ec-head .em { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
-        font-weight: 400; color: var(--brand-blue-tint); letter-spacing: -.01em; }
+      /* No italic-serif emphasis on the end card — "free" stays white and upright. */
+      #ec-head .em { font-family: inherit; font-style: normal;
+        font-weight: 800; color: var(--brand-white); letter-spacing: inherit; }
       #ec-sub { margin-top: 34px; font-size: 36px; font-weight: 500; line-height: 1.3;
         color: var(--brand-text-dim); max-width: 80%; }
       #ec-pill { margin-top: 58px; font-size: 42px; font-weight: 800; letter-spacing: -.01em;
@@ -205,9 +208,10 @@
       #contrast-foot { margin-top: 30px; font-size: 30px; gap: 12px; }
       #contrast-foot i { font-size: 38px; }
 
+      #card-checklist { padding-top: 320px; }
       #checklist-panel { border-radius: 26px; padding: 30px 34px 26px; }
       #card-checklist h2 { font-size: 62px; margin-bottom: 36px; }
-      .item { padding: 15px 0; gap: 20px; }
+      .item-in { padding: 15px 0; gap: 20px; }
       .tick { width: 54px; height: 54px; border-radius: 15px; }
       .tick svg { width: 28px; height: 28px; }
       .item .t { font-size: 34px; }
@@ -256,12 +260,7 @@
       <audio id="music" src="assets/music-bed-placeholder.m4a"
              data-start="0" data-duration="39" data-track-index="3"></audio>
 
-      <!-- S1 · 0.00–5.12 · Sean, hook -->
-      <div id="s1-eyebrow" class="clip" data-start="2.9" data-duration="2.15" data-track-index="4"
-           style="position:absolute;left:var(--pad);bottom:calc(var(--safe-bottom) + 40px);z-index:50;">
-        <div class="eyebrow">Ask these 3 questions</div>
-        <div class="rule" style="margin:20px 0 0;"></div>
-      </div>
+      <!-- S1 · 0.00–5.12 · Sean, hook. No overlay — the band below stays clear. -->
 
       <!-- S2 · 5.12–7.85 · Q1 "how much do you want to make from an order?" -->
       <div id="panel-stack" class="panel clip" data-start="5.12" data-duration="2.73" data-track-index="5">
@@ -322,12 +321,13 @@
         <div id="contrast-foot"><i>1.81&times;</i><span>the units, just to stand still.</span></div>
       </div>
 
-      <!-- S5 · 14.84–26.36 · workbook b-roll, slot A. Runs under "Once you know
-           these numbers…" and stays under the checklist, which scrims over it.
-           Beats: worksheets deck, 8/32/19, calendar, spreadsheets, tools. -->
+      <!-- S5 · 18.88–26.36 · workbook b-roll, slot A, under the checklist.
+           Beats: 8/32/19, calendar, spreadsheets. The worksheets deck was cut —
+           it is near-static and read as dead screen at 15-17s, so Sean now holds
+           camera through "…is much easier" instead. -->
       <div id="broll-a-wrap" class="broll-wrap">
         <video id="broll-a" src="assets/broll-a-45.mp4" muted
-               data-start="14.84" data-duration="11.52" data-track-index="8"></video>
+               data-start="18.88" data-duration="7.48" data-track-index="8"></video>
       </div>
 
       <!-- S6 · 18.88–26.28 · the four-item plan -->
@@ -336,22 +336,22 @@
         <div class="eyebrow">Once you know your numbers</div>
         <div class="rule"></div>
         <h2>The rest gets <span class="em">easy</span>.</h2>
-        <div class="item" id="ck1">
+        <div class="item" id="ck1"><div class="item-in">
           <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.6" /></svg></div>
           <div class="t">Choose an offer your margin supports</div>
-        </div>
-        <div class="item" id="ck2">
+        </div></div>
+        <div class="item" id="ck2"><div class="item-in">
           <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.6" /></svg></div>
           <div class="t">Order the right amount of stock</div>
-        </div>
-        <div class="item" id="ck3">
+        </div></div>
+        <div class="item" id="ck3"><div class="item-in">
           <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.6" /></svg></div>
           <div class="t">Set clear advertising limits</div>
-        </div>
-        <div class="item hot" id="ck4">
+        </div></div>
+        <div class="item hot" id="ck4"><div class="item-in">
           <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.6" /></svg></div>
           <div class="t">Stop guessing</div>
-        </div>
+        </div></div>
         </div>
       </div>
 
@@ -387,12 +387,6 @@
          finishes, so the end card is not silent. */
       gsap.set('#music', { volume: 0.16 });
       tl.to('#music', { volume: 0.42, duration: 0.9, ease: 'sine.out' }, 35.20);
-
-      /* ---- S1 · hook -------------------------------------------------------- */
-      tl.fromTo('#s1-eyebrow .eyebrow', { opacity: 0, y: 22 },
-               { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, 2.90)
-        .fromTo('#s1-eyebrow .rule', { scaleX: 0 },
-               { scaleX: 1, duration: .45, ease: 'power3.out' }, 3.05);
 
       /* ---- S2 · cost stack --------------------------------------------------
          Rows stagger down the stack, then the contribution locks in flame. */
@@ -454,7 +448,7 @@
          point before the fade-in can't inherit a stale opacity. */
       tl.set('#broll-a-wrap', { opacity: 0 }, 0)
         .set('#broll-b-wrap', { opacity: 0 }, 0)
-        .to('#broll-a-wrap', { opacity: 1, duration: .32, ease: 'power2.out' }, 14.84)
+        .to('#broll-a-wrap', { opacity: 1, duration: .32, ease: 'power2.out' }, 18.88)
         .to('#broll-a-wrap', { opacity: 0, duration: .30, ease: 'power2.in' }, 26.06)
         .set('#broll-a-wrap', { opacity: 0 }, 26.36)
         .to('#broll-b-wrap', { opacity: 1, duration: .30, ease: 'power2.out' }, 30.42)
@@ -472,8 +466,8 @@
                { opacity: 1, y: 0, duration: .42, ease: 'power3.out' }, 19.15);
       [['#ck1', 19.60], ['#ck2', 21.31], ['#ck3', 23.91], ['#ck4', 25.55]]
         .forEach(([sel, t]) => {
-          tl.fromTo(sel, { opacity: 0, x: -30 },
-                   { opacity: 1, x: 0, duration: .38, ease: 'power3.out' }, t)
+          tl.fromTo(sel, { height: 0, opacity: 0 },
+                   { height: 'auto', opacity: 1, duration: .40, ease: 'power3.out' }, t)
             .fromTo(sel + ' .tick', { scale: .6 },
                    { scale: 1, duration: .40, ease: 'back.out(2.4)' }, t + .06);
         });

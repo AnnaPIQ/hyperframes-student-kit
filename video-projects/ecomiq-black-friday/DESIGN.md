@@ -26,7 +26,8 @@ and `--safe-bottom` reserves an empty band at the bottom of every frame (230px i
   (`--brand-flame`) reserved for the payoff number, the hot column, the final
   checklist item and the CTA pill.
 - Rethink Sans throughout; Hedvig Letters Serif italic for the one emphasis word
-  per headline ("*discount*", "*easy*", "*free*") — the EcomIQ signature.
+  per headline ("*discount*", "*easy*") — the EcomIQ signature. The end card is the
+  exception: "free" stays white and upright so the CTA reads as one line.
 - Data panels sit over Sean in the lower third; the bigger ideas take the full frame.
 - The back half runs on the EcomIQ workbook b-roll; the checklist sits on its own
   panel over it, matching the cost-stack treatment used over Sean.

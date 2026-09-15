@@ -62,17 +62,18 @@ two slots by `scripts/prep-broll.sh`. Source beat map:
 | beat | in–out | used |
 | --- | --- | --- |
 | cover | 0.0–2.8 | slot B |
-| worksheets deck | 2.4–5.1 | slot A |
+| worksheets deck | 2.4–5.1 | **cut** — near-static, read as ~2s of dead screen at 15–17s |
 | stats 8/32/19 | 4.7–7.5 | slot A |
 | margin page | 7.1–10.4 | **skipped** — the cost-stack panel already counts to $59.71 at 5s |
 | calendar | 10.0–12.9 | slot A |
 | spreadsheets | 12.5–15.3 | slot A |
-| tools | 14.9–17.6 | slot A |
+| tools | 14.9–17.6 | unused |
 | outro lockup | 17.2–21.4 | **skipped** — the real end card does this at 34.4s |
 
-* **Slot A** (11.52s) is natural speed with one hard cut where the margin page
-  is skipped. It runs under "Once you know these numbers…" and stays under the
-  checklist.
+* **Slot A** (7.48s) is natural speed with one hard cut where the margin page is
+  skipped. It runs under the checklist only — the worksheets-deck beat was cut
+  because it is almost a held frame, so Sean holds camera through "…is much
+  easier" instead.
 * **Slot B** (3.98s) is the cover. Only 2.55s of clean cover exists before it
   crossfades to the deck, so it is stretched 0.64× — imperceptible on an
   already-slow push.
@@ -99,17 +100,19 @@ gap, so no cut lands mid-word.
 
 | # | In–Out | On screen | Content |
 | --- | --- | --- | --- |
-| S1 | 0.00–5.12 | Sean, full frame | Hook. Eyebrow "ASK THESE 3 QUESTIONS" in at 2.90 |
+| S1 | 0.00–18.88 | Sean, full frame | Hook through "…is much easier". No overlay — the subtitle band stays clear |
 | S2 | 5.12–7.85 | Lower panel over Sean | **Cost stack** on Q1 — $114.70 down to $59.71 / 52.1% |
 | S3 | 7.85–10.40 | Lower panel over Sean | **Count-ups** on Q2 — $59.71 max per order · 1.92× breakeven ROAS |
 | S4 | 10.43–14.78 | Full card | **Contrast** on Q3 — full price vs 25% off, closing on "1.81× the units" |
-| S5 | 14.84–26.36 | **Workbook b-roll**, slot A | Worksheets deck → 8/32/19 → calendar → spreadsheets → tools |
+| S5 | 18.88–26.36 | **Workbook b-roll**, slot A | 8/32/19 → calendar → spreadsheets, under the checklist |
 | S6 | 18.88–26.28 | Checklist panel over the b-roll | **4-item checklist**, one tick per spoken line |
 | S7 | 26.36–30.42 | Sean, full frame | Direct address — "that's where I'd start right now" |
 | S8 | 30.42–34.40 | **Workbook b-roll**, slot B | The cover itself, under "a free Black Friday workbook" |
 | S10 | 34.40–39.00 | End card | Lands on "Link is below" (34.55); voice ends 35.40, holds 3.6s after |
 
-Checklist ticks fire at 19.60 / 21.31 / 23.91 / 25.55, each on its own spoken line.
+Checklist ticks fire at 19.60 / 21.31 / 23.91 / 25.55, each on its own spoken
+line. The panel is pinned to a fixed top and each item grows it downward, so it
+never reserves empty height for ticks that have not appeared yet.
 
 **Persistent:** EcomIQ logo top-left on every frame, stepping back to 30% opacity
 on the end card so the hero lockup leads.
@@ -139,7 +142,8 @@ The cost stack reconciles exactly: 114.70 − 4.59 − 34.00 − 4.50 − 8.60 �
 * **Ratios:** 9:16 and 4:5. (The brief named 1:1 in one place and 4:5 in
   another; 4:5 was confirmed.)
 * **End card wording:** headline "Get your free Black Friday workbook",
-  button "Sign up free".
+  button "Sign up free". "free" is white and upright, not the italic-serif
+  emphasis used elsewhere.
 * **Crop over pad**, per the framing test above.
 * **Dead air spliced out** and a **subtitle band reserved** at the bottom.
 * **Workbook b-roll** replaces the product stills across the back half, with the
@@ -151,8 +155,8 @@ The cost stack reconciles exactly: 114.70 − 4.59 − 34.00 − 4.50 − 8.60 �
   replaced them, which also retires `product-suite-wide.png` and its garbled
   micro-text ("Pash Cycle Calculator", "Delivery Coe Coot Sheet"). The stills stay
   in `assets/` in case they are wanted again.
-* **~6s of the supplied b-roll is unused** — the margin page and the outro
-  lockup, both dropped as duplicates of content the ad already carries.
+* **About half the supplied b-roll is unused** — the margin page and outro lockup
+  as duplicates, plus the worksheets deck and tools beats as dead screen time.
 * **Music is a silent placeholder.** No licensed bed ships with the kit. Drop a
   track in at `assets/music-bed-placeholder.m4a` and the duck automation is
   already wired: bed at 0.16 under the voice, lifting to 0.42 at 35.20 once Sean

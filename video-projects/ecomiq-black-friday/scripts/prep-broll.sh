@@ -17,9 +17,11 @@
 #   • the margin page counts up to $59.71, which the cost-stack panel does at 5s
 #   • the outro lockup is an EcomIQ end card, which the real end card does at 34.4s
 #
-# Slot A (11.52s) covers "Once you know these numbers…" through the 4-item
-# checklist, which is overlaid on it as a scrim. Natural speed, one hard cut
-# where the margin page is skipped (stats -> calendar).
+# Slot A (7.48s) runs under the 4-item checklist only. The worksheets-deck beat
+# was dropped: it is almost a held frame, so it read as ~2s of dead screen at
+# 15-17s. Sean now stays on camera through "…is much easier" instead, and the
+# b-roll starts when the checklist does. Natural speed, one hard cut where the
+# margin page is skipped (stats -> calendar).
 #
 # Slot B (3.98s) covers "We've put the full process into a free Black Friday
 # workbook" with the cover shot. Only 2.55s of clean cover exists before it
@@ -29,7 +31,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.." || exit 1
 
-A_KEEP="between(t,2.60,7.30)+between(t,10.20,17.02)"   # 4.70s + 6.82s = 11.52s
+A_KEEP="between(t,4.90,7.30)+between(t,10.20,15.28)"   # 2.40s + 5.08s = 7.48s
 B_IN=2.55
 B_STRETCH=1.5608                                        # 2.55s -> 3.98s
 
