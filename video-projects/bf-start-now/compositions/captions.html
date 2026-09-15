@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>captions</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <!-- Word timings are embedded, never fetched — render-time network is banned. -->
+    <script src="assets/words.js"></script>
+    <style>
+      @font-face {
+        font-family: "Rethink Sans";
+        font-style: normal;
+        font-weight: 400 800;
+        font-display: block;
+        src: url(assets/fonts/RethinkSans.woff2) format("woff2");
+      }
+      [data-composition-id="captions"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="captions"] {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        font-family: "Rethink Sans", system-ui, sans-serif;
+      }
+      [data-composition-id="captions"] .band {
+        position: absolute;
+        left: 60px;
+        right: 60px;
+        top: 880px;
+        height: 210px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      [data-composition-id="captions"] .grp {
+        position: absolute;
+        left: 0;
+        right: 0;
+        text-align: center;
+        opacity: 0;
+        font-weight: 800;
+        font-size: 62px;
+        line-height: 1.16;
+        letter-spacing: -0.015em;
+        /* Stroke via layered shadows — -webkit-text-stroke renders inconsistently
+           in the capture browser. This also holds the words over the face. */
+        text-shadow:
+          0 3px 0 rgba(2, 14, 28, 0.95),
+          3px 0 0 rgba(2, 14, 28, 0.95),
+          -3px 0 0 rgba(2, 14, 28, 0.95),
+          0 -3px 0 rgba(2, 14, 28, 0.95),
+          3px 3px 0 rgba(2, 14, 28, 0.95),
+          -3px 3px 0 rgba(2, 14, 28, 0.95),
+          3px -3px 0 rgba(2, 14, 28, 0.95),
+          -3px -3px 0 rgba(2, 14, 28, 0.95),
+          0 10px 30px rgba(2, 14, 28, 0.85);
+      }
+      [data-composition-id="captions"] .w {
+        display: inline-block;
+        color: #ffffff;
+        padding: 0 2px;
+        transform-origin: 50% 70%;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="captions" data-width="1080" data-height="1920" data-duration="24.9">
+      <div class="band" id="cap-band"></div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="captions"] ';
+        const SLOT = 24.9;
+        const tl = gsap.timeline({ paused: true });
+
+        const WORDS = window.__VO_WORDS || [];
+        const band = document.querySelector(S + "#cap-band");
+
+        // Group words into short karaoke lines: break on sentence-final
+        // punctuation or after 5 words, whichever comes first.
+        const groups = [];
+        let cur = [];
+        WORDS.forEach((w) => {
+          cur.push(w);
+          const endsSentence = /[.!?]$/.test(w.w);
+          if (endsSentence || cur.length >= 5) {
+            groups.push(cur);
+            cur = [];
+          }
+        });
+        if (cur.length) groups.push(cur);
+
+        groups.forEach((g, gi) => {
+          const div = document.createElement("div");
+          div.className = "grp";
+          div.id = "g" + gi;
+          g.forEach((w, wi) => {
+            const span = document.createElement("span");
+            span.className = "w";
+            span.id = "g" + gi + "w" + wi;
+            span.textContent = w.w;
+            div.appendChild(span);
+            div.appendChild(document.createTextNode(" "));
+          });
+          if (band) band.appendChild(div);
+        });
+
+        // Show each group from just before its first word to just after its last.
+        groups.forEach((g, gi) => {
+          const inT = Math.max(0, g[0].t - 0.1);
+          const next = groups[gi + 1];
+          // Clear out before the next line arrives, or two lines double-expose.
+          const hardOut = next ? next[0].t - 0.13 : SLOT;
+          const outT = Math.max(inT + 0.2, Math.min(SLOT, g[g.length - 1].e + 0.16, hardOut));
+          tl.fromTo(S + "#g" + gi,
+            { opacity: 0, y: 16, visibility: "visible" },
+            { opacity: 1, y: 0, duration: 0.16, ease: "power2.out" }, inT);
+          tl.to(S + "#g" + gi, { opacity: 0, duration: 0.09, ease: "power2.in" }, outT);
+          // Deterministic kill: a word-level tween can otherwise win the race
+          // with the exit and leave a line stuck on screen.
+          tl.set(S + "#g" + gi, { opacity: 0, visibility: "hidden" }, outT + 0.1);
+
+          // Karaoke pop on the active word.
+          g.forEach((w, wi) => {
+            const sel = S + "#g" + gi + "w" + wi;
+            tl.to(sel, { color: "#FF4C32", scale: 1.09, duration: 0.09, ease: "power3.out" }, w.t);
+            tl.to(sel, { color: "#FFFFFF", scale: 1, duration: 0.16, ease: "power2.out" }, w.e + 0.02);
+          });
+        });
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["captions"] = tl;
+      })();
+    </script>
+  </body>
+</html>

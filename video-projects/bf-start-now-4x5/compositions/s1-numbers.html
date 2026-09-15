@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>s1-numbers</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family:"Rethink Sans"; font-style:normal; font-weight:400 800; font-display:block;
+        src:url(assets/fonts/RethinkSans.woff2) format("woff2"); }
+      @font-face { font-family:"Hedvig Letters Serif"; font-style:normal; font-weight:400; font-display:block;
+        src:url(assets/fonts/HedvigLettersSerif.woff2) format("woff2"); }
+      [data-composition-id="s1-numbers"] * { margin:0; padding:0; box-sizing:border-box; }
+      [data-composition-id="s1-numbers"] { position:absolute; inset:0; overflow:hidden;
+        font-family:"Rethink Sans", system-ui, sans-serif; }
+      [data-composition-id="s1-numbers"] .zone {
+        position:absolute; left:70px; right:70px; top:190px; height:660px;
+        display:flex; flex-direction:column; align-items:center; justify-content:center; gap:26px; }
+      [data-composition-id="s1-numbers"] .eyebrow {
+        font-weight:700; font-size:26px; letter-spacing:.3em; text-transform:uppercase; color:#9cd4ff; }
+      [data-composition-id="s1-numbers"] .chips { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+      [data-composition-id="s1-numbers"] .chip {
+        display:flex; align-items:center; gap:14px; padding:16px 24px; border-radius:12px;
+        background:rgba(10,50,95,.88); border:2px solid rgba(156,212,255,.3);
+        font-weight:600; font-size:27px; color:#dceaf8; }
+      [data-composition-id="s1-numbers"] .chip b { font-weight:800; color:#ffffff; }
+      [data-composition-id="s1-numbers"] .minus { color:#9cd4ff; font-weight:800; }
+      [data-composition-id="s1-numbers"] .box {
+        position:relative; padding:30px 56px; border-radius:16px; background:#ffffff;
+        border:5px solid #ff4c32; box-shadow:0 30px 70px -22px rgba(1,8,18,.95); text-align:center; }
+      [data-composition-id="s1-numbers"] .box .v {
+        font-family:"Hedvig Letters Serif", Georgia, serif; font-size:132px; line-height:1;
+        color:#06284c; font-variant-numeric:tabular-nums; }
+      [data-composition-id="s1-numbers"] .box .k {
+        margin-top:12px; font-weight:800; font-size:24px; letter-spacing:.22em;
+        text-transform:uppercase; color:#7d9bbd; }
+      [data-composition-id="s1-numbers"] .glow {
+        position:absolute; inset:-6px; border-radius:20px; box-shadow:0 0 90px 16px rgba(255,76,50,.85); opacity:0; }
+      [data-composition-id="s1-numbers"] .aov {
+        font-weight:700; font-size:27px; letter-spacing:.06em; color:#9cd4ff; }
+      [data-composition-id="s1-numbers"] .aov b { color:#ffffff; font-weight:800; }
+
+      /* ── format overrides (generated) ─────────────────────── */
+      [data-composition-id="s1-numbers"] .zone { top: 96px; height: 400px; gap: 16px; left: 50px; right: 50px; }
+      [data-composition-id="s1-numbers"] .eyebrow { font-size: 22px; }
+      [data-composition-id="s1-numbers"] .aov { font-size: 23px; }
+      [data-composition-id="s1-numbers"] .chip { padding: 11px 17px; font-size: 21px; }
+      [data-composition-id="s1-numbers"] .chips { gap: 11px; }
+      [data-composition-id="s1-numbers"] .box { padding: 18px 40px; border-width: 4px; }
+      [data-composition-id="s1-numbers"] .box .v { font-size: 96px; }
+      [data-composition-id="s1-numbers"] .box .k { font-size: 19px; margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="s1-numbers" data-width="1080" data-height="1350" data-duration="3.84">
+      <div class="zone">
+        <div class="eyebrow" id="s1-eye">Your numbers</div>
+        <div class="aov" id="s1-aov">Order value <b>$114.70</b></div>
+        <div class="chips">
+          <div class="chip c"><span class="minus">&minus;</span> Product <b>$34.00</b></div>
+          <div class="chip c"><span class="minus">&minus;</span> Fulfilment <b>$4.50</b></div>
+          <div class="chip c"><span class="minus">&minus;</span> Delivery <b>$8.60</b></div>
+        </div>
+        <div class="box" id="s1-box">
+          <span class="glow" id="s1-glow"></span>
+          <div class="v" id="s1-val">$0.00</div>
+          <div class="k">Contribution per order</div>
+        </div>
+      </div>
+    </div>
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="s1-numbers"] ';
+        const SLOT = 3.84;
+        const tl = gsap.timeline({ paused: true });
+
+        // Nothing lands until the face has dropped to the lower third at 1.15,
+        // so the hook is the speaker, then the number.
+        tl.fromTo(S + "#s1-eye", { y: 22, opacity: 0 }, { y: 0, opacity: 1, duration: .28, ease: "power2.out" }, 1.02);
+        tl.fromTo(S + "#s1-aov", { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: .26, ease: "power2.out" }, 1.14);
+
+        // "numbers" is spoken at 1.15 — the box slams just after it.
+        tl.fromTo(S + "#s1-box",
+          { scale: .78, opacity: 0, filter: "blur(14px)" },
+          { scale: 1, opacity: 1, filter: "blur(0px)", duration: .42, ease: "back.out(1.7)" }, 1.30);
+        const v = { n: 0 };
+        tl.to(v, { n: 59.71, duration: .55, ease: "power2.out",
+          onUpdate: () => { const el = document.querySelector(S + "#s1-val"); if (el) el.textContent = "$" + v.n.toFixed(2); } }, 1.42);
+        tl.fromTo(S + "#s1-glow", { opacity: 0 }, { opacity: 1, duration: .2, ease: "power2.out" }, 1.92);
+        tl.to(S + "#s1-glow", { opacity: .32, duration: .6, ease: "sine.inOut" }, 2.12);
+        tl.to(S + "#s1-glow", { opacity: .8, duration: .5, ease: "sine.inOut" }, 2.72);
+
+        // The cost chips settle in behind the answer.
+        tl.fromTo(S + ".c",
+          { y: 26, opacity: 0, scale: .94 },
+          { y: 0, opacity: 1, scale: 1, duration: .32, ease: "power3.out", stagger: .075 }, 1.62);
+
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines["s1-numbers"] = tl;
+      })();
+    </script>
+  </body>
+</html>

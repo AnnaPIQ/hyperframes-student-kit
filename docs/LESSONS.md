@@ -182,6 +182,41 @@ efficient over time instead of relearning the same lessons.
   them put the first pen a full frame-width away from the checkbox.
 
 
+## Talking-head shorts (face + graphics + karaoke captions)
+
+- **Caption the audio, not the transcript you were handed.** Auto-captions and
+  pasted transcripts drift from what was actually said. Run
+  `npx hyperframes transcribe <edit>.mp4 --model small.en --json` (it works in
+  this container — `doctor` reporting whisper-cpp missing is a false negative)
+  and caption from that. A caption that disagrees with the voice is worse than
+  none.
+- **Two caption lines double-expose unless the exit is clamped to the next
+  line's entry.** `lastWord.end + 0.16` alone overlaps the following group.
+  Clamp: `outT = min(lastEnd + 0.16, nextGroupFirstWord.t - 0.13)`, and follow
+  the fade with a hard `tl.set({opacity:0, visibility:"hidden"})` — the lint rule
+  `caption_exit_missing_hard_kill` exists because a word-level tween can
+  otherwise win the race and strand a line on screen.
+- **The seam must overlap the video's top edge, not stop above it.** A gradient
+  band that ends where the face begins leaves the razor line it was meant to
+  hide. Start the band ~30px above the face top and run it ~190px down INTO the
+  video, opaque at the top.
+- **A `scaleX` parent squashes its own label.** Bars that shrink to show a value
+  being consumed will distort any text inside them. Put labels in siblings
+  positioned over the track, never inside the scaling element.
+- **Type over a full-screen face needs a directional scrim, not a radial one.**
+  A soft radial leaves the words sitting on the subject's eyes. A top-down
+  linear gradient (0.94 → 0 over ~700px) reads as a deliberate title band and
+  actually separates the type.
+- **Position a prop by its point of contact** — for a pen, a zero-size wrapper
+  at the nib with the artwork offset from it, so moving it means moving the nib
+  to a target's coordinates.
+- **Google Drive: a big file needs the confirm URL, and it supports ranges.**
+  `uc?export=download` returns an HTML virus-scan interstitial for anything
+  large. Use `https://drive.usercontent.google.com/download?id=<ID>&export=download&confirm=t`,
+  which serves `accept-ranges: bytes` — so `ffprobe`/`ffmpeg` can read a 3GB mov
+  over HTTP without downloading it first.
+
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

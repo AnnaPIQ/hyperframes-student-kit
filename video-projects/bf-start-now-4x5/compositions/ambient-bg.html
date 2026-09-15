@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>ambient-bg</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      [data-composition-id="ambient-bg"] * { margin: 0; padding: 0; box-sizing: border-box; }
+      [data-composition-id="ambient-bg"] { position: absolute; inset: 0; overflow: hidden; background: #06284c; }
+
+      [data-composition-id="ambient-bg"] .base {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(70% 40% at 50% 16%, rgba(156, 212, 255, 0.16) 0%, rgba(6, 40, 76, 0) 62%),
+          radial-gradient(60% 34% at 50% 96%, rgba(255, 76, 50, 0.13) 0%, rgba(6, 40, 76, 0) 64%),
+          #06284c;
+      }
+      /* Drifting grid — depth without a pattern you can name */
+      [data-composition-id="ambient-bg"] .grid {
+        position: absolute;
+        left: -20%;
+        top: -10%;
+        width: 140%;
+        height: 120%;
+        background-image:
+          repeating-linear-gradient(0deg, rgba(156, 212, 255, 0.075) 0 2px, rgba(156, 212, 255, 0) 2px 110px),
+          repeating-linear-gradient(90deg, rgba(156, 212, 255, 0.075) 0 2px, rgba(156, 212, 255, 0) 2px 110px);
+        -webkit-mask-image: radial-gradient(64% 52% at 50% 30%, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 78%);
+        mask-image: radial-gradient(64% 52% at 50% 30%, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 78%);
+      }
+      [data-composition-id="ambient-bg"] .dot {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(156, 212, 255, 0.5);
+        box-shadow: 0 0 14px rgba(156, 212, 255, 0.55);
+      }
+      [data-composition-id="ambient-bg"] .hot { background: rgba(255, 76, 50, 0.65); box-shadow: 0 0 16px rgba(255, 76, 50, 0.7); }
+      [data-composition-id="ambient-bg"] .vig {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(72% 62% at 50% 40%, rgba(2, 14, 28, 0) 46%, rgba(2, 14, 28, 0.66) 100%);
+      }
+
+      /* ── format overrides (generated) ─────────────────────── */
+      [data-composition-id="ambient-bg"] .grid {
+        -webkit-mask-image: radial-gradient(70% 46% at 50% 26%, rgba(0,0,0,.9) 0%, rgba(0,0,0,0) 78%);
+        mask-image: radial-gradient(70% 46% at 50% 26%, rgba(0,0,0,.9) 0%, rgba(0,0,0,0) 78%);
+      }
+      [data-composition-id="ambient-bg"] .d:nth-of-type(5) { display: none; }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="ambient-bg" data-width="1080" data-height="1350" data-duration="24.9">
+      <div class="base"></div>
+      <div class="grid" id="bg-grid"></div>
+      <div class="dot d" style="left: 150px; top: 300px"></div>
+      <div class="dot d" style="left: 890px; top: 420px"></div>
+      <div class="dot d hot" style="left: 300px; top: 720px"></div>
+      <div class="dot d" style="left: 780px; top: 840px"></div>
+      <div class="dot d" style="left: 210px; top: 980px"></div>
+      <div class="dot d hot" style="left: 930px; top: 210px"></div>
+      <div class="vig"></div>
+    </div>
+
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="ambient-bg"] ';
+        const SLOT = 24.9;
+        const tl = gsap.timeline({ paused: true });
+
+        // The grid creeps for the whole runtime — no frame is ever static.
+        tl.fromTo(S + "#bg-grid",
+          { backgroundPosition: "0px 0px, 0px 0px" },
+          { backgroundPosition: "0px 330px, 0px 330px", duration: SLOT, ease: "none" }, 0);
+
+        // Particles drift and breathe. Finite repeats — repeat:-1 breaks capture.
+        tl.to(S + ".d",
+          { y: -46, duration: 4.15, ease: "sine.inOut", yoyo: true, repeat: 5,
+            stagger: { each: 0.5, from: "start" } }, 0);
+        tl.to(S + ".d",
+          { opacity: 0.35, duration: 2.075, ease: "sine.inOut", yoyo: true, repeat: 11,
+            stagger: { each: 0.33, from: "end" } }, 0);
+
+        tl.to({}, { duration: SLOT }, 0); // Law #11 anchor
+        window.__timelines["ambient-bg"] = tl;
+      })();
+    </script>
+  </body>
+</html>

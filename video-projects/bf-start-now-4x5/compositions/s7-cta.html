@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>s7-cta</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family:"Rethink Sans"; font-style:normal; font-weight:400 800; font-display:block;
+        src:url(assets/fonts/RethinkSans.woff2) format("woff2"); }
+      [data-composition-id="s7-cta"] * { margin:0; padding:0; box-sizing:border-box; }
+      [data-composition-id="s7-cta"] { position:absolute; inset:0; overflow:hidden;
+        font-family:"Rethink Sans", system-ui, sans-serif; }
+      [data-composition-id="s7-cta"] .zone {
+        position:absolute; left:70px; right:70px; top:190px; height:660px;
+        display:flex; flex-direction:column; align-items:center; justify-content:center; gap:34px; }
+      [data-composition-id="s7-cta"] .logo { width:330px; height:auto; }
+      [data-composition-id="s7-cta"] .pill {
+        display:inline-flex; align-items:center; gap:18px; padding:26px 54px; border-radius:999px;
+        background:#ff4c32; color:#fff; font-weight:800; font-size:44px; letter-spacing:.02em;
+        white-space:nowrap; box-shadow:0 24px 64px -16px rgba(255,76,50,.95); }
+      [data-composition-id="s7-cta"] .chev { display:flex; flex-direction:column; align-items:center; gap:4px; }
+      [data-composition-id="s7-cta"] .chev svg { display:block; }
+      [data-composition-id="s7-cta"] .chev path { stroke:#9cd4ff; stroke-width:8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+
+      /* ── format overrides (generated) ─────────────────────── */
+      [data-composition-id="s7-cta"] .zone { top: 96px; height: 400px; gap: 24px; }
+      [data-composition-id="s7-cta"] .logo { width: 250px; }
+      [data-composition-id="s7-cta"] .pill { padding: 19px 40px; font-size: 34px; }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="s7-cta" data-width="1080" data-height="1350" data-duration="1.78">
+      <div class="zone">
+        <img class="logo" id="s7-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div class="pill" id="s7-pill">Link is below</div>
+        <div class="chev">
+          <svg class="cv" width="74" height="34" viewBox="0 0 74 34"><path d="M6 6 L37 28 L68 6" /></svg>
+          <svg class="cv" width="74" height="34" viewBox="0 0 74 34"><path d="M6 6 L37 28 L68 6" /></svg>
+        </div>
+      </div>
+    </div>
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="s7-cta"] ';
+        const SLOT = 1.78;
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo(S + "#s7-logo", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: .32, ease: "power3.out" }, .1);
+        // "link" at local .99, "below." at 1.24 — the pill lands with them.
+        tl.fromTo(S + "#s7-pill",
+          { scale: .8, opacity: 0 },
+          { scale: 1, opacity: 1, duration: .34, ease: "back.out(2.2)" }, .84);
+        tl.fromTo(S + ".cv",
+          { y: -18, opacity: 0 },
+          { y: 0, opacity: 1, duration: .26, ease: "power2.out", stagger: .09 }, 1.06);
+        tl.to(S + ".cv", { y: 14, duration: .34, ease: "sine.inOut", yoyo: true, repeat: 1,
+          stagger: { each: .08, from: "start" } }, 1.32);
+        tl.to(S + "#s7-pill", { scale: 1.05, duration: .36, ease: "sine.inOut", yoyo: true, repeat: 1 }, 1.18);
+
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines["s7-cta"] = tl;
+      })();
+    </script>
+  </body>
+</html>

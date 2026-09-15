@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>s4-start-now</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family:"Rethink Sans"; font-style:normal; font-weight:400 800; font-display:block;
+        src:url(assets/fonts/RethinkSans.woff2) format("woff2"); }
+      [data-composition-id="s4-start-now"] * { margin:0; padding:0; box-sizing:border-box; }
+      [data-composition-id="s4-start-now"] { position:absolute; inset:0; overflow:hidden;
+        font-family:"Rethink Sans", system-ui, sans-serif; }
+      /* Sits over the full-screen face, so it needs its own scrim to stay legible */
+      [data-composition-id="s4-start-now"] .scrim {
+        position:absolute; left:0; right:0; top:0; height:760px;
+        background:linear-gradient(180deg, rgba(2,14,28,.94) 0%, rgba(2,14,28,.88) 36%,
+          rgba(2,14,28,.62) 66%, rgba(2,14,28,0) 100%); }
+      [data-composition-id="s4-start-now"] .zone {
+        position:absolute; left:60px; right:60px; top:196px; height:420px;
+        display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px; }
+      [data-composition-id="s4-start-now"] .slam {
+        font-weight:800; font-size:146px; line-height:.92; letter-spacing:-.045em;
+        color:#ffffff; text-align:center;
+        text-shadow:0 8px 40px rgba(2,14,28,.95), 0 0 90px rgba(2,14,28,.8); }
+      [data-composition-id="s4-start-now"] .rule {
+        width:340px; height:9px; background:#ff4c32; transform-origin:50% 50%;
+        box-shadow:0 0 34px rgba(255,76,50,.85); }
+      [data-composition-id="s4-start-now"] .sub {
+        font-weight:700; font-size:30px; letter-spacing:.2em; text-transform:uppercase;
+        color:#9cd4ff; text-align:center;
+        text-shadow:0 4px 22px rgba(2,14,28,.95); }
+      [data-composition-id="s4-start-now"] .strip {
+        position:absolute; left:90px; right:90px; top:132px; display:flex; gap:9px; align-items:flex-end; }
+      [data-composition-id="s4-start-now"] .wk {
+        flex:1; height:16px; border-radius:4px; background:rgba(156,212,255,.28); transform-origin:50% 100%; }
+      [data-composition-id="s4-start-now"] .wk.bf { background:#ff4c32; height:30px; box-shadow:0 0 22px rgba(255,76,50,.9); }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="s4-start-now" data-width="1080" data-height="1920" data-duration="2.96">
+      <div class="scrim" id="s4-scrim"></div>
+      <div class="strip" id="s4-strip">
+        <div class="wk k"></div><div class="wk k"></div><div class="wk k"></div><div class="wk k"></div>
+        <div class="wk k"></div><div class="wk k"></div><div class="wk k"></div><div class="wk k"></div>
+        <div class="wk k"></div><div class="wk k bf"></div>
+      </div>
+      <div class="zone">
+        <div class="slam" id="s4-slam">Start<br />now</div>
+        <div class="rule" id="s4-rule"></div>
+        <div class="sub" id="s4-sub">Before the campaigns run</div>
+      </div>
+    </div>
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="s4-start-now"] ';
+        const SLOT = 2.96;
+        const tl = gsap.timeline({ paused: true });
+
+        tl.fromTo(S + "#s4-scrim", { opacity: 0 }, { opacity: 1, duration: .34, ease: "power2.out" }, 0);
+
+        // Weeks to Black Friday tick in, the last one flame.
+        tl.fromTo(S + ".k", { scaleY: 0, opacity: 0 },
+          { scaleY: 1, opacity: 1, duration: .2, ease: "power3.out", stagger: .045 }, .18);
+
+        // "start" is spoken at local 1.05, "now" at 1.36 — the slam lands between.
+        tl.fromTo(S + "#s4-slam",
+          { scale: 1.5, opacity: 0, filter: "blur(22px)" },
+          { scale: 1, opacity: 1, filter: "blur(0px)", duration: .38, ease: "expo.out" }, 1.06);
+        tl.fromTo(S + "#s4-rule", { scaleX: 0, opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: .3, ease: "power3.out" }, 1.4);
+        tl.fromTo(S + "#s4-sub", { y: 18, opacity: 0 },
+          { y: 0, opacity: 1, duration: .28, ease: "power2.out" }, 1.56);
+
+        // The Black Friday marker pulses through the hold.
+        tl.to(S + ".bf", { scaleY: 1.35, duration: .42, ease: "sine.inOut", yoyo: true, repeat: 3 }, 1.5);
+        tl.to(S + "#s4-slam", { scale: 1.028, duration: 1.3, ease: "sine.inOut" }, 1.5);
+
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines["s4-start-now"] = tl;
+      })();
+    </script>
+  </body>
+</html>

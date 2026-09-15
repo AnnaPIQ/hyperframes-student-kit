@@ -40,3 +40,10 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Large source recordings pulled for a build (re-downloadable from Drive)
+**/assets/source-*.mov
+
+# Generated variants duplicate the master's video assets — the generator
+# (scripts/build-variants.mjs) recreates them from the committed master.
+video-projects/bf-start-now-4x5/assets/vo.mp4

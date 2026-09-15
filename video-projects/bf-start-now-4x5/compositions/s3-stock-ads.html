@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>s3-stock-ads</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family:"Rethink Sans"; font-style:normal; font-weight:400 800; font-display:block;
+        src:url(assets/fonts/RethinkSans.woff2) format("woff2"); }
+      [data-composition-id="s3-stock-ads"] * { margin:0; padding:0; box-sizing:border-box; }
+      [data-composition-id="s3-stock-ads"] { position:absolute; inset:0; overflow:hidden;
+        font-family:"Rethink Sans", system-ui, sans-serif; }
+      [data-composition-id="s3-stock-ads"] .zone {
+        position:absolute; left:70px; right:70px; top:190px; height:660px;
+        display:flex; flex-direction:column; justify-content:center; gap:34px; }
+      [data-composition-id="s3-stock-ads"] .card {
+        padding:30px 34px 34px; border-radius:18px; background:rgba(10,50,95,.9);
+        border:2px solid rgba(156,212,255,.28); box-shadow:0 24px 60px -22px rgba(1,8,18,.9); }
+      [data-composition-id="s3-stock-ads"] .lab {
+        font-weight:800; font-size:30px; letter-spacing:-.01em; color:#ffffff; }
+      [data-composition-id="s3-stock-ads"] .hint {
+        margin-top:6px; font-weight:600; font-size:23px; color:#9cd4ff; }
+      [data-composition-id="s3-stock-ads"] .meter {
+        position:relative; margin-top:22px; height:42px; border-radius:8px;
+        background:rgba(2,14,28,.55); overflow:hidden; }
+      [data-composition-id="s3-stock-ads"] .bar {
+        position:absolute; left:0; top:0; bottom:0; width:100%;
+        transform-origin:0% 50%; border-radius:8px; }
+      [data-composition-id="s3-stock-ads"] .b-blue { background:linear-gradient(90deg,#4f9ee0,#9cd4ff); }
+      [data-composition-id="s3-stock-ads"] .b-flame { background:linear-gradient(90deg,#c9381f,#ff4c32); }
+      [data-composition-id="s3-stock-ads"] .limit {
+        position:absolute; top:-10px; bottom:-10px; width:5px; background:#ff4c32;
+        box-shadow:0 0 18px rgba(255,76,50,.9); }
+      [data-composition-id="s3-stock-ads"] .limit-lab {
+        position:absolute; top:-42px; transform:translateX(-50%); white-space:nowrap;
+        font-weight:800; font-size:20px; letter-spacing:.2em; text-transform:uppercase; color:#ff4c32; }
+      [data-composition-id="s3-stock-ads"] .row { display:flex; align-items:baseline; justify-content:space-between; }
+      [data-composition-id="s3-stock-ads"] .tag {
+        font-weight:800; font-size:21px; letter-spacing:.2em; text-transform:uppercase; color:#7fa6cd; }
+
+      /* ── format overrides (generated) ─────────────────────── */
+      [data-composition-id="s3-stock-ads"] .zone { top: 96px; height: 400px; gap: 20px; left: 50px; right: 50px; }
+      [data-composition-id="s3-stock-ads"] .card { padding: 20px 24px 24px; border-radius: 14px; }
+      [data-composition-id="s3-stock-ads"] .lab { font-size: 25px; }
+      [data-composition-id="s3-stock-ads"] .hint { font-size: 19px; margin-top: 4px; }
+      [data-composition-id="s3-stock-ads"] .meter { height: 32px; margin-top: 15px; }
+      [data-composition-id="s3-stock-ads"] .tag { font-size: 17px; }
+      [data-composition-id="s3-stock-ads"] .limit-lab { font-size: 17px; top: -34px; }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="s3-stock-ads" data-width="1080" data-height="1350" data-duration="4.16">
+      <div class="zone">
+        <div class="card" id="s3-c1">
+          <div class="row"><div class="lab">The right amount of stock</div><div class="tag">Part 03</div></div>
+          <div class="hint">Forecast first, then reorder</div>
+          <div class="meter">
+            <div class="bar b-blue" id="s3-bar1"></div>
+            <div class="limit" id="s3-lim1" style="left:72%"></div>
+          </div>
+        </div>
+        <div class="card" id="s3-c2">
+          <div class="row"><div class="lab">Clear limits for advertising</div><div class="tag">Part 06</div></div>
+          <div class="hint">A ceiling you set before launch</div>
+          <div class="meter">
+            <div class="bar b-flame" id="s3-bar2"></div>
+            <div class="limit" id="s3-lim2" style="left:66%"></div>
+            <div class="limit-lab" id="s3-lim2lab" style="left:66%">Breakeven</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="s3-stock-ads"] ';
+        const SLOT = 4.16;
+        const tl = gsap.timeline({ paused: true });
+
+        // Card one on "order" (local .30), its bar filling through "stock" (1.32).
+        tl.fromTo(S + "#s3-c1", { y: 34, opacity: 0, filter: "blur(10px)" },
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: .42, ease: "power3.out" }, .18);
+        tl.fromTo(S + "#s3-bar1", { scaleX: 0 }, { scaleX: .72, duration: .9, ease: "power2.out" }, .38);
+        tl.fromTo(S + "#s3-lim1", { opacity: 0, scaleY: .4 }, { opacity: 1, scaleY: 1, duration: .26, ease: "power3.out" }, 1.18);
+
+        // Card two on "clear limits" (2.02), its bar stopping at the flame line.
+        tl.fromTo(S + "#s3-c2", { y: 34, opacity: 0, filter: "blur(10px)" },
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: .42, ease: "power3.out" }, 1.86);
+        tl.fromTo(S + "#s3-bar2", { scaleX: 0 }, { scaleX: .66, duration: .95, ease: "power2.out" }, 2.06);
+        tl.fromTo(S + "#s3-lim2", { opacity: 0, scaleY: .4 }, { opacity: 1, scaleY: 1, duration: .26, ease: "power3.out" }, 2.9);
+        tl.fromTo(S + "#s3-lim2lab", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .24, ease: "power2.out" }, 2.98);
+
+        // Both bars keep breathing against their ceilings so the hold is alive.
+        tl.to(S + "#s3-bar1", { scaleX: .695, duration: .55, ease: "sine.inOut", yoyo: true, repeat: 1 }, 1.9);
+        tl.to(S + "#s3-bar2", { scaleX: .645, duration: .5, ease: "sine.inOut", yoyo: true, repeat: 1 }, 3.16);
+
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines["s3-stock-ads"] = tl;
+      })();
+    </script>
+  </body>
+</html>

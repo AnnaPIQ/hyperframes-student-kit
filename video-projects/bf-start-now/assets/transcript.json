@@ -1,0 +1,476 @@
+[
+  {
+    "text": "Once",
+    "start": 0.21,
+    "end": 0.29,
+    "id": "w0"
+  },
+  {
+    "text": "you",
+    "start": 0.29,
+    "end": 0.5,
+    "id": "w1"
+  },
+  {
+    "text": "know",
+    "start": 0.5,
+    "end": 0.79,
+    "id": "w2"
+  },
+  {
+    "text": "these",
+    "start": 0.79,
+    "end": 1.14,
+    "id": "w3"
+  },
+  {
+    "text": "numbers,",
+    "start": 1.15,
+    "end": 1.79,
+    "id": "w4"
+  },
+  {
+    "text": "the",
+    "start": 1.8,
+    "end": 1.98,
+    "id": "w5"
+  },
+  {
+    "text": "rest",
+    "start": 1.98,
+    "end": 2.22,
+    "id": "w6"
+  },
+  {
+    "text": "of",
+    "start": 2.22,
+    "end": 2.33,
+    "id": "w7"
+  },
+  {
+    "text": "the",
+    "start": 2.34,
+    "end": 2.45,
+    "id": "w8"
+  },
+  {
+    "text": "plan",
+    "start": 2.52,
+    "end": 2.76,
+    "id": "w9"
+  },
+  {
+    "text": "becomes",
+    "start": 2.76,
+    "end": 3.19,
+    "id": "w10"
+  },
+  {
+    "text": "much",
+    "start": 3.19,
+    "end": 3.42,
+    "id": "w11"
+  },
+  {
+    "text": "easier.",
+    "start": 3.42,
+    "end": 3.84,
+    "id": "w12"
+  },
+  {
+    "text": "You",
+    "start": 3.84,
+    "end": 4.05,
+    "id": "w13"
+  },
+  {
+    "text": "can",
+    "start": 4.05,
+    "end": 4.22,
+    "id": "w14"
+  },
+  {
+    "text": "choose",
+    "start": 4.22,
+    "end": 4.61,
+    "id": "w15"
+  },
+  {
+    "text": "an",
+    "start": 4.61,
+    "end": 4.73,
+    "id": "w16"
+  },
+  {
+    "text": "offer",
+    "start": 4.73,
+    "end": 5.06,
+    "id": "w17"
+  },
+  {
+    "text": "your",
+    "start": 5.07,
+    "end": 5.33,
+    "id": "w18"
+  },
+  {
+    "text": "margin",
+    "start": 5.33,
+    "end": 5.72,
+    "id": "w19"
+  },
+  {
+    "text": "can",
+    "start": 5.72,
+    "end": 5.89,
+    "id": "w20"
+  },
+  {
+    "text": "actually",
+    "start": 5.9,
+    "end": 6.44,
+    "id": "w21"
+  },
+  {
+    "text": "support.",
+    "start": 6.44,
+    "end": 6.96,
+    "id": "w22"
+  },
+  {
+    "text": "You",
+    "start": 6.96,
+    "end": 7.17,
+    "id": "w23"
+  },
+  {
+    "text": "can",
+    "start": 7.17,
+    "end": 7.26,
+    "id": "w24"
+  },
+  {
+    "text": "order",
+    "start": 7.26,
+    "end": 7.5,
+    "id": "w25"
+  },
+  {
+    "text": "the",
+    "start": 7.5,
+    "end": 7.64,
+    "id": "w26"
+  },
+  {
+    "text": "right",
+    "start": 7.65,
+    "end": 7.87,
+    "id": "w27"
+  },
+  {
+    "text": "amount",
+    "start": 7.88,
+    "end": 8.14,
+    "id": "w28"
+  },
+  {
+    "text": "of",
+    "start": 8.17,
+    "end": 8.28,
+    "id": "w29"
+  },
+  {
+    "text": "stock",
+    "start": 8.28,
+    "end": 8.54,
+    "id": "w30"
+  },
+  {
+    "text": "and",
+    "start": 8.68,
+    "end": 8.77,
+    "id": "w31"
+  },
+  {
+    "text": "set",
+    "start": 8.77,
+    "end": 8.98,
+    "id": "w32"
+  },
+  {
+    "text": "clear",
+    "start": 8.98,
+    "end": 9.33,
+    "id": "w33"
+  },
+  {
+    "text": "limits",
+    "start": 9.33,
+    "end": 9.77,
+    "id": "w34"
+  },
+  {
+    "text": "for",
+    "start": 9.77,
+    "end": 9.94,
+    "id": "w35"
+  },
+  {
+    "text": "your",
+    "start": 10.02,
+    "end": 10.27,
+    "id": "w36"
+  },
+  {
+    "text": "advertising.",
+    "start": 10.27,
+    "end": 11.12,
+    "id": "w37"
+  },
+  {
+    "text": "And",
+    "start": 11.12,
+    "end": 11.33,
+    "id": "w38"
+  },
+  {
+    "text": "that's",
+    "start": 11.33,
+    "end": 11.68,
+    "id": "w39"
+  },
+  {
+    "text": "where",
+    "start": 11.68,
+    "end": 11.99,
+    "id": "w40"
+  },
+  {
+    "text": "I'd",
+    "start": 11.99,
+    "end": 12.17,
+    "id": "w41"
+  },
+  {
+    "text": "start",
+    "start": 12.17,
+    "end": 12.48,
+    "id": "w42"
+  },
+  {
+    "text": "now,",
+    "start": 12.48,
+    "end": 12.83,
+    "id": "w43"
+  },
+  {
+    "text": "before",
+    "start": 12.84,
+    "end": 13.16,
+    "id": "w44"
+  },
+  {
+    "text": "the",
+    "start": 13.16,
+    "end": 13.32,
+    "id": "w45"
+  },
+  {
+    "text": "campaigns",
+    "start": 13.32,
+    "end": 13.84,
+    "id": "w46"
+  },
+  {
+    "text": "just",
+    "start": 13.84,
+    "end": 14.08,
+    "id": "w47"
+  },
+  {
+    "text": "take",
+    "start": 14.08,
+    "end": 14.4,
+    "id": "w48"
+  },
+  {
+    "text": "over",
+    "start": 14.4,
+    "end": 14.56,
+    "id": "w49"
+  },
+  {
+    "text": "and",
+    "start": 14.56,
+    "end": 14.87,
+    "id": "w50"
+  },
+  {
+    "text": "rip",
+    "start": 14.87,
+    "end": 15.18,
+    "id": "w51"
+  },
+  {
+    "text": "all",
+    "start": 15.18,
+    "end": 15.49,
+    "id": "w52"
+  },
+  {
+    "text": "the",
+    "start": 15.49,
+    "end": 15.68,
+    "id": "w53"
+  },
+  {
+    "text": "profit",
+    "start": 15.68,
+    "end": 16.17,
+    "id": "w54"
+  },
+  {
+    "text": "out",
+    "start": 16.17,
+    "end": 16.4,
+    "id": "w55"
+  },
+  {
+    "text": "of",
+    "start": 16.4,
+    "end": 16.56,
+    "id": "w56"
+  },
+  {
+    "text": "your",
+    "start": 16.56,
+    "end": 16.86,
+    "id": "w57"
+  },
+  {
+    "text": "Black",
+    "start": 17,
+    "end": 17.29,
+    "id": "w58"
+  },
+  {
+    "text": "Friday.",
+    "start": 17.29,
+    "end": 18.08,
+    "id": "w59"
+  },
+  {
+    "text": "We've",
+    "start": 18.24,
+    "end": 18.47,
+    "id": "w60"
+  },
+  {
+    "text": "put",
+    "start": 18.47,
+    "end": 18.71,
+    "id": "w61"
+  },
+  {
+    "text": "together",
+    "start": 18.71,
+    "end": 19.34,
+    "id": "w62"
+  },
+  {
+    "text": "a",
+    "start": 19.34,
+    "end": 19.42,
+    "id": "w63"
+  },
+  {
+    "text": "full",
+    "start": 19.42,
+    "end": 19.66,
+    "id": "w64"
+  },
+  {
+    "text": "process",
+    "start": 19.8,
+    "end": 20.32,
+    "id": "w65"
+  },
+  {
+    "text": "into",
+    "start": 20.32,
+    "end": 20.81,
+    "id": "w66"
+  },
+  {
+    "text": "a",
+    "start": 20.81,
+    "end": 20.93,
+    "id": "w67"
+  },
+  {
+    "text": "free",
+    "start": 20.93,
+    "end": 21.43,
+    "id": "w68"
+  },
+  {
+    "text": "Black",
+    "start": 21.43,
+    "end": 21.87,
+    "id": "w69"
+  },
+  {
+    "text": "Friday",
+    "start": 22.18,
+    "end": 22.41,
+    "id": "w70"
+  },
+  {
+    "text": "workbook.",
+    "start": 22.41,
+    "end": 23.12,
+    "id": "w71"
+  },
+  {
+    "text": "If",
+    "start": 23.12,
+    "end": 23.2,
+    "id": "w72"
+  },
+  {
+    "text": "you're",
+    "start": 23.33,
+    "end": 23.46,
+    "id": "w73"
+  },
+  {
+    "text": "interested,",
+    "start": 23.46,
+    "end": 23.98,
+    "id": "w74"
+  },
+  {
+    "text": "the",
+    "start": 23.98,
+    "end": 24.11,
+    "id": "w75"
+  },
+  {
+    "text": "link",
+    "start": 24.11,
+    "end": 24.28,
+    "id": "w76"
+  },
+  {
+    "text": "is",
+    "start": 24.28,
+    "end": 24.36,
+    "id": "w77"
+  },
+  {
+    "text": "below.",
+    "start": 24.36,
+    "end": 24.7,
+    "id": "w78"
+  }
+]

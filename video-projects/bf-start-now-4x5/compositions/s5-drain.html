@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>s5-drain</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family:"Rethink Sans"; font-style:normal; font-weight:400 800; font-display:block;
+        src:url(assets/fonts/RethinkSans.woff2) format("woff2"); }
+      @font-face { font-family:"Hedvig Letters Serif"; font-style:normal; font-weight:400; font-display:block;
+        src:url(assets/fonts/HedvigLettersSerif.woff2) format("woff2"); }
+      [data-composition-id="s5-drain"] * { margin:0; padding:0; box-sizing:border-box; }
+      [data-composition-id="s5-drain"] { position:absolute; inset:0; overflow:hidden;
+        font-family:"Rethink Sans", system-ui, sans-serif; }
+      [data-composition-id="s5-drain"] .zone {
+        position:absolute; left:70px; right:70px; top:190px; height:660px;
+        display:flex; flex-direction:column; justify-content:center; gap:26px; }
+      [data-composition-id="s5-drain"] .eyebrow {
+        font-weight:700; font-size:25px; letter-spacing:.3em; text-transform:uppercase; color:#9cd4ff; }
+      [data-composition-id="s5-drain"] .track {
+        position:relative; height:132px; border-radius:14px; overflow:hidden;
+        background:rgba(2,14,28,.5); border:2px solid rgba(156,212,255,.26); }
+      [data-composition-id="s5-drain"] .keep {
+        position:absolute; inset:0; transform-origin:0% 50%;
+        background:linear-gradient(90deg,#4f9ee0,#9cd4ff); }
+      /* Labels sit OUTSIDE the scaling bars — a scaleX parent squashes its text. */
+      [data-composition-id="s5-drain"] .keep-lab {
+        position:absolute; left:30px; top:50%; transform:translateY(-50%); z-index:3;
+        font-weight:800; font-size:27px; letter-spacing:.18em; text-transform:uppercase; color:#06284c; }
+      [data-composition-id="s5-drain"] .spend {
+        position:absolute; right:0; top:0; bottom:0; width:100%; transform-origin:100% 50%;
+        background:linear-gradient(90deg,#c9381f,#ff4c32); }
+      [data-composition-id="s5-drain"] .spend-lab {
+        position:absolute; right:30px; top:50%; transform:translateY(-50%); z-index:3; opacity:0;
+        font-weight:800; font-size:27px; letter-spacing:.18em; text-transform:uppercase; color:#ffffff; }
+      [data-composition-id="s5-drain"] .left {
+        display:flex; align-items:baseline; gap:18px; }
+      [data-composition-id="s5-drain"] .left .n {
+        font-family:"Hedvig Letters Serif", Georgia, serif; font-size:104px; line-height:1;
+        color:#ffffff; font-variant-numeric:tabular-nums; }
+      [data-composition-id="s5-drain"] .left .k {
+        font-weight:800; font-size:24px; letter-spacing:.2em; text-transform:uppercase; color:#9cd4ff; }
+      [data-composition-id="s5-drain"] .warn {
+        align-self:flex-start; display:inline-flex; align-items:center; gap:14px;
+        padding:15px 28px; border-radius:999px; background:#ff4c32; color:#fff;
+        font-weight:800; font-size:25px; letter-spacing:.16em; text-transform:uppercase;
+        box-shadow:0 18px 48px -14px rgba(255,76,50,.95); }
+
+      /* ── format overrides (generated) ─────────────────────── */
+      [data-composition-id="s5-drain"] .zone { top: 96px; height: 400px; gap: 18px; left: 50px; right: 50px; }
+      [data-composition-id="s5-drain"] .eyebrow { font-size: 21px; }
+      [data-composition-id="s5-drain"] .track { height: 98px; }
+      [data-composition-id="s5-drain"] .keep-lab,
+      [data-composition-id="s5-drain"] .spend-lab { font-size: 22px; }
+      [data-composition-id="s5-drain"] .left .n { font-size: 76px; }
+      [data-composition-id="s5-drain"] .left .k { font-size: 20px; }
+      [data-composition-id="s5-drain"] .warn { padding: 12px 22px; font-size: 21px; }
+    </style>
+  </head>
+  <body>
+    <div data-composition-id="s5-drain" data-width="1080" data-height="1350" data-duration="4.16">
+      <div class="zone">
+        <div class="eyebrow" id="s5-eye">Without a limit</div>
+        <div class="track" id="s5-track">
+          <div class="keep" id="s5-keep"></div>
+          <div class="spend" id="s5-spend"></div>
+          <div class="keep-lab" id="s5-keeplab">Profit</div>
+          <div class="spend-lab" id="s5-spendlab">Ad spend</div>
+        </div>
+        <div class="left"><div class="n" id="s5-n">$59.71</div><div class="k">per order</div></div>
+        <div class="warn" id="s5-warn">Gone by Black Friday</div>
+      </div>
+    </div>
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const S = '[data-composition-id="s5-drain"] ';
+        const SLOT = 4.16;
+        const tl = gsap.timeline({ paused: true });
+
+        tl.set(S + "#s5-spend", { scaleX: 0 }, 0);
+
+        tl.fromTo(S + "#s5-eye", { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: .26, ease: "power2.out" }, .1);
+        tl.fromTo(S + "#s5-track", { y: 28, opacity: 0, scaleY: .8 },
+          { y: 0, opacity: 1, scaleY: 1, duration: .4, ease: "power3.out" }, .18);
+        tl.fromTo(S + ".left", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: .3, ease: "power2.out" }, .42);
+
+        // "rip" is at local .79, "profit" at 1.60, "out" at 2.09 — the ad-spend
+        // block eats the bar across exactly that phrase.
+        tl.to(S + "#s5-spend", { scaleX: .82, duration: 1.5, ease: "power2.in" }, .8);
+        tl.to(S + "#s5-keep", { scaleX: .17, duration: 1.5, ease: "power2.in" }, .8);
+        tl.to(S + "#s5-keeplab", { opacity: 0, duration: .5, ease: "power2.in" }, 1.25);
+        tl.fromTo(S + "#s5-spendlab", { opacity: 0 }, { opacity: 1, duration: .24, ease: "power2.out" }, 1.15);
+        // The number is the workbook's real figure. It is not replaced with an
+        // invented one — it simply gets swallowed as the spend bar takes over.
+        tl.to(S + ".left", { opacity: .22, filter: "blur(3px)", duration: .8, ease: "power2.in" }, 1.5);
+
+        // "Black Friday." lands at local 2.92 — the stamp follows the drain.
+        tl.fromTo(S + "#s5-warn",
+          { scale: .82, opacity: 0, rotate: -3 },
+          { scale: 1, opacity: 1, rotate: 0, duration: .34, ease: "back.out(2.2)" }, 2.44);
+        tl.to(S + "#s5-warn", { scale: 1.05, duration: .46, ease: "sine.inOut", yoyo: true, repeat: 2 }, 2.84);
+        tl.to(S + "#s5-track", { x: 5, duration: .07, ease: "power2.inOut", yoyo: true, repeat: 5 }, 2.44);
+
+        tl.to({}, { duration: SLOT }, 0);
+        window.__timelines["s5-drain"] = tl;
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,80 @@
+/* 4:5 — 1080x1350. The frame loses 570px of height, so the graphics zone and the
+   caption band both move up and tighten. Timing is untouched. */
+
+/* == index == */
+.layer { height: 1350px; }
+#face-wrapper { z-index: 5; }
+#seam { height: 170px; }
+#grade { background: radial-gradient(78% 74% at 50% 42%, rgba(2,14,28,0) 46%, rgba(2,14,28,.62) 100%); }
+
+/* == ambient-bg == */
+[data-composition-id="ambient-bg"] .grid {
+  -webkit-mask-image: radial-gradient(70% 46% at 50% 26%, rgba(0,0,0,.9) 0%, rgba(0,0,0,0) 78%);
+  mask-image: radial-gradient(70% 46% at 50% 26%, rgba(0,0,0,.9) 0%, rgba(0,0,0,0) 78%);
+}
+[data-composition-id="ambient-bg"] .d:nth-of-type(5) { display: none; }
+
+/* == captions == */
+[data-composition-id="captions"] .band { top: 500px; height: 170px; left: 50px; right: 50px; }
+[data-composition-id="captions"] .grp { font-size: 54px; }
+
+/* == s1-numbers == */
+[data-composition-id="s1-numbers"] .zone { top: 96px; height: 400px; gap: 16px; left: 50px; right: 50px; }
+[data-composition-id="s1-numbers"] .eyebrow { font-size: 22px; }
+[data-composition-id="s1-numbers"] .aov { font-size: 23px; }
+[data-composition-id="s1-numbers"] .chip { padding: 11px 17px; font-size: 21px; }
+[data-composition-id="s1-numbers"] .chips { gap: 11px; }
+[data-composition-id="s1-numbers"] .box { padding: 18px 40px; border-width: 4px; }
+[data-composition-id="s1-numbers"] .box .v { font-size: 96px; }
+[data-composition-id="s1-numbers"] .box .k { font-size: 19px; margin-top: 8px; }
+
+/* == s2-offer == */
+[data-composition-id="s2-offer"] .zone { top: 96px; height: 400px; gap: 12px; }
+[data-composition-id="s2-offer"] .eyebrow { font-size: 22px; }
+[data-composition-id="s2-offer"] .dial { width: 420px; height: 226px; }
+[data-composition-id="s2-offer"] .cap { top: 160px; }
+[data-composition-id="s2-offer"] .cap .lab { font-size: 34px; }
+[data-composition-id="s2-offer"] .ceil { padding: 11px 21px; font-size: 21px; }
+[data-composition-id="s2-offer"] .sub { font-size: 24px; max-width: 640px; }
+
+/* == s3-stock-ads == */
+[data-composition-id="s3-stock-ads"] .zone { top: 96px; height: 400px; gap: 20px; left: 50px; right: 50px; }
+[data-composition-id="s3-stock-ads"] .card { padding: 20px 24px 24px; border-radius: 14px; }
+[data-composition-id="s3-stock-ads"] .lab { font-size: 25px; }
+[data-composition-id="s3-stock-ads"] .hint { font-size: 19px; margin-top: 4px; }
+[data-composition-id="s3-stock-ads"] .meter { height: 32px; margin-top: 15px; }
+[data-composition-id="s3-stock-ads"] .tag { font-size: 17px; }
+[data-composition-id="s3-stock-ads"] .limit-lab { font-size: 17px; top: -34px; }
+
+/* == s4-start-now == */
+[data-composition-id="s4-start-now"] .scrim { height: 560px; }
+[data-composition-id="s4-start-now"] .zone { top: 132px; height: 320px; gap: 16px; }
+[data-composition-id="s4-start-now"] .slam { font-size: 112px; }
+[data-composition-id="s4-start-now"] .rule { width: 260px; height: 7px; }
+[data-composition-id="s4-start-now"] .sub { font-size: 24px; }
+[data-composition-id="s4-start-now"] .strip { top: 84px; left: 70px; right: 70px; }
+
+/* == s5-drain == */
+[data-composition-id="s5-drain"] .zone { top: 96px; height: 400px; gap: 18px; left: 50px; right: 50px; }
+[data-composition-id="s5-drain"] .eyebrow { font-size: 21px; }
+[data-composition-id="s5-drain"] .track { height: 98px; }
+[data-composition-id="s5-drain"] .keep-lab,
+[data-composition-id="s5-drain"] .spend-lab { font-size: 22px; }
+[data-composition-id="s5-drain"] .left .n { font-size: 76px; }
+[data-composition-id="s5-drain"] .left .k { font-size: 20px; }
+[data-composition-id="s5-drain"] .warn { padding: 12px 22px; font-size: 21px; }
+
+/* == s6-workbook == */
+[data-composition-id="s6-workbook"] .zone { top: 76px; height: 430px; }
+[data-composition-id="s6-workbook"] .stack { top: 74px; }
+[data-composition-id="s6-workbook"] .cover { width: 230px; height: 298px; margin: -149px 0 0 -115px; top: 132px; }
+[data-composition-id="s6-workbook"] .sheet { width: 204px; height: 264px; margin: -132px 0 0 -102px; top: 132px; }
+[data-composition-id="s6-workbook"] .free { font-size: 21px; padding: 11px 24px; }
+/* The title must clear the bottom of the fanned sheets, not sit on them. */
+[data-composition-id="s6-workbook"] .title { top: 378px; font-size: 44px; }
+[data-composition-id="s6-workbook"] .meta { top: 448px; font-size: 18px; }
+
+/* == s7-cta == */
+[data-composition-id="s7-cta"] .zone { top: 96px; height: 400px; gap: 24px; }
+[data-composition-id="s7-cta"] .logo { width: 250px; }
+[data-composition-id="s7-cta"] .pill { padding: 19px 40px; font-size: 34px; }
