@@ -31,7 +31,7 @@
         --pad: 72px;          /* side safe-area gutter            */
         --logo-w: 200px;      /* persistent top-left mark         */
         --safe-bottom: 230px; /* reserved subtitle band (12% of height) */
-        --row-fs: 34px;
+        --q-fs: 38px;         /* question copy                    */
         --title-fs: 112px;
       }
 
@@ -56,101 +56,38 @@
         display: flex; flex-direction: column; justify-content: center; }
       .eyebrow { font-size: 27px; font-weight: 600; letter-spacing: .30em;
         text-transform: uppercase; color: var(--brand-blue-tint); }
-      .rule { width: 104px; height: 6px; background: var(--brand-flame);
-        border-radius: 3px; transform-origin: left center; margin: 22px 0 34px; }
 
-      /* ---- S2/S3 lower panel over Sean, sitting on top of the band ----------- */
+      /* ---- S2 · the three questions -----------------------------------------
+         A lower panel over Sean, sitting on top of the subtitle band. It is
+         bottom-anchored, so each question grows it UPWARD as it lands — it never
+         reserves empty height for a question that has not been asked yet. */
       .panel { position: absolute; left: var(--pad); right: var(--pad);
         bottom: calc(var(--safe-bottom) + 20px); z-index: 50; }
       .panel-inner { background: rgba(6,40,76,.94); border: 1px solid var(--brand-border);
-        border-radius: 34px; padding: 36px 42px 32px;
+        border-radius: 34px; padding: 34px 40px 30px;
         box-shadow: 0 40px 110px -30px rgba(0,0,0,.85); }
       .panel .eyebrow { font-size: 25px; letter-spacing: .26em; }
       .panel-rule { width: 84px; height: 5px; background: var(--brand-flame);
-        border-radius: 3px; transform-origin: left center; margin: 14px 0 20px; }
+        border-radius: 3px; transform-origin: left center; margin: 14px 0 18px; }
 
-      .row { display: flex; justify-content: space-between; align-items: baseline;
-        font-size: var(--row-fs); font-weight: 500; padding: 6px 0; color: var(--brand-text-dim); }
-      .row .v { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--brand-sky); }
-      .row.top { color: var(--brand-white); }
-      .row.top .v { color: var(--brand-white); }
-      .divider { height: 1px; background: var(--brand-border); margin: 12px 0 4px; transform-origin: left center; }
-      .result { display: flex; justify-content: space-between; align-items: baseline; padding-top: 12px; }
-      .result .l { font-size: 31px; font-weight: 700; letter-spacing: -.01em; }
-      .result .v { font-size: 58px; font-weight: 800; letter-spacing: -.03em;
-        color: var(--brand-flame); font-variant-numeric: tabular-nums; }
-      .result .pct { font-size: 28px; font-weight: 700; color: var(--brand-blue-tint); margin-left: 14px; }
-
-      /* ---- S3 count-up tiles -------------------------------------------------- */
-      .tiles { display: flex; gap: 22px; }
-      .tile { flex: 1; background: rgba(16,61,111,.62); border: 1px solid var(--brand-border);
-        border-radius: 24px; padding: 24px 22px 22px; }
-      .tile .k { font-size: 22px; font-weight: 600; letter-spacing: .16em;
-        text-transform: uppercase; color: var(--brand-blue-tint); line-height: 1.25; min-height: 50px; }
-      .tile .n { font-size: 66px; font-weight: 800; letter-spacing: -.04em;
-        margin-top: 10px; font-variant-numeric: tabular-nums; }
-      .tile.hot .n { color: var(--brand-flame); }
-
-      /* ---- S4 contrast card --------------------------------------------------- */
-      #card-contrast h2 { font-size: 88px; font-weight: 800; line-height: .98;
-        letter-spacing: -.035em; margin-bottom: 44px; }
-      #card-contrast h2 .em { font-family: 'Hedvig Letters Serif', Georgia, serif;
-        font-style: italic; font-weight: 400; color: var(--brand-blue-tint); letter-spacing: -.01em; }
-      .cols { display: flex; gap: 24px; }
-      .col { flex: 1; border-radius: 28px; padding: 34px 30px 30px;
-        background: rgba(16,61,111,.55); border: 1px solid var(--brand-border); }
-      .col.hot { background: rgba(255,76,50,.13); border-color: rgba(255,76,50,.45); }
-      .col .h { font-size: 27px; font-weight: 700; letter-spacing: .16em;
-        text-transform: uppercase; color: var(--brand-blue-tint); }
-      .col.hot .h { color: var(--brand-flame); }
-      .col .big { font-size: 72px; font-weight: 800; letter-spacing: -.04em; margin: 14px 0 22px;
-        font-variant-numeric: tabular-nums; }
-      .col .kv { display: flex; justify-content: space-between; align-items: baseline;
-        font-size: 30px; font-weight: 500; color: var(--brand-text-dim); padding: 9px 0; }
-      .col .kv b { font-size: 41px; font-weight: 800; color: var(--brand-sky);
-        font-variant-numeric: tabular-nums; }
-      .col.hot .kv b { color: var(--brand-flame); }
-      #contrast-foot { margin-top: 46px; font-size: 40px; font-weight: 700; letter-spacing: -.01em;
-        color: var(--brand-white); display: flex; align-items: center; gap: 16px; }
-      #contrast-foot i { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
-        font-weight: 400; color: var(--brand-flame); font-size: 46px; }
-
-      /* ---- S6 checklist ------------------------------------------------------
-         Overlaid on the workbook b-roll, so the opaque card background is
-         replaced by a navy scrim — the footage still reads underneath. */
-      #card-checklist { justify-content: flex-start; padding-top: 480px;
-        background: linear-gradient(180deg,
-        rgba(6,40,76,.58) 0%, rgba(6,40,76,.42) 40%,
-        rgba(6,40,76,.50) 70%, rgba(6,40,76,.66) 100%); }
-      #checklist-panel { background: rgba(6,40,76,.95);
-        border: 1px solid var(--brand-border); border-radius: 34px;
-        padding: 40px 38px 34px;
-        box-shadow: 0 44px 120px -30px rgba(0,0,0,.9); }
-      #card-checklist h2 { font-size: 82px; font-weight: 800; line-height: 1.0;
-        letter-spacing: -.035em; margin-bottom: 40px; }
-      #card-checklist h2 .em { font-family: 'Hedvig Letters Serif', Georgia, serif;
-        font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
-      .item { overflow: hidden; }
-      .item-in { display: flex; align-items: center; gap: 24px; padding: 19px 0; }
-      .tick { flex: none; width: 68px; height: 68px; border-radius: 18px;
+      .q-row { overflow: hidden; }
+      .q-in { display: flex; align-items: flex-start; gap: 22px; padding: 13px 0; }
+      .q-n { flex: none; width: 56px; height: 56px; border-radius: 16px;
         background: rgba(156,212,255,.14); border: 1px solid var(--brand-border);
-        display: flex; align-items: center; justify-content: center; }
-      .tick svg { width: 35px; height: 35px; }
-      .tick path { stroke: var(--brand-blue-tint); stroke-width: 3.4; fill: none;
-        stroke-linecap: round; stroke-linejoin: round; }
-      .item .t { font-size: 42px; font-weight: 600; letter-spacing: -.015em; line-height: 1.14; }
-      .item.hot .tick { background: rgba(255,76,50,.18); border-color: rgba(255,76,50,.5); }
-      .item.hot .tick path { stroke: var(--brand-flame); }
-      .item.hot .t { font-weight: 800; color: var(--brand-flame); }
+        display: flex; align-items: center; justify-content: center;
+        font-size: 28px; font-weight: 800; color: var(--brand-blue-tint);
+        font-variant-numeric: tabular-nums; }
+      .q-t { font-size: var(--q-fs); font-weight: 600; line-height: 1.18;
+        letter-spacing: -.015em; padding-top: 6px; }
 
       /* ---- B-roll: the EcomIQ workbook film ----------------------------------
-         Plain non-`clip` wrappers (the <video> inside carries the timing, rule 2),
+         Plain non-`clip` wrapper (the <video> inside carries the timing, rule 2),
          so the fades live on the wrapper and never touch the video box (rule 9). */
       .broll-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 25; }
       .broll-wrap video { position: absolute; inset: 0; width: 100%; height: 100%;
         object-fit: cover; }
 
-      /* ---- S10 end card -------------------------------------------------------- */
+      /* ---- S4 end card -------------------------------------------------------- */
       #endcard { z-index: 70; align-items: center; text-align: center; }
       #ec-logo { width: 420px; height: auto; margin-bottom: 54px; }
       #ec-eyebrow { font-size: 27px; font-weight: 600; letter-spacing: .30em;
@@ -179,11 +116,13 @@
          out from between the phrases, so the A-roll runs 35.52s. Every beat
          below is on that tightened timeline.
 
+         Stripped back on review to: Sean, the three questions, the workbook
+         b-roll on the closing line, and the end card. The cost stack, count-up
+         tiles, discount contrast and the 4-item checklist were all cut, so no
+         workbook figures appear on screen any more.
+
          The bottom --safe-bottom band is deliberately kept empty for subtitles
          to be added later — no element is drawn inside it in any scene.
-
-         All on-screen figures are the worked example from Part 01 of
-         "The Black Friday Profit Plan" workbook — nothing invented.
          ===================================================================== -->
     <div id="root"
          data-composition-id="ecomiq-black-friday"
@@ -207,111 +146,36 @@
       <audio id="music" src="assets/music-bed-placeholder.m4a"
              data-start="0" data-duration="39" data-track-index="3"></audio>
 
-      <!-- S1 · 0.00–5.12 · Sean, hook. No overlay — the band below stays clear. -->
-
-      <!-- S2 · 5.12–7.85 · Q1 "how much do you want to make from an order?" -->
-      <div id="panel-stack" class="panel clip" data-start="5.12" data-duration="2.73" data-track-index="5">
-        <div class="panel-inner" id="stack-inner">
-        <div class="eyebrow">What you actually keep</div>
-        <div class="panel-rule"></div>
-        <div class="row top"><span>Order value</span><span class="v">$114.70</span></div>
-        <div class="row"><span>Discounts &amp; refunds</span><span class="v">&minus;$4.59</span></div>
-        <div class="row"><span>Landed product cost</span><span class="v">&minus;$34.00</span></div>
-        <div class="row"><span>Fulfilment</span><span class="v">&minus;$4.50</span></div>
-        <div class="row"><span>Delivery</span><span class="v">&minus;$8.60</span></div>
-        <div class="row"><span>Payment charges</span><span class="v">&minus;$3.30</span></div>
-        <div class="divider"></div>
-        <div class="result">
-          <span class="l">Contribution</span>
-          <span><span class="v" id="stack-num">$59.71</span><span class="pct">52.1%</span></span>
-        </div>
-        </div>
-      </div>
-
-      <!-- S3 · 7.85–10.40 · Q2 "how much can you afford to spend?" -->
-      <div id="panel-roas" class="panel clip" data-start="7.85" data-duration="2.55" data-track-index="6">
-        <div class="panel-inner" id="roas-inner">
-        <div class="eyebrow">What an order can fund</div>
-        <div class="panel-rule"></div>
-        <div class="tiles">
-          <div class="tile">
-            <div class="k">Most you can pay<br />per order</div>
-            <div class="n" id="cu-cac">$0.00</div>
-          </div>
-          <div class="tile hot">
-            <div class="k">Breakeven<br />ROAS</div>
-            <div class="n" id="cu-roas">0.00&times;</div>
-          </div>
-        </div>
+      <!-- S2 · 5.12–14.90 · the three questions, one landing as Sean asks it. -->
+      <div id="panel-q" class="panel clip" data-start="5.12" data-duration="9.78" data-track-index="4">
+        <div class="panel-inner" id="q-inner">
+          <div class="eyebrow">Ask yourself</div>
+          <div class="panel-rule"></div>
+          <div class="q-row" id="q1"><div class="q-in">
+            <div class="q-n">1</div>
+            <div class="q-t">How much do you want to make from an order?</div>
+          </div></div>
+          <div class="q-row" id="q2"><div class="q-in">
+            <div class="q-n">2</div>
+            <div class="q-t">How much can you afford to spend to get that order?</div>
+          </div></div>
+          <div class="q-row" id="q3"><div class="q-in">
+            <div class="q-n">3</div>
+            <div class="q-t">How far can you discount before that sale stops being worthwhile?</div>
+          </div></div>
         </div>
       </div>
 
-      <!-- S4 · 10.43–14.78 · Q3 "how far can you discount?" -->
-      <div id="card-contrast" class="card clip" data-start="10.43" data-duration="4.35" data-track-index="7">
-        <div class="eyebrow">Question three</div>
-        <div class="rule"></div>
-        <h2>How far can you <span class="em">discount</span>?</h2>
-        <div class="cols">
-          <div class="col" id="col-full">
-            <div class="h">Full price</div>
-            <div class="big">$114.70</div>
-            <div class="kv"><span>You keep</span><b>$59.71</b></div>
-            <div class="kv"><span>Breakeven ROAS</span><b>1.92&times;</b></div>
-          </div>
-          <div class="col hot" id="col-off">
-            <div class="h">25% off</div>
-            <div class="big">$86.03</div>
-            <div class="kv"><span>You keep</span><b>$33.00</b></div>
-            <div class="kv"><span>Breakeven ROAS</span><b>2.61&times;</b></div>
-          </div>
-        </div>
-        <div id="contrast-foot"><i>1.81&times;</i><span>the units, just to stand still.</span></div>
-      </div>
-
-      <!-- S5 · 18.88–26.36 · workbook b-roll, slot A, under the checklist.
-           Beats: 8/32/19, calendar, spreadsheets. The worksheets deck was cut —
-           it is near-static and read as dead screen at 15-17s, so Sean now holds
-           camera through "…is much easier" instead. -->
-      <div id="broll-a-wrap" class="broll-wrap">
-        <video id="broll-a" src="assets/broll-a-916.mp4" muted
-               data-start="18.88" data-duration="7.48" data-track-index="8"></video>
-      </div>
-
-      <!-- S6 · 18.88–26.28 · the four-item plan -->
-      <div id="card-checklist" class="card clip" data-start="18.88" data-duration="7.4" data-track-index="9">
-        <div id="checklist-panel">
-        <div class="eyebrow">Once you know your numbers</div>
-        <div class="rule"></div>
-        <h2>The rest gets <span class="em">easy</span>.</h2>
-        <div class="item" id="ck1"><div class="item-in">
-          <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.6" /></svg></div>
-          <div class="t">Choose an offer your margin supports</div>
-        </div></div>
-        <div class="item" id="ck2"><div class="item-in">
-          <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.6" /></svg></div>
-          <div class="t">Order the right amount of stock</div>
-        </div></div>
-        <div class="item" id="ck3"><div class="item-in">
-          <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.6" /></svg></div>
-          <div class="t">Set clear advertising limits</div>
-        </div></div>
-        <div class="item hot" id="ck4"><div class="item-in">
-          <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5.2 5.2L20 6.6" /></svg></div>
-          <div class="t">Stop guessing</div>
-        </div></div>
-        </div>
-      </div>
-
-      <!-- S8 · 30.42–34.40 · workbook b-roll, slot B: the cover itself, under
+      <!-- S3 · 30.42–34.40 · workbook b-roll: the cover itself, under
            "We've put the full process into a free Black Friday workbook." -->
       <div id="broll-b-wrap" class="broll-wrap">
         <video id="broll-b" src="assets/broll-b-916.mp4" muted
-               data-start="30.42" data-duration="3.98" data-track-index="10"></video>
+               data-start="30.42" data-duration="3.98" data-track-index="5"></video>
       </div>
 
-      <!-- S10 · 34.40–39.00 · end card. Lands on "Link is below" (34.55),
+      <!-- S4 · 34.40–39.00 · end card. Lands on "Link is below" (34.55),
            Sean's audio finishes over it at 35.36, then it holds to the end. -->
-      <div id="endcard" class="card clip" data-start="34.4" data-duration="4.6" data-track-index="12">
+      <div id="endcard" class="card clip" data-start="34.4" data-duration="4.6" data-track-index="6">
         <div id="ec-bloom"></div>
         <img id="ec-logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
         <div id="ec-eyebrow">Free workbook</div>
@@ -335,92 +199,31 @@
       gsap.set('#music', { volume: 0.16 });
       tl.to('#music', { volume: 0.42, duration: 0.9, ease: 'sine.out' }, 35.20);
 
-      /* ---- S2 · cost stack --------------------------------------------------
-         Rows stagger down the stack, then the contribution locks in flame. */
-      tl.fromTo('#stack-inner', { opacity: 0, y: 60 },
+      /* ---- S2 · the three questions -----------------------------------------
+         Each row animates its height from 0, so the bottom-anchored panel grows
+         upward question by question instead of reserving empty space. */
+      tl.fromTo('#q-inner', { opacity: 0, y: 60 },
                { opacity: 1, y: 0, duration: .42, ease: 'power3.out' }, 5.12)
-        .fromTo('#panel-stack .panel-rule', { scaleX: 0 },
-               { scaleX: 1, duration: .38, ease: 'power3.out' }, 5.28)
-        .fromTo('#panel-stack .row', { opacity: 0, x: -26 },
-               { opacity: 1, x: 0, duration: .28, stagger: .095, ease: 'power2.out' }, 5.38)
-        .fromTo('#panel-stack .divider', { scaleX: 0 },
-               { scaleX: 1, duration: .32, ease: 'power2.out' }, 6.06)
-        .fromTo('#panel-stack .result', { opacity: 0, y: 18 },
-               { opacity: 1, y: 0, duration: .38, ease: 'back.out(1.6)' }, 6.18)
-        .fromTo('#stack-num', { scale: .86 },
-               { scale: 1, duration: .42, ease: 'back.out(2.2)' }, 6.22)
-        .to('#stack-inner', { opacity: 0, y: -26, duration: .26, ease: 'power2.in' }, 7.59)
-        .set('#stack-inner', { opacity: 0 }, 7.85);
+        .fromTo('#panel-q .panel-rule', { scaleX: 0 },
+               { scaleX: 1, duration: .38, ease: 'power3.out' }, 5.28);
+      [['#q1', 5.12], ['#q2', 7.85], ['#q3', 10.43]].forEach(([sel, t]) => {
+        tl.fromTo(sel, { height: 0, opacity: 0 },
+                 { height: 'auto', opacity: 1, duration: .42, ease: 'power3.out' }, t)
+          .fromTo(sel + ' .q-n', { scale: .6 },
+                 { scale: 1, duration: .44, ease: 'back.out(2.4)' }, t + .06);
+      });
+      tl.to('#q-inner', { opacity: 0, y: -26, duration: .30, ease: 'power2.in' }, 14.60)
+        .set('#q-inner', { opacity: 0 }, 14.90);
 
-      /* ---- S3 · count-ups ---------------------------------------------------
-         Deterministic: a tweened proxy object, no Date.now / no randomness. */
-      const cac = { v: 0 }, roas = { v: 0 };
-      tl.fromTo('#roas-inner', { opacity: 0, y: 60 },
-               { opacity: 1, y: 0, duration: .38, ease: 'power3.out' }, 7.85)
-        .fromTo('#panel-roas .panel-rule', { scaleX: 0 },
-               { scaleX: 1, duration: .33, ease: 'power3.out' }, 7.98)
-        .fromTo('#panel-roas .tile', { opacity: 0, y: 28 },
-               { opacity: 1, y: 0, duration: .33, stagger: .13, ease: 'power2.out' }, 8.06)
-        .to(cac, { v: 59.71, duration: 1.0, ease: 'power2.out',
-                   onUpdate: () => { document.getElementById('cu-cac').textContent
-                     = '$' + cac.v.toFixed(2); } }, 8.22)
-        .to(roas, { v: 1.92, duration: 1.0, ease: 'power2.out',
-                    onUpdate: () => { document.getElementById('cu-roas').textContent
-                      = roas.v.toFixed(2) + '×'; } }, 8.36)
-        .to('#roas-inner', { opacity: 0, y: -26, duration: .26, ease: 'power2.in' }, 10.14)
-        .set('#roas-inner', { opacity: 0 }, 10.43);
-
-      /* ---- S4 · contrast ----------------------------------------------------- */
-      tl.fromTo('#card-contrast', { opacity: 0 },
-               { opacity: 1, duration: .30, ease: 'power2.out' }, 10.43)
-        .fromTo('#card-contrast .eyebrow', { opacity: 0, y: 18 },
-               { opacity: 1, y: 0, duration: .33, ease: 'power2.out' }, 10.54)
-        .fromTo('#card-contrast .rule', { scaleX: 0 },
-               { scaleX: 1, duration: .38, ease: 'power3.out' }, 10.63)
-        .fromTo('#card-contrast h2', { opacity: 0, y: 30 },
-               { opacity: 1, y: 0, duration: .42, ease: 'power3.out' }, 10.70)
-        .fromTo('#col-full', { opacity: 0, x: -34 },
-               { opacity: 1, x: 0, duration: .42, ease: 'power3.out' }, 11.16)
-        .fromTo('#col-off', { opacity: 0, x: 34 },
-               { opacity: 1, x: 0, duration: .42, ease: 'power3.out' }, 11.82)
-        .fromTo('#col-off', { boxShadow: '0 0 0 0 rgba(255,76,50,0)' },
-               { boxShadow: '0 26px 80px -26px rgba(255,76,50,.75)', duration: .5,
-                 ease: 'sine.out', immediateRender: false }, 12.20)
-        .fromTo('#contrast-foot', { opacity: 0, y: 22 },
-               { opacity: 1, y: 0, duration: .42, ease: 'back.out(1.5)' }, 13.30)
-        .to('#card-contrast', { opacity: 0, duration: .28, ease: 'power2.in' }, 14.50);
-
-      /* ---- S5/S8 · workbook b-roll ------------------------------------------
-         tl.set at 0 gives both wrappers a stable baseline, so a seek to any
-         point before the fade-in can't inherit a stale opacity. */
-      tl.set('#broll-a-wrap', { opacity: 0 }, 0)
-        .set('#broll-b-wrap', { opacity: 0 }, 0)
-        .to('#broll-a-wrap', { opacity: 1, duration: .32, ease: 'power2.out' }, 18.88)
-        .to('#broll-a-wrap', { opacity: 0, duration: .30, ease: 'power2.in' }, 26.06)
-        .set('#broll-a-wrap', { opacity: 0 }, 26.36)
+      /* ---- S3 · workbook b-roll ---------------------------------------------
+         tl.set at 0 gives the wrapper a stable baseline, so a seek to any point
+         before the fade-in can't inherit a stale opacity. */
+      tl.set('#broll-b-wrap', { opacity: 0 }, 0)
         .to('#broll-b-wrap', { opacity: 1, duration: .30, ease: 'power2.out' }, 30.42)
         .to('#broll-b-wrap', { opacity: 0, duration: .30, ease: 'power2.in' }, 34.18)
         .set('#broll-b-wrap', { opacity: 0 }, 34.40);
 
-      /* ---- S6 · checklist, one tick per spoken line ------------------------------ */
-      tl.fromTo('#card-checklist', { opacity: 0 },
-               { opacity: 1, duration: .32, ease: 'power2.out' }, 18.88)
-        .fromTo('#card-checklist .eyebrow', { opacity: 0, y: 18 },
-               { opacity: 1, y: 0, duration: .33, ease: 'power2.out' }, 18.99)
-        .fromTo('#card-checklist .rule', { scaleX: 0 },
-               { scaleX: 1, duration: .38, ease: 'power3.out' }, 19.08)
-        .fromTo('#card-checklist h2', { opacity: 0, y: 28 },
-               { opacity: 1, y: 0, duration: .42, ease: 'power3.out' }, 19.15);
-      [['#ck1', 19.60], ['#ck2', 21.31], ['#ck3', 23.91], ['#ck4', 25.55]]
-        .forEach(([sel, t]) => {
-          tl.fromTo(sel, { height: 0, opacity: 0 },
-                   { height: 'auto', opacity: 1, duration: .40, ease: 'power3.out' }, t)
-            .fromTo(sel + ' .tick', { scale: .6 },
-                   { scale: 1, duration: .40, ease: 'back.out(2.4)' }, t + .06);
-        });
-      tl.to('#card-checklist', { opacity: 0, duration: .30, ease: 'power2.in' }, 26.06);
-
-      /* ---- S10 · end card ---------------------------------------------------------- */
+      /* ---- S4 · end card ---------------------------------------------------------- */
       tl.fromTo('#endcard', { opacity: 0 },
                { opacity: 1, duration: .32, ease: 'power2.out' }, 34.40)
         .fromTo('#ec-logo', { opacity: 0, y: -22 },

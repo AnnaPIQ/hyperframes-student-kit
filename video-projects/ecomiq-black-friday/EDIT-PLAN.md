@@ -6,9 +6,10 @@ end card closes it.
 
 **Deliverables:** 9:16 (1080×1920) and 4:5 (1080×1350), H.264/AAC, faststart, 30 fps, **39.0s**.
 
-> Three later revisions are folded in below: **dead air removed** from between
-> the phrases, a **reserved subtitle band** at the bottom of every frame, and the
-> product stills **replaced with the EcomIQ workbook b-roll**.
+> Later revisions folded in below: **dead air removed** from between the phrases,
+> a **reserved subtitle band** at the bottom of every frame, the product stills
+> **replaced with the EcomIQ workbook b-roll**, and then a **strip-back** that cut
+> every data graphic in favour of the three questions as plain copy.
 
 ---
 
@@ -100,24 +101,28 @@ gap, so no cut lands mid-word.
 
 | # | In–Out | On screen | Content |
 | --- | --- | --- | --- |
-| S1 | 0.00–18.88 | Sean, full frame | Hook through "…is much easier". No overlay — the subtitle band stays clear |
-| S2 | 5.12–7.85 | Lower panel over Sean | **Cost stack** on Q1 — $114.70 down to $59.71 / 52.1% |
-| S3 | 7.85–10.40 | Lower panel over Sean | **Count-ups** on Q2 — $59.71 max per order · 1.92× breakeven ROAS |
-| S4 | 10.43–14.78 | Full card | **Contrast** on Q3 — full price vs 25% off, closing on "1.81× the units" |
-| S5 | 18.88–26.36 | **Workbook b-roll**, slot A | 8/32/19 → calendar → spreadsheets, under the checklist |
-| S6 | 18.88–26.28 | Checklist panel over the b-roll | **4-item checklist**, one tick per spoken line |
-| S7 | 26.36–30.42 | Sean, full frame | Direct address — "that's where I'd start right now" |
-| S8 | 30.42–34.40 | **Workbook b-roll**, slot B | The cover itself, under "a free Black Friday workbook" |
-| S10 | 34.40–39.00 | End card | Lands on "Link is below" (34.55); voice ends 35.40, holds 3.6s after |
+| S1 | 0.00–5.12 | Sean, full frame | Hook — "ask yourself these three questions" |
+| S2 | 5.12–14.90 | Question panel over Sean | The **three questions**, one landing as he asks it. The panel is bottom-anchored so each grows it upward |
+| S3 | 14.90–30.42 | Sean, full frame | The plan, "not guessing", "that's where I'd start right now" |
+| S4 | 30.42–34.40 | **Workbook b-roll** | The cover, under "a free Black Friday workbook" |
+| S5 | 34.40–39.00 | End card | Lands on "Link is below" (34.55); voice ends 35.40, holds 3.6s after |
 
-Checklist ticks fire at 19.60 / 21.31 / 23.91 / 25.55, each on its own spoken
-line. The panel is pinned to a fixed top and each item grows it downward, so it
-never reserves empty height for ticks that have not appeared yet.
+Questions land at 5.12 / 7.85 / 10.43, each as Sean asks it.
 
 **Persistent:** EcomIQ logo top-left on every frame, stepping back to 30% opacity
 on the end card so the hero lockup leads.
 
----
+### Stripped back on review
+
+The build originally carried four data graphics and a second b-roll slot. All
+were cut on review, in this order: the hook eyebrow, the static worksheets-deck
+b-roll beat, the 4-item checklist and the b-roll under it, then the cost stack,
+count-up tiles and discount contrast — replaced by the three questions as plain
+copy.
+
+**No workbook figures appear on screen any more.** $114.70, $59.71, 52.1%,
+1.92×, $33.00, 2.61× and 1.81× are all gone with the graphics that carried them.
+The numbers and their provenance are kept below in case they are wanted back.
 
 ## On-screen numbers — provenance
 
@@ -155,8 +160,11 @@ The cost stack reconciles exactly: 114.70 − 4.59 − 34.00 − 4.50 − 8.60 �
   replaced them, which also retires `product-suite-wide.png` and its garbled
   micro-text ("Pash Cycle Calculator", "Delivery Coe Coot Sheet"). The stills stay
   in `assets/` in case they are wanted again.
-* **About half the supplied b-roll is unused** — the margin page and outro lockup
-  as duplicates, plus the worksheets deck and tools beats as dead screen time.
+* **Only the cover beat of the supplied b-roll is used.** Slot A was cut with the
+  checklist, so the deck, 8/32/19, margin page, calendar, spreadsheets, tools and
+  outro beats are all unused — about 19s of the 21.4s film.
+* **Sean is on camera unbroken from 14.90 to 30.42** — 15.5s with no graphic or
+  cutaway. That is the longest uninterrupted stretch in the ad by some way.
 * **Music is a silent placeholder.** No licensed bed ships with the kit. Drop a
   track in at `assets/music-bed-placeholder.m4a` and the duck automation is
   already wired: bed at 0.16 under the voice, lifting to 0.42 at 35.20 once Sean

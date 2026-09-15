@@ -16,9 +16,9 @@ and `--safe-bottom` reserves an empty band at the bottom of every frame (230px i
 
 ## This project's idea
 - **Hook:** "Before you plan a single Black Friday ad, ask yourself these three questions."
-- **Message:** Know your contribution, your breakeven ROAS and your discount
-  ceiling first, and the rest of the plan follows. Every number on screen is the
-  workbook's own worked example.
+- **Message:** Answer three questions about margin, acquisition cost and discount
+  depth before you build the ad. The questions are the only motion graphic; no
+  figures are shown on screen.
 - **CTA:** Get your free Black Friday workbook → "Sign up free".
 
 ## Look
@@ -28,9 +28,8 @@ and `--safe-bottom` reserves an empty band at the bottom of every frame (230px i
 - Rethink Sans throughout; Hedvig Letters Serif italic for the one emphasis word
   per headline ("*discount*", "*easy*") — the EcomIQ signature. The end card is the
   exception: "free" stays white and upright so the CTA reads as one line.
-- Data panels sit over Sean in the lower third; the bigger ideas take the full frame.
-- The back half runs on the EcomIQ workbook b-roll; the checklist sits on its own
-  panel over it, matching the cost-stack treatment used over Sean.
+- One lower-third panel over Sean carries the three questions, growing upward as
+  each lands. The workbook b-roll appears once, on the closing line.
 
 ## Build
 
