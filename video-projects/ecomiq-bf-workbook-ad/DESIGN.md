@@ -40,15 +40,18 @@ going the wrong way, or the thing to click.
 
 - **Rethink Sans** 400–800, local `.woff2`. Headlines at 800 with −3.5%
   tracking, per the brand guide. `tabular-nums` on every number column.
-- **Hedvig Letters Serif** italic for exactly one emphasis word, on the end
-  card: *"Get your **free** Black Friday workbook"*.
+- **Hedvig Letters Serif** is available but currently unused — the end-card
+  headline is all Rethink Sans 800 in white, with no italic-serif emphasis word.
 
 ## Motion
 
 Adapted from `MOTION_PHILOSOPHY.md`, keeping the discipline and swapping the
 palette for EcomIQ's (the philosophy's own carve-out for a brand brief).
 
-- **One idea per beat.** 17 beats across 53s.
+- **Graphics are for emphasis only.** Six graphic beats across 53s, covering
+  46% of the pre-card runtime; Sean carries the other 54% clean. A graphic
+  appears only where a word needs weight or a number has to be seen, and never
+  just to restate what he already said.
 - **No hard cuts.** Every seam is a velocity-matched vertical whip: the
   outgoing layer rides up into blur, the incoming one rises out of it.
 - **The camera never sleeps.** The perspective grid parallaxes for the full
@@ -58,8 +61,8 @@ palette for EcomIQ's (the philosophy's own carve-out for a brand brief).
   graphic beats, so Sean's footage still reads as footage.
 - **Hold the outro.** The end card runs 7.82s, of which 3.87s is after the
   audio ends.
-- **Callback.** The workbook cover appears three times: it lands at 26.45, it
-  returns under "completely free" at 42.90, and it sits on the end card.
+- **Callback.** The workbook cover lands at 26.75 and the flame `FREE` chip on
+  it rhymes with the flame `Sign up free` pill on the end card.
 
 ## Sean is the bed
 

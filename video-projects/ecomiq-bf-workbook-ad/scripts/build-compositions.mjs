@@ -23,17 +23,13 @@ const VO_DUR = 52.1;
 
 /** Scene windows in edit time. Clean-Sean beats carry no graphic layer. */
 const T = {
-  stamp:     [2.30, 4.21],
-  costsA:    [4.21, 10.15],
-  costsB:    [12.20, 14.73],
-  terms:     [17.60, 19.55],
-  dashboard: [19.55, 21.75],
-  contrast:  [21.75, 25.44],
-  cover:     [26.45, 29.60],
-  product:   [29.60, 32.40],
-  worksheet: [32.40, 36.29],
-  checklist: [36.88, 41.58],
-  free:      [42.90, 45.18],
+  stamp:     [2.55, 4.05],    // the hook word
+  costs:     [10.70, 15.20],  // the cost stack, one beat
+  dashboard: [19.55, 21.75],  // real product preview
+  contrast:  [21.75, 25.44],  // the punchline
+  cover:     [26.75, 29.35],  // the workbook itself
+  worksheet: [32.55, 36.15],  // the count-up
+  checklist: [37.10, 41.30],  // the four things it walks you through
   endcard:   [45.18, 53.00],
 };
 const dur = (k) => +(T[k][1] - T[k][0]).toFixed(3);
@@ -41,7 +37,7 @@ const dur = (k) => +(T[k][1] - T[k][0]).toFixed(3);
    overlaps the incoming beat's entrance. Only the hero->hero seams need it;
    everywhere else Sean is already back on screen underneath. `prod` is capped
    by its 3.0s source clip. */
-const TAIL = { dashboard: 0.34, dashcap: 0.34, cover: 0.34, prod: 0.20, stats: 0.34, free: 0.34 };
+const TAIL = { dashboard: 0.34, dashcap: 0.34, cover: 0.34 };
 const durT = (k, t) => +(T[k][1] - T[k][0] + TAIL[t || k]).toFixed(3);
 
 const RATIOS = [
@@ -192,7 +188,7 @@ html, body { width:${r.w}px; height:${r.h}px; overflow:hidden; background:var(--
 .chip .k { font-weight:700; font-size:${px(21, r)}; letter-spacing:.14em;
   text-transform:uppercase; color:var(--brand-sky); }
 .chip .v { font-weight:800; font-size:${px(29, r)}; color:var(--brand-flame); }
-#costsB .closer { font-weight:600; font-size:${px(26, r)}; color:var(--brand-sky);
+#costs .closer { font-weight:600; font-size:${px(26, r)}; color:var(--brand-sky);
   letter-spacing:-.01em; padding-left:${px(6, r)}; }
 
 /* 07 — the two terms, over Sean */
@@ -304,10 +300,7 @@ html, body { width:${r.w}px; height:${r.h}px; overflow:hidden; background:var(--
   margin-bottom:${px(10, r)}; }
 #endcard .head { font-weight:800; font-size:${px(wide ? 80 : 62, r)}; line-height:1.02;
   letter-spacing:-.035em; max-width:${wide ? '100%' : '88%'}; }
-#endcard .thumbrow { display:flex; align-items:center; gap:${px(20, r)};
-  flex-direction:${wide ? 'row' : 'column'}; }
-#endcard .coverimg { width:${Math.round(r.w * (wide ? 0.24 : 0.20))}px; }
-#endcard .meta { font-weight:600; font-size:${px(23, r)}; color:var(--brand-sky); line-height:1.4; }
+#endcard .meta { font-weight:600; font-size:${px(24, r)}; color:var(--brand-sky); line-height:1.4; }
 #endcard .pill { align-self:${wide ? 'flex-start' : 'center'}; margin-top:${px(12, r)};
   font-weight:800; font-size:${px(36, r)}; color:var(--brand-white); background:var(--brand-flame);
   padding:${px(24, r)} ${px(54, r)}; border-radius:999px;
@@ -372,33 +365,10 @@ function html(r) {
         <div class="sub">A record Black Friday can still be one.</div>
       </div>
 
-      <!-- 02 · the cost stack starts building -->
-      <div id="costsA" class="band clip" data-start="${T.costsA[0]}" data-duration="${dur('costsA')}" data-track-index="11">
-${rows([0, 1, 2])}
-        <div class="chip" id="cpm">
-          <span class="k">Meta CPM, Cyber Week</span>
-          <span class="v num">2&ndash;3&times; baseline</span>
-        </div>
-        <div class="src">Gupta Media 2025 &middot; Trackbee 2026</div>
-      </div>
-
-      <!-- 05 · and completes -->
-      <div id="costsB" class="band clip" data-start="${T.costsB[0]}" data-duration="${dur('costsB')}" data-track-index="12">
+      <!-- 02 · the cost stack, once, as a summary -->
+      <div id="costs" class="band clip" data-start="${T.costs[0]}" data-duration="${dur('costs')}" data-track-index="12">
 ${rows([1, 2, 3, 4])}
         <div class="closer">All of it out of the same order.</div>
-      </div>
-
-      <!-- 07 · the two numbers Sean names -->
-      <div id="terms" class="band clip" data-start="${T.terms[0]}" data-duration="${dur('terms')}" data-track-index="13">
-        <div class="tcard" id="tc1">
-          <div class="t">Contribution margin</div>
-          <div class="d">What one order leaves after every variable cost linked to it.</div>
-        </div>
-        <div class="tcard" id="tc2">
-          <div class="t">Breakeven ROAS</div>
-          <div class="d">The point where an ad pays for the orders it generates, and nothing more.</div>
-          <div class="f num">= 1 &divide; contribution margin %</div>
-        </div>
       </div>
 
       <!-- 08 · the real Profitability Dashboard -->
@@ -439,17 +409,6 @@ ${rows([1, 2, 3, 4])}
         <div class="cap">The Black Friday Profit Plan</div>
       </div>
 
-      <!-- 12 · the real PDF, and what is in it -->
-      <div id="prod-wrap" class="bwrap">
-        <video id="prod" data-start="${T.product[0]}" data-duration="${durT('product', 'prod')}" data-track-index="18"
-               src="assets/broll/workbook.mp4" muted playsinline></video>
-      </div>
-      <div id="stats" class="clip" data-start="${T.product[0]}" data-duration="${durT('product', 'stats')}" data-track-index="19">
-        <div class="stat"><div class="n num" id="st1">0</div><div class="l">Parts</div></div>
-        <div class="stat"><div class="n num" id="st2">0</div><div class="l">Worksheets</div></div>
-        <div class="stat"><div class="n num" id="st3">0</div><div class="l">Free tools</div></div>
-      </div>
-
       <!-- 13 · the real contribution-margin worksheet -->
       <div id="worksheet" class="hero clip" data-start="${T.worksheet[0]}" data-duration="${dur('worksheet')}" data-track-index="20">
         <div class="eyebrow">What each order actually contributes</div>
@@ -476,21 +435,11 @@ ${checks}
         </div>
       </div>
 
-      <!-- 17 · the best part -->
-      <div id="free" class="hero clip" data-start="${T.free[0]}" data-duration="${durT('free')}" data-track-index="22">
-        <div class="big">Completely <span class="hot">free</span>.</div>
-        <div class="cap">The whole workbook, all 8 parts.</div>
-        <img class="coverimg" src="assets/pages/cover-free.png" alt="" />
-      </div>
-
       <!-- 18 · end card -->
       <div id="endcard" class="hero clip" data-start="${T.endcard[0]}" data-duration="${dur('endcard')}" data-track-index="23">
         <img class="lock" src="assets/ecomiq-lockup-white.png" alt="EcomIQ" />
-        <div class="head">Get your <span class="serif tint">free</span> Black Friday workbook</div>
-        <div class="thumbrow">
-          <img class="coverimg" src="assets/pages/cover-card.png" alt="" />
-          <div class="meta">8 parts &middot; 32 worksheets<br />19 free tools &middot; 2026 edition</div>
-        </div>
+        <div class="head">Get your free Black Friday workbook</div>
+        <div class="meta">8 parts &middot; 32 worksheets &middot; 19 free tools &middot; 2026 edition</div>
         <div class="pill">Sign up free</div>
       </div>
 
@@ -557,18 +506,17 @@ window.__timelines = window.__timelines || {};
 
   tl.set('#cover-nav', { opacity: 0 }, 0);
   bed(0.00,  CLEAN);
-  bed(4.05,  OVERLAY);   // cost stack builds
-  bed(10.00, CLEAN);
-  bed(12.05, OVERLAY);   // cost stack completes
-  bed(14.60, CLEAN);
-  bed(17.45, OVERLAY);   // the two terms
+  bed(10.55, OVERLAY);   // the cost stack
+  bed(15.10, CLEAN);
   bed(19.40, HERO);      // dashboard -> contrast, one continuous hero run
-  bed(25.30, CLEAN);
-  bed(26.30, HERO);      // workbook -> product -> worksheet
-  bed(36.18, CLEAN);
-  bed(36.74, OVERLAY);   // the checklist
-  bed(41.44, CLEAN);
-  bed(42.76, HERO);      // completely free -> end card
+  bed(25.34, CLEAN);
+  bed(26.60, HERO);      // the workbook
+  bed(29.30, CLEAN);
+  bed(32.40, HERO);      // the count-up
+  bed(36.05, CLEAN);
+  bed(36.95, OVERLAY);   // the checklist
+  bed(41.20, CLEAN);
+  bed(45.05, HERO);      // end card
 
   /* ── texture ───────────────────────────────────────────────────────────
      Grid + crosshairs only come up on the graphic beats, so Sean's footage
@@ -579,9 +527,9 @@ window.__timelines = window.__timelines || {};
   };
   tl.set('#grid', { opacity: 0 }, 0);
   tl.set('#marks', { opacity: 0 }, 0);
-  tex(4.05, 0.40); tex(10.00, 0.08); tex(12.05, 0.40); tex(14.60, 0.08);
-  tex(17.45, 0.40); tex(19.40, 0.88); tex(25.30, 0.10); tex(26.30, 0.88);
-  tex(36.18, 0.10); tex(36.74, 0.40); tex(41.44, 0.10); tex(42.76, 0.88);
+  tex(10.55, 0.40); tex(15.10, 0.08); tex(19.40, 0.88); tex(25.34, 0.10);
+  tex(26.60, 0.88); tex(29.30, 0.10); tex(32.40, 0.88); tex(36.05, 0.10);
+  tex(36.95, 0.40); tex(41.20, 0.10); tex(45.05, 0.88);
   // Camera never sleeps: the grid parallaxes across the whole piece.
   tl.fromTo('#grid', { backgroundPositionY: '0px' },
     { backgroundPositionY: '168px', duration: ${DURATION}, ease: 'none' }, 0);
@@ -608,29 +556,15 @@ window.__timelines = window.__timelines || {};
     { y: 0, opacity: 1, duration: 0.46, ease: 'power2.out' }, ${A(T.stamp[0] + 0.34)});
   exitUp('#stamp', ${A(T.stamp[1] - 0.22)});
 
-  /* ── 02 · cost stack builds ───────────────────────────────────────────── */
-  enterUp('#r1', 4.40, 0.52);
-  enterUp('#r2', 6.00, 0.52);
-  enterUp('#r3', 7.50, 0.52);
-  tl.fromTo('#cpm', { x: -40, opacity: 0, filter: 'blur(14px)' },
-    { x: 0, opacity: 1, filter: 'blur(0px)', duration: 0.50, ease: 'back.out(1.3)' }, 8.40);
-  tl.fromTo('#costsA .src', { opacity: 0 }, { opacity: 1, duration: 0.36, ease: 'sine.out' }, 8.74);
-  exitUp('#costsA', ${A(T.costsA[1] - 0.22)});
-
-  /* ── 05 · and completes. Rows 2-3 carry over already in place. ────────── */
-  tl.set(['#r2', '#r3'], { y: 0, opacity: 1, filter: 'blur(0px)' }, ${T.costsB[0]});
-  tl.fromTo('#costsB', { opacity: 0, filter: 'blur(18px)' },
-    { opacity: 1, filter: 'blur(0px)', duration: 0.40, ease: 'power2.out' }, ${T.costsB[0]});
-  enterUp('#r4', 12.35, 0.50);
-  enterUp('#r5', 13.50, 0.50);
-  tl.fromTo('#costsB .closer', { opacity: 0, y: 18 },
-    { opacity: 1, y: 0, duration: 0.40, ease: 'power2.out' }, 14.10);
-  exitUp('#costsB', ${A(T.costsB[1] - 0.22)});
-
-  /* ── 07 · the two terms Sean names ────────────────────────────────────── */
-  enterUp('#tc1', 17.75, 0.54);
-  enterUp('#tc2', 18.60, 0.54);
-  exitUp('#terms', ${A(T.terms[1] - 0.22)}, 0.22);
+  /* ── 02 · the cost stack. One beat, landing as a summary rather than a
+     slow build, so it reads as emphasis and hands the frame straight back. ── */
+  enterUp('#r2', 10.85, 0.48);
+  enterUp('#r3', 11.80, 0.48);
+  enterUp('#r4', 12.75, 0.48);
+  enterUp('#r5', 13.70, 0.48);
+  tl.fromTo('#costs .closer', { opacity: 0, y: 18 },
+    { opacity: 1, y: 0, duration: 0.40, ease: 'power2.out' }, 14.35);
+  exitUp('#costs', ${A(T.costs[1] - 0.22)});
 
   /* ── 08 · the real Profitability Dashboard ────────────────────────────── */
   tl.fromTo('#dash-wrap', { y: 90, opacity: 0, scale: 0.93, filter: 'blur(22px)' },
@@ -644,15 +578,15 @@ window.__timelines = window.__timelines || {};
 
   /* ── 09 · selling more, making less ───────────────────────────────────── */
   tl.fromTo('#sideA', { y: 70, opacity: 0, filter: 'blur(24px)' },
-    { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.56, ease: 'expo.out' }, ${A(T.contrast[0] + 0.10)});
+    { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.52, ease: 'expo.out' }, ${A(T.contrast[0] + 0.08)});
   countTo('#units', 1.00, 1.81, ${A(T.contrast[0] + 0.30)}, 1.05, mult, ${A(T.contrast[1] - 0.22)});
   tl.fromTo('#sideB', { y: 70, opacity: 0, filter: 'blur(24px)' },
-    { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.56, ease: 'expo.out' }, ${A(T.contrast[0] + 1.35)});
+    { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.52, ease: 'expo.out' }, ${A(T.contrast[0] + 1.05)});
   countTo('#contrib', 59.71, 33.00, ${A(T.contrast[0] + 1.60)}, 1.20, money, ${A(T.contrast[1] - 0.22)});
   tl.fromTo('#roas', { opacity: 0, scale: 0.90 },
-    { opacity: 1, scale: 1, duration: 0.40, ease: 'back.out(1.6)' }, ${A(T.contrast[0] + 3.05)});
+    { opacity: 1, scale: 1, duration: 0.40, ease: 'back.out(1.6)' }, ${A(T.contrast[0] + 2.30)});
   tl.fromTo('#contrast .src', { opacity: 0 },
-    { opacity: 1, duration: 0.34, ease: 'sine.out' }, ${A(T.contrast[0] + 3.25)});
+    { opacity: 1, duration: 0.34, ease: 'sine.out' }, ${A(T.contrast[0] + 2.55)});
   exitUp('#contrast', ${A(T.contrast[1] - 0.22)});
 
   /* ── 11 · the workbook lands ──────────────────────────────────────────── */
@@ -666,18 +600,6 @@ window.__timelines = window.__timelines || {};
     { scale: 1, rotate: -6, duration: 0.46, ease: 'back.out(2.2)' }, ${A(T.cover[0] + 1.75)});
   exitUp('#cover', ${T.cover[1]}, 0.30);
 
-  /* ── 12 · the real PDF + what is inside it ────────────────────────────── */
-  tl.fromTo('#prod-wrap', { y: 90, opacity: 0, scale: 0.94, filter: 'blur(22px)' },
-    { y: 0, opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.52, ease: 'power3.out' }, ${T.product[0]});
-  tl.to('#prod-wrap', { scale: 1.03, duration: ${A(dur('product') - 0.95)}, ease: 'none' }, ${A(T.product[0] + 0.65)});
-  tl.fromTo('#stats .stat', { y: 44, opacity: 0, filter: 'blur(16px)' },
-    { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.46, ease: 'back.out(1.4)', stagger: 0.10 }, ${A(T.product[0] + 0.80)});
-  countTo('#st1', 0, 8,  ${A(T.product[0] + 0.90)}, 0.60, whole, ${A(T.product[1] - 0.22)});
-  countTo('#st2', 0, 32, ${A(T.product[0] + 1.00)}, 0.60, whole, ${A(T.product[1] - 0.22)});
-  countTo('#st3', 0, 19, ${A(T.product[0] + 1.10)}, 0.60, whole, ${A(T.product[1] - 0.22)});
-  tl.to('#prod-wrap', { opacity: 0, y: -60, filter: 'blur(24px)', duration: 0.20, ease: 'power2.in' }, ${T.product[1]});
-  exitUp('#stats', ${T.product[1]}, 0.30);
-
   /* ── 13 · the real worksheet fills in on the beat ─────────────────────── */
   tl.fromTo('#worksheet .eyebrow', { opacity: 0, y: 20 },
     { opacity: 1, y: 0, duration: 0.40, ease: 'power2.out' }, ${A(T.worksheet[0] + 0.06)});
@@ -686,17 +608,17 @@ window.__timelines = window.__timelines || {};
   [0, 1, 2, 3, 4, 5].forEach((i) => {
     tl.fromTo('#ln' + i, { x: 48, opacity: 0, filter: 'blur(12px)' },
       { x: 0, opacity: 1, filter: 'blur(0px)', duration: 0.34, ease: 'power3.out' },
-      snap(${A(T.worksheet[0] + 0.20)} + i * 0.40));
+      snap(${A(T.worksheet[0] + 0.18)} + i * 0.30));
   });
   tl.fromTo('#lnT', { x: 48, opacity: 0, scale: 0.94, filter: 'blur(16px)' },
-    { x: 0, opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.48, ease: 'back.out(1.5)' }, ${A(T.worksheet[0] + 2.70)});
+    { x: 0, opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.48, ease: 'back.out(1.5)' }, ${A(T.worksheet[0] + 2.00)});
   tl.fromTo('#worksheet .maxline', { opacity: 0, y: 22 },
-    { opacity: 1, y: 0, duration: 0.42, ease: 'power2.out' }, ${A(T.worksheet[0] + 3.20)});
+    { opacity: 1, y: 0, duration: 0.42, ease: 'power2.out' }, ${A(T.worksheet[0] + 2.50)});
   exitUp('#worksheet', ${A(T.worksheet[1] - 0.22)});
 
   /* ── 15 · offer, inventory, marketing, follow-up ──────────────────────── */
   [0, 1, 2, 3].forEach((i) => {
-    const at = snap(${A(T.checklist[0] + 0.22)} + i * 1.10);
+    const at = snap(${A(T.checklist[0] + 0.20)} + i * 0.90);
     tl.fromTo('#chk' + i, { x: -56, opacity: 0, filter: 'blur(16px)' },
       { x: 0, opacity: 1, filter: 'blur(0px)', duration: 0.46, ease: 'expo.out' }, at);
     tl.fromTo('#chk' + i + ' .tick path', { strokeDashoffset: 30 },
@@ -704,22 +626,13 @@ window.__timelines = window.__timelines || {};
   });
   exitUp('#checklist', ${A(T.checklist[1] - 0.22)});
 
-  /* ── 17 · completely free ─────────────────────────────────────────────── */
-  tl.fromTo('#free .big', { scale: 0.80, opacity: 0, filter: 'blur(26px)' },
-    { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 0.50, ease: 'expo.out' }, ${A(T.free[0] + 0.02)});
-  tl.fromTo('#free .cap', { opacity: 0, y: 22 },
-    { opacity: 1, y: 0, duration: 0.42, ease: 'power2.out' }, ${A(T.free[0] + 0.48)});
-  tl.fromTo('#free .coverimg', { opacity: 0, y: 46, scale: 0.86 },
-    { opacity: 1, y: 0, scale: 1, duration: 0.50, ease: 'back.out(1.4)' }, ${A(T.free[0] + 0.66)});
-  exitUp('#free', ${T.free[1]}, 0.30);
-
   /* ── 18 · end card. Audio ends at 49.13; the card holds to ${DURATION}. ─── */
   tl.fromTo('#endcard .lock', { opacity: 0, y: -26, filter: 'blur(14px)' },
     { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.36, ease: 'power3.out' }, ${A(T.endcard[0] + 0.02)});
   tl.fromTo('#endcard .head', { opacity: 0, y: 46, filter: 'blur(20px)' },
     { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.62, ease: 'expo.out' }, ${A(T.endcard[0] + 0.30)});
-  tl.fromTo('#endcard .thumbrow', { opacity: 0, y: 40 },
-    { opacity: 1, y: 0, duration: 0.52, ease: 'power2.out' }, ${A(T.endcard[0] + 0.70)});
+  tl.fromTo('#endcard .meta', { opacity: 0, y: 30 },
+    { opacity: 1, y: 0, duration: 0.48, ease: 'power2.out' }, ${A(T.endcard[0] + 0.66)});
   tl.fromTo('#endcard .pill', { opacity: 0, scale: 0.80 },
     { opacity: 1, scale: 1, duration: 0.52, ease: 'back.out(1.7)' }, ${A(T.endcard[0] + 1.22)});
   tl.to('#endcard .pill', { scale: 1.035, duration: 1.05, ease: 'sine.inOut',

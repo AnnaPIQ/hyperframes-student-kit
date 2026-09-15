@@ -69,63 +69,59 @@ Every cut below lands on a measured pause in Sean's delivery, not a guess.
 
 ---
 
-## 3 · Structure — how Sean sits in it
+## 3 · Structure — Sean carries it, graphics only mark the beats
 
-Sean is the **bed**, and the edit cuts in and out of him. Three states:
+Revised after review: the first cut ran motion graphics over **78%** of the
+pre-card runtime. Graphics now appear only where a word needs weight or a
+number has to be seen, and nothing outlasts the phrase it serves.
+
+| | First cut | This cut |
+|---|---|---|
+| Graphic / B-roll on screen | 35.0s (78%) | **20.9s (46%)** |
+| Sean alone, clean | 10.1s (22%) | **24.3s (54%)** |
+| Sean on screen at all | 22% | **71%** |
+| Graphic beats | 11 | **6** |
+
+**Cut from the first edit** — each only restated what Sean already says: the
+two term-definition cards, the slow 5.9s cost-panel build (folded into one
+2-second summary), the PDF-scroll B-roll and its stat row (those figures are on
+the end card anyway), and the full-frame "Completely free" card.
+
+Three states, driven by a navy cover and a slow push on the footage:
 
 | State | Navy cover | Footage | Used for |
 |---|---|---|---|
-| **Clean** | 0% | full, sharp | he is the shot |
-| **Overlay** | 36% | −4.5% scale, 1.6px blur | graphics layer over his lower half, he stays present |
-| **Hero** | 100% | −7% scale, 9px blur | full-frame graphic or B-roll, he is off screen |
-
-Clean-Sean windows: 0.00–4.05 · 10.00–12.05 · 14.60–17.45 · 25.30–26.30 ·
-36.18–36.74 · 41.44–42.76 (**11.8s**). Overlay windows add another **15.2s**
-where he is on screen behind the graphics — **27s of the 45s before the end
-card (≈60%)**.
+| **Clean** | 0% | 1.00×, sharp | he is the shot |
+| **Overlay** | 36% | 1.04× push in, 1.6px blur | graphics over his lower half |
+| **Hero** | 100% | 1.09× push in, 9px blur | full-frame graphic or B-roll |
 
 ### Subtitle safe band
 
-The bottom of every frame is reserved and **no graphic ever enters it**:
-**380px** in 9:16, **268px** in 4:5. The scrim's bottom stop darkens that band
-to ~0.97 navy, so hand-added subtitles will sit on a clean, high-contrast
-ground without any further treatment.
+The bottom of every frame is reserved and **no graphic enters it**: **380px**
+in 9:16, **268px** in 4:5. The scrim darkens that band to ~0.97 navy, so
+hand-added subtitles read without further treatment.
 
 ---
 
 ## 4 · Cut list
 
-### ACT 1 — THE PROBLEM (0.00 → 25.44)
-
 | # | In | Out | Dur | On screen |
 |---|---|---|---|---|
-| 01 | 0.00 | 4.21 | 4.21 | **Sean, clean.** Logo fades in at 0.20. At **2.30**, on the word, flame-ruled stamp `Unprofitable.` punches into the band, blur-scale entry. |
-| 02 | 4.21 | 10.15 | 5.94 | **Sean as bed** (−4.5% scale, navy cover to 36%). Cost stack builds: **4.40** `Revenue ↑` blue-tint · **6.00** `Discounts ↑` flame · **7.50** `Ad costs ↑` flame · **8.40** cited chip `Meta CPM, Cyber Week — 2–3× baseline` with `Gupta Media 2025 · Trackbee 2026` under it. |
-| 03 | 10.15 | 12.20 | 2.05 | **Sean, clean.** Panel whips up and out on the cut. |
-| 04 | 12.20 | 14.73 | 2.53 | Panel returns, rows 2–3 carried over already in place. **12.35** `Fulfilment fees`. **13.50** `Returns ↑`. **14.10** closer: *All of it out of the same order.* |
-| 05 | 14.73 | 17.60 | 2.87 | **Sean, clean.** |
-| 06 | 17.60 | 19.55 | 1.95 | Two term cards over Sean. **17.75** `Contribution margin`. **18.60** `Breakeven ROAS` with the workbook's own formula `= 1 ÷ contribution margin %`. |
-| 07 | 19.55 | 21.75 | 2.20 | **HERO — real product.** `dashboard.mp4`: the actual Profitability Dashboard sheet, cursor tracking live cells. Caption under it. |
-| 08 | 21.75 | 25.44 | 3.69 | **HERO — the contrast.** `Selling more`, units count **1.00× → 1.81×** (22.05–23.10). `Making less` in flame, contribution counts **$59.71 → $33.00** (23.35–24.55). At **24.80** `Breakeven ROAS 1.92 → 2.61`. Footnote: *the workbook's worked example, at 25% off*. |
-
-### ACT 2 — THE WORKBOOK (25.44 → 45.18)
-
-| # | In | Out | Dur | On screen |
-|---|---|---|---|---|
-| 09 | 25.44 | 26.45 | 1.01 | **Sean, clean.** The 1.0s pause — the breathing beat before the turn. |
-| 10 | 26.45 | 29.60 | 3.15 | **The workbook lands.** `cover.png` rises from depth onto the perspective grid with motion blur; glint sweep **27.60**; flame `FREE` chip pins to it **28.20**. |
-| 11 | 29.60 | 32.40 | 2.80 | **Real product B-roll — `workbook.mp4`**: the actual PDF in a viewer, cover → Contents, 51 pages. Navy card, soft shadow, slow push. **30.90** stat row counts up: `8 PARTS · 32 WORKSHEETS · 19 FREE TOOLS`. |
-| 12 | 32.40 | 36.29 | 3.89 | **HERO — the real worksheet.** `page8.png` slides in; the stack fills on the beat, one line every 0.40s from **32.60**: `$114.70` → `− 4%` → `− $34.00` → `− $4.50` → `− $8.60` → `− $3.30`, then **`= $59.71 · 52.1%`** lands lit in flame at **35.10**. **35.60** `Max discount it supports — 25%`. |
-| 13 | 36.29 | 36.88 | 0.59 | **Sean, clean.** Pause beat. |
-| 14 | 36.88 | 41.58 | 4.70 | **4-item checklist**, over Sean. Ticks draw on the words: **37.10** `Your offer` · **38.20** `Your inventory` · **39.30** `Your marketing` · **40.40** `Your email follow-up`. |
-| 15 | 41.58 | 42.90 | 1.32 | **Sean, clean.** |
-| 16 | 42.90 | 45.18 | 2.28 | **`Completely free.`** full-frame, type scales 0.80→1.00 out of blur. Cover returns small beneath it (callback). |
-
-### ACT 3 — END CARD (45.18 → 53.00)
-
-| # | In | Out | Dur | On screen |
-|---|---|---|---|---|
-| 17 | 45.18 | 53.00 | 7.82 | **END CARD**, triggered on "The link is below". EcomIQ white lockup · headline **"Get your free Black Friday workbook"** (Rethink Sans 800, −3.5% tracking, *free* in Hedvig Letters Serif italic, blue-tint) · cover thumb + `8 parts · 32 worksheets · 19 free tools · 2026 edition` · flame pill **"Sign up free"** popping in at **46.40** on `back.out(1.7)`, then a slow breathe. Audio ends 49.13; card holds silent to 53.00. |
+| 01 | 0.00 | 2.55 | 2.55 | **Sean, clean.** Logo fades in at 0.20. |
+| 02 | 2.55 | 4.05 | 1.50 | **`Unprofitable.`** — flame rule, blur-scale punch, landing on the word. The hook. |
+| 03 | 4.05 | 10.70 | 6.65 | **Sean, clean.** He carries the whole revenue-vs-costs argument himself. |
+| 04 | 10.70 | 15.20 | 4.50 | **Cost stack**, over Sean. Four rows snap in on his list: **10.85** `Discounts ↑` · **11.80** `Ad costs ↑` · **12.75** `Fulfilment fees` · **13.70** `Returns ↑`. **14.35** closer: *All of it out of the same order.* |
+| 05 | 15.20 | 19.55 | 4.35 | **Sean, clean.** |
+| 06 | 19.55 | 21.75 | 2.20 | **Product preview.** `dashboard.mp4` — the real Profitability Dashboard sheet, cursor tracking live cells, caption under it. |
+| 07 | 21.75 | 25.30 | 3.55 | **The contrast.** `Selling more` counts **1.00× → 1.81×**; `Making less` in flame counts **$59.71 → $33.00**; then `Breakeven ROAS 1.92 → 2.61`. Footnote cites the workbook's worked example at 25% off. |
+| 08 | 25.30 | 26.75 | 1.45 | **Sean, clean.** |
+| 09 | 26.75 | 29.35 | 2.60 | **The workbook.** Cover rises from depth onto the grid, glint sweep, flame `FREE` chip pins to it. |
+| 10 | 29.35 | 32.55 | 3.20 | **Sean, clean.** |
+| 11 | 32.55 | 35.75 | 3.20 | **The count-up.** The real contribution-margin page slides in; the stack fills `$114.70 → −4% → −$34.00 → −$4.50 → −$8.60 → −$3.30`, landing on **`$59.71 · 52.1%`** lit in flame, then `Max discount it supports — 25%`. |
+| 12 | 35.75 | 37.10 | 1.35 | **Sean, clean.** |
+| 13 | 37.10 | 40.40 | 3.30 | **Four-item checklist**, over Sean. Ticks draw on his words: `Your offer` · `Your inventory` · `Your marketing` · `Your email follow-up`. |
+| 14 | 40.40 | 45.18 | 4.78 | **Sean, clean.** He carries "the best part is it is completely free" on his own. |
+| 15 | 45.18 | 53.00 | 7.82 | **END CARD**, on "the link is below". EcomIQ lockup · headline **"Get your free Black Friday workbook"** (all Rethink Sans 800, all white) · `8 parts · 32 worksheets · 19 free tools · 2026 edition` · flame pill **"Sign up free"**. No book preview. Audio ends 49.13; the card holds silent to 53.00. |
 
 ---
 

@@ -112,7 +112,7 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:var(--bran
 .chip .k { font-weight:700; font-size:21px; letter-spacing:.14em;
   text-transform:uppercase; color:var(--brand-sky); }
 .chip .v { font-weight:800; font-size:29px; color:var(--brand-flame); }
-#costsB .closer { font-weight:600; font-size:26px; color:var(--brand-sky);
+#costs .closer { font-weight:600; font-size:26px; color:var(--brand-sky);
   letter-spacing:-.01em; padding-left:6px; }
 
 /* 07 — the two terms, over Sean */
@@ -224,10 +224,7 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:var(--bran
   margin-bottom:10px; }
 #endcard .head { font-weight:800; font-size:80px; line-height:1.02;
   letter-spacing:-.035em; max-width:100%; }
-#endcard .thumbrow { display:flex; align-items:center; gap:20px;
-  flex-direction:row; }
-#endcard .coverimg { width:259px; }
-#endcard .meta { font-weight:600; font-size:23px; color:var(--brand-sky); line-height:1.4; }
+#endcard .meta { font-weight:600; font-size:24px; color:var(--brand-sky); line-height:1.4; }
 #endcard .pill { align-self:flex-start; margin-top:12px;
   font-weight:800; font-size:36px; color:var(--brand-white); background:var(--brand-flame);
   padding:24px 54px; border-radius:999px;
@@ -253,38 +250,14 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:var(--bran
       <div id="marks" class="clip" data-start="0" data-duration="53" data-track-index="5"></div>
 
       <!-- 01 · the stamp lands on the word "unprofitable" -->
-      <div id="stamp" class="band clip" data-start="2.3" data-duration="1.91" data-track-index="10">
+      <div id="stamp" class="band clip" data-start="2.55" data-duration="1.5" data-track-index="10">
         <div class="rule"></div>
         <div class="word">Unprofitable.</div>
         <div class="sub">A record Black Friday can still be one.</div>
       </div>
 
-      <!-- 02 · the cost stack starts building -->
-      <div id="costsA" class="band clip" data-start="4.21" data-duration="5.94" data-track-index="11">
-        <div class="row " id="r1">
-          <span class="lab">Revenue</span>
-          <span class="note">up</span>
-          <span class="arw">&#8593;</span>
-        </div>
-        <div class="row bad" id="r2">
-          <span class="lab">Discounts</span>
-          <span class="note">up</span>
-          <span class="arw">&#8593;</span>
-        </div>
-        <div class="row bad" id="r3">
-          <span class="lab">Ad costs</span>
-          <span class="note">up</span>
-          <span class="arw">&#8593;</span>
-        </div>
-        <div class="chip" id="cpm">
-          <span class="k">Meta CPM, Cyber Week</span>
-          <span class="v num">2&ndash;3&times; baseline</span>
-        </div>
-        <div class="src">Gupta Media 2025 &middot; Trackbee 2026</div>
-      </div>
-
-      <!-- 05 · and completes -->
-      <div id="costsB" class="band clip" data-start="12.2" data-duration="2.53" data-track-index="12">
+      <!-- 02 · the cost stack, once, as a summary -->
+      <div id="costs" class="band clip" data-start="10.7" data-duration="4.5" data-track-index="12">
         <div class="row bad" id="r2">
           <span class="lab">Discounts</span>
           <span class="note">up</span>
@@ -306,19 +279,6 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:var(--bran
           <span class="arw">&#8593;</span>
         </div>
         <div class="closer">All of it out of the same order.</div>
-      </div>
-
-      <!-- 07 · the two numbers Sean names -->
-      <div id="terms" class="band clip" data-start="17.6" data-duration="1.95" data-track-index="13">
-        <div class="tcard" id="tc1">
-          <div class="t">Contribution margin</div>
-          <div class="d">What one order leaves after every variable cost linked to it.</div>
-        </div>
-        <div class="tcard" id="tc2">
-          <div class="t">Breakeven ROAS</div>
-          <div class="d">The point where an ad pays for the orders it generates, and nothing more.</div>
-          <div class="f num">= 1 &divide; contribution margin %</div>
-        </div>
       </div>
 
       <!-- 08 · the real Profitability Dashboard -->
@@ -350,7 +310,7 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:var(--bran
       </div>
 
       <!-- 11 · the workbook lands -->
-      <div id="cover" class="hero clip" data-start="26.45" data-duration="3.49" data-track-index="17">
+      <div id="cover" class="hero clip" data-start="26.75" data-duration="2.94" data-track-index="17">
         <div class="holder">
           <img class="coverimg" src="assets/pages/cover.png" alt="The Black Friday Profit Plan" />
           <div class="glint"><i></i></div>
@@ -359,19 +319,8 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:var(--bran
         <div class="cap">The Black Friday Profit Plan</div>
       </div>
 
-      <!-- 12 · the real PDF, and what is in it -->
-      <div id="prod-wrap" class="bwrap">
-        <video id="prod" data-start="29.6" data-duration="3" data-track-index="18"
-               src="assets/broll/workbook.mp4" muted playsinline></video>
-      </div>
-      <div id="stats" class="clip" data-start="29.6" data-duration="3.14" data-track-index="19">
-        <div class="stat"><div class="n num" id="st1">0</div><div class="l">Parts</div></div>
-        <div class="stat"><div class="n num" id="st2">0</div><div class="l">Worksheets</div></div>
-        <div class="stat"><div class="n num" id="st3">0</div><div class="l">Free tools</div></div>
-      </div>
-
       <!-- 13 · the real contribution-margin worksheet -->
-      <div id="worksheet" class="hero clip" data-start="32.4" data-duration="3.89" data-track-index="20">
+      <div id="worksheet" class="hero clip" data-start="32.55" data-duration="3.6" data-track-index="20">
         <div class="eyebrow">What each order actually contributes</div>
         <div class="top">
           <img class="pageimg" src="assets/pages/page8.png" alt="Calculate your contribution margin" />
@@ -413,7 +362,7 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:var(--bran
       </div>
 
       <!-- 15 · then it walks you through -->
-      <div id="checklist" class="band clip" data-start="36.88" data-duration="4.7" data-track-index="21">
+      <div id="checklist" class="band clip" data-start="37.1" data-duration="4.2" data-track-index="21">
         <div class="items">
           <div class="chk" id="chk0">
             <svg class="tick" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18"/><path d="M12 20.5l5.5 5.5L28 15"/></svg>
@@ -434,21 +383,11 @@ html, body { width:1080px; height:1920px; overflow:hidden; background:var(--bran
         </div>
       </div>
 
-      <!-- 17 · the best part -->
-      <div id="free" class="hero clip" data-start="42.9" data-duration="2.62" data-track-index="22">
-        <div class="big">Completely <span class="hot">free</span>.</div>
-        <div class="cap">The whole workbook, all 8 parts.</div>
-        <img class="coverimg" src="assets/pages/cover-free.png" alt="" />
-      </div>
-
       <!-- 18 · end card -->
       <div id="endcard" class="hero clip" data-start="45.18" data-duration="7.82" data-track-index="23">
         <img class="lock" src="assets/ecomiq-lockup-white.png" alt="EcomIQ" />
-        <div class="head">Get your <span class="serif tint">free</span> Black Friday workbook</div>
-        <div class="thumbrow">
-          <img class="coverimg" src="assets/pages/cover-card.png" alt="" />
-          <div class="meta">8 parts &middot; 32 worksheets<br />19 free tools &middot; 2026 edition</div>
-        </div>
+        <div class="head">Get your free Black Friday workbook</div>
+        <div class="meta">8 parts &middot; 32 worksheets &middot; 19 free tools &middot; 2026 edition</div>
         <div class="pill">Sign up free</div>
       </div>
 
@@ -505,18 +444,17 @@ window.__timelines = window.__timelines || {};
 
   tl.set('#cover-nav', { opacity: 0 }, 0);
   bed(0.00,  CLEAN);
-  bed(4.05,  OVERLAY);   // cost stack builds
-  bed(10.00, CLEAN);
-  bed(12.05, OVERLAY);   // cost stack completes
-  bed(14.60, CLEAN);
-  bed(17.45, OVERLAY);   // the two terms
+  bed(10.55, OVERLAY);   // the cost stack
+  bed(15.10, CLEAN);
   bed(19.40, HERO);      // dashboard -> contrast, one continuous hero run
-  bed(25.30, CLEAN);
-  bed(26.30, HERO);      // workbook -> product -> worksheet
-  bed(36.18, CLEAN);
-  bed(36.74, OVERLAY);   // the checklist
-  bed(41.44, CLEAN);
-  bed(42.76, HERO);      // completely free -> end card
+  bed(25.34, CLEAN);
+  bed(26.60, HERO);      // the workbook
+  bed(29.30, CLEAN);
+  bed(32.40, HERO);      // the count-up
+  bed(36.05, CLEAN);
+  bed(36.95, OVERLAY);   // the checklist
+  bed(41.20, CLEAN);
+  bed(45.05, HERO);      // end card
 
   /* ── texture ───────────────────────────────────────────────────────────
      Grid + crosshairs only come up on the graphic beats, so Sean's footage
@@ -527,9 +465,9 @@ window.__timelines = window.__timelines || {};
   };
   tl.set('#grid', { opacity: 0 }, 0);
   tl.set('#marks', { opacity: 0 }, 0);
-  tex(4.05, 0.40); tex(10.00, 0.08); tex(12.05, 0.40); tex(14.60, 0.08);
-  tex(17.45, 0.40); tex(19.40, 0.88); tex(25.30, 0.10); tex(26.30, 0.88);
-  tex(36.18, 0.10); tex(36.74, 0.40); tex(41.44, 0.10); tex(42.76, 0.88);
+  tex(10.55, 0.40); tex(15.10, 0.08); tex(19.40, 0.88); tex(25.34, 0.10);
+  tex(26.60, 0.88); tex(29.30, 0.10); tex(32.40, 0.88); tex(36.05, 0.10);
+  tex(36.95, 0.40); tex(41.20, 0.10); tex(45.05, 0.88);
   // Camera never sleeps: the grid parallaxes across the whole piece.
   tl.fromTo('#grid', { backgroundPositionY: '0px' },
     { backgroundPositionY: '168px', duration: 53, ease: 'none' }, 0);
@@ -549,36 +487,22 @@ window.__timelines = window.__timelines || {};
     tl.to(sel, { y: -70, opacity: 0, filter: 'blur(24px)', duration: d, ease: 'power2.in' }, snap(at));
 
   /* ── 01 · the stamp ───────────────────────────────────────────────────── */
-  tl.fromTo('#stamp .rule', { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: 'expo.out' }, 2.3);
+  tl.fromTo('#stamp .rule', { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: 'expo.out' }, 2.55);
   tl.fromTo('#stamp .word', { y: 52, opacity: 0, scale: 0.90, filter: 'blur(20px)' },
-    { y: 0, opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.60, ease: 'expo.out' }, 2.36);
+    { y: 0, opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.60, ease: 'expo.out' }, 2.61);
   tl.fromTo('#stamp .sub', { y: 26, opacity: 0 },
-    { y: 0, opacity: 1, duration: 0.46, ease: 'power2.out' }, 2.64);
-  exitUp('#stamp', 3.99);
+    { y: 0, opacity: 1, duration: 0.46, ease: 'power2.out' }, 2.89);
+  exitUp('#stamp', 3.83);
 
-  /* ── 02 · cost stack builds ───────────────────────────────────────────── */
-  enterUp('#r1', 4.40, 0.52);
-  enterUp('#r2', 6.00, 0.52);
-  enterUp('#r3', 7.50, 0.52);
-  tl.fromTo('#cpm', { x: -40, opacity: 0, filter: 'blur(14px)' },
-    { x: 0, opacity: 1, filter: 'blur(0px)', duration: 0.50, ease: 'back.out(1.3)' }, 8.40);
-  tl.fromTo('#costsA .src', { opacity: 0 }, { opacity: 1, duration: 0.36, ease: 'sine.out' }, 8.74);
-  exitUp('#costsA', 9.93);
-
-  /* ── 05 · and completes. Rows 2-3 carry over already in place. ────────── */
-  tl.set(['#r2', '#r3'], { y: 0, opacity: 1, filter: 'blur(0px)' }, 12.2);
-  tl.fromTo('#costsB', { opacity: 0, filter: 'blur(18px)' },
-    { opacity: 1, filter: 'blur(0px)', duration: 0.40, ease: 'power2.out' }, 12.2);
-  enterUp('#r4', 12.35, 0.50);
-  enterUp('#r5', 13.50, 0.50);
-  tl.fromTo('#costsB .closer', { opacity: 0, y: 18 },
-    { opacity: 1, y: 0, duration: 0.40, ease: 'power2.out' }, 14.10);
-  exitUp('#costsB', 14.51);
-
-  /* ── 07 · the two terms Sean names ────────────────────────────────────── */
-  enterUp('#tc1', 17.75, 0.54);
-  enterUp('#tc2', 18.60, 0.54);
-  exitUp('#terms', 19.33, 0.22);
+  /* ── 02 · the cost stack. One beat, landing as a summary rather than a
+     slow build, so it reads as emphasis and hands the frame straight back. ── */
+  enterUp('#r2', 10.85, 0.48);
+  enterUp('#r3', 11.80, 0.48);
+  enterUp('#r4', 12.75, 0.48);
+  enterUp('#r5', 13.70, 0.48);
+  tl.fromTo('#costs .closer', { opacity: 0, y: 18 },
+    { opacity: 1, y: 0, duration: 0.40, ease: 'power2.out' }, 14.35);
+  exitUp('#costs', 14.98);
 
   /* ── 08 · the real Profitability Dashboard ────────────────────────────── */
   tl.fromTo('#dash-wrap', { y: 90, opacity: 0, scale: 0.93, filter: 'blur(22px)' },
@@ -592,82 +516,61 @@ window.__timelines = window.__timelines || {};
 
   /* ── 09 · selling more, making less ───────────────────────────────────── */
   tl.fromTo('#sideA', { y: 70, opacity: 0, filter: 'blur(24px)' },
-    { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.56, ease: 'expo.out' }, 21.85);
+    { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.52, ease: 'expo.out' }, 21.83);
   countTo('#units', 1.00, 1.81, 22.05, 1.05, mult, 25.22);
   tl.fromTo('#sideB', { y: 70, opacity: 0, filter: 'blur(24px)' },
-    { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.56, ease: 'expo.out' }, 23.1);
+    { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.52, ease: 'expo.out' }, 22.8);
   countTo('#contrib', 59.71, 33.00, 23.35, 1.20, money, 25.22);
   tl.fromTo('#roas', { opacity: 0, scale: 0.90 },
-    { opacity: 1, scale: 1, duration: 0.40, ease: 'back.out(1.6)' }, 24.8);
+    { opacity: 1, scale: 1, duration: 0.40, ease: 'back.out(1.6)' }, 24.05);
   tl.fromTo('#contrast .src', { opacity: 0 },
-    { opacity: 1, duration: 0.34, ease: 'sine.out' }, 25);
+    { opacity: 1, duration: 0.34, ease: 'sine.out' }, 24.3);
   exitUp('#contrast', 25.22);
 
   /* ── 11 · the workbook lands ──────────────────────────────────────────── */
   tl.fromTo('#cover .holder', { y: 150, scale: 0.72, opacity: 0, filter: 'blur(26px)' },
-    { y: 0, scale: 1, opacity: 1, filter: 'blur(0px)', duration: 0.70, ease: 'expo.out' }, 26.47);
+    { y: 0, scale: 1, opacity: 1, filter: 'blur(0px)', duration: 0.70, ease: 'expo.out' }, 26.77);
   tl.fromTo('#cover .cap', { opacity: 0, y: 18 },
-    { opacity: 1, y: 0, duration: 0.42, ease: 'power2.out' }, 27.45);
+    { opacity: 1, y: 0, duration: 0.42, ease: 'power2.out' }, 27.75);
   tl.fromTo('#cover .glint i', { xPercent: 0 },
-    { xPercent: 420, duration: 0.70, ease: 'power2.inOut' }, 27.6);
+    { xPercent: 420, duration: 0.70, ease: 'power2.inOut' }, 27.9);
   tl.fromTo('#cover .freechip', { scale: 0, rotate: -14 },
-    { scale: 1, rotate: -6, duration: 0.46, ease: 'back.out(2.2)' }, 28.2);
-  exitUp('#cover', 29.6, 0.30);
-
-  /* ── 12 · the real PDF + what is inside it ────────────────────────────── */
-  tl.fromTo('#prod-wrap', { y: 90, opacity: 0, scale: 0.94, filter: 'blur(22px)' },
-    { y: 0, opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.52, ease: 'power3.out' }, 29.6);
-  tl.to('#prod-wrap', { scale: 1.03, duration: 1.85, ease: 'none' }, 30.25);
-  tl.fromTo('#stats .stat', { y: 44, opacity: 0, filter: 'blur(16px)' },
-    { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.46, ease: 'back.out(1.4)', stagger: 0.10 }, 30.4);
-  countTo('#st1', 0, 8,  30.5, 0.60, whole, 32.18);
-  countTo('#st2', 0, 32, 30.6, 0.60, whole, 32.18);
-  countTo('#st3', 0, 19, 30.7, 0.60, whole, 32.18);
-  tl.to('#prod-wrap', { opacity: 0, y: -60, filter: 'blur(24px)', duration: 0.20, ease: 'power2.in' }, 32.4);
-  exitUp('#stats', 32.4, 0.30);
+    { scale: 1, rotate: -6, duration: 0.46, ease: 'back.out(2.2)' }, 28.5);
+  exitUp('#cover', 29.35, 0.30);
 
   /* ── 13 · the real worksheet fills in on the beat ─────────────────────── */
   tl.fromTo('#worksheet .eyebrow', { opacity: 0, y: 20 },
-    { opacity: 1, y: 0, duration: 0.40, ease: 'power2.out' }, 32.46);
+    { opacity: 1, y: 0, duration: 0.40, ease: 'power2.out' }, 32.61);
   tl.fromTo('#worksheet .pageimg', { x: -70, opacity: 0, filter: 'blur(22px)' },
-    { x: 0, opacity: 1, filter: 'blur(0px)', duration: 0.54, ease: 'expo.out' }, 32.44);
+    { x: 0, opacity: 1, filter: 'blur(0px)', duration: 0.54, ease: 'expo.out' }, 32.59);
   [0, 1, 2, 3, 4, 5].forEach((i) => {
     tl.fromTo('#ln' + i, { x: 48, opacity: 0, filter: 'blur(12px)' },
       { x: 0, opacity: 1, filter: 'blur(0px)', duration: 0.34, ease: 'power3.out' },
-      snap(32.6 + i * 0.40));
+      snap(32.73 + i * 0.30));
   });
   tl.fromTo('#lnT', { x: 48, opacity: 0, scale: 0.94, filter: 'blur(16px)' },
-    { x: 0, opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.48, ease: 'back.out(1.5)' }, 35.1);
+    { x: 0, opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.48, ease: 'back.out(1.5)' }, 34.55);
   tl.fromTo('#worksheet .maxline', { opacity: 0, y: 22 },
-    { opacity: 1, y: 0, duration: 0.42, ease: 'power2.out' }, 35.6);
-  exitUp('#worksheet', 36.07);
+    { opacity: 1, y: 0, duration: 0.42, ease: 'power2.out' }, 35.05);
+  exitUp('#worksheet', 35.93);
 
   /* ── 15 · offer, inventory, marketing, follow-up ──────────────────────── */
   [0, 1, 2, 3].forEach((i) => {
-    const at = snap(37.1 + i * 1.10);
+    const at = snap(37.3 + i * 0.90);
     tl.fromTo('#chk' + i, { x: -56, opacity: 0, filter: 'blur(16px)' },
       { x: 0, opacity: 1, filter: 'blur(0px)', duration: 0.46, ease: 'expo.out' }, at);
     tl.fromTo('#chk' + i + ' .tick path', { strokeDashoffset: 30 },
       { strokeDashoffset: 0, duration: 0.34, ease: 'power2.out' }, at + 0.20);
   });
-  exitUp('#checklist', 41.36);
-
-  /* ── 17 · completely free ─────────────────────────────────────────────── */
-  tl.fromTo('#free .big', { scale: 0.80, opacity: 0, filter: 'blur(26px)' },
-    { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 0.50, ease: 'expo.out' }, 42.92);
-  tl.fromTo('#free .cap', { opacity: 0, y: 22 },
-    { opacity: 1, y: 0, duration: 0.42, ease: 'power2.out' }, 43.38);
-  tl.fromTo('#free .coverimg', { opacity: 0, y: 46, scale: 0.86 },
-    { opacity: 1, y: 0, scale: 1, duration: 0.50, ease: 'back.out(1.4)' }, 43.56);
-  exitUp('#free', 45.18, 0.30);
+  exitUp('#checklist', 41.08);
 
   /* ── 18 · end card. Audio ends at 49.13; the card holds to 53. ─── */
   tl.fromTo('#endcard .lock', { opacity: 0, y: -26, filter: 'blur(14px)' },
     { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.36, ease: 'power3.out' }, 45.2);
   tl.fromTo('#endcard .head', { opacity: 0, y: 46, filter: 'blur(20px)' },
     { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.62, ease: 'expo.out' }, 45.48);
-  tl.fromTo('#endcard .thumbrow', { opacity: 0, y: 40 },
-    { opacity: 1, y: 0, duration: 0.52, ease: 'power2.out' }, 45.88);
+  tl.fromTo('#endcard .meta', { opacity: 0, y: 30 },
+    { opacity: 1, y: 0, duration: 0.48, ease: 'power2.out' }, 45.84);
   tl.fromTo('#endcard .pill', { opacity: 0, scale: 0.80 },
     { opacity: 1, scale: 1, duration: 0.52, ease: 'back.out(1.7)' }, 46.4);
   tl.to('#endcard .pill', { scale: 1.035, duration: 1.05, ease: 'sine.inOut',

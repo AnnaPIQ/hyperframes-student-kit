@@ -35,16 +35,24 @@ timing and copy can't drift apart between them.
 |---|---|---|
 | `assets/aroll/sean-9x16.mp4`, `sean-4x5.mp4` | A-roll, muted, centre-cropped | no — 70 MB, rebuild with `fetch-and-prep.sh` |
 | `assets/aroll/sean-vo.m4a` | the full VO, normalised to −16 LUFS | yes |
-| `assets/broll/*.mp4` | real screen recordings: the workbook PDF and the Profitability Dashboard | yes |
-| `assets/pages/*.png` | real page renders out of the workbook PDF (cover + the contribution-margin page) | yes |
+| `assets/broll/dashboard.mp4` | real screen recording of the Profitability Dashboard sheet | yes |
+| `assets/pages/*.png` | real page renders out of the workbook PDF: the cover and the contribution-margin page | yes |
 | `assets/music/music-bed.m4a` | silent duckable placeholder, wired at `data-volume="0.14"` | yes |
 
 B-roll and page renders came from two sibling branches:
 `claude/cool-allen-8hees7` (`video-projects/ecomiq-broll/`) and
 `claude/wonderful-curie-brnfzl` (`video-projects/bf-workbook-broll/`). Only the
 clips and pages this ad actually uses are committed here; those branches also
-carry the True CAC calculator recording, the 2026 calendar page, the page fan
-and the rest of the PDF, if a revision needs them.
+carry the workbook-PDF scroll, the True CAC calculator recording, the 2026
+calendar page, the page fan and the rest of the PDF, if a revision needs them.
+
+## Graphics are for emphasis only
+
+Six graphic beats across 53s, covering **46%** of the pre-card runtime; Sean
+carries the other **54%** clean. A graphic appears only where a word needs
+weight or a number has to be seen, never to restate what he just said. The
+first cut ran graphics over 78% of the runtime and was pulled back — see
+`EDIT_PLAN.md` §3 for what was dropped and why.
 
 ## Two things worth knowing
 
