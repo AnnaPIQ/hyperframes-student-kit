@@ -3,7 +3,8 @@
  * single spec, so 9:16 and 4:5 can never drift apart on timing or copy.
  *
  *   node scripts/build-compositions.mjs
- *     -> compositions/ad-9x16.html   (1080x1920)
+ *     -> index.html                 (1080x1920, the primary ratio — hyperframes
+ *                                    lint requires a root index.html)
  *     -> compositions/ad-4x5.html    (1080x1350)
  *
  * Every cut time below is a measured pause in Sean's delivery (ffmpeg
