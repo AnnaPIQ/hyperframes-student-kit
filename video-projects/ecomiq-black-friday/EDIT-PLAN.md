@@ -107,7 +107,12 @@ gap, so no cut lands mid-word.
 | S4 | 30.42–34.40 | **Workbook b-roll** | The cover, under "a free Black Friday workbook" |
 | S5 | 34.40–39.00 | End card | Lands on "Link is below" (34.55); voice ends 35.40, holds 3.6s after |
 
-Questions land at 5.12 / 7.85 / 10.43, each as Sean asks it.
+Questions land at 5.12 / 7.85 / 10.43, each as Sean asks it. Copy, shortened on
+review so each fits one line:
+
+1. How much do you want to make?
+2. How much can you spend to get the order?
+3. How far can you afford to discount?
 
 **Persistent:** EcomIQ logo top-left on every frame, stepping back to 30% opacity
 on the end card so the hero lockup leads.

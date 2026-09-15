@@ -51,13 +51,13 @@ const overrides = `
         --pad: 64px;
         --logo-w: 176px;
         --safe-bottom: 150px;   /* reserved subtitle band — 11% of 1350 */
-        --q-fs: 30px;
+        --q-fs: 32px;
         --title-fs: 88px;
       }
       #logo-wrap { top: 52px; }
       .eyebrow { font-size: 23px; }
 
-      .panel-inner { border-radius: 26px; padding: 28px 32px 24px; }
+      .panel-inner { border-radius: 26px; padding: 28px 28px 24px; }
       .panel .eyebrow { font-size: 21px; }
       .panel-rule { margin: 12px 0 14px; }
       .q-in { padding: 10px 0; gap: 18px; }
