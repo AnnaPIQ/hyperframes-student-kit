@@ -96,19 +96,6 @@
         pointer-events: none;
         background: radial-gradient(72% 76% at 46% 44%, rgba(1, 8, 18, 0) 42%, rgba(1, 8, 18, 0.72) 100%);
       }
-      /* Deterministic CSS grain — denser and a touch warm, so paper reads as paper */
-      #grain {
-        position: absolute;
-        inset: 0;
-        z-index: 41;
-        pointer-events: none;
-        background-image:
-          radial-gradient(rgba(255, 246, 236, 0.05) 1px, rgba(255, 255, 255, 0) 1px),
-          radial-gradient(rgba(255, 255, 255, 0.035) 1px, rgba(255, 255, 255, 0) 1px),
-          radial-gradient(rgba(0, 0, 0, 0.07) 1px, rgba(0, 0, 0, 0) 1px);
-        background-size: 3px 3px, 4px 4px, 6px 6px;
-        background-position: 0 0, 1px 2px, 2px 1px;
-      }
     </style>
   </head>
   <body>
@@ -192,7 +179,6 @@
       <div class="bloom" id="bl-7"></div>
 
       <div id="vignette"></div>
-      <div id="grain"></div>
     </div>
 
     <script>

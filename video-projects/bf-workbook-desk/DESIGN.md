@@ -23,10 +23,9 @@ beat for this version.
 | **Shadows** | Every object gets two: a tight dark contact shadow (short offset, ~20px blur) and a wide ambient one (~90px blur, low alpha). The pair is what sells weight. |
 | **Depth of field** | One sharp focal plane. Out-of-focus paper edges sit in the foreground on several shots. |
 | **Camera** | Never axis-aligned. The desk plane is tilted and the camera drifts on a slow sine — handheld, not locked off. |
-| **Grain** | Denser than v1 and slightly warm, so white paper reads as paper. |
 
 No perspective grid and no crosshairs — that is v1's texture. The unifying
-texture here is surface + raking light + shadow + grain.
+texture here is surface + raking light + shadow.
 
 ## Colors — the same five, but light does the work
 `#071d35` desk · `#FFFFFF` paper · `#9CD4FF` cool light · `#DEEEFE` the fields ·

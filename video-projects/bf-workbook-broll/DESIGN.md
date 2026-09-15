@@ -43,8 +43,8 @@ because a raster crop can't do that and a seam between crop and overlay would sh
 - Both load from local `.woff2`. No network at render time.
 
 ## Motion rules
-- Unifying texture on every frame: perspective grid + crosshairs + vignette +
-  CSS grain, all in the root so it runs continuously under every scene.
+- Unifying texture on every frame: perspective grid + crosshairs + vignette, all
+  in the root so it runs continuously under every scene.
 - Camera never sleeps — every shot has a slow push, drift or parallax.
 - Scenes overlap by 0.4s on ascending z-index; the incoming scene rises and
   un-blurs over the outgoing one, and a flame light-streak crosses the seam.
