@@ -1,0 +1,4 @@
+# The normalised A-roll crops are ~70 MB and fully derived — rebuild them with
+# `bash scripts/fetch-and-prep.sh`. The VO (1.2 MB) IS committed, so the audio
+# spine survives without re-pulling the 3.35 GB ProRes master from Drive.
+assets/aroll/*.mp4

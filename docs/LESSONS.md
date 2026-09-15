@@ -77,6 +77,57 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## Brand assets
+
+- **`ecomiq-logo-white.svg` renders with an inverted icon in the render engine.** The
+  mark is drawn with a `mask-type:luminance` mask and off-canvas path coordinates;
+  headless Chrome resolves it differently from a design tool, so the icon lands as a
+  dark block on navy instead of a white block with the navy motif inside. It is not
+  obvious at corner-logo size and very obvious at end-card size. **Fix:** use
+  `ecomiq-logo-white.png` (1671×286, has alpha) for both the corner logo and the
+  lockup. Check any new SVG logo by rendering a frame, not by opening it in a viewer.
+
+## Layout
+
+- **Scaling an A-roll `<video>` wrapper below 1.0 exposes the frame edge as navy
+  bars on all four sides.** "Push the footage back" as a state change looks right in
+  the abstract and wrong in the render. **Fix:** always push *in* (scale > 1.0) and
+  carry the state change on an overlay's opacity instead. Same read, no bars.
+
+## Render-breaking
+
+- **`--video-frame-format png` fills the container disk on long vertical footage.**
+  Extracting a 46s 1080×1920 A-roll to PNG is ~4–5 GB of frame cache, on top of a
+  ~12 GB allowance. **Fix:** only pass it when a *video* source is text-heavy UI shown
+  near native scale. Images (`<img>` page renders, covers) are unaffected by the flag,
+  so text crispness from stills costs nothing.
+
+## Compositions
+
+- **Assets referenced from a file in `compositions/` must be root-relative.** `../assets/…`
+  lints as an error (`invalid_parent_traversal_in_asset_path`) — compositions are served
+  with the *project root* as their base URL, so write `assets/…` even from a subfolder.
+- **An `id` that starts with a digit breaks `querySelector`.** `id="9x16-r1"` makes
+  `#9x16-r1` a SyntaxError. Don't derive element ids from a ratio key like `9x16`.
+- **A GSAP count-up leaves the final value on screen for barely a frame if the tween
+  ends near the clip's end.** Plan the count to *land* ~1s before the clip ends, and add
+  a trailing zero-delta tween that keeps writing the final value — otherwise a re-created
+  clip element reverts to its HTML default. (Shipped `8 / 31 / 17` instead of
+  `8 / 32 / 19` on the first draft.)
+- **Two tweens touching the same property with adjacent start/end times trip
+  `overlapping_gsap_tweens`.** An entrance ending at t and a slow push starting at t
+  count as overlapping — leave a frame or two of daylight between them.
+
+## Sourcing
+
+- **Google Drive files over ~100 MB return a virus-scan interstitial, not the file.**
+  A plain `drive.usercontent.google.com/download?id=…&export=download` gives HTML.
+  **Fix:** scrape `uuid` out of the interstitial's form and replay with
+  `&confirm=t&uuid=<uuid>`. Verify the first bytes are the real container before using it.
+- **Don't pull a multi-GB Drive file through the MCP connector** — `download_file_content`
+  returns base64 into context. Use the connector to *resolve* the file (title, size, mime)
+  and `curl` to fetch the bytes.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
