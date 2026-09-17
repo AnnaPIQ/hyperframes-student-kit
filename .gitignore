@@ -29,6 +29,17 @@ raw-media/
 assets/incoming/*
 !assets/incoming/README.md
 
+# Raw master downloads (multi-GB Drive pulls; re-fetch with a project's pull-media.sh)
+.dl/
+
+# Generated ratio builds — make-ratios.py re-emits these from the master index.html
+video-projects/*/build/
+
+# Derived montage cuts — seconds of ffmpeg off the committed 9:16 master
+# (scripts/prep-assets.sh regenerates them; the slow retime is skipped)
+video-projects/*/assets/montage-4x5.mp4
+video-projects/*/assets/montage-4x5-crop.mp4
+
 # Playwright browser profiles
 .playwright-profile/
 

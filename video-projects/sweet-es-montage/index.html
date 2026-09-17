@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>sweet-es-montage</title>
+    <!-- GSAP vendored locally — a CDN script cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts only — no render-time network fetch. Named literally, not
+         via var(), because the linter does not resolve custom properties. */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      /* Hedvig Letters Serif ships upright only — there is no italic cut. It is
+         declared as the NORMAL face so the browser synthesises the oblique the
+         emphasis word asks for; declaring it as the italic face would map the
+         upright file straight onto font-style:italic and the word would come
+         out unslanted. */
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      /* ---- ratio metrics · scripts/make-ratios.py rewrites this block ---- */
+      :root {
+        --band-bottom: 590px;   /* band baseline — keeps every graphic above the subtitle zone */
+        --band-pad: 64px;
+        --logo-top: 74px;   --logo-left: 74px;   --logo-w: 300px;
+        --eyebrow: 30px;    --figure: 178px;     --label: 40px;
+        --name: 76px;       --statement: 62px;   --barh: 64px;
+        --end-logo: 660px;  --end-line: 76px;    --end-pill: 40px;
+        --end-top: 230px;   --end-bottom: 500px;
+        --cap-w: 250px;     --bar1: 150px;       --bar3: 450px;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-white); }
+
+      /* ---- canvas -------------------------------------------------------- */
+      #bg { position: absolute; inset: 0;
+        background: radial-gradient(90% 50% at 50% 18%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 58%),
+          var(--brand-navy); }
+
+      /* ---- the montage — the spine of the piece --------------------------
+         The wrapper is a plain positioned div (never a clip, so the engine
+         cannot reposition it). Rule 9: never animate width/height/top/left on
+         a <video> itself. The montage carries its own camera movement, so it
+         gets no added drift — a global zoom across 21 internal cuts would read
+         as each successive shot being punched in further. */
+      #shot { position: absolute; inset: 0; overflow: hidden; }
+      #shot video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+      /* ---- proof bands ---------------------------------------------------
+         The montage is the spine, so nothing takes the frame away from it
+         until the end card. Each proof point lands in a navy band inset on
+         the footage: the top half of the frame always stays clean picture,
+         and every band bottoms out above the subtitle zone. */
+      /* The wrapper is a plain positioned div — never a clip, so the render
+         engine cannot reposition it — and is what GSAP animates. The band
+         itself only carries layout. */
+      .bandwrap { position: absolute; inset: 0; opacity: 0; }
+      .band { position: absolute; left: var(--band-pad); right: var(--band-pad);
+        bottom: var(--band-bottom);
+        background: linear-gradient(180deg, rgba(6,40,76,.93) 0%, rgba(6,40,76,.97) 100%);
+        border: 1px solid rgba(156,212,255,.22); border-radius: 28px;
+        padding: 44px 52px 48px; text-align: center;
+        box-shadow: 0 34px 90px -30px rgba(2,10,20,.85); }
+      /* The flame hairline that tops every band — the one hot accent. */
+      .band::before { content: ''; position: absolute; left: 52px; top: -3px; width: 120px;
+        height: 6px; background: var(--brand-flame); border-radius: 3px; }
+
+      /* Hidden states live in CSS as opacity:0 — tl.set(…, 0) does not render
+         on frame 0. Every entrance uses gsap.fromTo. */
+      .bandwrap, .eyebrow, .figure, .label, .name, .statement, .barrow, .hair,
+      #endCard, #endLogo, #endLine, #endPill { opacity: 0; }
+
+      .eyebrow { font-weight: 800; font-size: var(--eyebrow); letter-spacing: .20em;
+        text-transform: uppercase; color: var(--brand-blue-tint); }
+      .figure { font-weight: 800; font-size: var(--figure); line-height: .92;
+        letter-spacing: -.03em; margin-top: 16px; font-variant-numeric: tabular-nums; }
+      .hair { width: 150px; height: 4px; background: var(--brand-flame);
+        margin: 22px auto 20px; border-radius: 2px; transform-origin: 50% 50%; }
+      .label { font-weight: 800; font-size: var(--label); letter-spacing: .07em;
+        text-transform: uppercase; line-height: 1.18; }
+      /* Statement bands: sentence-weight type, no figure. */
+      .statement { font-weight: 800; font-size: var(--statement); line-height: 1.04;
+        letter-spacing: -.02em; margin-top: 14px; }
+      /* Client roster — set as type. Each name lands on its own spoken onset. */
+      .name { font-weight: 800; font-size: var(--name); line-height: 1.16;
+        letter-spacing: -.02em; }
+
+      /* Labelled bars at a true 1:3 ratio — flex: 0 0 auto everywhere, or the
+         row silently shrinks a bar and the ratio stops being the real ratio. */
+      .bars { margin-top: 20px; }
+      .barrow { display: flex; align-items: center; gap: 22px; margin: 16px 0; }
+      .barrow .cap { flex: 0 0 var(--cap-w); width: var(--cap-w); font-weight: 800; font-size: 26px;
+        letter-spacing: .09em; text-transform: uppercase; text-align: right; }
+      .bar { flex: 0 0 auto; height: var(--barh); background: var(--brand-blue-tint);
+        border-radius: 6px; transform: scaleX(0); transform-origin: 0 50%; }
+      .barrow .mult { flex: 0 0 auto; font-weight: 800; font-size: 40px; }
+      #eBar1 { width: var(--bar1); }   /* 1x */
+      #eBar3 { width: var(--bar3); }   /* 3x — exactly three times #eBar1 */
+
+      /* ---- end card ------------------------------------------------------ */
+      #endWrap { position: absolute; inset: 0; }
+      #endCard { position: absolute; inset: 0; background: var(--brand-navy); }
+      #endCard::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(78% 44% at 50% 34%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 60%); }
+      #endInner { position: absolute; left: 0; right: 0; top: var(--end-top); bottom: var(--end-bottom);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        padding: 0 90px; text-align: center; }
+      #endLogo { width: var(--end-logo); height: auto; }
+      #endLine { font-weight: 800; font-size: var(--end-line); letter-spacing: -.02em;
+        line-height: 1.06; margin-top: 78px; }
+      /* The one italic-serif emphasis word in the whole piece — the EcomIQ signature. */
+      #endLine .em { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
+        font-weight: 400; letter-spacing: -.01em; color: var(--brand-blue-tint); }
+      #endPill { margin-top: 66px; font-weight: 800; font-size: var(--end-pill);
+        color: var(--brand-white); background: var(--brand-flame);
+        padding: 30px 64px; border-radius: 999px;
+        box-shadow: 0 26px 70px -18px rgba(255,76,50,.62); }
+
+      /* ---- constants on every frame -------------------------------------- */
+      #vignette { position: absolute; inset: 0; pointer-events: none;
+        /* Deliberately gentle: a heavy navy vignette turns bright bakery
+           footage muddy blue-grey. */
+        background:
+          radial-gradient(46% 24% at 9% 6%, rgba(2,12,26,.50) 0%, rgba(2,12,26,0) 100%),
+          radial-gradient(ellipse 92% 76% at 50% 44%,
+            rgba(3,16,32,0) 56%, rgba(3,16,32,.18) 83%, rgba(2,10,20,.44) 100%); }
+      /* Deterministic CSS grain — three tiles, no PNG, no repeat:-1 */
+      #grain { position: absolute; inset: 0; pointer-events: none;
+        background-image:
+          radial-gradient(rgba(255,255,255,.030) 1px, transparent 1px),
+          radial-gradient(rgba(255,255,255,.020) 1px, transparent 1px),
+          radial-gradient(rgba(255,255,255,.015) 1px, transparent 1px);
+        background-size: 3px 3px, 5px 5px, 7px 7px;
+        background-position: 0 0, 1px 2px, 3px 1px; }
+      /* Logo lives inside a positioned non-clip wrapper so it cannot drift. */
+      #logoWrap { position: absolute; top: var(--logo-top); left: var(--logo-left);
+        width: var(--logo-w); filter: drop-shadow(0 6px 26px rgba(2,10,20,.6)); }
+      #logoWrap img { width: 100%; height: auto; display: block; }
+    </style>
+  </head>
+  <body>
+    <!-- The root deliberately carries NO data-start. With an inline
+         <video data-start=...> present, a data-start on the root trips
+         video_nested_in_timed_element and Studio preview dies at 0:00 (see
+         scripts/preflight.mjs). Lint is clean either way; omitting it is the
+         combination that passes both gates. -->
+    <div id="root" data-composition-id="sweet-es-montage" data-duration="46.2"
+         data-width="1080" data-height="1920">
+
+      <div id="bg" class="clip" data-start="0" data-duration="46.2" data-track-index="0"></div>
+
+      <!-- ================= THE MONTAGE ================= -->
+      <!-- 38.60s: carries the voiceover to the end card at 38.10 plus the
+           0.50s the card dissolves up over it. Muted — the montage master is
+           digital silence (-91 dB), so the mixer is fed by <audio> alone. -->
+      <div id="shot">
+        <video id="montage" src="assets/montage-9x16.mp4" muted
+          data-start="0" data-duration="38.53" data-track-index="1" data-media-start="0"></video>
+      </div>
+
+      <!-- ================= PROOF BANDS ================= -->
+      <!-- O1 · who we are watching -->
+      <div class="bandwrap" id="b1w"><div class="band clip" id="b1" data-start="0.40" data-duration="3.20" data-track-index="10">
+        <div class="eyebrow" id="b1Eye">An EcomIQ client</div>
+        <div class="statement" id="b1Name">Sweet E&rsquo;s Bake Shop</div>
+        <div class="hair" id="b1Hair"></div>
+        <div class="label" id="b1Lab">Los Angeles, California</div>
+      </div>
+      </div>
+
+      <!-- O2 · the figure. "10,000" is spoken at 7.45, "20,000" at 8.60. -->
+      <div class="bandwrap" id="b2w"><div class="band clip" id="b2" data-start="7.25" data-duration="3.95" data-track-index="11">
+        <div class="eyebrow" id="b2Eye">Your logo. Your photo.</div>
+        <div class="figure" id="b2Fig">10,000</div>
+        <div class="hair" id="b2Hair"></div>
+        <div class="label" id="b2Lab">Cookies. No problem.</div>
+      </div>
+      </div>
+
+      <!-- O3 · the roster. Set as type: no third-party logo is redrawn or
+           recoloured anywhere in the piece. Each name lands on its onset. -->
+      <div class="bandwrap" id="b3w"><div class="band clip" id="b3" data-start="12.05" data-duration="4.35" data-track-index="12">
+        <div class="eyebrow" id="b3Eye">They make for</div>
+        <div class="hair" id="b3Hair"></div>
+        <div class="name" id="b3N1">Nordstrom</div>
+        <div class="name" id="b3N2">Tory Burch</div>
+        <div class="name" id="b3N3">Beyond Yoga</div>
+        <div class="name" id="b3N4">The Lakers</div>
+      </div>
+      </div>
+
+      <!-- O4 · the claim, under "custom work at scale" -->
+      <div class="bandwrap" id="b4w"><div class="band clip" id="b4" data-start="17.30" data-duration="3.60" data-track-index="13">
+        <div class="eyebrow" id="b4Eye">Custom work at a scale</div>
+        <div class="statement" id="b4Line">Almost nobody else can touch.</div>
+      </div>
+      </div>
+
+      <!-- O5 · under "made in LA in hours" -->
+      <div class="bandwrap" id="b5w"><div class="band clip" id="b5" data-start="22.00" data-duration="2.20" data-track-index="14">
+        <div class="eyebrow" id="b5Eye">Made in LA</div>
+        <div class="statement" id="b5Line">Out the door in hours.</div>
+      </div>
+      </div>
+
+      <!-- O6 · "over four years" is spoken at 26.50 -->
+      <div class="bandwrap" id="b6w"><div class="band clip" id="b6" data-start="26.35" data-duration="2.85" data-track-index="15">
+        <div class="eyebrow" id="b6Eye">A brand we have worked with for</div>
+        <div class="figure" id="b6Fig">Four years</div>
+        <div class="hair" id="b6Hair"></div>
+        <div class="label" id="b6Lab">And counting</div>
+      </div>
+      </div>
+
+      <!-- O7 · "three times" is spoken at 32.18 -->
+      <div class="bandwrap" id="b7w"><div class="band clip" id="b7" data-start="32.00" data-duration="3.40" data-track-index="16">
+        <div class="eyebrow" id="b7Eye">Demand outgrew the old space</div>
+        <div class="figure" id="b7Fig">3&times; the size</div>
+        <div class="bars">
+          <div class="barrow" id="b7R1"><div class="cap">Old facility</div>
+            <div class="bar" id="eBar1"></div><div class="mult">1&times;</div></div>
+          <div class="barrow" id="b7R2"><div class="cap">New facility</div>
+            <div class="bar" id="eBar3"></div><div class="mult">3&times;</div></div>
+        </div>
+      </div>
+      </div>
+
+      <!-- ================= END CARD ================= -->
+      <!-- Comes up under "if you want us in your corner" (spoken 38.32) and
+           holds 4.64s after the last word. -->
+      <div id="endWrap">
+        <div id="endCard" class="clip" data-start="38.10" data-duration="8.10" data-track-index="20">
+          <div id="endInner">
+            <img id="endLogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+            <div id="endLine">Want us in your <span class="em">corner</span>?</div>
+            <div id="endPill">Find out more</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= CONSTANTS ================= -->
+      <div id="vignette" class="clip" data-start="0" data-duration="46.2" data-track-index="30"></div>
+      <div id="grain" class="clip" data-start="0" data-duration="46.2" data-track-index="31"></div>
+      <div id="logoWrap"><img id="logo" class="clip" data-start="0" data-duration="38.53"
+        data-track-index="32" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+
+      <!-- The voiceover. The complete read, dead air trimmed off both ends.
+           Audio and video share one track-index space. -->
+      <audio id="vo" src="assets/vo.m4a" data-start="0" data-duration="41.9" data-track-index="41"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const DUR = 46.2;
+      const tl = gsap.timeline({ paused: true });
+
+      /* Word onsets below are measured from assets/vo.m4a itself (whisper
+         small.en, word level), not from a pasted script — the shipped audio is
+         the timebase. Every band leads its spoken word by ~0.15-0.20s, which
+         reads as inevitable rather than late.
+
+         No figure is ever counted up from 0: a counter puts numbers on screen
+         that are not the real number. Figures land whole, on the spoken word.
+         The one text change in the piece (10,000 -> 20,000) is driven by an
+         onUpdate that is a pure function of band-local time, so every seek is
+         correct and the render stays deterministic. tl.call() never fires
+         under render and is used nowhere. */
+
+      /* Entrance: rises into place. Never a fade-only, and never letterSpacing
+         (lint rejects it) — tracking is static in CSS. */
+      function rise(sel, at, y, dur) {
+        tl.fromTo(sel, { opacity: 0, y: y === undefined ? 24 : y },
+          { opacity: 1, y: 0, duration: dur || 0.4, ease: 'power3.out' }, at);
+      }
+      function hair(sel, at) {
+        tl.fromTo(sel, { opacity: 0, scaleX: 0 },
+          { opacity: 1, scaleX: 1, duration: 0.4, ease: 'power3.out' }, at);
+      }
+
+      /* Bands push in and push out on movement alone — no flash, no bright
+         element, nothing that competes with the footage underneath. */
+      const BANDS = [
+        ['#b1w', 0.40, 3.20], ['#b2w', 7.25, 3.95], ['#b3w', 12.05, 4.35],
+        ['#b4w', 17.30, 3.60], ['#b5w', 22.00, 2.20], ['#b6w', 26.35, 2.85],
+        ['#b7w', 32.00, 3.40]
+      ];
+      BANDS.forEach(function (spec) {
+        const sel = spec[0], at = spec[1], dur = spec[2];
+        tl.fromTo(sel, { opacity: 0, yPercent: 14, scale: 0.97, filter: 'blur(8px)' },
+          { opacity: 1, yPercent: 0, scale: 1, filter: 'blur(0px)',
+            duration: 0.4, ease: 'power3.out' }, at);
+        tl.to(sel, { opacity: 0, yPercent: -8, scale: 0.99, filter: 'blur(8px)',
+          duration: 0.3, ease: 'power2.in' }, at + dur - 0.3);
+      });
+
+      /* ===== O1 · Sweet E's Bake Shop · 0.40 ===== */
+      rise('#b1Eye', 0.5, 14, 0.3);
+      rise('#b1Name', 0.64, 22, 0.42);
+      hair('#b1Hair', 0.92);
+      rise('#b1Lab', 1.0, 14, 0.34);
+
+      /* ===== O2 · 10,000 -> 20,000 · spoken 7.45 / 8.60 ===== */
+      rise('#b2Eye', 7.35, 14, 0.3);
+      (function () {
+        const el = document.querySelector('#b2Fig'), o = { p: 0 }, SPAN = 3.95;
+        el.textContent = '10,000';
+        tl.to(o, { p: 1, duration: SPAN, ease: 'none',
+          onUpdate: function () { el.textContent = o.p * SPAN < 1.35 ? '10,000' : '20,000'; } }, 7.25);
+      })();
+      tl.fromTo('#b2Fig', { opacity: 0, scale: 0.84, y: 22 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.42, ease: 'back.out(1.6)' }, 7.45);
+      /* the punch on "20,000" */
+      tl.to('#b2Fig', { scale: 1.08, duration: 0.2, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 8.6);
+      hair('#b2Hair', 9.0);
+      rise('#b2Lab', 9.1, 14, 0.34);
+      tl.to('#b2Fig', { scale: 1.014, duration: 1.4, ease: 'sine.inOut' }, 9.4);
+
+      /* ===== O3 · roster · Nordstrom 12.26 · Tory Burch 12.88 ·
+                    Beyond Yoga 13.96 · The Lakers 15.24 ===== */
+      rise('#b3Eye', 12.15, 14, 0.3);
+      hair('#b3Hair', 12.25);
+      [['#b3N1', 12.30], ['#b3N2', 12.92], ['#b3N3', 14.00], ['#b3N4', 15.28]].forEach(function (n) {
+        tl.fromTo(n[0], { opacity: 0, y: 24, scale: 0.95 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: 'back.out(1.4)' }, n[1]);
+      });
+
+      /* ===== O4 · custom work at scale · spoken 16.55 / 18.78 ===== */
+      rise('#b4Eye', 17.4, 14, 0.3);
+      rise('#b4Line', 17.56, 22, 0.44);
+
+      /* ===== O5 · made in LA, out the door in hours · spoken 22.14 / 23.20 ===== */
+      rise('#b5Eye', 22.1, 14, 0.3);
+      rise('#b5Line', 22.26, 22, 0.44);
+
+      /* ===== O6 · four years · spoken 26.50 ===== */
+      rise('#b6Eye', 26.45, 14, 0.3);
+      tl.fromTo('#b6Fig', { opacity: 0, scale: 0.86, y: 22 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.46, ease: 'back.out(1.5)' }, 26.6);
+      hair('#b6Hair', 27.1);
+      rise('#b6Lab', 27.2, 14, 0.34);
+      tl.to('#b6Fig', { scale: 1.014, duration: 1.3, ease: 'sine.inOut' }, 27.5);
+
+      /* ===== O7 · 3x the size · spoken 32.18 ===== */
+      rise('#b7Eye', 32.1, 14, 0.3);
+      tl.fromTo('#b7Fig', { opacity: 0, y: 26, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'back.out(1.5)' }, 32.24);
+      tl.fromTo('#b7R1', { opacity: 0, x: -24 },
+        { opacity: 1, x: 0, duration: 0.4, ease: 'power3.out' }, 32.8);
+      tl.fromTo('#eBar1', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, 32.86);
+      tl.fromTo('#b7R2', { opacity: 0, x: -24 },
+        { opacity: 1, x: 0, duration: 0.4, ease: 'power3.out' }, 33.1);
+      tl.fromTo('#eBar3', { scaleX: 0 }, { scaleX: 1, duration: 0.76, ease: 'power2.out' }, 33.16);
+      tl.to('#b7Fig', { scale: 1.014, duration: 1.3, ease: 'sine.inOut' }, 33.9);
+
+      /* ===== END CARD · 38.10, under "if you want us in your corner" =====
+         Dissolves up over the montage, which keeps playing underneath for the
+         full 0.50s rather than cutting to a hard edge. */
+      const X = 38.1;
+      tl.fromTo('#endCard', { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'sine.inOut' }, X);
+      /* the logo bug hands over to the end card's own lockup */
+      tl.to('#logoWrap', { opacity: 0, duration: 0.3, ease: 'power2.in' }, X);
+      tl.fromTo('#endLogo', { opacity: 0, scale: 0.94, y: 16 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.44, ease: 'power3.out' }, X + 0.3);
+      rise('#endLine', X + 0.78, 20, 0.44);
+      tl.fromTo('#endPill', { opacity: 0, scale: 0.86 },
+        { opacity: 1, scale: 1, duration: 0.52, ease: 'back.out(1.7)' }, X + 1.5);
+      /* Breathing hold — bounded repeats only, never repeat:-1 */
+      tl.to('#endPill', { scale: 1.035, duration: 1.15, yoyo: true, repeat: 3, ease: 'sine.inOut' }, X + 2.4);
+      tl.to('#endLogo', { scale: 1.018, duration: 5.6, ease: 'sine.inOut' }, X + 0.9);
+
+      /* Duration anchor — the composition must fill its slot exactly (Law 11). */
+      tl.to({}, { duration: DUR }, 0);
+      window.__timelines['sweet-es-montage'] = tl;
+    </script>
+  </body>
+</html>

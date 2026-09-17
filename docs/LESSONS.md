@@ -77,6 +77,56 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## Environment (this container)
+
+- **A render started with `nohup … &` inside a Bash tool call dies partway**
+  with `render_cancelled_parent_exited`. The tool's shell is the parent and it
+  exits as soon as the call returns. **Fix:** start long renders with the Bash
+  tool's own `run_in_background`, not with `nohup`/`&` inside a foreground call.
+- **`playwright.chromium.launch()` fails with "Executable doesn't exist at
+  …chromium_headless_shell-1217…".** The bundled Playwright version and the
+  browsers under `/opt/pw-browsers` are different revisions. **Fix:** resolve an
+  executable yourself and pass `executablePath` — `/opt/pw-browsers/chromium*`
+  or the hyperframes cache at
+  `/root/.cache/hyperframes/chrome/*/chrome-headless-shell-linux64/`. Never run
+  `playwright install` (it re-downloads ~200MB into a fixed-size disk).
+- **Google Drive files over ~100MB return an HTML virus-scan interstitial**, not
+  the file, so `curl` lands a 2KB page named `whatever.mov`. **Fix:** fetch
+  `https://drive.usercontent.google.com/download?id=<id>&export=download&confirm=t`
+  and guard on the expected byte size — an HTML page is ~KB, not ~GB.
+
+## Measuring a composition without rendering it
+
+- **`gsap.fromTo` has `immediateRender: true`, so the from-state is applied the
+  moment the page loads.** Any static layout measurement (Playwright bounding
+  boxes) therefore reads each element at its *entrance offset*, not where it
+  rests — an element entering from `yPercent: 14` measures 14% of its own
+  height too low, so band heights and safe-area checks all come out wrong.
+  **Fix:** inject `transform: none !important` alongside `opacity: 1` before
+  measuring. Worth doing: a Playwright pass that asserts safe-area clearance,
+  overflow and chart ratios costs seconds and catches what a render would cost
+  minutes to show you.
+
+## Fonts
+
+- **Hedvig Letters Serif ships upright only — there is no italic cut.** Declare
+  the `@font-face` as `font-style: normal` and let the browser synthesise the
+  oblique for `font-style: italic`. Declaring the face as `italic` maps the
+  upright file straight onto italic requests, and the brand's signature emphasis
+  word renders unslanted — lint passes, the frame is wrong.
+
+## Retiming footage to fit a voiceover
+
+- **A montage that is shorter than the VO should be retimed, not looped or
+  frozen.** `setpts=<f>*PTS` alone re-uses source frames, so at 0.776× you get a
+  5:4 frame cadence that judders on handheld shots. **Fix:** add
+  `minterpolate=fps=30:mi_mode=mci:mc_mode=aobmc:vsbmc=1`. Budget ~10 min per
+  30s of 1080×1920 at ~1.2× realtime, and run it in the background.
+- **Check the retimed asset's real duration before wiring `data-duration`.**
+  `setpts` lands on a frame boundary, so 29.967s × 1.288107 comes out at
+  38.533s, not the 38.600s the arithmetic promised. A `data-duration` longer
+  than the asset freezes its last frames.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
