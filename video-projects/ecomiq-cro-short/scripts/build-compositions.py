@@ -2,9 +2,6 @@
 """
 build-compositions.py — generate the EcomIQ CRO short composition for each ratio.
 
-One source of truth for the edit; only the frame size and a handful of layout
-numbers change per ratio. Writes:
-
     python3 scripts/build-compositions.py --ratio 4x5
 
 A Hyperframes project must have exactly ONE root composition: the runtime
@@ -17,7 +14,7 @@ meta.json is rewritten to match, so the project metadata never disagrees with th
 composition actually on disk.
 
 Timing is fixed by Sean's VO and the approved EDIT-PLAN.md:
-  0.0000 -> 15.4333   montage cutdown (18 shots, hard cuts + 3 act dissolves)
+  0.0000 -> 15.4333   montage cutdown (11 shots, hard cuts + 3 act dissolves)
  14.9600 -> 15.3633   cross-dissolve to the end card, resolving on the word "Stop"
  15.3633 -> 21.6000   end card holds under the rest of the VO
 """
@@ -26,23 +23,24 @@ from pathlib import Path
 
 PROJECT = Path(__file__).resolve().parent.parent
 
-TOTAL      = 21.600   # full VO
+TOTAL      = 21.600     # full VO
 MONTAGE    = 15.433333  # 463 frames @30
-CARD_IN    = 14.960   # cross-dissolve starts
+CARD_IN    = 14.960     # cross-dissolve starts
 CARD_FULL  = 15.363333  # card fully opaque, onset of "Stop"
 LOGO_IN    = 0.400
 LOGO_OUT   = 14.700
+GUARANTEE  = 17.750     # Sean says "Guaranteed"; the card word pulses with it
 
 RATIOS = {
     "9x16": dict(w=1080, h=1920, comp="ecomiq-cro-short",
                  logo_w=300, pad=72,
-                 card_logo=560, card_btn=46, card_gap=96, mark=980, lift=0.02),
+                 card_logo=440, head=64, em=72, card_btn=44, card_gap=58, lift=0.0),
     "4x5":  dict(w=1080, h=1350, comp="ecomiq-cro-4x5",
                  logo_w=280, pad=64,
-                 card_logo=520, card_btn=42, card_gap=84, mark=860, lift=0.02),
+                 card_logo=400, head=56, em=63, card_btn=40, card_gap=48, lift=0.0),
     "1x1":  dict(w=1080, h=1080, comp="ecomiq-cro-1x1",
                  logo_w=260, pad=60,
-                 card_logo=480, card_btn=38, card_gap=72, mark=760, lift=0.015),
+                 card_logo=360, head=48, em=54, card_btn=36, card_gap=38, lift=0.0),
 }
 
 TEMPLATE = """<!doctype html>
@@ -52,15 +50,15 @@ TEMPLATE = """<!doctype html>
     <meta name="viewport" content="width={w}, height={h}" />
     <title>EcomIQ CRO short — {ratio}</title>
     <!-- GSAP vendored locally: a CDN script cert-fails in the render env and freezes renders -->
-    <script src="{ap}/vendor/gsap.min.js"></script>
-    <link rel="stylesheet" href="{ap}/brand-tokens.css" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
     <style>
       /* LOCAL fonts, no network at render time. Families are named literally
          (not via var()) so the linter resolves them. */
       @font-face {{ font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
-        font-display: block; src: url({ap}/fonts/RethinkSans.woff2) format('woff2'); }}
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }}
       @font-face {{ font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
-        font-display: block; src: url({ap}/fonts/HedvigLettersSerif.woff2) format('woff2'); }}
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }}
 
       * {{ margin: 0; padding: 0; box-sizing: border-box; }}
       html, body {{
@@ -130,17 +128,29 @@ TEMPLATE = """<!doctype html>
           radial-gradient(72% 50% at 50% 30%, rgba(156,212,255,.13) 0%, rgba(6,40,76,0) 62%),
           var(--brand-navy);
       }}
-      /* Oversized IQ mark, the brand watermark from the reel's own card. */
-      #card-mark {{
-        position: absolute; left: 50%; top: 56%; width: {mark}px; height: auto;
-        transform: translate(-50%, -50%); opacity: .05;
-      }}
       #card-stage {{
         position: absolute; inset: 0; display: flex; flex-direction: column;
         align-items: center; justify-content: center; gap: {card_gap}px;
-        padding: 10%; text-align: center; transform: translateY(-{lift_px}px);
+        padding: 9%; text-align: center; transform: translateY(-{lift_px}px);
       }}
       #card-logo {{ width: {card_logo}px; height: auto; opacity: 0; display: block; }}
+
+      /* Headline. Brand rule: bold Rethink Sans, ~1.0 leading, -2% tracking, with
+         exactly ONE italic-serif emphasis word ("Guaranteed"). */
+      #card-copy {{ display: flex; flex-direction: column; align-items: center;
+        gap: {copy_gap}px; }}
+      #card-copy .hl {{
+        font-weight: 800; font-size: {head}px; line-height: 1.0;
+        letter-spacing: -0.02em; color: var(--brand-white); opacity: 0;
+      }}
+      #card-em {{
+        font-family: 'Hedvig Letters Serif', Georgia, serif;
+        font-style: italic; font-weight: 400;
+        font-size: {em}px; line-height: 1.0; letter-spacing: -0.01em;
+        color: var(--brand-blue-tint); opacity: 0;
+        margin-top: {em_gap}px;
+      }}
+
       #card-cta-wrap {{ position: relative; display: flex; justify-content: center; }}
       /* Flame bloom behind the button, echoing the reel's light-streak reveal. */
       #card-bloom {{
@@ -155,9 +165,8 @@ TEMPLATE = """<!doctype html>
         color: var(--brand-white); background: var(--brand-flame);
         padding: {btn_pad_v}px {btn_pad_h}px; border-radius: 999px;
         box-shadow: 0 22px 62px -14px rgba(255,76,50,.7);
-        display: inline-flex; align-items: center; gap: 16px; white-space: nowrap;
+        display: inline-flex; align-items: center; white-space: nowrap;
       }}
-      #card-btn .arrow {{ font-size: {arrow}px; line-height: 1; }}
     </style>
   </head>
   <body>
@@ -169,7 +178,7 @@ TEMPLATE = """<!doctype html>
       <div id="video-wrap">
         <!-- No class="clip" on <video> — it breaks playback (render contract rule 2).
              Audio is a sibling <audio>; the montage's own audio was dropped at prep. -->
-        <video id="montage" src="{ap}/montage-cutdown-{ratio}.mp4"
+        <video id="montage" src="assets/montage-cutdown-{ratio}.mp4"
                data-start="0" data-duration="{montage}" data-track-index="0"
                muted playsinline></video>
       </div>
@@ -177,7 +186,7 @@ TEMPLATE = """<!doctype html>
       <div id="vignette"></div>
 
       <div id="logo-wrap">
-        <img id="logo" src="{ap}/ecomiq-logo-white.png" alt="EcomIQ" />
+        <img id="logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
       </div>
 
       <div id="progress-track"><div id="progress"></div></div>
@@ -186,12 +195,18 @@ TEMPLATE = """<!doctype html>
 
       <div id="card">
         <div id="card-bg"></div>
-        <img id="card-mark" src="{ap}/ecomiq-icon-white.svg" alt="" />
         <div id="card-stage">
-          <img id="card-logo" src="{ap}/ecomiq-logo-white.svg" alt="EcomIQ" />
+          <img id="card-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+          <!-- Each line is its own block rather than a <br>, so the break never
+               depends on rendered font width. -->
+          <div id="card-copy">
+            <div class="hl" id="hl1">Stop losing sales</div>
+            <div class="hl" id="hl2">you&rsquo;ve already paid for</div>
+            <div id="card-em">Guaranteed</div>
+          </div>
           <div id="card-cta-wrap">
             <div id="card-bloom"></div>
-            <div id="card-btn">Link Below <span class="arrow">&darr;</span></div>
+            <div id="card-btn">Link Below</div>
           </div>
         </div>
       </div>
@@ -199,7 +214,7 @@ TEMPLATE = """<!doctype html>
       <div id="grain"></div>
 
       <!-- Sean's voiceover is the spine of the edit and runs the full duration. -->
-      <audio id="vo" src="{ap}/sean-vo.m4a"
+      <audio id="vo" src="assets/sean-vo.m4a"
              data-start="0" data-duration="{total}" data-track-index="1"
              data-volume="1"></audio>
     </div>
@@ -238,16 +253,28 @@ TEMPLATE = """<!doctype html>
       tl.to("#progress-track", {{ opacity: 0, duration: 0.3, ease: "power2.out" }}, {montage});
 
       // --- End card ------------------------------------------------------
+      // Lockup, then the headline lands line by line as he reads it.
       tl.fromTo("#card-logo", {{ opacity: 0, scale: 0.93, y: 14 }},
         {{ opacity: 1, scale: 1, y: 0, duration: 0.55, ease: "back.out(1.2)" }}, {card_full});
+      tl.fromTo("#hl1", {{ opacity: 0, y: 26 }},
+        {{ opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }}, {hl1_at});
+      tl.fromTo("#hl2", {{ opacity: 0, y: 26 }},
+        {{ opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }}, {hl2_at});
+      tl.fromTo("#card-em", {{ opacity: 0, y: 18, scale: 0.94 }},
+        {{ opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power2.out" }}, {em_at});
+
       tl.fromTo("#card-bloom", {{ opacity: 0, scaleX: 0.2 }},
         {{ opacity: 1, scaleX: 1, duration: 0.5, ease: "power2.out" }}, {btn_at} - 0.12);
       tl.fromTo("#card-btn", {{ opacity: 0, scale: 0.86 }},
         {{ opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }}, {btn_at});
 
-      // Camera never sleeps: the watermark drifts and the button breathes under the VO.
-      tl.fromTo("#card-mark", {{ scale: 1.0, rotation: -1.4 }},
-        {{ scale: 1.09, rotation: 1.4, duration: {mark_dur}, ease: "sine.inOut" }}, {card_full});
+      // "Guaranteed" punches as Sean says the word, leading the audio by 0.2s.
+      tl.to("#card-em", {{ scale: 1.07, textShadow: "0 0 34px rgba(156,212,255,.75)",
+        duration: 0.266667, ease: "power2.out" }}, {punch_at});
+      tl.to("#card-em", {{ scale: 1, textShadow: "0 0 0px rgba(156,212,255,0)",
+        duration: 0.5, ease: "power2.inOut" }}, {release_at});
+
+      // Camera never sleeps: the CTA breathes under the rest of the VO.
       tl.to("#card-bloom", {{ opacity: 0.55, duration: 0.65, ease: "sine.inOut",
         yoyo: true, repeat: {breathe_repeat} }}, {breathe_at});
       tl.to("#card-btn", {{ scale: 1.035, duration: 0.65, ease: "sine.inOut",
@@ -263,24 +290,30 @@ TEMPLATE = """<!doctype html>
 
 
 def build(ratio, cfg):
-    btn_at = round(CARD_FULL + 0.30, 6)
+    hl1_at = round(CARD_FULL + 0.26, 6)
+    hl2_at = round(CARD_FULL + 0.42, 6)
+    em_at = round(CARD_FULL + 0.64, 6)
+    btn_at = round(CARD_FULL + 0.98, 6)
     breathe_at = round(btn_at + 0.55, 6)
-    breathe_span = TOTAL - breathe_at
-    breathe_repeat = max(1, int(breathe_span / 0.65) - 1)
+    breathe_repeat = max(1, int((TOTAL - breathe_at) / 0.65) - 1)
+
     html = TEMPLATE.format(
-        ratio=ratio, w=cfg["w"], h=cfg["h"], comp=cfg["comp"], ap="assets",
+        ratio=ratio, w=cfg["w"], h=cfg["h"], comp=cfg["comp"],
         pad=cfg["pad"], logo_w=cfg["logo_w"], card_logo=cfg["card_logo"],
-        card_btn=cfg["card_btn"], card_gap=cfg["card_gap"], mark=cfg["mark"],
+        head=cfg["head"], em=cfg["em"], card_btn=cfg["card_btn"],
+        card_gap=cfg["card_gap"],
+        copy_gap=int(cfg["head"] * 0.18), em_gap=int(cfg["head"] * 0.30),
         lift_px=int(cfg["h"] * cfg["lift"]),
         btn_pad_v=int(cfg["card_btn"] * 0.72), btn_pad_h=int(cfg["card_btn"] * 1.5),
-        arrow=int(cfg["card_btn"] * 1.05),
         total=f"{TOTAL:.4f}", montage=f"{MONTAGE:.6f}",
         card_in=f"{CARD_IN:.4f}", card_full=f"{CARD_FULL:.6f}",
         card_dur=f"{CARD_FULL - CARD_IN:.6f}",
         logo_in=f"{LOGO_IN:.4f}", logo_out=f"{LOGO_OUT:.4f}",
+        hl1_at=f"{hl1_at:.4f}", hl2_at=f"{hl2_at:.4f}", em_at=f"{em_at:.4f}",
         btn_at=f"{btn_at:.4f}", breathe_at=f"{breathe_at:.4f}",
         breathe_repeat=breathe_repeat,
-        mark_dur=f"{TOTAL - CARD_FULL:.6f}",
+        punch_at=f"{GUARANTEE - 0.183333:.6f}",   # leads the spoken word by ~0.2s
+        release_at=f"{GUARANTEE + 0.116667:.6f}", # frame-aligned, no tween overlap
     )
     (PROJECT / "index.html").write_text(html)
 
@@ -288,8 +321,8 @@ def build(ratio, cfg):
     meta["width"], meta["height"] = cfg["w"], cfg["h"]
     (PROJECT / "meta.json").write_text(json.dumps(meta, indent=2) + "\n")
 
-    print(f"  index.html <- {ratio} ({cfg['w']}x{cfg['h']}), comp id "
-          f"{cfg['comp']}, breathe repeat={breathe_repeat}")
+    print(f"  index.html <- {ratio} ({cfg['w']}x{cfg['h']}), comp id {cfg['comp']}, "
+          f"btn {btn_at:.2f}s, breathe repeat={breathe_repeat}")
 
 
 if __name__ == "__main__":

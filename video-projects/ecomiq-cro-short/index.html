@@ -83,17 +83,29 @@
           radial-gradient(72% 50% at 50% 30%, rgba(156,212,255,.13) 0%, rgba(6,40,76,0) 62%),
           var(--brand-navy);
       }
-      /* Oversized IQ mark, the brand watermark from the reel's own card. */
-      #card-mark {
-        position: absolute; left: 50%; top: 56%; width: 980px; height: auto;
-        transform: translate(-50%, -50%); opacity: .05;
-      }
       #card-stage {
         position: absolute; inset: 0; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; gap: 96px;
-        padding: 10%; text-align: center; transform: translateY(-38px);
+        align-items: center; justify-content: center; gap: 58px;
+        padding: 9%; text-align: center; transform: translateY(-0px);
       }
-      #card-logo { width: 560px; height: auto; opacity: 0; display: block; }
+      #card-logo { width: 440px; height: auto; opacity: 0; display: block; }
+
+      /* Headline. Brand rule: bold Rethink Sans, ~1.0 leading, -2% tracking, with
+         exactly ONE italic-serif emphasis word ("Guaranteed"). */
+      #card-copy { display: flex; flex-direction: column; align-items: center;
+        gap: 11px; }
+      #card-copy .hl {
+        font-weight: 800; font-size: 64px; line-height: 1.0;
+        letter-spacing: -0.02em; color: var(--brand-white); opacity: 0;
+      }
+      #card-em {
+        font-family: 'Hedvig Letters Serif', Georgia, serif;
+        font-style: italic; font-weight: 400;
+        font-size: 72px; line-height: 1.0; letter-spacing: -0.01em;
+        color: var(--brand-blue-tint); opacity: 0;
+        margin-top: 19px;
+      }
+
       #card-cta-wrap { position: relative; display: flex; justify-content: center; }
       /* Flame bloom behind the button, echoing the reel's light-streak reveal. */
       #card-bloom {
@@ -104,13 +116,12 @@
       }
       #card-btn {
         position: relative; opacity: 0;
-        font-weight: 700; font-size: 46px; letter-spacing: -.01em;
+        font-weight: 700; font-size: 44px; letter-spacing: -.01em;
         color: var(--brand-white); background: var(--brand-flame);
-        padding: 33px 69px; border-radius: 999px;
+        padding: 31px 66px; border-radius: 999px;
         box-shadow: 0 22px 62px -14px rgba(255,76,50,.7);
-        display: inline-flex; align-items: center; gap: 16px; white-space: nowrap;
+        display: inline-flex; align-items: center; white-space: nowrap;
       }
-      #card-btn .arrow { font-size: 48px; line-height: 1; }
     </style>
   </head>
   <body>
@@ -139,12 +150,18 @@
 
       <div id="card">
         <div id="card-bg"></div>
-        <img id="card-mark" src="assets/ecomiq-icon-white.svg" alt="" />
         <div id="card-stage">
           <img id="card-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+          <!-- Each line is its own block rather than a <br>, so the break never
+               depends on rendered font width. -->
+          <div id="card-copy">
+            <div class="hl" id="hl1">Stop losing sales</div>
+            <div class="hl" id="hl2">you&rsquo;ve already paid for</div>
+            <div id="card-em">Guaranteed</div>
+          </div>
           <div id="card-cta-wrap">
             <div id="card-bloom"></div>
-            <div id="card-btn">Link Below <span class="arrow">&darr;</span></div>
+            <div id="card-btn">Link Below</div>
           </div>
         </div>
       </div>
@@ -191,20 +208,32 @@
       tl.to("#progress-track", { opacity: 0, duration: 0.3, ease: "power2.out" }, 15.433333);
 
       // --- End card ------------------------------------------------------
+      // Lockup, then the headline lands line by line as he reads it.
       tl.fromTo("#card-logo", { opacity: 0, scale: 0.93, y: 14 },
         { opacity: 1, scale: 1, y: 0, duration: 0.55, ease: "back.out(1.2)" }, 15.363333);
-      tl.fromTo("#card-bloom", { opacity: 0, scaleX: 0.2 },
-        { opacity: 1, scaleX: 1, duration: 0.5, ease: "power2.out" }, 15.6633 - 0.12);
-      tl.fromTo("#card-btn", { opacity: 0, scale: 0.86 },
-        { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 15.6633);
+      tl.fromTo("#hl1", { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 15.6233);
+      tl.fromTo("#hl2", { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "expo.out" }, 15.7833);
+      tl.fromTo("#card-em", { opacity: 0, y: 18, scale: 0.94 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power2.out" }, 16.0033);
 
-      // Camera never sleeps: the watermark drifts and the button breathes under the VO.
-      tl.fromTo("#card-mark", { scale: 1.0, rotation: -1.4 },
-        { scale: 1.09, rotation: 1.4, duration: 6.236667, ease: "sine.inOut" }, 15.363333);
+      tl.fromTo("#card-bloom", { opacity: 0, scaleX: 0.2 },
+        { opacity: 1, scaleX: 1, duration: 0.5, ease: "power2.out" }, 16.3433 - 0.12);
+      tl.fromTo("#card-btn", { opacity: 0, scale: 0.86 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 16.3433);
+
+      // "Guaranteed" punches as Sean says the word, leading the audio by 0.2s.
+      tl.to("#card-em", { scale: 1.07, textShadow: "0 0 34px rgba(156,212,255,.75)",
+        duration: 0.266667, ease: "power2.out" }, 17.566667);
+      tl.to("#card-em", { scale: 1, textShadow: "0 0 0px rgba(156,212,255,0)",
+        duration: 0.5, ease: "power2.inOut" }, 17.866667);
+
+      // Camera never sleeps: the CTA breathes under the rest of the VO.
       tl.to("#card-bloom", { opacity: 0.55, duration: 0.65, ease: "sine.inOut",
-        yoyo: true, repeat: 7 }, 16.2133);
+        yoyo: true, repeat: 6 }, 16.8933);
       tl.to("#card-btn", { scale: 1.035, duration: 0.65, ease: "sine.inOut",
-        yoyo: true, repeat: 7 }, 16.2133);
+        yoyo: true, repeat: 6 }, 16.8933);
 
       // Law #11 duration anchor — keeps the composition alive for its whole slot.
       tl.to({}, { duration: 21.6000 }, 0);

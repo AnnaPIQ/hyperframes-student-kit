@@ -2,10 +2,17 @@
 """
 build-cutdown.py — assemble the EcomIQ CRO short montage cutdown.
 
-v2 (Nate: "slow down montage slightly, we don't need to use it all, I prefer last
-clips"). 13 shots instead of 18, every one drawn from the back half of the reel
-(13.87s onward), each gently retimed to ~0.81x so the cutting breathes: average
-shot is now 1.19s, up from 0.86s.
+v3 (second "slow down montage slightly" pass). 11 shots, every one from the back
+half of the reel (13.87s onward), retimed to ~0.68x. Average shot is now 1.40s.
+
+  v1  18 shots · 0.86s avg · 1.00x
+  v2  13 shots · 1.19s avg · 1.23x
+  v3  11 shots · 1.40s avg · 1.48x  <- current
+
+The montage window is pinned at 463 frames by the VO and the 15.36s end card, so
+fewer cuts necessarily means more retime; there is no way to hold a shot longer
+without slowing it. At 1.48x the retime is plain frame duplication, which reads as
+deliberate slow-motion rather than interpolation artefacts.
 
 Everything is expressed in FRAMES at 30fps so every cut lands on a frame boundary.
 
@@ -31,21 +38,19 @@ ACTS = [
         (709, 29, 37, "S2  Boutique, Sean + client with product"),
     ]),
     ("act2-problem", [
-        (765, 25, 33, "S3  TikTok booth, Capture Leads"),
-        (468, 25, 31, "S4  Store site screen recording"),
+        (765, 25, 37, "S3  TikTok booth, Capture Leads"),
+        (468, 25, 37, "S4  Store site screen recording"),
+        (685, 24, 36, "S5  Hands on keyboard"),
     ]),
     ("act3-diagnosis", [
-        (685, 24, 30, "S5  Hands on keyboard"),
-        (661, 24, 30, "S6  Sean with mic, expo"),
-        (536, 35, 43, "S7  Stage, 1.3+ Billion / 99.9% uptime"),
-        (493, 19, 24, "S8  Strategist call, to camera"),
-        (599, 28, 35, "S9  Coffee meeting"),
+        (536, 35, 52, "S6  Stage, 1.3+ Billion / 99.9% uptime"),
+        (599, 28, 42, "S7  Coffee meeting"),
+        (627, 34, 50, "S8  Tesla, carries 'Give us 90 days'"),
     ]),
     ("act4-offer", [
-        (627, 34, 35, "S10 Tesla"),
-        (571, 28, 39, "S11 Boutique, lands on 'EcomIQ strategist'"),
-        (416, 52, 62, "S12 Retail aisle, product lifted on 'move'"),
-        (806, 26, 31, "S13 Sean portrait, into the end card"),
+        (571, 28, 42, "S9  Boutique, carries 'EcomIQ strategist'"),
+        (416, 52, 66, "S10 Retail aisle, product lifted on 'move'"),
+        (806, 26, 31, "S11 Sean portrait, into the end card"),
     ]),
 ]
 

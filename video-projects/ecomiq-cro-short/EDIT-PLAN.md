@@ -1,8 +1,18 @@
 # EcomIQ CRO Short — Edit Plan
 
-Status: **built and rendered.** Approved 2026-09-20. Revised the same day on Nate's
-note: *"slow down montage slightly, we don't need to use it all, I prefer last
-clips."* The shot list below is v2 and matches what shipped.
+Status: **built and rendered.** Approved 2026-09-20, revised twice the same day.
+The shot list below is v3 and matches what shipped.
+
+| | Shots | Avg shot | Retime |
+|---|---|---|---|
+| v1 | 18 | 0.86s | 1.00x |
+| v2 | 13 | 1.19s | 1.23x |
+| **v3** | **11** | **1.40s** | **1.48x** |
+
+The montage window is pinned at 463 frames by the VO and the 15.36s card, so fewer
+cuts necessarily means more retime: a shot cannot be held longer without being
+slowed. At 1.48x this is plain frame duplication, which reads as deliberate
+slow-motion rather than interpolation artefacts.
 
 ## Sources
 
@@ -60,57 +70,52 @@ qualify" at 19.20s.
 | Cross-dissolve | 14.96 to 15.36 (0.40s), card fully resolved on the word |
 | Card hold | 15.36 to 21.60 (6.24s), VO continues over it |
 
-## Shot list — 13 shots, montage covers 0 to 15.4333s (463 frames @30)
+## Shot list — 11 shots, montage covers 0 to 15.4333s (463 frames @30)
 
-v2. Every shot is drawn from the **back half of the reel** (13.87s onward) per Nate's
-"I prefer last clips", and each is retimed to roughly **0.81x** so the cutting
-breathes: average shot is now **1.19s**, up from 0.86s in v1 (18 shots).
+Every shot is drawn from the **back half of the reel** (13.87s onward). Hard cuts
+inside an act; a 6-frame cross-dissolve at each act boundary.
 
-Hard cuts inside an act; a 6-frame cross-dissolve at each act boundary.
-
-### Act 1 — Hook · "Run a Shopify store?"
 | # | Timeline | Source | Retime | Shot |
 |---|---|---|---|---|
 | 1 | 0.00 to 1.10 | 24.60 to 25.50 | 1.22x | Shopify booth |
 | 2 | 1.10 to 2.33 | 23.63 to 24.60 | 1.28x | Boutique, Sean + client with product |
+| 3 | 2.33 to 3.57 | 25.50 to 26.33 | 1.48x | TikTok booth, dissolve lands on "Getting" (2.35) |
+| 4 | 3.57 to 4.80 | 15.60 to 16.43 | 1.48x | Store site screen recording, carries "sales" |
+| 5 | 4.80 to 6.00 | 22.83 to 23.63 | 1.50x | Hands on keyboard, carries "Your conversion rate" (5.28) |
+| 6 | 6.00 to 7.73 | 17.87 to 19.03 | 1.49x | Stage, "1.3+ Billion / 99.9% uptime", carries "we guarantee" (7.43) |
+| 7 | 7.73 to 9.13 | 19.97 to 20.90 | 1.50x | Coffee meeting, carries "we can fix it" |
+| 8 | 9.13 to 10.80 | 20.90 to 22.03 | 1.47x | Tesla, carries "Give us 90 days" (9.40) |
+| 9 | 10.80 to 12.20 | 19.03 to 19.97 | 1.50x | Boutique, carries "EcomIQ strategist" (11.21) |
+| 10 | 12.20 to 14.40 | 13.87 to 15.60 | 1.27x | Retail aisle, product lifted on "move" (13.16) and "move yours" (14.26) |
+| 11 | 14.40 to 15.43 | 26.87 to 27.73 | 1.19x | Sean portrait, into the end card |
 
-### Act 2 — Problem · dissolve lands on "Getting" at 2.33
-| # | Timeline | Source | Retime | Shot |
-|---|---|---|---|---|
-| 3 | 2.33 to 3.43 | 25.50 to 26.33 | 1.32x | TikTok booth, "Capture Leads" |
-| 4 | 3.43 to 4.47 | 15.60 to 16.43 | 1.24x | Store site screen recording, cut on "not" (3.44) |
+Act dissolves land at 2.33, 6.00 and 10.80.
 
-### Act 3 — Diagnosis
-| # | Timeline | Source | Retime | Shot |
-|---|---|---|---|---|
-| 5 | 4.47 to 5.47 | 22.83 to 23.63 | 1.25x | Hands on keyboard |
-| 6 | 5.47 to 6.47 | 22.03 to 22.83 | 1.25x | Sean with mic, expo |
-| 7 | 6.47 to 7.90 | 17.87 to 19.03 | 1.23x | Stage, "1.3+ Billion / 99.9% uptime", carries "we guarantee" (7.43) |
-| 8 | 7.90 to 8.70 | 16.43 to 17.07 | 1.26x | Strategist call, to camera |
-| 9 | 8.70 to 9.87 | 19.97 to 20.90 | 1.25x | Coffee meeting, carries "Give us 90 days" (9.40) |
-
-### Act 4 — The offer
-| # | Timeline | Source | Retime | Shot |
-|---|---|---|---|---|
-| 10 | 9.87 to 11.03 | 20.90 to 22.03 | 1.03x | Tesla |
-| 11 | 11.03 to 12.33 | 19.03 to 19.97 | 1.39x | Boutique, carries "EcomIQ strategist" (11.21) |
-| 12 | 12.33 to 14.40 | 13.87 to 15.60 | 1.19x | Retail aisle, product lifted on "move" (13.16) and "move yours" (14.26) |
-| 13 | 14.40 to 15.43 | 26.87 to 27.73 | 1.19x | Sean portrait, into the end card |
-
-### Dropped from v1, worth knowing
-- **SHOPIFY PREMIER PARTNER card** (source 7.03 to 7.60). The single most on-message
-  frame in the reel for a Shopify CRO ad, but it sits at 25% into the source, so it
-  fell to the "last clips" rule. Say the word and it goes back in Act 1.
-- Also dropped: Sean direct-to-lens (8.37), Sean at laptop (5.57), Sean presenting
-  (9.07), expo floor (3.40), cupcake macro (6.37), greeting (7.60), Sean with mic
-  (10.73), attendee with phone (12.37). All from the front half.
+### Dropped, worth knowing
+- **SHOPIFY PREMIER PARTNER card** (source 7.03 to 7.60). The most on-message frame
+  in the reel for a Shopify CRO ad, but it sits a quarter into the source, so the
+  "last clips" rule pushed it out. One line to put it back in Act 1.
+- Also out, all front-half: Sean direct-to-lens, Sean at laptop, Sean presenting,
+  expo floor, cupcake macro, the greeting, attendee with phone, Sean with mic.
 
 ## Overlay and card
 
-- White `ecomiq-logo-white.svg` pinned top-left from 0.4s, fades out at 14.9s as the
-  card takes over. Wrapped in a positioned non-`clip` div per `docs/LESSONS.md`.
-- End card: navy canvas, white EcomIQ lockup, flame-orange "Link Below" pill,
-  Rethink Sans, brand tokens only, flame bloom sweep behind the button.
+- White EcomIQ lockup pinned top-left from 0.4s, clearing at 14.9s as the card takes
+  over. Wrapped in a positioned non-`clip` div per `docs/LESSONS.md`. Uses the `.png`
+  so it is not a duplicate media node of the card's `.svg` lockup.
+- End card: navy canvas, white EcomIQ lockup, headline, flame-orange "Link Below"
+  pill, brand tokens only, flame bloom behind the button. **No watermark mark and no
+  arrow glyph in the pill** (both removed on request).
+- Card copy, revealed line by line from 15.62s:
+
+  > **Stop losing sales**
+  > **you've already paid for**
+  > *Guaranteed*
+
+  "Guaranteed" is the single italic Hedvig Letters Serif emphasis word in blue tint,
+  the EcomIQ signature treatment. It pulses with a blue halo at 17.57s, leading
+  Sean's spoken "Guaranteed" (17.75s) by 0.18s.
+  Spelling note: the brief wrote "loosing"; the card ships "losing", matching the VO.
 
 ## Framing
 

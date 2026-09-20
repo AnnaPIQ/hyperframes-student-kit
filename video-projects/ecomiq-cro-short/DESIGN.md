@@ -19,7 +19,7 @@ local `.woff2` in `assets/fonts/` (no CDN at render time).
 ## Structure
 | | |
 |---|---|
-| 0.00 to 15.43 | 13-shot montage cutdown, white EcomIQ lockup pinned top-left, flame progress rule filling along the bottom |
+| 0.00 to 15.43 | 11-shot montage cutdown (~0.68x retime, 1.40s avg shot), white EcomIQ lockup pinned top-left, flame progress rule filling along the bottom |
 | 14.96 to 15.36 | light-streak whip + cross-dissolve, resolving **on** the word "Stop" |
 | 15.36 to 21.60 | end card holds under the rest of the VO (6.24s) |
 
@@ -32,14 +32,15 @@ hot accent, used only for the progress rule, the CTA pill and its bloom ·
 `--brand-blue-tint` as a faint top wash on the card.
 
 ## Type
-Rethink Sans 700 on the CTA. No serif emphasis word in this cut: the end card is a
-lockup plus a button, so the italic-Hedvig signature has nothing to sit on. Keep it
-that way unless a headline is added.
+Rethink Sans 800 on the card headline at 64px (9:16), 100% leading, -2% tracking.
+Rethink Sans 700 on the CTA. **Exactly one** italic Hedvig Letters Serif emphasis
+word, "Guaranteed", in `--brand-blue-tint`. Never add a second.
 
 ## Motion
-Snappy. Hard cuts inside each act, a 6-frame cross-dissolve at each of the three act
-boundaries, and one light-streak whip into the end card. Shots are retimed to ~0.81x
-so the cutting breathes at ~1.19s per shot.
+Hard cuts inside each act, a 6-frame cross-dissolve at each of the three act
+boundaries, and one light-streak whip into the end card. Shots are retimed to ~0.68x
+so the cutting breathes at ~1.40s per shot. On the card, the headline lands line by
+line and "Guaranteed" pulses 0.18s ahead of the spoken word.
 
 ## What NOT to do
 - Don't un-mute the montage. Sean's VO is the only audio.
@@ -49,6 +50,9 @@ so the cutting breathes at ~1.19s per shot.
 - Don't move the end card off 15.36s without re-measuring the onset of "Stop".
 - Don't introduce a second hot accent. Flame orange is the only one.
 - Don't stretch or recolour the logo.
+- Don't put a watermark mark or an arrow glyph back on the card; both were removed
+  deliberately.
+- Don't add a second serif-italic emphasis word alongside "Guaranteed".
 
 ## Build
 ```bash
