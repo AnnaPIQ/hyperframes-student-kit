@@ -42,7 +42,7 @@ Runtime **23.20s**. Sean's VO runs 0 to 23.00s and drives every cut.
 | 1 · Hook | 0.00 to 4.55 | "Run a Shopify store? Want every order worth more?" | Shopify cube, Premier Partner card, store aisle, dryft, site search, cupcakes, storefront |
 | 2 · Problem | 4.55 to 10.75 | "You're already winning the customer, now make each one spend more." | expo crowd, badge scan, aisle walk, couple laughing, bakery kitchen, studio, arriving, keyboard, coffee |
 | 3 · Offer | 10.75 to 17.30 | "Give us 90 days... a strategist who's done this before." | stage, "2.3+ Billion / 99.9% uptime", MMNTM room, podcast, presenting, SHOPTALK, walking, profile |
-| 4 · End card | 17.07 to 23.20 | "Same customers, bigger orders... tap the link." | EcomIQ logo, flame rule, "Same customers, *Bigger* orders / Guaranteed in 90 days", flame "Link Below" pill, held 6.15s |
+| 4 · End card | 17.07 to 23.20 | "Same customers, bigger orders... tap the link." | EcomIQ logo, flame rule, "Same customers, bigger orders / Guaranteed in 90 days", flame "Link Below" pill, held 6.15s |
 
 **End-card trigger.** "Same customers," begins at **17.05s**. Three independent
 measurements agree: a 0.77s pause at 16.30 to 17.07, the RMS floor breaking at
@@ -55,9 +55,10 @@ Cuts are hard inside a beat and a 0.18s dissolve across the three beat
 boundaries. The montage is muted at the asset level (`-an` in the build script),
 so only Sean's VO reaches the mixer.
 
-The end card carries the payoff line in the house style: one emphasis word
-(*Bigger*) in italic Hedvig serif on blue tint, the rest in Rethink Sans at
--2% tracking. The CTA pill is the only flame element besides the rule.
+The end card carries the payoff line flat: "Same customers, bigger orders" in
+white Rethink Sans at -2% tracking, no serif italic emphasis, over "Guaranteed
+in 90 days" at 50px so the guarantee reads nearly as strongly. The CTA pill is
+the only flame element besides the rule.
 
 ## Pacing
 

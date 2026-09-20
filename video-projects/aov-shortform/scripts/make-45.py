@@ -49,12 +49,12 @@ RULES = [
      "        position: relative; margin-top: 44px;\n"
      "        font-family: 'Rethink Sans', system-ui, sans-serif;\n"
      "        font-size: 51px; font-weight: 800; line-height: 1.06;"),
-    ("        position: relative; margin-top: 20px;\n"
+    ("        position: relative; margin-top: 24px;\n"
      "        font-family: 'Rethink Sans', system-ui, sans-serif;\n"
-     "        font-size: 42px; font-weight: 500; letter-spacing: -.01em;",
-     "        position: relative; margin-top: 16px;\n"
+     "        font-size: 50px; font-weight: 500; letter-spacing: -.015em;",
+     "        position: relative; margin-top: 20px;\n"
      "        font-family: 'Rethink Sans', system-ui, sans-serif;\n"
-     "        font-size: 37px; font-weight: 500; letter-spacing: -.01em;"),
+     "        font-size: 44px; font-weight: 500; letter-spacing: -.015em;"),
     # CTA pill
     ("        position: relative; margin-top: 76px;\n"
      "        font-family: 'Rethink Sans', system-ui, sans-serif;\n"
