@@ -1,15 +1,21 @@
 # EcomIQ CRO Short — Edit Plan
 
-Status: **awaiting approval** on the end-card trigger and the 4:5 crop approach.
-Nothing is rendered until that OK lands.
+Status: **awaiting approval** on the end-card trigger. The 4:5 framing question is
+closed, the square montage supplied on 2026-09-20 resolves it. Nothing is rendered
+until the OK lands.
 
 ## Sources
 
-| | Montage (visuals) | Sean (voiceover) |
-|---|---|---|
-| Drive title | `Showcase Reel.mp4` | `CRO1.aifc` |
-| Probe | 1080x1920, 9:16, 30fps, 29.72s, H.264 + AAC | AIFF-C, PCM 24-bit BE, 48kHz mono, 21.60s |
-| Staged as | `assets/montage-source.mp4` (muted, 0 to 27.73s) | `assets/sean-vo.m4a` (AAC 192k) |
+| | Montage, vertical | Montage, square | Sean (voiceover) |
+|---|---|---|---|
+| Drive title | `Showcase Reel.mp4` | `Showcase ad-1-1.mp4` | `CRO1.aifc` |
+| Probe | 1080x1920, 9:16, 30fps, 29.72s | 1440x1440, 1:1, 30fps, 29.72s | AIFF-C, PCM 24-bit BE, 48kHz mono, 21.60s |
+| Staged as | `assets/montage-source-9x16.mp4` | `assets/montage-source-4x5.mp4` | `assets/sean-vo.m4a` (AAC 192k) |
+| Feeds | the 9:16 export | the 4:5 export | both exports |
+
+Both montages are the same edit reframed: every cut in the vertical source appears at
+an identical timestamp in the square source, so the shot list below applies unchanged
+to both. Each is staged muted (`-an`) and trimmed to the 27.73s of live footage.
 
 The montage's own audio is dropped at the staging step (`-an`). Sean's VO is the
 only audio in the mix.
@@ -101,15 +107,22 @@ Cuts are hard inside an act; act boundaries get a 0.18s dissolve.
 
 ## Framing
 
-- **9:16 (1080x1920):** native. No scale, no pad, no crop.
-- **4:5 (1080x1350):** scale+pad would pillarbox 160px each side, which reads weak in
-  a Meta feed. Centre crop was checked against all 18 shots: 16 are clean with no
-  cropped heads. Two need a decision:
-  - **Shot 6** (store site screen recording) loses the page header and left nav under
-    a centre crop. Proposed fix: bias that shot's crop upward.
-  - **Shot 13** (vertical 2-up split screen) clips the bottom panel. Proposed fix:
-    scale-to-fit on a navy pad for that shot only.
-  - Recommendation: centre crop throughout plus those two per-shot fixes.
+- **9:16 (1080x1920):** vertical source, native. No scale, no pad, no crop.
+- **4:5 (1080x1350):** square source, centre-cropped on width (1152 of 1440, 144px off
+  each side) then scaled to 1080x1350 with lanczos. Full height is kept, so no head is
+  ever cropped, and the only resample is a mild 1152 to 1080 downscale.
+
+The square source resolved both framing problems that a vertical-to-4:5 crop had:
+
+| Shot | Vertical source cropped to 4:5 | Square source cropped to 4:5 |
+|---|---|---|
+| 6, store site screen recording | loses page header and left nav | page and Sean's circle both read clearly |
+| 13, strategist call | vertical 2-up split, bottom panel clipped | reframed as a single full-frame shot, no split |
+
+All 18 shots were frame-checked at the 4:5 crop. No crops to flag.
+
+Note on shot 2: a designed lens-flare sweep passes over "PREMIER" around 7.15s and
+resolves by 7.50s. That is in the source at every ratio, not a crop artifact.
 
 ## Deliverables
 
@@ -123,6 +136,7 @@ H.264 / AAC, `+faststart`, no captions.
 ## Open items for Nate
 
 1. Confirm the **15.36s** end-card trigger.
-2. Confirm **centre crop** for 4:5 (with the shot 6 and shot 13 fixes).
-3. The brief's step 4 says 1:1 while OUTPUT says 4:5. Building 4:5; say if 1:1 is also
-   wanted.
+2. The brief's step 4 says 1:1 while OUTPUT says 4:5. Building 4:5; say if a 1:1 cut is
+   also wanted. The square source would make that a native, crop-free export.
+
+Resolved: 4:5 framing, via the square montage. No crop decisions outstanding.
