@@ -32,11 +32,12 @@ old = """      /* 9:16 — Reels / Stories. Vertical room, so the logo sits high
         --gutter: 108px;
         --logo-top: 104px;
         --logo-w: 300px;
-        --lower-bottom: 340px;
+        --lower-bottom: 640px;   /* bottom 640px kept clear for subtitles */
         --chip: 34px;
         --stat: 190px;
         --h1: 88px;
         --card-gutter: 56px;
+        --card-lift: 0px;
         --pill: 40px;
         --card-logo-w: 460px;
       }"""
@@ -46,11 +47,12 @@ new = """      /* 4:5 — Meta feed. 570px shorter than the 9:16, so the type st
         --gutter: 108px;
         --logo-top: 76px;
         --logo-w: 272px;
-        --lower-bottom: 170px;
+        --lower-bottom: 430px;   /* bottom 430px kept clear for subtitles */
         --chip: 31px;
         --stat: 158px;
         --h1: 78px;
         --card-gutter: 56px;
+        --card-lift: 130px;
         --pill: 36px;
         --card-logo-w: 404px;
       }"""

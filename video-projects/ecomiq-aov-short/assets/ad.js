@@ -53,17 +53,17 @@
         { opacity: 0, y: -16, duration: q(0.30), ease: 'power2.in' }, q(19.14));
 
     /* --- callouts, each pinned to its line -------------------------------- */
-    // "...but they're all small."            VO 3.77 – 4.11
-    callout(tl, '#mg-small',      3.78,  4.40, 26);
-    // "A few changes to how you sell..."     VO 5.83 – 6.50
-    callout(tl, '#mg-sell',       5.50,  6.12, 26);
-    // "We guarantee it."                     VO 9.51 – 10.37
-    callout(tl, '#mg-guarantee',  9.58, 10.32, 26);
-    // "Give us 90 days."                     VO 11.08 – 12.02
-    callout(tl, '#mg-days',      11.16, 11.90, 30);
-    // "...an EcomIQ strategist..."           VO 13.00 – 14.10
-    callout(tl, '#mg-strategist',13.28, 14.06, 26);
-    // "...get your order value climbing."    VO 17.68 – 18.53
+    // "...but they're all small."            VO 3.77 – 4.11   shot 3.27–4.50
+    callout(tl, '#mg-small',      3.45,  4.40, 26);
+    // "A few changes to how you sell..."     VO 5.83 – 6.50   shot 5.77–7.03
+    callout(tl, '#mg-sell',       5.88,  6.92, 26);
+    // "We guarantee it."                     VO 9.51 – 10.37  shot 9.47–11.03
+    callout(tl, '#mg-guarantee',  9.58, 10.80, 26);
+    // "Give us 90 days."                     VO 11.08 – 12.02 shot 11.03–12.03
+    callout(tl, '#mg-days',      11.16, 11.94, 30);
+    // "...an EcomIQ strategist..."           VO 13.00 – 14.10 shot 13.03–14.37
+    callout(tl, '#mg-strategist',13.20, 14.22, 26);
+    // "...get your order value climbing."    VO 17.68 – 18.53 shot 17.60–19.50
     callout(tl, '#mg-climb',     17.70, 19.10, 26);
 
     // the bars climb on the word, staggered so the eye reads a rise
@@ -74,8 +74,8 @@
     /* --- beat seams: every cut carries motion ----------------------------- */
     whip(tl,  4.50, 0.60);  // hook -> promise
     whip(tl,  9.47, 0.70);  // promise -> "We guarantee it."
-    whip(tl, 10.47, 0.55);  // guarantee -> offer
-    whip(tl, 11.13, 0.60);  // offer -> "Give us 90 days."
+    whip(tl, 11.03, 0.60);  // guarantee -> "Give us 90 days."
+    whip(tl, 12.03, 0.55);  // offer -> mechanism
     whip(tl, 17.60, 0.65);  // mechanism -> the stat wall
 
     /* --- END CARD: cut on the word "Turn" --------------------------------- */
@@ -112,8 +112,13 @@
     // "bigger" gets the lift, on the word           VO 20.15 – 20.91
     tl.fromTo('#card-h1 .em',
         { scale: 1 },
-        { scale: 1.12, duration: q(0.34), ease: 'back.out(2.2)' }, q(20.18))
+        { scale: 1.08, duration: q(0.34), ease: 'back.out(2.2)' }, q(20.18))
       .to('#card-h1 .em', { scale: 1, duration: q(0.40), ease: 'power2.out' }, q(20.56));
+
+    // trust stamp reads first, then the CTA
+    tl.fromTo('#card-guarantee',
+        { opacity: 0, scale: 0.88, y: 16 },
+        { opacity: 1, scale: 1, y: 0, duration: q(0.42), ease: 'back.out(1.7)' }, q(21.12));
 
     // CTA lands exactly on "Tap the link"            VO 21.55
     tl.fromTo('#card-cta',

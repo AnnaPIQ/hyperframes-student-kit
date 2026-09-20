@@ -120,6 +120,13 @@ efficient over time instead of relearning the same lessons.
   past its shot's end or you get a 2-3 frame flash of the next shot. Build a
   labelled contact sheet of every detected shot first — sampling at `fps=1`
   mis-maps content when the reel cuts faster than 1s.
+- **`setpts` slow-motion lands a few frames short per shot.** Rescaling PTS does
+  not extend the *last* frame's duration, so a segment stretched by factor F
+  comes out ~(F-1) frames shy. Across 17 stretched shots a 585-frame montage
+  built as 578 — enough to desync an end card keyed to a word. **Fix:** clone
+  the tail then cut back to an exact count:
+  `setpts=(PTS-STARTPTS)*F,fps=30,tpad=stop_mode=clone:stop_duration=1,trim=end_frame=<OUT>,setpts=PTS-STARTPTS`.
+  Always verify with `ffprobe -count_frames`, not the duration field.
 - **A too-short anchor shot can be stretched rather than dropped.** A 0.57s
   static graphic card slowed to 1.00s (`setpts`) held a whole VO beat with no
   visible artefact.

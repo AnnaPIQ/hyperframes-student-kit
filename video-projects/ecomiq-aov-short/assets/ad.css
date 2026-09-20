@@ -148,6 +148,8 @@ html, body {
   /* tighter than the montage gutter: the headline must fit "Turn small
      orders" on one line so it breaks at the <br>, not mid-phrase */
   padding: 0 var(--card-gutter);
+  /* nudge the whole column up so the CTA clears the subtitle band too */
+  padding-bottom: var(--card-lift);
   text-align: center;
 }
 #card-logo { width: var(--card-logo-w); height: auto; display: block; }
@@ -162,15 +164,22 @@ html, body {
   line-height: 1.0; letter-spacing: -0.02em;
   color: var(--brand-white);
 }
-/* The EcomIQ signature: exactly one italic-serif emphasis word. */
-#card-h1 .em {
-  font-family: 'Hedvig Letters Serif', Georgia, serif;
-  font-style: italic; font-weight: 400;
-  letter-spacing: -0.01em;
+/* Headline is uniform white sans by request — no serif-italic emphasis word.
+   "bigger" still carries the beat, but through a scale lift rather than type. */
+#card-h1 .em { font: inherit; color: inherit; letter-spacing: inherit; }
+#card-guarantee {
+  margin-top: calc(var(--h1) * 0.50);
+  display: inline-flex; align-items: center; gap: 14px;
+  font-size: calc(var(--pill) * 0.72); font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--brand-blue-tint);
+  padding: calc(var(--pill) * 0.40) calc(var(--pill) * 1.05);
+  border: 2px solid rgba(156, 212, 255, 0.45);
+  border-radius: 999px;
+  white-space: nowrap;
 }
 #card-cta {
-  margin-top: calc(var(--h1) * 0.62);
+  margin-top: calc(var(--h1) * 0.30);
   display: inline-flex; align-items: center; gap: 20px;
   font-size: var(--pill); font-weight: 700;
   color: var(--brand-white);
@@ -180,4 +189,3 @@ html, body {
   box-shadow: 0 26px 80px -16px rgba(255, 76, 50, 0.72);
   white-space: nowrap;
 }
-#card-cta .arrow { font-size: 1.1em; line-height: 1; transform: translateY(-2px); }

@@ -30,55 +30,56 @@ VO="${2:?usage: build-montage.sh <raw-reel.mp4> <vo.aifc>}"
 mkdir -p assets
 
 # --- the shot table ----------------------------------------------------------
-# "<src_start_frame>:<out_frames>:<label>"
-# Anchors (★) are timed against the VO transcript:
-#   shot 13 → "We guarantee it."        (9.467s)
-#   shot 15 → "Give us 90 days."        (11.133s)
-#   shot 23 → "...order value climbing" (17.600s)
+# "<src_start_frame>:<src_frames>:<out_frames>:<label>"
+# out > src means the shot is slowed to fill its beat (setpts). 17 shots over
+# 585 frames — averaging 1.15s, deliberately slower than the reel's own ~0.8s
+# cutting so the footage can breathe under the VO. Not every shot in the reel
+# is used.
+#
+# Anchors (*) are timed against the VO transcript:
+#   shot  4 -> "...they're all small."        (3.267s)
+#   shot  6 -> "...how you sell..."           (5.767s)
+#   shot  9 -> "We guarantee it."             (9.467s)
+#   shot 10 -> "Give us 90 days."            (11.033s)
+#   shot 12 -> "...an EcomIQ strategist..."  (13.033s)
+#   shot 16 -> "...order value climbing."    (17.600s)
 SHOTS=(
-  "150:18:bake-shop storefront"          #  1  0.000  'Run a Shopify store'
-  "192:19:cupcakes"                      #  2  0.600
-  "685:24:laptop typing"                 #  3  1.233  'Plenty of orders'
-  "416:24:retail aisle"                  #  4  2.033
-  "710:27:retail, product in hand"       #  5  2.833
-  "445:23:dryft packets"                 #  6  3.733 ★'they're all small'
-  "272:27:whiteboard strategy"           #  7  4.500
-  "469:24:upsell / bundle UI"            #  8  5.400 ★'how you sell'
-  "371:24:tablet in hand"                #  9  6.200
-  "661:24:2400/2300 screens"             # 10  7.000 ★'lift what every'
-  "738:27:shopify booth"                 # 11  7.800
-  "228:23:high-five"                     # 12  8.700
-  "211:17:SHOPIFY PREMIER PARTNER"       # 13  9.467 ★'We guarantee it.'  (slowed 17→30)
-  "252:20:sean closeup"                  # 14 10.467
-  "327:25:sean with mic"                 # 15 11.133 ★'Give us 90 days.'
-  "493:19:strategist video call"         # 16 11.967
-  "352:19:merchant conversation"         # 17 12.600
-  "571:28:stockroom walkthrough"         # 18 13.233 ★'EcomIQ strategist'
-  "790:16:bakery kitchen"                # 19 14.167
-  "299:27:team walking"                  # 20 14.700
-  "628:33:delivery"                      # 21 15.600
-  "600:27:coffee / reset beat"           # 22 16.700
-  "541:30:1.3B / 99.9% stat wall"        # 23 17.600 ★'order value climbing'
-  "513:27:confident walk-off"            # 24 18.600
+  "150:18:30:bake-shop storefront"      #  1  0.000  'Run a Shopify store'
+  "192:19:32:cupcakes"                  #  2  1.000
+  "685:24:36:laptop typing"             #  3  2.067  'Plenty of orders'
+  "445:23:37:dryft packets"             #  4  3.267 *'they are all small'
+  "272:27:38:whiteboard strategy"       #  5  4.500
+  "469:24:38:upsell / bundle UI"        #  6  5.767 *'how you sell'
+  "661:24:36:2400/2300 screens"         #  7  7.033  'lift what every'
+  "738:27:37:shopify booth"             #  8  8.233  'customer spends'
+  "211:17:47:SHOPIFY PREMIER PARTNER"   #  9  9.467 *'We guarantee it.' + the pause after
+  "327:25:30:sean with mic"             # 10 11.033 *'Give us 90 days.'
+  "493:19:30:strategist video call"     # 11 12.033  'You will work with'
+  "571:28:40:stockroom walkthrough"     # 12 13.033 *'EcomIQ strategist'
+  "299:27:34:team walking"              # 13 14.367  'build those changes with you'
+  "628:33:36:delivery"                  # 14 15.500
+  "600:27:27:coffee / reset beat"       # 15 16.700
+  "541:30:30:1.3B / 99.9% stat wall"    # 16 17.600 *'order value climbing'
+  "513:27:27:confident walk-off"        # 17 18.600
 )
-SLOW_INDEX=13          # 1-based: the Premier Partner card, stretched to fill its beat
-SLOW_OUT_FRAMES=30
 
 # --- assemble the filter graph ----------------------------------------------
 filter=""; labels=""; n=0; total=0
 for entry in "${SHOTS[@]}"; do
-  IFS=':' read -r start len _label <<< "$entry"
+  IFS=':' read -r start srclen outlen _label <<< "$entry"
   n=$((n+1))
-  end=$((start + len))
-  if [ "$n" -eq "$SLOW_INDEX" ]; then
-    # stretch a short static card to fill its beat rather than cutting away early
-    pts=$(awk -v o=$SLOW_OUT_FRAMES -v l=$len 'BEGIN{printf "%.6f", o/l}')
-    filter+="[0:v]trim=start_frame=${start}:end_frame=${end},setpts=(PTS-STARTPTS)*${pts},fps=30[v${n}];"
-    total=$((total + SLOW_OUT_FRAMES))
+  end=$((start + srclen))
+  if [ "$outlen" -ne "$srclen" ]; then
+    # Stretch the shot to fill its beat. setpts rescales presentation times but
+    # does NOT extend the final frame's duration, so a stretched segment lands
+    # ~(factor-1) frames short. tpad clones the tail, then trim cuts back to an
+    # exact frame count — without this the 17 segments totalled 578, not 585.
+    pts=$(awk -v o="$outlen" -v l="$srclen" 'BEGIN{printf "%.6f", o/l}')
+    filter+="[0:v]trim=start_frame=${start}:end_frame=${end},setpts=(PTS-STARTPTS)*${pts},fps=30,tpad=stop_mode=clone:stop_duration=1,trim=end_frame=${outlen},setpts=PTS-STARTPTS[v${n}];"
   else
     filter+="[0:v]trim=start_frame=${start}:end_frame=${end},setpts=PTS-STARTPTS[v${n}];"
-    total=$((total + len))
   fi
+  total=$((total + outlen))
   labels+="[v${n}]"
 done
 filter+="${labels}concat=n=${n}:v=1:a=0[cut]"
