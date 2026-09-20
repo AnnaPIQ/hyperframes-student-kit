@@ -38,16 +38,32 @@ RULES = [
     # --- furniture scaled for the shorter frame -----------------------------
     ("#logo-wrap { position: absolute; top: 92px; left: 80px; width: 300px; }",
      "#logo-wrap { position: absolute; top: 74px; left: 74px; width: 262px; }"),
-    ("#card-logo { position: relative; width: 560px; height: auto; }",
-     "#card-logo { position: relative; width: 500px; height: auto; }"),
-    ("margin-top: 58px; width: 168px; height: 8px;",
-     "margin-top: 46px; width: 150px; height: 7px;"),
-    ("margin-top: 92px;", "margin-top: 74px;"),
-    ("font-size: 56px; font-weight: 700; letter-spacing: -.01em;",
-     "font-size: 50px; font-weight: 700; letter-spacing: -.01em;"),
-    ("padding: 38px 92px; border-radius: 999px;",
-     "padding: 34px 82px; border-radius: 999px;"),
-    ("#card-cta .arrow { font-size: 52px;", "#card-cta .arrow { font-size: 46px;"),
+    ("#card-logo { position: relative; width: 440px; height: auto; }",
+     "#card-logo { position: relative; width: 390px; height: auto; }"),
+    ("margin-top: 46px; width: 150px; height: 7px;",
+     "margin-top: 38px; width: 134px; height: 6px;"),
+    # end-card headline
+    ("        position: relative; margin-top: 56px;\n"
+     "        font-family: 'Rethink Sans', system-ui, sans-serif;\n"
+     "        font-size: 58px; font-weight: 800; line-height: 1.06;",
+     "        position: relative; margin-top: 44px;\n"
+     "        font-family: 'Rethink Sans', system-ui, sans-serif;\n"
+     "        font-size: 51px; font-weight: 800; line-height: 1.06;"),
+    ("        position: relative; margin-top: 20px;\n"
+     "        font-family: 'Rethink Sans', system-ui, sans-serif;\n"
+     "        font-size: 42px; font-weight: 500; letter-spacing: -.01em;",
+     "        position: relative; margin-top: 16px;\n"
+     "        font-family: 'Rethink Sans', system-ui, sans-serif;\n"
+     "        font-size: 37px; font-weight: 500; letter-spacing: -.01em;"),
+    # CTA pill
+    ("        position: relative; margin-top: 76px;\n"
+     "        font-family: 'Rethink Sans', system-ui, sans-serif;\n"
+     "        font-size: 50px; font-weight: 700; letter-spacing: -.01em;",
+     "        position: relative; margin-top: 58px;\n"
+     "        font-family: 'Rethink Sans', system-ui, sans-serif;\n"
+     "        font-size: 44px; font-weight: 700; letter-spacing: -.01em;"),
+    ("padding: 34px 84px; border-radius: 999px;",
+     "padding: 30px 74px; border-radius: 999px;"),
 ]
 
 html = SRC.read_text()

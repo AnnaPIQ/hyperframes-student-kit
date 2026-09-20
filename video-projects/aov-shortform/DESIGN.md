@@ -42,7 +42,7 @@ Runtime **23.20s**. Sean's VO runs 0 to 23.00s and drives every cut.
 | 1 · Hook | 0.00 to 4.55 | "Run a Shopify store? Want every order worth more?" | Shopify cube, Premier Partner card, store aisle, dryft, site search, cupcakes, storefront |
 | 2 · Problem | 4.55 to 10.75 | "You're already winning the customer, now make each one spend more." | expo crowd, badge scan, aisle walk, couple laughing, bakery kitchen, studio, arriving, keyboard, coffee |
 | 3 · Offer | 10.75 to 17.30 | "Give us 90 days... a strategist who's done this before." | stage, "2.3+ Billion / 99.9% uptime", MMNTM room, podcast, presenting, SHOPTALK, walking, profile |
-| 4 · End card | 17.07 to 23.20 | "Same customers, bigger orders... tap the link." | EcomIQ logo, flame rule, flame "Link Below" pill, held 6.15s |
+| 4 · End card | 17.07 to 23.20 | "Same customers, bigger orders... tap the link." | EcomIQ logo, flame rule, "Same customers, *Bigger* orders / Guaranteed in 90 days", flame "Link Below" pill, held 6.15s |
 
 **End-card trigger.** "Same customers," begins at **17.05s**. Three independent
 measurements agree: a 0.77s pause at 16.30 to 17.07, the RMS floor breaking at
@@ -54,6 +54,32 @@ punchline.
 Cuts are hard inside a beat and a 0.18s dissolve across the three beat
 boundaries. The montage is muted at the asset level (`-an` in the build script),
 so only Sean's VO reaches the mixer.
+
+The end card carries the payoff line in the house style: one emphasis word
+(*Bigger*) in italic Hedvig serif on blue tint, the rest in Rethink Sans at
+-2% tracking. The CTA pill is the only flame element besides the rule.
+
+## Pacing
+
+The source reel is fast-cut, averaging 0.73s per shot across 38 shots. Covering
+the 17.30s bed at native speed therefore needs roughly 24 of them, which reads
+frantic under a calm VO. The shot table instead uses **20 shots** and retimes
+each beat to fill its slot:
+
+| Beat | Shots | Source | On screen | Retime | Avg shot |
+|---|---|---|---|---|---|
+| 1 · Hook | 6 | 4.38s | 4.55s | x1.10 | 0.76s |
+| 2 · Problem | 7 | 5.49s | 6.38s | x1.21 | 0.91s |
+| 3 · Offer | 7 | 5.59s | 6.73s | x1.25 | 0.96s |
+
+Shots hold about 26% longer than a native-speed assembly would allow. The cost
+is mild slow motion, applied by frame duplication rather than interpolation, so
+roughly one frame in five to nine repeats on the later beats. The escalating
+retime is deliberate: the hook stays punchiest and the offer breathes most.
+
+`build-montage.sh` prints these figures on every build. To trade the slow motion
+back for speed, add shots to `BEAT2` / `BEAT3` in the shot table; the retime
+factor falls automatically because each beat's target length is fixed.
 
 ## Frame normalisation
 

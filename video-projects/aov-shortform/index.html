@@ -65,21 +65,38 @@
         position: absolute; left: -12%; bottom: -24%; width: 124%; height: 58%;
         background: var(--brand-gradient-2); filter: blur(96px); opacity: 0;
       }
-      #card-logo { position: relative; width: 560px; height: auto; }
+      #card-logo { position: relative; width: 440px; height: auto; }
       #card-rule {
-        position: relative; margin-top: 58px; width: 168px; height: 8px;
+        position: relative; margin-top: 46px; width: 150px; height: 7px;
         background: var(--brand-flame); border-radius: 4px; transform-origin: left center;
       }
-      #card-cta {
-        position: relative; margin-top: 92px;
-        display: inline-flex; align-items: center; gap: 20px;
+      /* End-card headline. The EcomIQ signature is exactly one emphasis word
+         in italic Hedvig serif, never two. */
+      #card-line1 {
+        position: relative; margin-top: 56px;
         font-family: 'Rethink Sans', system-ui, sans-serif;
-        font-size: 56px; font-weight: 700; letter-spacing: -.01em;
+        font-size: 58px; font-weight: 800; line-height: 1.06;
+        letter-spacing: -.02em; color: var(--brand-white);
+      }
+      #card-line1 .em {
+        font-family: 'Hedvig Letters Serif', Georgia, serif;
+        font-style: italic; font-weight: 400; letter-spacing: -.005em;
+        padding-right: .09em; color: var(--brand-blue-tint);
+      }
+      #card-line2 {
+        position: relative; margin-top: 20px;
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        font-size: 42px; font-weight: 500; letter-spacing: -.01em;
+        color: var(--brand-text-dim);
+      }
+      #card-cta {
+        position: relative; margin-top: 76px;
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        font-size: 50px; font-weight: 700; letter-spacing: -.01em;
         color: var(--brand-white); background: var(--brand-flame);
-        padding: 38px 92px; border-radius: 999px;
+        padding: 34px 84px; border-radius: 999px;
         box-shadow: 0 26px 82px -18px rgba(255,76,50,.72);
       }
-      #card-cta .arrow { font-size: 52px; line-height: 1; transform: translateY(2px); }
     </style>
   </head>
   <body>
@@ -113,7 +130,9 @@
         <div id="card-bloom"></div>
         <img id="card-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div id="card-rule"></div>
-        <div id="card-cta">Link Below <span class="arrow">&darr;</span></div>
+        <div id="card-line1">Same customers, <span class="em">Bigger</span> orders</div>
+        <div id="card-line2">Guaranteed in 90 days</div>
+        <div id="card-cta">Link Below</div>
       </div>
 
       <!-- Above the card in the DOM so the streak crosses the cut instead of
@@ -179,12 +198,18 @@
           { scale: .9, y: 14 },
           { scale: 1, y: 0, duration: .48, ease: "back.out(1.3)", immediateRender: false }, CUT + .07)
         .fromTo("#card-rule", { scaleX: 0 }, { scaleX: 1, duration: .42, ease: "power3.out" }, CUT + .40)
+        .fromTo("#card-line1",
+          { opacity: 0, y: 22 },
+          { opacity: 1, y: 0, duration: .44, ease: "power3.out" }, CUT + .52)
+        .fromTo("#card-line2",
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: .42, ease: "power2.out" }, CUT + .70)
         .fromTo("#card-cta",
           { opacity: 0, scale: .86 },
-          { opacity: 1, scale: 1, duration: .46, ease: "back.out(1.7)" }, CUT + .60)
+          { opacity: 1, scale: 1, duration: .46, ease: "back.out(1.7)" }, CUT + .92)
         // CTA breathes through the hold so the outro never goes static.
         .to("#card-cta", { scale: 1.035, duration: .85, ease: "sine.inOut",
-                           yoyo: true, repeat: 5 }, CUT + 1.35);
+                           yoyo: true, repeat: 4 }, CUT + 1.65);
 
       // Pad to data-duration. A timeline shorter than its slot makes the
       // engine drop the composition and flash black (contract rule 7).

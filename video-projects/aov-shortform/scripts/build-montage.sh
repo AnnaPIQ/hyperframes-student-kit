@@ -37,39 +37,34 @@ XF=0.18   # cross-dissolve length at beat boundaries
 # "<in> <out>" , source in/out seconds. Groups map 1:1 to the VO beats.
 # Beat 1, hook:    "Run a Shopify store? Want every order worth more?"
 BEAT1=(
-  "24.64 25.46"   # Shopify cube on the event floor
-  "07.07 07.56"   # Shopify Premier Partner card
-  "23.68 24.56"   # store aisle, customer with product in hand
-  "14.87 15.56"   # dryft pouches held up in store
-  "15.64 16.39"   # site search / product listing screen recording
-  "06.41 06.99"   # cupcakes, sprinkles falling
-  "05.00 05.56"   # bakery storefront
+  "24.64 25.47"   # Shopify cube on the event floor
+  "23.68 24.57"   # store aisle, customer with product in hand
+  "14.87 15.57"   # dryft pouches held up in store
+  "15.63 16.41"   # site search / product listing screen recording
+  "06.40 07.01"   # cupcakes, sprinkles falling
+  "05.00 05.57"   # bakery storefront
 )
 # Beat 2, problem: "You're already winning the customer.
 #                    Now make each one spend more."
 BEAT2=(
-  "13.20 13.84"   # expo floor wide, the crowd
-  "12.40 13.14"   # badge scan at the booth
-  "14.03 14.64"   # store aisle walk with a customer
-  "07.64 08.34"   # couple laughing
-  "26.37 26.84"   # bakery kitchen, two people
-  "11.77 12.34"   # two people, pink studio
-  "20.94 21.98"   # pulling up to the store
-  "22.87 23.60"   # hands on keyboard
-  "19.99 20.87"   # coffee through the window, breath beat
+  "13.19 13.85"   # expo floor wide, the crowd
+  "12.40 13.15"   # badge scan at the booth
+  "14.02 14.65"   # store aisle walk with a customer
+  "07.63 08.35"   # couple laughing
+  "20.93 22.01"   # pulling up to the store
+  "22.86 23.62"   # hands on keyboard
+  "19.99 20.88"   # coffee through the window, breath beat
 )
 # Beat 3, offer:   "Give us 90 days. You'll work with an EcomIQ strategist
 #                    who's done this before, and they'll do it for you."
 BEAT3=(
-  "02.94 03.36"   # Sean on stage with the mic
-  "18.07 18.99"   # stage, "2.3+ Billion / 99.9% uptime" behind
-  "04.14 04.93"   # MMNTM presentation to the room
-  "08.41 09.03"   # podcast, blue-lit
-  "09.11 09.93"   # presenting to the screen
-  "22.07 22.79"   # piece to camera, SHOPTALK
-  "00.61 01.06"   # podcast wide
-  "17.11 17.99"   # walking, sunglasses
-  "26.91 27.60"   # profile, smiling, warm human beat into the card
+  "17.10 18.00"   # walking, sunglasses
+  "18.06 19.00"   # stage, "2.3+ Billion / 99.9% uptime" behind
+  "04.13 04.94"   # MMNTM presentation to the room
+  "09.10 09.94"   # presenting to the screen
+  "08.40 09.04"   # podcast, blue-lit
+  "22.06 22.80"   # piece to camera, SHOPTALK
+  "26.90 27.62"   # profile, smiling, warm human beat into the card
 )
 
 # Beat target lengths, keyed to the VO phrase boundaries (silencedetect).
@@ -121,6 +116,8 @@ build_group () {
   # target and pushed the next xfade offset past the end of its own input.
   local stretch
   stretch=$(echo "($target + 0.25) / $natural" | bc -l)
+  printf '   %s: %d shots, %.2fs source over %.2fs on screen, retime x%.3f, avg shot %.2fs\n' \
+    "$gname" "$n" "$natural" "$target" "$stretch" "$(echo "$target / $n" | bc -l)" >&2
 
   local labels=""
   for s in "${shots[@]}"; do
