@@ -86,9 +86,11 @@
       #g-days .num { font-size: 236px; font-weight: 800; line-height: .86;
         letter-spacing: -.04em; color: var(--brand-white);
         text-shadow: 0 18px 70px rgba(0,0,0,.55); font-variant-numeric: tabular-nums; }
-      #g-days .word { font-family: 'Hedvig Letters Serif', Georgia, serif;
-        font-style: italic; font-weight: 400; font-size: 92px; line-height: 1;
-        color: var(--brand-blue-tint); margin-top: 6px;
+      /* Plain sans here — the piece's single Hedvig italic now sits on the end
+         card headline, where the brand's emphasis word belongs. */
+      #g-days .word { font-weight: 800; font-size: 78px; line-height: 1;
+        letter-spacing: .12em; text-transform: uppercase;
+        color: var(--brand-blue-tint); margin-top: 14px;
         text-shadow: 0 6px 26px rgba(6,40,76,.9); }
 
       /* G4 — visitors -> sales (beat F) */
@@ -107,12 +109,20 @@
 
       /* ---- end card ----------------------------------------------------- */
       #card { position: absolute; inset: 0; z-index: 60; background: var(--brand-navy);
-        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 46px; }
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; }
       #card-bloom { position: absolute; left: -12%; bottom: -24%; width: 124%; height: 62%;
         background: var(--brand-gradient-2); filter: blur(100px); opacity: .34; }
       #card-glow { position: absolute; inset: 0;
         background: radial-gradient(70% 44% at 50% 40%, rgba(156,212,255,.14) 0%, rgba(6,40,76,0) 60%); }
-      #card-logo { position: relative; width: 600px; height: auto; }
+      #card-logo { position: relative; width: 450px; height: auto; }
+      /* The payoff line, straight off the VO. This is the piece's headline, so
+         it carries the brand's signature italic-serif emphasis word. */
+      #card-headline { position: relative; text-align: center; max-width: 690px; }
+      #card-headline .line { font-size: 56px; font-weight: 800; line-height: 1.06;
+        letter-spacing: -.02em; color: var(--brand-white); }
+      #card-headline .em { font-family: 'Hedvig Letters Serif', Georgia, serif;
+        font-style: italic; font-weight: 400; font-size: 74px; line-height: 1;
+        letter-spacing: -.01em; color: var(--brand-blue-tint); margin-top: 20px; }
       #card-cta { position: relative; font-size: 50px; font-weight: 800; letter-spacing: .04em;
         color: var(--brand-white); background: var(--brand-flame);
         padding: 32px 78px; border-radius: 999px;
@@ -190,6 +200,10 @@
         <div id="card-bloom"></div>
         <div id="card-glow"></div>
         <img id="card-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="card-headline">
+          <div class="line">More sales from the traffic you have already got.</div>
+          <div class="em">Guaranteed</div>
+        </div>
         <div id="card-cta">Link Below</div>
       </div>
 
@@ -221,6 +235,8 @@
         .set("#g-flow .arrow", { opacity: 0, scaleX: 0 }, 14.9)
         .set("#g-flow .to", { opacity: 0, scale: .78 }, 14.9)
         .set("#card-logo", { opacity: 0, scale: .9, y: 18 }, 16.87)
+        .set("#card-headline .line", { opacity: 0, y: 26 }, 16.87)
+        .set("#card-headline .em", { opacity: 0, y: 20, scale: .94 }, 16.87)
         .set("#card-cta", { opacity: 0, scale: .82 }, 16.87)
         .set("#card-bloom", { opacity: 0 }, 16.87)
         .set("#flash", { opacity: 0 }, 16.75);
@@ -281,13 +297,19 @@
       tl.fromTo("#card-logo",
         { opacity: 0, scale: .9, y: 18 },
         { opacity: 1, scale: 1, y: 0, duration: .6, ease: "power3.out" }, 16.87)
+        .fromTo("#card-headline .line",
+          { opacity: 0, y: 26 },
+          { opacity: 1, y: 0, duration: .58, ease: "power3.out" }, 17.16)
+        .fromTo("#card-headline .em",
+          { opacity: 0, y: 20, scale: .94 },
+          { opacity: 1, y: 0, scale: 1, duration: .56, ease: "back.out(1.6)" }, 17.52)
         .fromTo("#card-cta",
           { opacity: 0, scale: .82 },
-          { opacity: 1, scale: 1, duration: .52, ease: "back.out(1.8)" }, 17.20)
+          { opacity: 1, scale: 1, duration: .52, ease: "back.out(1.8)" }, 17.94)
         .fromTo("#card-bloom",
           { opacity: 0 }, { opacity: .34, duration: 1.1, ease: "sine.out" }, 16.90)
         // CTA breathes through the hold so the card never goes static.
-        .to("#card-cta", { scale: 1.045, duration: .78, ease: "sine.inOut", yoyo: true, repeat: 4 }, 18.1);
+        .to("#card-cta", { scale: 1.045, duration: .78, ease: "sine.inOut", yoyo: true, repeat: 3 }, 18.8);
 
       // Pad to the root data-duration (render contract #7).
       tl.to({}, { duration: 22.9 }, 0);

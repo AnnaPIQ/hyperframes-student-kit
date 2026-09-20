@@ -33,38 +33,45 @@ esac
 [ -f "$SRC" ] || { echo "Missing source $SRC" >&2; exit 1; }
 
 # --- shot map -----------------------------------------------------------------
-# Each block is <source-in> <on-screen-length>. Blocks B and D carry an extra
-# 0.10s because xfade eats its transition duration out of the running total.
+# The reel is a rapid-cut montage — its own shots fire every 0.6-0.9s — so the
+# bed runs at 0.854x to let each one land, and draws from the BACK HALF of the
+# reel rather than sampling across all of it. Source 13.87-27.70 is the whole
+# usable tail (27.73 onward is the montage's baked-in end card), and at 0.854x
+# it fills the 16.87s under the VO exactly. Nothing before 13.87 is used,
+# except one deliberate insert:
 #
-#  A  0.00-3.70  "Want more of your Shopify traffic to actually buy?"  storefront UI
-#  B  3.70-6.20  "You're paying for every visitor,"                    stage + expo floor
-#  C  6.20-7.93  "too few of them actually convert,"                   store aisle browsing
-#  D  7.93-10.55 "and we guarantee we can change that."               Shopify Premier Partner
-#  E 10.55-13.88 "Give us 90 days, ... an EcomIQ strategist"           Sean + team
-#  F 13.88-16.87 "who'll turn more of those visitors into sales,"      customer buys + TikTok Shop
-A_IN=15.60; A_LEN=3.70
-B_IN=2.90;  B_LEN=2.60   # 2.50 on screen + 0.10 for the B->C dissolve
-C_IN=13.87; C_LEN=1.73
-D_IN=6.35;  D_LEN=2.72   # 2.62 on screen + 0.10 for the D->E dissolve
-E_IN=9.07;  E_LEN=3.33
-F_IN=23.63; F_LEN=2.99
+#   A  0.00- 8.69  src 13.870-21.170   storefront UI -> street -> retail -> cafe
+#   B  8.69- 9.36  src  7.030- 7.597   Shopify Premier Partner card  ** INSERT **
+#   C  9.36 -16.87 src 21.170-27.560   Tesla -> expo -> customer buys -> TikTok
+#                                      Shop -> closes on Sean's portrait
+#
+# B is the one frame pulled from outside the tail. It is the strongest
+# credibility image in the reel and it lands square on the word "guarantee"
+# (VO 8.81-9.08); C resumes exactly where A left off, so it reads as a clean
+# insert cut rather than a jump. Drop B and widen A/C if it is not wanted.
+# ffmpeg's trim floors each segment to a whole source frame, so the three
+# blocks yield 14.367s of real source, not the 14.407s the arithmetic suggests.
+# The rate is set so the bed OVER-runs the 16.87s clip (it lands at 16.93s) and
+# the engine trims the tail. Matching 16.87 exactly here left the bed two frames
+# short and flashed navy between the last footage frame and the end card.
+SPEED=0.840          # 16% slower than source — "slightly", not slow-motion
+PTS=1.190
+A_IN=13.870; A_LEN=7.302   # -> 8.599s on screen
+B_IN=7.030;  B_LEN=0.574   # -> 0.668s on screen, lands on "guarantee"
+C_IN=21.170; C_LEN=6.531   # -> 7.657s on screen
 
-# Snappy: hard cuts at A->B, C->D and E->F, a 0.10s dissolve at B->C and D->E
-# so the edit breathes twice without ever going soft.
-XF=0.10
+# Two hard cuts, in and out of the insert. An insert cut is always hard — a
+# dissolve would read as a scene change instead of a cutaway. With the reel
+# slowed and the tail running continuously either side, the edit sits far
+# calmer than the six-block version it replaces.
 
-echo "▶ Building $OUT  (ratio $RATIO, 16.87s, muted)"
+echo "▶ Building $OUT  (ratio $RATIO, 16.87s, ${SPEED}x, muted)"
 
 ffmpeg -y -v error -stats -i "$SRC" -filter_complex "
-  [0:v]trim=start=${A_IN}:duration=${A_LEN},setpts=PTS-STARTPTS[a];
-  [0:v]trim=start=${B_IN}:duration=${B_LEN},setpts=PTS-STARTPTS[b];
-  [0:v]trim=start=${C_IN}:duration=${C_LEN},setpts=PTS-STARTPTS[c];
-  [0:v]trim=start=${D_IN}:duration=${D_LEN},setpts=PTS-STARTPTS[d];
-  [0:v]trim=start=${E_IN}:duration=${E_LEN},setpts=PTS-STARTPTS[e];
-  [0:v]trim=start=${F_IN}:duration=${F_LEN},setpts=PTS-STARTPTS[f];
-  [b][c]xfade=transition=fade:duration=${XF}:offset=2.50[bc];
-  [d][e]xfade=transition=fade:duration=${XF}:offset=2.62[de];
-  [a][bc][de][f]concat=n=4:v=1:a=0[cat];
+  [0:v]trim=start=${A_IN}:duration=${A_LEN},setpts=(PTS-STARTPTS)*${PTS}[a];
+  [0:v]trim=start=${B_IN}:duration=${B_LEN},setpts=(PTS-STARTPTS)*${PTS}[b];
+  [0:v]trim=start=${C_IN}:duration=${C_LEN},setpts=(PTS-STARTPTS)*${PTS}[c];
+  [a][b][c]concat=n=3:v=1:a=0[cat];
   [cat]${NORM},fps=30,format=yuv420p[v]
 " -map "[v]" -an \
   -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p -movflags +faststart \

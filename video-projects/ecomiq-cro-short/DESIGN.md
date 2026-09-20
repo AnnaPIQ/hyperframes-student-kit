@@ -14,19 +14,23 @@ Full edit rationale, shot map and source probes: **`EDIT_PLAN.md`**.
 - **Hook:** "Want more of your Shopify traffic to actually buy?"
 - **Message:** you already paid for the traffic; 90 days with an EcomIQ
   strategist turns more of it into sales.
-- **CTA:** EcomIQ end card + "Link Below", cutting in at 16.87s on the line
-  "more sales from the traffic you've already got" and holding 6.03s.
+- **CTA:** EcomIQ end card cutting in at 16.87s on the line "more sales from the
+  traffic you've already got" and holding 6.03s — lockup, then the headline
+  "More sales from the traffic you have already got." / *Guaranteed*, then the
+  flame "Link Below" pill.
 
 ## Structure
 Sean's VO is the spine and the only audio. The Showcase Reel montage plays
-underneath it, muted and reordered so each shot block lands on the beat it
-sells. Sean never appears as a talking head — montage throughout, his voice
+underneath it, muted, slowed to 0.84x and drawn from the back half of the reel
+(source 13.87–27.56) with one Premier Partner insert on "guarantee". Sean never appears as a talking head — montage throughout, his voice
 over the top.
 
 ## Type
 - Rethink Sans 800 for every display mark, −2%…−4% tracking on the big ones.
-- **Exactly one** Hedvig Letters Serif italic in the piece: *days*, under the
-  90 counter. Brand rule — never a second emphasis word.
+- **Exactly one** Hedvig Letters Serif italic in the piece: ***Guaranteed***, on
+  the end card headline. Brand rule — never a second emphasis word. It sits on
+  the headline rather than the 90-days stat because the brand's emphasis word
+  belongs in a headline; "DAYS" is plain Rethink Sans in blue tint.
 
 ## Colour
 Flame `#FF4C32` is the only hot accent (GUARANTEED pill, BUYERS bar, the

@@ -59,43 +59,59 @@ to 22.90s with the VO playing out over it.
 
 ## Shot map
 
-Every in-point sits on a real shot boundary in the source, so no cut lands
-mid-motion. Source timings are identical in both masters.
+The reel is a rapid-cut montage — its own shots fire every 0.6–0.9s — so the bed
+runs at **0.84x** to let each one land, and draws from the **back half** of the
+reel rather than sampling across all of it. Source 13.87–27.56 is the whole
+usable tail; at 0.84x it fills the 16.87s under the VO. Nothing before 13.87 is
+used, except one deliberate insert.
 
-| # | VO line | On screen | Montage source | Why |
-|---|---|---|---|---|
-| A | "Want more of your Shopify traffic to actually buy?" | 0.00–3.70 | 15.60–19.30 | storefront / product page UI — literal on "Shopify traffic" |
-| B | "You're paying for every visitor," | 3.70–6.20 | 2.90–5.40 | stage + expo floor: spend in motion |
-| C | "too few of them actually convert," | 6.20–7.93 | 13.87–15.60 | store aisle, product in hand, browsing not buying |
-| D | "and we guarantee we can change that." | 7.93–10.55 | 6.35–9.07 | **Shopify Premier Partner** card lands on the word *guarantee* |
-| E | "Give us 90 days, … an EcomIQ strategist" | 10.55–13.88 | 9.07–12.40 | Sean + team, the human strategist |
-| F | "who'll turn more of those visitors into sales," | 13.88–16.87 | 23.63–26.62 | customer buying + TikTok Shop: conversion |
-| G | **END CARD** | 16.87–22.90 | — | EcomIQ logo + "Link Below", VO continues over it |
+| # | On screen | Montage source | Content |
+|---|---|---|---|
+| A | 0.00–8.69 | 13.870–21.170 | store aisle → storefront UI → street → retail → café |
+| B | 8.69–9.36 | 7.030–7.597 | **Shopify Premier Partner card — INSERT** |
+| C | 9.36–16.87 | 21.170–27.560 | Tesla → laptop → expo → customer buys → closes on Sean's portrait |
+| — | 16.87–22.90 | — | **END CARD** |
+
+**B is the one frame pulled from outside the tail.** It is the strongest
+credibility image in the reel and it lands square on the word *guarantee*
+(VO 8.81–9.08). C resumes exactly where A left off, so it reads as a clean
+insert cut rather than a jump. Drop B and widen A/C if it isn't wanted.
 
 Source past **27.73s** is the montage's own baked-in EcomIQ end card. Never
 pulled from — ours is built in the composition.
 
 ### Transitions
 
-Snappy. **Hard cuts** at A→B, C→D and E→F. **0.10s dissolves** at B→C and D→E
-so the edit breathes twice without going soft. A 0.19s sky-blue flash carries
+Two **hard cuts**, in and out of the insert. An insert cut is always hard — a
+dissolve would read as a scene change rather than a cutaway. With the reel
+slowed and the tail running continuously either side, the edit sits far calmer
+than the six-block version it replaces. A 0.19s sky-blue flash still carries
 the cut into the end card so the card arrives on the beat.
+
+The bed is built ~0.23s longer than the 16.87s clip and the engine trims the
+tail: `ffmpeg`'s `trim` floors each block to a whole source frame, and matching
+16.87 exactly left the bed two frames short, flashing navy before the card.
 
 ---
 
 ## Motion graphics
 
 Brand tokens only — flame `#FF4C32`, blue tint `#9CD4FF`, Rethink Sans, with the
-one Hedvig Letters Serif italic reserved for *days*. **No captions.**
+one Hedvig Letters Serif italic reserved for ***Guaranteed*** on the end card.
+**No captions.**
 
 | Mark | Time | Beat |
 |---|---|---|
 | EcomIQ white lockup, top-left | 0.00–16.87 | persistent, off as the end card takes over |
 | Conversion-gap bars (VISITORS / BUYERS) | 6.30–7.93 | "too few of them actually convert" |
 | GUARANTEED flame pill | 9.25–10.55 | "we guarantee we can change that" |
-| **90** counter + *days* | 10.82–13.60 | "Give us 90 days" |
+| **90** counter + DAYS | 10.82–13.60 | "Give us 90 days" |
 | VISITORS → SALES | 14.90–16.80 | "turn more of those visitors into sales" |
-| End card: logo + "Link Below" | 16.87–22.90 | the close |
+| End card: logo + headline + "Link Below" | 16.87–22.90 | the close |
+
+The end card reads, in order: EcomIQ lockup → **"More sales from the traffic you
+have already got."** → ***Guaranteed*** (the piece's one Hedvig italic) → flame
+"Link Below" pill. The headline appears as Sean says that exact line.
 
 The bars are deliberately unlabelled by percentage — the script makes no
 numeric claim, so neither does the graphic.
