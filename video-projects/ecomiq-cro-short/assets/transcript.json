@@ -1,0 +1,386 @@
+[
+  {
+    "text": "Run",
+    "start": 0,
+    "end": 0.37,
+    "id": "w0"
+  },
+  {
+    "text": "a",
+    "start": 0.37,
+    "end": 0.49,
+    "id": "w1"
+  },
+  {
+    "text": "Shopify",
+    "start": 0.84,
+    "end": 1.35,
+    "id": "w2"
+  },
+  {
+    "text": "store?",
+    "start": 1.35,
+    "end": 2.5,
+    "id": "w3"
+  },
+  {
+    "text": "Getting",
+    "start": 2.5,
+    "end": 2.67,
+    "id": "w4"
+  },
+  {
+    "text": "the",
+    "start": 2.72,
+    "end": 2.76,
+    "id": "w5"
+  },
+  {
+    "text": "traffic",
+    "start": 2.78,
+    "end": 3,
+    "id": "w6"
+  },
+  {
+    "text": "but",
+    "start": 3,
+    "end": 3.31,
+    "id": "w7"
+  },
+  {
+    "text": "not",
+    "start": 3.44,
+    "end": 3.66,
+    "id": "w8"
+  },
+  {
+    "text": "the",
+    "start": 3.66,
+    "end": 4,
+    "id": "w9"
+  },
+  {
+    "text": "sales?",
+    "start": 4,
+    "end": 5.28,
+    "id": "w10"
+  },
+  {
+    "text": "Your",
+    "start": 5.28,
+    "end": 5.41,
+    "id": "w11"
+  },
+  {
+    "text": "conversion",
+    "start": 5.41,
+    "end": 5.76,
+    "id": "w12"
+  },
+  {
+    "text": "rate",
+    "start": 5.76,
+    "end": 5.96,
+    "id": "w13"
+  },
+  {
+    "text": "is",
+    "start": 5.96,
+    "end": 6.11,
+    "id": "w14"
+  },
+  {
+    "text": "the",
+    "start": 6.14,
+    "end": 6.39,
+    "id": "w15"
+  },
+  {
+    "text": "problem",
+    "start": 6.8,
+    "end": 7,
+    "id": "w16"
+  },
+  {
+    "text": "and",
+    "start": 7,
+    "end": 7.21,
+    "id": "w17"
+  },
+  {
+    "text": "we",
+    "start": 7.28,
+    "end": 7.43,
+    "id": "w18"
+  },
+  {
+    "text": "guarantee",
+    "start": 7.43,
+    "end": 8.05,
+    "id": "w19"
+  },
+  {
+    "text": "we",
+    "start": 8.35,
+    "end": 8.38,
+    "id": "w20"
+  },
+  {
+    "text": "can",
+    "start": 8.38,
+    "end": 8.63,
+    "id": "w21"
+  },
+  {
+    "text": "fix",
+    "start": 8.67,
+    "end": 8.84,
+    "id": "w22"
+  },
+  {
+    "text": "it.",
+    "start": 8.91,
+    "end": 9.27,
+    "id": "w23"
+  },
+  {
+    "text": "Give",
+    "start": 9.4,
+    "end": 9.49,
+    "id": "w24"
+  },
+  {
+    "text": "us",
+    "start": 9.49,
+    "end": 9.59,
+    "id": "w25"
+  },
+  {
+    "text": "90",
+    "start": 9.59,
+    "end": 9.91,
+    "id": "w26"
+  },
+  {
+    "text": "days.",
+    "start": 9.91,
+    "end": 10.2,
+    "id": "w27"
+  },
+  {
+    "text": "You'll",
+    "start": 10.2,
+    "end": 10.62,
+    "id": "w28"
+  },
+  {
+    "text": "work",
+    "start": 10.62,
+    "end": 10.85,
+    "id": "w29"
+  },
+  {
+    "text": "with",
+    "start": 10.85,
+    "end": 11.08,
+    "id": "w30"
+  },
+  {
+    "text": "an",
+    "start": 11.08,
+    "end": 11.2,
+    "id": "w31"
+  },
+  {
+    "text": "ecom",
+    "start": 11.21,
+    "end": 11.47,
+    "id": "w32"
+  },
+  {
+    "text": "IQ",
+    "start": 11.47,
+    "end": 11.6,
+    "id": "w33"
+  },
+  {
+    "text": "strategist",
+    "start": 11.95,
+    "end": 12.29,
+    "id": "w34"
+  },
+  {
+    "text": "who",
+    "start": 12.29,
+    "end": 12.44,
+    "id": "w35"
+  },
+  {
+    "text": "knows",
+    "start": 12.48,
+    "end": 12.83,
+    "id": "w36"
+  },
+  {
+    "text": "how",
+    "start": 12.83,
+    "end": 13.03,
+    "id": "w37"
+  },
+  {
+    "text": "to",
+    "start": 13.03,
+    "end": 13.04,
+    "id": "w38"
+  },
+  {
+    "text": "move",
+    "start": 13.16,
+    "end": 13.17,
+    "id": "w39"
+  },
+  {
+    "text": "it",
+    "start": 13.47,
+    "end": 13.64,
+    "id": "w40"
+  },
+  {
+    "text": "and",
+    "start": 13.64,
+    "end": 13.75,
+    "id": "w41"
+  },
+  {
+    "text": "they'll",
+    "start": 13.8,
+    "end": 14.11,
+    "id": "w42"
+  },
+  {
+    "text": "move",
+    "start": 14.26,
+    "end": 14.43,
+    "id": "w43"
+  },
+  {
+    "text": "yours.",
+    "start": 14.52,
+    "end": 14.77,
+    "id": "w44"
+  },
+  {
+    "text": "Stop",
+    "start": 15,
+    "end": 15.5,
+    "id": "w45"
+  },
+  {
+    "text": "losing",
+    "start": 15.66,
+    "end": 16.01,
+    "id": "w46"
+  },
+  {
+    "text": "sales",
+    "start": 16.01,
+    "end": 16.22,
+    "id": "w47"
+  },
+  {
+    "text": "you've",
+    "start": 16.46,
+    "end": 16.66,
+    "id": "w48"
+  },
+  {
+    "text": "already",
+    "start": 16.66,
+    "end": 17.02,
+    "id": "w49"
+  },
+  {
+    "text": "paid",
+    "start": 17.06,
+    "end": 17.31,
+    "id": "w50"
+  },
+  {
+    "text": "for.",
+    "start": 17.31,
+    "end": 17.62,
+    "id": "w51"
+  },
+  {
+    "text": "Guaranteed",
+    "start": 17.75,
+    "end": 18.24,
+    "id": "w52"
+  },
+  {
+    "text": "in",
+    "start": 18.24,
+    "end": 18.33,
+    "id": "w53"
+  },
+  {
+    "text": "90",
+    "start": 18.37,
+    "end": 18.69,
+    "id": "w54"
+  },
+  {
+    "text": "days.",
+    "start": 18.84,
+    "end": 19.2,
+    "id": "w55"
+  },
+  {
+    "text": "Tap",
+    "start": 19.2,
+    "end": 19.35,
+    "id": "w56"
+  },
+  {
+    "text": "the",
+    "start": 19.58,
+    "end": 19.68,
+    "id": "w57"
+  },
+  {
+    "text": "link",
+    "start": 19.68,
+    "end": 20,
+    "id": "w58"
+  },
+  {
+    "text": "and",
+    "start": 20,
+    "end": 20.09,
+    "id": "w59"
+  },
+  {
+    "text": "see",
+    "start": 20.2,
+    "end": 20.74,
+    "id": "w60"
+  },
+  {
+    "text": "if",
+    "start": 21.04,
+    "end": 21.1,
+    "id": "w61"
+  },
+  {
+    "text": "you",
+    "start": 21.1,
+    "end": 21.56,
+    "id": "w62"
+  },
+  {
+    "text": "qualify.",
+    "start": 21.64,
+    "end": 22.93,
+    "id": "w63"
+  }
+]
