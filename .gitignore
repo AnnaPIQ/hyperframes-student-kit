@@ -29,6 +29,10 @@ raw-media/
 assets/incoming/*
 !assets/incoming/README.md
 
+# Per-project source masters — large and re-fetchable (scripts/fetch-sources.sh).
+# The cut beds that the compositions actually reference ARE committed.
+video-projects/*/assets/src/
+
 # Playwright browser profiles
 .playwright-profile/
 

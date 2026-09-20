@@ -72,6 +72,57 @@ efficient over time instead of relearning the same lessons.
   `kling3.0_pro`, `veo3.1`, `seedance2`, `gen4.5`, etc. via `npm run gen --model <id>`.
   Keep Runway as the single integration; pick the model per shot.
 
+## Composition authoring (clip lifecycle)
+
+- **A clip pops fully-formed for one frame before its entrance tween.** A clip is
+  inserted into the DOM at `data-start` wearing its CSS defaults, so an entrance
+  that begins even 0.02s later lets one 30fps frame render the finished element
+  before it animates in. **Fix:** lock the hidden state with
+  `tl.set(sel, {...}, <exact data-start>)` for every graphic, then tween. Applies
+  to anything the clip owns, including rails/containers you forgot to animate.
+- **A GSAP counter must hold its START value in the HTML, not its end value.**
+  `<div class="num">90</div>` flashes "90" before the count-up begins. Write `0`.
+- **One root `index.html` per project — a second aspect ratio needs its own
+  project folder.** `hyperframes lint` errors `root_composition_missing_html_wrapper`
+  / "exactly one root index.html" if you add a second root to the same folder.
+  Generate the sibling project's `index.html` from the first with a script so the
+  two can't drift.
+- **A generated `index.html` must literally begin with `<!doctype html>`.** Putting
+  a "GENERATED — do not edit" banner comment *above* the doctype trips
+  `root_composition_missing_html_wrapper`. Put the banner on the line after it.
+
+## Legibility over footage
+
+- **A white logo over bright footage needs a scrim, not just a drop-shadow.** Over
+  a white storefront screenshot the lockup vanishes however heavy the shadow.
+  **Fix:** a soft corner radial (`radial-gradient(... rgba(navy,.62) 0%, transparent 72%)`)
+  behind it — invisible over dark footage, rescues the mark over bright.
+- **A full-frame flash transition at 0.85 opacity white-outs two or more frames.**
+  Peak ~0.55 over ~0.19s total (in 0.07s, out 0.12s) reads as a punch on the cut
+  without blinding the viewer, and lets the incoming card rise out of its tail.
+
+## Sourcing footage
+
+- **Pull Drive media with `curl`, not the Drive connector's download tool.**
+  `download_file_content` returns base64 into context — a 35MB MP4 becomes ~47MB
+  of tokens. **Fix:** `curl -fsSL -o out.mp4 "https://drive.google.com/uc?export=download&id=<id>"`
+  for link-shared files, then `ffprobe` it. Verify with `file` — an HTML response
+  means the share permission changed.
+- **Confirm two "different" masters really are different before re-planning the
+  edit.** A 9:16 and a 1:1 export of the same reel look like different footage at
+  the same timestamp because the reframe crops to a different subject. Compare
+  frames at *identical* timestamps and check `nb_frames` — matching frame counts
+  and matching scene-cut lists mean one shot map drives both.
+- **`ffmpeg xfade` eats its transition duration out of the running total.** Each
+  0.1s dissolve shortens the concat by 0.1s. Extend the outgoing segment by the
+  transition duration per dissolve to land on an exact target length.
+
+## Environment
+
+- **`hyperframes doctor` reports FFmpeg and Chrome as failed on this container
+  and is wrong.** Both are present and work — the probe times out under load.
+  Run `ffmpeg -version` yourself before believing it and re-installing anything.
+
 ## Housekeeping
 
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat

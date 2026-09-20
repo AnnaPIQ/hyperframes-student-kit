@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>EcomIQ — CRO short (9:16)</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time (latin subset) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-bg);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-text);
+      }
+
+      /* ---- base canvas ------------------------------------------------- */
+      #bg { position: absolute; inset: 0; background: var(--brand-navy); z-index: 0; }
+
+      /* Montage bed. Non-timed wrapper so the engine never repositions the
+         <video> itself (render contract #9 / LESSONS "logo drifts"). */
+      #bed-slot { position: absolute; inset: 0; z-index: 10; }
+      #bed { display: block; width: 1080px; height: 1920px; object-fit: cover;
+             filter: saturate(1.06) contrast(1.03); }
+
+      /* Vignette + bottom scrim: sinks the footage edges into the navy and
+         buys legibility for the lower-third graphics. Radial, not a
+         full-screen linear gradient — linear banding is visible in H.264. */
+      #grade { position: absolute; inset: 0; z-index: 20; pointer-events: none;
+        background:
+          radial-gradient(ellipse 78% 62% at 50% 42%, rgba(6,40,76,0) 55%, rgba(6,40,76,.42) 100%);
+      }
+      #scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 620px; z-index: 21;
+        pointer-events: none;
+        background: linear-gradient(to top, rgba(6,40,76,.86) 0%, rgba(6,40,76,.45) 45%, rgba(6,40,76,0) 100%);
+      }
+
+      /* ---- persistent brand mark (top-left, off at the end card) --------
+         The opening shot is a white storefront page, so the white lockup needs
+         a scrim of its own — a soft corner radial that is invisible over dark
+         footage and rescues the mark over bright. */
+      #logo-scrim { position: absolute; top: 0; left: 0; width: 760px; height: 470px;
+        z-index: 39; pointer-events: none;
+        background: radial-gradient(60% 60% at 26% 34%, rgba(6,40,76,.62) 0%, rgba(6,40,76,0) 72%); }
+      #logo-slot { position: absolute; top: 96px; left: 96px; z-index: 40; }
+      #logo-slot img { display: block; width: 320px; height: auto;
+        filter: drop-shadow(0 4px 10px rgba(6,40,76,.85)) drop-shadow(0 8px 34px rgba(0,0,0,.6)); }
+
+      /* ---- shared lower-third geometry --------------------------------- */
+      .gfx { position: absolute; left: 96px; right: 96px; z-index: 30; }
+
+      /* G1 — the conversion gap (beat C: "too few of them actually convert") */
+      #g-gap { bottom: 380px; }
+      .gap-row { margin-bottom: 48px; }
+      .gap-row:last-child { margin-bottom: 0; }
+      .gap-label { font-size: 40px; font-weight: 800; letter-spacing: .2em;
+        text-transform: uppercase; margin-bottom: 22px;
+        text-shadow: 0 4px 18px rgba(6,40,76,.9); }
+      .gap-rail { height: 30px; border-radius: 14px; background: rgba(222,238,254,.16);
+        overflow: hidden; transform-origin: left center; }
+      .gap-fill { height: 100%; border-radius: 14px; transform-origin: left center; }
+      #gap-visitors .gap-label { color: var(--brand-blue-tint); }
+      #gap-visitors .gap-fill { width: 100%;  background: var(--brand-blue-tint); }
+      #gap-buyers   .gap-label { color: var(--brand-flame); }
+      #gap-buyers   .gap-fill { width: 11%;   background: var(--brand-flame);
+        box-shadow: 0 0 34px rgba(255,76,50,.75); }
+
+      /* G2 — GUARANTEED stamp (beat D) */
+      #g-guarantee { bottom: 360px; text-align: center; }
+      #g-guarantee .pill { display: inline-block; font-size: 56px; font-weight: 800;
+        letter-spacing: .16em; text-transform: uppercase; color: var(--brand-white);
+        background: var(--brand-flame); padding: 26px 62px; border-radius: 999px;
+        box-shadow: 0 22px 70px -14px rgba(255,76,50,.7); }
+
+      /* G3 — 90 days (beat E). The one Hedvig italic in the piece. */
+      #g-days { bottom: 300px; text-align: center; }
+      #g-days .num { font-size: 300px; font-weight: 800; line-height: .86;
+        letter-spacing: -.04em; color: var(--brand-white);
+        text-shadow: 0 18px 70px rgba(0,0,0,.55); font-variant-numeric: tabular-nums; }
+      #g-days .word { font-family: 'Hedvig Letters Serif', Georgia, serif;
+        font-style: italic; font-weight: 400; font-size: 112px; line-height: 1;
+        color: var(--brand-blue-tint); margin-top: 6px;
+        text-shadow: 0 6px 26px rgba(6,40,76,.9); }
+
+      /* G4 — visitors -> sales (beat F) */
+      #g-flow { bottom: 360px; display: flex; align-items: center; justify-content: center; gap: 30px; }
+      #g-flow .tag { font-size: 58px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+      #g-flow .from { color: var(--brand-blue-tint); }
+      #g-flow .to { color: var(--brand-white); background: var(--brand-flame);
+        padding: 16px 40px; border-radius: 999px;
+        box-shadow: 0 18px 56px -14px rgba(255,76,50,.7); }
+      #g-flow .arrow { width: 96px; height: 10px; border-radius: 5px;
+        background: var(--brand-flame); transform-origin: left center; position: relative; }
+      #g-flow .arrow::after { content: ''; position: absolute; right: -6px; top: 50%;
+        width: 26px; height: 26px; border-top: 10px solid var(--brand-flame);
+        border-right: 10px solid var(--brand-flame); transform: translateY(-50%) rotate(45deg);
+        border-radius: 3px; }
+
+      /* ---- end card ----------------------------------------------------- */
+      #card { position: absolute; inset: 0; z-index: 60; background: var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 58px; }
+      #card-bloom { position: absolute; left: -12%; bottom: -24%; width: 124%; height: 62%;
+        background: var(--brand-gradient-2); filter: blur(100px); opacity: .34; }
+      #card-glow { position: absolute; inset: 0;
+        background: radial-gradient(70% 44% at 50% 40%, rgba(156,212,255,.14) 0%, rgba(6,40,76,0) 60%); }
+      #card-logo { position: relative; width: 680px; height: auto; }
+      #card-cta { position: relative; font-size: 58px; font-weight: 800; letter-spacing: .04em;
+        color: var(--brand-white); background: var(--brand-flame);
+        padding: 38px 92px; border-radius: 999px;
+        box-shadow: 0 26px 84px -16px rgba(255,76,50,.75); }
+
+      /* Whip flash that carries the cut into the end card. */
+      #flash { position: absolute; inset: 0; z-index: 70; background: var(--brand-sky); opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <!-- Render contract: root carries id, data-composition-id, data-start="0",
+         data-duration, data-width, data-height. Timed visible children get
+         class="clip" + data-start/data-duration/data-track-index; <video> and
+         <audio> are timed but never get class="clip". -->
+    <div
+      id="root"
+      data-composition-id="ecomiq-cro-short"
+      data-start="0"
+      data-duration="22.9"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div id="bg" class="clip" data-start="0" data-duration="22.9" data-track-index="2"></div>
+
+      <!-- Montage bed: pre-cut, muted, 16.87s — reordered so each shot block
+           lands on the VO beat it sells. Built by scripts/build-bed.sh. -->
+      <div id="bed-slot">
+        <video id="bed" data-start="0" data-duration="16.87" data-track-index="0"
+               src="assets/montage-bed-916.mp4" muted playsinline></video>
+      </div>
+
+      <!-- Sean's VO is the spine of the edit and the only audio in the mix. -->
+      <audio id="vo" data-start="0" data-duration="22.23" data-track-index="1"
+             src="assets/sean-vo.wav" data-volume="1"></audio>
+
+      <div id="grade" class="clip" data-start="0" data-duration="16.87" data-track-index="3"></div>
+      <div id="scrim" class="clip" data-start="0" data-duration="16.87" data-track-index="4"></div>
+
+      <div id="logo-scrim" class="clip" data-start="0" data-duration="16.87" data-track-index="8"></div>
+      <div id="logo-slot"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+
+      <!-- G1 · "too few of them actually convert" -->
+      <div id="g-gap" class="gfx clip" data-start="6.3" data-duration="1.63" data-track-index="5">
+        <div class="gap-row" id="gap-visitors">
+          <div class="gap-label">Visitors</div>
+          <div class="gap-rail"><div class="gap-fill"></div></div>
+        </div>
+        <div class="gap-row" id="gap-buyers">
+          <div class="gap-label">Buyers</div>
+          <div class="gap-rail"><div class="gap-fill"></div></div>
+        </div>
+      </div>
+
+      <!-- G2 · "and we guarantee we can change that" -->
+      <div id="g-guarantee" class="gfx clip" data-start="9.25" data-duration="1.3" data-track-index="5">
+        <span class="pill">Guaranteed</span>
+      </div>
+
+      <!-- G3 · "Give us 90 days" -->
+      <div id="g-days" class="gfx clip" data-start="10.82" data-duration="2.78" data-track-index="5">
+        <div class="num">0</div>
+        <div class="word">days</div>
+      </div>
+
+      <!-- G4 · "turn more of those visitors into sales" -->
+      <div id="g-flow" class="gfx clip" data-start="14.9" data-duration="1.9" data-track-index="5">
+        <span class="tag from">Visitors</span>
+        <span class="arrow"></span>
+        <span class="tag to">Sales</span>
+      </div>
+
+      <!-- End card — fires on "more sales from the traffic you've already got"
+           at 16.87s and holds 6.03s while the VO plays out over it. -->
+      <div id="card" class="clip" data-start="16.87" data-duration="6.03" data-track-index="6">
+        <div id="card-bloom"></div>
+        <div id="card-glow"></div>
+        <img id="card-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="card-cta">Link Below</div>
+      </div>
+
+      <div id="flash" class="clip" data-start="16.75" data-duration="0.35" data-track-index="7"></div>
+    </div>
+
+    <script>
+      // Render contract: exactly one paused GSAP timeline, keyed to
+      // data-composition-id, registered on window.__timelines.
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Clips that start later than 0 are not in the DOM at page load, so their
+      // initial state is set inside the timeline (tl.set / fromTo), never with a
+      // bare gsap.set(). Everything that begins hidden uses fromTo — gsap.from()
+      // computes its end state from the hidden state and leaves it invisible.
+      //
+      // Each graphic's hidden state is locked with tl.set() at EXACTLY its
+      // data-start. A clip is inserted at data-start wearing its CSS defaults,
+      // so an entrance that begins even 0.02s later lets one frame render the
+      // element fully formed before it animates in — a visible pop at 30fps.
+      tl.set("#g-gap .gap-label", { opacity: 0, x: -26 }, 6.3)
+        .set("#g-gap .gap-rail", { scaleX: 0 }, 6.3)
+        .set("#g-gap .gap-fill", { scaleX: 0 }, 6.3)
+        .set("#g-guarantee .pill", { opacity: 0, scale: .72 }, 9.25)
+        .set("#g-days .num", { opacity: 0, y: 40, scale: .9 }, 10.82)
+        .set("#g-days .word", { opacity: 0, y: 26 }, 10.82)
+        .set("#g-flow .from", { opacity: 0, x: -34 }, 14.9)
+        .set("#g-flow .arrow", { opacity: 0, scaleX: 0 }, 14.9)
+        .set("#g-flow .to", { opacity: 0, scale: .78 }, 14.9)
+        .set("#card-logo", { opacity: 0, scale: .9, y: 18 }, 16.87)
+        .set("#card-cta", { opacity: 0, scale: .82 }, 16.87)
+        .set("#card-bloom", { opacity: 0 }, 16.87)
+        .set("#flash", { opacity: 0 }, 16.75);
+
+      /* ---- logo: settles in, steps aside for the end card ---------------- */
+      tl.fromTo("#logo-slot",
+        { opacity: 0, y: -22 },
+        { opacity: 1, y: 0, duration: .7, ease: "power3.out" }, .25)
+        .to("#logo-slot", { opacity: 0, duration: .2, ease: "power2.in" }, 16.7);
+
+      /* ---- G1 · the conversion gap (6.30) -------------------------------- */
+      tl.to("#g-gap .gap-rail", { scaleX: 1, duration: .38, ease: "power3.out", stagger: .09 }, 6.30)
+        .fromTo("#gap-visitors .gap-label",
+        { opacity: 0, x: -26 }, { opacity: 1, x: 0, duration: .34, ease: "power3.out" }, 6.32)
+        .fromTo("#gap-visitors .gap-fill",
+          { scaleX: 0 }, { scaleX: 1, duration: .52, ease: "power2.out" }, 6.40)
+        .fromTo("#gap-buyers .gap-label",
+          { opacity: 0, x: -26 }, { opacity: 1, x: 0, duration: .34, ease: "power3.out" }, 6.62)
+        .fromTo("#gap-buyers .gap-fill",
+          { scaleX: 0 }, { scaleX: 1, duration: .46, ease: "expo.out" }, 6.70);
+
+      /* ---- G2 · GUARANTEED stamp (9.25) ---------------------------------- */
+      tl.fromTo("#g-guarantee .pill",
+        { opacity: 0, scale: .72 },
+        { opacity: 1, scale: 1, duration: .46, ease: "back.out(2.2)" }, 9.27);
+
+      /* ---- G3 · 90 days (10.82) ------------------------------------------ */
+      const days = { n: 0 };
+      tl.fromTo("#g-days .num",
+        { opacity: 0, y: 40, scale: .9 },
+        { opacity: 1, y: 0, scale: 1, duration: .5, ease: "power4.out" }, 10.84)
+        .to(days, {
+          n: 90, duration: .62, ease: "power2.out", snap: { n: 1 },
+          onUpdate() {
+            const el = document.querySelector("#g-days .num");
+            if (el) el.textContent = String(Math.round(days.n));
+          }
+        }, 10.86)
+        .fromTo("#g-days .word",
+          { opacity: 0, y: 26 },
+          { opacity: 1, y: 0, duration: .52, ease: "power2.out" }, 11.22);
+
+      /* ---- G4 · visitors -> sales (14.90) -------------------------------- */
+      tl.fromTo("#g-flow .from",
+        { opacity: 0, x: -34 }, { opacity: 1, x: 0, duration: .4, ease: "power3.out" }, 14.92)
+        .fromTo("#g-flow .arrow",
+          { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: .34, ease: "power2.inOut" }, 15.12)
+        .fromTo("#g-flow .to",
+          { opacity: 0, scale: .78 }, { opacity: 1, scale: 1, duration: .42, ease: "back.out(2)" }, 15.34);
+
+      /* ---- end card (16.87) ---------------------------------------------
+         Snappy whip in: a short sky-blue flash carries the cut so the card
+         arrives exactly on the word "more". */
+      tl.fromTo("#flash",
+        { opacity: 0 }, { opacity: .55, duration: .07, ease: "power2.in" }, 16.80)
+        .to("#flash", { opacity: 0, duration: .12, ease: "power2.out" }, 16.87);
+
+      tl.fromTo("#card-logo",
+        { opacity: 0, scale: .9, y: 18 },
+        { opacity: 1, scale: 1, y: 0, duration: .6, ease: "power3.out" }, 16.87)
+        .fromTo("#card-cta",
+          { opacity: 0, scale: .82 },
+          { opacity: 1, scale: 1, duration: .52, ease: "back.out(1.8)" }, 17.20)
+        .fromTo("#card-bloom",
+          { opacity: 0 }, { opacity: .34, duration: 1.1, ease: "sine.out" }, 16.90)
+        // CTA breathes through the hold so the card never goes static.
+        .to("#card-cta", { scale: 1.045, duration: .78, ease: "sine.inOut", yoyo: true, repeat: 4 }, 18.1);
+
+      // Pad to the root data-duration (render contract #7).
+      tl.to({}, { duration: 22.9 }, 0);
+      window.__timelines["ecomiq-cro-short"] = tl;
+    </script>
+  </body>
+</html>
