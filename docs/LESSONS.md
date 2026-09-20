@@ -79,4 +79,49 @@ efficient over time instead of relearning the same lessons.
 
 ---
 
+## Audio & transcription
+
+- **`<audio>` without an `id` renders SILENT.** Lint catches it as the
+  `media_missing_id` *error*: "the renderer requires id to discover media
+  elements". `class="clip"` is forbidden on media (rule 2) and `id` is
+  mandatory — easy to write a comp that lints clean on structure but ships with
+  no sound. Same applies to `<video>`. **Fix:** always `<audio id="vo" ...>`.
+- **Encode a VO spine as PCM WAV, never AAC.** AAC carries encoder delay, so an
+  m4a VO drifts a few ms against graphics keyed to word onsets. A 24s 48k mono
+  WAV is only ~2.3MB. Verified: with WAV the rendered output's silence map is
+  identical to the source's, zero drift over 24.6s.
+- **Whisper word timings drift; silence onsets don't.** Over a 24s file
+  `hyperframes transcribe` put words up to ~0.7s off (and ran its last word past
+  the file's own duration). **Fix:** take sentence onsets from
+  `ffmpeg -af silencedetect`, and to pin one exact word, cut a ~2s clip around
+  it and re-transcribe just that — the offset within a short clip is reliable.
+- **Verify A/V sync by re-running silencedetect on the *rendered* file** and
+  diffing against the source's map. Cheaper and more certain than eyeballing.
+
+## Pulling sources from Google Drive
+
+- **Don't fetch large media through the Drive connector.** `download_file_content`
+  returns base64 — a 35MB video becomes ~47MB of text and blows the context
+  window. **Fix:** use the connector for metadata (confirms access, gives the
+  real filename/mime), then pull the bytes with
+  `curl -L "https://drive.google.com/uc?export=download&id=<FILE_ID>" -o out.mp4`.
+- **Probe before planning.** A montage delivered as "the 9:16" and "the square"
+  may not be the same framing — the 1440x1440 master of this reel was genuinely
+  *wider*, keeping on-screen stat text that the vertical crops off.
+
+## Editing technique (montage under a VO)
+
+- **Cut the montage in ffmpeg, layer graphics in HyperFrames.** Pre-building one
+  frame-exact silent master per ratio beats wiring 24 `<video>` elements: it is
+  deterministic, keeps the comp to a single video element, and the shot table
+  stays reviewable in one script.
+- **Respect the source's own cut points.** Detect them with
+  `select='gt(scene,0.25)',metadata=print`, then never let a chosen segment run
+  past its shot's end or you get a 2-3 frame flash of the next shot. Build a
+  labelled contact sheet of every detected shot first — sampling at `fps=1`
+  mis-maps content when the reel cuts faster than 1s.
+- **A too-short anchor shot can be stretched rather than dropped.** A 0.57s
+  static graphic card slowed to 1.00s (`setpts`) held a whole VO beat with no
+  visible artefact.
+
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

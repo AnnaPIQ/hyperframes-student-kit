@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>EcomIQ — Turn small orders into bigger ones (9:16)</title>
+    <!-- GSAP vendored locally — a CDN <script> cert-fails in the render env
+         and freezes the render (docs/LESSONS.md). -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <link rel="stylesheet" href="assets/ad.css" />
+    <style>
+      /* 9:16 — Reels / Stories. Vertical room, so the logo sits higher and the
+         callouts clear the platform UI at the bottom. */
+      :root {
+        --gutter: 108px;
+        --logo-top: 104px;
+        --logo-w: 300px;
+        --lower-bottom: 340px;
+        --chip: 34px;
+        --stat: 190px;
+        --h1: 88px;
+        --card-gutter: 56px;
+        --pill: 40px;
+        --card-logo-w: 460px;
+      }
+      html, body { width: 1080px; height: 1920px; }
+    </style>
+  </head>
+  <body>
+    <!-- Render contract: root carries id, data-composition-id, data-start,
+         data-duration, data-width, data-height. Every timed visible layer is a
+         `.clip` with data-start / data-duration / data-track-index, on its own
+         track so nothing collides. <video> and <audio> are timed but never
+         `.clip` (rule 2). -->
+    <div
+      id="root"
+      data-composition-id="ecomiq-aov-short"
+      data-start="0"
+      data-duration="24.6"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- footage: muted, wrapper owns the box (rules 5 + 9) -->
+      <div id="montage-wrap">
+        <video id="montage" src="assets/montage-9x16.mp4" muted
+               data-start="0" data-duration="19.5" data-track-index="0"></video>
+      </div>
+
+      <div id="grade"    class="clip layer" data-start="0" data-duration="19.5" data-track-index="1"></div>
+      <div id="vignette" class="clip layer" data-start="0" data-duration="19.5" data-track-index="2"></div>
+      <div id="grain"    class="clip layer" data-start="0" data-duration="24.6" data-track-index="3"></div>
+
+      <div id="logo-clip" class="clip layer" data-start="0" data-duration="19.5" data-track-index="4">
+        <div id="logo-pos"><img id="brand-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+      </div>
+
+      <div id="mg-small-clip" class="clip layer" data-start="3.6" data-duration="1.2" data-track-index="5">
+        <div id="mg-small" class="mg">
+          <span class="chip hot"><span class="arrow">&darr;</span> Small orders</span>
+        </div>
+      </div>
+
+      <div id="mg-sell-clip" class="clip layer" data-start="5.3" data-duration="1.2" data-track-index="6">
+        <div id="mg-sell" class="mg">
+          <span class="chip cool">Change how you sell</span>
+        </div>
+      </div>
+
+      <div id="mg-guarantee-clip" class="clip layer" data-start="9.4" data-duration="1.3" data-track-index="7">
+        <div id="mg-guarantee" class="mg">
+          <span class="chip hot">Guaranteed</span>
+        </div>
+      </div>
+
+      <div id="mg-days-clip" class="clip layer" data-start="11.0" data-duration="1.3" data-track-index="8">
+        <div id="mg-days" class="mg">
+          <span class="num">90<span class="unit">Days</span></span>
+        </div>
+      </div>
+
+      <div id="mg-strategist-clip" class="clip layer" data-start="13.1" data-duration="1.35" data-track-index="9">
+        <div id="mg-strategist" class="mg">
+          <span class="chip cool">Your EcomIQ strategist</span>
+        </div>
+      </div>
+
+      <div id="mg-climb-clip" class="clip layer" data-start="17.5" data-duration="2.0" data-track-index="10">
+        <div id="mg-climb" class="mg">
+          <span class="bars"><i></i><i></i><i></i></span>
+          <span class="chip hot">Order value <span class="arrow">&uarr;</span></span>
+        </div>
+      </div>
+
+      <div id="whip-clip" class="clip layer" data-start="0" data-duration="24.6" data-track-index="11">
+        <div id="whip"></div>
+      </div>
+      <div id="flash" class="clip layer" data-start="19.2" data-duration="0.8" data-track-index="12"></div>
+
+      <!-- END CARD — cuts in on the onset of "Turn small orders into bigger
+           ones." (19.50s) and holds 5.1s through the CTA line. -->
+      <div id="card" class="clip layer" data-start="19.5" data-duration="5.1" data-track-index="13">
+        <div id="card-bloom"></div>
+        <div id="card-glow"></div>
+        <div id="card-inner">
+          <img id="card-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+          <div id="card-rule"></div>
+          <div id="card-h1">Turn small orders<br />into <span class="em">bigger</span> ones.</div>
+          <div id="card-cta">Link Below <span class="arrow">&darr;</span></div>
+        </div>
+      </div>
+
+      <!-- Sean's VO is the spine of the whole edit. -->
+      <audio id="vo" src="assets/vo-sean.wav" data-start="0" data-duration="24.0853"
+             data-track-index="14" data-volume="1"></audio>
+    </div>
+
+    <script src="assets/ad.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["ecomiq-aov-short"] = window.__buildEcomiqAd();
+    </script>
+  </body>
+</html>

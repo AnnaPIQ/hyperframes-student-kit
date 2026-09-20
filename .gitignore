@@ -40,3 +40,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+# Built video masters (regenerate with a project's scripts/build-montage.sh)
+video-projects/*/assets/montage-*.mp4
+video-projects/*/assets/vo-*.wav
