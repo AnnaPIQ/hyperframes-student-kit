@@ -3,53 +3,211 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
-    <title>ecomiq-cro-short</title>
-    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <title>EcomIQ CRO short — 9x16</title>
+    <!-- GSAP vendored locally: a CDN script cert-fails in the render env and freezes renders -->
     <script src="assets/vendor/gsap.min.js"></script>
     <link rel="stylesheet" href="assets/brand-tokens.css" />
     <style>
-      /* LOCAL fonts — no network dependency at render time (latin subset) */
+      /* LOCAL fonts, no network at render time. Families are named literally
+         (not via var()) so the linter resolves them. */
       @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
         font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
       @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
         font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { width: 1080px; height: 1920px; overflow: hidden;
-        background: var(--brand-bg); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
-      #bg { position: absolute; inset: 0;
-        background: radial-gradient(90% 55% at 50% 20%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
-      #logo { position: absolute; top: 7%; left: 10%; width: 33%; height: auto; }
-      #stage { position: absolute; inset: 0; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; gap: 24px; padding: 10%; text-align: center; }
-      #eyebrow { font-weight: 600; font-size: 26px; letter-spacing: .34em; text-transform: uppercase; color: var(--brand-blue-tint); }
-      #headline { font-weight: 800; font-size: 96px; line-height: .98; letter-spacing: -.03em; }
-      #headline .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
-      #subhead { font-weight: 500; font-size: 34px; line-height: 1.3; color: var(--brand-text-dim); max-width: 70%; }
-      #cta { margin-top: 12px; font-weight: 700; font-size: 34px; color: var(--brand-white);
-        background: var(--brand-flame); padding: 26px 52px; border-radius: 999px;
-        box-shadow: 0 20px 64px -16px rgba(255,76,50,.6); }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-white);
+      }
+
+      /* Navy safety net so no frame can ever land on black. */
+      #bg { position: absolute; inset: 0; background: var(--brand-navy); }
+
+      /* Video lives in a plain positioned wrapper and is never animated
+         (render contract rule 9: animating a <video> freezes frames). */
+      #video-wrap { position: absolute; inset: 0; overflow: hidden; }
+      #montage { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+      /* Vignette sits over the footage only, to seat the logo and the progress rule. */
+      #vignette {
+        position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 78% 62% at 50% 46%,
+          rgba(0,0,0,0) 40%, rgba(2,14,28,0.30) 74%, rgba(2,14,28,0.62) 100%);
+      }
+
+      /* Deterministic CSS film grain: three offset dot tiles, no PNG, no randomness. */
+      #grain {
+        position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+        background-image:
+          radial-gradient(rgba(255,255,255,.030) 0.5px, transparent 0.5px),
+          radial-gradient(rgba(255,255,255,.020) 0.5px, transparent 0.5px),
+          radial-gradient(rgba(0,0,0,.015) 0.5px, transparent 0.5px);
+        background-size: 3px 3px, 5px 5px, 7px 7px;
+        background-position: 0 0, 1px 2px, 2px 1px;
+      }
+
+      /* Persistent white lockup, top-left. Wrapped in a positioned non-clip div so
+         the render engine cannot reposition it (docs/LESSONS.md). */
+      #logo-wrap { position: absolute; top: 72px; left: 72px; }
+      #logo { width: 300px; height: auto; display: block; opacity: 0;
+        filter: drop-shadow(0 4px 18px rgba(2,14,28,.55)); }
+
+      /* Flame progress rule: fills across the montage, callback to the CTA colour. */
+      #progress-track {
+        position: absolute; left: 0; right: 0; bottom: 0; height: 7px;
+        background: rgba(255,255,255,.14);
+      }
+      #progress {
+        position: absolute; inset: 0; transform-origin: left center; transform: scaleX(0);
+        background: linear-gradient(90deg, var(--brand-flame) 0%, #FF8A4C 100%);
+        box-shadow: 0 0 22px rgba(255,76,50,.75);
+      }
+
+      /* Light-streak whip that masks the cut into the end card. */
+      #streak {
+        position: absolute; top: 0; bottom: 0; width: 46%; opacity: 0;
+        pointer-events: none; filter: blur(22px);
+        background: linear-gradient(100deg, rgba(255,76,50,0) 0%,
+          rgba(255,138,76,.55) 42%, rgba(255,255,255,.92) 55%,
+          rgba(255,138,76,.55) 68%, rgba(255,76,50,0) 100%);
+      }
+
+      /* ---- End card ---------------------------------------------------- */
+      #card { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
+      #card-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(72% 50% at 50% 30%, rgba(156,212,255,.13) 0%, rgba(6,40,76,0) 62%),
+          var(--brand-navy);
+      }
+      /* Oversized IQ mark, the brand watermark from the reel's own card. */
+      #card-mark {
+        position: absolute; left: 50%; top: 56%; width: 980px; height: auto;
+        transform: translate(-50%, -50%); opacity: .05;
+      }
+      #card-stage {
+        position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 96px;
+        padding: 10%; text-align: center; transform: translateY(-38px);
+      }
+      #card-logo { width: 560px; height: auto; opacity: 0; display: block; }
+      #card-cta-wrap { position: relative; display: flex; justify-content: center; }
+      /* Flame bloom behind the button, echoing the reel's light-streak reveal. */
+      #card-bloom {
+        position: absolute; left: 50%; top: 50%; width: 150%; height: 240%;
+        transform: translate(-50%, -50%) scaleX(0.2); opacity: 0;
+        background: radial-gradient(closest-side, rgba(255,76,50,.75) 0%, rgba(255,76,50,0) 100%);
+        filter: blur(34px); pointer-events: none;
+      }
+      #card-btn {
+        position: relative; opacity: 0;
+        font-weight: 700; font-size: 46px; letter-spacing: -.01em;
+        color: var(--brand-white); background: var(--brand-flame);
+        padding: 33px 69px; border-radius: 999px;
+        box-shadow: 0 22px 62px -14px rgba(255,76,50,.7);
+        display: inline-flex; align-items: center; gap: 16px; white-space: nowrap;
+      }
+      #card-btn .arrow { font-size: 48px; line-height: 1; }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="ecomiq-cro-short" data-start="0" data-duration="6" data-width="1080" data-height="1920">
-      <div id="bg" class="clip" data-start="0" data-duration="6" data-track-index="0"></div>
-      <img id="logo" class="clip" data-start="0" data-duration="6" data-track-index="1" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-      <div id="stage" class="clip" data-start="0" data-duration="6" data-track-index="2">
-        <div id="eyebrow">E-Commerce Intelligence</div>
-        <div id="headline"><span class="em">Rethink</span> your strategy.</div>
-        <div id="subhead">Replace this copy. Build your scene. Ship the ad.</div>
-        <div id="cta">Get started &rarr;</div>
+    <div id="root" data-composition-id="ecomiq-cro-short" data-start="0" data-duration="21.6000"
+         data-width="1080" data-height="1920">
+
+      <div id="bg"></div>
+
+      <div id="video-wrap">
+        <!-- No class="clip" on <video> — it breaks playback (render contract rule 2).
+             Audio is a sibling <audio>; the montage's own audio was dropped at prep. -->
+        <video id="montage" src="assets/montage-cutdown-9x16.mp4"
+               data-start="0" data-duration="15.433333" data-track-index="0"
+               muted playsinline></video>
       </div>
+
+      <div id="vignette"></div>
+
+      <div id="logo-wrap">
+        <img id="logo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+      </div>
+
+      <div id="progress-track"><div id="progress"></div></div>
+
+      <div id="streak"></div>
+
+      <div id="card">
+        <div id="card-bg"></div>
+        <img id="card-mark" src="assets/ecomiq-icon-white.svg" alt="" />
+        <div id="card-stage">
+          <img id="card-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+          <div id="card-cta-wrap">
+            <div id="card-bloom"></div>
+            <div id="card-btn">Link Below <span class="arrow">&darr;</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="grain"></div>
+
+      <!-- Sean's voiceover is the spine of the edit and runs the full duration. -->
+      <audio id="vo" src="assets/sean-vo.m4a"
+             data-start="0" data-duration="21.6000" data-track-index="1"
+             data-volume="1"></audio>
     </div>
+
     <script>
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
-      tl.from("#logo", { opacity: 0, y: -20, duration: .6, ease: "power3.out" }, .2)
-        .from("#eyebrow", { opacity: 0, y: 16, duration: .5, ease: "power2.out" }, .5)
-        .from("#headline", { opacity: 0, y: 32, duration: .7, ease: "power3.out" }, .7)
-        .from("#subhead", { opacity: 0, y: 20, duration: .6, ease: "power2.out" }, 1.1)
-        .from("#cta", { opacity: 0, scale: .85, duration: .55, ease: "back.out(1.7)" }, 1.5);
-      tl.to({}, { duration: 6 }, 0); // pad to data-duration
+
+      // --- Montage phase -------------------------------------------------
+      // Logo enters top-left and holds through the footage.
+      tl.fromTo("#logo", { opacity: 0, y: -18 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.4000);
+
+      // Flame rule fills across the montage. Linear: it is a progress read, not a flourish.
+      tl.fromTo("#progress", { scaleX: 0 },
+        { scaleX: 1, duration: 15.433333, ease: "none" }, 0);
+
+      // Vignette breathes so the "still" frames never sit dead.
+      tl.fromTo("#vignette", { opacity: 0.82 },
+        { opacity: 1, duration: 3.858333, ease: "sine.inOut", yoyo: true, repeat: 3 }, 0);
+
+      // Logo clears before the card takes over.
+      tl.to("#logo", { opacity: 0, y: -14, duration: 0.26, ease: "power2.in" }, 14.7000);
+
+      // --- Transition to the end card ------------------------------------
+      // Light streak whips across to mask the cut, peaking inside the dissolve.
+      tl.fromTo("#streak", { xPercent: -160, opacity: 0 },
+        { xPercent: 40, opacity: 1, duration: 0.2, ease: "power2.in" }, 14.9600);
+      tl.to("#streak", { xPercent: 260, opacity: 0, duration: 0.26, ease: "power2.out" },
+        14.9600 + 0.2);
+
+      // The cross-dissolve resolves exactly on the word "Stop".
+      tl.fromTo("#card", { opacity: 0 },
+        { opacity: 1, duration: 0.403333, ease: "power2.inOut" }, 14.9600);
+      // Progress rule completes and retires into the card.
+      tl.to("#progress-track", { opacity: 0, duration: 0.3, ease: "power2.out" }, 15.433333);
+
+      // --- End card ------------------------------------------------------
+      tl.fromTo("#card-logo", { opacity: 0, scale: 0.93, y: 14 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.55, ease: "back.out(1.2)" }, 15.363333);
+      tl.fromTo("#card-bloom", { opacity: 0, scaleX: 0.2 },
+        { opacity: 1, scaleX: 1, duration: 0.5, ease: "power2.out" }, 15.6633 - 0.12);
+      tl.fromTo("#card-btn", { opacity: 0, scale: 0.86 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 15.6633);
+
+      // Camera never sleeps: the watermark drifts and the button breathes under the VO.
+      tl.fromTo("#card-mark", { scale: 1.0, rotation: -1.4 },
+        { scale: 1.09, rotation: 1.4, duration: 6.236667, ease: "sine.inOut" }, 15.363333);
+      tl.to("#card-bloom", { opacity: 0.55, duration: 0.65, ease: "sine.inOut",
+        yoyo: true, repeat: 7 }, 16.2133);
+      tl.to("#card-btn", { scale: 1.035, duration: 0.65, ease: "sine.inOut",
+        yoyo: true, repeat: 7 }, 16.2133);
+
+      // Law #11 duration anchor — keeps the composition alive for its whole slot.
+      tl.to({}, { duration: 21.6000 }, 0);
       window.__timelines["ecomiq-cro-short"] = tl;
     </script>
   </body>

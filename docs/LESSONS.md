@@ -72,6 +72,48 @@ efficient over time instead of relearning the same lessons.
   `kling3.0_pro`, `veo3.1`, `seedance2`, `gen4.5`, etc. via `npm run gen --model <id>`.
   Keep Runway as the single integration; pick the model per shot.
 
+## Multi-format projects (one composition, several aspect ratios)
+
+- **Two root-level HTML files with a `data-composition-id` = duplicated, layered audio.**
+  The runtime discovers *every* root-level composition as an entry point, so shipping
+  `index.html` + `ad-4x5.html` plays the voiceover twice. Lint catches it as
+  `multiple_root_compositions`. **Fix:** keep exactly one root composition and
+  generate each ratio into `index.html` in turn, rendering before the next is written
+  (see `video-projects/ecomiq-cro-short/scripts/render-all.sh`). Verify afterwards by
+  correlating the rendered audio envelope against the source — a single, un-layered
+  copy gives correlation 1.0000 and an amplitude ratio of 1.000.
+- **`../assets/...` from inside `compositions/` 404s in Studio.** Renders rewrite the
+  path, but Studio and other live consumers resolve against the *project root*.
+  **Fix:** always use root-relative paths (`assets/...`), whatever directory the
+  composition file sits in. Lint flags it as `invalid_parent_traversal_in_asset_path`.
+- **Two `<img>` with the same src + start + duration trip `duplicate_media_discovery_risk`.**
+  Hit when the same logo is used as both a corner bug and a hero lockup. **Fix:** point
+  one at a different file (e.g. the `.png` for the small corner instance, the `.svg`
+  for the large one) — quality-neutral when the raster is oversampled.
+
+## Transcription & sync
+
+- **Whisper timestamps can run past the end of the audio.** On a 21.60s file the
+  offline model reported 22.94s and placed a word onset 0.36s inside a silence.
+  **Fix:** never take a word time on faith for a hard cut. Anchor it against measured
+  audio energy (RMS over ~10ms windows) and use the real onset. Whisper's *ordering*
+  is reliable; its absolute tail timing is not.
+- **`hyperframes doctor` can report FFmpeg as broken when it works.** The startup hook
+  showed `✗ FFmpeg Failed to run ... -version` while `ffmpeg -version` returned 0 and
+  every filter ran fine. **Fix:** confirm with `ffmpeg -version` before believing the
+  doctor and chasing an install.
+
+## Retimes & frame-accurate cutdowns
+
+- **Express cutdowns in FRAMES, not seconds.** Round every in-point and length to
+  `1/fps` up front and let the script convert; deriving times from floats mid-pipeline
+  drifts cuts off the grid and lands them a frame either side of the word.
+- **`xfade` shortens the output by its own duration, which shifts every later cut.**
+  To cross-dissolve without moving the timeline, give the *incoming* segment an extra
+  head of exactly the transition length and set `offset = (running_length - xfade)/fps`.
+  With a retimed shot, the head must be `xfade * src_len / out_len` source frames so it
+  still lands as `xfade` frames of output.
+
 ## Housekeeping
 
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat

@@ -40,3 +40,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+# Derived montage cutdowns — rebuilt by a project's build-cutdown.py from the
+# committed montage-source-*.mp4 (scripts/render-all.sh regenerates on demand)
+**/assets/montage-cutdown-*.mp4

@@ -1,8 +1,8 @@
 # EcomIQ CRO Short — Edit Plan
 
-Status: **awaiting approval** on the end-card trigger. The 4:5 framing question is
-closed, the square montage supplied on 2026-09-20 resolves it. Nothing is rendered
-until the OK lands.
+Status: **built and rendered.** Approved 2026-09-20. Revised the same day on Nate's
+note: *"slow down montage slightly, we don't need to use it all, I prefer last
+clips."* The shot list below is v2 and matches what shipped.
 
 ## Sources
 
@@ -60,43 +60,50 @@ qualify" at 19.20s.
 | Cross-dissolve | 14.96 to 15.36 (0.40s), card fully resolved on the word |
 | Card hold | 15.36 to 21.60 (6.24s), VO continues over it |
 
-## Shot list — 18 shots, montage covers 0 to 15.20s
+## Shot list — 13 shots, montage covers 0 to 15.4333s (463 frames @30)
 
-Cuts are hard inside an act; act boundaries get a 0.18s dissolve.
+v2. Every shot is drawn from the **back half of the reel** (13.87s onward) per Nate's
+"I prefer last clips", and each is retimed to roughly **0.81x** so the cutting
+breathes: average shot is now **1.19s**, up from 0.86s in v1 (18 shots).
 
-### Act 1 — Hook
-| # | Timeline | Source | Shot |
-|---|---|---|---|
-| 1 | 0.00 to 0.90 | 24.60 to 25.50 | Shopify booth, orange |
-| 2 | 0.90 to 1.47 | 7.03 to 7.60 | SHOPIFY PREMIER PARTNER card |
-| 3 | 1.47 to 2.35 | 23.63 to 24.51 | Boutique, Sean + client with product |
+Hard cuts inside an act; a 6-frame cross-dissolve at each act boundary.
 
-### Act 2 — Problem (hard cut on "Getting" at 2.35)
-| # | Timeline | Source | Shot |
-|---|---|---|---|
-| 4 | 2.35 to 3.18 | 25.50 to 26.33 | TikTok booth, "Capture Leads" |
-| 5 | 3.18 to 3.88 | 3.40 to 4.10 | Expo floor, crowds |
-| 6 | 3.88 to 4.71 | 15.60 to 16.43 | Store site screen recording |
-| 7 | 4.71 to 5.20 | 6.37 to 6.86 | Cupcake macro |
+### Act 1 — Hook · "Run a Shopify store?"
+| # | Timeline | Source | Retime | Shot |
+|---|---|---|---|---|
+| 1 | 0.00 to 1.10 | 24.60 to 25.50 | 1.22x | Shopify booth |
+| 2 | 1.10 to 2.33 | 23.63 to 24.60 | 1.28x | Boutique, Sean + client with product |
+
+### Act 2 — Problem · dissolve lands on "Getting" at 2.33
+| # | Timeline | Source | Retime | Shot |
+|---|---|---|---|---|
+| 3 | 2.33 to 3.43 | 25.50 to 26.33 | 1.32x | TikTok booth, "Capture Leads" |
+| 4 | 3.43 to 4.47 | 15.60 to 16.43 | 1.24x | Store site screen recording, cut on "not" (3.44) |
 
 ### Act 3 — Diagnosis
-| # | Timeline | Source | Shot |
-|---|---|---|---|
-| 8 | 5.20 to 6.00 | 22.83 to 23.63 | Hands on keyboard |
-| 9 | 6.00 to 6.80 | 5.57 to 6.37 | Sean at laptop |
-| 10 | 6.80 to 7.96 | 17.87 to 19.03 | Stage, "1.3+ Billion / 99.9% uptime" |
-| 11 | 7.96 to 8.66 | 8.37 to 9.07 | Sean direct to lens, lands on "fix" (8.67) |
-| 12 | 8.66 to 9.40 | 9.07 to 9.81 | Sean presenting at screen |
+| # | Timeline | Source | Retime | Shot |
+|---|---|---|---|---|
+| 5 | 4.47 to 5.47 | 22.83 to 23.63 | 1.25x | Hands on keyboard |
+| 6 | 5.47 to 6.47 | 22.03 to 22.83 | 1.25x | Sean with mic, expo |
+| 7 | 6.47 to 7.90 | 17.87 to 19.03 | 1.23x | Stage, "1.3+ Billion / 99.9% uptime", carries "we guarantee" (7.43) |
+| 8 | 7.90 to 8.70 | 16.43 to 17.07 | 1.26x | Strategist call, to camera |
+| 9 | 8.70 to 9.87 | 19.97 to 20.90 | 1.25x | Coffee meeting, carries "Give us 90 days" (9.40) |
 
-### Act 4 — The offer (dissolve on "Give" at 9.40)
-| # | Timeline | Source | Shot |
-|---|---|---|---|
-| 13 | 9.40 to 10.04 | 16.43 to 17.07 | Split-screen strategist call |
-| 14 | 10.04 to 10.81 | 7.60 to 8.37 | Sean + client, greeting |
-| 15 | 10.81 to 11.81 | 10.73 to 11.73 | Sean with mic, lands on "EcomIQ" (11.21) |
-| 16 | 11.81 to 12.61 | 12.37 to 13.17 | Sean + attendee, phone in hand |
-| 17 | 12.61 to 14.34 | 13.87 to 15.60 | Retail aisle, product lifted on "move" (13.16) and "move yours" (14.26) |
-| 18 | 14.34 to 15.20 | 26.87 to 27.73 | Sean portrait, into the card |
+### Act 4 — The offer
+| # | Timeline | Source | Retime | Shot |
+|---|---|---|---|---|
+| 10 | 9.87 to 11.03 | 20.90 to 22.03 | 1.03x | Tesla |
+| 11 | 11.03 to 12.33 | 19.03 to 19.97 | 1.39x | Boutique, carries "EcomIQ strategist" (11.21) |
+| 12 | 12.33 to 14.40 | 13.87 to 15.60 | 1.19x | Retail aisle, product lifted on "move" (13.16) and "move yours" (14.26) |
+| 13 | 14.40 to 15.43 | 26.87 to 27.73 | 1.19x | Sean portrait, into the end card |
+
+### Dropped from v1, worth knowing
+- **SHOPIFY PREMIER PARTNER card** (source 7.03 to 7.60). The single most on-message
+  frame in the reel for a Shopify CRO ad, but it sits at 25% into the source, so it
+  fell to the "last clips" rule. Say the word and it goes back in Act 1.
+- Also dropped: Sean direct-to-lens (8.37), Sean at laptop (5.57), Sean presenting
+  (9.07), expo floor (3.40), cupcake macro (6.37), greeting (7.60), Sean with mic
+  (10.73), attendee with phone (12.37). All from the front half.
 
 ## Overlay and card
 
@@ -130,13 +137,19 @@ resolves by 7.50s. That is in the source at every ratio, not a crop artifact.
 |---|---|---|---|
 | 9:16 | `renders/ecomiq-cro-short-9x16.mp4` | 1080x1920 | 21.60s |
 | 4:5 | `renders/ecomiq-cro-short-4x5.mp4` | 1080x1350 | 21.60s |
+| 1:1 | `renders/ecomiq-cro-short-1x1.mp4` | 1080x1080 | 21.60s |
 
-H.264 / AAC, `+faststart`, no captions.
+All three: 648 frames @30fps, H.264 High, AAC-LC 48kHz stereo, `+faststart`, no
+captions. The 1:1 resolves the brief's internal contradiction (step 4 asked for 1:1,
+OUTPUT asked for 4:5) and is native from the square source, so it costs nothing.
+
+Verified on the finals: audio envelope correlates 1.0000 against the source VO at
+amplitude ratio 1.000 (single, un-layered copy); frames checked at every shot, the
+dissolve and the card in all three ratios; no cropped faces, no overflow, no black
+frames.
 
 ## Open items for Nate
 
-1. Confirm the **15.36s** end-card trigger.
-2. The brief's step 4 says 1:1 while OUTPUT says 4:5. Building 4:5; say if a 1:1 cut is
-   also wanted. The square source would make that a native, crop-free export.
-
-Resolved: 4:5 framing, via the square montage. No crop decisions outstanding.
+All resolved. 15.36s trigger confirmed; 4:5 framing solved by the square source; 1:1
+shipped alongside. The one open offer: the SHOPIFY PREMIER PARTNER card is out under
+the "last clips" rule and can go back into Act 1 on request.
