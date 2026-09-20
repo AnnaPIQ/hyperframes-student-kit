@@ -35,7 +35,7 @@ old = """      /* 9:16 — Reels / Stories. Vertical room, so the logo sits high
         --lower-bottom: 640px;   /* bottom 640px kept clear for subtitles */
         --chip: 34px;
         --stat: 190px;
-        --h1: 88px;
+        --h1: 80px;
         --card-gutter: 56px;
         --card-lift: 0px;
         --pill: 40px;
@@ -50,7 +50,7 @@ new = """      /* 4:5 — Meta feed. 570px shorter than the 9:16, so the type st
         --lower-bottom: 430px;   /* bottom 430px kept clear for subtitles */
         --chip: 31px;
         --stat: 158px;
-        --h1: 78px;
+        --h1: 71px;
         --card-gutter: 56px;
         --card-lift: 130px;
         --pill: 36px;

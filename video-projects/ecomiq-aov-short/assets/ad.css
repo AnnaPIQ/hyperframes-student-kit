@@ -170,10 +170,11 @@ html, body {
 #card-guarantee {
   margin-top: calc(var(--h1) * 0.50);
   display: inline-flex; align-items: center; gap: 14px;
-  font-size: calc(var(--pill) * 0.72); font-weight: 700;
+  font-size: calc(var(--pill) * 0.92); font-weight: 700;
   letter-spacing: 0.22em; text-transform: uppercase;
   color: var(--brand-blue-tint);
-  padding: calc(var(--pill) * 0.40) calc(var(--pill) * 1.05);
+  /* em padding so the badge keeps its proportions if the type is resized */
+  padding: 0.52em 1.30em;
   border: 2px solid rgba(156, 212, 255, 0.45);
   border-radius: 999px;
   white-space: nowrap;
