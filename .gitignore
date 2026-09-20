@@ -40,3 +40,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Derived b-roll beds (rebuild with the project's build-montage.sh)
+video-projects/*/assets/montage-*.mp4

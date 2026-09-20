@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>EcomIQ AOV, 4:5</title>
+    <!-- GSAP vendored locally. A CDN script cert-fails in the render env and freezes renders. -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts, no network dependency at render time. Families are named
+         literally because the linter does not resolve CSS variables. */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-text);
+      }
+
+      /* ---- montage bed -------------------------------------------------- */
+      /* The <video> is never transformed directly (contract rule 9). The whip
+         out at the end card is applied to this wrapper instead. */
+      #bed { position: absolute; inset: 0; transform-origin: 50% 46%; will-change: transform, filter; }
+      #bed video { width: 1080px; height: 1350px; object-fit: cover; display: block; }
+
+      /* Light brand grade so the footage sits inside the EcomIQ world without
+         dulling it. Navy only creeps in at the edges. */
+      #grade {
+        position: absolute; inset: 0; pointer-events: none;
+        background:
+          linear-gradient(180deg, rgba(6,40,76,.62) 0%, rgba(6,40,76,.10) 22%, rgba(6,40,76,0) 38%),
+          radial-gradient(120% 78% at 50% 44%, rgba(6,40,76,0) 42%, rgba(6,40,76,.45) 100%);
+      }
+
+      /* ---- top-left logo ------------------------------------------------ */
+      /* Positioned, non-clip wrapper. Elements marked class="clip" get
+         repositioned by the engine, which drags the logo off its corner. */
+      #logo-wrap { position: absolute; top: 74px; left: 74px; width: 262px; }
+      #corner-logo { width: 100%; height: auto; display: block;
+        filter: drop-shadow(0 6px 26px rgba(0,0,0,.45)); }
+
+      /* ---- transition whip ---------------------------------------------- */
+      #whip {
+        position: absolute; top: -20%; left: 0; width: 46%; height: 140%;
+        background: linear-gradient(100deg, rgba(255,76,50,0) 0%, rgba(255,166,61,.85) 42%,
+                    rgba(255,255,255,.95) 52%, rgba(255,76,50,.85) 62%, rgba(255,76,50,0) 100%);
+        filter: blur(26px); opacity: 0;
+      }
+
+      /* ---- end card ------------------------------------------------------ */
+      #card {
+        position: absolute; inset: 0; opacity: 0;
+        background:
+          radial-gradient(92% 52% at 50% 26%, rgba(156,212,255,.13) 0%, rgba(6,40,76,0) 58%),
+          var(--brand-navy);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+      }
+      #card-bloom {
+        position: absolute; left: -12%; bottom: -24%; width: 124%; height: 58%;
+        background: var(--brand-gradient-2); filter: blur(96px); opacity: 0;
+      }
+      #card-logo { position: relative; width: 500px; height: auto; }
+      #card-rule {
+        position: relative; margin-top: 46px; width: 150px; height: 7px;
+        background: var(--brand-flame); border-radius: 4px; transform-origin: left center;
+      }
+      #card-cta {
+        position: relative; margin-top: 74px;
+        display: inline-flex; align-items: center; gap: 20px;
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        font-size: 50px; font-weight: 700; letter-spacing: -.01em;
+        color: var(--brand-white); background: var(--brand-flame);
+        padding: 34px 82px; border-radius: 999px;
+        box-shadow: 0 26px 82px -18px rgba(255,76,50,.72);
+      }
+      #card-cta .arrow { font-size: 46px; line-height: 1; transform: translateY(2px); }
+    </style>
+  </head>
+  <body>
+    <!-- Render contract: root carries id, data-composition-id, data-start,
+         data-width, data-height. The <video> takes the timing attributes but
+         never class="clip" (rule 2); audio rides as a sibling (rule 5). -->
+    <div
+      id="root"
+      data-composition-id="aov-45"
+      data-start="0"
+      data-duration="23.2"
+      data-width="1080"
+      data-height="1350"
+    >
+      <div id="bed">
+        <video
+          id="montage"
+          src="assets/montage-45.mp4"
+          muted
+          data-start="0"
+          data-duration="17.3"
+          data-track-index="0"
+        ></video>
+      </div>
+
+      <div id="grade" class="clip" data-start="0" data-duration="17.3" data-track-index="1"></div>
+
+      <div id="logo-wrap"><img id="corner-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+
+      <div id="card">
+        <div id="card-bloom"></div>
+        <img id="card-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="card-rule"></div>
+        <div id="card-cta">Link Below <span class="arrow">&darr;</span></div>
+      </div>
+
+      <!-- Above the card in the DOM so the streak crosses the cut instead of
+           being painted over by it. -->
+      <div id="whip"></div>
+
+      <!-- Sean's VO is the spine of the edit. The montage is muted at the
+           asset level (build-montage.sh strips it with -an). -->
+      <audio
+        id="vo"
+        src="assets/vo-sean.m4a"
+        data-start="0"
+        data-duration="23"
+        data-track-index="2"
+        data-volume="1"
+      ></audio>
+    </div>
+
+    <script>
+      // Render contract: exactly one paused GSAP timeline, keyed to
+      // data-composition-id, registered on window.__timelines.
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // "Same customers, bigger orders." lands at 17.05s in the VO. The card
+      // leads the word by 0.20s so it is fully resolved as he says it.
+      const CUT = 16.85;
+
+      // Baseline for #card-logo: it carries two fromTo tweens (opacity and
+      // transform), and without this the last-authored from-values become its
+      // resting state on any seek before the card plays. gsap.set, not
+      // tl.set at 0: a zero-duration set at 0 does not render on frame 0.
+      gsap.set("#card-logo", { opacity: 0, scale: .9, y: 14 });
+
+      // Top-left logo, in on the first shot and cleared just before the card.
+      // fromTo, not from: the logo starts hidden, and from() would compute its
+      // end state from the hidden state and leave it invisible.
+      tl.fromTo("#logo-wrap",
+          { opacity: 0, y: -18 },
+          { opacity: 1, y: 0, duration: .55, ease: "power3.out" }, .30)
+        .to("#logo-wrap", { opacity: 0, y: -14, duration: .22, ease: "power2.in" }, CUT - .10);
+
+      // Montage whips out: push in, blur, and clear under the flame streak.
+      tl.to("#bed", { scale: 1.085, filter: "blur(28px)", opacity: 0,
+                      duration: .24, ease: "power2.in" }, CUT)
+        .to("#grade", { opacity: 0, duration: .18, ease: "power2.in" }, CUT);
+
+      // Flame streak crossing the cut, so the transition reads as motion
+      // rather than a hard splice.
+      tl.fromTo("#whip",
+          { opacity: 0, xPercent: -140, skewX: -12 },
+          { opacity: 1, xPercent: 60, skewX: -12, duration: .16, ease: "power2.in" }, CUT - .02)
+        .to("#whip", { opacity: 0, xPercent: 250, skewX: -12, duration: .26, ease: "power3.out" }, CUT + .14);
+
+      // End card resolves on the word, then holds to the end of the VO.
+      tl.fromTo("#card", { opacity: 0 }, { opacity: 1, duration: .13, ease: "power2.out" }, CUT + .06)
+        .fromTo("#card-bloom", { opacity: 0 }, { opacity: .42, duration: .7, ease: "sine.out" }, CUT + .07)
+        // Opacity snaps so the mark is legible ON the word; the scale keeps
+        // settling underneath it.
+        .fromTo("#card-logo", { opacity: 0 },
+          { opacity: 1, duration: .16, ease: "power2.out", immediateRender: false }, CUT + .07)
+        .fromTo("#card-logo",
+          { scale: .9, y: 14 },
+          { scale: 1, y: 0, duration: .48, ease: "back.out(1.3)", immediateRender: false }, CUT + .07)
+        .fromTo("#card-rule", { scaleX: 0 }, { scaleX: 1, duration: .42, ease: "power3.out" }, CUT + .40)
+        .fromTo("#card-cta",
+          { opacity: 0, scale: .86 },
+          { opacity: 1, scale: 1, duration: .46, ease: "back.out(1.7)" }, CUT + .60)
+        // CTA breathes through the hold so the outro never goes static.
+        .to("#card-cta", { scale: 1.035, duration: .85, ease: "sine.inOut",
+                           yoyo: true, repeat: 5 }, CUT + 1.35);
+
+      // Pad to data-duration. A timeline shorter than its slot makes the
+      // engine drop the composition and flash black (contract rule 7).
+      tl.to({}, { duration: 23.2 }, 0);
+      window.__timelines["aov-45"] = tl;
+    </script>
+  </body>
+</html>
