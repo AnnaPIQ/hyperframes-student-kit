@@ -140,6 +140,23 @@ efficient over time instead of relearning the same lessons.
   `curl -sL "https://drive.google.com/uc?export=download&id=<ID>"`.
 
 
+## Agent workflow (render waits)
+
+- **`until ! pgrep -f "chrome-headless"; do sleep 5; done; <render>` never exits.**
+  `pgrep -f` matches against full command lines, including the command line of the
+  shell running the loop, which contains the pattern. The guard matches itself, spins
+  forever, and the render it was gating never starts. Cost ~10 minutes of dead time
+  before it was spotted. **Fix:** wait on the artifact, not the process:
+  `until [ -f out.mp4 ] && [ out.mp4 -nt index.html ]; do sleep 10; done`. The same
+  self-match makes `pgrep -f "hyperframes render"` report RUNNING when nothing is;
+  confirm with `ps -eo etime,comm --sort=-pcpu | head` instead.
+- **Killing Chrome mid-render makes hyperframes silently restart the job**, so a render
+  that looked stalled was actually back at frame 0. Check the process `ELAPSED` column
+  before concluding a render is hung.
+- **The container wall clock barely advances between tool calls**, so `date` deltas are
+  a bad progress signal. Use the render process's own `ELAPSED` time.
+
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
