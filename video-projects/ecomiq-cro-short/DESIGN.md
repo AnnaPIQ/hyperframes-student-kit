@@ -16,8 +16,8 @@ Full edit rationale, shot map and source probes: **`EDIT_PLAN.md`**.
   strategist turns more of it into sales.
 - **CTA:** EcomIQ end card cutting in at 16.87s on the line "more sales from the
   traffic you've already got" and holding 6.03s — lockup, then the headline
-  "More sales from the traffic you have already got." / *Guaranteed*, then the
-  flame "Link Below" pill.
+  "More sales from the traffic you have already got." / Guaranteed, then the
+  flame "Link Below" pill, evenly spaced.
 
 ## Structure
 Sean's VO is the spine and the only audio. The Showcase Reel montage plays
@@ -27,10 +27,10 @@ over the top.
 
 ## Type
 - Rethink Sans 800 for every display mark, −2%…−4% tracking on the big ones.
-- **Exactly one** Hedvig Letters Serif italic in the piece: ***Guaranteed***, on
-  the end card headline. Brand rule — never a second emphasis word. It sits on
-  the headline rather than the 90-days stat because the brand's emphasis word
-  belongs in a headline; "DAYS" is plain Rethink Sans in blue tint.
+- **Exactly one** Hedvig Letters Serif italic in the piece: *days*, under the
+  90 counter. Brand rule — never a second emphasis word. The end card's
+  "Guaranteed" is white upright Rethink Sans by direction; an upright Hedvig
+  would be off-system, since the brand only ever sets the serif italic.
 
 ## Colour
 Flame `#FF4C32` is the only hot accent (GUARANTEED pill, BUYERS bar, the

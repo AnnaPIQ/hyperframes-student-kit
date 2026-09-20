@@ -85,11 +85,9 @@
       #g-days .num { font-size: 300px; font-weight: 800; line-height: .86;
         letter-spacing: -.04em; color: var(--brand-white);
         text-shadow: 0 18px 70px rgba(0,0,0,.55); font-variant-numeric: tabular-nums; }
-      /* Plain sans here — the piece's single Hedvig italic now sits on the end
-         card headline, where the brand's emphasis word belongs. */
-      #g-days .word { font-weight: 800; font-size: 96px; line-height: 1;
-        letter-spacing: .12em; text-transform: uppercase;
-        color: var(--brand-blue-tint); margin-top: 14px;
+      #g-days .word { font-family: 'Hedvig Letters Serif', Georgia, serif;
+        font-style: italic; font-weight: 400; font-size: 112px; line-height: 1;
+        color: var(--brand-blue-tint); margin-top: 6px;
         text-shadow: 0 6px 26px rgba(6,40,76,.9); }
 
       /* G4 — visitors -> sales (beat F) */
@@ -108,7 +106,7 @@
 
       /* ---- end card ----------------------------------------------------- */
       #card { position: absolute; inset: 0; z-index: 60; background: var(--brand-navy);
-        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 52px; }
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 96px; }
       #card-bloom { position: absolute; left: -12%; bottom: -24%; width: 124%; height: 62%;
         background: var(--brand-gradient-2); filter: blur(100px); opacity: .34; }
       #card-glow { position: absolute; inset: 0;
@@ -119,9 +117,8 @@
       #card-headline { position: relative; text-align: center; max-width: 800px; }
       #card-headline .line { font-size: 66px; font-weight: 800; line-height: 1.06;
         letter-spacing: -.02em; color: var(--brand-white); }
-      #card-headline .em { font-family: 'Hedvig Letters Serif', Georgia, serif;
-        font-style: italic; font-weight: 400; font-size: 88px; line-height: 1;
-        letter-spacing: -.01em; color: var(--brand-blue-tint); margin-top: 20px; }
+      #card-headline .em { font-size: 92px; font-weight: 800; line-height: 1;
+        letter-spacing: -.02em; color: var(--brand-white); margin-top: 96px; }
       #card-cta { position: relative; font-size: 58px; font-weight: 800; letter-spacing: .04em;
         color: var(--brand-white); background: var(--brand-flame);
         padding: 38px 92px; border-radius: 999px;

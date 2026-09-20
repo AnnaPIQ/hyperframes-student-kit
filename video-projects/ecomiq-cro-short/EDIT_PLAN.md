@@ -97,21 +97,22 @@ tail: `ffmpeg`'s `trim` floors each block to a whole source frame, and matching
 ## Motion graphics
 
 Brand tokens only — flame `#FF4C32`, blue tint `#9CD4FF`, Rethink Sans, with the
-one Hedvig Letters Serif italic reserved for ***Guaranteed*** on the end card.
-**No captions.**
+one Hedvig Letters Serif italic reserved for *days*. **No captions.**
 
 | Mark | Time | Beat |
 |---|---|---|
 | EcomIQ white lockup, top-left | 0.00–16.87 | persistent, off as the end card takes over |
 | Conversion-gap bars (VISITORS / BUYERS) | 6.30–7.93 | "too few of them actually convert" |
 | GUARANTEED flame pill | 9.25–10.55 | "we guarantee we can change that" |
-| **90** counter + DAYS | 10.82–13.60 | "Give us 90 days" |
+| **90** counter + *days* | 10.82–13.60 | "Give us 90 days" |
 | VISITORS → SALES | 14.90–16.80 | "turn more of those visitors into sales" |
 | End card: logo + headline + "Link Below" | 16.87–22.90 | the close |
 
 The end card reads, in order: EcomIQ lockup → **"More sales from the traffic you
-have already got."** → ***Guaranteed*** (the piece's one Hedvig italic) → flame
-"Link Below" pill. The headline appears as Sean says that exact line.
+have already got."** → **Guaranteed** → flame "Link Below" pill, with an even
+96px of air between all four. Guaranteed is white upright Rethink Sans, not a
+roman serif — the brand only ever sets the serif italic, so an upright Hedvig
+would be off-system. The headline appears as Sean says that exact line.
 
 The bars are deliberately unlabelled by percentage — the script makes no
 numeric claim, so neither does the graphic.
