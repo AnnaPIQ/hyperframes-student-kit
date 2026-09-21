@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>EcomIQ — Book a Free Audit Call (9:16)</title>
+    <!-- GSAP vendored locally — a CDN script cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network at render time. Named literally, not via var(),
+         so the linter can resolve them. */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-navy);
+        font-family: 'Rethink Sans', system-ui, sans-serif;
+        color: var(--brand-text);
+      }
+
+      /* Everything GSAP reveals starts hidden. Each is driven by fromTo —
+         gsap.from() on an already-hidden element computes its end state from
+         the hidden state and leaves it invisible (docs/LESSONS.md). */
+      #logo-slot, #b1-eyebrow, #b1-head, #b2-r1, #b2-r2, #b3-r1, #b3-r2,
+      #b4-head, #b4 .chip, #b5-eyebrow, #b5-pill, #b6 .head, #b7-head, #b7-sub,
+      #b8-eyebrow, #b8 .row, #b9 .head, #b10-head, #b11-head, #b11-sub,
+      #b12-head, #b13-head, #b14-a, #b14-b, #b14-c,
+      #endcard, #ec-logo, #ec-cta, #ec-bloom { opacity: 0; }
+      #b1-rule { transform: scaleX(0); }
+
+      /* ---- footage bed -------------------------------------------------- */
+      #broll-wrap { position: absolute; inset: 0; overflow: hidden; }
+      #broll { display: block; width: 1080px; height: 1920px; object-fit: cover;
+        /* Slight navy-leaning grade so the footage sits with the brand palette */
+        filter: contrast(1.04) saturate(1.06) brightness(1.02); }
+
+      /* Navy scrim: bottom weight for the copy, light top wash for the logo.
+         Without this the type fights bright retail/stage footage. */
+      #scrim { position: absolute; inset: 0; pointer-events: none;
+        background:
+          linear-gradient(to top, rgba(6,40,76,.90) 0%, rgba(6,40,76,.74) 22%, rgba(6,40,76,.40) 38%, rgba(6,40,76,.08) 54%, rgba(6,40,76,0) 66%),
+          linear-gradient(to bottom, rgba(6,40,76,.62) 0%, rgba(6,40,76,.14) 12%, rgba(6,40,76,0) 22%); }
+      #vignette { position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse 78% 62% at 50% 46%, rgba(0,0,0,0) 42%, rgba(0,0,0,.28) 100%); }
+      /* Deterministic CSS grain — no PNG, no randomness, headless-safe. */
+      #grain { position: absolute; inset: 0; pointer-events: none; opacity: .5;
+        background-image:
+          radial-gradient(rgba(255,255,255,.030) 1px, transparent 1px),
+          radial-gradient(rgba(255,255,255,.020) 1px, transparent 1px),
+          radial-gradient(rgba(0,0,0,.015) 1px, transparent 1px);
+        background-size: 3px 3px, 5px 5px, 7px 7px;
+        background-position: 0 0, 1px 2px, 3px 1px; }
+
+      /* ---- persistent logo, top-left ------------------------------------ */
+      /* Outer layer is full-bleed so the engine's clip repositioning is a no-op;
+         the logo itself sits in an inner, absolutely positioned, non-clip div. */
+      .layer { position: absolute; inset: 0; }
+      #logo-slot { position: absolute; top: 108px; left: 96px; width: 300px; }
+      #logo-slot img { display: block; width: 100%; height: auto; }
+
+      /* ---- shared copy block -------------------------------------------- */
+      /* Bottom-anchored and left-aligned on every beat. Bottom edge sits 470px
+         up so nothing collides with the Reels / Stories UI. */
+      .beat { position: absolute; left: 96px; right: 96px; bottom: 400px; }
+      .rule { width: 104px; height: 7px; background: var(--brand-flame);
+        border-radius: 4px; transform-origin: left center; margin-bottom: 26px; }
+      .eyebrow { font-size: 27px; font-weight: 600; letter-spacing: .30em;
+        text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 22px;
+        text-shadow: 0 2px 12px rgba(6,40,76,.95), 0 5px 30px rgba(6,40,76,.85); }
+      .head { font-size: 86px; font-weight: 800; line-height: 1.0; letter-spacing: -.02em;
+        color: var(--brand-white); text-shadow: 0 4px 18px rgba(6,40,76,.95), 0 8px 54px rgba(6,40,76,.7); }
+      .head.big { font-size: 104px; }
+      /* The brand signature: exactly one serif-italic emphasis word per beat. */
+      .em { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic;
+        font-weight: 400; letter-spacing: -.01em; color: var(--brand-blue-tint); }
+      .sub { margin-top: 26px; font-size: 36px; font-weight: 500; line-height: 1.3;
+        color: var(--brand-text-dim); max-width: 760px;
+        text-shadow: 0 2px 14px rgba(6,40,76,.9); }
+
+      /* ---- trend rows (revenue/profit, ad spend/sales) ------------------- */
+      .trend { display: flex; align-items: center; gap: 34px; margin-top: 26px; }
+      .trend .label { font-size: 54px; font-weight: 800; letter-spacing: -.02em;
+        width: 300px; text-transform: uppercase; }
+      .trend svg { width: 300px; height: 123px; overflow: visible; }
+      .trend .note { font-size: 34px; font-weight: 500; color: var(--brand-text-dim); }
+
+      /* ---- struck-through phrases --------------------------------------- */
+      .struck { position: relative; display: inline-block; }
+      .struck svg { position: absolute; left: -12px; top: 50%; width: calc(100% + 24px);
+        height: 20px; transform: translateY(-50%); overflow: visible; }
+
+      /* ---- stacked list (data / ads / funnel / numbers) ------------------ */
+      .stack { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; }
+      .stack .row { font-size: 62px; font-weight: 800; letter-spacing: -.02em;
+        line-height: 1.02; color: var(--brand-white); }
+      .stack .row.dim { color: var(--brand-blue-tint); }
+
+      /* ---- chips (the four unknowns) ------------------------------------ */
+      .chips { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; max-width: 840px; }
+      .chip { font-size: 38px; font-weight: 700; padding: 16px 30px; border-radius: 999px;
+        border: 2px solid var(--brand-border); background: rgba(10,50,95,.62);
+        color: var(--brand-white); }
+
+      /* ---- flame pill ---------------------------------------------------- */
+      .pill { display: inline-block; font-size: 42px; font-weight: 700;
+        color: var(--brand-white); background: var(--brand-flame);
+        padding: 26px 56px; border-radius: 999px;
+        box-shadow: 0 22px 70px -16px rgba(255,76,50,.65); }
+
+      /* ---- end card ------------------------------------------------------ */
+      #endcard { position: absolute; inset: 0; background: var(--brand-navy); }
+      /* Full-bleed radial bloom rising from the bottom edge. Deliberately NOT a
+         blurred box and NOT the icon SVG blown up — both show a hard rectangle. */
+      #ec-bloom { position: absolute; inset: 0;
+        background: radial-gradient(126% 64% at 50% 118%, rgba(156,212,255,.36) 0%,
+          rgba(90,160,224,.17) 36%, rgba(255,138,76,.05) 56%, rgba(6,40,76,0) 74%); }
+      #ec-stack { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%);
+        display: flex; flex-direction: column; align-items: center; gap: 74px; }
+      #ec-logo { width: 560px; height: auto; }
+      #ec-cta { font-size: 46px; font-weight: 700; color: var(--brand-white);
+        background: var(--brand-flame); padding: 30px 68px; border-radius: 999px;
+        box-shadow: 0 26px 80px -18px rgba(255,76,50,.7); }
+
+      /* Whip-streak that masks the cut into the end card. */
+      #whip { position: absolute; top: 0; left: 0; width: 46%; height: 100%;
+        background: linear-gradient(90deg, rgba(222,238,254,0) 0%, rgba(222,238,254,.92) 48%, rgba(222,238,254,0) 100%);
+        filter: blur(26px); opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <!-- Render contract: root carries id + data-composition-id + data-start
+         + data-width/height. <video>/<audio> take the data-* timing attrs but
+         must NOT get class="clip". Every other timed layer is a full-bleed
+         .clip .layer on its own track index, so nothing can collide. -->
+    <div
+      id="root"
+      data-composition-id="ecomiq-audit-call"
+      data-start="0"
+      data-duration="67.33"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- Footage bed. Muted: Sean's VO is the only audio. Trimmed at the
+           end-card cut (64.64s). -->
+      <div id="broll-wrap">
+        <video id="broll" data-start="0" data-duration="64.64" data-track-index="0"
+               src="assets/broll-916.mp4" muted playsinline></video>
+      </div>
+
+      <div class="clip layer" id="scrim-layer" data-start="0" data-duration="64.64" data-track-index="1">
+        <div id="scrim"></div>
+        <div id="vignette"></div>
+        <div id="grain"></div>
+      </div>
+
+      <!-- Persistent white logo, top-left. Leaves at the end card. -->
+      <div class="clip layer" id="logo-layer" data-start="0.5" data-duration="64.14" data-track-index="2">
+        <div id="logo-slot"><img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+      </div>
+
+      <!-- B1 · hook — "one problem keeping you up at night" (VO 0.04–6.84) -->
+      <div class="clip layer" id="b1" data-start="0.70" data-duration="6.10" data-track-index="3">
+        <div class="beat">
+          <div class="rule" id="b1-rule"></div>
+          <div class="eyebrow" id="b1-eyebrow">For Shopify founders</div>
+          <div class="head" id="b1-head"><span class="em">One</span> problem<br />keeping you up<br />at night.</div>
+        </div>
+      </div>
+
+      <!-- B2 · revenue climbs, profit doesn't (VO 7.80–10.42) -->
+      <div class="clip layer" id="b2" data-start="7.60" data-duration="3.60" data-track-index="4">
+        <div class="beat">
+          <div class="trend" id="b2-r1">
+            <div class="label" style="color: var(--brand-blue-tint)">Revenue</div>
+            <svg viewBox="0 0 180 74"><polyline points="4,66 48,52 96,30 176,8" fill="none"
+              stroke="#9CD4FF" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"
+              pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" /></svg>
+          </div>
+          <div class="trend" id="b2-r2">
+            <div class="label" style="color: var(--brand-flame)">Profit</div>
+            <svg viewBox="0 0 180 74"><polyline points="4,40 60,42 120,38 176,41" fill="none"
+              stroke="#FF4C32" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"
+              pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" /></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- B3 · ad spend up, sales backwards (VO 11.79–14.83) -->
+      <div class="clip layer" id="b3" data-start="11.60" data-duration="3.70" data-track-index="5">
+        <div class="beat">
+          <div class="trend" id="b3-r1">
+            <div class="label" style="color: var(--brand-blue-tint)">Ad spend</div>
+            <svg viewBox="0 0 180 74"><polyline points="4,66 52,50 104,28 176,6" fill="none"
+              stroke="#9CD4FF" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"
+              pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" /></svg>
+          </div>
+          <div class="trend" id="b3-r2">
+            <div class="label" style="color: var(--brand-flame)">Sales</div>
+            <svg viewBox="0 0 180 74"><polyline points="4,10 56,26 112,44 176,68" fill="none"
+              stroke="#FF4C32" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"
+              pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" /></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- B4 · you can't tell which one it is (VO 16.47–19.95) -->
+      <div class="clip layer" id="b4" data-start="16.30" data-duration="4.60" data-track-index="6">
+        <div class="beat">
+          <div class="head" id="b4-head">Is it <span class="em">which</span> one?</div>
+          <div class="chips">
+            <div class="chip">Your ads</div>
+            <div class="chip">Your website</div>
+            <div class="chip">Your product</div>
+            <div class="chip">Your pricing</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B5 · the offer (VO 24.53–25.83) -->
+      <div class="clip layer" id="b5" data-start="24.20" data-duration="3.90" data-track-index="7">
+        <div class="beat">
+          <div class="eyebrow" id="b5-eyebrow">With our team</div>
+          <div class="pill" id="b5-pill">Book a free audit call</div>
+        </div>
+      </div>
+
+      <!-- B6 · not a generic teardown (VO 28.18–29.81) -->
+      <div class="clip layer" id="b6" data-start="28.15" data-duration="2.35" data-track-index="8">
+        <div class="beat">
+          <div class="head"><span class="struck">Generic teardown<svg viewBox="0 0 100 20"
+            preserveAspectRatio="none"><line id="b6-line" x1="0" y1="10" x2="100" y2="10"
+            stroke="#FF4C32" stroke-width="9" stroke-linecap="round"
+            pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" /></svg></span></div>
+        </div>
+      </div>
+
+      <!-- B7 · one specific problem (VO 30.91–33.67) -->
+      <div class="clip layer" id="b7" data-start="30.80" data-duration="3.90" data-track-index="9">
+        <div class="beat">
+          <div class="head big" id="b7-head"><span class="em">One</span> specific<br />problem.</div>
+          <div class="sub" id="b7-sub">The one that's actually costing you money.</div>
+        </div>
+      </div>
+
+      <!-- B8 · we go into your numbers (VO 37.63–40.96) -->
+      <div class="clip layer" id="b8" data-start="37.50" data-duration="4.10" data-track-index="10">
+        <div class="beat">
+          <div class="eyebrow" id="b8-eyebrow">We go into</div>
+          <div class="stack">
+            <div class="row">Your data</div>
+            <div class="row">Your ads</div>
+            <div class="row">Your funnel</div>
+            <div class="row dim">All of your numbers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B9 · not a template, not a checklist (VO 41.91–44.52) -->
+      <div class="clip layer" id="b9" data-start="41.80" data-duration="3.40" data-track-index="11">
+        <div class="beat">
+          <div class="head" style="font-size: 76px">
+            <span class="struck">No template<svg viewBox="0 0 100 20" preserveAspectRatio="none"
+              ><line id="b9-l1" x1="0" y1="10" x2="100" y2="10" stroke="#FF4C32" stroke-width="9"
+              stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"
+            /></svg></span><br />
+            <span class="struck">No checklist<svg viewBox="0 0 100 20" preserveAspectRatio="none"
+              ><line id="b9-l2" x1="0" y1="10" x2="100" y2="10" stroke="#FF4C32" stroke-width="9"
+              stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"
+            /></svg></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- B10 · just your store (VO 45.81–48.32) -->
+      <div class="clip layer" id="b10" data-start="45.70" data-duration="3.20" data-track-index="12">
+        <div class="beat">
+          <div class="head" id="b10-head"><span class="em">Just</span> your store.<br />And your problems.</div>
+        </div>
+      </div>
+
+      <!-- B11 · a clear answer and a plan (VO 50.46–54.16) -->
+      <div class="clip layer" id="b11" data-start="50.30" data-duration="4.20" data-track-index="13">
+        <div class="beat">
+          <div class="head" id="b11-head">A <span class="em">clear</span> answer.</div>
+          <div class="sub" id="b11-sub">And a plan for what to fix first.</div>
+        </div>
+      </div>
+
+      <!-- B12 · promise everything, deliver nothing (VO 55.48–57.09) -->
+      <div class="clip layer" id="b12" data-start="55.10" data-duration="3.70" data-track-index="14">
+        <div class="beat">
+          <div class="head" style="font-size: 76px" id="b12-head">
+            Promise everything.<br /><span class="struck">Deliver nothing.<svg viewBox="0 0 100 20"
+              preserveAspectRatio="none"><line id="b12-line" x1="0" y1="10" x2="100" y2="10"
+              stroke="#FF4C32" stroke-width="9" stroke-linecap="round" pathLength="1"
+              stroke-dasharray="1" stroke-dashoffset="1" /></svg></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- B13 · the opposite of that (VO 59.56–61.13) -->
+      <div class="clip layer" id="b13" data-start="59.40" data-duration="1.90" data-track-index="15">
+        <div class="beat">
+          <div class="head big" id="b13-head">The <span class="em">opposite</span><br />of that.</div>
+        </div>
+      </div>
+
+      <!-- B14 · the three-beat close (VO 61.24 / 62.19 / 63.55) -->
+      <div class="clip layer" id="b14" data-start="61.24" data-duration="3.40" data-track-index="16">
+        <div class="beat">
+          <div class="head big">
+            <span id="b14-a">Your store.</span><br />
+            <span id="b14-b">Your problems.</span><br />
+            <span id="b14-c" class="em">Your plan.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Whip streak masking the cut to the end card -->
+      <div class="clip layer" id="whip-layer" data-start="64.34" data-duration="0.80" data-track-index="17">
+        <div id="whip"></div>
+      </div>
+
+      <!-- END CARD · 64.64 → 67.33. Logo top-left is gone; his VO keeps running
+           and lands "click the link below" (65.80) with the button already up. -->
+      <div class="clip layer" id="endcard-layer" data-start="64.64" data-duration="2.69" data-track-index="18">
+        <div id="endcard">
+          <div id="ec-bloom"></div>
+          <div id="ec-stack">
+            <img id="ec-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+            <div id="ec-cta">Link Below</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Master voiceover — the spine of the whole edit. -->
+      <audio id="vo" data-start="0" data-duration="67.33" data-track-index="19" data-volume="1"
+             src="assets/sean-vo.m4a"></audio>
+    </div>
+
+    <script>
+      // Render contract: exactly one paused GSAP timeline, keyed to
+      // data-composition-id, registered on window.__timelines.
+      window.__timelines = window.__timelines || {};
+      (() => {
+        const DURATION = 67.33;
+        const tl = gsap.timeline({ paused: true });
+
+        // Everything that starts hidden uses fromTo — gsap.from() on an element
+        // already at opacity:0 computes its end state from the hidden state and
+        // leaves it invisible (docs/LESSONS.md).
+        const inUp = (sel, at, d = 0.5, y = 34) =>
+          tl.fromTo(sel, { opacity: 0, y, scale: 0.97 },
+            { opacity: 1, y: 0, scale: 1, duration: d, ease: "expo.out" }, at);
+        const outUp = (sel, at, d = 0.32) =>
+          tl.to(sel, { opacity: 0, y: -20, duration: d, ease: "power2.in" }, at);
+        const draw = (sel, at, d = 0.5) =>
+          tl.fromTo(sel, { strokeDashoffset: 1 },
+            { strokeDashoffset: 0, duration: d, ease: "power2.out" }, at);
+
+        // ---- persistent layers ------------------------------------------
+        tl.fromTo("#logo-slot", { opacity: 0, y: -22 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.5);
+        // Logo clears out just before the end card takes the frame.
+        tl.to("#logo-slot", { opacity: 0, y: -26, duration: 0.3, ease: "power2.in" }, 64.34);
+
+        // ---- B1 · hook ---------------------------------------------------
+        tl.fromTo("#b1-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out" }, 0.9);
+        inUp("#b1-eyebrow", 1.0, 0.45, 20);
+        inUp("#b1-head", 3.6, 0.6);
+        outUp("#b1 .beat", 6.45);
+
+        // ---- B2 · revenue up, profit flat --------------------------------
+        inUp("#b2-r1", 7.8, 0.45);
+        draw("#b2-r1 polyline", 8.0, 0.55);
+        inUp("#b2-r2", 9.31, 0.45);
+        draw("#b2-r2 polyline", 9.5, 0.55);
+        outUp("#b2 .beat", 10.88);
+
+        // ---- B3 · ad spend up, sales down --------------------------------
+        inUp("#b3-r1", 11.79, 0.45);
+        draw("#b3-r1 polyline", 11.99, 0.55);
+        inUp("#b3-r2", 14.02, 0.45);
+        draw("#b3-r2 polyline", 14.22, 0.55);
+        outUp("#b3 .beat", 14.98);
+
+        // ---- B4 · which one is it ----------------------------------------
+        inUp("#b4-head", 16.47, 0.5);
+        tl.fromTo("#b4 .chip", { opacity: 0, y: 26, scale: 0.94 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.4)", stagger: 0.22 }, 19.10);
+        outUp("#b4 .beat", 20.58);
+
+        // ---- B5 · the offer ----------------------------------------------
+        inUp("#b5-eyebrow", 24.2, 0.4, 18);
+        tl.fromTo("#b5-pill", { opacity: 0, scale: 0.82 },
+          { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" }, 24.53);
+        tl.to("#b5-pill", { scale: 1.035, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 1 }, 25.3);
+        outUp("#b5 .beat", 27.78);
+
+        // ---- B6 · not a generic teardown ---------------------------------
+        inUp("#b6 .head", 28.18, 0.45);
+        draw("#b6-line", 28.9, 0.45);
+        outUp("#b6 .beat", 30.18);
+
+        // ---- B7 · one specific problem -----------------------------------
+        inUp("#b7-head", 30.91, 0.55);
+        inUp("#b7-sub", 32.81, 0.45, 24);
+        outUp("#b7 .beat", 34.38);
+
+        // ---- B8 · your numbers -------------------------------------------
+        inUp("#b8-eyebrow", 37.5, 0.4, 18);
+        // Rows land on "your data" / "your ads" / "your funnel" / "your numbers"
+        tl.fromTo("#b8 .row:nth-child(1)", { opacity: 0, x: -34 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 37.63);
+        tl.fromTo("#b8 .row:nth-child(2)", { opacity: 0, x: -34 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 38.25);
+        tl.fromTo("#b8 .row:nth-child(3)", { opacity: 0, x: -34 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 38.84);
+        tl.fromTo("#b8 .row:nth-child(4)", { opacity: 0, x: -34 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out" }, 39.62);
+        outUp("#b8 .beat", 41.28);
+
+        // ---- B9 · no template, no checklist ------------------------------
+        inUp("#b9 .head", 41.91, 0.45);
+        draw("#b9-l1", 42.4, 0.4);
+        draw("#b9-l2", 43.43, 0.4);
+        outUp("#b9 .beat", 44.88);
+
+        // ---- B10 · just your store ---------------------------------------
+        inUp("#b10-head", 45.81, 0.55);
+        outUp("#b10 .beat", 48.58);
+
+        // ---- B11 · a clear answer ----------------------------------------
+        inUp("#b11-head", 50.46, 0.55);
+        inUp("#b11-sub", 52.2, 0.45, 24);
+        outUp("#b11 .beat", 54.18);
+
+        // ---- B12 · promise everything, deliver nothing --------------------
+        inUp("#b12-head", 55.48, 0.5);
+        draw("#b12-line", 56.45, 0.45);
+        outUp("#b12 .beat", 58.48);
+
+        // ---- B13 · the opposite of that ----------------------------------
+        inUp("#b13-head", 59.56, 0.5);
+        outUp("#b13 .beat", 60.98);
+
+        // ---- B14 · the three-beat close ----------------------------------
+        // Each line lands on its own word: 61.24 / 62.19 / 63.55.
+        tl.fromTo("#b14-a", { opacity: 0, x: -44 }, { opacity: 1, x: 0, duration: 0.42, ease: "expo.out" }, 61.24);
+        tl.fromTo("#b14-b", { opacity: 0, x: -44 }, { opacity: 1, x: 0, duration: 0.42, ease: "expo.out" }, 62.19);
+        tl.fromTo("#b14-c", { opacity: 0, x: -44 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, 63.55);
+
+        // ---- whip into the end card --------------------------------------
+        tl.fromTo("#whip", { xPercent: -160, opacity: 0 },
+          { xPercent: 40, opacity: 1, duration: 0.18, ease: "power2.in" }, 64.36)
+          .to("#whip", { xPercent: 260, opacity: 0, duration: 0.26, ease: "power2.out" }, 64.54);
+
+        // ---- END CARD ----------------------------------------------------
+        tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, 64.64);
+        tl.fromTo("#ec-logo", { opacity: 0, y: 26, scale: 0.94 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "expo.out" }, 64.70);
+        tl.fromTo("#ec-cta", { opacity: 0, scale: 0.8 },
+          { opacity: 1, scale: 1, duration: 0.42, ease: "back.out(1.7)" }, 65.05);
+        // Button breathes under "click the link below" (65.80–66.76).
+        tl.to("#ec-cta", { scale: 1.045, duration: 0.58, ease: "sine.inOut", yoyo: true, repeat: 2 }, 65.62);
+        tl.fromTo("#ec-bloom", { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "sine.out" }, 64.64);
+
+        // Law #11 — anchor the timeline to the full slot so the tail can't
+        // collapse into a black-frame flash.
+        tl.to({}, { duration: DURATION }, 0);
+        window.__timelines["ecomiq-audit-call"] = tl;
+      })();
+    </script>
+  </body>
+</html>

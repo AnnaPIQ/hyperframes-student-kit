@@ -40,3 +40,11 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+# Generated + source video beds for the EcomIQ audit-call ad. These are large
+# and fully reproducible: montage-source.mp4 comes from Drive, the broll-*.mp4
+# beds are built from it by video-projects/ecomiq-audit-call/scripts/build-broll.py.
+# The voiceover and its transcript ARE committed — they're small and they're what
+# every beat timing is anchored to.
+**/assets/montage-source.mp4
+**/assets/broll-916.mp4
+**/assets/broll-45.mp4

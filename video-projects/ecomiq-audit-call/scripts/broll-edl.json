@@ -1,0 +1,389 @@
+[
+ {
+  "i": 0,
+  "src_in": 0.0,
+  "src_out": 0.57,
+  "screen_in": 0.0,
+  "screen_out": 1.27,
+  "duration": 1.27,
+  "note": "shot 00"
+ },
+ {
+  "i": 1,
+  "src_in": 0.57,
+  "src_out": 1.1,
+  "screen_in": 1.27,
+  "screen_out": 2.44,
+  "duration": 1.18,
+  "note": "shot 01"
+ },
+ {
+  "i": 2,
+  "src_in": 1.1,
+  "src_out": 1.67,
+  "screen_in": 2.44,
+  "screen_out": 3.71,
+  "duration": 1.27,
+  "note": "shot 02"
+ },
+ {
+  "i": 3,
+  "src_in": 1.67,
+  "src_out": 2.3,
+  "screen_in": 3.71,
+  "screen_out": 5.11,
+  "duration": 1.4,
+  "note": "shot 03"
+ },
+ {
+  "i": 4,
+  "src_in": 2.3,
+  "src_out": 2.9,
+  "screen_in": 5.11,
+  "screen_out": 6.44,
+  "duration": 1.33,
+  "note": "shot 04"
+ },
+ {
+  "i": 5,
+  "src_in": 2.9,
+  "src_out": 3.4,
+  "screen_in": 6.44,
+  "screen_out": 7.56,
+  "duration": 1.11,
+  "note": "shot 05"
+ },
+ {
+  "i": 6,
+  "src_in": 3.4,
+  "src_out": 4.1,
+  "screen_in": 7.56,
+  "screen_out": 9.11,
+  "duration": 1.56,
+  "note": "shot 06"
+ },
+ {
+  "i": 7,
+  "src_in": 4.1,
+  "src_out": 4.97,
+  "screen_in": 9.11,
+  "screen_out": 11.04,
+  "duration": 1.93,
+  "note": "shot 07"
+ },
+ {
+  "i": 8,
+  "src_in": 4.97,
+  "src_out": 5.6,
+  "screen_in": 11.04,
+  "screen_out": 12.44,
+  "duration": 1.4,
+  "note": "shot 08"
+ },
+ {
+  "i": 9,
+  "src_in": 5.6,
+  "src_out": 6.37,
+  "screen_in": 12.44,
+  "screen_out": 14.16,
+  "duration": 1.71,
+  "note": "shot 09"
+ },
+ {
+  "i": 10,
+  "src_in": 6.37,
+  "src_out": 7.03,
+  "screen_in": 14.16,
+  "screen_out": 15.62,
+  "duration": 1.47,
+  "note": "shot 10"
+ },
+ {
+  "i": 11,
+  "src_in": 7.03,
+  "src_out": 7.6,
+  "screen_in": 15.62,
+  "screen_out": 16.89,
+  "duration": 1.27,
+  "note": "shot 11"
+ },
+ {
+  "i": 12,
+  "src_in": 7.6,
+  "src_out": 8.37,
+  "screen_in": 16.89,
+  "screen_out": 18.6,
+  "duration": 1.71,
+  "note": "shot 12"
+ },
+ {
+  "i": 13,
+  "src_in": 7.03,
+  "src_out": 7.6,
+  "screen_in": 18.6,
+  "screen_out": 19.87,
+  "duration": 1.27,
+  "note": "callback -> Shopify Premier Partner card returns on 'with our team'"
+ },
+ {
+  "i": 14,
+  "src_in": 8.37,
+  "src_out": 9.07,
+  "screen_in": 19.87,
+  "screen_out": 21.42,
+  "duration": 1.56,
+  "note": "shot 13"
+ },
+ {
+  "i": 15,
+  "src_in": 9.07,
+  "src_out": 9.97,
+  "screen_in": 21.42,
+  "screen_out": 23.42,
+  "duration": 2.0,
+  "note": "shot 14"
+ },
+ {
+  "i": 16,
+  "src_in": 9.97,
+  "src_out": 10.87,
+  "screen_in": 23.42,
+  "screen_out": 25.42,
+  "duration": 2.0,
+  "note": "shot 15"
+ },
+ {
+  "i": 17,
+  "src_in": 10.87,
+  "src_out": 11.73,
+  "screen_in": 25.42,
+  "screen_out": 27.33,
+  "duration": 1.91,
+  "note": "shot 16"
+ },
+ {
+  "i": 18,
+  "src_in": 11.73,
+  "src_out": 12.37,
+  "screen_in": 27.33,
+  "screen_out": 28.76,
+  "duration": 1.42,
+  "note": "shot 17"
+ },
+ {
+  "i": 19,
+  "src_in": 12.37,
+  "src_out": 13.17,
+  "screen_in": 28.76,
+  "screen_out": 30.53,
+  "duration": 1.78,
+  "note": "shot 18"
+ },
+ {
+  "i": 20,
+  "src_in": 5.6,
+  "src_out": 6.37,
+  "screen_in": 30.53,
+  "screen_out": 32.24,
+  "duration": 1.71,
+  "note": "callback -> late-night laptop returns on 'costing you money'"
+ },
+ {
+  "i": 21,
+  "src_in": 13.17,
+  "src_out": 13.87,
+  "screen_in": 32.24,
+  "screen_out": 33.8,
+  "duration": 1.56,
+  "note": "shot 19"
+ },
+ {
+  "i": 22,
+  "src_in": 13.87,
+  "src_out": 14.83,
+  "screen_in": 33.8,
+  "screen_out": 35.93,
+  "duration": 2.13,
+  "note": "shot 20"
+ },
+ {
+  "i": 23,
+  "src_in": 14.83,
+  "src_out": 15.6,
+  "screen_in": 35.93,
+  "screen_out": 37.64,
+  "duration": 1.71,
+  "note": "shot 21"
+ },
+ {
+  "i": 24,
+  "src_in": 15.6,
+  "src_out": 16.43,
+  "screen_in": 37.64,
+  "screen_out": 39.49,
+  "duration": 1.84,
+  "note": "shot 22"
+ },
+ {
+  "i": 25,
+  "src_in": 17.07,
+  "src_out": 18.03,
+  "screen_in": 39.49,
+  "screen_out": 41.62,
+  "duration": 2.13,
+  "note": "callback -> keynote stats screen returns on 'all of your numbers'"
+ },
+ {
+  "i": 26,
+  "src_in": 16.43,
+  "src_out": 17.07,
+  "screen_in": 41.62,
+  "screen_out": 43.04,
+  "duration": 1.42,
+  "note": "shot 23"
+ },
+ {
+  "i": 27,
+  "src_in": 17.07,
+  "src_out": 18.03,
+  "screen_in": 43.04,
+  "screen_out": 45.18,
+  "duration": 2.13,
+  "note": "shot 24"
+ },
+ {
+  "i": 28,
+  "src_in": 18.03,
+  "src_out": 19.03,
+  "screen_in": 45.18,
+  "screen_out": 47.4,
+  "duration": 2.22,
+  "note": "shot 25"
+ },
+ {
+  "i": 29,
+  "src_in": 19.03,
+  "src_out": 19.97,
+  "screen_in": 47.4,
+  "screen_out": 49.49,
+  "duration": 2.09,
+  "note": "shot 26"
+ },
+ {
+  "i": 30,
+  "src_in": 14.83,
+  "src_out": 15.6,
+  "screen_in": 49.49,
+  "screen_out": 51.2,
+  "duration": 1.71,
+  "note": "callback -> product-in-store returns on 'your store and your problems'"
+ },
+ {
+  "i": 31,
+  "src_in": 19.97,
+  "src_out": 20.9,
+  "screen_in": 51.2,
+  "screen_out": 53.27,
+  "duration": 2.07,
+  "note": "shot 27"
+ },
+ {
+  "i": 32,
+  "src_in": 20.9,
+  "src_out": 22.03,
+  "screen_in": 53.27,
+  "screen_out": 55.78,
+  "duration": 2.51,
+  "note": "shot 28"
+ },
+ {
+  "i": 33,
+  "src_in": 22.03,
+  "src_out": 22.83,
+  "screen_in": 55.78,
+  "screen_out": 57.56,
+  "duration": 1.78,
+  "note": "shot 29"
+ },
+ {
+  "i": 34,
+  "src_in": 26.87,
+  "src_out": 27.73,
+  "screen_in": 57.56,
+  "screen_out": 59.47,
+  "duration": 1.91,
+  "note": "callback -> portrait smile returns on 'a clear answer'"
+ },
+ {
+  "i": 35,
+  "src_in": 22.83,
+  "src_out": 23.63,
+  "screen_in": 59.47,
+  "screen_out": 61.24,
+  "duration": 1.78,
+  "note": "shot 30"
+ },
+ {
+  "i": 36,
+  "src_in": 23.63,
+  "src_out": 24.6,
+  "screen_in": 61.24,
+  "screen_out": 63.4,
+  "duration": 2.16,
+  "note": "shot 31"
+ },
+ {
+  "i": 37,
+  "src_in": 24.6,
+  "src_out": 25.5,
+  "screen_in": 63.4,
+  "screen_out": 65.4,
+  "duration": 2.0,
+  "note": "shot 32"
+ },
+ {
+  "i": 38,
+  "src_in": 25.5,
+  "src_out": 26.33,
+  "screen_in": 65.4,
+  "screen_out": 67.24,
+  "duration": 1.84,
+  "note": "shot 33"
+ },
+ {
+  "i": 39,
+  "src_in": 0.57,
+  "src_out": 1.1,
+  "screen_in": 67.24,
+  "screen_out": 68.42,
+  "duration": 1.18,
+  "note": "callback -> Sean Clarke badge returns on 'the opposite of that'"
+ },
+ {
+  "i": 40,
+  "src_in": 26.33,
+  "src_out": 26.87,
+  "screen_in": 68.42,
+  "screen_out": 69.62,
+  "duration": 1.2,
+  "note": "shot 34"
+ },
+ {
+  "i": 41,
+  "src_in": 26.87,
+  "src_out": 27.73,
+  "screen_in": 69.62,
+  "screen_out": 71.53,
+  "duration": 1.91,
+  "note": "shot 35"
+ },
+ {
+  "i": 42,
+  "src_in": 7.03,
+  "src_out": 7.6,
+  "screen_in": 71.53,
+  "screen_out": 72.8,
+  "duration": 1.27,
+  "note": "callback -> Shopify Premier Partner card lands last, straight into the end card"
+ }
+]
