@@ -102,6 +102,7 @@ index.html                     9:16 master, 1080x1920
 compositions/aov-45.html       4:5 master, 1080x1350 (same timeline, rescaled furniture)
 scripts/build-montage.sh       cuts, retimes and normalises the b-roll bed
 scripts/make-45.py             derives compositions/aov-45.html from index.html
+scripts/make-hires.py          derives a zoomed 2x composition from any of the above
 assets/vo-sean.m4a             normalised voiceover (committed)
 assets/montage-916.mp4         derived b-roll bed, 17.30s (gitignored, rebuild below)
 assets/montage-45.mp4          derived b-roll bed, 17.30s (gitignored, rebuild below)
@@ -123,9 +124,33 @@ if index.html drifts from what it expects, so the 4:5 can never ship stale.
 
 ## Render
 
+Platform masters, 1080 wide, which is what Meta actually wants:
+
 ```bash
 npx hyperframes render --quality standard --output renders/aov-916.mp4
 npx hyperframes render -c compositions/aov-45.html --quality standard --output renders/aov-45.mp4
 ```
 
-Both are H.264 / AAC MP4 with `+faststart`.
+2x hi-res masters for archival and repurposing:
+
+```bash
+# 9:16, portrait-4k is an exact 2x of 1080x1920
+npx hyperframes render --resolution portrait-4k --quality standard --output renders/aov-916-hires.mp4
+
+# 4:5 has no matching preset, so generate a zoomed 2x composition first
+python3 scripts/make-hires.py compositions/aov-45.html compositions/aov-45-2x.html
+npx hyperframes render -c compositions/aov-45-2x.html --quality standard --output renders/aov-45-hires.mp4
+```
+
+All four are H.264 / AAC MP4 with `+faststart`.
+
+What 2x buys: the end card, its type and the corner logo are drawn by the
+browser, so they rasterise at full size and genuinely resolve finer. The
+montage bed is 1080 wide at source, so the footage is upscaled, not improved.
+The 2x files are worth shipping for archival or for re-cropping later, but the
+1080 masters are the correct upload for Meta.
+
+`make-hires.py` reasserts the authored size on `#root` with `!important`
+because the engine writes the composition size there inline. Without that the
+root is both doubled and zoomed, which lays the content out in a 4x box and
+strands it in the bottom-right quadrant.

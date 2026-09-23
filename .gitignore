@@ -43,3 +43,5 @@ assets/incoming/*
 
 # Derived b-roll beds (rebuild with the project's build-montage.sh)
 video-projects/*/assets/montage-*.mp4
+# Generated 2x hi-res compositions (rebuild with scripts/make-hires.py)
+video-projects/*/compositions/*-2x.html
