@@ -67,15 +67,17 @@ used, except one deliberate insert.
 
 | # | On screen | Montage source | Content |
 |---|---|---|---|
-| A | 0.00–8.69 | 13.870–21.170 | store aisle → storefront UI → street → retail → café |
-| B | 8.69–9.36 | 7.030–7.597 | **Shopify Premier Partner card — INSERT** |
-| C | 9.36–16.87 | 21.170–27.560 | Tesla → laptop → expo → customer buys → closes on Sean's portrait |
+| A | 0.00–9.68 | 13.870–22.030 | store aisle → storefront UI → street → retail → café → the full Tesla shot |
+| B | 9.68–10.35 | 7.030–7.597 | **Shopify Premier Partner card — INSERT** |
+| C | 10.35–16.87 | 22.030–27.700 | expo → customer buys → TikTok Shop → closes on Sean's portrait |
 | — | 16.87–22.90 | — | **END CARD** |
 
-**B is the one frame pulled from outside the tail.** It is the strongest
-credibility image in the reel and it lands square on the word *guarantee*
-(VO 8.81–9.08). C resumes exactly where A left off, so it reads as a clean
-insert cut rather than a jump. Drop B and widen A/C if it isn't wanted.
+**B is the one frame pulled from outside the tail** — the strongest credibility
+image in the reel. It sits **between two complete shots**: A plays the Tesla shot
+right through to its own cut at 22.03 and C picks up the next one. Splicing it
+at 21.17 instead chopped the Tesla shot in half and read as a glitch. The
+GUARANTEED flame pill (9.25–10.55) runs across the join, so the overlay bridges
+the cut and the pill lands over the Shopify badge.
 
 Source past **27.73s** is the montage's own baked-in EcomIQ end card. Never
 pulled from — ours is built in the composition.
@@ -103,7 +105,7 @@ one Hedvig Letters Serif italic reserved for *days*. **No captions.**
 |---|---|---|
 | EcomIQ white lockup, top-left | 0.00–16.87 | persistent, off as the end card takes over |
 | Conversion-gap bars (VISITORS / BUYERS) | 6.30–7.93 | "too few of them actually convert" |
-| GUARANTEED flame pill | 9.25–10.55 | "we guarantee we can change that" |
+| GUARANTEED flame pill | 9.25–10.55 | "we guarantee we can change that" — carries over the Premier Partner insert |
 | **90** counter + *days* | 10.82–13.60 | "Give us 90 days" |
 | VISITORS → SALES | 14.90–16.80 | "turn more of those visitors into sales" |
 | End card: logo + headline + "Link Below" | 16.87–22.90 | the close |

@@ -34,31 +34,32 @@ esac
 
 # --- shot map -----------------------------------------------------------------
 # The reel is a rapid-cut montage — its own shots fire every 0.6-0.9s — so the
-# bed runs at 0.854x to let each one land, and draws from the BACK HALF of the
+# bed runs at 0.84x to let each one land, and draws from the BACK HALF of the
 # reel rather than sampling across all of it. Source 13.87-27.70 is the whole
-# usable tail (27.73 onward is the montage's baked-in end card), and at 0.854x
-# it fills the 16.87s under the VO exactly. Nothing before 13.87 is used,
-# except one deliberate insert:
+# usable tail (27.73 onward is the montage's baked-in end card). Nothing before
+# 13.87 is used, except one deliberate insert:
 #
-#   A  0.00- 8.69  src 13.870-21.170   storefront UI -> street -> retail -> cafe
-#   B  8.69- 9.36  src  7.030- 7.597   Shopify Premier Partner card  ** INSERT **
-#   C  9.36 -16.87 src 21.170-27.560   Tesla -> expo -> customer buys -> TikTok
-#                                      Shop -> closes on Sean's portrait
+#   A  0.00- 9.68  src 13.870-22.030   storefront UI -> street -> retail -> cafe
+#                                      -> the full Tesla shot (20.90-22.03)
+#   B  9.68-10.35  src  7.030- 7.597   Shopify Premier Partner card  ** INSERT **
+#   C 10.35-16.87  src 22.030-27.700   expo -> customer buys -> TikTok Shop ->
+#                                      closes on Sean's portrait
 #
-# B is the one frame pulled from outside the tail. It is the strongest
-# credibility image in the reel and it lands square on the word "guarantee"
-# (VO 8.81-9.08); C resumes exactly where A left off, so it reads as a clean
-# insert cut rather than a jump. Drop B and widen A/C if it is not wanted.
-# ffmpeg's trim floors each segment to a whole source frame, so the three
-# blocks yield 14.367s of real source, not the 14.407s the arithmetic suggests.
-# The rate is set so the bed OVER-runs the 16.87s clip (it lands at 16.93s) and
-# the engine trims the tail. Matching 16.87 exactly here left the bed two frames
+# B is the one frame pulled from outside the tail — the strongest credibility
+# image in the reel. It sits BETWEEN two complete shots: A plays the Tesla shot
+# right through to its own cut at 22.03 and C picks up the next one. Splicing it
+# at 21.17 instead chopped the Tesla shot in half and read as a glitch.
+#
+# ffmpeg's trim floors each segment to a whole source frame, so the three blocks
+# yield 14.367s of real source, not the 14.404s the arithmetic suggests. The
+# rate is set so the bed OVER-runs the 16.87s clip (it lands at 17.10s) and the
+# engine trims the tail. Matching 16.87 exactly here left the bed two frames
 # short and flashed navy between the last footage frame and the end card.
 SPEED=0.840          # 16% slower than source — "slightly", not slow-motion
 PTS=1.190
-A_IN=13.870; A_LEN=7.302   # -> 8.599s on screen
-B_IN=7.030;  B_LEN=0.574   # -> 0.668s on screen, lands on "guarantee"
-C_IN=21.170; C_LEN=6.531   # -> 7.657s on screen
+A_IN=13.870; A_LEN=8.160   # -> 9.675s on screen, ends on the Tesla shot's own cut
+B_IN=7.030;  B_LEN=0.574   # -> 0.674s on screen
+C_IN=22.030; C_LEN=5.670   # -> 6.743s on screen
 
 # Two hard cuts, in and out of the insert. An insert cut is always hard — a
 # dissolve would read as a scene change instead of a cutaway. With the reel

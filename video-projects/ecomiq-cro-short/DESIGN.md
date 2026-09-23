@@ -22,7 +22,8 @@ Full edit rationale, shot map and source probes: **`EDIT_PLAN.md`**.
 ## Structure
 Sean's VO is the spine and the only audio. The Showcase Reel montage plays
 underneath it, muted, slowed to 0.84x and drawn from the back half of the reel
-(source 13.87–27.56) with one Premier Partner insert on "guarantee". Sean never appears as a talking head — montage throughout, his voice
+(source 13.87–27.70) with one Premier Partner insert placed between whole
+shots, after the Tesla clip. Sean never appears as a talking head — montage throughout, his voice
 over the top.
 
 ## Type
