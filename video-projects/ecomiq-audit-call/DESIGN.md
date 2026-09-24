@@ -64,13 +64,13 @@ Every timing below is a word onset from the transcript.
 | B1 | 0.70–6.80 | "…one problem keeping you up at night" | eyebrow + *One* problem headline |
 | B2 | 7.60–11.20 | "revenue climbing but profits not following" | Revenue rising line vs Profit flat line |
 | B3 | 11.60–15.30 | "ad spend up but sales going backwards" | Ad spend rising vs Sales falling |
-| B4 | 16.30–20.90 | "no idea what your problem is" | four chips: ads / website / product / pricing |
+| B4 | 18.95–20.90 | "your ads, your website, your product, your pricing" | four chips, one per phrase |
 | B5 | 24.20–28.10 | "book a free audit call with our team" | flame pill |
 | B6 | 28.15–30.50 | "not a generic teardown" | struck through |
-| B7 | 30.80–34.70 | "one specific problem… costing you money" | *One* specific problem |
+| B7 | 30.80–34.70 | "one specific problem… costing you money" | "One specific problem." — all white, no serif emphasis |
 | B8 | 37.50–41.60 | "your data, your ads, your funnel, your numbers" | four-row stack, one row per phrase |
 | B9 | 41.80–45.20 | "not a template or a checklist" | both struck through |
-| B10 | 45.70–48.90 | "just your store and your problems" | *Just* your store |
+| B10 | 45.70–48.90 | "just your store and your problems" | *Just* in white serif italic (`.em.white`) |
 | B11 | 50.30–54.50 | "a clear answer and a plan for what to fix first" | A *clear* answer + sub |
 | B12 | 55.10–58.80 | "promise everything and deliver nothing" | second line struck |
 | B13 | 59.40–61.30 | "this is the opposite of that" | The *opposite* of that |
@@ -90,7 +90,12 @@ The white EcomIQ logo sits top-left for the whole b-roll and clears out at
 Straight from `assets/brand-tokens.css` — navy `#06284C` canvas and scrim, flame
 `#FF4C32` as the only hot accent (rules, CTA, "wrong" trend lines, strikethroughs),
 blue tint `#9CD4FF` for eyebrows and the serif emphasis word. Rethink Sans
-throughout, Hedvig Letters Serif italic for exactly one emphasis word per beat.
+throughout, Hedvig Letters Serif italic for at most one emphasis word per beat.
+
+Two beats deviate from the blue-tint default at Nate's direction: B7 sets "One"
+in plain white sans (no emphasis word at all), and B10 keeps "Just" in serif
+italic but white rather than blue-tint, via the `.em.white` modifier. B1 still
+carries the standard blue-tint italic "One".
 Both fonts are local `.woff2`; GSAP is vendored. No network at render time.
 
 Copy sits bottom-anchored and left-aligned on every beat, over a navy scrim —
