@@ -123,6 +123,20 @@ efficient over time instead of relearning the same lessons.
   and is wrong.** Both are present and work — the probe times out under load.
   Run `ffmpeg -version` yourself before believing it and re-installing anything.
 
+## Delivery
+
+- **`--resolution` takes named presets only**, not arbitrary sizes:
+  `landscape`, `portrait`, `landscape-4k`, `portrait-4k`, `square`, `square-4k`.
+  So 9:16 can export 2× via `portrait-4k` (2160×3840) but **4:5 has no 2×
+  preset** — 2160×2700 is rejected. Ship 4:5 at native 1080×1350, CRF 15.
+- **`--resolution` disables BeginFrame capture and falls back to screenshot
+  capture** — a 23s 9:16 went from ~1m50s to ~6m50s. Budget for it, and
+  spot-check the output: the slower path is a different code path.
+- **Check the source resolution before promising a hi-res master.** An upscaled
+  export adds no detail to live-action footage. Here both montage masters cap at
+  1080 on the short edge, so 1080 native at CRF 15 *is* the master; the 2×
+  export only sharpens the CSS-drawn layers (type, logo, end card).
+
 ## Housekeeping
 
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat

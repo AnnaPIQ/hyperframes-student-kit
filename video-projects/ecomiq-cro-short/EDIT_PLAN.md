@@ -13,6 +13,35 @@ Two exports, same edit, two frames:
 
 Total runtime **22.90s**. H.264 High / AAC LC, faststart.
 
+### Delivery masters
+
+| File | Size | Notes |
+|---|---|---|
+| `ecomiq-cro-9x16-1080x1920-HIGH.mp4` | 1080×1920 · 27 MB | **ship this** — CRF 15, native |
+| `ecomiq-cro-4x5-1080x1350-HIGH.mp4` | 1080×1350 · 19 MB | **ship this** — CRF 15, native |
+| `ecomiq-cro-9x16-2160x3840-HIGH.mp4` | 2160×3840 · 73 MB | optional 2×; type and end card render truly at 2×, footage is upscaled |
+
+**1080 is the resolution ceiling for the footage.** The 9:16 montage master is
+exactly 1080×1920 and the square master is 1440×1440 (cropped to 1152×1440 for
+the 4:5), so no export can add real detail to the live-action. The 2× 9:16 only
+sharpens the CSS-drawn layers — logo, graphics, end card — which is worth it
+only where a platform actually wants 4K.
+
+There is no 4:5 equivalent: `--resolution` takes named presets only
+(`portrait-4k` is 2160×3840), and 2160×2700 is not among them.
+
+```bash
+# the two masters
+cd video-projects/ecomiq-cro-short    && npx hyperframes render --quality high \
+  --output renders/ecomiq-cro-9x16-1080x1920-HIGH.mp4
+cd video-projects/ecomiq-cro-short-45 && npx hyperframes render --quality high \
+  --output renders/ecomiq-cro-4x5-1080x1350-HIGH.mp4
+
+# optional 2x 9:16 (~7 min — --resolution disables BeginFrame capture)
+cd video-projects/ecomiq-cro-short    && npx hyperframes render --quality high \
+  --resolution portrait-4k --output renders/ecomiq-cro-9x16-2160x3840-HIGH.mp4
+```
+
 ---
 
 ## Sources
