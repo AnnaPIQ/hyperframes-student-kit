@@ -30,8 +30,15 @@ The first cut used the single `Showcase Reel.mp4` montage. That reel holds only
 so it can't surface mid-ad) against **64.64s** of voiceover, so it was retimed to
 0.45×. At 2.2× slow motion it read as obviously wrong.
 
-The cheat sheet fixes it at the source: 35 usable clips, so the bed now runs at
-**native speed** — no retiming, no interpolation, no looping, one shot per 1.95s.
+The cheat sheet fixes it at the source: the bed now runs at **native speed** —
+no retiming, no interpolation, no looping, one shot per 2.55s.
+
+**Motif caps.** The sheet holds 8 near-identical hotel-laptop setups. Using them
+all made the bed feel repetitive even though every file was distinct, so each
+clip carries a `motif` and `scripts/broll-manifest.json` caps how many of each
+can appear: laptop 2, car 3, walking 2, phone 1, meeting 5, stage 2, event 4,
+retail 3, bakery 4 — **26 shots**. The laptop motif went from 10 available to 2
+used. The build asserts no two *adjacent* shots share a motif either.
 
 **Orientation is the trap.** 18 of these clips are phone-shot vertical footage
 exported into a 3840×2160 container with the rotation *baked in* and no rotation
@@ -57,8 +64,8 @@ the final frame and stretched the file by 72ms on the first attempt, and every
 beat here is anchored to word onsets in the transcript.
 
 ## Format decisions
-- **9:16 needs no cropping** — 33 of the 35 clips are natively vertical (15
-  already, 18 after the rotation fix above).
+- **9:16 needs no cropping** — all but the two Shoptalk stage shots are natively
+  vertical (some already, the rest after the rotation fix above).
 - **4:5 is a centre crop**, 285px off the top and bottom, *not* scale+pad.
   Padding a 9:16 source into 4:5 gives a 759×1350 image with 160px black bars
   down both sides, which reads as broken in a Meta feed. Checked across the
@@ -75,10 +82,10 @@ Every timing below is a word onset from the transcript.
 | B4 | 18.95–20.90 | "your ads, your website, your product, your pricing" | four chips, one per phrase |
 | B5 | 24.20–28.10 | "book a free audit call with our team" | flame pill |
 | B6 | 28.15–30.50 | "not a generic teardown" | struck through |
-| B7 | 30.80–34.70 | "one specific problem… costing you money" | "One specific problem." — all white, no serif emphasis |
+| B7 | 30.80–34.70 | "one specific problem… costing you money" | "One specific problem." — all white, upright |
 | B8 | 37.50–41.60 | "your data, your ads, your funnel, your numbers" | four-row stack, one row per phrase |
 | B9 | 41.80–45.20 | "not a template or a checklist" | both struck through |
-| B10 | 45.70–48.90 | "just your store and your problems" | *Just* in white serif italic (`.em.white`) |
+| B10 | 45.70–48.90 | "just your store and your problems" | "Just your store." — all white, upright |
 | B11 | 50.30–54.50 | "a clear answer and a plan for what to fix first" | A *clear* answer + sub |
 | B12 | 55.10–58.80 | "promise everything and deliver nothing" | second line struck |
 | B13 | 59.40–61.30 | "this is the opposite of that" | The *opposite* of that |
@@ -97,13 +104,14 @@ The white EcomIQ logo sits top-left for the whole b-roll and clears out at
 ## Brand application
 Straight from `assets/brand-tokens.css` — navy `#06284C` canvas and scrim, flame
 `#FF4C32` as the only hot accent (rules, CTA, "wrong" trend lines, strikethroughs),
-blue tint `#9CD4FF` for eyebrows and the serif emphasis word. Rethink Sans
-throughout, Hedvig Letters Serif italic for at most one emphasis word per beat.
+blue tint `#9CD4FF` for eyebrows. Rethink Sans throughout.
 
-Two beats deviate from the blue-tint default at Nate's direction: B7 sets "One"
-in plain white sans (no emphasis word at all), and B10 keeps "Just" in serif
-italic but white rather than blue-tint, via the `.em.white` modifier. B1 still
-carries the standard blue-tint italic "One".
+**No serif italic emphasis.** At Nate's direction every blue-tint italic
+emphasis word was changed to white and upright, so `.em` now only sets colour
+and inherits font, style and weight from `.head`. Hedvig Letters Serif is still
+shipped in `assets/fonts/` and still declared, but nothing renders in it.
+Blue tint survives only where it was never italic: the eyebrows, and the last
+row of the B8 stack ("All of your numbers").
 Both fonts are local `.woff2`; GSAP is vendored. No network at render time.
 
 Copy sits bottom-anchored and left-aligned on every beat, over a navy scrim —
