@@ -77,12 +77,14 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
-- **iPhone A-roll is HLG HDR (bt2020 / arib-std-b67) — must convert to SDR, but match the ORIGINAL
-  look, don't "grade".** Generic tonemaps (mobius/hable/reinhard at any npl) all shift it: too
-  bright/orange or flat/grey, and the client noticed immediately. **Fix:** use the file's own
-  Drive preview as ground truth (`https://drive.google.com/thumbnail?id=<id>&sz=w1080` = frame 0),
-  tonemap `mobius` @npl=400, then a per-channel histogram-match 3D LUT fitted to that frame
-  (`lut3d=…cube`). See `video-projects/bf-webinar/assets/footage/aroll-drive-match.cube`. *(bf-webinar)*
+- **iPhone A-roll is HLG HDR (bt2020 / arib-std-b67): keep it HDR, don't convert.** Every SDR
+  tonemap (mobius/hable/reinhard, even a LUT fitted to Drive's preview) changed the lighting and
+  the client rejected all of them. **Fix:** prep with resize/crop only, keeping HLG tags
+  (`libx265 -pix_fmt yuv420p10le -color_primaries bt2020 -color_trc arib-std-b67 -colorspace bt2020nc`
+  + matching `-x265-params`). HyperFrames auto-promotes to an HDR render (HEVC Main10 HLG MP4,
+  SDR DOM composited on top). Output is H.265, not H.264; renders ~4× slower. *(bf-webinar)*
+- **`sleep` is blocked in the Bash tool here**: `for …; sleep 10; done` wait loops return
+  instantly. Wait on renders with a `run_in_background` `until grep -q "rendered in" log` instead.
 - **Don't lay vignette/grain/light-streak/blur-pulse over talking-head footage by default.** The
   client read the vignette as "you changed the lighting" and the streak/blur whips as "flashes".
   Clean slide/fade cuts; keep texture for full-screen graphic scenes only. *(bf-webinar)*

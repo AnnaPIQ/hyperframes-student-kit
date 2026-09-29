@@ -47,9 +47,10 @@ footage keeps its original lighting.
   takeover and end card pad their content above the zone (`--safe-bottom`).
 
 ## Footage prep (see assets/footage/)
-- A-roll: iPhone HLG HDR → SDR, matched to the ORIGINAL look (Drive's own preview of the
-  clip): mobius tonemap @400 nits + `assets/footage/aroll-drive-match.cube` (per-channel
-  histogram match to Drive's frame 0). Don't regrade.
+- A-roll: **native iPhone HLG HDR, passed through untouched** (resize/crop/30fps only,
+  HEVC Main10, BT.2020, arib-std-b67). No tonemap, no LUT, no grade: original lighting.
+  HyperFrames auto-promotes the render to HDR (HEVC Main10 HLG MP4) and composites the SDR
+  graphics + B-roll on top. HDR renders are slow (~10–12 min draft on this box).
 - 4K B-roll was vertical footage stored sideways → `transpose=1`.
 - 4:5 = crop of the 9:16 frame (A-roll at y=150 for headroom above Sean; portrait B-roll centred). Stage clip is
   scale+pad on a blurred fill in both ratios.
