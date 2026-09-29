@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Final delivery: untouched HLG A-roll + colour-exact graphics layer.
 #   bash scripts/finish.sh [9x16|4x5|9x16-2x|4x5-2x ...]   (default: 9x16 4x5)
+#   REUSE_LAYER=1 bash scripts/finish.sh 9x16-2x   -> composite only, reuse an existing layer render
 #   2x targets = hi-res masters (2160x3840 / 2160x2700); run scripts/prep-2x.sh first.
 #
 # 1. render the graphics layer (A-roll stripped) as ProRes 4444 with alpha — SDR, brand-exact
@@ -17,7 +18,10 @@ for FMT in "${@:-9x16 4x5}"; do
     case $F in *-2x) FOOT=footage-2x; CRF=18;; *) FOOT=footage; CRF=16;; esac
     FMT_BASE=${F%-2x}
     LAYER=renders/layer-$F.mov
-    (cd .build-layer-$F && npx hyperframes render --format mov --output ../$LAYER --quiet)
+    # REUSE_LAYER=1 skips the layer render when renders/layer-<fmt>.mov already exists (composite only)
+    if [ "${REUSE_LAYER:-0}" = 1 ] && [ -f "$LAYER" ]; then echo "reusing $LAYER"; else
+      (cd .build-layer-$F && npx hyperframes render --format mov --output ../$LAYER --quiet)
+    fi
     ffmpeg -v error -y \
       -i assets/$FOOT/aroll_$FMT_BASE.mp4 -i $LAYER -i assets/aroll-audio.m4a \
       -filter_complex "\
