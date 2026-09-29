@@ -25,7 +25,8 @@
   "shoptalk-stage-a": "16:9 slide text is chopped by the 9:16 crop",
   "shoptalk-stage-b": "16:9 stats slide, same cropped-text problem",
   "sweetes-team": "cheat sheet mislabels it; the file is Sean on a laptop, breaking the laptop cap",
-  "limitless-sign": "camera pans across the banner so the shot always ends on chopped text; MMNTM branding, not EcomIQ"
+  "limitless-sign": "camera pans across the banner so the shot always ends on chopped text; MMNTM branding, not EcomIQ",
+  "car-into-hotel": "replaced at Nate's request; hotel exterior swapped for the cake-boxing shot"
  },
  "clips": [
   {
@@ -47,13 +48,13 @@
    "motif": "phone"
   },
   {
-   "i": 2,
-   "alias": "car-into-hotel",
-   "drive_id": "1vmYi5ZP_zYfXkxcm57lQdwwCGJRDI0s7",
-   "in": 3.11,
+   "alias": "sweetes-boxing",
+   "drive_id": "1cF3UR7rqtK27rx9HUh5H7Wt_yipf8fhp",
+   "in": 30.0,
    "transform": "rotate_cw",
-   "cue": "cue+clamped",
-   "motif": "car"
+   "cue": "cue (0:29-0:45 'cake being packed')",
+   "motif": "bakery",
+   "i": 2
   },
   {
    "i": 3,

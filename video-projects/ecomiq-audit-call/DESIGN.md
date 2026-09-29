@@ -37,8 +37,15 @@ no retiming, no interpolation, no looping, one shot per 2.55s.
 all made the bed feel repetitive even though every file was distinct, so each
 clip carries a `motif` and `scripts/broll-manifest.json` caps how many of each
 can appear: laptop 2, car 3, walking 2, phone 1, meeting 5, stage 2, event 4,
-retail 3, bakery 3 — **23 shots** at 2.9s. The laptop motif went from 10
+retail 3, bakery 4 — **23 shots** at 2.9s. The laptop motif went from 10
 available to 2 used. The build asserts no two *adjacent* shots share a motif.
+
+**Second framings from one source.** Shot 3 is a tight top-down of hands
+boxing a cake, taken from the same file as the medium of Erica holding one
+(different cue, 27s apart). Every other motif is at its cap, so a genuinely new
+subject was not available — and a real store fulfilling an order reads better
+under "revenue climbing but your profit not following" than the hotel exterior
+it replaced.
 
 **No chopped-text frames.** Four clips were cut because the frame sliced text
 mid-word, which reads as a flash of nonsense: both Shoptalk stage shots (16:9
