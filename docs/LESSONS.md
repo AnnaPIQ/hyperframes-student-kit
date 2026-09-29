@@ -101,8 +101,18 @@ efficient over time instead of relearning the same lessons.
 - **Phone A-roll comes in around -37 LUFS, far too quiet for Meta.** **Fix:** two-pass
   `loudnorm` the VO asset to -16 LUFS / -1.5 dBTP *before* rendering, and check the
   final with `ffmpeg -af ebur128`.
-- **`render` output was HEVC here.** Meta wants H.264. **Fix:** transcode the master:
-  `-c:v libx264 -crf 17 -pix_fmt yuv420p -c:a aac -movflags +faststart`.
+- **iPhone A-roll is HDR (HLG / BT.2020), which silently makes the whole ad HDR.** The
+  render detects it, outputs 10-bit HEVC, and the HLG tag survives an H.264 transcode, so
+  colours can shift or wash out on Meta. **Fix:** check `ffprobe ... color_transfer`
+  (`arib-std-b67` = HLG), tone-map during prep:
+  `zscale=t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,tonemap=mobius:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p`
+  (mobius looked natural; hable went grey), tag outputs bt709, and render with `--sdr`.
+- **Final delivery is H.264.** Transcode the master:
+  `-c:v libx264 -crf 17 -pix_fmt yuv420p -colorspace bt709 -color_primaries bt709 -color_trc bt709 -c:a aac -movflags +faststart`.
+- **Background tasks have a time limit (~45 min here).** Chaining two ~22 min renders in one
+  task got the second one killed. Run one render per background task.
+- **GitHub hard-caps files at 100 MiB.** A 36s 1080x1920 CRF 18 A-roll hit 98.7 MiB. Use
+  CRF 20 for committed mezzanines.
 - **`gsap_repeated_fromto_without_baseline` warning:** a second `fromTo` on the same element
   (e.g. a pulse after an entrance) should be a plain `tl.to`.
 

@@ -7,7 +7,7 @@ EcomIQ Black Friday free-webinar ad, 37.0s, two ratios from one template.
 | 9:16 Reels / Stories | `bf-webinar-ad/final.mp4` (also `renders/ecomiq-bf-webinar-9x16.mp4`) | 1080x1920 |
 | 4:5 Meta feed | `bf-webinar-ad-4x5/final.mp4` (also `renders/ecomiq-bf-webinar-4x5.mp4`) | 1080x1350 |
 
-Both: H.264 High + AAC 192k, 30fps, faststart, 37.0s, -16 LUFS integrated / -1.4 dBTP.
+Both: H.264 High, SDR bt709, AAC 192k, 30fps, faststart, 37.0s, -16 LUFS integrated / -1.4 dBTP.
 
 Destination URL for the ad: https://ecomiq.com/pages/bf-webinar?utm_source=ecomiq&utm_medium=owned&utm_campaign=bf-webinar-2026
 
@@ -17,15 +17,17 @@ cd video-projects/bf-webinar-ad
 # edit src/ad.template.html (never the generated index.html files)
 node build.mjs                                  # writes both index.html files + syncs 4:5 assets
 npx hyperframes lint
-npx hyperframes render --quality standard --output renders/bf-webinar-9x16-master.mp4
-# render outputs HEVC here; transcode for Meta:
-ffmpeg -i renders/bf-webinar-9x16-master.mp4 -c:v libx264 -crf 17 -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart renders/ecomiq-bf-webinar-9x16.mp4
+npx hyperframes render --quality standard --sdr --output renders/bf-webinar-9x16-master.mp4
+# transcode for Meta (H.264, SDR bt709, faststart):
+ffmpeg -i renders/bf-webinar-9x16-master.mp4 -c:v libx264 -crf 17 -pix_fmt yuv420p -colorspace bt709 -color_primaries bt709 -color_trc bt709 -c:a aac -b:a 192k -movflags +faststart renders/ecomiq-bf-webinar-9x16.mp4
 cd ../bf-webinar-ad-4x5 && npx hyperframes lint && \
-  npx hyperframes render --quality standard --output renders/bf-webinar-4x5-master.mp4   # then the same ffmpeg transcode
+  npx hyperframes render --quality standard --sdr --output renders/bf-webinar-4x5-master.mp4   # then the same ffmpeg transcode
 ```
 
 ## Sources
-- A-roll: Drive `IMG_1545.MOV` (4K HEVC portrait, 36.4s). Speech runs 0 to 35.3s, used in full.
+- A-roll: Drive `IMG_1545.MOV` (4K HEVC HLG-HDR portrait, 36.4s). Speech runs 0 to 35.3s, used in full.
+  Tone-mapped to SDR bt709 (mobius) and recropped for headroom; see DESIGN.md flags.
+- Subtitle safe zone reserved for manual subtitles: 9:16 y 1385 to 1640, 4:5 y 1060 to 1290.
 - B-roll (Drive "B-Roll Short Cut" sheet), segments pulled at the sheet's timecodes, all muted:
   Shoptalk stage (`Sean Clarke Pacific IQ.mp4` 0:12), Dryft product holding (0:10, reused
   at 0:11.4 for "bundles"), Sweet E's cake packing (0:29), Sweet E's cookie scroll (0:01),
