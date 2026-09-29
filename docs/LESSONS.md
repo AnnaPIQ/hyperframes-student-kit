@@ -77,6 +77,23 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## Sourcing & multi-ratio (bf-webinar-ad, 2026-09)
+
+- **Drive B-roll masters are 0.4–1.7 GB; the Drive connector's base64 download can't carry
+  them.** **Fix:** if the file is link-shared, read only the segment you need straight over
+  HTTPS: `ffmpeg -ca_file /root/.ccr/ca-bundle.crt -ss <in> -t <dur> -i
+  "https://drive.usercontent.google.com/download?id=<ID>&export=download&confirm=t" ...`
+  (HTTP range reads; ~4s of 4K in ~4s). The B-roll sheet's `0.12-0.14` means 0:12–0:14.
+- **No whisper-cpp for word timestamps.** **Fix:** `pip install faster-whisper` and run
+  `small.en` with `word_timestamps=True`; the model download worked through the proxy here.
+- **`multiple_root_compositions` lint ERROR when shipping 9:16 + 4:5 from one folder.**
+  **Fix:** one template + a tiny `build.mjs` that writes `index.html` into each ratio's own
+  project folder and syncs assets (see `video-projects/bf-webinar-ad/build.mjs`).
+- **9:16 portrait footage to 4:5:** padding pillarboxes a talking head, so centre-crop
+  1920→1350 with a per-clip y offset (A-roll 230px kept head + hand in frame).
+- **`gsap_repeated_fromto_without_baseline` warning:** a second `fromTo` on the same element
+  (e.g. a pulse after an entrance) should be a plain `tl.to`.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

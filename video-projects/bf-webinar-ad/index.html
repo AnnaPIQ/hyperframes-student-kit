@@ -1,0 +1,410 @@
+<!doctype html>
+<!-- GENERATED from src/ad.template.html by build.mjs. Edit the template, not this file. -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>bf-webinar-ad</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time (latin subset) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--brand-bg); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
+
+      /* ---- per-format layout knobs ---------------------------------------- */
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden;
+        --logo-top: 132px; --logo-left: 72px;
+        --band-bottom: 300px;   /* keep graphics above the Reels caption / CTA UI */
+        --pad-x: 84px;
+        --big: 210px; --mid: 64px; --lab: 32px;
+        --card-w: 936px; --tile-w: 470px; }
+      #root.f4x5 {
+        --logo-top: 60px; --logo-left: 60px;
+        --band-bottom: 86px;
+        --big: 176px; --mid: 56px; --lab: 29px;
+        --card-w: 820px; --tile-w: 390px; }
+
+      #bg { position: absolute; inset: 0; background: var(--brand-navy); }
+
+      /* ---- footage --------------------------------------------------------- */
+      .vwrap { position: absolute; inset: 0; overflow: hidden; }
+      .vwrap video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .group { position: absolute; inset: 0; opacity: 0; will-change: transform, filter, opacity; }
+      .panel { position: absolute; inset: 0;
+        background: radial-gradient(80% 50% at 50% 30%, var(--brand-surface-2) 0%, var(--brand-navy) 70%); }
+
+      /* bottom scrim so type reads over footage */
+      #scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 62%; opacity: 0; pointer-events: none;
+        background: linear-gradient(180deg,
+          color-mix(in srgb, var(--brand-navy) 0%, transparent) 0%,
+          color-mix(in srgb, var(--brand-navy) 55%, transparent) 38%,
+          color-mix(in srgb, var(--brand-navy) 88%, transparent) 100%); }
+
+      /* ---- persistent logo (non-clip wrapper so the engine can't move it) -- */
+      #logo-wrap { position: absolute; top: var(--logo-top); left: var(--logo-left); width: 10%; z-index: 50;
+        filter: drop-shadow(0 3px 8px color-mix(in srgb, var(--brand-black) 45%, transparent)); }
+      #logo-wrap img { display: block; width: 100%; height: auto; }
+
+      /* ---- whip streak ----------------------------------------------------- */
+      #streak { position: absolute; left: -10%; width: 120%; top: 100%; height: 26%; z-index: 40; opacity: 0;
+        pointer-events: none; mix-blend-mode: screen; filter: blur(22px);
+        background: linear-gradient(180deg, transparent 0%, var(--brand-blue-tint) 42%, var(--brand-white) 50%,
+          var(--brand-blue-tint) 58%, transparent 100%); }
+
+      /* ---- motion-graphic band (lower third) ------------------------------- */
+      .mg { position: absolute; left: 0; right: 0; bottom: var(--band-bottom); z-index: 30;
+        padding: 0 var(--pad-x); display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+      .eyebrow { font-weight: 600; font-size: var(--lab); letter-spacing: .26em; text-transform: uppercase;
+        color: var(--brand-blue-tint); }
+      .big { font-weight: 800; font-size: var(--big); line-height: .9; letter-spacing: -.035em;
+        font-variant-numeric: tabular-nums; white-space: nowrap;
+        text-shadow: 0 0 40px color-mix(in srgb, var(--brand-blue-tint) 35%, transparent); }
+      .big .hot { color: var(--brand-flame); }
+      .label { font-weight: 500; font-size: var(--mid); line-height: 1.02; letter-spacing: -.02em; }
+      .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint);
+        letter-spacing: -.01em; display: inline-block; }
+
+      /* hook bars */
+      .bars { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+      .barrow { display: flex; align-items: center; gap: 22px; }
+      .barrow span { width: 210px; font-weight: 600; font-size: var(--lab); color: var(--brand-text-dim); }
+      .track { flex: 1; height: 34px; border-radius: 999px; background: color-mix(in srgb, var(--brand-sky) 14%, transparent); overflow: hidden; }
+      .fill { height: 100%; border-radius: 999px; transform-origin: left center; }
+      #bar-last { width: 50%; background: var(--brand-blue-tint); }
+      #bar-this { width: 100%; background: var(--brand-flame);
+        box-shadow: 0 0 30px color-mix(in srgb, var(--brand-flame) 60%, transparent); }
+
+      /* pill */
+      .pill { display: inline-flex; align-items: center; gap: 18px; padding: 22px 38px; border-radius: 999px;
+        font-weight: 700; font-size: calc(var(--lab) * 1.35); letter-spacing: .12em; text-transform: uppercase;
+        background: color-mix(in srgb, var(--brand-navy) 78%, transparent);
+        border: 2px solid var(--brand-border); }
+      .pill i { width: 18px; height: 18px; border-radius: 50%; background: var(--brand-flame);
+        box-shadow: 0 0 16px var(--brand-flame); }
+
+      /* stage card */
+      #stage-vwrap { position: absolute; left: calc(50% - var(--card-w) / 2); width: var(--card-w); aspect-ratio: 16 / 9; top: 21%;
+        border-radius: 28px; overflow: hidden;
+        border: 2px solid var(--brand-border);
+        box-shadow: 0 40px 90px -30px var(--brand-black); }
+      #root.f4x5 #stage-vwrap { top: 15%; }
+      #stage-vwrap video { width: 100%; height: 100%; object-fit: cover; }
+      .stage-copy { position: absolute; left: 0; right: 0; bottom: var(--band-bottom); padding: 0 var(--pad-x);
+        display: flex; flex-direction: column; gap: 16px; }
+
+      /* yoy bars */
+      .cols { display: flex; align-items: flex-end; gap: 22px; height: 230px; margin-bottom: 10px; }
+      #root.f4x5 .cols { height: 170px; }
+      .col { width: 96px; border-radius: 16px 16px 6px 6px; transform-origin: bottom center; background: var(--brand-blue-tint); }
+      .col.c1 { height: 36%; opacity: .55; } .col.c2 { height: 64%; opacity: .8; }
+      .col.c3 { height: 100%; background: var(--brand-flame); box-shadow: 0 0 34px color-mix(in srgb, var(--brand-flame) 55%, transparent); }
+
+      /* discount */
+      .strike-wrap { position: relative; display: inline-block; }
+      #strike { position: absolute; left: -3%; width: 106%; top: 50%; height: 16px; margin-top: -8px;
+        background: var(--brand-flame); border-radius: 8px; transform-origin: left center;
+        box-shadow: 0 0 24px var(--brand-flame); }
+
+      /* checklist */
+      .glass { width: 100%; padding: 34px 40px; border-radius: 30px;
+        background: color-mix(in srgb, var(--brand-navy) 80%, transparent);
+        border: 2px solid var(--brand-border);
+        box-shadow: inset 0 1px 0 color-mix(in srgb, var(--brand-white) 18%, transparent), 0 30px 80px -30px var(--brand-black); }
+      .glass .eyebrow { margin-bottom: 18px; }
+      .item { display: flex; align-items: center; gap: 24px; padding: 13px 0; font-weight: 600;
+        font-size: calc(var(--mid) * .72); letter-spacing: -.01em; }
+      #root.f4x5 .item { padding: 9px 0; }
+      .box { flex: none; width: 52px; height: 52px; border-radius: 14px; border: 3px solid var(--brand-border);
+        position: relative; }
+      .tick { position: absolute; inset: -3px; border-radius: 14px; background: var(--brand-flame);
+        display: flex; align-items: center; justify-content: center; }
+      .tick svg { width: 30px; height: 30px; }
+
+      /* date tile */
+      .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+        justify-content: center; gap: 34px; padding: 0 var(--pad-x); text-align: center; }
+      .tile { width: var(--tile-w); border-radius: 36px; overflow: hidden; background: var(--brand-sky);
+        box-shadow: 0 50px 110px -30px var(--brand-black), 0 0 0 2px var(--brand-border); transform-origin: top center; }
+      .tile-top { background: var(--brand-flame); color: var(--brand-white); font-weight: 800;
+        font-size: calc(var(--tile-w) * .15); letter-spacing: .2em; padding: 18px 0 14px; }
+      .tile-num { color: var(--brand-navy); font-weight: 800; font-size: calc(var(--tile-w) * .56); line-height: 1;
+        letter-spacing: -.05em; padding: 12px 0 30px; font-variant-numeric: tabular-nums; }
+      .when { font-weight: 500; font-size: calc(var(--lab) * 1.2); color: var(--brand-text-dim); letter-spacing: .02em; }
+
+      /* end card */
+      #bloom { position: absolute; left: -20%; right: -20%; bottom: -18%; height: 60%; border-radius: 50%;
+        background: var(--brand-gradient-2); filter: blur(120px); opacity: .34; }
+      .end { gap: 30px; }
+      #end-icon { width: 150px; height: auto; }
+      #root.f4x5 #end-icon { width: 124px; }
+      #end-head { font-weight: 800; font-size: 124px; line-height: .98; letter-spacing: -.03em; max-width: 900px; }
+      #root.f4x5 #end-head { font-size: 108px; }
+      #end-sub { font-weight: 500; font-size: 46px; letter-spacing: -.01em; color: var(--brand-text-dim); }
+      #end-cta { margin-top: 18px; font-weight: 700; font-size: 44px; color: var(--brand-white);
+        background: var(--brand-flame); padding: 30px 64px; border-radius: 999px;
+        box-shadow: 0 22px 70px -14px color-mix(in srgb, var(--brand-flame) 70%, transparent); }
+    </style>
+  </head>
+  <body>
+    <div id="root" class="f9x16" data-composition-id="bf-webinar-ad" data-start="0" data-duration="37" data-width="1080" data-height="1920">
+      <div id="bg" class="clip" data-start="0" data-duration="37" data-track-index="0"></div>
+
+      <!-- A-ROLL spine: one continuous clip so lips stay locked to the VO -->
+      <div id="aroll-wrap" class="vwrap">
+        <video id="aroll" src="assets/9x16/aroll.mp4" data-start="0" data-duration="33" data-track-index="1" muted playsinline></video>
+      </div>
+
+      <!-- B-ROLL groups (muted). Each video runs ~0.35s past its cut so the next whip lands on picture. -->
+      <div id="g-stage" class="group">
+        <div id="stage-panel" class="clip panel" data-start="5.9" data-duration="2.9" data-track-index="10"></div>
+        <div id="stage-vwrap">
+          <video id="v-stage" src="assets/stage.mp4" data-start="5.9" data-duration="2.55" data-media-start="0.9" data-track-index="11" muted playsinline></video>
+        </div>
+        <div class="stage-copy clip" id="stage-copy" data-start="5.9" data-duration="2.9" data-track-index="12">
+          <div class="eyebrow" id="stage-eyebrow">Sean Clarke · Founder</div>
+          <div class="big" id="stage-num">$0M<span class="hot">+</span></div>
+          <div class="label" id="stage-label">in combined revenue scaled</div>
+        </div>
+      </div>
+
+      <div id="g-dryft" class="group">
+        <div class="vwrap"><video id="v-dryft" src="assets/9x16/dryft.mp4" data-start="8.45" data-duration="2.0" data-media-start="0" data-track-index="13" muted playsinline></video></div>
+      </div>
+      <div id="g-cake" class="group">
+        <div class="vwrap"><video id="v-cake" src="assets/9x16/cake.mp4" data-start="10.1" data-duration="2.25" data-media-start="0.3" data-track-index="14" muted playsinline></video></div>
+      </div>
+      <div id="g-cookie" class="group">
+        <div class="vwrap"><video id="v-cookie" src="assets/9x16/cookie.mp4" data-start="12" data-duration="1.85" data-media-start="0.4" data-track-index="15" muted playsinline></video></div>
+      </div>
+      <div id="g-laptop" class="group">
+        <div class="vwrap"><video id="v-laptop" src="assets/9x16/laptop.mp4" data-start="17.25" data-duration="2.4" data-media-start="0" data-track-index="16" muted playsinline></video></div>
+      </div>
+      <div id="g-bundle" class="group">
+        <div class="vwrap"><video id="v-bundle" src="assets/9x16/dryft.mp4" data-start="19.3" data-duration="1.45" data-media-start="1.9" data-track-index="17" muted playsinline></video></div>
+      </div>
+      <div id="g-klaviyo" class="group">
+        <div class="vwrap"><video id="v-klaviyo" src="assets/9x16/klaviyo.mp4" data-start="20.4" data-duration="2.0" data-media-start="0.2" data-track-index="18" muted playsinline></video></div>
+      </div>
+
+      <div id="scrim"></div>
+
+      <!-- MG 1 — hook: double your revenue -->
+      <div id="mg-hook" class="mg clip" data-start="0.3" data-duration="3.3" data-track-index="20">
+        <div class="eyebrow" id="hook-eyebrow">Black Friday revenue</div>
+        <div class="big" id="hook-num">1.0<span class="hot">×</span></div>
+        <div class="bars">
+          <div class="barrow" id="row-last"><span>Last year</span><div class="track"><div class="fill" id="bar-last"></div></div></div>
+          <div class="barrow" id="row-this"><span>This year</span><div class="track"><div class="fill" id="bar-this"></div></div></div>
+        </div>
+      </div>
+
+      <!-- MG 2 — free live webinar pill -->
+      <div id="mg-pill" class="mg clip" data-start="3.6" data-duration="2.4" data-track-index="21">
+        <div class="pill" id="pill"><i></i>Free live webinar</div>
+        <div class="label" id="pill-sub">with Sean Clarke</div>
+      </div>
+
+      <!-- MG 3 — 8 & 9 figure brands -->
+      <div id="mg-fig" class="mg clip" data-start="8.45" data-duration="1.7" data-track-index="22">
+        <div class="eyebrow" id="fig-eyebrow">The playbook behind</div>
+        <div class="big" id="fig-num" style="font-size: calc(var(--big) * .62)">$1,000,000</div>
+        <div class="label" id="fig-label">8- &amp; 9-figure brands</div>
+      </div>
+
+      <!-- MG 4 — year on year -->
+      <div id="mg-yoy" class="mg clip" data-start="10.1" data-duration="3.75" data-track-index="23">
+        <div class="cols"><div class="col c1"></div><div class="col c2"></div><div class="col c3"></div></div>
+        <div class="label" id="yoy-1">Year on year,</div>
+        <div class="label" id="yoy-2"><span class="em">incredible</span> performance.</div>
+      </div>
+
+      <!-- MG 5 — not just discounts -->
+      <div id="mg-disc" class="mg clip" data-start="13.85" data-duration="3.45" data-track-index="24">
+        <div class="eyebrow" id="disc-eyebrow">It's not just</div>
+        <div class="strike-wrap" id="disc-wrap"><div class="big" id="disc-num">0%<span class="hot"> OFF</span></div><div id="strike"></div></div>
+        <div class="label" id="disc-sub">It's the whole plan.</div>
+      </div>
+
+      <!-- MG 6 — checklist -->
+      <div id="mg-list" class="mg clip" data-start="17.25" data-duration="8.0" data-track-index="25">
+        <div class="glass" id="glass">
+          <div class="eyebrow">On the webinar</div>
+          <div class="item" id="it1"><div class="box"><div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="var(--brand-white)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>Ad account setup</div>
+          <div class="item" id="it2"><div class="box"><div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="var(--brand-white)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>How many creatives you need</div>
+          <div class="item" id="it3"><div class="box"><div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="var(--brand-white)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>Bundles, or not</div>
+          <div class="item" id="it4"><div class="box"><div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="var(--brand-white)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>Which emails to send, and when</div>
+          <div class="item" id="it5"><div class="box"><div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="var(--brand-white)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>What to watch once it's live</div>
+        </div>
+      </div>
+
+      <!-- DATE — October 14th -->
+      <div id="g-date" class="group" style="z-index: 32">
+        <div class="clip panel" id="date-panel" data-start="28.45" data-duration="2.3" data-track-index="26"></div>
+        <div class="center clip" id="date-center" data-start="28.45" data-duration="2.3" data-track-index="27">
+          <div class="eyebrow" id="date-eyebrow">Free live webinar</div>
+          <div class="tile" id="tile"><div class="tile-top">OCT</div><div class="tile-num" id="tile-num">01</div></div>
+          <div class="when" id="date-when">Wednesday · 1:30pm PT · 4:30pm ET</div>
+        </div>
+      </div>
+
+      <!-- END CARD -->
+      <div id="g-end" class="group" style="z-index: 34">
+        <div class="clip panel" id="end-panel" data-start="32.45" data-duration="4.55" data-track-index="28"></div>
+        <div class="clip" id="end-bloom-clip" data-start="32.45" data-duration="4.55" data-track-index="29" style="position:absolute;inset:0;overflow:hidden"><div id="bloom"></div></div>
+        <div class="center end clip" id="end-center" data-start="32.45" data-duration="4.55" data-track-index="30">
+          <img id="end-icon" src="assets/ecomiq-icon-white.svg" alt="EcomIQ" />
+          <div id="end-head"><span class="em" id="end-em">Double</span> <span id="end-rest">your Black Friday</span></div>
+          <div id="end-sub">Webinar. October 14th</div>
+          <div id="end-cta">Sign up free &rarr;</div>
+        </div>
+      </div>
+
+      <div id="streak"></div>
+
+      <div id="logo-wrap"><img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+
+      <audio id="vo" src="assets/audio/sean-vo.m4a" data-start="0" data-duration="36.39" data-track-index="40" data-volume="1"></audio>
+      <!-- MUSIC BED PLACEHOLDER (silent). Swap the file for the licensed bed; 0.15 = ducked under VO. -->
+      <audio id="music" src="assets/audio/music-bed-PLACEHOLDER.m4a" data-start="0" data-duration="37" data-track-index="41" data-volume="0.15"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const H = 1920;
+      const D = 37;
+      const tl = gsap.timeline({ paused: true });
+      const $ = (s) => document.querySelector(s);
+
+      // ---- transition helpers ---------------------------------------------
+      // streak: blue-tint light band rips up the frame, peaking on the cut
+      const streak = (t) => tl.fromTo("#streak", { y: 0, opacity: 0.85 }, { y: -H * 1.35, opacity: 0.85, duration: 0.36, ease: "power3.in" }, t - 0.2)
+                              .set("#streak", { opacity: 0 }, t + 0.17);
+      // whip a group in from below with blur
+      const whipIn = (sel, t) => {
+        tl.set(sel, { opacity: 1 }, t);
+        tl.fromTo(sel, { y: H * 0.1, filter: "blur(26px)" }, { y: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, t);
+      };
+      // whip a group out upward. reveal=true fades it so Sean shows through.
+      const whipOut = (sel, t, reveal) => {
+        tl.to(sel, { y: -H * 0.1, filter: "blur(26px)", opacity: reveal ? 0 : 1, duration: 0.24, ease: "power2.in" }, t - 0.24);
+        if (!reveal) tl.set(sel, { opacity: 0 }, t + 0.34);
+      };
+      const cut = (outSel, inSel, t) => { streak(t); if (outSel) whipOut(outSel, t, !inSel); if (inSel) whipIn(inSel, t); };
+      const mgOut = (sel, t) => tl.to(sel, { y: -60, filter: "blur(18px)", opacity: 0, duration: 0.22, ease: "power2.in" }, t - 0.22);
+      const counter = (sel, o, fmt) => () => { $(sel).innerHTML = fmt(o.v); };
+      const comma = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+      // ---- camera never sleeps: slow push on Sean, a punch on the rest beat -
+      tl.fromTo("#aroll-wrap", { scale: 1 }, { scale: 1.04, duration: 25, ease: "none" }, 0);
+      tl.to("#aroll-wrap", { scale: 1.1, duration: 3.2, ease: "sine.inOut" }, 25.2);
+      tl.set("#aroll-wrap", { scale: 1.04 }, 29.5); // reset while the date panel fully covers Sean
+
+      // ---- MG1 hook: 1.0x -> 2.0x on "double" (0.54) -----------------------
+      tl.to("#scrim", { opacity: 1, duration: 0.4, ease: "power2.out" }, 0.2);
+      tl.fromTo("#hook-eyebrow", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.3);
+      tl.fromTo("#hook-num", { opacity: 0, x: -80, filter: "blur(16px)" }, { opacity: 1, x: 0, filter: "blur(0px)", duration: 0.35, ease: "expo.out" }, 0.45);
+      tl.fromTo("#row-last", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.6);
+      tl.fromTo("#row-this", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.72);
+      tl.fromTo("#bar-last", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power2.out" }, 0.7);
+      tl.fromTo("#bar-this", { scaleX: 0 }, { scaleX: 0.5, duration: 0.5, ease: "power2.out" }, 0.8);
+      tl.to("#bar-this", { scaleX: 1, duration: 1.2, ease: "power2.inOut" }, 1.3);
+      const hk = { v: 1 };
+      tl.to(hk, { v: 2, duration: 1.2, ease: "power2.inOut", onUpdate: counter("#hook-num", hk, (v) => v.toFixed(1) + '<span class="hot">×</span>') }, 1.3);
+      tl.to("#hook-num", { scale: 1.08, duration: 0.18, yoyo: true, repeat: 1, ease: "sine.inOut", transformOrigin: "left center" }, 2.5);
+      tl.to("#row-last", { opacity: 0.5, duration: 0.3, ease: "power1.out" }, 2.1); // "versus last year"
+      mgOut("#mg-hook", 3.55);
+
+      // ---- MG2 pill: "completely free webinar" (3.7 – 4.3) -----------------
+      tl.fromTo("#pill", { opacity: 0, scale: 0.7, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.8)", transformOrigin: "left center" }, 3.7);
+      tl.fromTo("#pill-sub", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }, 4.4);
+      tl.fromTo("#pill i", { scale: 1 }, { scale: 1.5, duration: 0.3, yoyo: true, repeat: 3, ease: "sine.inOut" }, 4.2);
+      mgOut("#mg-pill", 5.9);
+
+      // ---- STAGE (5.9 – 8.45): social proof + $98M+ ------------------------
+      cut(null, "#g-stage", 5.9);
+      tl.fromTo("#stage-vwrap", { scale: 0.9 }, { scale: 1, duration: 0.7, ease: "expo.out" }, 5.9);
+      tl.fromTo("#stage-eyebrow", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 6.15);
+      tl.fromTo("#stage-num", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 6.3);
+      const st = { v: 0 };
+      tl.to(st, { v: 98, duration: 1.1, ease: "power3.out", onUpdate: counter("#stage-num", st, (v) => "$" + Math.round(v) + 'M<span class="hot">+</span>') }, 6.35);
+      tl.fromTo("#stage-label", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.45, ease: "circ.out" }, 6.8);
+      tl.to("#scrim", { opacity: 0, duration: 0.3 }, 5.9);
+
+      // ---- DRYFT (8.45 – 10.1): "eight and nine figure brands" -------------
+      cut("#g-stage", "#g-dryft", 8.45);
+      tl.to("#scrim", { opacity: 1, duration: 0.3 }, 8.45);
+      tl.fromTo("#fig-eyebrow", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 8.5);
+      tl.fromTo("#fig-num", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.3, ease: "expo.out" }, 8.55);
+      const fg = { v: 1000000 };
+      tl.to(fg, { v: 10000000, duration: 0.4, ease: "power2.out", onUpdate: counter("#fig-num", fg, (v) => "$" + comma(v)) }, 8.6);
+      tl.to(fg, { v: 100000000, duration: 0.5, ease: "power2.out", onUpdate: counter("#fig-num", fg, (v) => "$" + comma(v) + (v > 99999999 ? '<span class="hot">+</span>' : "")) }, 9.15);
+      tl.fromTo("#fig-label", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.4)" }, 9.4);
+      mgOut("#mg-fig", 10.1);
+
+      // ---- CAKE → COOKIE (10.1 – 13.8): year on year ------------------------
+      cut("#g-dryft", "#g-cake", 10.1);
+      cut("#g-cake", "#g-cookie", 12.0);
+      tl.fromTo("#mg-yoy .col", { scaleY: 0 }, { scaleY: 1, duration: 0.55, ease: "power3.out", stagger: 0.28 }, 10.15);
+      tl.fromTo("#yoy-1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 10.2);
+      tl.fromTo("#yoy-2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 11.85);
+      tl.fromTo("#yoy-2 .em", { x: -30 }, { x: 0, duration: 0.5, ease: "expo.out" }, 11.85);
+      tl.fromTo("#mg-yoy .c3", { scaleY: 1 }, { scaleY: 1.12, duration: 0.3, ease: "back.out(2)" }, 12.05);
+      mgOut("#mg-yoy", 13.8);
+      cut("#g-cookie", null, 13.8);
+
+      // ---- DISCOUNT (13.85 – 17.25): "not just ... discounts" --------------
+      tl.fromTo("#disc-eyebrow", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 14.1);
+      tl.fromTo("#disc-wrap", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)", transformOrigin: "left center" }, 14.9);
+      const dc = { v: 0 };
+      tl.to(dc, { v: 50, duration: 0.55, ease: "power2.out", onUpdate: counter("#disc-num", dc, (v) => Math.round(v) + '%<span class="hot"> OFF</span>') }, 15.0);
+      tl.fromTo("#strike", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power4.inOut" }, 15.9);
+      tl.to("#disc-num", { opacity: 0.45, duration: 0.3 }, 16.05);
+      tl.fromTo("#disc-sub", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out" }, 16.1);
+      mgOut("#mg-disc", 17.25);
+
+      // ---- CHECKLIST (17.25 – 25.2) over laptop / bundle / klaviyo / Sean ---
+      cut(null, "#g-laptop", 17.25);
+      cut("#g-laptop", "#g-bundle", 19.3);
+      cut("#g-bundle", "#g-klaviyo", 20.4);
+      cut("#g-klaviyo", null, 22.4);
+      tl.fromTo("#glass", { opacity: 0, y: 80, filter: "blur(14px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, 17.25);
+      [["#it1", 17.36], ["#it2", 18.3], ["#it3", 19.64], ["#it4", 20.45], ["#it5", 22.5]].forEach(([s, t]) => {
+        tl.fromTo(s, { opacity: 0.28, x: -24 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out" }, t - 0.1);
+        tl.fromTo(s + " .tick", { scale: 0, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.35, ease: "back.out(2.4)" }, t + 0.05);
+      });
+      tl.set(["#it2", "#it3", "#it4", "#it5"], { opacity: 0.28 }, 17.25);
+      tl.set("#mg-list .tick", { scale: 0 }, 17.25);
+      mgOut("#mg-list", 25.2);
+      tl.to("#scrim", { opacity: 0, duration: 0.4 }, 25.2);
+
+      // ---- DATE (28.45 – 30.3): "October 14th" ------------------------------
+      cut(null, "#g-date", 28.45);
+      tl.fromTo("#date-eyebrow", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 28.5);
+      tl.fromTo("#tile", { rotationX: -95, opacity: 0 }, { rotationX: 0, opacity: 1, duration: 0.6, ease: "back.out(1.5)", transformPerspective: 1200 }, 28.55);
+      const dt = { v: 1 };
+      tl.to(dt, { v: 14, duration: 0.5, ease: "power2.out", onUpdate: counter("#tile-num", dt, (v) => String(Math.round(v)).padStart(2, "0")) }, 28.8);
+      tl.fromTo("#date-when", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "circ.out" }, 29.2);
+      cut("#g-date", null, 30.3);
+
+      // ---- END CARD (32.45 – 37): "click the link below" --------------------
+      cut(null, "#g-end", 32.45);
+      tl.fromTo("#bloom", { opacity: 0 }, { opacity: 0.34, duration: 1.2, ease: "sine.out" }, 32.45);
+      tl.fromTo("#end-icon", { opacity: 0, scale: 0.6, rotation: -12 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(1.7)" }, 32.6);
+      tl.fromTo("#end-em", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, 32.8);
+      tl.fromTo("#end-rest", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 32.95);
+      tl.fromTo("#end-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 33.25);
+      tl.fromTo("#end-cta", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.55, ease: "back.out(1.7)" }, 33.5);
+      tl.to("#end-cta", { scale: 1.045, duration: 0.6, yoyo: true, repeat: 3, ease: "sine.inOut" }, 34.3);
+
+      tl.to({}, { duration: D }, 0); // pad to data-duration
+      window.__timelines["bf-webinar-ad"] = tl;
+    </script>
+  </body>
+</html>
