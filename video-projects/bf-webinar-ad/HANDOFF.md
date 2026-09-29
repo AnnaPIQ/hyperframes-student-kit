@@ -36,7 +36,7 @@ cd ../bf-webinar-ad-4x5 && npx hyperframes lint && \
   Dryft / Sweet E's clips were stored sideways and are rotated 90° CW.
 - VO normalised to -16 LUFS (two-pass loudnorm); the raw phone mic was about -37 LUFS.
 - Word timings: `assets/transcript/sean-words.json` (faster-whisper small.en).
-- The Wed 14 Oct, 1:30pm PT / 4:30pm ET details come from the landing page.
+- $98M+ and the Wed 14 Oct, 1:30pm PT / 4:30pm ET details come from the landing page.
 
 ## Placeholders / open items
 - Music: `assets/audio/music-bed-PLACEHOLDER.m4a` is silent, mixed at 0.15 (ducked level).

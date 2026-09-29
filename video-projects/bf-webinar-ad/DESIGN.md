@@ -31,7 +31,7 @@ Brand kit copied from `assets/ecomiq/`. Tokens: `assets/brand-tokens.css`. Fonts
 | t | VO | Picture | Graphic |
 |---|---|---|---|
 | 0.0 to 5.9 | "double your revenue ... free webinar" | Sean | 1.0x to 2.0x count-up + last-year / this-year bars; then "Free live webinar" pill |
-| 5.9 to 8.45 | "exact secrets we use at Pacific IQ" | Shoptalk stage clip in a card | none (footage is the proof) |
+| 5.9 to 8.45 | "exact secrets we use at Pacific IQ" | Shoptalk stage clip in a card | $98M+ count-up (landing-page claim; restored at review so the card doesn't float alone) |
 | 8.45 to 10.1 | "eight and nine figure brands" | Dryft product | $10,000,000 to $100,000,000 count-up |
 | 10.1 to 13.8 | "year on year ... incredible performance" | Sweet E's cake, cookies | none |
 | 13.8 to 17.25 | "not just what discounts" | Sean | 0 to 50% OFF count-up, flame strike, "It's the whole plan." |
@@ -43,7 +43,7 @@ Brand kit copied from `assets/ecomiq/`. Tokens: `assets/brand-tokens.css`. Fonts
 
 Transitions: vertical whip (y + blur) on every cut, no light streak (removed at review). No hard cuts.
 
-Motion graphics are for emphasis only (review): 2x hook, free-webinar pill, 8/9-figure count,
+Motion graphics are for emphasis only (review): 2x hook, free-webinar pill, $98M+ on the stage card, 8/9-figure count,
 not-just-discounts strike, date card, end card. Everything else is footage.
 
 ## Subtitle safe zone (for subtitles added later by hand)

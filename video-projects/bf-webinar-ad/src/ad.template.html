@@ -89,11 +89,14 @@
         box-shadow: 0 0 16px var(--brand-flame); }
 
       /* stage card */
-      #stage-vwrap { position: absolute; left: calc(50% - var(--card-w) / 2); width: var(--card-w); aspect-ratio: 16 / 9; top: calc((100% - var(--sub-zone) - var(--card-w) * 9 / 16) / 2);
+      #stage-vwrap { position: absolute; left: calc(50% - var(--card-w) / 2); width: var(--card-w); aspect-ratio: 16 / 9; top: 21%;
         border-radius: 28px; overflow: hidden;
         border: 2px solid var(--brand-border);
         box-shadow: 0 40px 90px -30px var(--brand-black); }
+      #root.f4x5 #stage-vwrap { top: 13%; }
       #stage-vwrap video { width: 100%; height: 100%; object-fit: cover; }
+      .stage-copy { position: absolute; left: 0; right: 0; bottom: var(--band-bottom); padding: 0 var(--pad-x);
+        display: flex; flex-direction: column; gap: 12px; }
       /* discount */
       .strike-wrap { position: relative; display: inline-block; }
       #strike { position: absolute; left: -3%; width: 106%; top: 50%; height: 16px; margin-top: -8px;
@@ -140,6 +143,11 @@
         <div id="stage-panel" class="clip panel" data-start="5.9" data-duration="2.9" data-track-index="10"></div>
         <div id="stage-vwrap">
           <video id="v-stage" src="assets/stage.mp4" data-start="5.9" data-duration="2.55" data-media-start="0.9" data-track-index="11" muted playsinline></video>
+        </div>
+        <div class="stage-copy clip" id="stage-copy" data-start="5.9" data-duration="2.9" data-track-index="12">
+          <div class="eyebrow" id="stage-eyebrow">Sean Clarke · Founder</div>
+          <div class="big" id="stage-num">$0M<span class="hot">+</span></div>
+          <div class="label" id="stage-label">in combined revenue scaled</div>
         </div>
       </div>
 
@@ -276,9 +284,14 @@
       tl.fromTo("#pill i", { scale: 1 }, { scale: 1.5, duration: 0.3, yoyo: true, repeat: 3, ease: "sine.inOut" }, 4.2);
       mgOut("#mg-pill", 5.9);
 
-      // ---- STAGE (5.9 – 8.45): social proof, footage only ---------------------
+      // ---- STAGE (5.9 – 8.45): social proof + $98M+ ------------------------
       cut(null, "#g-stage", 5.9);
       tl.fromTo("#stage-vwrap", { scale: 0.9 }, { scale: 1, duration: 0.7, ease: "expo.out" }, 5.9);
+      tl.fromTo("#stage-eyebrow", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 6.15);
+      tl.fromTo("#stage-num", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 6.3);
+      const st = { v: 0 };
+      tl.to(st, { v: 98, duration: 1.1, ease: "power3.out", onUpdate: counter("#stage-num", st, (v) => "$" + Math.round(v) + 'M<span class="hot">+</span>') }, 6.35);
+      tl.fromTo("#stage-label", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.45, ease: "circ.out" }, 6.8);
       tl.to("#scrim", { opacity: 0, duration: 0.3 }, 5.9);
 
       // ---- DRYFT (8.45 – 10.1): "eight and nine figure brands" -------------
