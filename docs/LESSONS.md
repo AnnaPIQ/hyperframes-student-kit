@@ -77,9 +77,17 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
-- **iPhone A-roll is HLG HDR (bt2020 / arib-std-b67) — renders look grey/washed.** **Fix:** tonemap
-  to SDR during prep: `zscale=t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=mobius:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p`
-  (hable is muddy, npl=100 mobius over-exposes skin). *(bf-webinar)*
+- **iPhone A-roll is HLG HDR (bt2020 / arib-std-b67) — must convert to SDR, but match the ORIGINAL
+  look, don't "grade".** Generic tonemaps (mobius/hable/reinhard at any npl) all shift it: too
+  bright/orange or flat/grey, and the client noticed immediately. **Fix:** use the file's own
+  Drive preview as ground truth (`https://drive.google.com/thumbnail?id=<id>&sz=w1080` = frame 0),
+  tonemap `mobius` @npl=400, then a per-channel histogram-match 3D LUT fitted to that frame
+  (`lut3d=…cube`). See `video-projects/bf-webinar/assets/footage/aroll-drive-match.cube`. *(bf-webinar)*
+- **Don't lay vignette/grain/light-streak/blur-pulse over talking-head footage by default.** The
+  client read the vignette as "you changed the lighting" and the streak/blur whips as "flashes".
+  Clean slide/fade cuts; keep texture for full-screen graphic scenes only. *(bf-webinar)*
+- **Plan a subtitle safe zone up front** when subtitles may be added later (9:16 bottom ~600px,
+  4:5 bottom ~330px); put overlay graphics in an upper band instead. *(bf-webinar)*
 - **4K b-roll "landscape" that's really vertical with no rotation flag** (people lie sideways in
   frame grabs). Always eyeball a frame before choosing pad vs crop. **Fix:** `transpose=1` (90° CW)
   → native 9:16. *(bf-webinar)*

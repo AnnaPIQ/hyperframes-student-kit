@@ -37,13 +37,21 @@ caps for eyebrows. Hedvig Letters Serif italic for ONE word only: *Double* on th
 | 15.50–16.46 | "It's completely free" | FREE callback |
 | 16.55–20.50 | "Click the link below…" | end card; audio ends 18.9s, holds to 20.5s |
 
-Every cut: light-streak whip + ±160px / 28px blur whip. Persistent logo bug top-left
-(10% width, drop shadow). Grain + vignette on every frame.
+Every cut: clean slide + fade (±120px, no blur, no light streak: client asked for no flashes).
+Persistent logo bug top-left (10% width, drop shadow). No vignette/grain over footage: the
+footage keeps its original lighting.
+
+## Subtitle safe zone (keep clear, subtitles added later)
+- 9:16: bottom **600px** (y ≥ 1320). 4:5: bottom **330px** (y ≥ 1020).
+- Overlay graphics sit in an upper band (`--band-top`) with a top navy scrim; the discount
+  takeover and end card pad their content above the zone (`--safe-bottom`).
 
 ## Footage prep (see assets/footage/)
-- A-roll: iPhone HLG HDR → SDR (zscale + mobius tonemap @203 nits), 30fps.
+- A-roll: iPhone HLG HDR → SDR, matched to the ORIGINAL look (Drive's own preview of the
+  clip): mobius tonemap @400 nits + `assets/footage/aroll-drive-match.cube` (per-channel
+  histogram match to Drive's frame 0). Don't regrade.
 - 4K B-roll was vertical footage stored sideways → `transpose=1`.
-- 4:5 = centre crop of the 9:16 frame (A-roll + portrait B-roll). Stage clip is
+- 4:5 = crop of the 9:16 frame (A-roll at y=150 for headroom above Sean; portrait B-roll centred). Stage clip is
   scale+pad on a blurred fill in both ratios.
 
 ## What NOT to do
