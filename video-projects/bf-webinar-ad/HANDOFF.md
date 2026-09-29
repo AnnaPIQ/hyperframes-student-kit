@@ -26,7 +26,8 @@ cd ../bf-webinar-ad-4x5 && npx hyperframes lint && \
 
 ## Sources
 - A-roll: Drive `IMG_1545.MOV` (4K HEVC HLG-HDR portrait, 36.4s). Speech runs 0 to 35.3s, used in full.
-  Tone-mapped to SDR bt709 (mobius) and recropped for headroom; see DESIGN.md flags.
+  Original lighting kept (HLG code values passed through, re-tagged SDR bt709; a tone-map was
+  rejected at review) and recropped for headroom; see DESIGN.md flags.
 - Subtitle safe zone reserved for manual subtitles: 9:16 y 1385 to 1640, 4:5 y 1060 to 1290.
 - B-roll (Drive "B-Roll Short Cut" sheet), segments pulled at the sheet's timecodes, all muted:
   Shoptalk stage (`Sean Clarke Pacific IQ.mp4` 0:12), Dryft product holding (0:10, reused
@@ -35,7 +36,7 @@ cd ../bf-webinar-ad-4x5 && npx hyperframes lint && \
   Dryft / Sweet E's clips were stored sideways and are rotated 90° CW.
 - VO normalised to -16 LUFS (two-pass loudnorm); the raw phone mic was about -37 LUFS.
 - Word timings: `assets/transcript/sean-words.json` (faster-whisper small.en).
-- $98M+ and the Wed 14 Oct, 1:30pm PT / 4:30pm ET details come from the landing page.
+- The Wed 14 Oct, 1:30pm PT / 4:30pm ET details come from the landing page.
 
 ## Placeholders / open items
 - Music: `assets/audio/music-bed-PLACEHOLDER.m4a` is silent, mixed at 0.15 (ducked level).
