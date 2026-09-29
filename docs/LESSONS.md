@@ -133,6 +133,21 @@ efficient over time instead of relearning the same lessons.
   `transpose=1` and only 4 were truly landscape. Rotated clips become true
   2160x3840 and then need no cropping at all.
 
+- **Cropping 16:9 slide/stage footage into 9:16 slices the text mid-word.** It
+  reads as a flash of nonsense rather than as a crop, and it is the one thing a
+  reviewer notices immediately. Treat any clip whose subject IS text (a keynote
+  slide, event signage, a stats screen) as unusable vertically unless it was shot
+  vertical. Same for a camera panning across a banner: the shot will always end
+  on half a word.
+- **Check b-roll at three points per shot, not one.** A midpoint contact sheet
+  passes a clip whose first or last half-second contains a title card, a slate or
+  a pan onto a screen. Sampling at 20/50/80% across every shot caught four bad
+  clips a midpoint scan had cleared.
+- **Trust the footage, not the shot list.** A clip labelled "Sweet Es team
+  working" in the client's b-roll sheet was Sean on a laptop end to end — which
+  silently broke the motif cap it was supposed to sit outside. Verify what each
+  file actually shows before assigning it a role in the edit.
+
 ## Multiple aspect ratios in one project
 
 - **Two root-level HTML files with `data-composition-id` is a lint error**

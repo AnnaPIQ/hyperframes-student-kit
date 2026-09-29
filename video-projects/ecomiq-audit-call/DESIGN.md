@@ -37,8 +37,17 @@ no retiming, no interpolation, no looping, one shot per 2.55s.
 all made the bed feel repetitive even though every file was distinct, so each
 clip carries a `motif` and `scripts/broll-manifest.json` caps how many of each
 can appear: laptop 2, car 3, walking 2, phone 1, meeting 5, stage 2, event 4,
-retail 3, bakery 4 — **26 shots**. The laptop motif went from 10 available to 2
-used. The build asserts no two *adjacent* shots share a motif either.
+retail 3, bakery 3 — **23 shots** at 2.9s. The laptop motif went from 10
+available to 2 used. The build asserts no two *adjacent* shots share a motif.
+
+**No chopped-text frames.** Four clips were cut because the frame sliced text
+mid-word, which reads as a flash of nonsense: both Shoptalk stage shots (16:9
+presentation slides, and the only clips that needed a 9:16 crop), and the
+Limitless Growth banner (the camera pans across it, so the shot always ends on
+half a word). A fourth, "sweetes-team", turned out to be mislabelled in the
+sheet — the file is Sean on a laptop end to end, a third laptop shot in
+disguise. Reasons for all of them are in the manifest's `dropped` map. Every
+remaining shot was checked at three points across its duration.
 
 **Orientation is the trap.** 18 of these clips are phone-shot vertical footage
 exported into a 3840×2160 container with the rotation *baked in* and no rotation
@@ -64,8 +73,9 @@ the final frame and stretched the file by 72ms on the first attempt, and every
 beat here is anchored to word onsets in the transcript.
 
 ## Format decisions
-- **9:16 needs no cropping** — all but the two Shoptalk stage shots are natively
-  vertical (some already, the rest after the rotation fix above).
+- **9:16 needs no cropping at all** — with the two Shoptalk stage shots cut,
+  every remaining clip is natively vertical (some already, the rest after the
+  rotation fix above). Nothing in the bed is cropped.
 - **4:5 is a centre crop**, 285px off the top and bottom, *not* scale+pad.
   Padding a 9:16 source into 4:5 gives a 759×1350 image with 160px black bars
   down both sides, which reads as broken in a Meta feed. Checked across the

@@ -1,12 +1,11 @@
 {
- "shot_seconds": 2.55,
+ "shot_seconds": 2.9,
  "motif_caps": {
   "laptop": 2,
-  "car": 3,
+  "car": 4,
   "walking": 2,
   "phone": 1,
   "meeting": 5,
-  "stage": 2,
   "event": 4,
   "retail": 3,
   "bakery": 4
@@ -23,7 +22,10 @@
   "hotel-walkaway": "motif 'laptop' already at its cap of 2",
   "hotel-walktoward": "motif 'laptop' already at its cap of 2",
   "sean-laptop": "motif 'laptop' already at its cap of 2",
-  "jaren-in-car": "motif 'car' already at its cap of 3"
+  "shoptalk-stage-a": "16:9 slide text is chopped by the 9:16 crop",
+  "shoptalk-stage-b": "16:9 stats slide, same cropped-text problem",
+  "sweetes-team": "cheat sheet mislabels it; the file is Sean on a laptop, breaking the laptop cap",
+  "limitless-sign": "camera pans across the banner so the shot always ends on chopped text; MMNTM branding, not EcomIQ"
  },
  "clips": [
   {
@@ -48,7 +50,7 @@
    "i": 2,
    "alias": "car-into-hotel",
    "drive_id": "1vmYi5ZP_zYfXkxcm57lQdwwCGJRDI0s7",
-   "in": 4.06,
+   "in": 3.11,
    "transform": "rotate_cw",
    "cue": "cue+clamped",
    "motif": "car"
@@ -93,7 +95,7 @@
    "i": 7,
    "alias": "klaviyo-walking",
    "drive_id": "1cQ3NitKGYa1c4e--fehHg9eXAZ4_sjI4",
-   "in": 5.98,
+   "in": 5.03,
    "transform": "none",
    "cue": "cue+clamped",
    "motif": "event"
@@ -126,13 +128,13 @@
    "motif": "meeting"
   },
   {
-   "i": 11,
-   "alias": "shoptalk-stage-a",
-   "drive_id": "1XuPAArGjpESm3JUhjU7Q3gVmz4L_y72Z",
-   "in": 12.0,
-   "transform": "crop",
-   "cue": "cue",
-   "motif": "stage"
+   "alias": "jaren-in-car",
+   "drive_id": "1VSu3Mqc8P78Kqnzkvge8vzIY9fGtIoCC",
+   "in": 0.15,
+   "transform": "none",
+   "cue": "cue+clamped",
+   "motif": "car",
+   "i": 11
   },
   {
    "i": 12,
@@ -145,33 +147,6 @@
   },
   {
    "i": 13,
-   "alias": "shoptalk-stage-b",
-   "drive_id": "1XuPAArGjpESm3JUhjU7Q3gVmz4L_y72Z",
-   "in": 362.0,
-   "transform": "crop",
-   "cue": "cue",
-   "motif": "stage"
-  },
-  {
-   "i": 14,
-   "alias": "limitless-sign",
-   "drive_id": "1dNYc4_WmlkTcBxo9J51bXnFXYsDtm1TF",
-   "in": 18.0,
-   "transform": "rotate_cw",
-   "cue": "cue",
-   "motif": "event"
-  },
-  {
-   "i": 15,
-   "alias": "sean-jaren-outside",
-   "drive_id": "1E-8ZHZQNI5jGseDnYnJ9Z4TazXH_MwSU",
-   "in": 3.24,
-   "transform": "none",
-   "cue": "fallback",
-   "motif": "meeting"
-  },
-  {
-   "i": 16,
    "alias": "klaviyo-booths",
    "drive_id": "1my1K0R_aiMAc4Vdi3z3eyu5RC0-jcGeM",
    "in": 3.42,
@@ -180,7 +155,16 @@
    "motif": "event"
   },
   {
-   "i": 17,
+   "i": 14,
+   "alias": "sean-jaren-outside",
+   "drive_id": "1E-8ZHZQNI5jGseDnYnJ9Z4TazXH_MwSU",
+   "in": 3.24,
+   "transform": "none",
+   "cue": "fallback",
+   "motif": "meeting"
+  },
+  {
+   "i": 15,
    "alias": "jaren-into-car",
    "drive_id": "1WsMOk5hNhK5b-iNaELhBT6FZ0UWPXV6O",
    "in": 7.0,
@@ -189,7 +173,7 @@
    "motif": "car"
   },
   {
-   "i": 18,
+   "i": 16,
    "alias": "dryft-store-walk",
    "drive_id": "1jHsUTe013mdBLjB6VQvJmjzwj0r6cXzT",
    "in": 21.0,
@@ -198,7 +182,7 @@
    "motif": "retail"
   },
   {
-   "i": 19,
+   "i": 17,
    "alias": "sweetes-cake",
    "drive_id": "1cF3UR7rqtK27rx9HUh5H7Wt_yipf8fhp",
    "in": 3.0,
@@ -207,7 +191,7 @@
    "motif": "bakery"
   },
   {
-   "i": 20,
+   "i": 18,
    "alias": "dryft-product",
    "drive_id": "1RapxMHiEtRmM6ig2GKFSSeCSHU4PA_U1",
    "in": 10.0,
@@ -216,7 +200,7 @@
    "motif": "retail"
   },
   {
-   "i": 21,
+   "i": 19,
    "alias": "sweetes-sprinkle",
    "drive_id": "13dyHmvfYPQCPA84j_Kz8HsH9sf_hAUTy",
    "in": 1.0,
@@ -225,7 +209,7 @@
    "motif": "bakery"
   },
   {
-   "i": 22,
+   "i": 20,
    "alias": "dryft-sleep",
    "drive_id": "1zP47vHs6MgFiwiKzGHRXiW8lrc3lh6BO",
    "in": 18.0,
@@ -234,7 +218,7 @@
    "motif": "retail"
   },
   {
-   "i": 23,
+   "i": 21,
    "alias": "sweetes-cookie",
    "drive_id": "1Cy939sI_20AioB9loydrqhbavZ-m_xcS",
    "in": 1.0,
@@ -243,22 +227,13 @@
    "motif": "bakery"
   },
   {
-   "i": 24,
+   "i": 22,
    "alias": "sean-laughing",
    "drive_id": "1oVTj4XGGc0JKgHr9jI2Chue_hLYais9O",
    "in": 7.96,
    "transform": "rotate_cw",
    "cue": "fallback",
    "motif": "meeting"
-  },
-  {
-   "i": 25,
-   "alias": "sweetes-team",
-   "drive_id": "1zYln8LRm6OesbDwjXfiiKcpRLxs6H-E7",
-   "in": 5.09,
-   "transform": "rotate_cw",
-   "cue": "fallback",
-   "motif": "bakery"
   }
  ]
 }
