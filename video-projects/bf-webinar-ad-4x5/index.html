@@ -21,15 +21,20 @@
       /* ---- per-format layout knobs ---------------------------------------- */
       #root { position: relative; width: 1080px; height: 1350px; overflow: hidden;
         --logo-top: 132px; --logo-left: 72px;
-        --band-bottom: 300px;   /* keep graphics above the Reels caption / CTA UI */
+        /* SUBTITLE SAFE ZONE: y 1385–1640 stays clear of graphics for manual subtitles
+           (bottom 280px is the Reels caption / CTA UI). */
+        --sub-zone: 535px;
+        --band-bottom: var(--sub-zone);
+        --scrim-h: 50%;
         --pad-x: 84px;
-        --big: 210px; --mid: 64px; --lab: 32px;
-        --card-w: 936px; --tile-w: 470px; }
+        --big: 164px; --mid: 54px; --lab: 29px; --cols-h: 160px;
+        --card-w: 936px; --tile-w: 430px; }
       #root.f4x5 {
         --logo-top: 60px; --logo-left: 60px;
-        --band-bottom: 86px;
-        --big: 176px; --mid: 56px; --lab: 29px;
-        --card-w: 820px; --tile-w: 390px; }
+        --sub-zone: 290px;      /* subtitle safe zone: y 1060–1290 */
+        --scrim-h: 45%;
+        --big: 124px; --mid: 44px; --lab: 25px; --cols-h: 110px;
+        --card-w: 780px; --tile-w: 330px; }
 
       #bg { position: absolute; inset: 0; background: var(--brand-navy); }
 
@@ -41,7 +46,7 @@
         background: radial-gradient(80% 50% at 50% 30%, var(--brand-surface-2) 0%, var(--brand-navy) 70%); }
 
       /* bottom scrim so type reads over footage */
-      #scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 56%; opacity: 0; pointer-events: none; z-index: 20;
+      #scrim { position: absolute; left: 0; right: 0; bottom: 0; height: var(--scrim-h); opacity: 0; pointer-events: none; z-index: 20;
         background: linear-gradient(180deg,
           color-mix(in srgb, var(--brand-navy) 0%, transparent) 0%,
           color-mix(in srgb, var(--brand-navy) 66%, transparent) 36%,
@@ -60,7 +65,7 @@
 
       /* ---- motion-graphic band (lower third) ------------------------------- */
       .mg { position: absolute; left: 0; right: 0; bottom: var(--band-bottom); z-index: 30;
-        padding: 0 var(--pad-x); display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+        padding: 0 var(--pad-x); display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
       .eyebrow { text-shadow: 0 2px 14px color-mix(in srgb, var(--brand-navy) 90%, transparent); font-weight: 600; font-size: var(--lab); letter-spacing: .26em; text-transform: uppercase;
         color: var(--brand-blue-tint); }
       .big { font-weight: 800; font-size: var(--big); line-height: .9; letter-spacing: -.035em;
@@ -72,10 +77,10 @@
         letter-spacing: -.01em; display: inline-block; margin-right: .14em; }
 
       /* hook bars */
-      .bars { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+      .bars { display: flex; flex-direction: column; gap: 12px; width: 100%; }
       .barrow { display: flex; align-items: center; gap: 22px; }
-      .barrow span { width: 210px; font-weight: 600; font-size: var(--lab); color: var(--brand-text-dim); }
-      .track { flex: 1; height: 34px; border-radius: 999px; background: color-mix(in srgb, var(--brand-sky) 14%, transparent); overflow: hidden; }
+      .barrow span { width: calc(var(--lab) * 6.4); font-weight: 600; font-size: var(--lab); color: var(--brand-text-dim); }
+      .track { flex: 1; height: calc(var(--lab) * .95); border-radius: 999px; background: color-mix(in srgb, var(--brand-sky) 14%, transparent); overflow: hidden; }
       .fill { height: 100%; border-radius: 999px; transform-origin: left center; }
       #bar-last { width: 50%; background: var(--brand-blue-tint); }
       #bar-this { width: 100%; background: var(--brand-flame);
@@ -94,15 +99,14 @@
         border-radius: 28px; overflow: hidden;
         border: 2px solid var(--brand-border);
         box-shadow: 0 40px 90px -30px var(--brand-black); }
-      #root.f4x5 #stage-vwrap { top: 15%; }
+      #root.f4x5 #stage-vwrap { top: 13%; }
       #stage-vwrap video { width: 100%; height: 100%; object-fit: cover; }
       .stage-copy { position: absolute; left: 0; right: 0; bottom: var(--band-bottom); padding: 0 var(--pad-x);
         display: flex; flex-direction: column; gap: 16px; }
 
       /* yoy bars */
-      .cols { display: flex; align-items: flex-end; gap: 22px; height: 230px; margin-bottom: 10px; }
-      #root.f4x5 .cols { height: 170px; }
-      .col { width: 96px; border-radius: 16px 16px 6px 6px; transform-origin: bottom center; background: var(--brand-blue-tint); }
+      .cols { display: flex; align-items: flex-end; gap: 20px; height: var(--cols-h); margin-bottom: 6px; }
+      .col { width: calc(var(--cols-h) * .5); border-radius: 16px 16px 6px 6px; transform-origin: bottom center; background: var(--brand-blue-tint); }
       .col.c1 { height: 36%; opacity: .55; } .col.c2 { height: 64%; opacity: .8; }
       .col.c3 { height: 100%; background: var(--brand-flame); box-shadow: 0 0 34px color-mix(in srgb, var(--brand-flame) 55%, transparent); }
 
@@ -113,14 +117,14 @@
         box-shadow: 0 0 24px var(--brand-flame); }
 
       /* checklist */
-      .glass { width: 100%; padding: 34px 40px; border-radius: 30px;
+      .glass { width: 100%; padding: 28px 36px; border-radius: 30px;
         background: color-mix(in srgb, var(--brand-navy) 80%, transparent);
         border: 2px solid var(--brand-border);
         box-shadow: inset 0 1px 0 color-mix(in srgb, var(--brand-white) 18%, transparent), 0 30px 80px -30px var(--brand-black); }
       .glass .eyebrow { margin-bottom: 18px; }
-      .item { display: flex; align-items: center; gap: 24px; padding: 13px 0; font-weight: 600;
+      .item { display: flex; align-items: center; gap: 22px; padding: 10px 0; font-weight: 600;
         font-size: calc(var(--mid) * .72); letter-spacing: -.01em; }
-      #root.f4x5 .item { padding: 9px 0; }
+      #root.f4x5 .item { padding: 6px 0; } #root.f4x5 .box { width: 42px; height: 42px; } #root.f4x5 .tick svg { width: 24px; height: 24px; }
       .box { flex: none; width: 52px; height: 52px; border-radius: 14px; border: 3px solid var(--brand-border);
         position: relative; }
       .tick { position: absolute; inset: -3px; border-radius: 14px; background: var(--brand-flame);
@@ -129,7 +133,7 @@
 
       /* date tile */
       .center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
-        justify-content: center; gap: 34px; padding: 0 var(--pad-x); text-align: center; }
+        justify-content: center; gap: 30px; padding: 0 var(--pad-x) var(--sub-zone); text-align: center; }
       .tile { width: var(--tile-w); border-radius: 36px; overflow: hidden; background: var(--brand-sky);
         box-shadow: 0 50px 110px -30px var(--brand-black), 0 0 0 2px var(--brand-border); transform-origin: top center; }
       .tile-top { background: var(--brand-flame); color: var(--brand-white); font-weight: 800;
@@ -143,9 +147,10 @@
         background: var(--brand-gradient-2); filter: blur(120px); opacity: .22; }
       .end { gap: 30px; }
       #end-icon { width: 150px; height: auto; }
-      #root.f4x5 #end-icon { width: 124px; }
-      #end-head { font-weight: 800; font-size: 124px; line-height: .98; letter-spacing: -.03em; max-width: 900px; }
-      #root.f4x5 #end-head { font-size: 108px; max-width: 760px; }
+      #root.f4x5 #end-icon { width: 96px; }
+      #end-head { font-weight: 800; font-size: 116px; line-height: .98; letter-spacing: -.03em; max-width: 900px; }
+      #root.f4x5 #end-head { font-size: 88px; max-width: 640px; }
+      #root.f4x5 .end { gap: 20px; } #root.f4x5 #end-sub { font-size: 38px; } #root.f4x5 #end-cta { font-size: 36px; padding: 24px 52px; margin-top: 8px; }
       #end-sub { font-weight: 500; font-size: 46px; letter-spacing: -.01em; color: var(--brand-text-dim); }
       #end-cta { margin-top: 18px; font-weight: 700; font-size: 44px; color: var(--brand-white);
         background: var(--brand-flame); padding: 30px 64px; border-radius: 999px;
@@ -193,6 +198,9 @@
         <div class="vwrap"><video id="v-klaviyo" src="assets/4x5/klaviyo.mp4" data-start="20.4" data-duration="2.0" data-media-start="0.2" data-track-index="18" muted playsinline></video></div>
       </div>
 
+      <div id="g-live" class="group">
+        <div class="vwrap"><video id="v-live" src="assets/4x5/cake.mp4" data-start="22.4" data-duration="2.45" data-media-start="2.55" data-track-index="19" muted playsinline></video></div>
+      </div>
       <div id="scrim" class="clip" data-start="0" data-duration="37" data-track-index="46"></div>
 
       <!-- MG 1 — hook: double your revenue -->
@@ -214,7 +222,7 @@
       <!-- MG 3 — 8 & 9 figure brands -->
       <div id="mg-fig" class="mg clip" data-start="8.45" data-duration="1.7" data-track-index="22">
         <div class="eyebrow" id="fig-eyebrow">The playbook behind</div>
-        <div class="big" id="fig-num" style="font-size: calc(var(--big) * .62)">$1,000,000</div>
+        <div class="big" id="fig-num" style="font-size: calc(var(--big) * .74)">$1,000,000</div>
         <div class="label" id="fig-label">8- &amp; 9-figure brands</div>
       </div>
 
@@ -233,7 +241,7 @@
       </div>
 
       <!-- MG 6 — checklist -->
-      <div id="mg-list" class="mg clip" data-start="17.25" data-duration="8.0" data-track-index="25">
+      <div id="mg-list" class="mg clip" data-start="17.25" data-duration="7.65" data-track-index="25">
         <div class="glass" id="glass">
           <div class="eyebrow">On the webinar</div>
           <div class="item" id="it1"><div class="box"><div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="var(--brand-white)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>Ad account setup</div>
@@ -373,7 +381,8 @@
       cut(null, "#g-laptop", 17.25);
       cut("#g-laptop", "#g-bundle", 19.3);
       cut("#g-bundle", "#g-klaviyo", 20.4);
-      cut("#g-klaviyo", null, 22.4);
+      cut("#g-klaviyo", "#g-live", 22.4);
+      cut("#g-live", null, 24.85);
       tl.fromTo("#glass", { opacity: 0, y: 80, filter: "blur(14px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out" }, 17.25);
       [["#it1", 17.36], ["#it2", 18.3], ["#it3", 19.64], ["#it4", 20.45], ["#it5", 22.5]].forEach(([s, t]) => {
         tl.fromTo(s, { opacity: 0.28, x: -24 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out" }, t - 0.1);
@@ -381,8 +390,8 @@
       });
       tl.set(["#it2", "#it3", "#it4", "#it5"], { opacity: 0.28 }, 17.25);
       tl.set("#mg-list .tick", { scale: 0 }, 17.25);
-      mgOut("#mg-list", 25.2);
-      tl.to("#scrim", { opacity: 0, duration: 0.4 }, 25.2);
+      mgOut("#mg-list", 24.85);
+      tl.to("#scrim", { opacity: 0, duration: 0.4 }, 24.85);
 
       // ---- DATE (28.45 – 30.3): "October 14th" ------------------------------
       cut(null, "#g-date", 28.45);

@@ -8,7 +8,7 @@ Two deliverables are built from ONE template (`src/ad.template.html` + `build.mj
 
 | File | Ratio | Size | Footage |
 |---|---|---|---|
-| `index.html` | 9:16 Reels / Stories | 1080x1920 | `assets/9x16/*` (native portrait, no crop) |
+| `index.html` | 9:16 Reels / Stories | 1080x1920 | `assets/9x16/*` (A-roll 1.25x crop from 4K for headroom) |
 | `../bf-webinar-ad-4x5/index.html` | 4:5 Meta feed | 1080x1350 | `bf-webinar-ad-4x5/assets/4x5/*` (portrait centre-crop, see flags) |
 
 Never edit `index*.html` by hand. Edit the template, then `node build.mjs`.
@@ -19,7 +19,7 @@ Brand kit copied from `assets/ecomiq/`. Tokens: `assets/brand-tokens.css`. Fonts
 ## Tokens / assets in use
 - Colours: `--brand-navy` (canvas), `--brand-blue-tint` (eyebrows, serif emphasis, streak),
   `--brand-sky` (calendar tile), `--brand-flame` (the one hot accent: CTA pill, "x", strike,
-  checkmarks, tallest bar), `--brand-white`, `--brand-text-dim`, `--brand-surface`,
+  checkmarks, tallest bar), `--brand-white`, `--brand-text-dim`, `--brand-surface-2`,
   `--brand-border`, `--brand-gradient-2` (end-card bloom only). Scrims use
   `color-mix()` on `--brand-navy`, no new hex values.
 - Type: `'Rethink Sans'` 500/600/800, `'Hedvig Letters Serif'` italic for exactly one
@@ -35,13 +35,19 @@ Brand kit copied from `assets/ecomiq/`. Tokens: `assets/brand-tokens.css`. Fonts
 | 8.45 to 10.1 | "eight and nine figure brands" | Dryft product | $10,000,000 to $100,000,000 count-up |
 | 10.1 to 13.8 | "year on year ... incredible performance" | Sweet E's cake, cookies | 3 rising bars, "Year on year, *incredible* performance." |
 | 13.8 to 17.25 | "not just what discounts" | Sean | 0 to 50% OFF count-up, flame strike, "It's the whole plan." |
-| 17.25 to 25.2 | ad accounts / creatives / bundles / emails / once live | laptop, Dryft bundle, Klaviyo event, Sean | 5-item checklist, each ticks on its word |
-| 25.2 to 28.45 | "walk through all of this" | Sean, slow push-in | rest beat |
+| 17.25 to 24.85 | ad accounts / creatives / bundles / emails / once live | laptop, Dryft bundle, Klaviyo event, Sweet E's packing | 5-item checklist, each ticks on its word |
+| 24.85 to 28.45 | "walk through all of this" | Sean, slow push-in | rest beat |
 | 28.45 to 30.3 | "October 14th" | full navy | calendar tile flip, 01 to 14 count |
 | 30.3 to 32.45 | "if that's helpful" | Sean | none |
 | 32.45 to 37.0 | "click the link below ... completely free" | end card | icon, headline, subhead, flame pill, 4.5s hold |
 
 Transitions: vertical whip (y + blur) with a blue-tint light streak on every cut. No hard cuts.
+
+## Subtitle safe zone (for subtitles added later by hand)
+No graphic enters this strip; motion graphics sit directly above it and centred scenes
+(date, end card) centre above it. Controlled by `--sub-zone` in the template.
+- 9:16: y 1385 to 1640 (the bottom 280px is left for the Reels caption / CTA UI)
+- 4:5: y 1060 to 1290
 
 ## Audio
 - `assets/audio/sean-vo.m4a` at 1.0 (full A-roll audio). B-roll is muted.
@@ -49,8 +55,10 @@ Transitions: vertical whip (y + blur) with a blue-tint light streak on every cut
   Swap the file for the licensed bed, keep the filename or update the template.
 
 ## Flags
-- 4:5 crops: all portrait footage is centre-cropped 1920 to 1350 tall (A-roll offset 230px
-  to keep Sean's head and hand). Padding would pillarbox a talking head.
+- A-roll framing: recropped from the 4K source so Sean's head starts ~15% from the top.
+  9:16 = `crop=1728:3072:216:768`, 4:5 = `crop=2160:2700:0:862`, both from `IMG_1545.MOV`.
+- 4:5 B-roll crops: portrait B-roll is centre-cropped 1920 to 1350 tall. Padding would
+  pillarbox it.
 - Stage clip is landscape: scaled to fit and framed as a card (no crop) in both ratios.
 
 ## What NOT to do
