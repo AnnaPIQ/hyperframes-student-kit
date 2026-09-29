@@ -83,6 +83,14 @@ efficient over time instead of relearning the same lessons.
   (`libx265 -pix_fmt yuv420p10le -color_primaries bt2020 -color_trc arib-std-b67 -colorspace bt2020nc`
   + matching `-x265-params`). HyperFrames auto-promotes to an HDR render (HEVC Main10 HLG MP4,
   SDR DOM composited on top). Output is H.265, not H.264; renders ~4× slower. *(bf-webinar)*
+- **HyperFrames' HDR auto-promotion shifts SDR graphics colours** (flame #FF4C32 → ~#FF0001,
+  navy #06284C → ~#00539C once decoded): SDR DOM is not mapped into BT.2020 HLG per BT.2408.
+  **Fix:** render the graphics as an SDR ProRes 4444 alpha layer (A-roll stripped, transparent
+  page), convert with an exact SDR→HLG LUT (203-nit white = HLG 0.75; see
+  `video-projects/bf-webinar/scripts/sdr-to-hlg-lut.py`), then ffmpeg-overlay it on the native
+  HLG A-roll (`scripts/finish.sh`). Brand colours then round-trip within 1/255. *(bf-webinar)*
+- **A full-frame scrim behind overlay text reads as "you changed the lighting"** on talking-head
+  footage (it darkened the wall ~33%). Put each graphic on its own compact panel instead. *(bf-webinar)*
 - **`sleep` is blocked in the Bash tool here**: `for …; sleep 10; done` wait loops return
   instantly. Wait on renders with a `run_in_background` `until grep -q "rendered in" log` instead.
 - **Don't lay vignette/grain/light-streak/blur-pulse over talking-head footage by default.** The
