@@ -77,6 +77,30 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+- **iPhone A-roll is HLG HDR (bt2020 / arib-std-b67) — renders look grey/washed.** **Fix:** tonemap
+  to SDR during prep: `zscale=t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=mobius:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p`
+  (hable is muddy, npl=100 mobius over-exposes skin). *(bf-webinar)*
+- **4K b-roll "landscape" that's really vertical with no rotation flag** (people lie sideways in
+  frame grabs). Always eyeball a frame before choosing pad vs crop. **Fix:** `transpose=1` (90° CW)
+  → native 9:16. *(bf-webinar)*
+- **Lav/phone VO recorded ~−35 LUFS plays near-silent on social.** Check loudness before the final
+  bake (`loudnorm=print_format=summary`). **Fix:** two-pass `loudnorm=I=-14:TP=-1.5:LRA=11:linear=true`
+  on the audio asset, then re-render. *(bf-webinar)*
+- **Whisper transcription works in the cloud container now** — `npx hyperframes transcribe <wav>
+  --model small.en --json` downloaded its model fine (Sept 2026). Try it before falling back to
+  silence analysis. *(bf-webinar)*
+
+## Multi-format builds
+
+- **Two root compositions in one project folder = lint error `multiple_root_compositions`**
+  (duplicate audio risk). **Fix:** one template (`src/ad.template.html`) + `scripts/build.mjs` that
+  writes the 9:16 `index.html` and a generated, gitignored sibling project `.build-4x5/` (hard-linked
+  assets, own `meta.json`). Render each from its own folder. *(bf-webinar)*
+- **Repeated `tl.fromTo` on one element (whips, callbacks) → lint `gsap_repeated_fromto_without_baseline`.**
+  **Fix:** `immediateRender:false` on every re-use + a `tl.set(el, {...}, 0)` baseline (keep initial
+  *hidden* states in CSS, not `tl.set`, or you get `gsap_timeline_set_initial_hide`). Never tween
+  `fontSize` (reflow snap) — crossfade two stacked spans instead. *(bf-webinar)*
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
