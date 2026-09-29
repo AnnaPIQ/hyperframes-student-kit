@@ -91,6 +91,18 @@ efficient over time instead of relearning the same lessons.
   project folder and syncs assets (see `video-projects/bf-webinar-ad/build.mjs`).
 - **9:16 portrait footage to 4:5:** padding pillarboxes a talking head, so centre-crop
   1920→1350 with a per-clip y offset (A-roll 230px kept head + hand in frame).
+- **Overlay (scrim / text) sits BELOW B-roll in the render but above it in `snapshot`.** The
+  renderer composites `<video>` layers by stacking context, so DOM order alone isn't
+  enough. **Fix:** give every layer an explicit `z-index` (video groups 10, scrim 20,
+  graphics 30). Verify on a real render frame; `hyperframes snapshot` hid this bug.
+- **Bare `<img>` logo in a non-clip wrapper never painted.** **Fix:** keep the positioned
+  non-clip wrapper, and make the `<img>` itself a timed clip (`class="clip"` + data-start/
+  duration/track-index) spanning the whole piece.
+- **Phone A-roll comes in around -37 LUFS, far too quiet for Meta.** **Fix:** two-pass
+  `loudnorm` the VO asset to -16 LUFS / -1.5 dBTP *before* rendering, and check the
+  final with `ffmpeg -af ebur128`.
+- **`render` output was HEVC here.** Meta wants H.264. **Fix:** transcode the master:
+  `-c:v libx264 -crf 17 -pix_fmt yuv420p -c:a aac -movflags +faststart`.
 - **`gsap_repeated_fromto_without_baseline` warning:** a second `fromTo` on the same element
   (e.g. a pulse after an entrance) should be a plain `tl.to`.
 
