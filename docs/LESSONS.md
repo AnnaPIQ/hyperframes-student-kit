@@ -95,8 +95,8 @@ efficient over time instead of relearning the same lessons.
   renderer composites `<video>` layers by stacking context, so DOM order alone isn't
   enough. **Fix:** give every layer an explicit `z-index` (video groups 10, scrim 20,
   graphics 30). Verify on a real render frame; `hyperframes snapshot` hid this bug.
-- **Bare `<img>` logo in a non-clip wrapper never painted.** **Fix:** keep the positioned
-  non-clip wrapper, and make the `<img>` itself a timed clip (`class="clip"` + data-start/
+- **Non-timed overlay elements (bare `<img>`, scrim/streak `<div>`s) never paint in the render.** **Fix:** keep the positioned
+  non-clip wrapper, and make the element itself a timed clip (`class="clip"` + data-start/
   duration/track-index) spanning the whole piece.
 - **Phone A-roll comes in around -37 LUFS, far too quiet for Meta.** **Fix:** two-pass
   `loudnorm` the VO asset to -16 LUFS / -1.5 dBTP *before* rendering, and check the
