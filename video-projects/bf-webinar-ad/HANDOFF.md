@@ -2,10 +2,12 @@
 
 EcomIQ Black Friday free-webinar ad, 37.0s, two ratios from one template.
 
-| Deliverable | Project | Size |
+| Deliverable | File | Size |
 |---|---|---|
-| 9:16 Reels / Stories | `video-projects/bf-webinar-ad/` | 1080x1920 |
-| 4:5 Meta feed | `video-projects/bf-webinar-ad-4x5/` (generated) | 1080x1350 |
+| 9:16 Reels / Stories | `bf-webinar-ad/final.mp4` (also `renders/ecomiq-bf-webinar-9x16.mp4`) | 1080x1920 |
+| 4:5 Meta feed | `bf-webinar-ad-4x5/final.mp4` (also `renders/ecomiq-bf-webinar-4x5.mp4`) | 1080x1350 |
+
+Both: H.264 High + AAC 192k, 30fps, faststart, 37.0s, -16 LUFS integrated / -1.4 dBTP.
 
 Destination URL for the ad: https://ecomiq.com/pages/bf-webinar?utm_source=ecomiq&utm_medium=owned&utm_campaign=bf-webinar-2026
 
@@ -15,9 +17,11 @@ cd video-projects/bf-webinar-ad
 # edit src/ad.template.html (never the generated index.html files)
 node build.mjs                                  # writes both index.html files + syncs 4:5 assets
 npx hyperframes lint
-npx hyperframes render --quality standard --output renders/bf-webinar-9x16.mp4
+npx hyperframes render --quality standard --output renders/bf-webinar-9x16-master.mp4
+# render outputs HEVC here; transcode for Meta:
+ffmpeg -i renders/bf-webinar-9x16-master.mp4 -c:v libx264 -crf 17 -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart renders/ecomiq-bf-webinar-9x16.mp4
 cd ../bf-webinar-ad-4x5 && npx hyperframes lint && \
-  npx hyperframes render --quality standard --output renders/bf-webinar-4x5.mp4
+  npx hyperframes render --quality standard --output renders/bf-webinar-4x5-master.mp4   # then the same ffmpeg transcode
 ```
 
 ## Sources
@@ -27,6 +31,7 @@ cd ../bf-webinar-ad-4x5 && npx hyperframes lint && \
   at 0:11.4 for "bundles"), Sweet E's cake packing (0:29), Sweet E's cookie scroll (0:01),
   Sweet E's team at laptop (0:09), Klaviyo event space (`IMG_0472.MOV` 0:00).
   Dryft / Sweet E's clips were stored sideways and are rotated 90° CW.
+- VO normalised to -16 LUFS (two-pass loudnorm); the raw phone mic was about -37 LUFS.
 - Word timings: `assets/transcript/sean-words.json` (faster-whisper small.en).
 - $98M+ and the Wed 14 Oct, 1:30pm PT / 4:30pm ET details come from the landing page.
 
