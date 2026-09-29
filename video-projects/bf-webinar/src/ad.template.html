@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width={{W}}, height={{H}}" />
+    <meta name="viewport" content="width={{CW}}, height={{CH}}" />
     <title>bf-webinar {{FMT}}</title>
     <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
     <script src="assets/vendor/gsap.min.js"></script>
@@ -15,9 +15,11 @@
       @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
         font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { width: {{W}}px; height: {{H}}px; overflow: hidden;
+      html, body { width: {{CW}}px; height: {{CH}}px; overflow: hidden;
         background: {{PAGE_BG}}; font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
-      #root { position: relative; width: {{W}}px; height: {{H}}px; overflow: hidden; background: {{PAGE_BG}}; }
+      #root { position: relative; width: {{CW}}px; height: {{CH}}px; overflow: hidden; background: {{PAGE_BG}}; }
+      /* Layout is authored at 1x ({{W}}x{{H}}); #canvas zooms it to the output size (2x for hi-res masters). */
+      #canvas { position: relative; width: {{W}}px; height: {{H}}px; overflow: hidden; zoom: {{ZOOM}}; }
       .full { position: absolute; inset: 0; }
 
       /* ---------- footage (videos live in NON-timed wrappers; GSAP moves the wrappers) ---------- */
@@ -132,21 +134,22 @@
     </style>
   </head>
   <body>
-    <div id="root" class="{{CLS}}" data-composition-id="{{ID}}" data-start="0" data-duration="20.5" data-width="{{W}}" data-height="{{H}}">
+    <div id="root" class="{{CLS}}" data-composition-id="{{ID}}" data-start="0" data-duration="20.5" data-width="{{CW}}" data-height="{{CH}}">
+      <div id="canvas">
 
       <!-- A-ROLL: Sean, the spine. Muted video + separate full-length audio track. -->
       <div id="w-aroll" class="vwrap">
         <div class="kb" id="kb-aroll"><!--AROLL--><video id="v-aroll" data-start="0" data-duration="17.1" data-track-index="1"
-          src="assets/footage/aroll_{{FMT}}.mp4" muted playsinline></video><!--/AROLL--></div>
+          src="assets/{{FOOT}}/aroll_{{FMT}}.mp4" muted playsinline></video><!--/AROLL--></div>
       </div>
       <!--AROLL--><audio id="a-aroll" data-start="0" data-duration="18.93" data-track-index="0" data-volume="1" src="assets/aroll-audio.m4a"></audio><!--/AROLL-->
 
       <!-- B-ROLL (social proof). All muted; prepped per-ratio in assets/footage/. -->
-      <div id="w-stage" class="vwrap broll"><div class="kb" id="kb-stage"><video id="v-stage" data-start="5.18" data-duration="1.6" data-track-index="2" src="assets/footage/stage_{{FMT}}.mp4" muted playsinline></video></div></div>
-      <div id="w-mentor" class="vwrap broll"><div class="kb" id="kb-mentor"><video id="v-mentor" data-start="8.98" data-duration="2.2" data-track-index="3" src="assets/footage/mentor_{{FMT}}.mp4" muted playsinline></video></div></div>
-      <div id="w-cake" class="vwrap broll"><div class="kb" id="kb-cake"><video id="v-cake" data-start="10.72" data-duration="1.12" data-track-index="4" src="assets/footage/cake_{{FMT}}.mp4" muted playsinline></video></div></div>
-      <div id="w-dryft" class="vwrap broll"><div class="kb" id="kb-dryft"><video id="v-dryft" data-start="11.4" data-duration="1.15" data-track-index="5" src="assets/footage/dryft_{{FMT}}.mp4" muted playsinline></video></div></div>
-      <div id="w-store" class="vwrap broll"><div class="kb" id="kb-store"><video id="v-store" data-start="12.96" data-duration="1.95" data-track-index="6" src="assets/footage/store_{{FMT}}.mp4" muted playsinline></video></div></div>
+      <div id="w-stage" class="vwrap broll"><div class="kb" id="kb-stage"><video id="v-stage" data-start="5.18" data-duration="1.6" data-track-index="2" src="assets/{{FOOT}}/stage_{{FMT}}.mp4" muted playsinline></video></div></div>
+      <div id="w-mentor" class="vwrap broll"><div class="kb" id="kb-mentor"><video id="v-mentor" data-start="8.98" data-duration="2.2" data-track-index="3" src="assets/{{FOOT}}/mentor_{{FMT}}.mp4" muted playsinline></video></div></div>
+      <div id="w-cake" class="vwrap broll"><div class="kb" id="kb-cake"><video id="v-cake" data-start="10.72" data-duration="1.12" data-track-index="4" src="assets/{{FOOT}}/cake_{{FMT}}.mp4" muted playsinline></video></div></div>
+      <div id="w-dryft" class="vwrap broll"><div class="kb" id="kb-dryft"><video id="v-dryft" data-start="11.4" data-duration="1.15" data-track-index="5" src="assets/{{FOOT}}/dryft_{{FMT}}.mp4" muted playsinline></video></div></div>
+      <div id="w-store" class="vwrap broll"><div class="kb" id="kb-store"><video id="v-store" data-start="12.96" data-duration="1.95" data-track-index="6" src="assets/{{FOOT}}/store_{{FMT}}.mp4" muted playsinline></video></div></div>
 
       <!-- Overlay layers: all span the full composition (exist in the DOM from t=0); GSAP owns visibility via opacity. -->
 
@@ -215,6 +218,7 @@
 
       <!-- Persistent logo bug, top-left, every frame -->
       <div id="bug"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+      </div>
     </div>
 
     <script>

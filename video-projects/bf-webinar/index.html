@@ -18,6 +18,8 @@
       html, body { width: 1080px; height: 1920px; overflow: hidden;
         background: var(--brand-black); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
       #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--brand-black); }
+      /* Layout is authored at 1x (1080x1920); #canvas zooms it to the output size (2x for hi-res masters). */
+      #canvas { position: relative; width: 1080px; height: 1920px; overflow: hidden; zoom: 1; }
       .full { position: absolute; inset: 0; }
 
       /* ---------- footage (videos live in NON-timed wrappers; GSAP moves the wrappers) ---------- */
@@ -133,6 +135,7 @@
   </head>
   <body>
     <div id="root" class="f9x16" data-composition-id="bf-webinar-9x16" data-start="0" data-duration="20.5" data-width="1080" data-height="1920">
+      <div id="canvas">
 
       <!-- A-ROLL: Sean, the spine. Muted video + separate full-length audio track. -->
       <div id="w-aroll" class="vwrap">
@@ -215,6 +218,7 @@
 
       <!-- Persistent logo bug, top-left, every frame -->
       <div id="bug"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+      </div>
     </div>
 
     <script>

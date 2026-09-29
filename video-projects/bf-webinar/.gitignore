@@ -1,3 +1,5 @@
 # generated sibling projects (node scripts/build.mjs)
 .build-4x5/
 .build-layer-*/
+# hi-res footage: regenerate with scripts/prep-2x.sh (too big for git)
+assets/footage-2x/
