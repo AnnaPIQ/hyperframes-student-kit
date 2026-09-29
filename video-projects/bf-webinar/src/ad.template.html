@@ -29,11 +29,13 @@
       #w-dryft { z-index: 23; } #w-store { z-index: 24; }
       #w-aroll { z-index: 10; }
 
-      /* ---------- upper-band motion graphics (bottom stays clear for subtitles) (over footage) ---------- */
-      .scrim { z-index: 30; opacity: 0;
-        background: radial-gradient(140% 46% at 50% 0%, rgba(6,40,76,.94) 0%, rgba(6,40,76,.7) 45%, rgba(6,40,76,0) 82%); }
+      /* ---------- upper-band motion graphics (bottom stays clear for subtitles). No full-frame scrim: footage keeps its original lighting; each graphic sits on its own compact navy panel (over footage) ---------- */
       .band { position: absolute; left: 0; right: 0; top: var(--band-top); z-index: 40; opacity: 0;
         display: flex; flex-direction: column; align-items: center; gap: var(--band-gap); padding: 0 var(--gutter); text-align: center; }
+      .band .panel { display: flex; flex-direction: column; align-items: center; gap: var(--band-gap);
+        padding: var(--panel-pad); border-radius: 36px; background: rgba(6,40,76,.9);
+        border: 1px solid rgba(156,212,255,.22); box-shadow: 0 24px 60px -24px rgba(0,0,0,.55); }
+      #mg1 .panel { width: 100%; max-width: 880px; }
       .eyebrow { font-weight: 700; font-size: var(--eyebrow-fs); letter-spacing: .3em; text-transform: uppercase; color: var(--brand-blue-tint);
         text-shadow: 0 2px 12px rgba(6,40,76,.9), 0 0 2px rgba(6,40,76,.9); }
       .fig { font-weight: 800; letter-spacing: -.03em; line-height: .95; font-variant-numeric: tabular-nums;
@@ -117,12 +119,12 @@
       #bug img { display: block; width: 100%; height: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,.55)) drop-shadow(0 0 14px rgba(6,40,76,.5)); }
 
       /* ---------- per-format layout tokens ---------- */
-      .f9x16 { --safe-bottom: 600px; --pad-top: 200px; --band-top: 200px; --band-gap: 16px; --eyebrow-fs: 30px; --bar-h: 24px; --lab-fs: 24px; --pill-fs: 36px;
+      .f9x16 { --safe-bottom: 600px; --pad-top: 200px; --band-top: 200px; --band-gap: 16px; --panel-pad: 30px 56px 34px; --eyebrow-fs: 30px; --bar-h: 24px; --lab-fs: 24px; --pill-fs: 36px;
         --gutter: 96px; --bug-top: 118px; --bug-left: 72px; --bug-w: 108px;
         --fig-xl: 220px; --fig-free: 250px; --fig-money: 124px;
         --gauge: 600px; --gauge-num: 185px; --mg2-gap: 48px;
         --card-gap: 52px; --card-logo: 540px; --card-head: 165px; --card-head-w: 900px; --card-sub: 50px; --card-cta: 58px; --card-cta-pad: 34px 78px; }
-      .f4x5 { --safe-bottom: 330px; --pad-top: 120px; --band-top: 118px; --band-gap: 10px; --eyebrow-fs: 22px; --bar-h: 18px; --lab-fs: 20px; --pill-fs: 28px;
+      .f4x5 { --safe-bottom: 330px; --pad-top: 120px; --band-top: 118px; --band-gap: 10px; --panel-pad: 20px 40px 24px; --eyebrow-fs: 22px; --bar-h: 18px; --lab-fs: 20px; --pill-fs: 28px;
         --gutter: 110px; --bug-top: 62px; --bug-left: 64px; --bug-w: 108px;
         --fig-xl: 150px; --fig-free: 170px; --fig-money: 100px;
         --gauge: 440px; --gauge-num: 140px; --mg2-gap: 30px;
@@ -147,28 +149,33 @@
       <div id="w-store" class="vwrap broll"><div class="kb" id="kb-store"><video id="v-store" data-start="12.96" data-duration="1.95" data-track-index="6" src="assets/footage/store_{{FMT}}.mp4" muted playsinline></video></div></div>
 
       <!-- Overlay layers: all span the full composition (exist in the DOM from t=0); GSAP owns visibility via opacity. -->
-      <div id="scrim" class="full scrim clip" data-start="0" data-duration="20.5" data-track-index="10"></div>
 
       <!-- MG1 · "double your revenue this Black Friday" -->
       <div id="mg1" class="band clip" data-start="0" data-duration="20.5" data-track-index="11">
-        <div class="eyebrow">Black Friday revenue</div>
-        <div class="fig"><span id="mg1-num">1.0</span><span class="x">&times;</span></div>
-        <div class="bar"><i id="mg1-fill"></i><i id="mg1-base"></i></div>
-        <div class="barlab"><span>Last year</span><span id="mg1-bf">This year</span></div>
+        <div class="panel">
+          <div class="eyebrow">Black Friday revenue</div>
+          <div class="fig"><span id="mg1-num">1.0</span><span class="x">&times;</span></div>
+          <div class="bar"><i id="mg1-fill"></i><i id="mg1-base"></i></div>
+          <div class="barlab"><span>Last year</span><span id="mg1-bf">This year</span></div>
+        </div>
       </div>
 
       <!-- MG3 + MG5 callback · "completely FREE webinar" -->
       <div id="mgfree" class="band clip" data-start="0" data-duration="20.5" data-track-index="12">
-        <div class="eyebrow" id="free-eyebrow">Completely</div>
-        <div id="free-word">FREE</div>
-        <div id="free-pill" class="pill">Webinar</div>
+        <div class="panel">
+          <div class="eyebrow" id="free-eyebrow">Completely</div>
+          <div id="free-word">FREE</div>
+          <div id="free-pill" class="pill">Webinar</div>
+        </div>
       </div>
 
       <!-- MG4 · "eight and nine figure brands" -->
       <div id="mg4" class="band clip" data-start="0" data-duration="20.5" data-track-index="13">
-        <div class="eyebrow">Secrets from brands at</div>
-        <div class="fig swapfig"><span id="mg4-f8">$10,000,000</span><span id="mg4-f9">$10<span class="z" id="mg4-z">0</span>,000,000</span></div>
-        <div id="mg4-tag" class="pill"><span class="swap"><span id="mg4-lab8">8-figure</span><span id="mg4-lab9">9-figure</span></span> brands</div>
+        <div class="panel">
+          <div class="eyebrow">Secrets from brands at</div>
+          <div class="fig swapfig"><span id="mg4-f8">$10,000,000</span><span id="mg4-f9">$10<span class="z" id="mg4-z">0</span>,000,000</span></div>
+          <div id="mg4-tag" class="pill"><span class="swap"><span id="mg4-lab8">8-figure</span><span id="mg4-lab9">9-figure</span></span> brands</div>
+        </div>
       </div>
 
       <!-- MG2 · "a bigger discount is not going to get you there" (full-screen) -->
@@ -246,13 +253,11 @@
         tl.set("#mg4-tag", { y: 0, scale: 1 }, 0);
         tl.set("#card-head", { y: 0 }, 0);
         tl.set("#card-cta", { scale: 1 }, 0);
-        tl.set("#scrim", { opacity: 0 }, 0);
 
         // ---- A-roll: slow push-in across the whole spine ------------------
         tl.fromTo("#kb-aroll", { scale: 1.0 }, { scale: 1.07, duration: 17.1, ease: "none" }, 0);
 
         // ---- MG1 · 0.35–2.10 · "double your revenue this Black Friday" ---
-        tl.fromTo("#scrim", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, 0.25);
         whipIn("#mg1", 0.3, 0.45);
         tl.fromTo("#mg1 .fig", { scale: 0.7 }, { scale: 1, duration: 0.5, ease: "back.out(1.6)" }, 0.35);
         count("#mg1-num", 1.0, 2.0, 0.49, 0.75, "power2.inOut", (v) => v.toFixed(1));        // "double" @0.49
@@ -260,7 +265,6 @@
         tl.fromTo("#mg1-bf", { color: "#9fb6d4" }, { color: "#FF4C32", duration: 0.2, ease: "power1.out" }, 1.44); // "Black Friday"
         tl.fromTo("#mg1 .fig", { scale: 1 }, { scale: 1.06, duration: 0.18, yoyo: true, repeat: 1, ease: "sine.inOut", ...nf }, 1.44);
         whipOut("#mg1", 2.1);
-        tl.fromTo("#scrim", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.in", ...nf }, 2.1);
 
         // ---- MG2 · 3.18–5.22 · "a bigger discount is not going to get you there" ----
         tl.fromTo("#mg2", { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.35, ease: "expo.out" }, 3.14);
@@ -290,7 +294,6 @@
 
         // ---- MG3 · 6.55–7.62 · "completely free webinar" ---------------
         const freeIn = (t0, tFree, tPill) => {
-          tl.fromTo("#scrim", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out", ...nf }, t0);
           tl.fromTo("#mgfree", { opacity: 0, y: 0 }, { opacity: 1, duration: 0.01, ...nf }, t0);
           tl.fromTo("#free-eyebrow", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out", ...nf }, t0 + 0.02);
           tl.fromTo("#free-word", { opacity: 0, scale: 2.4 }, { opacity: 1, scale: 1, duration: 0.32, ease: "expo.out", ...nf }, tFree - 0.08);
@@ -298,7 +301,6 @@
         };
         freeIn(6.62, 7.12, 7.28);                                                  // "completely" 6.57 · "free" 7.12 · "webinar" 7.28
         whipOut("#mgfree", 7.64);
-        tl.fromTo("#scrim", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.in", ...nf }, 7.64);
 
         // ---- B-roll: mentor (9.02–10.76) → cake → dryft (B→B whips) -------
         whipIn("#w-mentor", 8.98); drift("#w-mentor", 8.98, 2.0); whipIn("#w-cake", 10.74, 0.35); drift("#w-cake", 10.74, 1.1, 1.06, 1.14); whipIn("#w-dryft", 11.4, 0.35); drift("#w-dryft", 11.4, 1.1, 1.04, 1.12);
@@ -307,7 +309,6 @@
         tl.set("#w-mentor, #w-cake", { opacity: 0 }, 12.2);
 
         // ---- MG4 · 10.78–12.12 · "eight and nine figure brands" -------------
-        tl.fromTo("#scrim", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out", ...nf }, 10.72);
         whipIn("#mg4", 10.76, 0.4);
         tl.fromTo("#mg4 .fig", { x: 90 }, { x: 0, duration: 0.4, ease: "expo.out" }, 10.76);
         // "eight" 10.80 → $10,000,000 · "nine" 11.12 → the extra zero drops in = $100,000,000
@@ -319,7 +320,6 @@
         tl.fromTo("#mg4-tag", { scale: 1 }, { scale: 1.12, duration: 0.14, yoyo: true, repeat: 1, ease: "sine.inOut" }, 11.14);
         tl.fromTo("#mg4-tag", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out", ...nf }, 10.92);
         whipOut("#mg4", 12.12);
-        tl.fromTo("#scrim", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.in", ...nf }, 12.12);
 
         // ---- B-roll: store (13.00–14.50) -----------------------------------
         whipIn("#w-store", 12.98); drift("#w-store", 12.98, 1.9);
@@ -328,7 +328,6 @@
         // ---- MG5 · 15.50–16.45 · "It's completely free" — FREE callback -----
         freeIn(15.5, 16.0, 16.12);
         whipOut("#mgfree", 16.46);
-        tl.fromTo("#scrim", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.in", ...nf }, 16.46);
 
         // ---- END CARD · 16.55 → 20.5 · "click the link below" ------------
         tl.fromTo("#card", { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.4, ease: "expo.out" }, 16.55);
