@@ -26,12 +26,11 @@
       /* Everything GSAP reveals starts hidden. Each is driven by fromTo —
          gsap.from() on an already-hidden element computes its end state from
          the hidden state and leaves it invisible (docs/LESSONS.md). */
-      #logo-slot, #b1-eyebrow, #b1-head, #b2-r1, #b2-r2, #b3-r1, #b3-r2,
+      #logo-slot, #b2-r1, #b2-r2, #b3-r1, #b3-r2,
       #b4 .chip, #b5-eyebrow, #b5-pill, #b6 .head, #b7-head, #b7-sub,
       #b8-eyebrow, #b8 .row, #b9 .head, #b10-head, #b11-head, #b11-sub,
       #b12-head, #b13-head, #b14-a, #b14-b, #b14-c,
       #endcard, #ec-logo, #ec-cta, #ec-bloom { opacity: 0; }
-      #b1-rule { transform: scaleX(0); }
 
       /* ---- footage bed -------------------------------------------------- */
       #broll-wrap { position: absolute; inset: 0; overflow: hidden; }
@@ -43,7 +42,7 @@
          Without this the type fights bright retail/stage footage. */
       #scrim { position: absolute; inset: 0; pointer-events: none;
         background:
-          linear-gradient(to top, rgba(6,40,76,.95) 0%, rgba(6,40,76,.84) 26%, rgba(6,40,76,.14) 54%, rgba(6,40,76,0) 70%),
+          linear-gradient(to top, rgba(6,40,76,.93) 0%, rgba(6,40,76,.90) 34%, rgba(6,40,76,.70) 54%, rgba(6,40,76,.24) 72%, rgba(6,40,76,0) 84%),
           linear-gradient(to bottom, rgba(6,40,76,.80) 0%, rgba(6,40,76,.22) 15%, rgba(6,40,76,0) 27%); }
       #vignette { position: absolute; inset: 0; pointer-events: none;
         background: radial-gradient(ellipse 80% 66% at 50% 44%, rgba(0,0,0,0) 42%, rgba(0,0,0,.28) 100%); }
@@ -66,9 +65,7 @@
       /* ---- shared copy block -------------------------------------------- */
       /* Bottom-anchored and left-aligned on every beat. Bottom edge sits 470px
          up so nothing collides with the Reels / Stories UI. */
-      .beat { position: absolute; left: 96px; right: 96px; bottom: 150px; }
-      .rule { width: 104px; height: 7px; background: var(--brand-flame);
-        border-radius: 4px; transform-origin: left center; margin-bottom: 26px; }
+      .beat { position: absolute; left: 96px; right: 96px; bottom: 485px; }
       .eyebrow { font-size: 27px; font-weight: 600; letter-spacing: .30em;
         text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 22px;
         text-shadow: 0 2px 12px rgba(6,40,76,.95), 0 5px 30px rgba(6,40,76,.85); }
@@ -165,15 +162,6 @@
       <!-- Persistent white logo, top-left. Leaves at the end card. -->
       <div class="clip layer" id="logo-layer" data-start="0.5" data-duration="64.14" data-track-index="2">
         <div id="logo-slot"><img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
-      </div>
-
-      <!-- B1 · hook — "one problem keeping you up at night" (VO 0.04–6.84) -->
-      <div class="clip layer" id="b1" data-start="0.70" data-duration="6.10" data-track-index="3">
-        <div class="beat">
-          <div class="rule" id="b1-rule"></div>
-          <div class="eyebrow" id="b1-eyebrow">For Shopify founders</div>
-          <div class="head" id="b1-head"><span class="em">One</span> problem<br />keeping you up<br />at night.</div>
-        </div>
       </div>
 
       <!-- B2 · revenue climbs, profit doesn't (VO 7.80–10.42) -->
@@ -372,12 +360,6 @@
           { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.5);
         // Logo clears out just before the end card takes the frame.
         tl.to("#logo-slot", { opacity: 0, y: -26, duration: 0.3, ease: "power2.in" }, 64.34);
-
-        // ---- B1 · hook ---------------------------------------------------
-        tl.fromTo("#b1-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.out" }, 0.9);
-        inUp("#b1-eyebrow", 1.0, 0.45, 20);
-        inUp("#b1-head", 3.6, 0.6);
-        outUp("#b1 .beat", 6.45);
 
         // ---- B2 · revenue up, profit flat --------------------------------
         inUp("#b2-r1", 7.8, 0.45);

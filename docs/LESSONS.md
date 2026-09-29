@@ -148,6 +148,21 @@ efficient over time instead of relearning the same lessons.
   silently broke the motif cap it was supposed to sit outside. Verify what each
   file actually shows before assigning it a role in the edit.
 
+- **Reserving a caption band? Measure the layout, not the frames.** Two traps.
+  (1) `overflow: visible` SVGs (strikethroughs, trend lines) put strokes BELOW
+  the text box — a 360px anchor left the lowest element at 327px. (2) Scanning
+  rendered frames for bright pixels misses any element that is not near-white:
+  blue-tint and flame copy never crossed the threshold, so the scan reported a
+  clear band that was not clear. **Fix:** drive the real page in headless Chrome
+  and take `getBoundingClientRect()` over `.beat, .beat *`, which catches
+  overflow and is colour-blind. See `scripts/measure-beats.mjs`.
+- **Playwright's bundled browser may be missing even when Playwright is installed.**
+  Point it at the hyperframes Chrome shell instead:
+  `chromium.launch({ executablePath: "/root/.cache/hyperframes/chrome/chrome-headless-shell/*/chrome-headless-shell-linux64/chrome-headless-shell" })`.
+  Also run the script from the directory whose `node_modules` holds playwright,
+  and `path.resolve()` the file before `file://` — a relative path throws
+  ERR_INVALID_URL.
+
 ## Multiple aspect ratios in one project
 
 - **Two root-level HTML files with `data-composition-id` is a lint error**

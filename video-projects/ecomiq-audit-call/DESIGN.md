@@ -133,8 +133,24 @@ Both fonts are local `.woff2`; GSAP is vendored. No network at render time.
 
 Copy sits bottom-anchored and left-aligned on every beat, over a navy scrim —
 the footage is bright retail and stage material and flat white type loses against
-it. 9:16 keeps the block 400px off the bottom to clear the Reels UI; 4:5 drops it
-to 150px since the Meta feed has no overlay.
+it. 9:16 keeps the block 400px off the bottom to clear the Reels UI.
+
+**4:5 reserves a caption band.** Subtitles are added downstream, so the 4:5 copy
+is anchored 485px off the bottom, leaving every beat at least **452px** clear.
+The binding constraint is NOT the anchor: the strikethrough and trend SVGs are
+`overflow: visible`, so their strokes spill ~33px below the text box, and the
+lowest element ("Generic teardown") governs. After changing the anchor, always
+re-measure:
+
+```bash
+CH=$(ls /root/.cache/hyperframes/chrome/chrome-headless-shell/*/chrome-headless-shell-linux64/chrome-headless-shell | head -1) \
+  node scripts/measure-beats.mjs ../ecomiq-audit-call-45/index.html 1350
+```
+
+It reports every beat's lowest and highest pixel, measured from the real layout
+rather than sampled frames. A brightness scan of rendered frames is NOT reliable
+here — the blue-tint and flame elements never exceed a white-text threshold, so
+they are missed entirely.
 
 ## Known transcription note
 Whisper hears "free **order** call" where the script says "free **audit** call"

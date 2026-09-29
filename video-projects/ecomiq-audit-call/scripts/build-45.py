@@ -68,12 +68,15 @@ sub('#broll { display: block; width: 1080px; height: 1920px; object-fit: cover;'
 # --- layout: 570px less height to work with --------------------------------
 sub('          linear-gradient(to top, rgba(6,40,76,.90) 0%, rgba(6,40,76,.74) 22%, rgba(6,40,76,.40) 38%, rgba(6,40,76,.08) 54%, rgba(6,40,76,0) 66%),\n'
     '          linear-gradient(to bottom, rgba(6,40,76,.62) 0%, rgba(6,40,76,.14) 12%, rgba(6,40,76,0) 22%); }',
-    '          linear-gradient(to top, rgba(6,40,76,.95) 0%, rgba(6,40,76,.84) 26%, rgba(6,40,76,.14) 54%, rgba(6,40,76,0) 70%),\n'
+    '          linear-gradient(to top, rgba(6,40,76,.93) 0%, rgba(6,40,76,.90) 34%, rgba(6,40,76,.70) 54%, rgba(6,40,76,.24) 72%, rgba(6,40,76,0) 84%),\n'
     '          linear-gradient(to bottom, rgba(6,40,76,.80) 0%, rgba(6,40,76,.22) 15%, rgba(6,40,76,0) 27%); }')
 
-# Meta feed has no Reels UI to clear, so the copy sits closer to the edge.
+# The copy is lifted to leave a clear band along the bottom for subtitles added
+# downstream. Measure with scripts/measure-beats.mjs after changing this - the
+# binding constraint is NOT this number but the lowest overflow:visible SVG
+# stroke, which sits ~33px below the text box.
 sub('.beat { position: absolute; left: 96px; right: 96px; bottom: 400px; }',
-    '.beat { position: absolute; left: 96px; right: 96px; bottom: 150px; }')
+    '.beat { position: absolute; left: 96px; right: 96px; bottom: 485px; }')
 sub('#logo-slot { position: absolute; top: 108px; left: 96px; width: 300px; }',
     '#logo-slot { position: absolute; top: 74px; left: 96px; width: 280px; }')
 
