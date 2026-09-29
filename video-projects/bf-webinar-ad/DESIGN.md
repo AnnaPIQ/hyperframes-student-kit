@@ -20,12 +20,12 @@ Brand kit copied from `assets/ecomiq/`. Tokens: `assets/brand-tokens.css`. Fonts
 - Colours: `--brand-navy` (canvas), `--brand-white` (all text incl. eyebrows; no light blue or
   italics, per review), `--brand-sky` (calendar tile), `--brand-flame` (the one hot accent: CTA pill, "x", strike,
   checkmarks, tallest bar), `--brand-white`, `--brand-text-dim`, `--brand-surface-2`,
-  `--brand-border`, `--brand-gradient-2` (end-card bloom only). Scrims use
+  `--brand-border`, `--brand-accent-glow` (end-card horizon glow), `--brand-sky` at 38% (grid lines). Scrims use
   `color-mix()` on `--brand-navy`, no new hex values.
-- Type: `'Rethink Sans'` 500/600/800, `'Hedvig Letters Serif'` upright (not italic) for the
-  one emphasis word on the end card ("Double").
+- Type: `'Rethink Sans'` 500/600/800 throughout (end card headline is all sans, per the
+  client's reference end card). `'Hedvig Letters Serif'` is loaded but currently unused.
 - Logos: `ecomiq-logo-white.svg` persistent top-left (22% width, enlarged at review; soft shadow, every frame);
-  `ecomiq-icon-white.svg` as the end-card mark.
+  the same wordmark large on the end card.
 
 ## Beat map (seconds, anchored to faster-whisper word timestamps in `assets/transcript/`)
 | t | VO | Picture | Graphic |
@@ -39,7 +39,7 @@ Brand kit copied from `assets/ecomiq/`. Tokens: `assets/brand-tokens.css`. Fonts
 | 24.85 to 28.45 | "walk through all of this" | Sean, slow push-in | rest beat |
 | 28.45 to 30.3 | "October 14th" | full navy | calendar tile flip, 01 to 14 count |
 | 30.3 to 32.45 | "if that's helpful" | Sean | none |
-| 32.45 to 37.0 | "click the link below ... completely free" | end card | icon, headline, subhead, flame pill, 4.5s hold |
+| 32.45 to 37.0 | "click the link below ... completely free" | end card | wordmark, "Double your Black Friday", "Webinar. October 14th", flame "Sign up free" pill, glowing perspective grid floor, 4.5s hold |
 
 Transitions: vertical whip (y + blur) on every cut, no light streak (removed at review). No hard cuts.
 
