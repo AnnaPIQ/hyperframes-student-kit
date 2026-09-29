@@ -41,11 +41,11 @@
         background: radial-gradient(80% 50% at 50% 30%, var(--brand-surface-2) 0%, var(--brand-navy) 70%); }
 
       /* bottom scrim so type reads over footage */
-      #scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 62%; opacity: 0; pointer-events: none;
+      #scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 72%; opacity: 0; pointer-events: none;
         background: linear-gradient(180deg,
           color-mix(in srgb, var(--brand-navy) 0%, transparent) 0%,
-          color-mix(in srgb, var(--brand-navy) 55%, transparent) 38%,
-          color-mix(in srgb, var(--brand-navy) 88%, transparent) 100%); }
+          color-mix(in srgb, var(--brand-navy) 62%, transparent) 34%,
+          color-mix(in srgb, var(--brand-navy) 94%, transparent) 100%); }
 
       /* ---- persistent logo (non-clip wrapper so the engine can't move it) -- */
       #logo-wrap { position: absolute; top: var(--logo-top); left: var(--logo-left); width: 10%; z-index: 50;
@@ -69,7 +69,7 @@
       .big .hot { color: var(--brand-flame); }
       .label { font-weight: 500; font-size: var(--mid); line-height: 1.02; letter-spacing: -.02em; }
       .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint);
-        letter-spacing: -.01em; display: inline-block; }
+        letter-spacing: -.01em; display: inline-block; margin-right: .14em; }
 
       /* hook bars */
       .bars { display: flex; flex-direction: column; gap: 14px; width: 100%; }
@@ -140,7 +140,7 @@
 
       /* end card */
       #bloom { position: absolute; left: -20%; right: -20%; bottom: -18%; height: 60%; border-radius: 50%;
-        background: var(--brand-gradient-2); filter: blur(120px); opacity: .34; }
+        background: var(--brand-gradient-2); filter: blur(120px); opacity: .22; }
       .end { gap: 30px; }
       #end-icon { width: 150px; height: auto; }
       #root.f4x5 #end-icon { width: 124px; }
@@ -268,7 +268,7 @@
 
       <div id="streak"></div>
 
-      <div id="logo-wrap"><img id="logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+      <div id="logo-wrap"><img id="logo" class="clip" data-start="0" data-duration="37" data-track-index="45" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
 
       <audio id="vo" src="assets/audio/sean-vo.m4a" data-start="0" data-duration="36.39" data-track-index="40" data-volume="1"></audio>
       <!-- MUSIC BED PLACEHOLDER (silent). Swap the file for the licensed bed; 0.15 = ducked under VO. -->
@@ -395,8 +395,8 @@
 
       // ---- END CARD (32.45 – 37): "click the link below" --------------------
       cut(null, "#g-end", 32.45);
-      tl.fromTo("#bloom", { opacity: 0 }, { opacity: 0.34, duration: 1.2, ease: "sine.out" }, 32.45);
-      tl.fromTo("#end-icon", { opacity: 0, scale: 0.6, rotation: -12 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(1.7)" }, 32.6);
+      tl.fromTo("#bloom", { opacity: 0 }, { opacity: 0.22, duration: 1.2, ease: "sine.out" }, 32.45);
+      tl.fromTo("#end-icon", { opacity: 0, scale: 0.6, rotation: -12 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "back.out(1.7)" }, 32.5);
       tl.fromTo("#end-em", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, 32.8);
       tl.fromTo("#end-rest", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 32.95);
       tl.fromTo("#end-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, 33.25);
