@@ -17,7 +17,7 @@ Brand kit copied from `assets/ecomiq/`. Tokens: `assets/brand-tokens.css`. Fonts
 `assets/fonts/RethinkSans.woff2` + `assets/fonts/HedvigLettersSerif.woff2`.
 
 ## Tokens / assets in use
-- Colours: `--brand-navy` (canvas), `--brand-blue-tint` (eyebrows, serif emphasis, streak),
+- Colours: `--brand-navy` (canvas), `--brand-blue-tint` (eyebrows, serif emphasis),
   `--brand-sky` (calendar tile), `--brand-flame` (the one hot accent: CTA pill, "x", strike,
   checkmarks, tallest bar), `--brand-white`, `--brand-text-dim`, `--brand-surface-2`,
   `--brand-border`, `--brand-gradient-2` (end-card bloom only). Scrims use
@@ -41,7 +41,7 @@ Brand kit copied from `assets/ecomiq/`. Tokens: `assets/brand-tokens.css`. Fonts
 | 30.3 to 32.45 | "if that's helpful" | Sean | none |
 | 32.45 to 37.0 | "click the link below ... completely free" | end card | icon, headline, subhead, flame pill, 4.5s hold |
 
-Transitions: vertical whip (y + blur) with a blue-tint light streak on every cut. No hard cuts.
+Transitions: vertical whip (y + blur) on every cut, no light streak (removed at review). No hard cuts.
 
 ## Subtitle safe zone (for subtitles added later by hand)
 No graphic enters this strip; motion graphics sit directly above it and centred scenes

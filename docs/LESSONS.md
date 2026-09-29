@@ -106,7 +106,14 @@ efficient over time instead of relearning the same lessons.
   colours can shift or wash out on Meta. **Fix:** check `ffprobe ... color_transfer`
   (`arib-std-b67` = HLG), tone-map during prep:
   `zscale=t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,tonemap=mobius:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p`
-  (mobius looked natural; hable went grey), tag outputs bt709, and render with `--sdr`.
+  ...but review rejected the tone-map ("lighting is wrong": mobius pushed skin warm/orange).
+  What matched the original look was a **pass-through**: keep the HLG code values, convert
+  only the matrix, and re-tag as SDR:
+  `zscale=min=2020_ncl:m=709:rin=limited:r=limited,format=yuv420p,setparams=colorspace=bt709:color_primaries=bt709:color_trc=bt709`.
+  Tag outputs bt709 and render with `--sdr`. Always A/B a face crop against the look the
+  client has already approved before swapping colour pipelines.
+- **Whip light-streak read as "white flashes" to the client.** Keep blur whips; skip the
+  white/blue-tint streak band on ads unless asked for.
 - **Final delivery is H.264.** Transcode the master:
   `-c:v libx264 -crf 17 -pix_fmt yuv420p -colorspace bt709 -color_primaries bt709 -color_trc bt709 -c:a aac -movflags +faststart`.
 - **Background tasks have a time limit (~45 min here).** Chaining two ~22 min renders in one

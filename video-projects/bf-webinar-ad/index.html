@@ -57,12 +57,6 @@
         filter: drop-shadow(0 3px 8px color-mix(in srgb, var(--brand-black) 45%, transparent)); }
       #logo-wrap img { display: block; width: 100%; height: auto; }
 
-      /* ---- whip streak ----------------------------------------------------- */
-      #streak { position: absolute; left: -10%; width: 120%; top: 100%; height: 26%; z-index: 40; opacity: 0;
-        pointer-events: none; mix-blend-mode: screen; filter: blur(22px);
-        background: linear-gradient(180deg, transparent 0%, var(--brand-blue-tint) 42%, var(--brand-white) 50%,
-          var(--brand-blue-tint) 58%, transparent 100%); }
-
       /* ---- motion-graphic band (lower third) ------------------------------- */
       .mg { position: absolute; left: 0; right: 0; bottom: var(--band-bottom); z-index: 30;
         padding: 0 var(--pad-x); display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
@@ -274,8 +268,6 @@
         </div>
       </div>
 
-      <div id="streak" class="clip" data-start="0" data-duration="37" data-track-index="47"></div>
-
       <div id="logo-wrap"><img id="logo" class="clip" data-start="0" data-duration="37" data-track-index="45" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
 
       <audio id="vo" src="assets/audio/sean-vo.m4a" data-start="0" data-duration="36.39" data-track-index="40" data-volume="1"></audio>
@@ -291,9 +283,6 @@
       const $ = (s) => document.querySelector(s);
 
       // ---- transition helpers ---------------------------------------------
-      // streak: blue-tint light band rips up the frame, peaking on the cut
-      const streak = (t) => tl.fromTo("#streak", { y: 0, opacity: 0.85 }, { y: -H * 1.35, opacity: 0.85, duration: 0.36, ease: "power3.in" }, t - 0.2)
-                              .set("#streak", { opacity: 0 }, t + 0.17);
       // whip a group in from below with blur
       const whipIn = (sel, t) => {
         tl.set(sel, { opacity: 1 }, t);
@@ -304,7 +293,7 @@
         tl.to(sel, { y: -H * 0.1, filter: "blur(26px)", opacity: reveal ? 0 : 1, duration: 0.24, ease: "power2.in" }, t - 0.24);
         if (!reveal) tl.set(sel, { opacity: 0 }, t + 0.34);
       };
-      const cut = (outSel, inSel, t) => { streak(t); if (outSel) whipOut(outSel, t, !inSel); if (inSel) whipIn(inSel, t); };
+      const cut = (outSel, inSel, t) => { if (outSel) whipOut(outSel, t, !inSel); if (inSel) whipIn(inSel, t); };
       const mgOut = (sel, t) => tl.to(sel, { y: -60, filter: "blur(18px)", opacity: 0, duration: 0.22, ease: "power2.in" }, t - 0.22);
       const counter = (sel, o, fmt) => () => { $(sel).innerHTML = fmt(o.v); };
       const comma = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
