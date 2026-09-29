@@ -18,22 +18,30 @@ The 4:5 project is generated from this one by `scripts/build-45.py` — edit
 |---|---|---|
 | Voiceover (spine) | `assets/sean-vo.m4a` | 67.33s, from `Book a Audit Call from EIQ Message.aifc` (mono PCM 24-bit/48k), loudness-normalised |
 | Word timings | `assets/sean-vo.transcript.json` | whisper `small.en`, 216 words — every beat below is anchored to it |
-| Montage | `assets/montage-source.mp4` | 1080×1920, 30fps, 29.70s. **Its own audio is unused.** |
+| B-roll | 35 clips, per `scripts/broll-manifest.json` | from the "B-Roll Short Cut" sheet |
 
-Both sources came from Drive:
-- Montage — `Showcase Reel.mp4` · https://drive.google.com/file/d/1SsgE0TJCjKo2YwvpSOA8-MtFcpHWNWwl/view
+Sources on Drive:
 - Voiceover — `Book a Audit Call from EIQ Message.aifc` · https://drive.google.com/file/d/1NXnQBdkkrXUMX8K98huHoGIytDt9rIiM/view
+- B-roll cheat sheet — https://docs.google.com/spreadsheets/d/1TdA4lCWJTMRTmWDtU7yCzyrqeU6CyNeZygH5Opnvif8/edit
 
-Two things about the montage that drive the build:
+### Why the bed is built from the cheat sheet, not the Showcase Reel
+The first cut used the single `Showcase Reel.mp4` montage. That reel holds only
+**27.73s** of usable footage (its last 2s are its own EcomIQ end card, excluded
+so it can't surface mid-ad) against **64.64s** of voiceover, so it was retimed to
+0.45×. At 2.2× slow motion it read as obviously wrong.
 
-1. **It already ends with an EcomIQ end card** (navy + white logo + flame "Click
-   The Link Below" pill) from 27.73s. That tail is excluded from the b-roll pool
-   so it can't surface mid-ad; the end card is rebuilt here instead. Usable
-   b-roll is **0.00–27.73s**.
-2. **27.73s of footage has to cover 64.64s of visuals.** `scripts/build-broll.py`
-   retimes every shot to 0.45× with motion-compensated interpolation
-   (`minterpolate`, applied per shot — running it across a cut warps the two
-   shots together) and adds 7 callback shots. Result: ~1.7s per shot, no loops.
+The cheat sheet fixes it at the source: 35 usable clips, so the bed now runs at
+**native speed** — no retiming, no interpolation, no looping, one shot per 1.95s.
+
+**Orientation is the trap.** 18 of these clips are phone-shot vertical footage
+exported into a 3840×2160 container with the rotation *baked in* and no rotation
+metadata, so ffmpeg does not auto-correct them and they decode with faces on
+their side. They carry `"transform": "rotate_cw"` in the manifest and get
+`transpose=1`; afterwards they are true 2160×3840 and need **no crop at all**.
+Only 2 clips are genuinely landscape and take a centre crop. Three were dropped
+(reasons in the manifest's `dropped` map): a two-shot wide that loses a person in
+9:16, surf footage that is off-message, and one whose Drive download returned no
+video stream.
 
 ## Audio
 The raw recording arrives at **-32.6 LUFS** integrated against a -8.2 dBTP peak
@@ -49,8 +57,8 @@ the final frame and stretched the file by 72ms on the first attempt, and every
 beat here is anchored to word onsets in the transcript.
 
 ## Format decisions
-- **9:16 is a native passthrough** — the montage is already 1080×1920, so no
-  scaling at all.
+- **9:16 needs no cropping** — 33 of the 35 clips are natively vertical (15
+  already, 18 after the rotation fix above).
 - **4:5 is a centre crop**, 285px off the top and bottom, *not* scale+pad.
   Padding a 9:16 source into 4:5 gives a 759×1350 image with 160px black bars
   down both sides, which reads as broken in a Meta feed. Checked across the
@@ -109,13 +117,13 @@ Whisper hears "free **order** call" where the script says "free **audit** call"
 timing, and the on-screen copy says "audit".
 
 ## Rebuild
-`assets/montage-source.mp4` and both `broll-*.mp4` beds are gitignored — they're
-large and fully reproducible. Pull the montage from the Drive link above, then:
+Both `broll-*.mp4` beds are gitignored — they're large and fully reproducible.
+`build-broll.py` downloads every clip itself from the ids in the manifest:
 
 ```bash
 cd video-projects/ecomiq-audit-call
 python3 scripts/prep-vo.py <source.aifc>   # normalise VO (only if re-pulling it)
-python3 scripts/build-broll.py             # retime montage -> broll-916.mp4 + broll-45.mp4
+python3 scripts/build-broll.py             # pull b-roll from Drive -> broll-916.mp4 + broll-45.mp4
 python3 scripts/build-45.py                # regenerate the 4:5 sibling project
 npx hyperframes lint                       # expect 0 errors, 20 benign warnings
 npx hyperframes render --quality standard --output renders/ecomiq-audit-call-916.mp4

@@ -1,0 +1,290 @@
+{
+ "shot_seconds": 1.95,
+ "dropped": {
+  "bess-sean-podcast": "two-shot wide; a 9:16 crop loses one of them",
+  "pacificiq-reel": "surf footage, off-message for an audit-call ad",
+  "shopify-intro": "Drive returned no video stream"
+ },
+ "clips": [
+  {
+   "i": 0,
+   "alias": "hotel-typing-1",
+   "drive_id": "1JNuCmTeW9-UxRyaW5SyWiffEqDqlM636",
+   "in": 0.0,
+   "transform": "none",
+   "cue": "cue"
+  },
+  {
+   "i": 1,
+   "alias": "hotel-sidecome",
+   "drive_id": "171jTbk8HF6wE68h0gii2rSkh6AyqdU0O",
+   "in": 1.0,
+   "transform": "none",
+   "cue": "fallback"
+  },
+  {
+   "i": 2,
+   "alias": "sean-thinking-laptop",
+   "drive_id": "1x1uT_kVmPod-vpPn5SVIGY4kUZmfCwBo",
+   "in": 4.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  },
+  {
+   "i": 3,
+   "alias": "hotel-lightbehind",
+   "drive_id": "1YQRE78H_mJ___XLoPCtn2jr1afObdexL",
+   "in": 1.0,
+   "transform": "none",
+   "cue": "fallback"
+  },
+  {
+   "i": 4,
+   "alias": "hotel-walkaway",
+   "drive_id": "1v8rpskKIYrRyvvL1VGZveXCU1wq7oT9K",
+   "in": 2.1,
+   "transform": "none",
+   "cue": "fallback"
+  },
+  {
+   "i": 5,
+   "alias": "sean-texting-outside",
+   "drive_id": "1bCUe9ETpsi_4LYDwqDXRHRHdaV0-dNi-",
+   "in": 0.0,
+   "transform": "none",
+   "cue": "cue"
+  },
+  {
+   "i": 6,
+   "alias": "car-into-hotel",
+   "drive_id": "1vmYi5ZP_zYfXkxcm57lQdwwCGJRDI0s7",
+   "in": 4.06,
+   "transform": "rotate_cw",
+   "cue": "cue+clamped"
+  },
+  {
+   "i": 7,
+   "alias": "sean-into-car",
+   "drive_id": "1mMQyiHcU5cb6KKnzUajxnTxOqKJlLgDj",
+   "in": 2.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  },
+  {
+   "i": 8,
+   "alias": "hotel-hawaii",
+   "drive_id": "1478VsPLnQ3yNRwvrqbHXsJKBw_XepjP2",
+   "in": 0.0,
+   "transform": "none",
+   "cue": "fallback"
+  },
+  {
+   "i": 9,
+   "alias": "jaren-in-car",
+   "drive_id": "1VSu3Mqc8P78Kqnzkvge8vzIY9fGtIoCC",
+   "in": 1.0,
+   "transform": "none",
+   "cue": "cue"
+  },
+  {
+   "i": 10,
+   "alias": "walking-industrial",
+   "drive_id": "1ORRLYbkYhSU3NIaLTEcZ36tGhUFybGti",
+   "in": 19.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  },
+  {
+   "i": 11,
+   "alias": "hotel-typing-2",
+   "drive_id": "16DLmmhWw5FomebACycCPfFocFsAwUPsi",
+   "in": 0.0,
+   "transform": "none",
+   "cue": "fallback"
+  },
+  {
+   "i": 12,
+   "alias": "hotel-walktoward",
+   "drive_id": "11WrRiZXe8qH8H6q-6kHCX-PPPZ6CEHJ-",
+   "in": 1.75,
+   "transform": "none",
+   "cue": "fallback"
+  },
+  {
+   "i": 13,
+   "alias": "sean-laptop-man",
+   "drive_id": "1HVH9tFgvcAfS-YczxU_aiLOmUxm18Ofu",
+   "in": 3.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  },
+  {
+   "i": 14,
+   "alias": "mason-handshake",
+   "drive_id": "1reXIHROlDwRj2wAV-FQeVcoCzyakM2df",
+   "in": 6.64,
+   "transform": "rotate_cw",
+   "cue": "fallback"
+  },
+  {
+   "i": 15,
+   "alias": "sean-mason-2women",
+   "drive_id": "1GycuM9sO1RClaXwnU7sdYi6HOqr6p15I",
+   "in": 5.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  },
+  {
+   "i": 16,
+   "alias": "shoptalk-stage-a",
+   "drive_id": "1XuPAArGjpESm3JUhjU7Q3gVmz4L_y72Z",
+   "in": 12.0,
+   "transform": "crop",
+   "cue": "cue"
+  },
+  {
+   "i": 17,
+   "alias": "shoptalk-stage-b",
+   "drive_id": "1XuPAArGjpESm3JUhjU7Q3gVmz4L_y72Z",
+   "in": 362.0,
+   "transform": "crop",
+   "cue": "cue"
+  },
+  {
+   "i": 18,
+   "alias": "limitless-sign",
+   "drive_id": "1dNYc4_WmlkTcBxo9J51bXnFXYsDtm1TF",
+   "in": 18.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  },
+  {
+   "i": 19,
+   "alias": "klaviyo-walking",
+   "drive_id": "1cQ3NitKGYa1c4e--fehHg9eXAZ4_sjI4",
+   "in": 5.98,
+   "transform": "none",
+   "cue": "cue+clamped"
+  },
+  {
+   "i": 20,
+   "alias": "shoptalk-walking",
+   "drive_id": "1E84Z6zKpVVUDcihIVQ6L6hbSFyUbOxrb",
+   "in": 12.19,
+   "transform": "none",
+   "cue": "fallback"
+  },
+  {
+   "i": 21,
+   "alias": "klaviyo-booths",
+   "drive_id": "1my1K0R_aiMAc4Vdi3z3eyu5RC0-jcGeM",
+   "in": 3.42,
+   "transform": "none",
+   "cue": "fallback"
+  },
+  {
+   "i": 22,
+   "alias": "sean-jaren-outside",
+   "drive_id": "1E-8ZHZQNI5jGseDnYnJ9Z4TazXH_MwSU",
+   "in": 3.24,
+   "transform": "none",
+   "cue": "fallback"
+  },
+  {
+   "i": 23,
+   "alias": "jaren-into-car",
+   "drive_id": "1WsMOk5hNhK5b-iNaELhBT6FZ0UWPXV6O",
+   "in": 7.0,
+   "transform": "none",
+   "cue": "cue"
+  },
+  {
+   "i": 24,
+   "alias": "hotel-typing-3",
+   "drive_id": "12swNKWEy6KMNidPbOrYUY4LAYniV42co",
+   "in": 0.0,
+   "transform": "none",
+   "cue": "fallback"
+  },
+  {
+   "i": 25,
+   "alias": "dryft-store-walk",
+   "drive_id": "1jHsUTe013mdBLjB6VQvJmjzwj0r6cXzT",
+   "in": 21.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  },
+  {
+   "i": 26,
+   "alias": "dryft-product",
+   "drive_id": "1RapxMHiEtRmM6ig2GKFSSeCSHU4PA_U1",
+   "in": 10.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  },
+  {
+   "i": 27,
+   "alias": "dryft-sleep",
+   "drive_id": "1zP47vHs6MgFiwiKzGHRXiW8lrc3lh6BO",
+   "in": 18.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  },
+  {
+   "i": 28,
+   "alias": "sweetes-cake",
+   "drive_id": "1cF3UR7rqtK27rx9HUh5H7Wt_yipf8fhp",
+   "in": 3.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  },
+  {
+   "i": 29,
+   "alias": "sweetes-sprinkle",
+   "drive_id": "13dyHmvfYPQCPA84j_Kz8HsH9sf_hAUTy",
+   "in": 1.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  },
+  {
+   "i": 30,
+   "alias": "sweetes-cookie",
+   "drive_id": "1Cy939sI_20AioB9loydrqhbavZ-m_xcS",
+   "in": 1.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  },
+  {
+   "i": 31,
+   "alias": "sweetes-team",
+   "drive_id": "1zYln8LRm6OesbDwjXfiiKcpRLxs6H-E7",
+   "in": 5.09,
+   "transform": "rotate_cw",
+   "cue": "fallback"
+  },
+  {
+   "i": 32,
+   "alias": "following-sean",
+   "drive_id": "1vk6MsGPlFBwNjRb_CvsJ17lq6EokzIXi",
+   "in": 12.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  },
+  {
+   "i": 33,
+   "alias": "sean-laughing",
+   "drive_id": "1oVTj4XGGc0JKgHr9jI2Chue_hLYais9O",
+   "in": 7.96,
+   "transform": "rotate_cw",
+   "cue": "fallback"
+  },
+  {
+   "i": 34,
+   "alias": "sean-laptop",
+   "drive_id": "1OEhRQ9CeyZxdI_21Eqm9x-SqGXKuoCL2",
+   "in": 9.0,
+   "transform": "rotate_cw",
+   "cue": "cue"
+  }
+ ]
+}

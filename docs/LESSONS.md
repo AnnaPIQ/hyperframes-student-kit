@@ -118,6 +118,21 @@ efficient over time instead of relearning the same lessons.
   rectangle on the end card. A full-bleed `radial-gradient` bloom has no box to
   show and is safer.
 
+- **"It looks like weird speed" = you didn't have enough footage.** Covering a
+  67s voiceover with 27.7s of b-roll needs 0.45x, and 2.2x slow motion reads as
+  broken no matter how clean the interpolation is. Below about 0.8x the viewer
+  sees slow motion. **Fix:** get more footage rather than stretching what you
+  have — count usable seconds against VO length BEFORE designing the bed, and
+  say plainly if the gap is more than ~1.3x.
+- **4K "landscape" phone clips are often vertical with the rotation baked in.**
+  3840x2160 with NO rotation metadata, so ffmpeg does not auto-rotate and faces
+  decode on their side — and a 9:16 centre crop of that gives a confident,
+  correct-looking, completely wrong frame. **Fix:** before trusting `width >
+  height`, render each clip's mid-frame at both `transpose=1` and `transpose=2`
+  into one contact sheet and classify by eye. In one 22-clip batch, 18 needed
+  `transpose=1` and only 4 were truly landscape. Rotated clips become true
+  2160x3840 and then need no cropping at all.
+
 ## Multiple aspect ratios in one project
 
 - **Two root-level HTML files with `data-composition-id` is a lint error**
