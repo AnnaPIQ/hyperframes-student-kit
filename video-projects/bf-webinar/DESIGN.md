@@ -18,11 +18,11 @@ Brand kit from `assets/ecomiq/` (see `.claude/skills/ecomiq-ad/references/brand.
 Tokens: `assets/brand-tokens.css`. Fonts: local `assets/fonts/RethinkSans.woff2` +
 `HedvigLettersSerif.woff2`. Logo: `assets/ecomiq-logo-white.svg`.
 
-## Palette (5 hues, each with a job)
+## Palette (each hue has a job)
 | Colour | Token | Meaning here |
 |---|---|---|
-| Black `#000` | `--brand-black` | Black Friday canvas (discount takeover) |
-| Navy `#06284C` | `--brand-navy` | brand canvas, graphic panels, end card |
+| Navy `#06284C` | `--brand-navy` | brand canvas: discount takeover, graphic panels, end card |
+| Black `#000` | `--brand-black` | neutral page background only |
 | Flame `#FF4C32` | `--brand-flame` | the hot accent: growth, discount danger, CTA |
 | Blue Tint `#9CD4FF` | `--brand-blue-tint` | eyebrows, "last year", end-card date line |
 | White / Sky | `--brand-white` / `--brand-sky` | figures, body |
