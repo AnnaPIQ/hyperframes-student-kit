@@ -35,7 +35,7 @@ Brand kit copied from `assets/ecomiq/`. Tokens: `assets/brand-tokens.css`. Fonts
 | 8.45 to 10.1 | "eight and nine figure brands" | Dryft product | $10,000,000 to $100,000,000 count-up |
 | 10.1 to 13.8 | "year on year ... incredible performance" | Sweet E's cake, cookies | 3 rising bars, "Year on year, *incredible* performance." |
 | 13.8 to 17.25 | "not just what discounts" | Sean | 0 to 50% OFF count-up, flame strike, "It's the whole plan." |
-| 17.25 to 24.85 | ad accounts / creatives / bundles / emails / once live | laptop, Dryft bundle, Klaviyo event, Sweet E's packing | 5-item checklist, each ticks on its word |
+| 17.25 to 24.85 | ad accounts / creatives / bundles / emails / once live | laptop, Sweet E's cookies, Dryft bundle, Klaviyo event, Sweet E's packing | 5-item checklist, each ticks on its word |
 | 24.85 to 28.45 | "walk through all of this" | Sean, slow push-in | rest beat |
 | 28.45 to 30.3 | "October 14th" | full navy | calendar tile flip, 01 to 14 count |
 | 30.3 to 32.45 | "if that's helpful" | Sean | none |
