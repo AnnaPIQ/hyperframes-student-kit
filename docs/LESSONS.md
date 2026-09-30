@@ -187,6 +187,15 @@ efficient over time instead of relearning the same lessons.
   the numbers said "blue cast", and they tracked the fix from a 31-point red
   deficit down to 5-12.
 
+- **Key a segment cache on content, not on index.** A b-roll builder cached
+  shots as `seg{i}.mp4`, so changing a clip's in-point re-ran the build, printed
+  success and silently reused the OLD segment. Include the source id, in-point
+  and transform in the cache filename. The symptom is maddening: a fix that
+  verifiably lands in the manifest never appears in the render.
+- **A panning shot's cue point is where the subject ARRIVES, not where the clip
+  starts.** A patio shot cued at 0.0 spent its whole 2.9s on empty chairs; the
+  subject only entered at ~4.5s. Scan a pan end to end before picking the in-point.
+
 ## Multiple aspect ratios in one project
 
 - **Two root-level HTML files with `data-composition-id` is a lint error**

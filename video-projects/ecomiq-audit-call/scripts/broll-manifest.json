@@ -42,9 +42,9 @@
    "i": 1,
    "alias": "sean-texting-outside",
    "drive_id": "1bCUe9ETpsi_4LYDwqDXRHRHdaV0-dNi-",
-   "in": 0.0,
+   "in": 4.0,
    "transform": "none",
-   "cue": "cue",
+   "cue": "cue+repointed (camera pans right; Sean enters frame ~4.5s)",
    "motif": "phone"
   },
   {

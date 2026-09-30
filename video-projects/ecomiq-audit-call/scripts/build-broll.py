@@ -88,7 +88,10 @@ def main():
     WORK.mkdir(parents=True, exist_ok=True)
 
     def build(clip):
-        seg = WORK / f"seg{clip['i']:03d}.mp4"
+        # Key the cache on the clip's CONTENT, not just its index - keying by
+        # index alone silently served a stale segment whenever an in-point,
+        # source or transform changed.
+        seg = WORK / f"seg{clip['i']:03d}_{clip['drive_id'][:8]}_{clip['in']}_{clip['transform']}.mp4"
         if seg.exists():
             return
         src = fetch(clip)
@@ -102,7 +105,8 @@ def main():
     with ThreadPoolExecutor(max_workers=WORKERS) as pool:
         list(pool.map(build, clips))
 
-    segs = [WORK / f"seg{c['i']:03d}.mp4" for c in clips]
+    segs = [WORK / f"seg{c['i']:03d}_{c['drive_id'][:8]}_{c['in']}_{c['transform']}.mp4"
+            for c in clips]
     missing = [p.name for p in segs if not p.exists()]
     if missing:
         sys.exit(f"segments failed to render: {missing}")
