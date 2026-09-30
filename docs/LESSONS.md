@@ -55,6 +55,24 @@ efficient over time instead of relearning the same lessons.
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +
   placing motion-graphic overlays over the join make cutdowns feel seamless.
 
+- **Whisper word timestamps drift up to ~0.4s on sentence ends.** Cutting a VO on them
+  can clip a word. **Fix:** find real pauses with `ffmpeg -af silencedetect=n=-45dB:d=0.12`,
+  cut inside those, then re-transcribe the cut to confirm every splice reads whole.
+- **`whisper-cli` dies with "Illegal instruction" after a container restart.** The cached
+  build was compiled for the old host CPU. **Fix:** rebuild portably in
+  `~/.cache/hyperframes/whisper/whisper.cpp`: `cmake -B build-portable -DGGML_NATIVE=OFF`
+  then `cmake --build build-portable --target whisper-cli` (run with `LD_LIBRARY_PATH=build-portable/bin`).
+
+## Multi-format delivery
+
+- **Two root `.html` files with `data-composition-id` = lint error
+  `multiple_root_compositions`.** **Fix:** keep `index.html` as the one root; put the
+  other aspect ratio in `compositions/format-4x5.html` with *root-relative* asset paths
+  (`assets/...`, not `../assets/`), and render it with `-c compositions/format-4x5.html`.
+  Generate both from one template so they never drift (see `sean-audit-call-ad/scripts/build.mjs`).
+- **Two `<img>` with the same `src` warn `duplicate_media_discovery_risk`.** Use the
+  `.png` lockup for one and the `.svg` for the other.
+
 ## Delivery & resolution
 
 - **There is no 4:5 render "preset."** Ship the final via `--quality high` at the

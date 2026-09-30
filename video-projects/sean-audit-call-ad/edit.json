@@ -1,0 +1,49 @@
+{
+  "_about": "Single source of truth for the cut. scripts/build.mjs reads this to build assets/vo-cut.wav, assets/montage-cut.mp4 and both entry compositions. VO ranges are SOURCE-recording seconds; every other time is EDIT-timeline seconds (verified against a whisper pass on the cut VO).",
+  "fps": 30,
+  "duration": 38.2,
+  "endCard": 34.13,
+  "dissolve": 0.2,
+  "vo": {
+    "source": "assets/source/sean-vo.aifc",
+    "driveId": "1NXnQBdkkrXUMX8K98huHoGIytDt9rIiM",
+    "fade": 0.02,
+    "_ranges": "Cut inside measured silences: after 'this is for you.' / before 'We want to invite' / after 'with our team.' / before 'Now, this won't be a template'.",
+    "ranges": [[0.0, 6.35], [22.9, 26.98], [40.8, 67.328]]
+  },
+  "montage": {
+    "source": "assets/source/showcase-reel.mp4",
+    "driveId": "1SsgE0TJCjKo2YwvpSOA8-MtFcpHWNWwl",
+    "minSpeed": 0.75,
+    "_shotStarts": "Scene-detected cut points in the source reel (ffmpeg select gt(scene,0.3)). Shot n = [shotStarts[n], shotStarts[n+1]).",
+    "shotStarts": [0, 0.566667, 1.1, 1.66667, 2.3, 2.9, 3.4, 4.1, 4.96667, 5.6, 6.36667, 7.03333, 7.6, 8.36667, 9.06667, 9.96667, 10.8667, 11.7333, 12.3667, 13.1667, 13.8667, 14.8333, 15.6, 16.4333, 17.0667, 18.0333, 19.0333, 19.9667, 20.9, 22.0333, 22.8333, 23.6333, 24.6, 25.5, 26.3333, 26.8667, 27.7333, 29.72],
+    "_skip": "13, 16, 29 = Sean talking to camera/mic (lips would not match the VO). 36 = old end card.",
+    "sections": [
+      [
+        { "until": 0.95, "shots": [32], "vo": "If you're a" },
+        { "until": 2.40, "shots": [11, 20], "vo": "Shopify founder" },
+        { "until": 4.93, "shots": [9, 30, 27], "vo": "and one problem has been keeping you up at night," },
+        { "until": 6.35, "shots": [5, 1, 35], "vo": "this is for you." }
+      ],
+      [
+        { "until": 8.60, "shots": [12, 17, 4, 34], "vo": "We want to invite you to book a" },
+        { "until": 10.43, "shots": [23, 22, 18], "vo": "free audit call with our team." }
+      ],
+      [
+        { "until": 13.98, "shots": [19, 7, 25, 15], "vo": "Now, this won't be a template or a checklist that's built for everyone." },
+        { "until": 18.84, "shots": [21, 31, 20, 26, 10, 8], "vo": "This will just be your store and your problems. You'll" },
+        { "until": 23.76, "shots": [14, 24, 2, 1, 0, 34, 3], "vo": "leave the call with a clear answer and a plan for what to fix first." },
+        { "until": 30.76, "shots": [6, 7, 33, 19, 28, 25, 18], "vo": "So if you're tired of courses ... this is the opposite of that." },
+        { "until": 31.71, "shots": [31], "vo": "Your store," },
+        { "until": 33.07, "shots": [9, 30], "vo": "your problems" },
+        { "until": 34.13, "shots": [14, 35], "vo": "and your plan." }
+      ]
+    ]
+  },
+  "graphics": {
+    "founders": { "in": 0.95, "out": 4.80 },
+    "audit": { "in": 8.60, "out": 10.36 },
+    "template": { "in": 11.85, "checklist": 12.25, "out": 13.95 },
+    "stack": { "store": 30.80, "problems": 31.75, "plan": 33.10 }
+  }
+}
