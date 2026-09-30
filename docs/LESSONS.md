@@ -222,6 +222,41 @@ efficient over time instead of relearning the same lessons.
   stays an untimed plain `<div>` (it exists to be transformed, since animating the
   video element freezes frames). Same for `<audio>`, which also takes `data-volume`.
 
+## Type over footage
+
+- **A scrim is the wrong tool for legibility over bright footage.** A full-frame
+  wash in a brand colour tints every shot, and the tint reads as a fault long
+  before anyone notices the type got easier to read. **Fix:** carry legibility in
+  the type itself with a three-layer `text-shadow` (tight dark core, mid spread,
+  wide soft pool) and use no wash at all, or a small one. If you must darken,
+  use **black, not a brand colour** — neutral darkening reads as contrast, a
+  coloured one reads as a cast.
+- **A wash that has to exist should be gated to the beats, not held flat.** Held
+  flat it also darkens the stretches that carry no copy. Tween it between a low
+  base and full only while a beat is on screen, and read the beat windows off the
+  DOM (`[id^="b"].layer` → `data-start`/`data-duration`) rather than hardcoding
+  them, so retiming a beat can't leave the wash pointing at old timestamps. Merge
+  windows less than ~1s apart or it flickers between adjacent beats.
+- **Top-anchor headlines when subtitles get added downstream.** Bottom-anchored
+  copy forces you to reserve and re-measure a caption band every time the type
+  scale moves. Anchoring to the top left 695px clear in a 1080×1350 (51% of the
+  frame) with nothing to protect.
+- **One `.strike` span wrapping two lines draws the rule BETWEEN them**, not
+  through either — the SVG is positioned at 50% of the *span*, which for a
+  two-line span is the gap. **Fix:** one struck span per line.
+
+## Reviewing without rendering
+
+- **Drive the GSAP timeline in headless Chrome instead of rendering a draft.**
+  `tl.pause(); tl.seek(t)` plus setting `video.currentTime` by hand and waiting on
+  `requestVideoFrameCallback` gets a real frame in ~1s versus ~8 minutes for a
+  draft render. The render engine owns playback and you must never do this in a
+  composition — but a throwaway Playwright script is not a render. Keep renders
+  for the final verification pass; they are still the ground truth.
+- **Keep every layout value in CSS custom properties on `:root`.** Deriving a
+  second aspect ratio then becomes one `:root` swap instead of ~20 per-rule
+  string substitutions that break whenever the master's whitespace moves.
+
 ## Housekeeping
 
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat

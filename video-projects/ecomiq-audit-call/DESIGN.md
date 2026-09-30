@@ -93,18 +93,17 @@ Every timing below is a word onset from the transcript.
 
 | Beat | VO | Line | Graphic |
 |---|---|---|---|
-| B1 | 0.70–6.80 | "…one problem keeping you up at night" | eyebrow + *One* problem headline |
-| B2 | 7.60–11.20 | "revenue climbing but profits not following" | Revenue rising line vs Profit flat line |
-| B3 | 11.60–15.30 | "ad spend up but sales going backwards" | Ad spend rising vs Sales falling |
-| B5 | 24.20–28.10 | "book a free audit call with our team" | flame pill |
-| B6 | 28.15–30.50 | "not a generic teardown" | struck through |
-| B7 | 30.80–34.70 | "one specific problem… costing you money" | "One specific problem." — all white, upright |
-| B8 | 37.50–41.60 | "your data, your ads, your funnel, your numbers" | four-row stack, one row per phrase |
-| B9 | 41.80–45.20 | "not a template or a checklist" | both struck through |
-| B10 | 45.70–48.90 | "just your store and your problems" | "Just your store." — all white, upright |
-| B11 | 50.30–54.50 | "a clear answer and a plan for what to fix first" | A *clear* answer + sub |
-| B12 | 55.10–58.80 | "promise everything and deliver nothing" | second line struck |
-| B13 | 59.40–61.30 | "this is the opposite of that" | The *opposite* of that |
+| B2 | 7.60–11.20 | "revenue climbing but profits not following" | REVENUE UP. / PROFIT **FLAT.** + data card, both sparklines draw on |
+| B3 | 11.60–15.30 | "ad spend up but sales going backwards" | AD SPEND UP. / SALES **DOWN.** + two stat tiles |
+| B5 | 24.20–28.10 | "book a free audit call with our team" | flame CTA pill |
+| B6 | 28.15–30.50 | "not a generic teardown" | GENERIC / TEARDOWN, **each line struck separately** |
+| B7 | 30.80–34.70 | "one specific problem… costing you money" | ONE SPECIFIC PROBLEM. + sub |
+| B8 | 37.50–41.60 | "your data, your ads, your funnel, your numbers" | 2×2 stat tiles, one per phrase |
+| B9 | 41.80–45.20 | "not a template or a checklist" | A TEMPLATE **≠** YOUR STORE |
+| B10 | 45.70–48.90 | "just your store and your problems" | YOUR STORE. / YOUR PROBLEMS. |
+| B11 | 50.30–54.50 | "a clear answer and a plan for what to fix first" | A CLEAR ANSWER. + sub |
+| B12 | 55.10–58.80 | "promise everything and deliver nothing" | PROMISE EVERYTHING **≠** DELIVER ANYTHING |
+| B13 | 59.40–61.30 | "this is the opposite of that" | THE OPPOSITE OF THAT. |
 | B14 | 61.24–64.64 | "your store, your problems and your plan" | three lines landing on 61.24 / 62.19 / 63.55 |
 | **End card** | **64.64–67.33** | "Book your free audit call, click the link below" | logo + flame **Link Below** |
 
@@ -118,52 +117,46 @@ The white EcomIQ logo sits top-left for the whole b-roll and clears out at
 64.34s, just before the whip into the end card.
 
 ## Brand application
-Straight from `assets/brand-tokens.css` — navy `#06284C` canvas and scrim, flame
-`#FF4C32` as the only hot accent (rules, CTA, "wrong" trend lines, strikethroughs),
-blue tint `#9CD4FF` for eyebrows. Rethink Sans throughout.
 
-**No serif italic emphasis.** At Nate's direction every blue-tint italic
-emphasis word was changed to white and upright, so `.em` now only sets colour
-and inherits font, style and weight from `.head`. Hedvig Letters Serif is still
-shipped in `assets/fonts/` and still declared, but nothing renders in it.
-Blue tint survives only where it was never italic: the eyebrows, and the last
-row of the B8 stack ("All of your numbers").
+**The motion-graphics language follows the reference spot Nate supplied**
+(Drive `19unnciAQpZKufOg96GvKxLVxJSecV5-6`, 18.9s, 1080x1920). What was taken
+from it, and why each choice matters here:
+
+| Reference device | How it lands in this ad |
+|---|---|
+| Heavy all-caps white headlines, **top-anchored**, small lead line over a much larger payoff line | Every beat. `.lead` 58px over `.head` 104px |
+| Legibility from a **drop shadow, not a scrim** | Three-layer `.shadow` stack (tight core, mid spread, wide pool) |
+| Two caps lines split by a large coloured operator | B9 `A template ≠ Your store`, B12 `Promise everything ≠ Deliver anything`, in flame |
+| Dark rounded data cards on a dot-grid field | B2 revenue-vs-profit card: two sparklines that draw on, delta pills |
+| Stat-tile rows | B3 (Ad spend / Sales) and B8 (Data / Ads / Funnel / Numbers) |
+| Flame CTA pill | B5 `Book a free audit call`, and the end card's `Link Below` |
+| Burned-in karaoke captions | **Not carried over** - Nate adds subtitles downstream, so the lower half is deliberately left empty |
+
+Two things the reference style fixes for us as a side effect:
+
+1. **Top-anchored headlines free the whole bottom half.** The 4:5's worst-case
+   clearance went from 452px to **695px** (51% of frame height), so subtitles
+   now fit without a reserved band to protect.
+2. **Shadow-based legibility removes the bottom scrim**, which was the root
+   cause of the blue haze. What darkening remains is a **top-only, BLACK**
+   wash (not navy - a navy wash tints, a neutral one just adds contrast) and it
+   is **gated to the beats**: base 0.34, rising to 1.0 only while copy is on
+   screen. The windows are read off the DOM at runtime, so retiming a beat
+   cannot leave the wash pointing at old timestamps.
+
+Palette straight from `assets/brand-tokens.css` - navy `#06284C` end card,
+flame `#FF4C32` as the only hot accent (operators, strikethroughs, falling
+trend lines, CTA pills, the final "Your plan."), blue tint `#9CD4FF` for the
+rising trend line and its delta. Rethink Sans throughout, 800 weight on
+headlines. Hedvig Letters Serif is still shipped and declared but nothing
+renders in it - all emphasis is white or flame, upright, per Nate's direction.
 Both fonts are local `.woff2`; GSAP is vendored. No network at render time.
 
-Copy sits bottom-anchored and left-aligned on every beat, over a navy scrim —
-the footage is bright retail and stage material and flat white type loses against
-it. 9:16 keeps the block 400px off the bottom to clear the Reels UI.
-
-**The 4:5 scrim is gated to the beats.** It runs at 0.22 opacity by default and
-rises to 0.72 only while a beat is on screen (`build-45.py` reads the beat
-windows out of the master and generates the tweens, merging windows less than 1s
-apart so it can't flicker). Held flat it tinted every shot — including the whole
-7.2s opening, which has no graphic on it at all. Because the scrim is lighter,
-the 4:5 copy carries deeper text-shadows than the 9:16.
-
-**Keep the 4:5 scrim matched to the 9:16.** Lifting the 4:5 copy tempts you to
-pile on scrim opacity to keep it legible. Don't: at one point the bottom wash
-covered 84% of the frame and the top wash 27%, which between them tinted the
-whole image blue. Match the 9:16's scrim DENSITY at the equivalent copy
-positions instead (~.74 behind the copy's bottom edge, ~.34 behind its top) and
-let the type's own text-shadow carry the rest.
-
-**4:5 reserves a caption band.** Subtitles are added downstream, so the 4:5 copy
-is anchored 485px off the bottom, leaving every beat at least **452px** clear.
-The binding constraint is NOT the anchor: the strikethrough and trend SVGs are
-`overflow: visible`, so their strokes spill ~33px below the text box, and the
-lowest element ("Generic teardown") governs. After changing the anchor, always
-re-measure:
-
-```bash
-CH=$(ls /root/.cache/hyperframes/chrome/chrome-headless-shell/*/chrome-headless-shell-linux64/chrome-headless-shell | head -1) \
-  node scripts/measure-beats.mjs ../ecomiq-audit-call-45/index.html 1350
-```
-
-It reports every beat's lowest and highest pixel, measured from the real layout
-rather than sampled frames. A brightness scan of rendered frames is NOT reliable
-here — the blue-tint and flame elements never exceed a white-text threshold, so
-they are missed entirely.
+**Layout lives in CSS custom properties on `:root`.** `--beat-top`, `--head`,
+`--lead`, `--op`, the card and tile sizes, the logo box, the end-card sizes -
+all tokens. That is the entire difference between the two cuts, so
+`scripts/build-45.py` swaps one `:root` block instead of the ~20 brittle
+per-rule substitutions it used to run.
 
 ## Known transcription note
 Whisper hears "free **order** call" where the script says "free **audit** call"
@@ -179,11 +172,37 @@ cd video-projects/ecomiq-audit-call
 python3 scripts/prep-vo.py <source.aifc>   # normalise VO (only if re-pulling it)
 python3 scripts/build-broll.py             # pull b-roll from Drive -> broll-916.mp4 + broll-45.mp4
 python3 scripts/build-45.py                # regenerate the 4:5 sibling project
-npx hyperframes lint                       # expect 0 errors, 20 benign warnings
+npx hyperframes lint                       # expect 0 errors, 18 benign warnings
 npx hyperframes render --quality standard --output renders/ecomiq-audit-call-916.mp4
 cd ../ecomiq-audit-call-45 && npx hyperframes render --quality standard \
   --output renders/ecomiq-audit-call-45.mp4
 ```
 
-The 20 lint warnings are all `nested_structure_needs_subcomposition` — a Studio
-timeline-ergonomics note (one row per top-level element), not a render issue.
+Most of the 18 lint warnings are `nested_structure_needs_subcomposition` — a
+Studio timeline-ergonomics note (one row per top-level element), not a render
+issue.
+
+## Reviewing a change without paying for a render
+
+A draft render of this comp costs ~8 minutes. `scripts/shoot-beats.mjs` gets the
+same frames in ~15 seconds by driving the GSAP timeline in headless Chrome:
+
+```bash
+CH=$(ls /root/.cache/hyperframes/chrome/chrome-headless-shell/*/chrome-headless-shell-linux64/chrome-headless-shell | head -1) \
+  node scripts/shoot-beats.mjs index.html 1920 /tmp/shots 9.8 13.6 29.8 44.0
+```
+
+It seeks both the timeline and the `<video>` by hand, which the render engine
+would never do — fine here, nothing is recorded. Use it for every layout pass
+and keep renders for the final check; a render is still the ground truth before
+delivery.
+
+Subtitle clearance in the 4:5 is checked with `scripts/measure-beats.mjs`, which
+measures the real layout rather than sampling frames — a brightness scan misses
+the flame and blue-tint elements entirely, because they never cross a
+white-text threshold:
+
+```bash
+CH=$(ls /root/.cache/hyperframes/chrome/chrome-headless-shell/*/chrome-headless-shell-linux64/chrome-headless-shell | head -1) \
+  node scripts/measure-beats.mjs ../ecomiq-audit-call-45/index.html 1350
+```
