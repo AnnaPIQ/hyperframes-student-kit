@@ -135,6 +135,13 @@ Copy sits bottom-anchored and left-aligned on every beat, over a navy scrim —
 the footage is bright retail and stage material and flat white type loses against
 it. 9:16 keeps the block 400px off the bottom to clear the Reels UI.
 
+**Keep the 4:5 scrim matched to the 9:16.** Lifting the 4:5 copy tempts you to
+pile on scrim opacity to keep it legible. Don't: at one point the bottom wash
+covered 84% of the frame and the top wash 27%, which between them tinted the
+whole image blue. Match the 9:16's scrim DENSITY at the equivalent copy
+positions instead (~.74 behind the copy's bottom edge, ~.34 behind its top) and
+let the type's own text-shadow carry the rest.
+
 **4:5 reserves a caption band.** Subtitles are added downstream, so the 4:5 copy
 is anchored 485px off the bottom, leaving every beat at least **452px** clear.
 The binding constraint is NOT the anchor: the strikethrough and trend SVGs are

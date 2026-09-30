@@ -163,6 +163,15 @@ efficient over time instead of relearning the same lessons.
   and `path.resolve()` the file before `file://` — a relative path throws
   ERR_INVALID_URL.
 
+- **Moving copy up the frame tempts you into a scrim that hazes the whole shot.**
+  Raising a 4:5 copy block to clear a caption band meant the scrim had to reach
+  further up to keep type legible; pushed too far it covered 84% of the frame
+  from the bottom and 27% from the top, tinting every shot blue. **Fix:** match
+  the scrim's DENSITY at the copy's top and bottom edges to a cut you already
+  like, rather than raising opacity until the text reads, and lean on the type's
+  text-shadow. Compare the two aspect ratios side by side at identical
+  timestamps — the haze is invisible until you do.
+
 ## Multiple aspect ratios in one project
 
 - **Two root-level HTML files with `data-composition-id` is a lint error**
