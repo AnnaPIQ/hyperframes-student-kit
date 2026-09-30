@@ -68,7 +68,7 @@ sub('#broll { display: block; width: 1080px; height: 1920px; object-fit: cover;'
 # --- layout: 570px less height to work with --------------------------------
 sub('          linear-gradient(to top, rgba(6,40,76,.90) 0%, rgba(6,40,76,.74) 22%, rgba(6,40,76,.40) 38%, rgba(6,40,76,.08) 54%, rgba(6,40,76,0) 66%),\n'
     '          linear-gradient(to bottom, rgba(6,40,76,.62) 0%, rgba(6,40,76,.14) 12%, rgba(6,40,76,0) 22%); }',
-    '          linear-gradient(to top, rgba(6,40,76,.82) 0%, rgba(6,40,76,.74) 34%, rgba(6,40,76,.34) 58%, rgba(6,40,76,.06) 68%, rgba(6,40,76,0) 74%),\n'
+    '          linear-gradient(to top, rgba(6,40,76,.80) 0%, rgba(6,40,76,.66) 34%, rgba(6,40,76,.30) 58%, rgba(6,40,76,.05) 68%, rgba(6,40,76,0) 74%),\n'
     '          linear-gradient(to bottom, rgba(6,40,76,.62) 0%, rgba(6,40,76,.14) 12%, rgba(6,40,76,0) 22%); }')
 
 # The copy is lifted to leave a clear band along the bottom for subtitles added
@@ -82,6 +82,9 @@ sub('#logo-slot { position: absolute; top: 108px; left: 96px; width: 300px; }',
 
 # Type scale steps down ~12% so the long headlines still breathe.
 sub('.head { font-size: 86px;', '.head { font-size: 76px;')
+# A lighter scrim means the copy leans on its own shadow, so deepen it here.
+sub('color: var(--brand-white); text-shadow: 0 4px 18px rgba(6,40,76,.95), 0 8px 54px rgba(6,40,76,.7); }',
+    'color: var(--brand-white);\n        text-shadow: 0 2px 10px rgba(6,40,76,.98), 0 5px 24px rgba(6,40,76,.94), 0 12px 56px rgba(6,40,76,.8); }')
 sub('.head.big { font-size: 104px; }', '.head.big { font-size: 92px; }')
 sub('.sub { margin-top: 26px; font-size: 36px;', '.sub { margin-top: 22px; font-size: 33px;')
 sub('.stack .row { font-size: 62px;', '.stack .row { font-size: 54px;')
@@ -98,6 +101,11 @@ sub('.trend { display: flex; align-items: center; gap: 34px; margin-top: 26px; }
     '.trend { display: flex; align-items: center; gap: 28px; margin-top: 20px; }')
 sub('.trend svg { width: 300px; height: 123px; overflow: visible; }',
     '.trend svg { width: 260px; height: 107px; overflow: visible; }')
+sub('.trend .label { font-size: 47px; font-weight: 800; letter-spacing: -.02em;\n        width: 260px;',
+    '.trend .label { text-shadow: 0 2px 10px rgba(6,40,76,.98), 0 5px 24px rgba(6,40,76,.9);\n'
+    '        font-size: 47px; font-weight: 800; letter-spacing: -.02em;\n        width: 260px;')
+sub('.stack .row { font-size: 54px;',
+    '.stack .row { text-shadow: 0 2px 10px rgba(6,40,76,.98), 0 5px 24px rgba(6,40,76,.9); font-size: 54px;')
 sub('.pill { display: inline-block; font-size: 42px;', '.pill { display: inline-block; font-size: 38px;')
 sub('.pill { display: inline-block; font-size: 38px; font-weight: 700;\n        color: var(--brand-white); background: var(--brand-flame);\n        padding: 26px 56px;',
     '.pill { display: inline-block; font-size: 38px; font-weight: 700;\n        color: var(--brand-white); background: var(--brand-flame);\n        padding: 23px 50px;')
@@ -116,6 +124,32 @@ sub('radial-gradient(126% 64% at 50% 118%,', 'radial-gradient(132% 72% at 50% 12
 
 # Vignette tightens to the shorter frame.
 sub('radial-gradient(ellipse 78% 62% at 50% 46%,', 'radial-gradient(ellipse 80% 66% at 50% 44%,')
+
+# --- gate the scrim to the beats (4:5 only) --------------------------------
+import re as _re
+_beats = [(float(a), float(a) + float(d)) for _i, a, d in
+          _re.findall(r'id="(b\d+)" data-start="([\d.]+)" data-duration="([\d.]+)"', s)]
+_beats.sort()
+# Merge windows closer than 1s so the scrim does not flicker between beats.
+_merged = []
+for a, b in _beats:
+    if _merged and a - _merged[-1][1] < 1.0:
+        _merged[-1][1] = max(_merged[-1][1], b)
+    else:
+        _merged.append([a, b])
+_windows = ", ".join(f"[{a:.2f},{b:.2f}]" for a, b in _merged)
+sub('''        // Law #11 — anchor the timeline to the full slot so the tail can't''',
+    f'''        // ---- 4:5 only · scrim gating -------------------------------------
+        // The scrim only needs to be up when there is copy to back. Held flat it
+        // tinted every shot, including the opening with no graphic on it at all.
+        const SCRIM_BASE = 0.22, SCRIM_PEAK = 0.72;
+        tl.set("#scrim", {{ opacity: SCRIM_BASE }}, 0);
+        [{_windows}].forEach(([a, b]) => {{
+          tl.to("#scrim", {{ opacity: SCRIM_PEAK, duration: 0.35, ease: "sine.out" }}, Math.max(0, a - 0.4))
+            .to("#scrim", {{ opacity: SCRIM_BASE, duration: 0.5, ease: "sine.inOut" }}, b - 0.15);
+        }});
+
+        // Law #11 — anchor the timeline to the full slot so the tail can't''')
 
 sub('    <!-- Render contract: root carries id',
     '''    <!-- 4:5 Meta-feed cut. Same edit, same VO, same beat timings as the 9:16

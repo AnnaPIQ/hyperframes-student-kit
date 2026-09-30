@@ -172,6 +172,21 @@ efficient over time instead of relearning the same lessons.
   text-shadow. Compare the two aspect ratios side by side at identical
   timestamps — the haze is invisible until you do.
 
+- **A scrim held flat across the whole timeline tints every shot.** Copy is only
+  on screen for part of a video, but a full-length scrim layer darkens the rest
+  for nothing — a reviewer reads that as "blue haze over everything", and the
+  frame they screenshot is usually one with NO graphic on it. **Fix:** gate the
+  scrim to the beat windows (generate the tweens from the beats' own
+  data-start/data-duration, merging windows <1s apart so it can't flicker), drop
+  its peak below 1.0, and give the type deeper text-shadows to make up the
+  difference.
+- **Measure a colour cast, don't eyeball it.** Sample the SAME source band in
+  both aspect ratios at the same timestamp and compare mean RGB. A navy scrim
+  costs far more red than blue, so the giveaway is the R-vs-B gap: the 4:5 was
+  losing 44 points of red against 17 of blue. Eyeballing said "a bit dark";
+  the numbers said "blue cast", and they tracked the fix from a 31-point red
+  deficit down to 5-12.
+
 ## Multiple aspect ratios in one project
 
 - **Two root-level HTML files with `data-composition-id` is a lint error**

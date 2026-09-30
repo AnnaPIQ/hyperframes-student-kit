@@ -135,6 +135,13 @@ Copy sits bottom-anchored and left-aligned on every beat, over a navy scrim —
 the footage is bright retail and stage material and flat white type loses against
 it. 9:16 keeps the block 400px off the bottom to clear the Reels UI.
 
+**The 4:5 scrim is gated to the beats.** It runs at 0.22 opacity by default and
+rises to 0.72 only while a beat is on screen (`build-45.py` reads the beat
+windows out of the master and generates the tweens, merging windows less than 1s
+apart so it can't flicker). Held flat it tinted every shot — including the whole
+7.2s opening, which has no graphic on it at all. Because the scrim is lighter,
+the 4:5 copy carries deeper text-shadows than the 9:16.
+
 **Keep the 4:5 scrim matched to the 9:16.** Lifting the 4:5 copy tempts you to
 pile on scrim opacity to keep it legible. Don't: at one point the bottom wash
 covered 84% of the frame and the top wash 27%, which between them tinted the

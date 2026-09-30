@@ -42,7 +42,7 @@
          Without this the type fights bright retail/stage footage. */
       #scrim { position: absolute; inset: 0; pointer-events: none;
         background:
-          linear-gradient(to top, rgba(6,40,76,.82) 0%, rgba(6,40,76,.74) 34%, rgba(6,40,76,.34) 58%, rgba(6,40,76,.06) 68%, rgba(6,40,76,0) 74%),
+          linear-gradient(to top, rgba(6,40,76,.80) 0%, rgba(6,40,76,.66) 34%, rgba(6,40,76,.30) 58%, rgba(6,40,76,.05) 68%, rgba(6,40,76,0) 74%),
           linear-gradient(to bottom, rgba(6,40,76,.62) 0%, rgba(6,40,76,.14) 12%, rgba(6,40,76,0) 22%); }
       #vignette { position: absolute; inset: 0; pointer-events: none;
         background: radial-gradient(ellipse 80% 66% at 50% 44%, rgba(0,0,0,0) 42%, rgba(0,0,0,.28) 100%); }
@@ -70,7 +70,8 @@
         text-transform: uppercase; color: var(--brand-blue-tint); margin-bottom: 22px;
         text-shadow: 0 2px 12px rgba(6,40,76,.95), 0 5px 30px rgba(6,40,76,.85); }
       .head { font-size: 76px; font-weight: 800; line-height: 1.02; letter-spacing: -.02em;
-        color: var(--brand-white); text-shadow: 0 4px 18px rgba(6,40,76,.95), 0 8px 54px rgba(6,40,76,.7); }
+        color: var(--brand-white);
+        text-shadow: 0 2px 10px rgba(6,40,76,.98), 0 5px 24px rgba(6,40,76,.94), 0 12px 56px rgba(6,40,76,.8); }
       .head.big { font-size: 92px; }
       /* Emphasis words run white and upright, in the same sans as the rest of
          the line — everything else inherits from .head. */
@@ -81,7 +82,8 @@
 
       /* ---- trend rows (revenue/profit, ad spend/sales) ------------------- */
       .trend { display: flex; align-items: center; gap: 28px; margin-top: 20px; }
-      .trend .label { font-size: 47px; font-weight: 800; letter-spacing: -.02em;
+      .trend .label { text-shadow: 0 2px 10px rgba(6,40,76,.98), 0 5px 24px rgba(6,40,76,.9);
+        font-size: 47px; font-weight: 800; letter-spacing: -.02em;
         width: 260px; text-transform: uppercase; }
       .trend svg { width: 260px; height: 107px; overflow: visible; }
       .trend .note { font-size: 34px; font-weight: 500; color: var(--brand-text-dim); }
@@ -93,7 +95,7 @@
 
       /* ---- stacked list (data / ads / funnel / numbers) ------------------ */
       .stack { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
-      .stack .row { font-size: 54px; font-weight: 800; letter-spacing: -.02em;
+      .stack .row { text-shadow: 0 2px 10px rgba(6,40,76,.98), 0 5px 24px rgba(6,40,76,.9); font-size: 54px; font-weight: 800; letter-spacing: -.02em;
         line-height: 1.02; color: var(--brand-white); }
       .stack .row.dim { color: var(--brand-blue-tint); }
 
@@ -451,6 +453,16 @@
         // Button breathes under "click the link below" (65.80–66.76).
         tl.to("#ec-cta", { scale: 1.045, duration: 0.58, ease: "sine.inOut", yoyo: true, repeat: 2 }, 65.62);
         tl.fromTo("#ec-bloom", { opacity: 0 }, { opacity: 1, duration: 0.9, ease: "sine.out" }, 64.64);
+
+        // ---- 4:5 only · scrim gating -------------------------------------
+        // The scrim only needs to be up when there is copy to back. Held flat it
+        // tinted every shot, including the opening with no graphic on it at all.
+        const SCRIM_BASE = 0.22, SCRIM_PEAK = 0.72;
+        tl.set("#scrim", { opacity: SCRIM_BASE }, 0);
+        [[7.60,15.30], [18.95,20.90], [24.20,34.70], [37.50,48.90], [50.30,64.64]].forEach(([a, b]) => {
+          tl.to("#scrim", { opacity: SCRIM_PEAK, duration: 0.35, ease: "sine.out" }, Math.max(0, a - 0.4))
+            .to("#scrim", { opacity: SCRIM_BASE, duration: 0.5, ease: "sine.inOut" }, b - 0.15);
+        });
 
         // Law #11 — anchor the timeline to the full slot so the tail can't
         // collapse into a black-frame flash.
