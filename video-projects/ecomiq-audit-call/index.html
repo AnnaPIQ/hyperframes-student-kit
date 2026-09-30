@@ -27,7 +27,7 @@
          gsap.from() on an already-hidden element computes its end state from
          the hidden state and leaves it invisible (docs/LESSONS.md). */
       #logo-slot, #b2-r1, #b2-r2, #b3-r1, #b3-r2,
-      #b4 .chip, #b5-eyebrow, #b5-pill, #b6 .head, #b7-head, #b7-sub,
+      #b5-eyebrow, #b5-pill, #b6 .head, #b7-head, #b7-sub,
       #b8-eyebrow, #b8 .row, #b9 .head, #b10-head, #b11-head, #b11-sub,
       #b12-head, #b13-head, #b14-a, #b14-b, #b14-c,
       #endcard, #ec-logo, #ec-cta, #ec-bloom { opacity: 0; }
@@ -96,12 +96,6 @@
       .stack .row { font-size: 62px; font-weight: 800; letter-spacing: -.02em;
         line-height: 1.02; color: var(--brand-white); }
       .stack .row.dim { color: var(--brand-blue-tint); }
-
-      /* ---- chips (the four unknowns) ------------------------------------ */
-      .chips { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; max-width: 840px; }
-      .chip { font-size: 38px; font-weight: 700; padding: 16px 30px; border-radius: 999px;
-        border: 2px solid var(--brand-border); background: rgba(10,50,95,.62);
-        color: var(--brand-white); }
 
       /* ---- flame pill ---------------------------------------------------- */
       .pill { display: inline-block; font-size: 42px; font-weight: 700;
@@ -192,19 +186,6 @@
             <svg viewBox="0 0 180 74"><polyline points="4,10 56,26 112,44 176,68" fill="none"
               stroke="#FF4C32" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"
               pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" /></svg>
-          </div>
-        </div>
-      </div>
-
-      <!-- B4 · the four things it could be (VO 19.10–19.95). Chips only — they
-           land one per phrase as he lists them, so no headline is needed. -->
-      <div class="clip layer" id="b4" data-start="18.95" data-duration="1.95" data-track-index="6">
-        <div class="beat">
-          <div class="chips">
-            <div class="chip">Your ads</div>
-            <div class="chip">Your website</div>
-            <div class="chip">Your product</div>
-            <div class="chip">Your pricing</div>
           </div>
         </div>
       </div>
@@ -370,12 +351,6 @@
         inUp("#b3-r2", 14.02, 0.45);
         draw("#b3-r2 polyline", 14.22, 0.55);
         outUp("#b3 .beat", 14.98);
-
-        // ---- B4 · the four things it could be ----------------------------
-        // One chip per phrase as he lists them: 19.10 / 19.32 / 19.54 / 19.76.
-        tl.fromTo("#b4 .chip", { opacity: 0, y: 26, scale: 0.94 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.4)", stagger: 0.22 }, 19.10);
-        outUp("#b4 .beat", 20.58);
 
         // ---- B5 · the offer ----------------------------------------------
         inUp("#b5-eyebrow", 24.2, 0.4, 18);

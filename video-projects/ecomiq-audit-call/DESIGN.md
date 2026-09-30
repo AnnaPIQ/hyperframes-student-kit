@@ -96,7 +96,6 @@ Every timing below is a word onset from the transcript.
 | B1 | 0.70–6.80 | "…one problem keeping you up at night" | eyebrow + *One* problem headline |
 | B2 | 7.60–11.20 | "revenue climbing but profits not following" | Revenue rising line vs Profit flat line |
 | B3 | 11.60–15.30 | "ad spend up but sales going backwards" | Ad spend rising vs Sales falling |
-| B4 | 18.95–20.90 | "your ads, your website, your product, your pricing" | four chips, one per phrase |
 | B5 | 24.20–28.10 | "book a free audit call with our team" | flame pill |
 | B6 | 28.15–30.50 | "not a generic teardown" | struck through |
 | B7 | 30.80–34.70 | "one specific problem… costing you money" | "One specific problem." — all white, upright |

@@ -90,10 +90,6 @@ sub('.sub { margin-top: 26px; font-size: 36px;', '.sub { margin-top: 22px; font-
 sub('.stack .row { font-size: 62px;', '.stack .row { font-size: 54px;')
 sub('.stack { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; }',
     '.stack { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }')
-sub('.chip { font-size: 38px; font-weight: 700; padding: 16px 30px;',
-    '.chip { font-size: 34px; font-weight: 700; padding: 14px 26px;')
-sub('.chips { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; max-width: 840px; }',
-    '.chips { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 20px; max-width: 800px; }')
 sub('.trend .label { font-size: 54px;', '.trend .label { font-size: 47px;')
 sub('.trend .label { font-size: 47px; font-weight: 800; letter-spacing: -.02em;\n        width: 300px;',
     '.trend .label { font-size: 47px; font-weight: 800; letter-spacing: -.02em;\n        width: 260px;')
