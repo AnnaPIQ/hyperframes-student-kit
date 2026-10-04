@@ -58,6 +58,8 @@ No graphic enters this strip; motion graphics sit directly above it and centred 
   Swap the file for the licensed bed, keep the filename or update the template.
 
 ## Flags
+- Colour: the A-roll is iPhone HLG HDR and the deliverables stay HLG-tagged (client-approved
+  look). Do not tone-map or re-tag to SDR.
 - A-roll framing: recropped from the 4K source so Sean's head starts ~15% from the top.
   9:16 = `crop=1728:3072:216:768`, 4:5 = `crop=2160:2700:0:862`, both from `IMG_1545.MOV`.
 - 4:5 B-roll crops: portrait B-roll is centre-cropped 1920 to 1350 tall. Padding would

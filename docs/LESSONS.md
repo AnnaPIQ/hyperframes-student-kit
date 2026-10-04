@@ -110,8 +110,13 @@ efficient over time instead of relearning the same lessons.
   What matched the original look was a **pass-through**: keep the HLG code values, convert
   only the matrix, and re-tag as SDR:
   `zscale=min=2020_ncl:m=709:rin=limited:r=limited,format=yuv420p,setparams=colorspace=bt709:color_primaries=bt709:color_trc=bt709`.
-  Tag outputs bt709 and render with `--sdr`. Always A/B a face crop against the look the
-  client has already approved before swapping colour pipelines.
+  ...and that was ALSO rejected ("revert to original lighting"). Re-tagging HLG as bt709
+  shows it flat and desaturated in real players; ffmpeg PNG grabs ignore the transfer tag,
+  so a side-by-side made that way looked identical and misled the check. What the client
+  approved was the untouched HLG file: keep `bt2020nc / bt2020 / arib-std-b67` tags on the
+  A-roll, render WITHOUT `--sdr`, and keep those tags on the H.264 transcode.
+  **Rule: don't "fix" HDR iPhone footage unless the client asks; judge colour in a real
+  player, never from ffmpeg frame grabs.**
 - **Whip light-streak read as "white flashes" to the client.** Keep blur whips; skip the
   white/blue-tint streak band on ads unless asked for.
 - **Final delivery is H.264.** Transcode the master:
