@@ -77,6 +77,16 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+- **Two aspect ratios in one project -> lint error `multiple_root_compositions`.** Only one
+  root HTML with `data-composition-id` is allowed (risk of duplicate audio). **Fix:** generate
+  `index.html` per format from one template script and render each in turn (see
+  `video-projects/ecomiq-sean-vo-ad/scripts/`). Avoids duplicating heavy footage into a 2nd project.
+- **`hyperframes transcribe` looks hung on first run (no output for minutes).** It is silently
+  downloading/building whisper + the model. **Fix:** run it in the background with a log; the
+  second run is fast. Pull Drive files with `curl` on
+  `drive.usercontent.google.com/download?id=<id>&export=download&confirm=t` (link-shared files)
+  rather than base64 through the connector for anything over a few MB.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
