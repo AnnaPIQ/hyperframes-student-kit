@@ -77,6 +77,18 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+- **4K phone b-roll stored sideways with NO rotation flag** (3840x2160, heads on the
+  left). ffprobe shows no rotate tag, so autorotate does nothing. **Fix:** contact-sheet
+  the raw first, then `-noautorotate ... -vf "transpose=1,scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920"`.
+  Note `-noautorotate` is an input option (must come before `-i`).
+- **B-roll sheet links can point at the wrong file.** Always check the Drive title or a
+  contact sheet before cutting (the "Sean on Laptop" and "Sweet Es team" links were swapped).
+- **Google Drive files can be pulled directly** in the cloud container:
+  `curl -L "https://drive.usercontent.google.com/download?id=<ID>&export=download&confirm=t"`.
+  Cut the needed seconds right away, then delete the raw (sources run 0.3-1.6 GB each).
+- **`#card svg {position:absolute}` also catches inline icon SVGs inside labels**, piling
+  arrows onto the first letter. **Fix:** use the child selector `#card > svg`.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
