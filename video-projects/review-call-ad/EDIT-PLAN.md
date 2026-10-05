@@ -398,7 +398,7 @@ Everything else matches.
 
 Sign-off questions resolved by judgement during the build:
 
-1. **Captions** raised to the Reels safe band (centre ~y 1215). Same type treatment as previous ads.
+1. **Captions** sit near the bottom like normal subtitles (~85% height, as in the previous ads), per your feedback. Same type treatment.
 2. **Sweet E's opener** is the Sean and Erica walk-out (verified: Erica leads out of the pink door, Sean behind her), followed by the Bake Shop sign landing on the word "Sweet E's", then sprinkles. The cookie scroll was cut for time.
 3. **Flag** reads **DO THIS FIRST** (mirrors the VO "which to do first").
 4. **Stage shot** is the Shoptalk wide at 0:12.9 (Sean on stage with his own talk-title screen), cropped clear of Rebuy's stat panel. The 6:03 medium could not be cropped clear of "99.9%".
@@ -408,3 +408,9 @@ Sign-off questions resolved by judgement during the build:
 8. **Rebuild**: `bash scripts/build-plate.sh` recreates `assets/media/` (git-ignored) from Drive.
 
 Still on you: confirm the Sweet E's +500% substantiation is on file, and fix the two swapped links in the B-Roll sheet.
+
+### Revisions after first review
+- Subtitles moved to the standard bottom position (~85% height) on every beat, including the CTA.
+- End card now lands on "and choose a time" (21.28s) while Sean is still talking, with CHOOSE A TIME under BOOK NOW. Runtime 24.24s.
+- Highlights pared back: flame only on FREE., DO THIS FIRST and BOOK NOW; one serif italic (*Free.* on the end card). The $10K/$60K underlines, flame ticks, flame dashes, the second ↑ CONVERSION pill and the flame FREE chip were removed or neutralised.
+

@@ -13,14 +13,15 @@ motion lives in mask reveals, card slide-ups, tick draw-ons, one count-up and sl
 - White `#FFFFFF`: review cards, captions
 - Sky `#DEEEFE`: inactive cards, skeleton UI
 - Blue Tint `#9CD4FF`: numbers, annotation strokes, active-card outline
-- Flame `#FF4C32`: action only (ticks, FREE, uplift, priority, BOOK NOW)
+- Flame `#FF4C32`: three payoff words only: **FREE.** (lock-up), **DO THIS FIRST**, **BOOK NOW**.
+  Ticks, dashes, underlines, tags and chips stay navy/white/sky so the flame lands harder.
 
 ## Typography
 Rethink Sans for everything (800 for lock-ups, -2 to -3% tracking). Hedvig Letters Serif
 italic exactly once: *Free.* on the end card.
 
 ## Layout
-- Meta safe band y 270-1250. Captions centred ~y 1215 (CTA: inside the call tile).
+- Meta safe band y 270-1250 for graphics. Captions sit low like normal subtitles (bottom edge ~270px from the frame bottom, ~85% height).
 - Logo: white wordmark top-left (64, 150) in a non-clip wrapper.
 - Crop marks (+) on every card corner and a faint dot grid on navy stages = unifying texture.
 
@@ -28,4 +29,4 @@ italic exactly once: *Free.* on the end card.
 - No revenue/profit charts, timelines or dashboards (that was the 90-Day ad)
 - No glitch, neon, chrome, fake 3D, bouncing type, giant zooms, confetti, fake notifications
 - No Dryft or non-Sweet E's footage under the +500% claim
-- No second serif-italic word; no flame used as decoration
+- No second serif-italic word; no flame or Blue Tint word highlights beyond the payoff words

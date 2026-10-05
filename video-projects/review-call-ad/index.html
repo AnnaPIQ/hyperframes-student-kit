@@ -48,18 +48,18 @@
       .cm::after { top: 8px; left: 0; width: 18px; height: 2px; }
       .eyebrow { font-weight: 700; font-size: 24px; letter-spacing: .16em; text-transform: uppercase;
         display: flex; align-items: center; gap: 14px; }
-      .dash { width: 34px; height: 5px; border-radius: 3px; background: #FF4C32; flex: none; }
+      .dash { width: 34px; height: 5px; border-radius: 3px; background: currentColor; opacity: .7; flex: none; }
       .num { flex: none; width: 76px; height: 76px; border-radius: 18px; background: #06284C;
         color: #9CD4FF; font-weight: 800; font-size: 36px; display: flex; align-items: center;
         justify-content: center; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
       .skel { height: 16px; border-radius: 8px; background: #DEEEFE; }
       .tick { width: 54px; height: 54px; flex: none; }
-      .tick circle { fill: #FF4C32; }
+      .tick circle { fill: #06284C; }
       .tick path { fill: none; stroke: #FFFFFF; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round;
         stroke-dasharray: 40; stroke-dashoffset: 40; }
       .flamePill { background: #FF4C32; color: #FFFFFF; font-weight: 800; border-radius: 999px;
         box-shadow: 0 18px 50px -14px rgba(255,76,50,.7); }
-      .tag { position: absolute; background: #9CD4FF; color: #06284C; font-weight: 800; font-size: 22px;
+      .tag { position: absolute; background: #DEEEFE; color: #06284C; font-weight: 800; font-size: 22px;
         letter-spacing: .12em; padding: 9px 16px; border-radius: 10px; white-space: nowrap; }
       .annot { position: absolute; border: 5px solid #9CD4FF; border-radius: 16px; }
 
@@ -71,7 +71,6 @@
       #s1 .range .lo { color: #06284C; display: block; }
       #s1 .range .hi { color: #06284C; display: block; }
       #s1 .range span { position: relative; width: max-content; }
-      .ulx { position: absolute; left: 0; right: 0; bottom: -2px; height: 8px; border-radius: 4px; background: #FF4C32; transform: scaleX(0); transform-origin: 0 50%; display: block; }
       #s1 .per { margin-top: 18px; display: flex; align-items: center; justify-content: space-between; }
       #s1 .per span { font-weight: 800; font-size: 38px; letter-spacing: .12em; color: #06284C; }
 
@@ -79,7 +78,7 @@
       #s2label { left: 690px; top: 318px; width: 340px; }
       #s2label .big { font-weight: 800; font-size: 70px; line-height: 1; letter-spacing: -.03em;
         text-shadow: 0 4px 24px rgba(6,40,76,.55); white-space: nowrap; }
-      #s2label .ul { height: 9px; width: 300px; background: #FF4C32; border-radius: 5px; margin-top: 10px;
+      #s2label .ul { height: 9px; width: 300px; background: #FFFFFF; border-radius: 5px; margin-top: 10px;
         transform-origin: 0 50%; }
       #s2label .small { margin-top: 14px; font-weight: 700; font-size: 28px; letter-spacing: .2em;
         text-shadow: 0 2px 14px rgba(6,40,76,.6); }
@@ -103,15 +102,16 @@
       .mini .sq { width: 54px; height: 54px; border-radius: 12px; background: #DEEEFE; flex: none; }
       .mini .bar { height: 14px; border-radius: 7px; background: #DEEEFE; flex: 1; }
       .mini .btn { margin-top: 20px; height: 44px; border-radius: 12px; background: #06284C; }
-      #s3you { left: 96px; top: 330px; font-weight: 800; font-size: 26px; letter-spacing: .2em; color: #9CD4FF;
+      #s3you { left: 96px; top: 330px; font-weight: 800; font-size: 26px; letter-spacing: .2em; color: #FFFFFF;
         display: flex; align-items: center; gap: 14px; }
       #s3bubble { left: 760px; top: 300px; width: 240px; height: 240px; border-radius: 50%; overflow: hidden;
         border: 6px solid #FFFFFF; box-shadow: 0 16px 44px rgba(0,0,0,.4); }
       #s3bubble video { width: 228px; height: 228px; object-fit: cover; display: block; }
       #s3live { left: 770px; top: 552px; font-weight: 700; font-size: 20px; letter-spacing: .16em; color: #DEEEFE;
         display: flex; align-items: center; gap: 10px; }
-      #s3live i { width: 12px; height: 12px; border-radius: 50%; background: #FF4C32; display: block; }
-      #s3up { left: 200px; top: 1078px; font-size: 30px; padding: 16px 26px; letter-spacing: .1em; white-space: nowrap; }
+      #s3live i { width: 12px; height: 12px; border-radius: 50%; background: #DEEEFE; display: block; }
+      #s3up { left: 200px; top: 1078px; font-size: 30px; font-weight: 800; padding: 16px 26px; letter-spacing: .1em; white-space: nowrap;
+        background: #9CD4FF; color: #06284C; border-radius: 999px; }
 
       /* S4 lock-up */
       #s4 { left: 56px; top: 450px; width: 404px; padding: 30px 30px 34px; }
@@ -127,13 +127,12 @@
       #clientTag { left: 64px; top: 236px; background: #FFFFFF; color: #06284C; border-radius: 14px;
         padding: 14px 20px; font-weight: 800; font-size: 22px; letter-spacing: .14em; display: flex; gap: 12px;
         align-items: center; box-shadow: 0 12px 30px rgba(6,40,76,.35); white-space: nowrap; }
-      #clientTag .k { color: #FF4C32; }
+      #clientTag .k { color: #6b87a6; }
       #s7 { left: 0; top: 640px; width: 1080px; display: flex; flex-direction: column; align-items: center; }
       #s7 .eb { font-weight: 700; font-size: 26px; letter-spacing: .24em; color: #DEEEFE; }
       #s7 .big { margin-top: 6px; font-weight: 800; font-size: 236px; line-height: 1; letter-spacing: -.05em;
         font-variant-numeric: tabular-nums; text-shadow: 0 10px 50px rgba(6,40,76,.6); }
       #s7 .sub { margin-top: 8px; font-weight: 800; font-size: 44px; letter-spacing: .1em; text-shadow: 0 4px 24px rgba(6,40,76,.6); }
-      #s7up { left: 340px; top: 1070px; font-size: 28px; padding: 14px 26px; letter-spacing: .1em; white-space: nowrap; }
 
       /* S8-10 review stack */
       .st { left: 640px; width: 380px; height: 116px; display: flex; align-items: center; gap: 20px; padding: 0 22px; }
@@ -159,7 +158,7 @@
       #d2 .row { display: flex; align-items: center; gap: 16px; }
       #d2 .chip { font-weight: 800; font-size: 26px; letter-spacing: .1em; padding: 14px 18px; border-radius: 12px; }
       #d2 .c1 { background: #DEEEFE; color: #06284C; }
-      #d2 .c2 { background: #FF4C32; color: #fff; }
+      #d2 .c2 { background: #06284C; color: #fff; }
       #d2 svg { width: 60px; height: 30px; }
       #d2 .cap2 { font-weight: 600; font-size: 22px; color: #4a6a8c; text-align: center; line-height: 1.3; }
       #flag { left: 668px; top: 814px; font-size: 28px; padding: 14px 26px; letter-spacing: .14em;
@@ -175,22 +174,18 @@
       #ctaTile video { width: 940px; height: 608px; object-fit: cover; display: block; }
       #ctaChip { left: 92px; top: 328px; background: rgba(6,40,76,.82); border-radius: 12px; padding: 10px 16px;
         font-weight: 700; font-size: 20px; letter-spacing: .16em; display: flex; gap: 10px; align-items: center; }
-      #ctaChip i { width: 12px; height: 12px; border-radius: 50%; background: #FF4C32; display: block; }
+      #ctaChip i { width: 12px; height: 12px; border-radius: 50%; background: #DEEEFE; display: block; }
       #ctaRow { left: 0; top: 960px; width: 1080px; display: flex; justify-content: center; gap: 16px; }
       #ctaRow div { font-weight: 800; font-size: 28px; letter-spacing: .08em; padding: 14px 22px; border-radius: 14px;
         background: #FFFFFF; color: #06284C; white-space: nowrap; }
-      #ctaRow div.f { background: #FF4C32; color: #FFFFFF; }
       #book { left: 190px; top: 1052px; width: 700px; height: 124px; font-size: 62px; letter-spacing: .02em;
         display: flex; align-items: center; justify-content: center; gap: 22px; }
       #book svg { width: 44px; height: 52px; }
-      #choose { left: 0; top: 1196px; width: 1080px; text-align: center; font-weight: 700; font-size: 26px;
-        letter-spacing: .24em; color: #DEEEFE; }
 
-      /* captions (previous-ad treatment, raised into the Reels safe band) */
-      .cap { position: absolute; left: 60px; width: 960px; top: 1182px; text-align: center; font-weight: 500;
+      /* captions: standard lower-third subtitle position, previous-ad treatment */
+      .cap { position: absolute; z-index: 20; left: 60px; width: 960px; bottom: 270px; text-align: center; font-weight: 500;
         font-size: 50px; line-height: 1.18; color: #FFFFFF; opacity: 0;
         text-shadow: 0 2px 12px rgba(0,0,0,.55), 0 0 2px rgba(0,0,0,.4); }
-      .cap.inTile { top: 838px; font-size: 44px; }
 
       /* end card */
       #endStage { position: absolute; inset: 0; opacity: 0;
@@ -205,15 +200,16 @@
       #end .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; font-size: 104px;
         color: #9CD4FF; line-height: 1; }
       #end .pill { margin-top: 18px; font-size: 44px; padding: 26px 64px; }
+      #end .choose { font-weight: 700; font-size: 28px; letter-spacing: .24em; color: #DEEEFE; }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="review-call-ad" data-start="0" data-duration="25.24" data-fps="25"
+    <div id="root" data-composition-id="review-call-ad" data-start="0" data-duration="24.24" data-fps="25"
          data-width="1080" data-height="1920">
 
       <!-- picture edit: A-roll crops + B-roll, cut frame-accurately in FFmpeg (scripts/build-plate.sh) -->
       <div id="plateWrap"><div id="plateInner">
-        <video id="plate" data-start="0" data-duration="25.24" data-track-index="0"
+        <video id="plate" data-start="0" data-duration="24.24" data-track-index="0"
                src="assets/media/plate.mp4" muted playsinline></video>
       </div></div>
       <audio id="vo" data-start="0" data-duration="24.24" data-track-index="1" src="assets/media/vo.wav" data-volume="1"></audio>
@@ -246,7 +242,7 @@
       <div id="t3a" class="tag hide" style="left:120px;top:392px">PRODUCT PAGE</div>
       <div id="t3b" class="tag hide" style="left:700px;top:598px">CART</div>
       <div id="t3c" class="tag hide" style="left:700px;top:850px">CHECKOUT</div>
-      <div id="s3up" class="abs flamePill hide">&uarr;&nbsp; CONVERSION</div>
+      <div id="s3up" class="abs hide">&uarr;&nbsp; CONVERSION</div>
       <div id="s3bubble" class="abs hide">
         <video id="bubble" data-start="4.72" data-duration="1.52" data-track-index="2"
                src="assets/media/bubble.mp4" muted playsinline></video>
@@ -256,7 +252,7 @@
       <!-- S1 qualifier -->
       <div id="s1" class="card hide">
         <div class="eyebrow"><span class="dash"></span>Shopify founders</div>
-        <div class="range"><span class="lo" id="s1lo">$10K<i class="ulx" id="s1ulA"></i></span><span class="hi" id="s1hi">&ndash;$60K<i class="ulx" id="s1ulB"></i></span></div>
+        <div class="range"><span class="lo" id="s1lo">$10K</span><span class="hi" id="s1hi">&ndash;$60K</span></div>
         <div class="per"><span id="s1per">/ MONTH</span>
           <svg class="tick" id="s1tick" viewBox="0 0 54 54"><circle cx="27" cy="27" r="27"/><path d="M15 28 L24 37 L40 19"/></svg>
         </div>
@@ -294,7 +290,6 @@
         <div class="big" id="s7num">+0%</div>
         <div class="sub" id="s7sub">WEBSITE CONVERSION RATE</div>
       </div>
-      <div id="s7up" class="abs flamePill hide">&uarr;&nbsp; CONVERSION</div>
 
       <!-- S8-10 review stack -->
       <div id="st1" class="card st hide" style="top:410px"><div class="num">01</div>
@@ -324,14 +319,13 @@
       <!-- CTA -->
       <div id="ctaStage" class="navyStage"></div>
       <div id="ctaTile" class="abs hide">
-        <video id="ctatile" data-start="20.40" data-duration="3.84" data-track-index="3"
+        <video id="ctatile" data-start="20.40" data-duration="0.88" data-track-index="3"
                src="assets/media/ctatile.mp4" muted playsinline></video>
       </div>
       <div id="ctaChip" class="abs hide"><i></i>FREE STORE REVIEW</div>
-      <div id="ctaRow" class="abs"><div id="cr1" class="hide">30 MINUTES</div><div id="cr2" class="hide">3 CHANGES</div><div id="cr3" class="f hide">FREE</div></div>
+      <div id="ctaRow" class="abs"><div id="cr1" class="hide">30 MINUTES</div><div id="cr2" class="hide">3 CHANGES</div><div id="cr3" class="hide">FREE</div></div>
       <div id="book" class="abs flamePill hide">BOOK NOW
         <svg viewBox="0 0 44 52"><path d="M22 4 V44 M6 30 L22 46 L38 30" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div id="choose" class="abs hide">CHOOSE A TIME</div>
 
       <!-- captions -->
       <div class="cap" id="c1">Shopify founders doing</div>
@@ -348,8 +342,8 @@
       <div class="cap" id="c12">what we'd change on your store</div>
       <div class="cap" id="c13">why each one matters</div>
       <div class="cap" id="c14">and which to do first</div>
-      <div class="cap inTile" id="c15">Tap Book Now</div>
-      <div class="cap inTile" id="c16">and choose a time</div>
+      <div class="cap" id="c15">Tap Book Now</div>
+      <div class="cap" id="c16">and choose a time</div>
 
       <!-- cursor -->
       <svg id="cursor" viewBox="0 0 46 58"><path d="M4 3 L4 46 L15 35 L23 54 L31 50 L23 32 L39 32 Z" fill="#FFFFFF" stroke="#06284C" stroke-width="3" stroke-linejoin="round"/></svg>
@@ -361,6 +355,7 @@
         <div class="h" id="endH">Three changes.<br />Thirty minutes.</div>
         <div class="em" id="endEm">Free.</div>
         <div class="pill flamePill" id="endPill">BOOK NOW</div>
+        <div class="choose" id="endChoose">CHOOSE A TIME</div>
       </div>
 
       <!-- logo: positioned, non-clip wrapper so the engine never moves it -->
@@ -419,9 +414,6 @@
       tl.fromTo('#s1 .eyebrow', { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power3.out' }, 0.12);
       rise('#s1lo', 0.20, 0.3, 44);
       rise('#s1hi', 0.34, 0.3, 44, 'power3.out');
-      // audio sync: flame underline sweeps each figure as Sean says it
-      tl.fromTo('#s1ulA', { scaleX: 0 }, { scaleX: 1, duration: 0.24, ease: 'power2.inOut' }, 1.08);
-      tl.fromTo('#s1ulB', { scaleX: 0 }, { scaleX: 1, duration: 0.24, ease: 'power2.inOut' }, 1.58);
       tl.fromTo('#s1per', { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.26, ease: 'power2.out' }, 2.62);
       tick('#s1tick', 2.76);
       hide('#s1', 3.04);
@@ -480,8 +472,7 @@
       tl.fromTo(cnt, { v: 0 }, { v: 500, duration: 0.40, ease: 'power3.out',
         onUpdate: function () { document.getElementById('s7num').textContent = '+' + Math.round(cnt.v) + '%'; } }, 13.36);
       tl.fromTo('#s7sub', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.26, ease: 'expo.out' }, 13.84);
-      tl.fromTo('#s7up', { opacity: 0, y: 30, scale: 0.8 }, { opacity: 1, y: 0, scale: 1, duration: 0.28, ease: 'back.out(1.6)' }, 14.08);
-      hide('#s7, #s7up, #dim, #clientTag', 14.72);
+      hide('#s7, #dim, #clientTag', 14.72);
 
       // ---------- S8-10 review stack 14.72-20.40 ----------
       ['#st1', '#st2', '#st3'].forEach(function (s, i) { rise(s, 14.76 + i * 0.08, 0.3, 40); });
@@ -525,7 +516,7 @@
       show('#ctaStage', 20.40);
       tl.fromTo('#ctaTile', { opacity: 1, clipPath: 'inset(0% 0% 100% 0% round 30px)' },
         { clipPath: 'inset(0% 0% 0% 0% round 30px)', duration: 0.36, ease: 'expo.out' }, 20.40);
-      tl.fromTo('#ctaTile video', { scale: 1.06 }, { scale: 1.0, duration: 3.84, ease: 'none' }, 20.40);
+      tl.fromTo('#ctaTile video', { scale: 1.06 }, { scale: 1.0, duration: 0.88, ease: 'none' }, 20.40);
       tl.fromTo('#ctaChip', { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.24, ease: 'power2.out' }, 20.56);
       ['#cr1', '#cr2', '#cr3'].forEach(function (s, i) { rise(s, 20.48 + i * 0.08, 0.28, 24, 'power3.out'); });
       tl.fromTo('#book', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.34, ease: 'back.out(1.6)' }, 20.66);
@@ -533,17 +524,17 @@
       cursorTo(640, 1130, 20.84, 0.34);
       click(21.18);
       tl.to('#book', { scale: 0.95, duration: 0.07, ease: 'power4.in', yoyo: true, repeat: 1 }, 21.18);
-      tl.to('#cursor', { opacity: 0, duration: 0.2, ease: 'none' }, 21.70);
-      tl.fromTo('#choose', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.26, ease: 'power2.out' }, 21.30);
-      tl.to('#book', { scale: 1.04, duration: 0.5, ease: 'sine.inOut', yoyo: true, repeat: 3 }, 22.20);
 
-      // ---------- End card 24.24-25.24 ----------
-      show('#endStage', 24.24); show('#end', 24.24);
-      hide('#ctaStage, #ctaTile, #ctaChip, #cr1, #cr2, #cr3, #book, #choose, #logoBox', 24.24);
-      rise('#endLogo', 24.28, 0.3, 20, 'power3.out');
-      rise('#endH', 24.36, 0.32, 30);
-      rise('#endEm', 24.48, 0.32, 30, 'power2.out');
-      tl.fromTo('#endPill', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.6)' }, 24.58);
+      // ---------- End card 21.28-24.24 (lands on "and choose a time", while Sean is still talking) ----------
+      const E = 21.28;
+      show('#endStage', E); show('#end', E);
+      hide('#ctaStage, #ctaTile, #ctaChip, #cr1, #cr2, #cr3, #book, #cursor, #logoBox', E);
+      rise('#endLogo', E + 0.04, 0.3, 20, 'power3.out');
+      rise('#endH', E + 0.12, 0.32, 30);
+      rise('#endEm', E + 0.24, 0.32, 30, 'power2.out');
+      tl.fromTo('#endPill', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.6)' }, E + 0.34);
+      tl.fromTo('#endChoose', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.26, ease: 'power2.out' }, E + 0.46);
+      tl.to('#endPill', { scale: 1.04, duration: 0.5, ease: 'sine.inOut', yoyo: true, repeat: 3 }, 22.30);
 
       // ---------- captions ----------
       [['#c1', 0.08, 1.08], ['#c2', 1.08, 3.04], ['#c3', 3.04, 4.72], ['#c4', 4.72, 6.24], ['#c5', 6.24, 7.88],
@@ -551,7 +542,7 @@
        ['#c11', 14.84, 16.20], ['#c12', 16.20, 17.88], ['#c13', 17.96, 19.08], ['#c14', 19.16, 20.40],
        ['#c15', 20.48, 21.28], ['#c16', 21.28, 22.60]].forEach(function (c) { show(c[0], c[1]); hide(c[0], c[2]); });
 
-      tl.to({}, { duration: 25.24 }, 0); // fill the slot (Law #11)
+      tl.to({}, { duration: 24.24 }, 0); // fill the slot (Law #11)
       window.__timelines['review-call-ad'] = tl;
     </script>
   </body>
