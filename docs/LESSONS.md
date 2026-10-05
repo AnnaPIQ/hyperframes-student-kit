@@ -55,6 +55,23 @@ efficient over time instead of relearning the same lessons.
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +
   placing motion-graphic overlays over the join make cutdowns feel seamless.
 
+- **Whisper word times are compressed when a clip opens with silence.** On a take with
+  2.6s of pre-roll, `hyperframes transcribe` put the first word at 0.0s and squeezed the
+  opening line. **Fix:** find speech onset with `ffmpeg -af silencedetect=noise=-45dB:d=0.12`,
+  trim the audio a beat before it, transcribe that, then add the offset back. Cross-check
+  phrase ends against the silence map.
+
+## Sourcing from Google Drive
+
+- **Drive public links trip "Quota exceeded" fast.** Running parallel `ffprobe`/`ffmpeg -ss`
+  range requests against `drive.usercontent.google.com` links locked out *every* file on
+  the account (not just the ones probed) for up to 24h. **Fix:** download each file once,
+  sequentially (`xargs -P 2` max), then probe and grab frames locally. Use the Drive
+  connector's `get_file_metadata` to check names/sizes first, which costs no download quota.
+- **Check that B-roll sheet links point at the file their row names.** Compare each link's
+  Drive title via `get_file_metadata`. Swapped links put the wrong client under a
+  social-proof claim.
+
 ## Delivery & resolution
 
 - **There is no 4:5 render "preset."** Ship the final via `--quality high` at the
