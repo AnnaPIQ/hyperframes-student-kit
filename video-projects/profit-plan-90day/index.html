@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>profit-plan-90day</title>
+    <!-- GSAP vendored locally: a CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #06284C;
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #06284C; }
+
+      /* ---- Sean (A-roll). #cam is a non-clip wrapper; GSAP sets the framing mode on it. */
+      #cam { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 1;
+        transform-origin: 50% 0%; }
+      #aroll { width: 1080px; height: 1920px; object-fit: cover; display: block; }
+
+      /* ---- B-roll: each video sits in its own non-clip wrapper so the wrapper can push in */
+      .bw { position: absolute; inset: 0; z-index: 2; transform-origin: 50% 50%; }
+      .bw video { width: 1080px; height: 1920px; object-fit: cover; display: block; }
+
+      /* ---- Scrims / cards */
+      .scrim-low { position: absolute; inset: 0; z-index: 3;
+        background: linear-gradient(180deg, rgba(6,40,76,0) 46%, rgba(6,40,76,.78) 70%, rgba(6,40,76,.85) 100%); }
+      #scrimTrack { position: absolute; inset: 0; z-index: 3; background: rgba(6,40,76,.66); }
+      .card { position: absolute; inset: 0; z-index: 3;
+        background: radial-gradient(70% 45% at 50% 38%, #0d3a6b 0%, #06284C 62%, #041d38 100%);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        padding: 270px 64px 670px; gap: 22px; text-align: center; }
+
+      /* ---- Shared type */
+      .gfx { position: absolute; left: 64px; right: 64px; z-index: 4; text-align: center; }
+      .eyebrow { font-weight: 700; font-size: 30px; letter-spacing: .14em; text-transform: uppercase; color: #9CD4FF; }
+      .hero { font-weight: 800; letter-spacing: -0.02em; line-height: 1; color: #FFFFFF; font-variant-numeric: tabular-nums; }
+      .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: #9CD4FF; letter-spacing: 0; }
+      .flame { color: #FF4C32; }
+      .uline { width: 150px; height: 7px; border-radius: 4px; background: #FF4C32; margin: 14px auto 0; transform-origin: 0% 50%; }
+      .panel { background: rgba(6,40,76,.86); border-radius: 24px; }
+      .shadow { text-shadow: 0 4px 24px rgba(4,20,40,.55); }
+
+      /* ---- Captions */
+      .cap { position: absolute; left: 90px; right: 90px; top: 1135px; height: 110px; z-index: 5;
+        display: flex; align-items: center; justify-content: center; text-align: center;
+        font-weight: 600; font-size: 50px; line-height: 1.12; letter-spacing: -0.005em;
+        text-shadow: 0 3px 14px rgba(0,0,0,.55), 0 0 2px rgba(0,0,0,.4); }
+      .cap .hf { color: #FF4C32; } .cap .hb { color: #9CD4FF; }
+
+      /* ---- Logo (non-clip wrapper so the engine never repositions it) */
+      #logoWrap { position: absolute; left: 64px; top: 104px; width: 236px; z-index: 6; }
+      #logoWrap img { width: 100%; height: auto; display: block; }
+
+      /* G1 */
+      #g1a { top: 1140px; font-weight: 800; font-size: 66px; letter-spacing: -0.01em; }
+      #g1b { top: 968px; }
+      #g1b .hero { font-size: 200px; margin-top: 8px; }
+      #g1b .mo { font-size: 92px; letter-spacing: -0.01em; }
+      /* G2 chart */
+      #g2 { top: 930px; height: 310px; }
+      #g2 svg { position: absolute; left: 0; top: 0; }
+      /* G3 */
+      #g3 { top: 948px; }
+      #g3 .hero { font-size: 108px; }
+      #g3bar { position: relative; margin: 26px auto 0; width: 820px; height: 46px; border: 3px solid #DEEEFE; border-radius: 10px; }
+      #g3fill { position: absolute; left: 3px; top: 3px; bottom: 3px; width: 34%; background: #FF4C32; border-radius: 6px; transform-origin: 0% 50%; }
+      #g3bar .lab { position: absolute; top: -40px; left: 0; font-weight: 700; font-size: 24px; letter-spacing: .14em; color: #9CD4FF; }
+      #g3bar .labp { position: absolute; left: 18px; top: 7px; font-weight: 700; font-size: 22px; letter-spacing: .12em; color: #FFFFFF; }
+      /* G4 */
+      #g4 { top: 975px; }
+      #g4bar { position: relative; margin: 20px auto 0; width: 900px; height: 76px; border-radius: 12px; background: #DEEEFE; overflow: hidden; }
+      #g4margin { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #FF4C32; opacity: 0; }
+      #g4costs { position: absolute; right: 0; top: 0; bottom: 0; width: 100%; background: #1d4a7a; transform-origin: 100% 50%;
+        display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 26px; letter-spacing: .14em; }
+      #g4rev { position: absolute; left: 22px; top: 0; bottom: 0; display: flex; align-items: center;
+        font-weight: 700; font-size: 26px; letter-spacing: .14em; color: #06284C; }
+      #g4mlab { position: absolute; left: 22px; top: 0; bottom: 0; display: flex; align-items: center;
+        font-weight: 800; font-size: 26px; letter-spacing: .14em; color: #FFFFFF; opacity: 0; }
+      /* G5 card */
+      #card3 .hero { font-size: 280px; }
+      .tiles { display: flex; gap: 28px; margin-top: 18px; }
+      .tile { width: 230px; height: 150px; border-radius: 18px; border: 3px solid #1d4a7a; background: #0a325f;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+      .tile .num { font-weight: 800; font-size: 46px; color: #9fb6d4; font-variant-numeric: tabular-nums; }
+      .tile .ind { width: 120px; height: 10px; border-radius: 5px; background: #1d4a7a; position: relative; }
+      .tile .ind::after { content: ""; position: absolute; right: 18px; top: -6px; width: 0; height: 0;
+        border-left: 9px solid transparent; border-right: 9px solid transparent; border-top: 12px solid #1d4a7a; }
+      .tile.on { border-color: #FF4C32; background: #2a2a4a; }
+      #pk { font-weight: 800; font-size: 44px; letter-spacing: .06em; margin-top: 10px; }
+      /* G6 */
+      #g6 { top: 952px; }
+      #g6 .hero { font-size: 170px; }
+      #g6rail { position: absolute; left: 0; right: 0; top: 214px; height: 80px; }
+      #g6rail .line { position: absolute; left: 70px; right: 70px; top: 22px; height: 4px; background: #DEEEFE; border-radius: 2px; transform-origin: 0% 50%; }
+      #g6rail .d { position: absolute; top: -6px; font-weight: 700; font-size: 20px; letter-spacing: .1em; color: #9CD4FF; }
+      #g6rail .node { position: absolute; top: 13px; width: 22px; height: 22px; margin-left: -11px; border-radius: 50%; background: #FF4C32; border: 3px solid #06284C; }
+      #g6rail .nl { position: absolute; top: 46px; width: 200px; margin-left: -100px; font-weight: 700; font-size: 21px; letter-spacing: .1em; color: #FFFFFF; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+      #g6tag { position: absolute; left: 0; right: 0; top: 214px; font-weight: 800; font-size: 58px; letter-spacing: -0.01em; }
+      /* G7 / G9 */
+      #g7 { top: 1072px; }
+      #g9 { top: 1022px; }
+      #g9 .hero { font-size: 68px; margin-top: 10px; }
+      #mobLock { position: absolute; left: 0; right: 0; top: 1030px; z-index: 4; display: flex; justify-content: center; }
+      #mobLock img { width: 400px; height: auto; }
+      /* G8 card */
+      #card500 img { width: 430px; height: auto; margin-bottom: 22px; }
+      #card500 .hero { font-size: 250px; }
+      #c5src { position: absolute; left: 0; right: 0; top: 1208px; font-weight: 500; font-size: 24px; color: #9fb6d4; }
+      #in1y { font-weight: 800; font-size: 46px; letter-spacing: .1em; margin-top: 6px; }
+      /* G10 tracker */
+      #g10 { top: 600px; }
+      .trow { display: flex; align-items: center; justify-content: space-between; width: 860px; margin: 0 auto;
+        height: 120px; padding: 0 34px; border-bottom: 2px solid rgba(222,238,254,.18); }
+      .trow .ch { font-weight: 800; font-size: 46px; letter-spacing: .02em; }
+      .trow .pr { display: flex; align-items: center; gap: 16px; font-weight: 700; font-size: 28px; letter-spacing: .12em; color: #FF4C32; }
+      .trow .pb { height: 14px; border-radius: 7px; background: #FF4C32; transform-origin: 0% 50%; }
+      #g10end { top: 1100px; }
+      #g10end .hero { font-size: 72px; line-height: 1.04; }
+      /* G11 */
+      #g11 { top: 956px; }
+      #g11 .hero { font-size: 176px; }
+      #g11 .dc { font-weight: 800; font-size: 76px; letter-spacing: -0.01em; margin-top: 6px; }
+      /* G12 */
+      #g12 { top: 1135px; height: 110px; display: flex; align-items: center; justify-content: center;
+        font-weight: 800; font-size: 54px; letter-spacing: -0.005em; }
+      /* G13 CTA */
+      #g13 { top: 930px; }
+      #g13 .hl { font-weight: 800; font-size: 66px; line-height: 1.04; letter-spacing: -0.015em; }
+      #pill { display: inline-flex; align-items: center; gap: 22px; margin-top: 26px; padding: 26px 64px;
+        border-radius: 999px; background: #FF4C32; font-weight: 800; font-size: 56px; letter-spacing: .04em;
+        box-shadow: 0 18px 50px -14px rgba(255,76,50,.55); }
+      #arrow { display: inline-block; font-size: 54px; }
+      #g13sub { margin-top: 16px; font-weight: 600; font-size: 32px; color: #DEEEFE; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="profit-plan-90day" data-start="0" data-duration="38.65" data-width="1080" data-height="1920">
+
+      <!-- ===== A-roll (Sean) ===== -->
+      <div id="cam">
+        <video id="aroll" data-start="0" data-duration="38.65" data-track-index="0"
+          src="assets/media/aroll.mp4" muted playsinline></video>
+      </div>
+      <audio id="mix" data-start="0" data-duration="38.65" data-track-index="30" src="assets/media/mix.wav" data-volume="1"></audio>
+
+      <!-- ===== B-roll ===== -->
+      <div class="bw" id="w1"><video id="b1" data-start="18.00" data-duration="0.80" data-track-index="1" src="assets/media/b1.mp4" muted playsinline></video></div>
+      <div class="bw" id="w2"><video id="b2" data-start="18.80" data-duration="0.75" data-track-index="1" src="assets/media/b2.mp4" muted playsinline></video></div>
+      <div class="bw" id="w3"><video id="b3" data-start="19.55" data-duration="0.70" data-track-index="1" src="assets/media/b3.mp4" muted playsinline></video></div>
+      <div class="bw" id="w4"><video id="b4" data-start="20.25" data-duration="1.05" data-track-index="1" src="assets/media/b4.mp4" muted playsinline></video></div>
+      <div class="bw" id="w5"><video id="b5" data-start="24.45" data-duration="0.80" data-track-index="1" src="assets/media/b5.mp4" muted playsinline></video></div>
+      <div class="bw" id="w6"><video id="b6" data-start="25.25" data-duration="0.76" data-track-index="1" src="assets/media/b6.mp4" muted playsinline></video></div>
+      <div class="bw" id="w7"><video id="b7" data-start="26.01" data-duration="2.94" data-track-index="1" src="assets/media/b7.mp4" muted playsinline></video></div>
+
+      <div id="scrimA" class="scrim-low clip" data-start="18.00" data-duration="3.30" data-track-index="2"></div>
+      <div id="scrimB" class="scrim-low clip" data-start="24.45" data-duration="1.56" data-track-index="2"></div>
+      <div id="scrimTrack" class="clip" data-start="26.01" data-duration="2.94" data-track-index="2"></div>
+
+      <!-- ===== G1: qualifier ===== -->
+      <div id="g1a" class="gfx shadow clip" data-start="0.05" data-duration="0.70" data-track-index="3">SHOPIFY FOUNDERS</div>
+      <div id="g1b" class="gfx clip" data-start="0.75" data-duration="2.27" data-track-index="4">
+        <div class="eyebrow">Shopify founders</div>
+        <div class="hero shadow">$20K+<span class="mo">/MO</span></div>
+        <div class="uline"></div>
+      </div>
+
+      <!-- ===== G2: sales vs profit ===== -->
+      <div id="g2" class="gfx panel clip" data-start="3.02" data-duration="2.85" data-track-index="3">
+        <svg width="952" height="310" viewBox="0 0 952 310">
+          <line x1="40" y1="262" x2="912" y2="262" stroke="#1d4a7a" stroke-width="3" />
+          <polyline id="g2sales" points="40,250 170,226 300,212 430,178 560,150 690,108 820,72 870,52"
+            fill="none" stroke="#9CD4FF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" pathLength="1"
+            stroke-dasharray="1" stroke-dashoffset="1" />
+          <line id="g2profit" x1="40" y1="250" x2="560" y2="250" stroke="#FF4C32" stroke-width="10" stroke-linecap="round"
+            pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+          <rect id="g2cap" x="552" y="236" width="28" height="28" rx="4" fill="#FF4C32" opacity="0" />
+          <text id="g2sl" x="640" y="58" fill="#9CD4FF" font-family="Rethink Sans" font-weight="800" font-size="44" letter-spacing="2" opacity="0">SALES ↑</text>
+          <text id="g2pl" x="602" y="264" fill="#FF4C32" font-family="Rethink Sans" font-weight="800" font-size="44" letter-spacing="2" opacity="0">PROFIT →</text>
+        </svg>
+      </div>
+
+      <!-- ===== Captions (verbatim; trimmed where a graphic carries the phrase) ===== -->
+      <div id="c1" class="cap clip" data-start="5.87" data-duration="1.18" data-track-index="10">We'll show you how to</div>
+      <div id="c2" class="cap clip" data-start="9.83" data-duration="1.57" data-track-index="10">And it all starts with your</div>
+      <div id="c3" class="cap clip" data-start="11.40" data-duration="1.38" data-track-index="10"><span><span class="hb">margins</span> and costs,</span></div>
+      <div id="c4" class="cap clip" data-start="14.45" data-duration="0.55" data-track-index="10">From there,</div>
+      <div id="c5" class="cap clip" data-start="18.00" data-duration="1.55" data-track-index="10">Specialists from my team</div>
+      <div id="c6" class="cap clip" data-start="19.55" data-duration="0.70" data-track-index="10">that have helped</div>
+      <div id="c7" class="cap clip" data-start="20.25" data-duration="1.05" data-track-index="10">brands like Mob Armor</div>
+      <div id="c8" class="cap clip" data-start="24.45" data-duration="0.80" data-track-index="10">will help your team</div>
+      <div id="c9" class="cap clip" data-start="26.01" data-duration="2.11" data-track-index="10">and track what each one does</div>
+      <div id="c10" class="cap clip" data-start="28.95" data-duration="0.79" data-track-index="10">And it all starts with</div>
+      <div id="c11" class="cap clip" data-start="31.75" data-duration="1.45" data-track-index="10">You'll come away knowing</div>
+
+      <!-- ===== G3: keep more of it ===== -->
+      <div id="g3" class="gfx clip" data-start="7.05" data-duration="2.78" data-track-index="3">
+        <div class="hero shadow"><span id="g3k">KEEP</span> <span id="g3m" class="em">more</span></div>
+        <div class="hero shadow" id="g3o">OF IT.</div>
+        <div id="g3bar"><div class="lab">REVENUE</div><div id="g3fill"></div><div class="labp">PROFIT</div></div>
+      </div>
+
+      <!-- ===== G4: margins + costs ===== -->
+      <div id="g4" class="gfx clip" data-start="11.40" data-duration="1.38" data-track-index="3">
+        <div class="eyebrow shadow">Margins + costs</div>
+        <div id="g4bar">
+          <div id="g4margin"></div>
+          <div id="g4rev">REVENUE</div>
+          <div id="g4costs">COSTS</div>
+          <div id="g4mlab">MARGIN</div>
+        </div>
+      </div>
+
+      <!-- ===== G5: 3 things (card) ===== -->
+      <div id="card3" class="card clip" data-start="12.78" data-duration="1.67" data-track-index="5">
+        <div class="eyebrow">Eating your margin</div>
+        <div><div class="hero" id="three">3</div><div class="uline" id="u3"></div></div>
+        <div class="tiles">
+          <div class="tile" id="t1"><div class="num">01</div><div class="ind"></div></div>
+          <div class="tile" id="t2"><div class="num">02</div><div class="ind"></div></div>
+          <div class="tile" id="t3"><div class="num">03</div><div class="ind"></div></div>
+        </div>
+        <div id="pk">PROFIT KILLERS</div>
+      </div>
+
+      <!-- ===== G6: 90-day plan ===== -->
+      <div id="g6" class="gfx clip" data-start="15.00" data-duration="3.00" data-track-index="3">
+        <div class="hero shadow">90 DAYS</div>
+        <div class="uline" id="u6"></div>
+        <div id="g6rail">
+          <div class="line"></div>
+          <div class="d" style="left:70px">DAY 1</div>
+          <div class="d" style="right:70px">DAY 90</div>
+          <div class="node" id="n1" style="left:160px"></div><div class="nl" id="l1" style="left:160px">DIAGNOSE</div>
+          <div class="node" id="n2" style="left:400px"></div><div class="nl" id="l2" style="left:400px">PLAN</div>
+          <div class="node" id="n3" style="left:640px"></div><div class="nl" id="l3" style="left:640px">IMPLEMENT</div>
+          <div class="node" id="n4" style="left:880px"></div><div class="nl" id="l4" style="left:880px">TRACK</div>
+        </div>
+        <div id="g6tag" class="shadow">BUILT AROUND <span class="em">your</span> NUMBERS.</div>
+      </div>
+
+      <!-- ===== G7: specialists label ===== -->
+      <div id="g7" class="gfx eyebrow clip" data-start="18.00" data-duration="0.80" data-track-index="3" style="font-size:34px">Ecommerce specialists</div>
+
+      <!-- Mob Armor lockup over the product shot -->
+      <div id="mobLock" class="clip" data-start="20.25" data-duration="1.05" data-track-index="3"><img src="assets/mob-armor-logo-white.png" alt="Mob Armor" /></div>
+
+      <!-- ===== G8: +500% (card, matches the August Mob Armor ad) ===== -->
+      <div id="card500" class="card clip" data-start="21.30" data-duration="3.15" data-track-index="5">
+        <img id="c5logo" src="assets/mob-armor-logo-white.png" alt="Mob Armor" />
+        <div class="eyebrow">Total sales</div>
+        <div><div class="hero" id="pct">+0%</div><div class="uline" id="u5"></div></div>
+        <div id="in1y">IN 1 YEAR</div>
+        <div id="c5src">Mob Armor Shopify data, Aug 2025 to Aug 2026</div>
+      </div>
+
+      <!-- ===== G9: implement ===== -->
+      <div id="g9" class="gfx clip" data-start="24.60" data-duration="1.41" data-track-index="3">
+        <div class="eyebrow shadow">Implement</div>
+        <div class="hero shadow" id="g9h">MAKE THE CHANGES.</div>
+      </div>
+
+      <!-- ===== G10: tracker ===== -->
+      <div id="g10" class="gfx clip" data-start="26.01" data-duration="2.94" data-track-index="3">
+        <div class="eyebrow" style="margin-bottom:22px">Track</div>
+        <div class="trow" id="r1"><div class="ch">CHANGE 01</div><div class="pr">▲ PROFIT <div class="pb" style="width:90px"></div></div></div>
+        <div class="trow" id="r2"><div class="ch">CHANGE 02</div><div class="pr">▲ PROFIT <div class="pb" style="width:150px"></div></div></div>
+        <div class="trow" id="r3"><div class="ch">CHANGE 03</div><div class="pr">▲ PROFIT <div class="pb" style="width:210px"></div></div></div>
+      </div>
+      <div id="g10end" class="gfx clip" data-start="28.12" data-duration="0.83" data-track-index="4">
+        <div class="hero shadow">TRACK THE IMPACT ON <span class="flame">PROFIT.</span></div>
+      </div>
+
+      <!-- ===== G11: free discovery call ===== -->
+      <div id="g11" class="gfx clip" data-start="29.74" data-duration="2.01" data-track-index="3">
+        <div class="hero shadow flame">FREE</div>
+        <div class="dc shadow">DISCOVERY CALL</div>
+      </div>
+
+      <!-- ===== G12 ===== -->
+      <div id="g12" class="gfx shadow clip" data-start="33.20" data-duration="1.20" data-track-index="3">
+        <span>KNOW WHERE YOUR <span class="flame">MARGIN</span> GOES.</span>
+      </div>
+
+      <!-- ===== G13: CTA ===== -->
+      <div id="g13" class="gfx clip" data-start="34.52" data-duration="4.13" data-track-index="3">
+        <div class="hl shadow" id="g13hl">BOOK YOUR <span class="flame">FREE</span> DISCOVERY CALL</div>
+        <div id="pill">BOOK NOW <span id="arrow">↓</span></div>
+        <div id="g13sub" class="shadow">Choose a time below</div>
+      </div>
+
+      <div id="logoWrap"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // ---- Sean framing. WIDE = full 9:16 column. GRAPHIC = 1.15x anchored to the
+      // bottom (face lifts to the top half, graphics sit on the chest). TIGHT = 1.3x.
+      const WIDE = { scale: 1, y: 0 };
+      const G = (s) => ({ scale: s, y: 1920 * (1 - s) });
+      const TIGHT = { scale: 1.3, y: -325 };
+      const cam = (t, m) => tl.set("#cam", m, t);
+      const push = (t, d, s0, s1) => tl.fromTo("#cam", G(s0), { ...G(s1), duration: d, ease: "none" }, t);
+      cam(0, TIGHT);
+      cam(0.75, G(1.15)); push(3.02, 2.85, 1.15, 1.2);
+      cam(5.87, WIDE);
+      cam(7.05, G(1.15));
+      cam(9.83, TIGHT);
+      cam(11.40, G(1.15));
+      push(14.45, 3.55, 1.15, 1.22);
+      push(28.95, 2.80, 1.15, 1.19);
+      cam(31.75, TIGHT);
+      push(34.40, 4.25, 1.15, 1.18);
+
+      // ---- B-roll pushes (3%)
+      [["#w1",18.00,.80],["#w2",18.80,.75],["#w3",19.55,.70],["#w4",20.25,1.05],["#w5",24.45,.80],["#w6",25.25,.76],["#w7",26.01,2.94]]
+        .forEach(([w,t,d]) => tl.fromTo(w, { scale: 1 }, { scale: 1.03, duration: d, ease: "none" }, t));
+
+      // ---- G1
+      tl.fromTo("#g1a", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0.05);
+      tl.fromTo("#g1b .eyebrow", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.75);
+      tl.fromTo("#g1b .hero", { opacity: 0, scale: 1.04, y: 6 }, { opacity: 1, scale: 1, y: 0, duration: 0.17, ease: "power3.out" }, 0.75);
+      tl.fromTo("#g1b .uline", { scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: "power2.out" }, 0.9);
+
+      // ---- G2
+      tl.fromTo("#g2", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.25, ease: "power3.out" }, 3.02);
+      tl.fromTo("#g2sales", { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.7, ease: "power2.inOut" }, 3.21);
+      tl.fromTo("#g2sl", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 3.8);
+      tl.fromTo("#g2profit", { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.5, ease: "power2.out" }, 4.16);
+      tl.fromTo("#g2cap", { opacity: 0 }, { opacity: 1, duration: 0.067, ease: "none" }, 4.6);
+      tl.fromTo("#g2pl", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.25, ease: "power2.out" }, 4.66);
+      tl.to("#g2cap", { opacity: 0.3, duration: 0.067, ease: "none", yoyo: true, repeat: 1 }, 4.9);
+
+      // ---- G3
+      tl.fromTo("#g3k", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.25, ease: "power3.out" }, 7.05);
+      tl.fromTo("#g3m", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.25, ease: "power3.out" }, 7.30);
+      tl.fromTo("#g3o", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.25, ease: "power3.out" }, 7.80);
+      tl.fromTo("#g3bar", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 8.30);
+      tl.fromTo("#g3fill", { scaleX: 18 / 34 }, { scaleX: 1, duration: 0.8, ease: "power2.inOut" }, 8.30);
+      tl.to("#g3", { opacity: 0, y: 30, duration: 0.2, ease: "power2.in" }, 9.60);
+
+      // ---- G4
+      tl.fromTo("#g4", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.2, ease: "power3.out" }, 11.40);
+      tl.fromTo("#g4costs", { scaleX: 0 }, { scaleX: 0.45, duration: 0.2, ease: "power3.out" }, 11.60);
+      tl.to("#g4costs", { scaleX: 0.72, duration: 0.2, ease: "power3.out" }, 12.00);
+      tl.to("#g4rev", { opacity: 0, duration: 0.15, ease: "none" }, 12.10);
+      tl.to("#g4margin", { opacity: 1, duration: 0.2, ease: "none" }, 12.10);
+      tl.to("#g4mlab", { opacity: 1, duration: 0.2, ease: "none" }, 12.15);
+
+      // ---- G5 card
+      tl.fromTo("#card3 .eyebrow", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 12.80);
+      tl.fromTo("#three", { opacity: 0, scale: 1.05 }, { opacity: 1, scale: 1, duration: 0.17, ease: "power3.out" }, 13.05);
+      tl.fromTo("#u3", { scaleX: 0 }, { scaleX: 1, duration: 0.2, ease: "power2.out" }, 13.10);
+      tl.fromTo(".tile", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out", stagger: 0.05 }, 12.85);
+      [["#t1",13.30],["#t2",13.55],["#t3",13.80]].forEach(([t,s]) => {
+        tl.set(t, { className: "tile on" }, s);
+        tl.set(t + " .num", { color: "#FF4C32" }, s);
+      });
+      tl.fromTo("#pk", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 13.90);
+
+      // ---- G6
+      tl.fromTo("#g6 .hero", { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.2, ease: "power3.out" }, 15.00);
+      tl.fromTo("#u6", { scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: "power2.out" }, 15.10);
+      tl.fromTo("#g6rail .line", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power2.inOut" }, 15.70);
+      tl.fromTo("#g6rail .d", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 15.70);
+      ["1","2","3","4"].forEach((n, i) => {
+        tl.fromTo("#n" + n, { scale: 0 }, { scale: 1, duration: 0.15, ease: "back.out(1.4)" }, 15.70 + i * 0.15);
+        tl.fromTo("#l" + n, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 15.72 + i * 0.15);
+      });
+      tl.to("#g6rail", { opacity: 0, y: 30, duration: 0.2, ease: "power2.in" }, 16.85);
+      tl.fromTo("#g6tag", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.25, ease: "power3.out" }, 16.99);
+
+      // ---- G7 + Mob Armor lockup
+      tl.fromTo("#g7", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 18.00);
+      tl.fromTo("#mobLock", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 20.30);
+
+      // ---- G8 card: count lands on "500%"
+      tl.fromTo("#c5logo", { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 21.30);
+      tl.fromTo("#card500 .eyebrow", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 21.35);
+      const ctr = { v: 0 };
+      tl.fromTo(ctr, { v: 0 }, { v: 500, duration: 1.15, ease: "power3.out",
+        onUpdate: () => { document.getElementById("pct").textContent = "+" + Math.round(ctr.v) + "%"; } }, 21.40);
+      tl.fromTo("#u5", { scaleX: 0 }, { scaleX: 1, duration: 0.25, ease: "power2.out" }, 22.55);
+      tl.fromTo("#in1y", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 22.90);
+      tl.fromTo("#c5src", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 23.10);
+
+      // ---- G9
+      tl.fromTo("#g9 .eyebrow", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 24.60);
+      tl.fromTo("#g9h", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.25, ease: "power3.out" }, 25.25);
+
+      // ---- G10
+      tl.fromTo("#g10 .eyebrow", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 26.05);
+      [["#r1",26.30],["#r2",26.90],["#r3",27.50]].forEach(([r,t]) => {
+        tl.fromTo(r, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.25, ease: "power3.out" }, t);
+        tl.fromTo(r + " .pb", { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "power2.out" }, t + 0.12);
+      });
+      tl.to("#g10", { opacity: 0.28, duration: 0.2, ease: "none" }, 28.10);
+      tl.fromTo("#g10end", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.25, ease: "power3.out" }, 28.12);
+
+      // ---- G11
+      tl.fromTo("#g11 .hero", { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.2, ease: "power3.out" }, 29.74);
+      tl.fromTo("#g11 .dc", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 30.10);
+
+      // ---- G12
+      tl.fromTo("#g12", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 33.20);
+
+      // ---- G13 CTA (holds to the last frame)
+      tl.fromTo("#g13hl", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 34.52);
+      tl.fromTo("#pill", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.3)" }, 34.75);
+      tl.fromTo("#arrow", { y: 0 }, { y: 10, duration: 0.3, ease: "power1.inOut", yoyo: true, repeat: 3 }, 35.10);
+      tl.fromTo("#g13sub", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 35.25);
+
+      // ---- Captions: quick rise-in on each
+      document.querySelectorAll(".cap").forEach((c) => {
+        const t = parseFloat(c.dataset.start);
+        tl.fromTo(c, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.133, ease: "power2.out" }, t);
+      });
+
+      tl.to({}, { duration: 38.65 }, 0); // anchor: timeline fills the slot
+      window.__timelines["profit-plan-90day"] = tl;
+    </script>
+  </body>
+</html>
