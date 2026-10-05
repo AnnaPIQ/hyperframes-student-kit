@@ -43,6 +43,8 @@
       .flame { color: #FF4C32; }
       .uline { width: 150px; height: 7px; border-radius: 4px; background: #FF4C32; margin: 14px auto 0; transform-origin: 0% 50%; }
       .panel { background: rgba(6,40,76,.86); border-radius: 24px; }
+      .pb2 { display: inline-block; background: rgba(6,40,76,.86); border-radius: 24px; padding: 22px 40px; }
+      .cap .cb { display: inline-block; background: rgba(6,40,76,.80); border-radius: 16px; padding: 10px 24px; }
       .shadow { text-shadow: 0 4px 24px rgba(4,20,40,.55); }
 
       /* ---- Captions */
@@ -58,22 +60,22 @@
 
       /* G1 */
       #g1a { top: 1140px; font-weight: 800; font-size: 66px; letter-spacing: -0.01em; }
-      #g1b { top: 968px; }
-      #g1b .hero { font-size: 200px; margin-top: 8px; }
-      #g1b .mo { font-size: 92px; letter-spacing: -0.01em; }
+      #g1b { top: 920px; }
+      #g1b .hero { font-size: 180px; margin-top: 8px; }
+      #g1b .mo { font-size: 84px; letter-spacing: -0.01em; }
       /* G2 chart */
       #g2 { top: 930px; height: 310px; }
       #g2 svg { position: absolute; left: 0; top: 0; }
       /* G3 */
-      #g3 { top: 948px; }
-      #g3 .hero { font-size: 108px; }
-      #g3bar { position: relative; margin: 26px auto 0; width: 820px; height: 46px; border: 3px solid #DEEEFE; border-radius: 10px; }
+      #g3 { top: 925px; }
+      #g3 .hero { font-size: 92px; }
+      #g3bar { position: relative; margin: 50px auto 0; width: 760px; height: 46px; border: 3px solid #DEEEFE; border-radius: 10px; }
       #g3fill { position: absolute; left: 3px; top: 3px; bottom: 3px; width: 34%; background: #FF4C32; border-radius: 6px; transform-origin: 0% 50%; }
       #g3bar .lab { position: absolute; top: -40px; left: 0; font-weight: 700; font-size: 24px; letter-spacing: .14em; color: #9CD4FF; }
       #g3bar .labp { position: absolute; left: 18px; top: 7px; font-weight: 700; font-size: 22px; letter-spacing: .12em; color: #FFFFFF; }
       /* G4 */
-      #g4 { top: 975px; }
-      #g4bar { position: relative; margin: 20px auto 0; width: 900px; height: 76px; border-radius: 12px; background: #DEEEFE; overflow: hidden; }
+      #g4 { top: 930px; }
+      #g4bar { position: relative; margin: 20px auto 0; width: 860px; height: 76px; border-radius: 12px; background: #DEEEFE; overflow: hidden; }
       #g4margin { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #FF4C32; opacity: 0; }
       #g4costs { position: absolute; right: 0; top: 0; bottom: 0; width: 100%; background: #1d4a7a; transform-origin: 100% 50%;
         display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 26px; letter-spacing: .14em; }
@@ -93,18 +95,20 @@
       .tile.on { border-color: #FF4C32; background: #2a2a4a; }
       #pk { font-weight: 800; font-size: 44px; letter-spacing: .06em; margin-top: 10px; }
       /* G6 */
-      #g6 { top: 952px; }
-      #g6 .hero { font-size: 170px; }
-      #g6rail { position: absolute; left: 0; right: 0; top: 214px; height: 80px; }
+      #g6 { top: 900px; }
+      #g6 .pb2 { width: 952px; }
+      #g6 .hero { font-size: 166px; }
+      #g6area { position: relative; height: 104px; margin-top: 10px; }
+      #g6rail { position: absolute; left: -40px; right: -40px; top: 0; height: 104px; }
       #g6rail .line { position: absolute; left: 70px; right: 70px; top: 22px; height: 4px; background: #DEEEFE; border-radius: 2px; transform-origin: 0% 50%; }
       #g6rail .d { position: absolute; top: -6px; font-weight: 700; font-size: 20px; letter-spacing: .1em; color: #9CD4FF; }
       #g6rail .node { position: absolute; top: 13px; width: 22px; height: 22px; margin-left: -11px; border-radius: 50%; background: #FF4C32; border: 3px solid #06284C; }
-      #g6rail .nl { position: absolute; top: 46px; width: 200px; margin-left: -100px; font-weight: 700; font-size: 21px; letter-spacing: .1em; color: #FFFFFF; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
-      #g6tag { position: absolute; left: 0; right: 0; top: 214px; font-weight: 800; font-size: 58px; letter-spacing: -0.01em; }
+      #g6rail .nl { position: absolute; top: 48px; width: 200px; margin-left: -100px; font-weight: 700; font-size: 24px; letter-spacing: .1em; color: #FFFFFF; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+      #g6tag { position: absolute; left: 0; right: 0; top: 18px; font-weight: 800; font-size: 54px; letter-spacing: -0.01em; }
       /* G7 / G9 */
       #g7 { top: 1072px; }
       #g9 { top: 1022px; }
-      #g9 .hero { font-size: 68px; margin-top: 10px; }
+      #g9 .hero { font-size: 68px; margin-top: 30px; }
       #mobLock { position: absolute; left: 0; right: 0; top: 1030px; z-index: 4; display: flex; justify-content: center; }
       #mobLock img { width: 400px; height: auto; }
       /* G8 card */
@@ -122,16 +126,16 @@
       #g10end { top: 1100px; }
       #g10end .hero { font-size: 72px; line-height: 1.04; }
       /* G11 */
-      #g11 { top: 956px; }
+      #g11 { top: 925px; }
       #g11 .hero { font-size: 176px; }
       #g11 .dc { font-weight: 800; font-size: 76px; letter-spacing: -0.01em; margin-top: 6px; }
       /* G12 */
       #g12 { top: 1135px; height: 110px; display: flex; align-items: center; justify-content: center;
-        font-weight: 800; font-size: 54px; letter-spacing: -0.005em; }
+        font-weight: 800; font-size: 50px; letter-spacing: -0.005em; }
       /* G13 CTA */
-      #g13 { top: 930px; }
-      #g13 .hl { font-weight: 800; font-size: 66px; line-height: 1.04; letter-spacing: -0.015em; }
-      #pill { display: inline-flex; align-items: center; gap: 22px; margin-top: 26px; padding: 26px 64px;
+      #g13 { top: 880px; }
+      #g13 .hl { font-weight: 800; font-size: 60px; line-height: 1.04; letter-spacing: -0.015em; }
+      #pill { display: inline-flex; align-items: center; gap: 22px; margin-top: 22px; padding: 22px 60px;
         border-radius: 999px; background: #FF4C32; font-weight: 800; font-size: 56px; letter-spacing: .04em;
         box-shadow: 0 18px 50px -14px rgba(255,76,50,.55); }
       #arrow { display: inline-block; font-size: 54px; }
@@ -163,11 +167,11 @@
 
       <!-- ===== G1: qualifier ===== -->
       <div id="g1a" class="gfx shadow clip" data-start="0.05" data-duration="0.70" data-track-index="3">SHOPIFY FOUNDERS</div>
-      <div id="g1b" class="gfx clip" data-start="0.75" data-duration="2.27" data-track-index="4">
+      <div id="g1b" class="gfx clip" data-start="0.75" data-duration="2.27" data-track-index="4"><div class="pb2">
         <div class="eyebrow">Shopify founders</div>
-        <div class="hero shadow">$20K+<span class="mo">/MO</span></div>
+        <div class="hero">$20K+<span class="mo">/MO</span></div>
         <div class="uline"></div>
-      </div>
+      </div></div>
 
       <!-- ===== G2: sales vs profit ===== -->
       <div id="g2" class="gfx panel clip" data-start="3.02" data-duration="2.85" data-track-index="3">
@@ -185,35 +189,35 @@
       </div>
 
       <!-- ===== Captions (verbatim; trimmed where a graphic carries the phrase) ===== -->
-      <div id="c1" class="cap clip" data-start="5.87" data-duration="1.18" data-track-index="10">We'll show you how to</div>
-      <div id="c2" class="cap clip" data-start="9.83" data-duration="1.57" data-track-index="10">And it all starts with your</div>
-      <div id="c3" class="cap clip" data-start="11.40" data-duration="1.38" data-track-index="10"><span><span class="hb">margins</span> and costs,</span></div>
-      <div id="c4" class="cap clip" data-start="14.45" data-duration="0.55" data-track-index="10">From there,</div>
-      <div id="c5" class="cap clip" data-start="18.00" data-duration="1.55" data-track-index="10">Specialists from my team</div>
-      <div id="c6" class="cap clip" data-start="19.55" data-duration="0.70" data-track-index="10">that have helped</div>
-      <div id="c7" class="cap clip" data-start="20.25" data-duration="1.05" data-track-index="10">brands like Mob Armor</div>
-      <div id="c8" class="cap clip" data-start="24.45" data-duration="0.80" data-track-index="10">will help your team</div>
-      <div id="c9" class="cap clip" data-start="26.01" data-duration="2.11" data-track-index="10">and track what each one does</div>
-      <div id="c10" class="cap clip" data-start="28.95" data-duration="0.79" data-track-index="10">And it all starts with</div>
-      <div id="c11" class="cap clip" data-start="31.75" data-duration="1.45" data-track-index="10">You'll come away knowing</div>
+      <div id="c1" class="cap clip" data-start="5.87" data-duration="1.18" data-track-index="10"><span class="cb">We'll show you how to</span></div>
+      <div id="c2" class="cap clip" data-start="9.83" data-duration="1.57" data-track-index="10"><span class="cb">And it all starts with your</span></div>
+      <div id="c3" class="cap clip" data-start="11.40" data-duration="1.38" data-track-index="10"><span class="cb"><span class="hb">margins</span> and costs,</span></div>
+      <div id="c4" class="cap clip" data-start="14.45" data-duration="0.55" data-track-index="10"><span class="cb">From there,</span></div>
+      <div id="c5" class="cap clip" data-start="18.00" data-duration="1.55" data-track-index="10"><span class="cb">Specialists from my team</span></div>
+      <div id="c6" class="cap clip" data-start="19.55" data-duration="0.70" data-track-index="10"><span class="cb">that have helped</span></div>
+      <div id="c7" class="cap clip" data-start="20.25" data-duration="1.05" data-track-index="10"><span class="cb">brands like Mob Armor</span></div>
+      <div id="c8" class="cap clip" data-start="24.45" data-duration="0.80" data-track-index="10"><span class="cb">will help your team</span></div>
+      <div id="c9" class="cap clip" data-start="26.01" data-duration="2.11" data-track-index="10"><span class="cb">and track what each one does</span></div>
+      <div id="c10" class="cap clip" data-start="28.95" data-duration="0.79" data-track-index="10"><span class="cb">And it all starts with</span></div>
+      <div id="c11" class="cap clip" data-start="31.75" data-duration="1.45" data-track-index="10"><span class="cb">You'll come away knowing</span></div>
 
       <!-- ===== G3: keep more of it ===== -->
-      <div id="g3" class="gfx clip" data-start="7.05" data-duration="2.78" data-track-index="3">
-        <div class="hero shadow"><span id="g3k">KEEP</span> <span id="g3m" class="em">more</span></div>
-        <div class="hero shadow" id="g3o">OF IT.</div>
+      <div id="g3" class="gfx clip" data-start="7.05" data-duration="2.78" data-track-index="3"><div class="pb2">
+        <div class="hero"><span id="g3k">KEEP</span> <span id="g3m" class="em">more</span></div>
+        <div class="hero" id="g3o">OF IT.</div>
         <div id="g3bar"><div class="lab">REVENUE</div><div id="g3fill"></div><div class="labp">PROFIT</div></div>
-      </div>
+      </div></div>
 
       <!-- ===== G4: margins + costs ===== -->
       <div id="g4" class="gfx clip" data-start="11.40" data-duration="1.38" data-track-index="3">
-        <div class="eyebrow shadow">Margins + costs</div>
+        <div class="pb2"><div class="eyebrow">Margins + costs</div>
         <div id="g4bar">
           <div id="g4margin"></div>
           <div id="g4rev">REVENUE</div>
           <div id="g4costs">COSTS</div>
           <div id="g4mlab">MARGIN</div>
         </div>
-      </div>
+      </div></div>
 
       <!-- ===== G5: 3 things (card) ===== -->
       <div id="card3" class="card clip" data-start="12.78" data-duration="1.67" data-track-index="5">
@@ -228,10 +232,10 @@
       </div>
 
       <!-- ===== G6: 90-day plan ===== -->
-      <div id="g6" class="gfx clip" data-start="15.00" data-duration="3.00" data-track-index="3">
-        <div class="hero shadow">90 DAYS</div>
+      <div id="g6" class="gfx clip" data-start="15.00" data-duration="3.00" data-track-index="3"><div class="pb2">
+        <div class="hero">90 DAYS</div>
         <div class="uline" id="u6"></div>
-        <div id="g6rail">
+        <div id="g6area"><div id="g6rail">
           <div class="line"></div>
           <div class="d" style="left:70px">DAY 1</div>
           <div class="d" style="right:70px">DAY 90</div>
@@ -240,8 +244,8 @@
           <div class="node" id="n3" style="left:640px"></div><div class="nl" id="l3" style="left:640px">IMPLEMENT</div>
           <div class="node" id="n4" style="left:880px"></div><div class="nl" id="l4" style="left:880px">TRACK</div>
         </div>
-        <div id="g6tag" class="shadow">BUILT AROUND <span class="em">your</span> NUMBERS.</div>
-      </div>
+        <div id="g6tag">BUILT AROUND <span class="em">your</span> NUMBERS.</div></div>
+      </div></div>
 
       <!-- ===== G7: specialists label ===== -->
       <div id="g7" class="gfx eyebrow clip" data-start="18.00" data-duration="0.80" data-track-index="3" style="font-size:34px">Ecommerce specialists</div>
@@ -276,22 +280,22 @@
       </div>
 
       <!-- ===== G11: free discovery call ===== -->
-      <div id="g11" class="gfx clip" data-start="29.74" data-duration="2.01" data-track-index="3">
-        <div class="hero shadow flame">FREE</div>
-        <div class="dc shadow">DISCOVERY CALL</div>
-      </div>
+      <div id="g11" class="gfx clip" data-start="29.74" data-duration="2.01" data-track-index="3"><div class="pb2">
+        <div class="hero flame">FREE</div>
+        <div class="dc">DISCOVERY CALL</div>
+      </div></div>
 
       <!-- ===== G12 ===== -->
-      <div id="g12" class="gfx shadow clip" data-start="33.20" data-duration="1.20" data-track-index="3">
-        <span>KNOW WHERE YOUR <span class="flame">MARGIN</span> GOES.</span>
+      <div id="g12" class="gfx clip" data-start="33.20" data-duration="1.20" data-track-index="3">
+        <span class="pb2" style="padding:12px 28px;border-radius:16px">KNOW WHERE YOUR <span class="flame">MARGIN</span> GOES.</span>
       </div>
 
       <!-- ===== G13: CTA ===== -->
-      <div id="g13" class="gfx clip" data-start="34.52" data-duration="4.13" data-track-index="3">
-        <div class="hl shadow" id="g13hl">BOOK YOUR <span class="flame">FREE</span> DISCOVERY CALL</div>
+      <div id="g13" class="gfx clip" data-start="34.52" data-duration="4.13" data-track-index="3"><div class="pb2" id="g13p">
+        <div class="hl" id="g13hl"><div>BOOK YOUR <span class="flame">FREE</span></div><div>DISCOVERY CALL</div></div>
         <div id="pill">BOOK NOW <span id="arrow">↓</span></div>
-        <div id="g13sub" class="shadow">Choose a time below</div>
-      </div>
+        <div id="g13sub">Choose a time below</div>
+      </div></div>
 
       <div id="logoWrap"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
     </div>
@@ -411,6 +415,7 @@
       tl.fromTo("#g12", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 33.20);
 
       // ---- G13 CTA (holds to the last frame)
+      tl.fromTo("#g13p", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 34.52);
       tl.fromTo("#g13hl", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 34.52);
       tl.fromTo("#pill", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.3)" }, 34.75);
       tl.fromTo("#arrow", { y: 0 }, { y: 10, duration: 0.3, ease: "power1.inOut", yoyo: true, repeat: 3 }, 35.10);

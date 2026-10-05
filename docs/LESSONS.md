@@ -50,7 +50,21 @@ efficient over time instead of relearning the same lessons.
   block the Whisper model download. **Fix:** caption from the known script text and
   anchor timing via silence analysis instead of word-level timestamps.
 
+- **Pulling a few seconds of B-roll from a huge Drive file.** Don't download it.
+  `ffmpeg -ss <in> -i "https://drive.usercontent.google.com/download?export=download&confirm=t&id=<ID>" -t <dur>`
+  uses HTTP range seeks and fetches only what it needs (works on multi-GB 4K MP4s).
+- **4K iPhone/vertical clips stored as 3840x2160 with no rotation flag** (EcomIQ B-roll
+  library). They play sideways; `transpose=1` makes them native 2160x3840 for 9:16.
+
 ## Editing technique (talking-head cutdowns)
+
+- **Accent colours vanish on light wardrobe.** Flame/blue text over a cream jacket was
+  unreadable even with text-shadow. **Fix:** put every on-Sean graphic and caption on a
+  navy panel (`rgba(6,40,76,.86)`, 24px radius). (profit-plan-90day)
+- **16:9 talking head into 9:16 with room for graphics:** crop a full-height 9:16
+  column, then a 1.15x "GRAPHIC" framing anchored to the frame bottom lifts the face
+  into the top half and frees the chest area for graphics + captions inside Meta's
+  safe zone. Do framing as GSAP transforms on a non-clip wrapper around the `<video>`.
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +
   placing motion-graphic overlays over the join make cutdowns feel seamless.
