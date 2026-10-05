@@ -4,8 +4,8 @@
     python3 scripts/build-audio.py
 
 Reads  assets/media/vo.wav   (from prep-media.sh)
-Writes assets/media/sfx.wav  (SFX only, for the editor)
-       assets/media/mix.wav  (VO at -14 LUFS + SFX ~10 dB under)
+Writes assets/media/sfx.wav  (SFX only, optional stem for the editor)
+       assets/media/mix.wav  (VO at -14 LUFS; SFX off unless SFX_GAIN is set)
 
 Every sound is generated from sine maths, so the bed is deterministic and
 licence-free. Palette per the edit plan: light impacts, soft ticks, a rise,
@@ -73,11 +73,14 @@ sfx = os.path.join(ROOT, "sfx.wav")
 write(sfx, buf, 0.32)  # peaks around -10 dBFS before the mix gain below
 vo = os.path.join(ROOT, "vo.wav")
 mix = os.path.join(ROOT, "mix.wav")
+SFX_GAIN = float(os.environ.get("SFX_GAIN", "0"))  # 0.55 = the original SFX level
 subprocess.run([
     "ffmpeg", "-nostdin", "-v", "error", "-y", "-i", vo, "-i", sfx, "-filter_complex",
     # loudnorm buffers its tail; with amix duration=first that dropped the last
     # ~3 s of VO. Pad both inputs and trim the mix to the exact ad length.
-    "[0:a]loudnorm=I=-14:TP=-1.5:LRA=9,aresample=48000,apad[v];[1:a]volume=0.55,apad[s];"
+    # SFX_GAIN=0 by default: the client preferred VO only. sfx.wav is still
+    # written as a separate stem in case an editor wants to try it.
+    f"[0:a]loudnorm=I=-14:TP=-1.5:LRA=9,aresample=48000,apad[v];[1:a]volume={SFX_GAIN},apad[s];"
     "[v][s]amix=inputs=2:normalize=0:duration=longest,alimiter=limit=0.84,"
     f"atrim=0:{DUR},asetpts=PTS-STARTPTS[out]",
     "-map", "[out]", "-c:a", "pcm_s16le", mix], check=True)
