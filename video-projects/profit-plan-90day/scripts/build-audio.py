@@ -75,8 +75,10 @@ vo = os.path.join(ROOT, "vo.wav")
 mix = os.path.join(ROOT, "mix.wav")
 subprocess.run([
     "ffmpeg", "-nostdin", "-v", "error", "-y", "-i", vo, "-i", sfx, "-filter_complex",
-    "[0:a]loudnorm=I=-14:TP=-1.5:LRA=9[v];[1:a]volume=0.55[s];"
-    "[v][s]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.89,"
-    "aresample=48000[out]",
+    # loudnorm buffers its tail; with amix duration=first that dropped the last
+    # ~3 s of VO. Pad both inputs and trim the mix to the exact ad length.
+    "[0:a]loudnorm=I=-14:TP=-1.5:LRA=9,aresample=48000,apad[v];[1:a]volume=0.55,apad[s];"
+    "[v][s]amix=inputs=2:normalize=0:duration=longest,alimiter=limit=0.84,"
+    f"atrim=0:{DUR},asetpts=PTS-STARTPTS[out]",
     "-map", "[out]", "-c:a", "pcm_s16le", mix], check=True)
 print("✓ sfx.wav + mix.wav")
