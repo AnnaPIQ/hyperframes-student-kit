@@ -4,53 +4,555 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
     <title>review-call-ad</title>
-    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <!-- GSAP vendored locally: CDN cert-fails in the render env and freezes renders -->
     <script src="assets/vendor/gsap.min.js"></script>
     <link rel="stylesheet" href="assets/brand-tokens.css" />
     <style>
-      /* LOCAL fonts — no network dependency at render time (latin subset) */
       @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
         font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
       @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
         font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { width: 1080px; height: 1920px; overflow: hidden;
-        background: var(--brand-bg); font-family: 'Rethink Sans', system-ui, sans-serif; color: var(--brand-text); }
-      #bg { position: absolute; inset: 0;
-        background: radial-gradient(90% 55% at 50% 20%, rgba(156,212,255,.10) 0%, rgba(6,40,76,0) 55%), var(--brand-navy); }
-      #logo { position: absolute; top: 7%; left: 10%; width: 33%; height: auto; }
-      #stage { position: absolute; inset: 0; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; gap: 24px; padding: 10%; text-align: center; }
-      #eyebrow { font-weight: 600; font-size: 26px; letter-spacing: .34em; text-transform: uppercase; color: var(--brand-blue-tint); }
-      #headline { font-weight: 800; font-size: 96px; line-height: .98; letter-spacing: -.03em; }
-      #headline .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: var(--brand-blue-tint); }
-      #subhead { font-weight: 500; font-size: 34px; line-height: 1.3; color: var(--brand-text-dim); max-width: 70%; }
-      #cta { margin-top: 12px; font-weight: 700; font-size: 34px; color: var(--brand-white);
-        background: var(--brand-flame); padding: 26px 52px; border-radius: 999px;
-        box-shadow: 0 20px 64px -16px rgba(255,76,50,.6); }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #06284C;
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+      .abs { position: absolute; }
+      .hide { opacity: 0; }
+
+      /* ---------- picture ---------- */
+      #plateWrap { position: absolute; inset: 0; overflow: hidden; }
+      #plateInner { position: absolute; inset: 0; transform-origin: 34% 34%; }
+      #plate { width: 1080px; height: 1920px; object-fit: cover; }
+      #shade { position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(180deg, rgba(6,40,76,0) 46%, rgba(6,40,76,.55) 66%, rgba(6,40,76,.92) 100%); }
+      #topshade { position: absolute; left: 0; right: 0; top: 0; height: 360px; pointer-events: none;
+        background: linear-gradient(180deg, rgba(6,40,76,.55) 0%, rgba(6,40,76,0) 100%); }
+      #dim { position: absolute; inset: 0; background: rgba(6,40,76,.55); opacity: 0; }
+
+      /* full-screen graphic stage (section 3 + CTA): navy + audit dot grid */
+      .navyStage { position: absolute; inset: 0; opacity: 0;
+        background:
+          radial-gradient(circle at 1.5px 1.5px, rgba(222,238,254,.16) 1.5px, transparent 2px) 0 0 / 54px 54px,
+          radial-gradient(70% 45% at 50% 30%, rgba(156,212,255,.14) 0%, rgba(6,40,76,0) 70%),
+          #06284C; }
+
+      /* ---------- logo ---------- */
+      #logoBox { position: absolute; top: 150px; left: 64px; width: 250px; height: 50px; }
+      #logoBox img { width: 250px; height: auto; display: block; }
+
+      /* ---------- review card system ---------- */
+      .card { position: absolute; background: #FFFFFF; color: #06284C; border-radius: 24px;
+        border: 1px solid #DEEEFE; box-shadow: 0 16px 44px rgba(6,40,76,.40); }
+      .cm { position: absolute; width: 18px; height: 18px; pointer-events: none; }
+      .cm::before, .cm::after { content: ''; position: absolute; background: rgba(156,212,255,.75); }
+      .cm::before { left: 8px; top: 0; width: 2px; height: 18px; }
+      .cm::after { top: 8px; left: 0; width: 18px; height: 2px; }
+      .eyebrow { font-weight: 700; font-size: 24px; letter-spacing: .16em; text-transform: uppercase;
+        display: flex; align-items: center; gap: 14px; }
+      .dash { width: 34px; height: 5px; border-radius: 3px; background: #FF4C32; flex: none; }
+      .num { flex: none; width: 76px; height: 76px; border-radius: 18px; background: #06284C;
+        color: #9CD4FF; font-weight: 800; font-size: 36px; display: flex; align-items: center;
+        justify-content: center; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+      .skel { height: 16px; border-radius: 8px; background: #DEEEFE; }
+      .tick { width: 54px; height: 54px; flex: none; }
+      .tick circle { fill: #FF4C32; }
+      .tick path { fill: none; stroke: #FFFFFF; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round;
+        stroke-dasharray: 40; stroke-dashoffset: 40; }
+      .flamePill { background: #FF4C32; color: #FFFFFF; font-weight: 800; border-radius: 999px;
+        box-shadow: 0 18px 50px -14px rgba(255,76,50,.7); }
+      .tag { position: absolute; background: #9CD4FF; color: #06284C; font-weight: 800; font-size: 22px;
+        letter-spacing: .12em; padding: 9px 16px; border-radius: 10px; white-space: nowrap; }
+      .annot { position: absolute; border: 5px solid #9CD4FF; border-radius: 16px; }
+
+      /* S1 qualifier card */
+      #s1 { left: 596px; top: 470px; width: 424px; padding: 34px 34px 30px; }
+      #s1 .eyebrow { color: #06284C; font-size: 23px; }
+      #s1 .range { margin-top: 22px; font-weight: 800; font-size: 104px; line-height: .98; letter-spacing: -.035em;
+        font-variant-numeric: tabular-nums; }
+      #s1 .range .lo { color: #06284C; display: block; }
+      #s1 .range .hi { color: #06284C; display: block; }
+      #s1 .range span { position: relative; width: max-content; }
+      .ulx { position: absolute; left: 0; right: 0; bottom: -2px; height: 8px; border-radius: 4px; background: #FF4C32; transform: scaleX(0); transform-origin: 0 50%; display: block; }
+      #s1 .per { margin-top: 18px; display: flex; align-items: center; justify-content: space-between; }
+      #s1 .per span { font-weight: 800; font-size: 38px; letter-spacing: .12em; color: #06284C; }
+
+      /* S2 three changes */
+      #s2label { left: 690px; top: 318px; width: 340px; }
+      #s2label .big { font-weight: 800; font-size: 70px; line-height: 1; letter-spacing: -.03em;
+        text-shadow: 0 4px 24px rgba(6,40,76,.55); white-space: nowrap; }
+      #s2label .ul { height: 9px; width: 300px; background: #FF4C32; border-radius: 5px; margin-top: 10px;
+        transform-origin: 0 50%; }
+      #s2label .small { margin-top: 14px; font-weight: 700; font-size: 28px; letter-spacing: .2em;
+        text-shadow: 0 2px 14px rgba(6,40,76,.6); }
+      .s2card { left: 690px; width: 330px; height: 132px; display: flex; align-items: center; gap: 22px; padding: 0 26px; }
+      .s2card .lines { flex: 1; display: flex; flex-direction: column; gap: 14px; }
+
+      /* S3 store teardown */
+      #s3store { left: 96px; top: 420px; width: 520px; height: 690px; padding: 26px; border-radius: 34px; }
+      #s3store .img { height: 300px; border-radius: 20px; background:
+        linear-gradient(135deg, #DEEEFE 0%, #c9e2fb 100%); position: relative; }
+      #s3store .img::after { content: ''; position: absolute; left: 50%; top: 50%; width: 120px; height: 120px;
+        margin: -60px 0 0 -60px; border-radius: 50%; background: rgba(156,212,255,.8); }
+      #s3store .t1 { margin-top: 30px; width: 78%; height: 26px; border-radius: 13px; background: #06284C; opacity: .85; }
+      #s3store .t2 { margin-top: 18px; width: 52%; height: 18px; border-radius: 9px; background: #DEEEFE; }
+      #s3store .price { margin-top: 26px; font-weight: 800; font-size: 40px; color: #06284C; }
+      #s3store .atc { margin-top: 26px; height: 96px; border-radius: 18px; background: #06284C; color: #fff;
+        font-weight: 800; font-size: 28px; letter-spacing: .14em; display: flex; align-items: center; justify-content: center; }
+      .mini { left: 660px; width: 330px; height: 228px; padding: 24px; border-radius: 26px; }
+      .mini .h { font-weight: 800; font-size: 22px; letter-spacing: .14em; color: #06284C; }
+      .mini .row { display: flex; gap: 14px; align-items: center; margin-top: 18px; }
+      .mini .sq { width: 54px; height: 54px; border-radius: 12px; background: #DEEEFE; flex: none; }
+      .mini .bar { height: 14px; border-radius: 7px; background: #DEEEFE; flex: 1; }
+      .mini .btn { margin-top: 20px; height: 44px; border-radius: 12px; background: #06284C; }
+      #s3you { left: 96px; top: 330px; font-weight: 800; font-size: 26px; letter-spacing: .2em; color: #9CD4FF;
+        display: flex; align-items: center; gap: 14px; }
+      #s3bubble { left: 760px; top: 300px; width: 240px; height: 240px; border-radius: 50%; overflow: hidden;
+        border: 6px solid #FFFFFF; box-shadow: 0 16px 44px rgba(0,0,0,.4); }
+      #s3bubble video { width: 228px; height: 228px; object-fit: cover; display: block; }
+      #s3live { left: 770px; top: 552px; font-weight: 700; font-size: 20px; letter-spacing: .16em; color: #DEEEFE;
+        display: flex; align-items: center; gap: 10px; }
+      #s3live i { width: 12px; height: 12px; border-radius: 50%; background: #FF4C32; display: block; }
+      #s3up { left: 200px; top: 1078px; font-size: 30px; padding: 16px 26px; letter-spacing: .1em; white-space: nowrap; }
+
+      /* S4 lock-up */
+      #s4 { left: 56px; top: 450px; width: 404px; padding: 30px 30px 34px; }
+      #s4 .clock { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
+      #s4 .clock svg { width: 64px; height: 64px; flex: none; }
+      #s4 .clock .t { font-weight: 800; font-size: 40px; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+      #s4 .ln { font-weight: 800; font-size: 50px; line-height: 1.08; letter-spacing: -.03em; white-space: nowrap; }
+      #s4 .ln.free { color: #FF4C32; }
+      #s4 .rule { height: 1px; background: #DEEEFE; margin: 14px 0; }
+
+      /* S5 eyebrow, S6/7 client tag, S7 proof */
+      #s5eb { left: 64px; top: 1090px; color: #FFFFFF; font-size: 30px; text-shadow: 0 2px 14px rgba(6,40,76,.7); }
+      #clientTag { left: 64px; top: 236px; background: #FFFFFF; color: #06284C; border-radius: 14px;
+        padding: 14px 20px; font-weight: 800; font-size: 22px; letter-spacing: .14em; display: flex; gap: 12px;
+        align-items: center; box-shadow: 0 12px 30px rgba(6,40,76,.35); white-space: nowrap; }
+      #clientTag .k { color: #FF4C32; }
+      #s7 { left: 0; top: 640px; width: 1080px; display: flex; flex-direction: column; align-items: center; }
+      #s7 .eb { font-weight: 700; font-size: 26px; letter-spacing: .24em; color: #DEEEFE; }
+      #s7 .big { margin-top: 6px; font-weight: 800; font-size: 236px; line-height: 1; letter-spacing: -.05em;
+        font-variant-numeric: tabular-nums; text-shadow: 0 10px 50px rgba(6,40,76,.6); }
+      #s7 .sub { margin-top: 8px; font-weight: 800; font-size: 44px; letter-spacing: .1em; text-shadow: 0 4px 24px rgba(6,40,76,.6); }
+      #s7up { left: 340px; top: 1070px; font-size: 28px; padding: 14px 26px; letter-spacing: .1em; white-space: nowrap; }
+
+      /* S8-10 review stack */
+      .st { left: 640px; width: 380px; height: 116px; display: flex; align-items: center; gap: 20px; padding: 0 22px; }
+      .st .lab { flex: 1; position: relative; height: 60px; }
+      .st .lab .skel { position: absolute; left: 0; top: 22px; width: 82%; }
+      .st .lab .txt { position: absolute; left: 0; top: 0; font-weight: 800; font-size: 25px; line-height: 1.12;
+        letter-spacing: .06em; width: 190px; }
+      .st .tick { width: 44px; height: 44px; }
+      .st.active { box-shadow: 0 0 0 5px #9CD4FF, 0 16px 44px rgba(6,40,76,.40); }
+      #detail { left: 640px; top: 830px; width: 380px; height: 300px; padding: 24px; }
+      #d1, #d2 { position: absolute; inset: 24px; }
+      #d1 .wf { position: absolute; left: 0; top: 0; width: 160px; height: 252px; border-radius: 14px;
+        border: 2px solid #DEEEFE; padding: 12px; }
+      #d1 .wf .im { height: 92px; border-radius: 8px; background: #DEEEFE; }
+      #d1 .wf .b1 { margin-top: 12px; height: 12px; width: 80%; border-radius: 6px; background: #06284C; opacity: .8; }
+      #d1 .wf .b2 { margin-top: 10px; height: 10px; width: 55%; border-radius: 5px; background: #DEEEFE; }
+      #d1 .wf .bt { margin-top: 18px; height: 40px; border-radius: 8px; background: #06284C; }
+      #d1 .an { left: 4px; top: 152px; width: 152px; height: 92px; border-radius: 12px; border-width: 4px; }
+      #d1 .note { position: absolute; left: 184px; top: 40px; width: 148px; font-weight: 800; font-size: 24px;
+        line-height: 1.15; letter-spacing: .04em; }
+      #d1 .note small { display: block; margin-top: 10px; font-weight: 600; font-size: 20px; letter-spacing: 0; color: #4a6a8c; line-height: 1.3; }
+      #d2 { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 22px; }
+      #d2 .row { display: flex; align-items: center; gap: 16px; }
+      #d2 .chip { font-weight: 800; font-size: 26px; letter-spacing: .1em; padding: 14px 18px; border-radius: 12px; }
+      #d2 .c1 { background: #DEEEFE; color: #06284C; }
+      #d2 .c2 { background: #FF4C32; color: #fff; }
+      #d2 svg { width: 60px; height: 30px; }
+      #d2 .cap2 { font-weight: 600; font-size: 22px; color: #4a6a8c; text-align: center; line-height: 1.3; }
+      #flag { left: 668px; top: 814px; font-size: 28px; padding: 14px 26px; letter-spacing: .14em;
+        border-radius: 12px; white-space: nowrap; transform-origin: 50% 0%; }
+
+      /* cursor */
+      #cursor { position: absolute; left: 0; top: 0; width: 46px; height: 58px; opacity: 0;
+        filter: drop-shadow(0 6px 10px rgba(0,0,0,.35)); transform-origin: 6px 4px; }
+
+      /* CTA */
+      #ctaTile { left: 64px; top: 300px; width: 952px; height: 620px; border-radius: 30px; overflow: hidden;
+        border: 6px solid #FFFFFF; box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+      #ctaTile video { width: 940px; height: 608px; object-fit: cover; display: block; }
+      #ctaChip { left: 92px; top: 328px; background: rgba(6,40,76,.82); border-radius: 12px; padding: 10px 16px;
+        font-weight: 700; font-size: 20px; letter-spacing: .16em; display: flex; gap: 10px; align-items: center; }
+      #ctaChip i { width: 12px; height: 12px; border-radius: 50%; background: #FF4C32; display: block; }
+      #ctaRow { left: 0; top: 960px; width: 1080px; display: flex; justify-content: center; gap: 16px; }
+      #ctaRow div { font-weight: 800; font-size: 28px; letter-spacing: .08em; padding: 14px 22px; border-radius: 14px;
+        background: #FFFFFF; color: #06284C; white-space: nowrap; }
+      #ctaRow div.f { background: #FF4C32; color: #FFFFFF; }
+      #book { left: 190px; top: 1052px; width: 700px; height: 124px; font-size: 62px; letter-spacing: .02em;
+        display: flex; align-items: center; justify-content: center; gap: 22px; }
+      #book svg { width: 44px; height: 52px; }
+      #choose { left: 0; top: 1196px; width: 1080px; text-align: center; font-weight: 700; font-size: 26px;
+        letter-spacing: .24em; color: #DEEEFE; }
+
+      /* captions (previous-ad treatment, raised into the Reels safe band) */
+      .cap { position: absolute; left: 60px; width: 960px; top: 1182px; text-align: center; font-weight: 500;
+        font-size: 50px; line-height: 1.18; color: #FFFFFF; opacity: 0;
+        text-shadow: 0 2px 12px rgba(0,0,0,.55), 0 0 2px rgba(0,0,0,.4); }
+      .cap.inTile { top: 838px; font-size: 44px; }
+
+      /* end card */
+      #endStage { position: absolute; inset: 0; opacity: 0;
+        background:
+          radial-gradient(circle at 1.5px 1.5px, rgba(222,238,254,.14) 1.5px, transparent 2px) 0 0 / 54px 54px,
+          radial-gradient(60% 40% at 50% 42%, rgba(156,212,255,.20) 0%, rgba(6,40,76,0) 70%),
+          #06284C; }
+      #end { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; padding: 560px 90px 0;
+        display: flex; flex-direction: column; align-items: center; gap: 30px; text-align: center; opacity: 0; }
+      #end img { width: 440px; height: auto; }
+      #end .h { font-weight: 800; font-size: 76px; line-height: 1.0; letter-spacing: -.03em; margin-top: 20px; }
+      #end .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; font-size: 104px;
+        color: #9CD4FF; line-height: 1; }
+      #end .pill { margin-top: 18px; font-size: 44px; padding: 26px 64px; }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="review-call-ad" data-start="0" data-duration="6" data-width="1080" data-height="1920">
-      <div id="bg" class="clip" data-start="0" data-duration="6" data-track-index="0"></div>
-      <img id="logo" class="clip" data-start="0" data-duration="6" data-track-index="1" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
-      <div id="stage" class="clip" data-start="0" data-duration="6" data-track-index="2">
-        <div id="eyebrow">E-Commerce Intelligence</div>
-        <div id="headline"><span class="em">Rethink</span> your strategy.</div>
-        <div id="subhead">Replace this copy. Build your scene. Ship the ad.</div>
-        <div id="cta">Get started &rarr;</div>
+    <div id="root" data-composition-id="review-call-ad" data-start="0" data-duration="25.24" data-fps="25"
+         data-width="1080" data-height="1920">
+
+      <!-- picture edit: A-roll crops + B-roll, cut frame-accurately in FFmpeg (scripts/build-plate.sh) -->
+      <div id="plateWrap"><div id="plateInner">
+        <video id="plate" data-start="0" data-duration="25.24" data-track-index="0"
+               src="assets/media/plate.mp4" muted playsinline></video>
+      </div></div>
+      <audio id="vo" data-start="0" data-duration="24.24" data-track-index="1" src="assets/media/vo.wav" data-volume="1"></audio>
+
+      <div id="dim"></div>
+      <div id="shade"></div>
+      <div id="topshade"></div>
+
+      <!-- S3 store teardown stage -->
+      <div id="s3stage" class="navyStage"></div>
+      <div id="s3you" class="abs hide"><span class="dash"></span>YOUR STORE</div>
+      <div id="s3store" class="card hide">
+        <div class="img"></div><div class="t1"></div><div class="t2"></div>
+        <div class="price">$48.00</div><div class="atc">ADD TO CART</div>
       </div>
+      <div id="s3cart" class="card mini hide" style="top:640px">
+        <div class="h">CART</div>
+        <div class="row"><div class="sq"></div><div class="bar"></div></div>
+        <div class="btn"></div>
+      </div>
+      <div id="s3check" class="card mini hide" style="top:892px">
+        <div class="h">CHECKOUT</div>
+        <div class="row"><div class="bar"></div></div>
+        <div class="row"><div class="bar" style="flex:.6"></div></div>
+        <div class="btn" style="background:#9CD4FF"></div>
+      </div>
+      <div id="a3a" class="annot hide" style="left:110px;top:434px;width:492px;height:662px"></div>
+      <div id="a3b" class="annot hide" style="left:648px;top:628px;width:354px;height:252px"></div>
+      <div id="a3c" class="annot hide" style="left:648px;top:880px;width:354px;height:252px"></div>
+      <div id="t3a" class="tag hide" style="left:120px;top:392px">PRODUCT PAGE</div>
+      <div id="t3b" class="tag hide" style="left:700px;top:598px">CART</div>
+      <div id="t3c" class="tag hide" style="left:700px;top:850px">CHECKOUT</div>
+      <div id="s3up" class="abs flamePill hide">&uarr;&nbsp; CONVERSION</div>
+      <div id="s3bubble" class="abs hide">
+        <video id="bubble" data-start="4.72" data-duration="1.52" data-track-index="2"
+               src="assets/media/bubble.mp4" muted playsinline></video>
+      </div>
+      <div id="s3live" class="abs hide"><i></i>ON THE CALL</div>
+
+      <!-- S1 qualifier -->
+      <div id="s1" class="card hide">
+        <div class="eyebrow"><span class="dash"></span>Shopify founders</div>
+        <div class="range"><span class="lo" id="s1lo">$10K<i class="ulx" id="s1ulA"></i></span><span class="hi" id="s1hi">&ndash;$60K<i class="ulx" id="s1ulB"></i></span></div>
+        <div class="per"><span id="s1per">/ MONTH</span>
+          <svg class="tick" id="s1tick" viewBox="0 0 54 54"><circle cx="27" cy="27" r="27"/><path d="M15 28 L24 37 L40 19"/></svg>
+        </div>
+      </div>
+
+      <!-- S2 three changes -->
+      <div id="s2label" class="abs hide">
+        <div class="big">3 CHANGES</div><div class="ul" id="s2ul"></div><div class="small" id="s2small">WE'D MAKE</div>
+      </div>
+      <div id="s2c1" class="card s2card hide" style="top:520px"><div class="num">01</div><div class="lines"><div class="skel" style="width:100%"></div><div class="skel" style="width:64%"></div></div></div>
+      <div id="s2c2" class="card s2card hide" style="top:672px"><div class="num">02</div><div class="lines"><div class="skel" style="width:100%"></div><div class="skel" style="width:52%"></div></div></div>
+      <div id="s2c3" class="card s2card hide" style="top:824px"><div class="num">03</div><div class="lines"><div class="skel" style="width:100%"></div><div class="skel" style="width:74%"></div></div></div>
+
+      <!-- S4 lock-up -->
+      <div id="s4" class="card hide">
+        <div class="clock" id="s4clock">
+          <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="none" stroke="#DEEEFE" stroke-width="6"/>
+            <circle id="s4ring" cx="32" cy="32" r="27" fill="none" stroke="#9CD4FF" stroke-width="6" stroke-linecap="round"
+              stroke-dasharray="170" stroke-dashoffset="170" transform="rotate(-90 32 32)"/>
+            <path d="M32 18 V33 L41 38" fill="none" stroke="#06284C" stroke-width="5" stroke-linecap="round"/></svg>
+          <div class="t">30:00</div>
+        </div>
+        <div class="ln" id="s4l1">30 MINUTES.</div>
+        <div class="rule"></div>
+        <div class="ln" id="s4l2">3 CHANGES.</div>
+        <div class="rule"></div>
+        <div class="ln free" id="s4l3">FREE.</div>
+      </div>
+
+      <!-- S5 / S6 / S7 -->
+      <div id="s5eb" class="abs eyebrow hide"><span class="dash"></span>Ecommerce specialists</div>
+      <div id="clientTag" class="abs hide"><span class="k">CLIENT</span><span>SWEET E'S BAKE SHOP</span></div>
+      <div id="s7" class="abs hide">
+        <div class="eb">CLIENT RESULT</div>
+        <div class="big" id="s7num">+0%</div>
+        <div class="sub" id="s7sub">WEBSITE CONVERSION RATE</div>
+      </div>
+      <div id="s7up" class="abs flamePill hide">&uarr;&nbsp; CONVERSION</div>
+
+      <!-- S8-10 review stack -->
+      <div id="st1" class="card st hide" style="top:410px"><div class="num">01</div>
+        <div class="lab"><div class="skel"></div><div class="txt">WHAT TO CHANGE</div></div>
+        <svg class="tick" viewBox="0 0 54 54"><circle cx="27" cy="27" r="27"/><path d="M15 28 L24 37 L40 19"/></svg></div>
+      <div id="st2" class="card st hide" style="top:546px"><div class="num">02</div>
+        <div class="lab"><div class="skel"></div><div class="txt">WHY IT MATTERS</div></div>
+        <svg class="tick" viewBox="0 0 54 54"><circle cx="27" cy="27" r="27"/><path d="M15 28 L24 37 L40 19"/></svg></div>
+      <div id="st3" class="card st hide" style="top:682px"><div class="num">03</div>
+        <div class="lab"><div class="skel"></div><div class="txt">WHAT TO DO FIRST</div></div>
+        <svg class="tick" viewBox="0 0 54 54"><circle cx="27" cy="27" r="27"/><path d="M15 28 L24 37 L40 19"/></svg></div>
+      <div id="detail" class="card hide">
+        <div id="d1">
+          <div class="wf"><div class="im"></div><div class="b1"></div><div class="b2"></div><div class="bt"></div></div>
+          <div class="annot an" id="d1an"></div>
+          <div class="note" id="d1note">WHAT WE'D CHANGE<small>on your store, specifically</small></div>
+        </div>
+        <div id="d2" class="hide">
+          <div class="row"><div class="chip c1">CHANGE</div>
+            <svg viewBox="0 0 60 30"><path id="d2arrow" d="M2 15 H52 M42 5 L54 15 L42 25" fill="none" stroke="#06284C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="90" stroke-dashoffset="90"/></svg>
+            <div class="chip c2" id="d2impact">IMPACT</div></div>
+          <div class="cap2">and the reason behind every recommendation</div>
+        </div>
+      </div>
+      <div id="flag" class="abs flamePill hide">DO THIS FIRST</div>
+
+      <!-- CTA -->
+      <div id="ctaStage" class="navyStage"></div>
+      <div id="ctaTile" class="abs hide">
+        <video id="ctatile" data-start="20.40" data-duration="3.84" data-track-index="3"
+               src="assets/media/ctatile.mp4" muted playsinline></video>
+      </div>
+      <div id="ctaChip" class="abs hide"><i></i>FREE STORE REVIEW</div>
+      <div id="ctaRow" class="abs"><div id="cr1" class="hide">30 MINUTES</div><div id="cr2" class="hide">3 CHANGES</div><div id="cr3" class="f hide">FREE</div></div>
+      <div id="book" class="abs flamePill hide">BOOK NOW
+        <svg viewBox="0 0 44 52"><path d="M22 4 V44 M6 30 L22 46 L38 30" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div id="choose" class="abs hide">CHOOSE A TIME</div>
+
+      <!-- captions -->
+      <div class="cap" id="c1">Shopify founders doing</div>
+      <div class="cap" id="c2">$10,000 to $60,000 a month</div>
+      <div class="cap" id="c3">we'll show you three changes</div>
+      <div class="cap" id="c4">to make your store more money</div>
+      <div class="cap" id="c5">on a free 30-minute call</div>
+      <div class="cap" id="c6">you'll be on with specialists</div>
+      <div class="cap" id="c7">from the team that have helped</div>
+      <div class="cap" id="c8">brands like Sweet E's</div>
+      <div class="cap" id="c9">lift their website conversion rate</div>
+      <div class="cap" id="c10">by over 500%</div>
+      <div class="cap" id="c11">and on the call, we'll tell you</div>
+      <div class="cap" id="c12">what we'd change on your store</div>
+      <div class="cap" id="c13">why each one matters</div>
+      <div class="cap" id="c14">and which to do first</div>
+      <div class="cap inTile" id="c15">Tap Book Now</div>
+      <div class="cap inTile" id="c16">and choose a time</div>
+
+      <!-- cursor -->
+      <svg id="cursor" viewBox="0 0 46 58"><path d="M4 3 L4 46 L15 35 L23 54 L31 50 L23 32 L39 32 Z" fill="#FFFFFF" stroke="#06284C" stroke-width="3" stroke-linejoin="round"/></svg>
+
+      <!-- end card -->
+      <div id="endStage"></div>
+      <div id="end">
+        <img id="endLogo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+        <div class="h" id="endH">Three changes.<br />Thirty minutes.</div>
+        <div class="em" id="endEm">Free.</div>
+        <div class="pill flamePill" id="endPill">BOOK NOW</div>
+      </div>
+
+      <!-- logo: positioned, non-clip wrapper so the engine never moves it -->
+      <div id="logoBox"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
     </div>
+
     <script>
+      // crop-mark registration "+" at every card corner (the unifying audit texture)
+      document.querySelectorAll('.card').forEach(function (c) {
+        [[-9, -9], [null, -9], [-9, null], [null, null]].forEach(function (p) {
+          var m = document.createElement('i'); m.className = 'cm';
+          if (p[0] === null) m.style.right = '-9px'; else m.style.left = p[0] + 'px';
+          if (p[1] === null) m.style.bottom = '-9px'; else m.style.top = p[1] + 'px';
+          c.appendChild(m);
+        });
+      });
+
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
-      tl.from("#logo", { opacity: 0, y: -20, duration: .6, ease: "power3.out" }, .2)
-        .from("#eyebrow", { opacity: 0, y: 16, duration: .5, ease: "power2.out" }, .5)
-        .from("#headline", { opacity: 0, y: 32, duration: .7, ease: "power3.out" }, .7)
-        .from("#subhead", { opacity: 0, y: 20, duration: .6, ease: "power2.out" }, 1.1)
-        .from("#cta", { opacity: 0, scale: .85, duration: .55, ease: "back.out(1.7)" }, 1.5);
-      tl.to({}, { duration: 6 }, 0); // pad to data-duration
-      window.__timelines["review-call-ad"] = tl;
+      const F = 0.04; // one frame at 25fps
+      const show = (sel, t) => tl.set(sel, { opacity: 1 }, t);
+      const hide = (sel, t) => tl.set(sel, { opacity: 0 }, t);
+      const wipe = (sel, t, d = 0.3, r = 24) => tl.fromTo(sel,
+        { opacity: 1, clipPath: `inset(0% 100% 0% 0% round ${r}px)` },
+        { clipPath: `inset(0% 0% 0% 0% round ${r}px)`, duration: d, ease: 'expo.out' }, t);
+      const rise = (sel, t, d = 0.32, y = 36, ease = 'expo.out') => tl.fromTo(sel,
+        { opacity: 0, y: y }, { opacity: 1, y: 0, duration: d, ease: ease }, t);
+      const tick = (svg, t) => {
+        tl.fromTo(svg, { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.24, ease: 'back.out(2)' }, t);
+        tl.fromTo(svg + ' path', { strokeDashoffset: 40 }, { strokeDashoffset: 0, duration: 0.2, ease: 'power2.out' }, t + 0.06);
+      };
+      const cursorTo = (x, y, t, d = 0.4) => tl.to('#cursor', { x: x, y: y, duration: d, ease: 'power2.inOut' }, t);
+      const click = (t) => tl.to('#cursor', { scale: 0.86, duration: 0.07, ease: 'power4.in', yoyo: true, repeat: 1 }, t);
+
+      // ---------- picture: slow push on every shot (camera never sleeps) ----------
+      // [start, end, transformOrigin]
+      const shots = [
+        [0, 3.04, '34% 34%'], [3.04, 4.72, '36% 30%'], [6.24, 7.88, '66% 34%'],
+        [7.88, 8.52, '45% 40%'], [8.52, 9.16, '50% 40%'], [9.16, 9.80, '50% 40%'], [9.80, 10.44, '50% 35%'],
+        [10.44, 11.00, '50% 40%'], [11.00, 11.64, '40% 40%'], [11.64, 12.52, '50% 60%'], [12.52, 14.72, '50% 35%'],
+        [14.72, 17.88, '34% 34%'], [17.88, 19.08, '34% 34%'], [19.08, 20.40, '34% 34%']
+      ];
+      shots.forEach(function (s) {
+        const len = s[1] - s[0];
+        tl.set('#plateInner', { transformOrigin: s[2], scale: 1 }, s[0]);
+        tl.to('#plateInner', { scale: 1 + Math.min(0.045, 0.016 * len), duration: len, ease: 'none' }, s[0]);
+      });
+      tl.set('#plateInner', { scale: 1 }, 20.40);
+
+      // shades: off on full-graphic beats
+      hide('#shade', 4.72); show('#shade', 6.24); hide('#shade', 20.40);
+      hide('#topshade', 4.72); show('#topshade', 6.24); hide('#topshade', 20.40);
+
+      // ---------- S1 qualifier 0.00-3.04 ----------
+      wipe('#s1', 0.04, 0.34);
+      tl.fromTo('#s1 .eyebrow', { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power3.out' }, 0.12);
+      rise('#s1lo', 0.20, 0.3, 44);
+      rise('#s1hi', 0.34, 0.3, 44, 'power3.out');
+      // audio sync: flame underline sweeps each figure as Sean says it
+      tl.fromTo('#s1ulA', { scaleX: 0 }, { scaleX: 1, duration: 0.24, ease: 'power2.inOut' }, 1.08);
+      tl.fromTo('#s1ulB', { scaleX: 0 }, { scaleX: 1, duration: 0.24, ease: 'power2.inOut' }, 1.58);
+      tl.fromTo('#s1per', { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.26, ease: 'power2.out' }, 2.62);
+      tick('#s1tick', 2.76);
+      hide('#s1', 3.04);
+
+      // ---------- S2 three changes 3.04-4.72 ----------
+      rise('#s2c1', 3.80, 0.3, 60);
+      rise('#s2c2', 3.94, 0.3, 60);
+      rise('#s2c3', 4.08, 0.3, 60);
+      tl.fromTo('#s2label', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.28, ease: 'power3.out' }, 4.20);
+      tl.fromTo('#s2ul', { scaleX: 0 }, { scaleX: 1, duration: 0.26, ease: 'power2.inOut' }, 4.32);
+      tl.fromTo('#s2small', { opacity: 0 }, { opacity: 1, duration: 0.2, ease: 'none' }, 4.44);
+      hide('#s2label, #s2c1, #s2c2, #s2c3', 4.72);
+
+      // ---------- S3 store teardown 4.72-6.24 ----------
+      show('#s3stage', 4.72);
+      tl.fromTo('#s3store', { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.34, ease: 'expo.out' }, 4.72);
+      tl.fromTo('#s3you', { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.26, ease: 'power3.out' }, 4.76);
+      rise('#s3cart', 4.80, 0.3, 60, 'power3.out');
+      rise('#s3check', 4.88, 0.3, 60, 'power3.out');
+      tl.fromTo('#s3bubble', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.5)' }, 4.76);
+      tl.fromTo('#s3live', { opacity: 0 }, { opacity: 1, duration: 0.2, ease: 'none' }, 4.90);
+      tl.set('#cursor', { x: 900, y: 1140, opacity: 1, scale: 1 }, 4.92);
+      [['#a3a', '#t3a', 5.04], ['#a3b', '#t3b', 5.28], ['#a3c', '#t3c', 5.52]].forEach(function (a) {
+        tl.fromTo(a[0], { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.22, ease: 'power3.out' }, a[2]);
+        tl.fromTo(a[1], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' }, a[2] + 0.04);
+      });
+      cursorTo(560, 700, 4.96, 0.3); cursorTo(860, 760, 5.26, 0.24); cursorTo(860, 1010, 5.50, 0.22);
+      cursorTo(500, 960, 5.72, 0.22); click(5.94);
+      tl.fromTo('#s3up', { opacity: 0, y: 40, scale: 0.8 }, { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: 'back.out(1.6)' }, 5.60);
+      hide('#s3stage, #s3store, #s3you, #s3cart, #s3check, #s3bubble, #s3live, #a3a, #a3b, #a3c, #t3a, #t3b, #t3c, #s3up, #cursor', 6.24);
+
+      // ---------- S4 lock-up 6.24-7.88 ----------
+      tl.fromTo('#s4', { opacity: 1, clipPath: 'inset(0% 0% 100% 0% round 24px)' },
+        { clipPath: 'inset(0% 0% 0% 0% round 24px)', duration: 0.3, ease: 'expo.out' }, 6.24);
+      tl.set('#s4clock, #s4l1, #s4l3', { opacity: 0 }, 6.24);
+      tl.fromTo('#s4l2', { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.24, ease: 'power3.out' }, 6.28);
+      tl.fromTo('#s4l3', { opacity: 0, scale: 1.5 }, { opacity: 1, scale: 1, duration: 0.24, ease: 'back.out(2)', transformOrigin: '0% 50%' }, 6.40);
+      tl.fromTo('#s4l1', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.28, ease: 'expo.out' }, 6.68);
+      tl.fromTo('#s4clock', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.26, ease: 'power2.out' }, 6.72);
+      tl.fromTo('#s4ring', { strokeDashoffset: 170 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power2.inOut' }, 6.80);
+      hide('#s4', 7.88);
+
+      // ---------- S5 authority 7.88-10.44 ----------
+      tl.fromTo('#s5eb', { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power3.out' }, 7.96);
+      hide('#s5eb', 10.44);
+
+      // ---------- S6/S7 Sweet E's proof 10.44-14.72 ----------
+      tl.fromTo('#clientTag', { opacity: 1, clipPath: 'inset(0% 100% 0% 0% round 14px)' },
+        { clipPath: 'inset(0% 0% 0% 0% round 14px)', duration: 0.32, ease: 'expo.out' }, 10.48);
+      show('#dim', 12.52);
+      tl.fromTo('#s7 .eb', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.24, ease: 'power2.out' }, 12.56);
+      show('#s7', 12.52);
+      tl.set('#s7 .big, #s7sub', { opacity: 0 }, 12.52);
+      const cnt = { v: 0 };
+      tl.fromTo('#s7 .big', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.24, ease: 'power3.out' }, 13.36);
+      tl.fromTo(cnt, { v: 0 }, { v: 500, duration: 0.40, ease: 'power3.out',
+        onUpdate: function () { document.getElementById('s7num').textContent = '+' + Math.round(cnt.v) + '%'; } }, 13.36);
+      tl.fromTo('#s7sub', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.26, ease: 'expo.out' }, 13.84);
+      tl.fromTo('#s7up', { opacity: 0, y: 30, scale: 0.8 }, { opacity: 1, y: 0, scale: 1, duration: 0.28, ease: 'back.out(1.6)' }, 14.08);
+      hide('#s7, #s7up, #dim, #clientTag', 14.72);
+
+      // ---------- S8-10 review stack 14.72-20.40 ----------
+      ['#st1', '#st2', '#st3'].forEach(function (s, i) { rise(s, 14.76 + i * 0.08, 0.3, 40); });
+      tl.set('.st .txt', { opacity: 0 }, 14.72);
+      tl.set('.st .tick', { opacity: 0 }, 14.72);
+      // 01 WHAT TO CHANGE
+      tl.set('#st1', { className: 'card st active' }, 15.32);
+      tl.fromTo('#st1 .txt', { opacity: 0, clipPath: 'inset(0% 100% 0% 0%)' }, { opacity: 1, clipPath: 'inset(0% 0% 0% 0%)', duration: 0.3, ease: 'expo.out' }, 15.32);
+      tl.to('#st1 .skel', { opacity: 0, duration: 0.12, ease: 'none' }, 15.32);
+      rise('#detail', 15.40, 0.32, 40, 'power3.out');
+      tl.set('#d1an', { opacity: 0 }, 15.40);
+      tl.set('#cursor', { x: 960, y: 1180, opacity: 1, scale: 1 }, 15.90);
+      cursorTo(790, 1050, 15.94, 0.3);
+      tl.fromTo('#d1an', { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.24, ease: 'power3.out' }, 16.20);
+      click(16.24);
+      tick('#st1 .tick', 17.28);
+      tl.set('#st1', { className: 'card st' }, 17.88);
+      // 02 WHY IT MATTERS
+      tl.set('#st2', { className: 'card st active' }, 17.92);
+      tl.fromTo('#st2 .txt', { opacity: 0, clipPath: 'inset(0% 100% 0% 0%)' }, { opacity: 1, clipPath: 'inset(0% 0% 0% 0%)', duration: 0.28, ease: 'expo.out' }, 17.92);
+      tl.to('#st2 .skel', { opacity: 0, duration: 0.12, ease: 'none' }, 17.92);
+      hide('#d1', 17.88); show('#d2', 17.88); hide('#cursor', 17.88);
+      tl.fromTo('#d2 .c1', { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.22, ease: 'power2.out' }, 17.96);
+      tl.fromTo('#d2arrow', { strokeDashoffset: 90 }, { strokeDashoffset: 0, duration: 0.26, ease: 'power2.inOut' }, 18.30);
+      tl.fromTo('#d2impact', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.24, ease: 'back.out(2)' }, 18.52);
+      tick('#st2 .tick', 18.84);
+      tl.set('#st2', { className: 'card st' }, 19.08);
+      // 03 WHAT TO DO FIRST + priority
+      hide('#detail', 19.08);
+      tl.set('#st3', { className: 'card st active' }, 19.16);
+      tl.fromTo('#st3 .txt', { opacity: 0, clipPath: 'inset(0% 100% 0% 0%)' }, { opacity: 1, clipPath: 'inset(0% 0% 0% 0%)', duration: 0.28, ease: 'expo.out' }, 19.16);
+      tl.to('#st3 .skel', { opacity: 0, duration: 0.12, ease: 'none' }, 19.16);
+      tl.set('#cursor', { x: 980, y: 1060, opacity: 1, scale: 1 }, 19.40);
+      cursorTo(860, 760, 19.44, 0.36); click(19.84);
+      tl.to('#st3', { scale: 1.04, duration: 0.24, ease: 'back.out(2)' }, 19.98);
+      tl.fromTo('#flag', { opacity: 0, y: -24, scale: 0.6 }, { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: 'back.out(1.4)' }, 19.98);
+      tl.to('#st1, #st2', { opacity: 0.55, duration: 0.2, ease: 'power1.out' }, 20.02);
+      hide('#st1, #st2, #st3, #flag, #cursor', 20.40);
+
+      // ---------- S11 CTA 20.40-24.24 ----------
+      show('#ctaStage', 20.40);
+      tl.fromTo('#ctaTile', { opacity: 1, clipPath: 'inset(0% 0% 100% 0% round 30px)' },
+        { clipPath: 'inset(0% 0% 0% 0% round 30px)', duration: 0.36, ease: 'expo.out' }, 20.40);
+      tl.fromTo('#ctaTile video', { scale: 1.06 }, { scale: 1.0, duration: 3.84, ease: 'none' }, 20.40);
+      tl.fromTo('#ctaChip', { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.24, ease: 'power2.out' }, 20.56);
+      ['#cr1', '#cr2', '#cr3'].forEach(function (s, i) { rise(s, 20.48 + i * 0.08, 0.28, 24, 'power3.out'); });
+      tl.fromTo('#book', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.34, ease: 'back.out(1.6)' }, 20.66);
+      tl.set('#cursor', { x: 900, y: 1300, opacity: 1, scale: 1 }, 20.80);
+      cursorTo(640, 1130, 20.84, 0.34);
+      click(21.18);
+      tl.to('#book', { scale: 0.95, duration: 0.07, ease: 'power4.in', yoyo: true, repeat: 1 }, 21.18);
+      tl.to('#cursor', { opacity: 0, duration: 0.2, ease: 'none' }, 21.70);
+      tl.fromTo('#choose', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.26, ease: 'power2.out' }, 21.30);
+      tl.to('#book', { scale: 1.04, duration: 0.5, ease: 'sine.inOut', yoyo: true, repeat: 3 }, 22.20);
+
+      // ---------- End card 24.24-25.24 ----------
+      show('#endStage', 24.24); show('#end', 24.24);
+      hide('#ctaStage, #ctaTile, #ctaChip, #cr1, #cr2, #cr3, #book, #choose, #logoBox', 24.24);
+      rise('#endLogo', 24.28, 0.3, 20, 'power3.out');
+      rise('#endH', 24.36, 0.32, 30);
+      rise('#endEm', 24.48, 0.32, 30, 'power2.out');
+      tl.fromTo('#endPill', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.6)' }, 24.58);
+
+      // ---------- captions ----------
+      [['#c1', 0.08, 1.08], ['#c2', 1.08, 3.04], ['#c3', 3.04, 4.72], ['#c4', 4.72, 6.24], ['#c5', 6.24, 7.88],
+       ['#c6', 7.96, 9.00], ['#c7', 9.00, 10.44], ['#c8', 10.44, 11.56], ['#c9', 11.56, 13.36], ['#c10', 13.36, 14.72],
+       ['#c11', 14.84, 16.20], ['#c12', 16.20, 17.88], ['#c13', 17.96, 19.08], ['#c14', 19.16, 20.40],
+       ['#c15', 20.48, 21.28], ['#c16', 21.28, 22.60]].forEach(function (c) { show(c[0], c[1]); hide(c[0], c[2]); });
+
+      tl.to({}, { duration: 25.24 }, 0); // fill the slot (Law #11)
+      window.__timelines['review-call-ad'] = tl;
     </script>
   </body>
 </html>

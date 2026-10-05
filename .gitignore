@@ -40,3 +40,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# review-call-ad rendered media (rebuild with video-projects/review-call-ad/scripts/build-plate.sh)
+video-projects/review-call-ad/assets/media/

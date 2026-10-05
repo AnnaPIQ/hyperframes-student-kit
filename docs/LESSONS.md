@@ -72,6 +72,13 @@ efficient over time instead of relearning the same lessons.
   Drive title via `get_file_metadata`. Swapped links put the wrong client under a
   social-proof claim.
 
+- **Heavy 4K/ProRes talking-head + many crops: cut a "plate" in FFmpeg first.** Build the
+  whole picture edit (crops, punch-ins, B-roll, frame-exact at the source fps) as one
+  1080x1920 H.264 plate, then layer graphics/captions/slow pushes in Hyperframes over a
+  single `<video>`. Faster renders, no browser 4K decode, no wrapper-animation drift.
+  Example: `video-projects/review-call-ad/scripts/build-plate.sh`. Render with `--fps 25`
+  when the A-roll is 25fps (supported) to avoid cadence judder.
+
 ## Delivery & resolution
 
 - **There is no 4:5 render "preset."** Ship the final via `--quality high` at the

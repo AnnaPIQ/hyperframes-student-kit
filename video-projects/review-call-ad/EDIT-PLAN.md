@@ -391,3 +391,20 @@ Everything else matches.
 3. Priority flag wording: **PRIORITY #1** or **DO THIS FIRST**?
 4. Confirm the Sweet E's +500% substantiation is on file for Meta review.
 5. Fix the two swapped links in the "B-Roll Short Cut" sheet ("Sweet Es team working" and "Sean on Laptop").
+
+---
+
+## 12. Build decisions (as built in `index.html`)
+
+Sign-off questions resolved by judgement during the build:
+
+1. **Captions** raised to the Reels safe band (centre ~y 1215). Same type treatment as previous ads.
+2. **Sweet E's opener** is the Sean and Erica walk-out (verified: Erica leads out of the pink door, Sean behind her), followed by the Bake Shop sign landing on the word "Sweet E's", then sprinkles. The cookie scroll was cut for time.
+3. **Flag** reads **DO THIS FIRST** (mirrors the VO "which to do first").
+4. **Stage shot** is the Shoptalk wide at 0:12.9 (Sean on stage with his own talk-title screen), cropped clear of Rebuy's stat panel. The 6:03 medium could not be cropped clear of "99.9%".
+5. **+500% hero** sits over Erica holding one of her cakes. The visitor-dot idea was dropped for a cleaner frame; the flame "↑ CONVERSION" pill from the store beat returns instead (callback).
+6. **CTA**: Sean's face fills the upper half of every 9:16 crop, so a dominant BOOK NOW cannot sit under it inside the safe band. Sean moves into a rounded "free store review" call tile with the chips, BOOK NOW and CHOOSE A TIME below. He stays on screen; captions sit inside the tile.
+7. **Frame rate** 25fps throughout (A-roll native; the CLI supports it).
+8. **Rebuild**: `bash scripts/build-plate.sh` recreates `assets/media/` (git-ignored) from Drive.
+
+Still on you: confirm the Sweet E's +500% substantiation is on file, and fix the two swapped links in the B-Roll sheet.
