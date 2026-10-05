@@ -26,6 +26,8 @@ italic exactly once: *Free.* on the end card.
 - Crop marks (+) on every card corner and a faint dot grid on navy stages = unifying texture.
 
 ## What NOT to Do
+- No on-screen text that just repeats what the subtitle is saying
+- No sub-second B-roll flurries or popping graphics; shots ~1s+, graphics ease in and fade out
 - No revenue/profit charts, timelines or dashboards (that was the 90-Day ad)
 - No glitch, neon, chrome, fake 3D, bouncing type, giant zooms, confetti, fake notifications
 - No Dryft or non-Sweet E's footage under the +500% claim

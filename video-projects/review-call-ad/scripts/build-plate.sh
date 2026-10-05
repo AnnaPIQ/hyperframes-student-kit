@@ -19,11 +19,8 @@ seg(){ [ -f "$W/seg/$1.mp4" ] || { ffmpeg -v error -y -ss "$3" -t "$4" -i "$(U "
   -c:v libx264 -preset veryfast -crf 14 -pix_fmt yuv420p "$W/seg/$1.mp4"; sleep 3; }; }
 seg stage0    1XuPAArGjpESm3JUhjU7Q3gVmz4L_y72Z 12.5 2   # Shoptalk stage wide (1080p)
 seg lapman    1HVH9tFgvcAfS-YczxU_aiLOmUxm18Ofu 2.5  5   # Sean holding laptop talking to man
-seg women     1GycuM9sO1RClaXwnU7sdYi6HOqr6p15I 4    4   # Sean and Mason with group
-seg overlap   1x1uT_kVmPod-vpPn5SVIGY4kUZmfCwBo 3.5  5   # angle over laptop, Sean thinking
 seg seanerica 1OEhRQ9CeyZxdI_21Eqm9x-SqGXKuoCL2 7    7   # Sweet E's: Erica + Sean walk-out
 seg sign      1TIjxtO9kg_JXo48WW9bVog0DIDKakFis 0    12  # Sweet E's Bake Shop sign
-seg sprinkle  13dyHmvfYPQCPA84j_Kz8HsH9sf_hAUTy 0    4   # sprinkles on cupcakes
 seg pack      1cF3UR7rqtK27rx9HUh5H7Wt_yipf8fhp 2.5  5   # Erica with cake (hero under +500%)
 
 V="fps=25,format=yuv420p"; X="-c:v libx264 -preset medium -crf 14 -r 25 -an"
@@ -37,17 +34,14 @@ a a9  21.28 1.20 1056:1878:1572:100   # WIDE-L 1.15x 17.88-19.08 why it matters 
 a a10 22.72 1.32 1215:2160:1518:0     # WIDE-L  19.08-20.40  which to do first
 b(){ ffmpeg -v error -y -ss "$3" -i "seg/$2.mp4" -vf "$5scale=1080:1920:flags=lanczos,$V" -frames:v "$4" $X "$1.mp4"; }
 R="transpose=1,fps=25,"   # vertical phone footage stored sideways
-b b1 stage0    0.4 16 "crop=608:1080:760:0,fps=25,"   # 7.88-8.52 (crop keeps Rebuy stats out)
-b b2 lapman    1.0 16 "$R"                            # 8.52-9.16
-b b3 women     1.0 16 "$R"                            # 9.16-9.80
-b b4 overlap   1.0 16 "$R"                            # 9.80-10.44
-b b5 seanerica 4.8 14 "$R"                            # 10.44-11.00
-b b6 sign      1.0 16 "$R"                            # 11.00-11.64 (lands on "Sweet E's")
-b b7 sprinkle  0.6 22 "$R"                            # 11.64-12.52
-b b8 pack      0.0 55 "$R"                            # 12.52-14.72 (+500% hero)
+b c1 stage0    0.62 32 "crop=608:1080:790:0,fps=25,"   # 7.88-9.16 (ends before the clip's own camera cut at 1.93s; crop keeps Rebuy stats out)
+b c2 lapman    1.0  32 "$R"                            # 9.16-10.44
+b c3 sign      0.5  28 "$R"                            # 10.44-11.56 (sign on "Sweet E's")
+b c4 seanerica 4.6  24 "$R"                            # 11.56-12.52 (Erica + Sean)
+b b8 pack      0.0  55 "$R"                            # 12.52-14.72 (+500% hero)
 ffmpeg -v error -y -f lavfi -i "color=c=0x06284C:s=1080x1920:r=25" -frames:v 38  $X navy3.mp4    # 4.72-6.24 store review
 ffmpeg -v error -y -f lavfi -i "color=c=0x06284C:s=1080x1920:r=25" -frames:v 121 $X navyend.mp4  # 20.40-25.24 CTA + end
-printf "file '%s.mp4'\n" a1 a2 navy3 a4 b1 b2 b3 b4 b5 b6 b7 b8 a8 a9 a10 navyend > list.txt
+printf "file '%s.mp4'\n" a1 a2 navy3 a4 c1 c2 c3 c4 b8 a8 a9 a10 navyend > list.txt
 ffmpeg -v error -y -f concat -safe 0 -i list.txt -c copy plate.mp4
 
 # overlays: Sean "on the call" bubble (S3) and CTA call tile (S11)

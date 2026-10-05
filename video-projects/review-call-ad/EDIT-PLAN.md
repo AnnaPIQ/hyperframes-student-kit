@@ -413,4 +413,7 @@ Still on you: confirm the Sweet E's +500% substantiation is on file, and fix the
 - Subtitles moved to the standard bottom position (~85% height) on every beat, including the CTA.
 - End card now lands on "and choose a time" (21.28s) while Sean is still talking, with CHOOSE A TIME under BOOK NOW. Runtime 24.24s.
 - Highlights pared back: flame only on FREE., DO THIS FIRST and BOOK NOW; one serif italic (*Free.* on the end card). The $10K/$60K underlines, flame ticks, flame dashes, the second ↑ CONVERSION pill and the flame FREE chip were removed or neutralised.
+- "Ecommerce Specialists" eyebrow removed; team montage is footage only.
+- No graphic repeats the spoken line in plain text: removed "3 CHANGES / WE'D MAKE", the 01/02/03 card labels (bars now fill navy as each is reviewed), "WHAT WE'D CHANGE", the CHANGE → IMPACT sub-line, "CLIENT RESULT" and the end-card "CHOOSE A TIME". Kept: qualifier card, 30 MIN lock-up, +500% with its label, CTA button, end-card lock-up.
+- Less flashing: B-roll is now 4 shots of ~1-1.3s (stage, Sean with a founder, Sweet E's sign on "Sweet E's", Sean with Erica) plus the held +500% shot. Store-review beat slowed (one cursor glide, soft fades). Graphics fade out over 0.2s into each cut. Fixed a 2-frame camera cut hidden inside the stage clip.
 

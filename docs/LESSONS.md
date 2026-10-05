@@ -79,6 +79,11 @@ efficient over time instead of relearning the same lessons.
   Example: `video-projects/review-call-ad/scripts/build-plate.sh`. Render with `--fps 25`
   when the A-roll is 25fps (supported) to avoid cadence judder.
 
+- **B-roll sources can hide their own camera cuts.** A "single" stage clip switched angle
+  at 1.93s and flashed a 2-frame close-up into the edit. **Fix:** run
+  `ffmpeg -i clip.mp4 -vf "select='gt(scene,0.15)',showinfo" -f null -` on every segment
+  (and on the finished plate) and keep in/outs clear of any cut it reports.
+
 ## Delivery & resolution
 
 - **There is no 4:5 render "preset."** Ship the final via `--quality high` at the
