@@ -50,6 +50,20 @@ efficient over time instead of relearning the same lessons.
   block the Whisper model download. **Fix:** caption from the known script text and
   anchor timing via silence analysis instead of word-level timestamps.
 
+- **Need word timings but `whisper-cpp` is missing (cloud container).** `pip install faster-whisper`
+  works and the `small.en` model downloads fine. If `transcribe()` throws
+  `open() got an unexpected keyword argument 'metadata_errors'` (PyAV version clash), extract
+  16 kHz mono WAV with ffmpeg and pass a numpy float32 array instead of a path. Cross-check
+  gaps with an RMS level profile: it caught two script lines that were never actually recorded.
+- **Google Drive public downloads hit "Quota exceeded" after a few large files.** Streaming
+  ffmpeg seeks over `drive.usercontent.google.com` fire many range requests and burn the
+  quota fast (the response becomes a small HTML page, so ffmpeg reports "Invalid data").
+  **Fix:** download each clip once with `curl` sequentially, grab frames locally, delete;
+  pass `-nostdin` to ffmpeg inside `while read` loops. Check the first bytes for `<!DOCTYPE`.
+- **B-roll index sheets can carry swapped links.** Always confirm the actual filename
+  (`curl -sI` shows `content-disposition`) and duration against the row label and timecode
+  before trusting a pick, especially for client-proof footage.
+
 ## Editing technique (talking-head cutdowns)
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +
