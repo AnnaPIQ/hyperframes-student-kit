@@ -7,10 +7,11 @@
 
 > **Build revisions (supersede the plan below where they differ)**
 > 1. Head trimmed by 0.48 s so Sean is already looking at camera on frame 1. Every timestamp below is now 0.48 s earlier, and the runtime is 30.52 s.
-> 2. Subtitles moved down to the conventional lower position: block bottom edge at y 1520.
+> 2. Subtitles moved down to the lower position: block bottom edge at y 1670 (250 px above the frame edge).
 > 3. Logo moved higher: top-left, x 64 / y 120.
 > 4. Subtitle highlights cut to two: "Book Now" in #FF4C32 and "first" in italic. Everything else is white.
 > 5. Graphics too brief to read were removed: the "TO MAKE YOUR STORE / MORE MONEY." lines, the "ECOMMERCE SPECIALISTS" label and the "YOUR STORE. WITH YOU." card. The +49% lockup and the DO THIS FIRST tag now hold longer.
+> 7. Lip sync measured and corrected: the VO now runs 0.10 s later so voice and lips match within one frame.
 > 6. End card reads "FREE" (white) over "Store Review" (white, title case), then the BOOK NOW pill.
 
 ---

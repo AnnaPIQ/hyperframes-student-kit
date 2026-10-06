@@ -44,6 +44,13 @@ efficient over time instead of relearning the same lessons.
 - **Talking-head lips out of sync.** Source recordings often have a ~0.2s audio start
   offset that the engine drops. **Fix:** advance the video ~0.16s relative to audio so
   lips match (tune per clip).
+- **Measure sync, don't eyeball it.** Camera MOVs carry an audio `start_time` (0.079 s on
+  the three-changes A-roll) that is lost once the VO plays as its own `<audio>` clip, and
+  `<video>` `data-media-start` landed one source frame early. Net result: voice 100 ms
+  ahead of lips. **Fix:** (1) cross-correlate the render's audio envelope against the
+  source audio to get the audio offset; (2) frame-match rendered frames against the
+  prepped clip, run through the same scale and crop, to get the video offset; (3) set the
+  VO `data-media-start` so the two agree. Scripts: `video-projects/three-changes-ad/scripts/`.
 - **Phone / vertical b-roll imports rotated.** **Fix:** rotate 90° CW during prep
   (`ffmpeg -vf "transpose=1"`).
 - **Offline transcriber can't run (model download egress-blocked).** Some environments

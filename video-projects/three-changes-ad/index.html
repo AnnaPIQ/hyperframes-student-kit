@@ -115,7 +115,7 @@
 
       /* ---------- subtitles ---------- */
       .sub { z-index: 9; }
-      .sub-box { position: absolute; left: 110px; right: 110px; bottom: 400px; display: flex; flex-direction: column; align-items: center; }
+      .sub-box { position: absolute; left: 110px; right: 110px; bottom: 250px; display: flex; flex-direction: column; align-items: center; }
       .sub-box span.l { display: block; font-size: 54px; font-weight: 600; line-height: 1.15; text-align: center;
         text-shadow: 0 2px 14px rgba(6,40,76,.7), 0 0 3px rgba(6,40,76,.55); padding: 0 22px; }
       .sub-box.boxed span.l { background: rgba(6,40,76,.7); text-shadow: none; }
@@ -257,7 +257,7 @@
       <div id="sub16" class="clip layer sub" data-start="26.18" data-duration="2.28" data-track-index="8"><div class="sub-box boxed"><span class="l">for your free</span><span class="l">EcomIQ store review</span></div></div>
 
       <!-- ===== audio ===== -->
-      <audio id="vo" data-media-start="0.48" data-start="0" data-duration="30.52" data-track-index="20" src="assets/vo.m4a" data-volume="1"></audio>
+      <audio id="vo" data-media-start="0.38" data-start="0" data-duration="30.52" data-track-index="20" src="assets/vo.m4a" data-volume="1"></audio>
       <audio id="music" data-media-start="0.48" data-start="0" data-duration="30.52" data-track-index="21" src="assets/music.wav" data-volume="0.1"></audio>
       <audio id="sfx" data-media-start="0.48" data-start="0" data-duration="30.52" data-track-index="22" src="assets/sfx.wav" data-volume="0.5"></audio>
     </div>
@@ -333,10 +333,10 @@
       tl.fromTo("#wf-hero", { "--hl": 0 }, { "--hl": 1, duration: 0.25, ease: "power2.out" }, 19.22);
       tl.fromTo("#wf-hero", { scale: 1 }, { scale: 1.035, duration: 0.18, yoyo: true, repeat: 1, ease: "power1.inOut" }, 19.22);
       // beat 02
-      tl.to("#g3-b1", { opacity: 0, y: -60, scale: 0.6, duration: 0.3, ease: "power3.in" }, 19.7);
+      tl.to("#g3-b1", { opacity: 0, y: -60, scale: 0.6, duration: 0.24, ease: "power3.in" }, 19.7);
       tl.to("#g3-wire", { opacity: 0, duration: 0.25 }, 19.7);
       IN("#g3-r1", 19.82, { d: 0.3 });
-      IN("#g3-b2", 19.86, { dy: 16, d: 0.35, ease: "power3.out" });
+      IN("#g3-b2", 19.98, { dy: 16, d: 0.35, ease: "power3.out" });
       IN("#c-change", 20.12, { d: 0.3 });
       tl.set(["#c-line", "#c-arrow"], { opacity: 1 }, 20.52);
       tl.fromTo("#c-line", { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: "power1.inOut" }, 20.52);
@@ -344,9 +344,9 @@
       IN("#c-impact", 20.82, { d: 0.3 });
       tl.fromTo("#c-impact", { "--fill": 0 }, { "--fill": 1, duration: 0.25 }, 21.3);
       // beat 03
-      tl.to(["#g3-b2", "#c-change", "#c-line", "#c-arrow", "#c-impact"], { opacity: 0, duration: 0.25, ease: "power1.in" }, 21.7);
+      tl.to(["#g3-b2", "#c-change", "#c-line", "#c-arrow", "#c-impact"], { opacity: 0, duration: 0.22, ease: "power1.in" }, 21.7);
       IN("#g3-r2", 21.82, { d: 0.3 });
-      IN("#g3-b3", 21.86, { dy: 16, d: 0.35, ease: "power3.out" });
+      IN("#g3-b3", 21.96, { dy: 16, d: 0.35, ease: "power3.out" });
       IN("#pc-a", 22.02, { d: 0.28 }); IN("#pc-b", 22.1, { d: 0.28 }); IN("#pc-c", 22.18, { d: 0.28 });
       tl.set("#pc-tag", { opacity: 0 }, 18.02);
       tl.to("#pc-b", { y: -100, scale: 1.04, "--pri": 1, duration: 0.35, ease: "power3.inOut" }, 23.02);
