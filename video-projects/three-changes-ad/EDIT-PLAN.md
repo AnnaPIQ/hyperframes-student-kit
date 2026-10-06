@@ -11,8 +11,8 @@
 > 3. Logo moved higher: top-left, x 64 / y 120.
 > 4. Subtitle highlights cut to two: "Book Now" in #FF4C32 and "first" in italic. Everything else is white.
 > 5. Graphics too brief to read were removed: the "TO MAKE YOUR STORE / MORE MONEY." lines, the "ECOMMERCE SPECIALISTS" label and the "YOUR STORE. WITH YOU." card. The +49% lockup and the DO THIS FIRST tag now hold longer.
-> 7. Lip sync measured and corrected: the VO now runs 0.10 s later so voice and lips match within one frame.
 > 6. End card reads "FREE" (white) over "Store Review" (white, title case), then the BOOK NOW pill.
+> 7. Lip sync measured and corrected: the VO now runs 0.10 s later so voice and lips match within one frame.
 
 ---
 
