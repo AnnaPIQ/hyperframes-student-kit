@@ -289,9 +289,9 @@
       // Sean placement presets (face anchor at 840,640 in plate px)
       const FULL110 = { x: 0, y: -110, scale: 1.10 };
       const FULL100 = { x: 0, y: -110, scale: 1.10 };   // "100%" framing, lifted so the face sits at y ~600
-      const LEFT    = { x: -270, y: 120, scale: 1.0 };   // face at x 270
-      const LEFT_S  = { x: -240, y: 120, scale: 1.0 };   // S11, slightly less far
-      const RIGHT   = { x: 270, y: 120, scale: 1.0 };    // face at x 810
+      const LEFT    = { x: -270, y: 0, scale: 1.0 };     // face at x 270
+      const LEFT_S  = { x: -240, y: 0, scale: 1.0 };     // S11, slightly less far
+      const RIGHT   = { x: 270, y: 0, scale: 1.0 };      // face at x 810
       const CARD    = { x: 288, y: -80, scale: 1.25 };   // face centred in right card
       const CLIP_FULL = "inset(0px 0px 0px 0px round 0px)";
       const CLIP_CARD_R = "inset(300px 64px 810px 640px round 32px)";
@@ -411,8 +411,8 @@
       tl.set("#sean-clip", { clipPath: CLIP_FULL }, 22.0);
       tl.set("#cut-w", { opacity: 0 }, 22.0);
       tl.to("#sean-clip", { opacity: 1, duration: 0.5, ease: "power1.inOut" }, 22.3);
-      tl.to(["#broll-clip", "#fb-l"], { opacity: 0, duration: 0.5, ease: "power1.inOut" }, 22.3);
-      hide(["#dot1", "#st1", "#vl1", "#dot2", "#st2", "#vl2", "#dot3", "#st3", "#pr-l", "#pr-bar"], 22.3, 0.4);
+      tl.to(["#broll-clip", "#fb-l"], { opacity: 0, duration: 0.4, ease: "power1.inOut" }, 22.3);
+      hide(["#dot1", "#st1", "#vl1", "#dot2", "#st2", "#vl2", "#dot3", "#st3", "#pr-l", "#pr-bar"], 22.2, 0.25);
       show("#fdc", 22.6, 0.45, { y: 24 }, OUT);
 
       // ---------------- S11 24.4 - 27.2 ----------------
