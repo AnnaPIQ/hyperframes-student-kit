@@ -26,6 +26,22 @@ Differences from the written script: "helped **brands like** Mob Armor", "**we'l
 
 B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest analysis clips have no Drive link in the sheet (see Part 2 notes), and the remaining footage is used only where it proves something. It can be raised to ~25% by extending the strategist beat if you want more cover.
 
+## Revision 3 (review feedback, supersedes Revision 2 and the details below where they conflict)
+
+- **Karaoke subtitles:** the word Sean is saying turns Flame #FF4C32 on its exact word timing, then returns to white. The fixed orange on "ceiling" and "Book Now" is removed; "*we'll tell you*" stays italic.
+- **End card** comes in on "tap" (ad 35.4s) and holds to the end. Subtitles stay on top of it. "Free." is white, upright Rethink Sans 800. **Total length 40.4s.**
+- **Every graphic is now on screen long enough to read (about 1s or more):**
+
+| Graphic | Readable before | Readable now | Change |
+|---|---|---|---|
+| FIX THIS FIRST | ~0.7s | ~1.3s | lands on "fix"; scene dissolves straight into the strategist B-roll |
+| CEILING FOUND card | ~0.7s | ~1.1s | wall and tag land on "where" |
+| Progress resumes | 0.55s | ~1.3s | starts on "and track"; handshake shot trimmed to 0.78s; holds into "And it all starts" |
+| Where you are / want to be card | 0.8s | removed | merged into the gap scene |
+| The gap | 1.85s | ~4.2s | builds current ("where you are"), target ("want to be"), then the gap bracket ("what it would take") |
+
+---
+
 ## Revision 2 (review feedback, supersedes the details below where they conflict)
 
 - **Head and tail trimmed:** the ad starts at A-roll 0:00.4 (Sean already facing camera) and Sean ends at 0:39.3 (before he turns back to his computer). **Ad time = A-roll source time minus 0.4s.** The timings below are in source seconds.
