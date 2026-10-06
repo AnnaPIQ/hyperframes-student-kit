@@ -13,6 +13,7 @@
 > 5. Graphics too brief to read were removed: the "TO MAKE YOUR STORE / MORE MONEY." lines, the "ECOMMERCE SPECIALISTS" label and the "YOUR STORE. WITH YOU." card. The +49% lockup and the DO THIS FIRST tag now hold longer.
 > 6. End card reads "FREE" (white) over "Store Review" (white, title case), then the BOOK NOW pill.
 > 7. Lip sync measured and corrected: the VO now runs 0.10 s later so voice and lips match within one frame.
+> 8. Final masters: `final.mp4` here (9:16, 1080×1920) and `../three-changes-ad-4x5/final.mp4` (4:5, 1080×1350, same edit re-laid out). Both H.264/AAC, 30 fps, about -14.5 LUFS.
 
 ---
 
