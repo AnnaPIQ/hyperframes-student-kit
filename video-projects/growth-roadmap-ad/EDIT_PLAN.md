@@ -26,6 +26,13 @@ Differences from the written script: "helped **brands like** Mob Armor", "**we'l
 
 B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest analysis clips have no Drive link in the sheet (see Part 2 notes), and the remaining footage is used only where it proves something. It can be raised to ~25% by extending the strategist beat if you want more cover.
 
+## Revision 6 (review feedback)
+
+- **EcomIQ logo raised** from y 268 to y 170. In Stories placements Meta's profile row sits around y 100 to 200 on the left, so check it there; Reels and Feed are clear.
+- **Flash on "And it all starts" removed:** the A-roll reframe and de-blur used to fire just after the progress graphic had faded (ad ~24.2s), causing a visible jump and blur. The reframe now happens hidden under the fade, and the blur is gone.
+
+---
+
 ## Revision 5 (review feedback)
 
 - **EcomIQ logo** (white lockup, 270px wide) sits top-left for the whole ad, at x 64, y 268, just below Meta's top safe zone. It fades in at 0.2s, and the end card covers it so the logo is never doubled. Full-screen headlines move down to y 400 to clear it.
