@@ -31,7 +31,18 @@ efficient over time instead of relearning the same lessons.
   elements — which is correct for code-authored compositions. Survivable; don't contort
   the comp to silence it.
 
+- **Elements visible before their cue (e.g. checkmarks showing early).** Two `fromTo`s on
+  the same target: the last-authored one's from-values win at load (immediateRender).
+  **Fix:** `immediateRender: false` on every later `fromTo` for that target.
+- **Lint `video_nested_in_timed_element`.** A `<video>` with `data-start` inside a timed
+  (`class="clip"` + `data-start`) wrapper extracts the wrong frames. Make the wrapper a plain
+  non-timed div and animate its opacity/transform with GSAP instead.
+
 ## Layout
+
+- **Nested spans collapse on top of each other** when a rule like `.slot span
+  { position:absolute }` also matches inner styling spans (an orange word inside a line).
+  Use the child combinator: `.slot > span`.
 
 - **Logo drifts / won't stay top-left.** The render engine repositions elements marked
   `class="clip"`. **Fix:** wrap the logo in a *positioned, non-`clip`* `<div>` and place
@@ -49,6 +60,23 @@ efficient over time instead of relearning the same lessons.
 - **Offline transcriber can't run (model download egress-blocked).** Some environments
   block the Whisper model download. **Fix:** caption from the known script text and
   anchor timing via silence analysis instead of word-level timestamps.
+
+- **Floating-head cutout: use the built-in `npx hyperframes remove-background`.** It writes
+  alpha WebM that renders correctly in a `<video>` (verified, bf-webinar-ad). CPU only:
+  ~1.8s/frame at 1080x1920, so a 36s A-roll is ~12 min plus encode. Choke the matte 1px
+  (`alphaextract,erosion,gblur=sigma=1.2` → `alphamerge`) to kill the wall halo.
+- **Matte grabs background text next to the subject (e.g. LED stats on a stage wall).**
+  Erosion/opening and hard alpha thresholds don't remove it and eat the mic/hands.
+  **Fix:** zero alpha on the text's hue (pink: b-g>22 & r-g>22; neutral white only in the
+  head band), then drop detached islands (`video-projects/bf-webinar-ad/scripts/clean-matte.py`).
+- **Hair-edge colour spill from monitors behind the speaker** (purple/green fringes) is
+  inside the opaque hair region, so an edge-band despill does nothing. Fix at the shoot:
+  plain wall behind the speaker. Otherwise it needs a manual roto pass.
+- **Phone lav A-roll can arrive at -37 LUFS.** Two-pass `loudnorm` to -14 LUFS / -1.5 dBTP
+  (with a gentle `highpass` + `acompressor` first) before it goes in the comp.
+- **Google Drive "anyone with link" files download directly** with
+  `curl -L "https://drive.usercontent.google.com/download?id=<ID>&export=download&confirm=t"`
+  (the Drive MCP base64 download is unusable for 300MB+ video).
 
 ## Editing technique (talking-head cutdowns)
 

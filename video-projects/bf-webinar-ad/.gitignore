@@ -1,0 +1,6 @@
+# raw Drive downloads + intermediate media (rebuild with scripts/prep-media.sh)
+.media-src/
+.media-work/
+snapshots/
+# 54MB alpha cutout: regenerate with scripts/prep-media.sh
+assets/sean-cutout.webm
