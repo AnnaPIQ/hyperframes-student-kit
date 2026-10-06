@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>growth-roadmap-ad-4x5</title>
+    <!-- GSAP vendored locally , CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden; background: #06284C;
+        font-family: 'Rethink Sans', sans-serif; color: #FFFFFF; }
+      #root { position: absolute; inset: 0; overflow: hidden; background: #06284C; }
+
+      /* ---------- footage layers (non-timed wrappers, timed media inside) ---------- */
+      .vwrap { position: absolute; inset: 0; overflow: hidden; }
+      .vwrap video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      #awBox { position: absolute; left: 0; top: -200px; width: 1080px; height: 1920px; z-index: 1; }
+      #aw { z-index: 1; }
+      .bw { z-index: 5; }
+
+      /* ---------- full-screen roadmap scenes (navy) ---------- */
+      .mg { position: absolute; inset: 0; z-index: 10; background: #06284C; overflow: hidden; }
+      .mg .grid { position: absolute; inset: 0;
+        background:
+          repeating-linear-gradient(0deg, rgba(222,238,254,.045) 0 1px, transparent 1px 90px),
+          repeating-linear-gradient(90deg, rgba(222,238,254,.045) 0 1px, transparent 1px 90px); }
+      .mg .inner { position: absolute; inset: 0; }
+      #mgA .lift, #mgD .lift, #mgE .lift { position: absolute; inset: 0; transform: translateY(-285px); }
+      #mgA .lift .head, #mgD .lift .head, #mgE .lift .head { top: 520px; }
+      .mg .head { position: absolute; left: 90px; right: 90px; top: 400px; text-align: center;
+        font-weight: 800; font-size: 82px; line-height: 1.0; letter-spacing: -0.02em; color: #FFFFFF; }
+      .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400;
+        letter-spacing: -0.01em; color: #9CD4FF; }
+      .tag { font-weight: 700; font-size: 29px; letter-spacing: .16em; text-transform: uppercase; }
+      .val { font-weight: 800; font-size: 58px; letter-spacing: -0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+
+      /* vertical roadmap primitives (centre x = 540) */
+      .vtrack { position: absolute; left: 537px; width: 0; border-left: 6px dashed rgba(222,238,254,.55); }
+      .vprog { position: absolute; left: 535px; width: 10px; background: #9CD4FF; border-radius: 5px; transform-origin: 50% 100%; }
+      .dot { position: absolute; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; background: #9CD4FF;
+        box-shadow: 0 0 0 10px rgba(156,212,255,.18); }
+      .ring { position: absolute; width: 52px; height: 52px; margin: -26px 0 0 -26px; border-radius: 50%;
+        border: 8px solid #FF4C32; background: #06284C; }
+      .lbl { position: absolute; display: flex; flex-direction: column; gap: 8px; }
+      .lbl.r { align-items: flex-start; }
+      .lbl.l { align-items: flex-end; text-align: right; }
+      .cell { position: absolute; top: 862px; width: 210px; height: 76px; border-radius: 12px;
+        display: flex; align-items: center; justify-content: center; text-align: center;
+        font-weight: 700; font-size: 24px; letter-spacing: .12em; text-transform: uppercase; color: #FFFFFF; }
+      .cross { position: absolute; width: 150px; height: 150px; margin: -75px 0 0 -75px; border: 4px solid #FFFFFF; border-radius: 50%; }
+      .cross::before, .cross::after { content: ''; position: absolute; background: #FFFFFF; }
+      .cross::before { left: 50%; top: -26px; bottom: -26px; width: 4px; margin-left: -2px;
+        -webkit-mask: linear-gradient(#000 0 26px, transparent 26px calc(100% - 26px), #000 calc(100% - 26px)); }
+      .cross::after { top: 50%; left: -26px; right: -26px; height: 4px; margin-top: -2px;
+        -webkit-mask: linear-gradient(90deg, #000 0 26px, transparent 26px calc(100% - 26px), #000 calc(100% - 26px)); }
+
+      /* ---------- chest card over Sean (the horizontal roadmap) ---------- */
+      .card { position: absolute; left: 70px; width: 940px; top: 840px; height: 250px; z-index: 8;
+        background: rgba(6,40,76,.92); border: 2px solid rgba(222,238,254,.18); border-radius: 30px;
+        box-shadow: 0 30px 80px -30px rgba(0,0,0,.6); overflow: hidden; }
+      .htrack { position: absolute; height: 0; border-top: 6px dashed rgba(222,238,254,.55); }
+      .hprog { position: absolute; height: 10px; background: #9CD4FF; border-radius: 5px; transform-origin: 0 50%; }
+      .card .dot { width: 34px; height: 34px; margin: -17px 0 0 -17px; }
+      .card .ring { width: 46px; height: 46px; margin: -23px 0 0 -23px; border-width: 7px; }
+
+      /* ---------- B-roll proof labels ---------- */
+      .plabel { position: absolute; left: 70px; top: 1130px; z-index: 8; display: flex; flex-direction: column; gap: 10px;
+        padding: 26px 34px; background: rgba(6,40,76,.9); border-radius: 22px; border-left: 8px solid #9CD4FF; }
+      .plabel .big { font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1.02; color: #FFFFFF; }
+
+      /* ---------- end card (matches the campaign end-card system) ---------- */
+      #endCard { position: absolute; inset: 0; z-index: 40; overflow: hidden;
+        background: radial-gradient(60% 38% at 50% 44%, rgba(156,212,255,.22) 0%, rgba(156,212,255,0) 100%), #06284C; }
+      #endCard .dots { position: absolute; inset: 0;
+        background-image: radial-gradient(rgba(222,238,254,.16) 1.6px, transparent 1.8px); background-size: 44px 44px; }
+      #endCard .stack { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+        justify-content: center; padding-bottom: 180px; text-align: center; }
+      #ecLogoWrap { position: relative; width: 520px; margin-bottom: 44px; }
+      #ecLogoWrap img { display: block; width: 100%; height: auto; }
+      .ecLine { font-weight: 800; font-size: 96px; line-height: 1.02; letter-spacing: -0.03em; color: #FFFFFF; }
+      #ecFree { font-weight: 800; font-size: 96px; line-height: 1.02; letter-spacing: -0.03em; color: #FFFFFF; margin-top: 22px; }
+      #ecBtn { margin-top: 56px; font-weight: 700; font-size: 46px; letter-spacing: .02em; text-transform: uppercase;
+        color: #FFFFFF; background: #FF4C32; padding: 30px 70px; border-radius: 999px;
+        box-shadow: 0 18px 60px -12px rgba(255,76,50,.65); }
+
+      /* ---------- persistent brand mark (non-clip wrapper so it never drifts) ---------- */
+      #brandMark { position: absolute; left: 64px; top: 50px; width: 270px; z-index: 35; pointer-events: none;
+        filter: drop-shadow(0 2px 10px rgba(0,0,0,.35)); }
+      #brandMark img { display: block; width: 100%; height: auto; }
+
+      /* ---------- subtitles: fixed bottom line, one system for Sean, B-roll and graphics ---------- */
+      .sub { position: absolute; left: 0; right: 0; top: 1120px; height: 96px; z-index: 50;
+        display: block; white-space: nowrap; text-align: center;
+        font-weight: 700; font-size: 64px; line-height: 96px; letter-spacing: -0.01em; color: #FFFFFF;
+        text-shadow: 0 2px 4px rgba(0,0,0,.5), 0 4px 18px rgba(0,0,0,.45); }
+      .sub .w { color: #FFFFFF; }
+      .sub .i { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; font-size: 1.08em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="growth-roadmap-ad-4x5" data-start="0" data-duration="40.4" data-width="1080" data-height="1350">
+
+      <!-- ===================== A-ROLL (Sean, the authority) ===================== -->
+      <div id="awBox">
+        <div id="aw" class="vwrap">
+          <video id="aroll" src="assets/aroll-916.mp4" data-start="0" data-media-start="0.4" data-duration="38.9" data-track-index="0" muted playsinline></video>
+        </div>
+      </div>
+
+      <!-- ===================== BRAND MARK (top left, whole ad; end card covers it) ===================== -->
+      <div id="brandMark"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+
+      <!-- ===================== B-ROLL (proof) ===================== -->
+      <div id="bw1" class="vwrap bw"><video id="b1" src="assets/broll/b1-angle-laptop.mp4" data-start="8.6" data-duration="1.4" data-media-start="0.2" data-track-index="1" muted playsinline></video></div>
+      <div id="bw2" class="vwrap bw"><video id="b2" src="assets/broll/b2-hotel-laptop.mp4" data-start="10" data-duration="1.05" data-media-start="0.2" data-track-index="2" muted playsinline></video></div>
+      <div id="bw3" class="vwrap bw"><video id="b3" src="assets/broll/b3-shoptalk-stage.mp4" data-start="12.6" data-duration="0.8" data-media-start="0.1" data-track-index="1" muted playsinline></video></div>
+      <div id="bw4" class="vwrap bw"><video id="b4" src="assets/broll/b4-klaviyo-event.mp4" data-start="13.4" data-duration="0.8" data-media-start="0.2" data-track-index="2" muted playsinline></video></div>
+      <div id="bw5" class="vwrap bw"><video id="b5" src="assets/broll/b5-mason-team.mp4" data-start="14.2" data-duration="0.8" data-media-start="0.2" data-track-index="1" muted playsinline></video></div>
+      <div id="bw6" class="vwrap bw"><video id="b6" src="assets/broll/b6-laptop-man.mp4" data-start="19.8" data-duration="1.4" data-media-start="0.2" data-track-index="2" muted playsinline></video></div>
+      <div id="bw7" class="vwrap bw"><video id="b7" src="assets/broll/b7-handshake.mp4" data-start="21.2" data-duration="1.18" data-media-start="0.4" data-track-index="1" muted playsinline></video></div>
+
+
+      <!-- ===================== CHEST CARDS over Sean (horizontal roadmap) ===================== -->
+      <!-- HOOK: $20K ●────○ $100K -->
+      <div id="cardHook" class="card clip" data-start="0" data-duration="4.35" data-track-index="4">
+        <div class="tag" id="hkHere" style="position:absolute; left:52px; top:34px; color:#9CD4FF">You are here</div>
+        <div class="tag" id="hkTgt" style="position:absolute; right:52px; top:34px; color:#FF4C32">Target</div>
+        <div class="htrack" id="hkTrack" style="left:100px; width:740px; top:120px"></div>
+        <div id="hkComet" style="position:absolute; left:100px; top:123px; width:22px; height:22px; margin:-11px 0 0 -11px; border-radius:50%; background:#DEEEFE; box-shadow:0 0 18px 6px rgba(222,238,254,.55)"></div>
+        <div class="dot" id="hkDot" style="left:100px; top:123px"></div>
+        <div class="ring" id="hkRing" style="left:840px; top:123px"></div>
+        <div class="val" id="hkCur" style="position:absolute; left:52px; top:166px; color:#9CD4FF">$20K/mo</div>
+        <div class="val" id="hkTv" style="position:absolute; right:52px; top:166px; color:#FF4C32">$100K/mo</div>
+      </div>
+
+      <!-- CEILING LOCATED: the path hits a wall, the wall gets a target marker -->
+      <div id="cardCeil" class="card clip" data-start="11.05" data-duration="1.6" data-track-index="4">
+        <div class="htrack" style="left:100px; width:740px; top:150px"></div>
+        <div class="hprog" id="ceProg" style="left:100px; width:380px; top:148px"></div>
+        <div class="dot" style="left:100px; top:153px"></div>
+        <div class="ring" style="left:840px; top:153px"></div>
+        <div id="ceWall" style="position:absolute; left:482px; top:100px; width:14px; height:106px; border-radius:7px; background:#FF4C32"></div>
+        <div class="cross" id="ceCross" style="left:489px; top:153px; width:120px; height:120px; margin:-60px 0 0 -60px"></div>
+        <div class="tag" id="ceTag" style="position:absolute; left:0; right:0; top:28px; text-align:center; color:#FFFFFF">Ceiling found</div>
+        <div class="tag" style="position:absolute; left:52px; top:196px; color:#9CD4FF">$20K</div>
+        <div class="tag" style="position:absolute; right:52px; top:196px; color:#FF4C32">$100K</div>
+      </div>
+
+
+      <!-- ===================== FULL-SCREEN ROADMAP SCENES ===================== -->
+      <!-- A · GROWTH CEILING → FIX THIS FIRST -->
+      <div id="mgA" class="mg clip" data-start="4.3" data-duration="4.6" data-track-index="5">
+        <div class="grid"></div>
+        <div class="inner" id="mgAin"><div class="lift">
+          <div class="head" id="aH2">Find the blocker.</div>
+          <div class="vtrack" style="top:640px; height:590px"></div>
+          <div class="vprog" id="aProg" style="top:938px; height:292px"></div>
+          <div class="ring" style="left:540px; top:640px"></div>
+          <div class="dot" style="left:540px; top:1230px"></div>
+          <div class="lbl r" style="left:600px; top:604px"><div class="tag" style="color:#FF4C32">Target</div><div class="val" style="color:#FF4C32">$100K/mo</div></div>
+          <div class="lbl r" style="left:600px; top:1196px"><div class="tag" style="color:#9CD4FF">Current</div><div class="val" style="color:#9CD4FF">$20K/mo</div></div>
+          <div class="cell" id="aC1" style="left:205px; background:#FF4C32"><span class="bl">Blocker</span></div>
+          <div class="cell" id="aC2" style="left:435px; background:#FF4C32"><span class="bl">Blocker</span></div>
+          <div class="cell" id="aC3" style="left:665px; background:#FF4C32"><span class="bl">Blocker</span></div>
+          <div class="tag" id="aCeil" style="position:absolute; left:205px; top:812px; color:#FF4C32">Growth ceiling</div>
+          <div class="cross" id="aCross" style="left:540px; top:900px; width:250px; height:150px; margin:-75px 0 0 -125px; border-radius:20px"></div>
+          <div class="tag" id="aFix" style="position:absolute; left:0; right:0; top:1020px; text-align:center; color:#FFFFFF"><span style="background:#06284C; padding:6px 16px; border-radius:8px">Fix this first</span></div></div>
+        </div>
+      </div>
+
+      <!-- C · MOB ARMOR +500% -->
+      <div id="mgC" class="mg clip" data-start="16.1" data-duration="4" data-track-index="6">
+        <div class="grid"></div>
+        <div class="inner" id="mgCin" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding-bottom:200px; gap:26px">
+          <div id="cBrand" style="width:560px"><img src="assets/mob-armor-logo-white.png" alt="Mob Armor" style="display:block; width:100%; height:auto" /></div>
+          <div id="cNum" style="font-weight:800; font-size:260px; letter-spacing:-0.04em; line-height:.9; color:#FF4C32; font-variant-numeric:tabular-nums">+500%</div>
+          <div id="cBar" style="width:640px; height:8px; border-radius:4px; background:rgba(222,238,254,.25); overflow:hidden">
+            <div id="cBarFill" style="width:100%; height:100%; background:#DEEEFE; transform-origin:0 50%"></div>
+          </div>
+          <div id="cSales" style="font-weight:800; font-size:72px; letter-spacing:-0.02em; line-height:1">Total sales</div>
+          <div id="cYear" class="tag" style="font-size:36px; color:#9CD4FF">In 1 year</div>
+        </div>
+      </div>
+
+      <!-- D · PROGRESS RESUMES -->
+      <div id="mgD" class="mg clip" data-start="21.98" data-duration="2.62" data-track-index="5">
+        <div class="grid"></div>
+        <div class="inner" id="mgDin"><div class="lift">
+          <div class="vtrack" style="top:640px; height:590px"></div>
+          <div class="vprog" id="dProg" style="top:760px; height:470px"></div>
+          <div class="ring" style="left:540px; top:640px"></div>
+          <div class="dot" style="left:540px; top:1230px"></div>
+          <div class="cell" style="left:205px; background:transparent; border:3px solid rgba(222,238,254,.35)"></div>
+          <div class="cell" id="dL" style="left:435px; width:105px; border-radius:12px 0 0 12px; background:#FF4C32"></div>
+          <div class="cell" id="dR" style="left:540px; width:105px; border-radius:0 12px 12px 0; background:#FF4C32"></div>
+          <div class="cell" style="left:665px; background:transparent; border:3px solid rgba(222,238,254,.35)"></div>
+          <div class="lbl l" id="dChg" style="right:600px; top:950px"><div class="tag" style="color:#DEEEFE">Change made</div></div>
+          <div class="dot" id="dMark" style="left:540px; top:760px; width:30px; height:30px; margin:-15px 0 0 -15px"></div>
+          <div class="lbl r" id="dRes" style="left:590px; top:742px"><div class="tag" style="color:#9CD4FF">Result tracked</div></div>
+          <div class="lbl r" style="left:600px; top:622px"><div class="tag" style="color:#FF4C32">Target</div></div></div>
+        </div>
+      </div>
+
+      <!-- E · THE GAP -->
+      <div id="mgE" class="mg clip" data-start="27.2" data-duration="4.2" data-track-index="6">
+        <div class="grid"></div>
+        <div class="inner" id="mgEin"><div class="lift">
+          <div class="vtrack" id="eTrack" style="top:640px; height:590px"></div>
+          <div class="ring" id="eRing" style="left:540px; top:640px"></div>
+          <div class="dot" id="eDot" style="left:540px; top:1230px"></div>
+          <div class="lbl l" id="eTgtL" style="right:600px; top:606px"><div class="tag" style="color:#FF4C32">Target</div></div>
+          <div class="lbl l" id="eCurL" style="right:600px; top:1196px"><div class="tag" style="color:#9CD4FF">Current</div></div>
+          <div id="eM1" style="position:absolute; left:518px; top:1032px; width:44px; height:6px; background:#DEEEFE"></div>
+          <div id="eM2" style="position:absolute; left:518px; top:834px; width:44px; height:6px; background:#DEEEFE"></div>
+          <div class="tag" id="eM1t" style="position:absolute; right:600px; top:1020px; color:#DEEEFE">Blockers</div>
+          <div class="tag" id="eM2t" style="position:absolute; right:600px; top:822px; color:#DEEEFE">Priorities</div>
+          <div id="eBr" style="position:absolute; left:640px; top:640px; width:34px; height:590px; border:4px solid #FFFFFF; border-left:none; border-radius:0 18px 18px 0; transform-origin:50% 50%"></div>
+          <div id="eGap" style="position:absolute; left:700px; top:900px; font-weight:800; font-size:64px; letter-spacing:-0.02em; line-height:1">The<br>gap</div></div>
+        </div>
+      </div>
+
+      <!-- ===================== END CARD ===================== -->
+      <div id="endCard" class="clip" data-start="35.4" data-duration="5.0" data-track-index="7">
+        <div class="dots"></div>
+        <div class="stack" id="ecStack">
+          <div id="ecLogoWrap"><img id="ecLogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+          <div class="ecLine" id="ecL1">Find the ceiling.</div>
+          <div class="ecLine" id="ecL2">Map the gap.</div>
+          <div id="ecFree">Free.</div>
+          <div id="ecBtn">Book now</div>
+        </div>
+      </div>
+
+      <!-- ===================== SUBTITLES (one system, fixed bottom line) ===================== -->
+      <div id="s01" class="sub clip" data-start="0.22" data-duration="1.24" data-track-index="20" data-line-end="1.86"><span class="w" data-t="0.62">Shopify</span> <span class="w" data-t="1.18">founders</span> <span class="w" data-t="1.58">doing</span></div>
+      <div id="s02" class="sub clip" data-start="1.46" data-duration="1.08" data-track-index="21" data-line-end="2.94"><span class="w" data-t="1.86">$20,000</span> <span class="w" data-t="2.6">a</span> <span class="w" data-t="2.72">month</span></div>
+      <div id="s03" class="sub clip" data-start="2.54" data-duration="1.76" data-track-index="20" data-line-end="4.7"><span class="w" data-t="2.94">and</span> <span class="w" data-t="3.18">aiming</span> <span class="w" data-t="3.56">for</span> <span class="w" data-t="3.82">$100,000.</span></div>
+      <div id="s04" class="sub clip" data-start="4.3" data-duration="0.96" data-track-index="21" data-line-end="5.66"><span class="w" data-t="4.7">We'll</span> <span class="w" data-t="5.04">show</span> <span class="w" data-t="5.3">you</span></div>
+      <div id="s05" class="sub clip" data-start="5.26" data-duration="0.6" data-track-index="20" data-line-end="6.26"><span class="w" data-t="5.66">what's</span> <span class="w" data-t="6.0">holding</span></div>
+      <div id="s06" class="sub clip" data-start="5.86" data-duration="0.74" data-track-index="21" data-line-end="7.0"><span class="w" data-t="6.26">your</span> <span class="w" data-t="6.44">growth</span> <span class="w" data-t="6.64">back</span></div>
+      <div id="s07" class="sub clip" data-start="6.6" data-duration="1.8" data-track-index="20" data-line-end="8.8"><span class="w" data-t="7.0">and</span> <span class="w" data-t="7.26">what</span> <span class="w" data-t="7.56">to</span> <span class="w" data-t="7.78">fix</span> <span class="w" data-t="8.06">first.</span></div>
+      <div id="s08" class="sub clip" data-start="8.72" data-duration="0.54" data-track-index="21" data-line-end="9.66"><span class="w" data-t="9.12">Your</span> <span class="w" data-t="9.28">strategist</span></div>
+      <div id="s09" class="sub clip" data-start="9.26" data-duration="1.22" data-track-index="20" data-line-end="10.88"><span class="w" data-t="9.66">goes</span> <span class="w" data-t="10.1">through</span> <span class="w" data-t="10.36">your</span> <span class="w" data-t="10.64">numbers</span></div>
+      <div id="s10" class="sub clip" data-start="10.48" data-duration="0.5" data-track-index="21" data-line-end="11.38"><span class="w" data-t="10.88">with</span> <span class="w" data-t="11.16">you</span></div>
+      <div id="s11" class="sub clip" data-start="10.98" data-duration="0.82" data-track-index="20" data-line-end="12.2"><span class="w" data-t="11.38">and</span> <span class="w" data-t="11.56">finds</span> <span class="w" data-t="11.92">where</span></div>
+      <div id="s12" class="sub clip" data-start="11.8" data-duration="0.85" data-track-index="21" data-line-end="13.05"><span class="w" data-t="12.2">the</span> <span class="w" data-t="12.32">ceiling</span> <span class="w" data-t="12.54">is.</span></div>
+      <div id="s13" class="sub clip" data-start="12.72" data-duration="0.68" data-track-index="20" data-line-end="13.8"><span class="w" data-t="13.12">Then</span> <span class="w" data-t="13.28">they</span> <span class="w" data-t="13.42">bring</span> <span class="w" data-t="13.62">in</span></div>
+      <div id="s14" class="sub clip" data-start="13.4" data-duration="1.22" data-track-index="21" data-line-end="15.02"><span class="w" data-t="13.8">specialists</span> <span class="w" data-t="14.24">from</span> <span class="w" data-t="14.66">the</span> <span class="w" data-t="14.8">team</span></div>
+      <div id="s15" class="sub clip" data-start="14.62" data-duration="0.68" data-track-index="20" data-line-end="15.7"><span class="w" data-t="15.02">that</span> <span class="w" data-t="15.16">have</span> <span class="w" data-t="15.24">helped</span> <span class="w" data-t="15.44">brands</span></div>
+      <div id="s16" class="sub clip" data-start="15.3" data-duration="0.86" data-track-index="21" data-line-end="16.56"><span class="w" data-t="15.7">like</span> <span class="w" data-t="15.96">Mob</span> <span class="w" data-t="16.22">Armor</span></div>
+      <div id="s17" class="sub clip" data-start="16.16" data-duration="1.04" data-track-index="20" data-line-end="17.6"><span class="w" data-t="16.56">grow</span> <span class="w" data-t="16.86">total</span> <span class="w" data-t="17.24">sales</span></div>
+      <div id="s18" class="sub clip" data-start="17.2" data-duration="1.44" data-track-index="21" data-line-end="19.04"><span class="w" data-t="17.6">by</span> <span class="w" data-t="17.82">over</span> <span class="w" data-t="18.0">500%</span></div>
+      <div id="s19" class="sub clip" data-start="18.64" data-duration="1.26" data-track-index="20" data-line-end="20.3"><span class="w" data-t="19.04">in</span> <span class="w" data-t="19.68">a</span> <span class="w" data-t="19.82">year.</span></div>
+      <div id="s20" class="sub clip" data-start="20.12" data-duration="1.12" data-track-index="21" data-line-end="21.64"><span class="w" data-t="20.52">They</span> <span class="w" data-t="20.78">guide</span> <span class="w" data-t="21.02">your</span> <span class="w" data-t="21.32">team</span></div>
+      <div id="s21" class="sub clip" data-start="21.24" data-duration="0.74" data-track-index="20" data-line-end="22.38"><span class="w" data-t="21.64">through</span> <span class="w" data-t="21.94">the</span> <span class="w" data-t="22.06">changes</span></div>
+      <div id="s22" class="sub clip" data-start="21.98" data-duration="1.7" data-track-index="21" data-line-end="24.08"><span class="w" data-t="22.38">and</span> <span class="w" data-t="22.72">track</span> <span class="w" data-t="23.02">the</span> <span class="w" data-t="23.32">result.</span></div>
+      <div id="s23" class="sub clip" data-start="23.76" data-duration="0.6" data-track-index="20" data-line-end="24.76"><span class="w" data-t="24.16">And</span> <span class="w" data-t="24.32">it</span> <span class="w" data-t="24.38">all</span> <span class="w" data-t="24.5">starts</span></div>
+      <div id="s24" class="sub clip" data-start="24.36" data-duration="1.78" data-track-index="21" data-line-end="26.54"><span class="w" data-t="24.76">with</span> <span class="w" data-t="25.22">a</span> <span class="w" data-t="25.36">free</span> <span class="w" data-t="25.68">discovery</span> <span class="w" data-t="26.12">call.</span></div>
+      <div id="s25" class="sub clip" data-start="26.14" data-duration="1.38" data-track-index="20" data-line-end="27.92"><span class="w" data-t="26.54">We'll</span> <span class="w" data-t="27.5">go</span> <span class="w" data-t="27.64">through</span></div>
+      <div id="s26" class="sub clip" data-start="27.52" data-duration="1.04" data-track-index="21" data-line-end="28.96"><span class="w" data-t="27.92">where</span> <span class="w" data-t="28.28">you</span> <span class="w" data-t="28.42">are,</span></div>
+      <div id="s27" class="sub clip" data-start="28.56" data-duration="0.76" data-track-index="20" data-line-end="29.72"><span class="w" data-t="28.96">where</span> <span class="w" data-t="29.18">you</span> <span class="w" data-t="29.3">want</span> <span class="w" data-t="29.42">to</span> <span class="w" data-t="29.54">be</span></div>
+      <div id="s28" class="sub clip" data-start="29.32" data-duration="0.88" data-track-index="21" data-line-end="30.6"><span class="w" data-t="29.72">and</span> <span class="w" data-t="29.94">what</span> <span class="w" data-t="30.2">it</span> <span class="w" data-t="30.3">would</span> <span class="w" data-t="30.42">take</span></div>
+      <div id="s29" class="sub clip" data-start="30.2" data-duration="1.2" data-track-index="20" data-line-end="31.8"><span class="w" data-t="30.6">to</span> <span class="w" data-t="30.8">get</span> <span class="w" data-t="30.98">you</span> <span class="w" data-t="31.14">there.</span></div>
+      <div id="s30" class="sub clip" data-start="31.5" data-duration="0.64" data-track-index="21" data-line-end="32.54"><span class="w" data-t="31.9">And</span> <span class="w" data-t="31.98">if</span> <span class="w" data-t="32.08">that</span> <span class="w" data-t="32.24">gap</span></div>
+      <div id="s31" class="sub clip" data-start="32.14" data-duration="1.02" data-track-index="20" data-line-end="33.56"><span class="w" data-t="32.54">isn't</span> <span class="w" data-t="32.94">one</span> <span class="w" data-t="33.16">that</span> <span class="w" data-t="33.3">we</span> <span class="w" data-t="33.42">think</span></div>
+      <div id="s32" class="sub clip" data-start="33.16" data-duration="0.92" data-track-index="21" data-line-end="34.48"><span class="w" data-t="33.56">we</span> <span class="w" data-t="33.72">can</span> <span class="w" data-t="33.86">close,</span></div>
+      <div id="s33" class="sub clip" data-start="34.08" data-duration="1.07" data-track-index="20" data-line-end="35.55"><span class="w" data-t="34.48">we'll</span> <span class="w" data-t="34.74">tell</span> <span class="w" data-t="34.9">you.</span></div>
+      <div id="s34" class="sub clip" data-start="35.28" data-duration="0.84" data-track-index="21" data-line-end="36.52"><span class="w" data-t="35.68">So</span> <span class="w" data-t="35.82">tap</span> <span class="w" data-t="36.04">Book</span> <span class="w" data-t="36.24">Now</span></div>
+      <div id="s35" class="sub clip" data-start="36.12" data-duration="0.88" data-track-index="20" data-line-end="37.4"><span class="w" data-t="36.52">and</span> <span class="w" data-t="36.8">choose</span> <span class="w" data-t="37.0">a</span> <span class="w" data-t="37.18">time</span></div>
+      <div id="s36" class="sub clip" data-start="37.0" data-duration="1.5" data-track-index="21" data-line-end="38.9"><span class="w" data-t="37.4">for</span> <span class="w" data-t="37.64">your</span> <span class="w" data-t="37.72">free</span> <span class="w" data-t="37.9">discovery</span> <span class="w" data-t="38.2">call.</span></div>
+
+      <!-- ===================== AUDIO ===================== -->
+      <audio id="vo" src="assets/vo.m4a" data-start="0" data-media-start="0.4" data-duration="38.9" data-track-index="40" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true }); // authored in A-roll source seconds
+
+      // ---- A-roll framing: origin at frame top, y keeps Sean's chin near y≈1030 at every scale ----
+      const pose = (s) => ({ scale: s, y: 1030 - 1090 * s, transformOrigin: "50% 0%" });
+      tl.set("#aw", pose(1.10), 0);
+      tl.to("#aw", { ...pose(1.15), duration: 4.6, ease: "none" }, 0);           // slow hook push
+      tl.set("#aw", pose(1.22), 11.45);                                            // tighter crop: ceiling found
+      tl.to("#aw", { ...pose(1.25), duration: 1.55, ease: "none" }, 11.45);
+      tl.set("#aw", pose(1.15), 15.4);                                             // back to Sean for "Mob Armor"
+      tl.to("#aw", { ...pose(1.19), duration: 1.1, ease: "none" }, 15.4);
+      tl.set("#aw", pose(1.06), 24.3);                                            // reframe hidden under the progress graphic fade
+      tl.to("#aw", { ...pose(1.10), duration: 2.25, ease: "none" }, 24.3);
+      tl.set("#aw", pose(1.13), 26.6);
+      tl.to("#aw", { ...pose(1.16), duration: 3.35, ease: "none" }, 26.6);
+      tl.set("#aw", pose(1.12), 31.8);                                             // trust line: clean frame
+      tl.to("#aw", { ...pose(1.18), duration: 2.6, ease: "none" }, 31.8);
+      tl.to("#aw", { ...pose(1.28), duration: 0.3, ease: "power3.out" }, 34.45);   // punch-in on "we'll tell you"
+      tl.set("#aw", pose(1.10), 35.55);                                            // CTA framing
+      tl.to("#aw", { ...pose(1.13), duration: 5.0, ease: "none" }, 35.55);
+      // returning to Sean from a cover: soft de-blur so the cut never feels hard
+      [11.45, 15.4].forEach((t) => tl.fromTo("#aw", { filter: "blur(14px)" }, { filter: "blur(0px)", duration: 0.28, ease: "power2.out", immediateRender: false }, t));
+
+      // ---- B-roll entries: blur + scale settle (each cut carries motion) ----
+      const bIn = (sel, t) => tl.fromTo(sel, { scale: 1.12, filter: "blur(16px)" }, { scale: 1, filter: "blur(0px)", duration: 0.3, ease: "power3.out", immediateRender: false }, t);
+      bIn("#bw1", 9.0); bIn("#bw2", 10.4); bIn("#bw3", 13.0); bIn("#bw4", 13.8); bIn("#bw5", 14.6); bIn("#bw6", 20.2); bIn("#bw7", 21.6);
+      // slow drift while on screen
+      [["#bw1", 9.3, 1.1], ["#bw2", 10.6, 0.85], ["#bw6", 20.5, 1.1]].forEach(([s, t, d]) => tl.to(s, { scale: 1.04, duration: d, ease: "none" }, t));
+
+
+      // ---- generic card entrance ----
+      const cardIn = (sel, t) => tl.fromTo(sel, { y: 50, opacity: 0, scale: 0.96 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "power3.out" }, t);
+
+      // HOOK: $20K lands on "$20,000", path draws, $100K lands on "$100,000"
+      cardIn("#cardHook", 0.1);
+      // whole roadmap readable within the first second (muted viewers), then it reacts to the words
+      tl.fromTo("#hkTrack", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: "power2.inOut" }, 0.3);
+      tl.fromTo("#hkDot", { scale: 0 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)" }, 0.28);
+      tl.fromTo(["#hkHere", "#hkCur"], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out", stagger: 0.06 }, 0.35);
+      tl.fromTo("#hkRing", { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: 0.45, ease: "back.out(1.8)" }, 0.7);
+      tl.fromTo(["#hkTgt", "#hkTv"], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "expo.out", stagger: 0.06 }, 0.75);
+      tl.set("#hkComet", { opacity: 0 }, 0.1);
+      // "$20,000": current marker ticks
+      tl.to("#hkDot", { scale: 1.6, duration: 0.14, ease: "power2.out", yoyo: true, repeat: 1 }, 1.86);
+      tl.to("#hkCur", { scale: 1.08, transformOrigin: "0% 50%", duration: 0.14, ease: "power2.out", yoyo: true, repeat: 1 }, 1.86);
+      // "aiming for $100,000": light travels the path and lands on the target
+      tl.set("#hkComet", { opacity: 1, x: 0 }, 2.95);
+      tl.to("#hkComet", { x: 740, duration: 0.85, ease: "power2.inOut" }, 2.95);
+      tl.to("#hkComet", { opacity: 0, duration: 0.15 }, 3.8);
+      tl.to("#hkRing", { scale: 1.45, duration: 0.16, ease: "power2.out", yoyo: true, repeat: 1 }, 3.82);
+      tl.to("#hkTv", { scale: 1.1, transformOrigin: "100% 50%", duration: 0.16, ease: "power2.out", yoyo: true, repeat: 1 }, 3.82);
+
+      // ---- full-screen scene transitions: calm dissolve in and out, no movement, no blur ----
+      const mgIn = (sel, inner, t) => {
+        tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "sine.inOut" }, t);
+      };
+      const mgOut = (sel, inner, t) => {
+        tl.to(sel, { opacity: 0, duration: 0.3, ease: "sine.inOut" }, t);
+      };
+
+      // A · growth ceiling → fix this first (4.70 – 9.05)
+      mgIn("#mgA", "#mgAin", 4.7);
+      tl.set("#aH2", { opacity: 0 }, 4.7);
+      tl.fromTo("#aCeil", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 5.0);
+      tl.set(".bl", { opacity: 0 }, 4.7);
+      tl.fromTo("#aProg", { scaleY: 0 }, { scaleY: 1, duration: 1.5, ease: "power1.in" }, 5.12);   // line climbs…
+      tl.to(["#aC1", "#aC2", "#aC3"], { y: -8, duration: 0.08, ease: "power2.out", yoyo: true, repeat: 1 }, 6.62); // …and stops dead
+      tl.fromTo("#aH2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 7.05);
+      // ceiling resolves into three blockers
+      tl.to("#aC1", { x: -18, backgroundColor: "rgba(6,40,76,1)", boxShadow: "inset 0 0 0 3px #FF4C32", duration: 0.35, ease: "power2.out" }, 7.0);
+      tl.to("#aC3", { x: 18, backgroundColor: "rgba(6,40,76,1)", boxShadow: "inset 0 0 0 3px #FF4C32", duration: 0.35, ease: "power2.out" }, 7.0);
+      tl.to("#aC2", { backgroundColor: "rgba(6,40,76,1)", boxShadow: "inset 0 0 0 3px #FF4C32", duration: 0.35, ease: "power2.out" }, 7.0);
+      tl.fromTo(".bl", { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.12, immediateRender: false }, 7.1);
+      tl.to("#aCeil", { opacity: 0, duration: 0.2 }, 7.0);
+      // one becomes THE blocker: target locks, the others fade back
+      tl.fromTo("#aCross", { scale: 1.8, opacity: 0, rotation: 45 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.45, ease: "expo.out" }, 7.45);
+      tl.to("#aC2", { backgroundColor: "#FF4C32", boxShadow: "inset 0 0 0 3px #FF4C32", duration: 0.2, ease: "power2.out" }, 7.78);
+      tl.to(["#aC1", "#aC3"], { boxShadow: "inset 0 0 0 3px rgba(222,238,254,.35)", opacity: 0.6, duration: 0.3 }, 7.78);
+      tl.fromTo("#aFix", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.3, ease: "back.out(2)" }, 7.8);
+      mgOut("#mgA", "#mgAin", 9.0);
+
+      // ceiling found on the roadmap card (11.45 – 13.05)
+      cardIn("#cardCeil", 11.45);
+      tl.fromTo("#ceProg", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.out" }, 11.48);
+      tl.fromTo("#ceWall", { scaleY: 0 }, { scaleY: 1, duration: 0.3, ease: "back.out(2)" }, 11.7);
+      tl.fromTo("#ceCross", { scale: 2.2, opacity: 0, rotation: 60 }, { scale: 1, opacity: 1, rotation: 0, duration: 0.4, ease: "expo.out" }, 11.82);
+      tl.fromTo("#ceTag", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 11.95);
+
+      // C · MOB ARMOR +500% (16.50 – 20.50)
+      mgIn("#mgC", "#mgCin", 16.5);
+      tl.fromTo("#cBrand", { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 16.6);
+      const cnt = { v: 0 };
+      tl.set("#cNum", { textContent: "+0%" }, 16.5);
+      tl.to(cnt, { v: 500, duration: 1.35, ease: "power2.out", onUpdate: () => { document.getElementById("cNum").textContent = "+" + Math.round(cnt.v) + "%"; } }, 16.95);
+      tl.fromTo("#cNum", { scale: 0.9 }, { scale: 1, duration: 1.35, ease: "power2.out" }, 16.95);
+      tl.fromTo("#cBarFill", { scaleX: 0 }, { scaleX: 1, duration: 1.35, ease: "power2.out" }, 16.95);
+      tl.fromTo("#cSales", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 17.2);
+      tl.to("#cNum", { scale: 1.06, duration: 0.15, ease: "power2.out", yoyo: true, repeat: 1 }, 18.3);
+      tl.fromTo("#cYear", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "back.out(2)" }, 19.66);
+      mgOut("#mgC", "#mgCin", 20.2);
+
+      // D · progress resumes (22.60 – 24.20)
+      mgIn("#mgD", "#mgDin", 22.38);
+      tl.to("#dL", { x: -50, opacity: 0, duration: 0.4, ease: "power3.out" }, 22.55);   // barrier removed
+      tl.to("#dR", { x: 50, opacity: 0, duration: 0.4, ease: "power3.out" }, 22.55);
+      tl.fromTo("#dChg", { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, 22.6);
+      tl.fromTo("#dProg", { scaleY: 292 / 470 }, { scaleY: 1, duration: 0.55, ease: "power2.inOut" }, 22.72); // progress climbs past the old ceiling
+      tl.fromTo("#dMark", { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(2.5)" }, 23.33);
+      tl.fromTo("#dRes", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.3, ease: "expo.out" }, 23.35);
+      mgOut("#mgD", "#mgDin", 24.3);
+
+
+
+      // E · THE GAP (29.95 – 31.80)
+      mgIn("#mgE", "#mgEin", 27.6);
+      tl.fromTo("#eDot", { scale: 0 }, { scale: 1, duration: 0.4, ease: "back.out(2.2)" }, 27.9);          // "where you are"
+      tl.fromTo("#eCurL", { opacity: 0, x: 16 }, { opacity: 1, x: 0, duration: 0.35, ease: "power3.out" }, 27.95);
+      tl.fromTo("#eTrack", { clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0% 0 0 0)", duration: 0.8, ease: "power2.inOut" }, 28.3);
+      tl.fromTo("#eRing", { scale: 0, rotation: -90 }, { scale: 1, rotation: 0, duration: 0.45, ease: "back.out(1.8)" }, 29.15); // "want to be"
+      tl.fromTo("#eTgtL", { opacity: 0, x: 16 }, { opacity: 1, x: 0, duration: 0.35, ease: "expo.out" }, 29.2);
+      tl.fromTo("#eBr", { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: "power3.out" }, 29.94);
+      tl.fromTo("#eGap", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 30.1);
+      tl.fromTo(["#eM1", "#eM1t"], { opacity: 0, x: 16 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, 30.3);
+      tl.fromTo(["#eM2", "#eM2t"], { opacity: 0, x: 16 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, 30.5);
+      mgOut("#mgE", "#mgEin", 31.5);
+
+
+      // ---- subtitles: quick, consistent pop (same position for Sean, B-roll and graphics) ----
+      document.querySelectorAll(".sub").forEach((el) => {
+        const t = parseFloat(el.dataset.start) + 0.4; // back to source seconds
+        tl.fromTo(el, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.14, ease: "power2.out" }, t);
+      });
+      // karaoke: the word Sean is saying turns Flame, then returns to white
+      document.querySelectorAll(".sub").forEach((line) => {
+        const ws = [...line.querySelectorAll(".w")];
+        const end = parseFloat(line.dataset.lineEnd);
+        ws.forEach((w, i) => {
+          const on = parseFloat(w.dataset.t);
+          const off = i + 1 < ws.length ? parseFloat(ws[i + 1].dataset.t) : end;
+          tl.set(w, { color: "#FF4C32" }, on);
+          tl.set(w, { color: "#FFFFFF" }, off);
+        });
+      });
+
+      tl.to({}, { duration: 40.6 }, 0); // pad to full source length
+      // Head and tail trim: skip Sean turning from his computer (source 0 to 0.4s) and turning back (after 39.3s)
+      const master = gsap.timeline({ paused: true });
+      master.add(tl.tweenFromTo(0.4, 39.3, { ease: "none" }), 0);
+      master.fromTo("#brandMark", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "sine.inOut" }, 0.2);
+      // END CARD (ad seconds): dissolves in over Sean's last beat, then holds
+      const E = 35.4; // on "tap"
+      master.fromTo("#endCard", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "sine.inOut" }, E);
+      master.fromTo("#ecLogoWrap", { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, E + 0.25);
+      master.fromTo("#ecL1", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.45, ease: "expo.out" }, E + 0.45);
+      master.fromTo("#ecL2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.45, ease: "expo.out" }, E + 0.6);
+      master.fromTo("#ecFree", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" }, E + 0.85);
+      master.fromTo("#ecBtn", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.8)" }, E + 1.1);
+      master.to("#ecBtn", { scale: 1.04, duration: 0.55, ease: "sine.inOut", yoyo: true, repeat: 5 }, E + 1.6);
+      master.to({}, { duration: 40.4 }, 0);
+      window.__timelines["growth-roadmap-ad-4x5"] = master;
+    </script>
+  </body>
+</html>
