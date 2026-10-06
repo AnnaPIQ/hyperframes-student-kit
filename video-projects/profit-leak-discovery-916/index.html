@@ -108,19 +108,19 @@
       #sp-big2 { left: 104px; top: 990px; font-size: 92px; color: #FFFFFF; }
 
       /* S8/S9 process column (B-roll card left) */
-      .st { left: 680px; font-size: 44px; }
-      #st1 { top: 380px; } #st2 { top: 612px; } #st3 { top: 844px; }
+      .st { left: 680px; font-size: 52px; }
+      #st1 { top: 370px; } #st2 { top: 598px; } #st3 { top: 826px; }
       .dot { width: 18px; height: 18px; border-radius: 50%; left: 646px; }
-      #dot1 { top: 392px; background: #FF4C32; }
-      #dot2 { top: 624px; background: #DEEEFE; } #dot3 { top: 856px; background: #DEEEFE; }
-      .vline { left: 654px; width: 2px; height: 108px; background: #DEEEFE; transform-origin: 50% 0; }
-      #vl1 { top: 488px; } #vl2 { top: 720px; }
+      #dot1 { top: 386px; background: #FF4C32; }
+      #dot2 { top: 614px; background: #DEEEFE; } #dot3 { top: 842px; background: #DEEEFE; }
+      .vline { left: 654px; width: 2px; height: 96px; background: #DEEEFE; transform-origin: 50% 0; }
+      #vl1 { top: 486px; } #vl2 { top: 714px; }
       #pr-l { left: 680px; top: 962px; font-size: 26px; }
       #pr-bar { left: 680px; top: 998px; width: 146px; height: 40px; background: #FFFFFF; border-radius: 6px;
         transform-origin: 0 50%; }
 
       /* S10 navy card */
-      #fdc { left: 150px; top: 896px; width: 780px; height: 128px; border-radius: 24px;
+      #fdc { left: 150px; top: 960px; width: 780px; height: 128px; border-radius: 24px;
         background: rgba(6,40,76,0.92); display: flex; align-items: center; justify-content: center; gap: 18px;
         font-size: 60px; }
 
@@ -287,8 +287,8 @@
       const IO = "power2.inOut", OUT = "power3.out", EXP = "expo.out";
 
       // Sean placement presets (face anchor at 840,640 in plate px)
-      const FULL110 = { x: 0, y: 0, scale: 1.10 };
-      const FULL100 = { x: 0, y: 0, scale: 1.0 };
+      const FULL110 = { x: 0, y: -110, scale: 1.10 };
+      const FULL100 = { x: 0, y: -110, scale: 1.10 };   // "100%" framing, lifted so the face sits at y ~600
       const LEFT    = { x: -270, y: 120, scale: 1.0 };   // face at x 270
       const LEFT_S  = { x: -240, y: 120, scale: 1.0 };   // S11, slightly less far
       const RIGHT   = { x: 270, y: 120, scale: 1.0 };    // face at x 810
@@ -334,7 +334,7 @@
       tl.to(["#lk1", "#lk3", "#lk1-l", "#lk3-l"], { opacity: 0.4, duration: 0.3 }, 7.3);
       tl.to("#lk2", { backgroundColor: "#FF4C32", borderColor: "#FF4C32", duration: 0.3 }, 7.3);
       tl.to("#lk2-l", { color: "#FF4C32", duration: 0.3 }, 7.3);
-      tl.fromTo("#lk2-ring", { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 1.15, duration: 0.7, ease: "power2.out" }, 7.4);
+      tl.fromTo("#lk2-ring", { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 1.15, duration: 0.7, ease: "power2.out", immediateRender: false }, 7.4);
       tl.fromTo("#fix-line", { opacity: 1, scaleY: 0 }, { scaleY: 1, duration: 0.3, ease: IO }, 7.6);
       show("#fix-tag", 7.75, 0.35, { y: 20 }, EXP);
       tl.to("#sean-wrap", { scale: 1.02, duration: 2.3, ease: "none" }, 7.3);
@@ -428,7 +428,7 @@
       hide(["#bz1", "#bz-line", "#bz-chev", "#bz2"], 27.15, 0.35);
       tl.to("#sean-wrap", { ...FULL100, duration: 0.6, ease: IO }, 27.2);
       tl.to("#cut-w", { opacity: 0, duration: 0.6, ease: "power1.inOut" }, 27.2);
-      tl.to("#sean-wrap", { scale: 1.06, duration: 4.1, ease: "none" }, 27.8);
+      tl.to("#sean-wrap", { scale: 1.16, duration: 4.1, ease: "none" }, 27.8);
 
       // ---------------- S14 31.9 - 38.0 ----------------
       tl.to("#sean-wrap", { ...LEFT, duration: 0.6, ease: IO }, 31.9);
