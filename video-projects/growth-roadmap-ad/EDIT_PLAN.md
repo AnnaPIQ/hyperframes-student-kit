@@ -26,6 +26,15 @@ Differences from the written script: "helped **brands like** Mob Armor", "**we'l
 
 B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest analysis clips have no Drive link in the sheet (see Part 2 notes), and the remaining footage is used only where it proves something. It can be raised to ~25% by extending the strategist beat if you want more cover.
 
+## Revision 4 (review feedback)
+
+- **Lip sync fixed and measured.** The camera file's audio starts 0.089s after its video, and the first voice extract dropped that gap, so sound ran ~3 frames ahead of the lips. The VO is now rebuilt with the camera's true start offset. Measured by waveform cross-correlation against the camera audio: 0.0ms offset in the VO file and in the render. Video frames in the render match the source within one frame (the source is 25fps).
+- **Subtitles:** black outline removed (soft drop shadow only). "we'll tell you" uses the same font as every other subtitle, not italic.
+- **"Find the blocker."** is all white, upright Rethink Sans.
+- **Mob Armor logo** (official white horizontal lockup, rendered from the client's vector master) replaces the "MOB ARMOR" text above +500%.
+
+---
+
 ## Revision 3 (review feedback, supersedes Revision 2 and the details below where they conflict)
 
 - **Karaoke subtitles:** the word Sean is saying turns Flame #FF4C32 on its exact word timing, then returns to white. The fixed orange on "ceiling" and "Book Now" is removed; "*we'll tell you*" stays italic.

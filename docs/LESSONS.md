@@ -41,6 +41,11 @@ efficient over time instead of relearning the same lessons.
 
 ## Footage & A/V sync
 
+- **Camera audio track starts late, and a plain extract silently drops the gap.** growth-roadmap-ad's ProRes master had
+  audio `start_time=0.089` (ffprobe). `ffmpeg -i cam.mov -vn vo.wav` starts the audio at 0, so the sound led the lips by
+  ~3 frames. **Fix:** always check `ffprobe -show_entries stream=codec_type,start_time` and extract with
+  `-af aresample=async=1:first_pts=0` to keep the true offset. Verify by FFT cross-correlating the render audio against
+  that aligned extract (expect 0.0ms).
 - **Talking-head lips out of sync.** Source recordings often have a ~0.2s audio start
   offset that the engine drops. **Fix:** advance the video ~0.16s relative to audio so
   lips match (tune per clip).
