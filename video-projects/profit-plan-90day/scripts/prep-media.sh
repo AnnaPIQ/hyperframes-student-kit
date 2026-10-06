@@ -47,6 +47,18 @@ ffmpeg -nostdin -v error -y -i "$AROLL" -filter_complex "
  -map "[aout]" -c:a pcm_s16le "$OUT/vo.wav"
 echo "✓ aroll.mp4 + vo.wav"
 
+# 4:5 feed version: wider 1728x2160 window on the same centre, same cuts + grade
+CROP45="crop=1728:2160:1066:0,scale=1440:1800:flags=lanczos"
+ffmpeg -nostdin -v error -y -i "$AROLL" -filter_complex "
+ [0:v]split=4[v0][v1][v2][v3];
+ [v0]trim=0.50:14.95,setpts=PTS-STARTPTS[a];
+ [v1]trim=15.55:30.05,setpts=PTS-STARTPTS[b];
+ [v2]trim=30.65:36.10,setpts=PTS-STARTPTS[c];
+ [v3]trim=36.65:40.90,setpts=PTS-STARTPTS[d];
+ [a][b][c][d]concat=n=4:v=1:a=0,$CROP45,$GRADE,fps=30,format=yuv420p[v]" \
+ -map "[v]" -c:v libx264 -preset medium -crf 17 -g 15 -movflags +faststart -an "$OUT/aroll-4x5.mp4"
+echo "✓ aroll-4x5.mp4"
+
 # ---- B-roll ------------------------------------------------------------------
 # name | drive id | in (s) | dur (s) | filter (rotate/crop to 1080x1920)
 ROT="transpose=1,scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920"
