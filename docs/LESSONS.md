@@ -77,6 +77,23 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## Session: growth-roadmap-ad (9:16 Meta, A-roll + B-roll + roadmap MG)
+
+- **Multi-GB Google Drive footage can't come through the Drive connector** (it returns base64). **Fix:** direct
+  `curl -L "https://drive.usercontent.google.com/download?id=<ID>&export=download&confirm=t"` works for link-shared
+  files through the proxy (2.6GB ProRes in about a minute). Read the B-roll sheet itself with the Drive connector.
+- **No whisper-cpp in the container.** **Fix:** `python3 -m venv fw && fw/bin/pip install faster-whisper`, model
+  `small.en` with `word_timestamps=True` gives word timings in seconds. Caption what was actually said; it drifted
+  from the written script in five places.
+- **4K B-roll from the PacificIQ shoot is shot vertical but stored 3840x2160 with no rotation tag.** **Fix:**
+  `transpose=1` then `scale=1080:1920`. iPhone clips (2160x3840 or rotation-tagged) need nothing.
+- **Linter errors on tweening `letterSpacing`** (`gsap_non_transform_motion`). **Fix:** animate y/opacity instead.
+- **Camera A-roll audio was about -30 LUFS, so the render was far too quiet for Meta.** **Fix:** `loudnorm=I=-16:TP=-1.5`
+  on the VO before mixing, then set the bed (~0.22) and SFX against it. Check with `ebur128` on the render.
+- **White subtitles disappear over light clothing.** **Fix:** `-webkit-text-stroke: 7px rgba(6,40,76,.9);
+  paint-order: stroke fill; text-wrap: balance;` gives a thin navy edge with no caption box and no widow words.
+- **A line passing behind a small label reads as a strike-through.** **Fix:** give the label a navy background span.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*
