@@ -30,7 +30,7 @@
           repeating-linear-gradient(0deg, rgba(222,238,254,.045) 0 1px, transparent 1px 90px),
           repeating-linear-gradient(90deg, rgba(222,238,254,.045) 0 1px, transparent 1px 90px); }
       .mg .inner { position: absolute; inset: 0; }
-      .mg .head { position: absolute; left: 90px; right: 90px; top: 300px; text-align: center;
+      .mg .head { position: absolute; left: 90px; right: 90px; top: 400px; text-align: center;
         font-weight: 800; font-size: 82px; line-height: 1.0; letter-spacing: -0.02em; color: #FFFFFF; }
       .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400;
         letter-spacing: -0.01em; color: #9CD4FF; }
@@ -86,6 +86,11 @@
         color: #FFFFFF; background: #FF4C32; padding: 30px 70px; border-radius: 999px;
         box-shadow: 0 18px 60px -12px rgba(255,76,50,.65); }
 
+      /* ---------- persistent brand mark (non-clip wrapper so it never drifts) ---------- */
+      #brandMark { position: absolute; left: 64px; top: 268px; width: 270px; z-index: 35; pointer-events: none;
+        filter: drop-shadow(0 2px 10px rgba(0,0,0,.35)); }
+      #brandMark img { display: block; width: 100%; height: auto; }
+
       /* ---------- subtitles: fixed bottom line, one system for Sean, B-roll and graphics ---------- */
       .sub { position: absolute; left: 0; right: 0; top: 1500px; height: 96px; z-index: 50;
         display: block; white-space: nowrap; text-align: center;
@@ -103,14 +108,17 @@
         <video id="aroll" src="assets/aroll-916.mp4" data-start="0" data-media-start="0.4" data-duration="38.9" data-track-index="0" muted playsinline></video>
       </div>
 
+      <!-- ===================== BRAND MARK (top left, whole ad; end card covers it) ===================== -->
+      <div id="brandMark"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+
       <!-- ===================== B-ROLL (proof) ===================== -->
       <div id="bw1" class="vwrap bw"><video id="b1" src="assets/broll/b1-angle-laptop.mp4" data-start="8.6" data-duration="1.4" data-media-start="0.2" data-track-index="1" muted playsinline></video></div>
       <div id="bw2" class="vwrap bw"><video id="b2" src="assets/broll/b2-hotel-laptop.mp4" data-start="10" data-duration="1.05" data-media-start="0.2" data-track-index="2" muted playsinline></video></div>
       <div id="bw3" class="vwrap bw"><video id="b3" src="assets/broll/b3-shoptalk-stage.mp4" data-start="12.6" data-duration="0.8" data-media-start="0.1" data-track-index="1" muted playsinline></video></div>
       <div id="bw4" class="vwrap bw"><video id="b4" src="assets/broll/b4-klaviyo-event.mp4" data-start="13.4" data-duration="0.8" data-media-start="0.2" data-track-index="2" muted playsinline></video></div>
       <div id="bw5" class="vwrap bw"><video id="b5" src="assets/broll/b5-mason-team.mp4" data-start="14.2" data-duration="0.8" data-media-start="0.2" data-track-index="1" muted playsinline></video></div>
-      <div id="bw6" class="vwrap bw"><video id="b6" src="assets/broll/b6-laptop-man.mp4" data-start="20.05" data-duration="1.15" data-media-start="0.2" data-track-index="2" muted playsinline></video></div>
-      <div id="bw7" class="vwrap bw"><video id="b7" src="assets/broll/b7-handshake.mp4" data-start="21.2" data-duration="0.78" data-media-start="0.4" data-track-index="1" muted playsinline></video></div>
+      <div id="bw6" class="vwrap bw"><video id="b6" src="assets/broll/b6-laptop-man.mp4" data-start="19.8" data-duration="1.4" data-media-start="0.2" data-track-index="2" muted playsinline></video></div>
+      <div id="bw7" class="vwrap bw"><video id="b7" src="assets/broll/b7-handshake.mp4" data-start="21.2" data-duration="1.18" data-media-start="0.4" data-track-index="1" muted playsinline></video></div>
 
 
       <!-- ===================== CHEST CARDS over Sean (horizontal roadmap) ===================== -->
@@ -292,9 +300,9 @@
 
       // ---- B-roll entries: blur + scale settle (each cut carries motion) ----
       const bIn = (sel, t) => tl.fromTo(sel, { scale: 1.12, filter: "blur(16px)" }, { scale: 1, filter: "blur(0px)", duration: 0.3, ease: "power3.out", immediateRender: false }, t);
-      bIn("#bw1", 9.0); bIn("#bw2", 10.4); bIn("#bw3", 13.0); bIn("#bw4", 13.8); bIn("#bw5", 14.6); bIn("#bw6", 20.45); bIn("#bw7", 21.6);
+      bIn("#bw1", 9.0); bIn("#bw2", 10.4); bIn("#bw3", 13.0); bIn("#bw4", 13.8); bIn("#bw5", 14.6); bIn("#bw6", 20.2); bIn("#bw7", 21.6);
       // slow drift while on screen
-      [["#bw1", 9.3, 1.1], ["#bw2", 10.6, 0.85], ["#bw6", 20.75, 0.85]].forEach(([s, t, d]) => tl.to(s, { scale: 1.04, duration: d, ease: "none" }, t));
+      [["#bw1", 9.3, 1.1], ["#bw2", 10.6, 0.85], ["#bw6", 20.5, 1.1]].forEach(([s, t, d]) => tl.to(s, { scale: 1.04, duration: d, ease: "none" }, t));
 
 
       // ---- generic card entrance ----
@@ -415,6 +423,7 @@
       // Head and tail trim: skip Sean turning from his computer (source 0 to 0.4s) and turning back (after 39.3s)
       const master = gsap.timeline({ paused: true });
       master.add(tl.tweenFromTo(0.4, 39.3, { ease: "none" }), 0);
+      master.fromTo("#brandMark", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "sine.inOut" }, 0.2);
       // END CARD (ad seconds): dissolves in over Sean's last beat, then holds
       const E = 35.4; // on "tap"
       master.fromTo("#endCard", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "sine.inOut" }, E);

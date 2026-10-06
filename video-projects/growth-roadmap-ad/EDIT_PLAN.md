@@ -26,6 +26,13 @@ Differences from the written script: "helped **brands like** Mob Armor", "**we'l
 
 B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest analysis clips have no Drive link in the sheet (see Part 2 notes), and the remaining footage is used only where it proves something. It can be raised to ~25% by extending the strategist beat if you want more cover.
 
+## Revision 5 (review feedback)
+
+- **EcomIQ logo** (white lockup, 270px wide) sits top-left for the whole ad, at x 64, y 268, just below Meta's top safe zone. It fades in at 0.2s, and the end card covers it so the logo is never doubled. Full-screen headlines move down to y 400 to clear it.
+- **Sean flash removed (ad 19.8 to 20.05s):** the "Sean holding laptop" B-roll now starts underneath the Mob Armor graphic's fade, so the graphic dissolves straight into the footage. The same fix is applied where the handshake hands over to "progress resumes" (ad ~22s).
+
+---
+
 ## Revision 4 (review feedback)
 
 - **Lip sync fixed and measured.** The camera file's audio starts 0.089s after its video, and the first voice extract dropped that gap, so sound ran ~3 frames ahead of the lips. The VO is now rebuilt with the camera's true start offset. Measured by waveform cross-correlation against the camera audio: 0.0ms offset in the VO file and in the render. Video frames in the render match the source within one frame (the source is 25fps).
