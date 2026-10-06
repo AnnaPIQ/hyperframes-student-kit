@@ -50,6 +50,16 @@ efficient over time instead of relearning the same lessons.
   block the Whisper model download. **Fix:** caption from the known script text and
   anchor timing via silence analysis instead of word-level timestamps.
 
+- **No whisper-cpp in the cloud container, but word timings still possible.** `pip install
+  faster-whisper` works and the `small.en` model downloads from Hugging Face. Its file loader
+  crashes on the preinstalled PyAV (`open() got an unexpected keyword argument
+  'metadata_errors'`). **Fix:** extract 16 kHz mono WAV with ffmpeg, read it with `wave` into a
+  float32 numpy array and pass the array to `model.transcribe(..., word_timestamps=True)`.
+- **B-roll sheet labels can be wrong.** In the EcomIQ "B-Roll Short Cut" sheet, "Sean on Laptop"
+  is actually Sweet E's client footage, and the Shoptalk "rebuy" talk shows Rebuy's platform stats
+  on screen. **Fix:** contact-sheet every clip before planning, and keep other brands' footage
+  and numbers away from any client proof claim.
+
 ## Editing technique (talking-head cutdowns)
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +
