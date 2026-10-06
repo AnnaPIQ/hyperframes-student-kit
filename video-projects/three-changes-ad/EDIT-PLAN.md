@@ -1,6 +1,6 @@
 # EcomIQ Meta Ad: "Three Changes" Store Review, Complete Edit Plan
 
-**Format:** 9:16 vertical, 1080×1920, 25 fps (matches the A-roll, no frame-rate conversion), Meta Reels / Stories / Feed 9:16
+**Format:** 9:16 vertical, 1080×1920, rendered at 30 fps (A-roll is 25 fps), Meta Reels / Stories / Feed 9:16
 **Runtime:** 31.00 s (voice ends 28.84 s, CTA held 2.16 s after the last word)
 **Timebase:** every timestamp below is the A-roll source timecode, and the edit runs 1:1 on it. There are no trims, so edit time = A-roll time. Snap to the nearest frame (0.04 s).
 

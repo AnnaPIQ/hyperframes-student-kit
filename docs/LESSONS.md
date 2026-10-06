@@ -77,6 +77,20 @@ efficient over time instead of relearning the same lessons.
 - **Gitignore render scratch dirs** (`render-work-*`, `**/renders/frames*`). They bloat
   commits and aren't deliverables.
 
+## Source footage from Google Drive
+
+- **ffmpeg can't open a large Drive video by URL ("Invalid data found").** Streaming a
+  big file straight from `drive.usercontent.google.com` fails intermittently through the
+  proxy. **Fix:** `curl -r 0-70000000` the first ~70 MB (moov is at the front on camera
+  MP4s) and cut from the partial file. Small files stream fine.
+- **Studio A-roll VO arrives very quiet (about -37 LUFS) and the music bed buries it.**
+  **Fix:** `highpass=f=70,acompressor,loudnorm=I=-15:TP=-1.5` on the VO during prep, music
+  at `data-volume` 0.1 (about 19 dB under). Check the mix with `ebur128` (aim -14 LUFS).
+- **Landscape A-roll into 9:16: guessing the face x from a thumbnail put Sean too far
+  right.** Render a draft, measure the face position in the frame, back-solve the wrapper
+  `x`, and prep the crop wider than the tightest framing needs so every punch-in still
+  covers the full 1080 width.
+
 ---
 
 *Add new entries above this line as you discover them. One symptom → fix per bullet.*

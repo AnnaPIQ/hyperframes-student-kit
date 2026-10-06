@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>three-changes-ad</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL fonts — no network dependency at render time (latin subset) */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+
+      /* Layout grid (see EDIT-PLAN.md §1.1): logo y290 · hero zone y380-1050 ·
+         subtitle block bottom edge y1240 · nothing essential below y1248 (Meta UI). */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #06284C;
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+      .layer { position: absolute; inset: 0; }
+
+      /* ---------- A-roll: one continuous clip, reframed by moving the wrapper ---------- */
+      #aroll-wrap { position: absolute; left: 0; top: 0; width: 1366px; height: 1920px; transform-origin: 0 0; z-index: 1; }
+      #aroll { display: block; width: 100%; height: 100%; }
+
+      /* ---------- B-roll ---------- */
+      .broll-wrap { position: absolute; inset: 0; z-index: 2; }
+      .broll-wrap video { display: block; width: 1080px; height: 1920px; transform-origin: 50% 40%; }
+
+      /* ---------- navy graphic scenes ---------- */
+      .gfx { z-index: 3; background:
+        radial-gradient(900px 900px at 540px 760px, rgba(156,212,255,.10) 0%, rgba(156,212,255,0) 70%), #06284C; }
+      .abs { position: absolute; left: 0; right: 0; text-align: center; }
+      .xb { font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+      .eyebrow { font-weight: 700; font-size: 30px; letter-spacing: .1em; text-transform: uppercase; color: #DEEEFE; }
+
+      /* GFX-1 */
+      #g1-nums { top: 485px; font-size: 150px; display: flex; justify-content: center; gap: 70px; transform-origin: 50% 0; }
+      #g1-nums span { display: inline-block; }
+      #g1-head { top: 520px; font-size: 130px; transform-origin: 50% 0; }
+      #g1-sub1 { top: 688px; font-size: 44px; font-weight: 700; color: #DEEEFE; letter-spacing: .02em; }
+      #g1-sub2 { top: 742px; font-size: 64px; }
+      #g1-card { position: absolute; left: 270px; top: 830px; width: 540px; height: 190px; border: 2px solid #DEEEFE;
+        border-radius: 20px; display: flex; align-items: center; gap: 36px; padding: 0 40px; }
+      #g1-card svg { display: block; }
+      #g1-l2 { top: 610px; font-size: 120px; }
+      #g1-l3 { top: 750px; font-size: 120px; color: #FF4C32; text-shadow: 0 0 60px rgba(255,76,50,.18); }
+
+      /* GFX-2 (Furbish proof) */
+      #g2-eb { top: 370px; font-size: 28px; }
+      #g2-name { top: 405px; font-size: 56px; text-transform: uppercase; }
+      #g2-num { top: 478px; font-size: 200px; color: #FF4C32; letter-spacing: -0.03em; font-variant-numeric: tabular-nums;
+        text-shadow: 0 0 70px rgba(255,76,50,.18); }
+      #g2-hos { top: 692px; font-size: 52px; }
+      #g2-yoy { top: 764px; font-size: 34px; font-weight: 700; letter-spacing: .1em; color: #9CD4FF; }
+      #g2-chart { position: absolute; left: 355px; top: 820px; width: 370px; height: 250px; }
+      #g2-base { position: absolute; left: -30px; right: -30px; top: 210px; height: 1px; background: rgba(222,238,254,.6); }
+      .bar { position: absolute; bottom: 40px; width: 150px; border-radius: 10px 10px 0 0; transform-origin: 50% 100%; }
+      #bar-a { left: 0; height: 130px; background: rgba(222,238,254,.30); border: 1px solid #DEEEFE; border-bottom: 0; }
+      #bar-b { left: 220px; height: 194px; background: linear-gradient(180deg, #9CD4FF 0%, rgba(156,212,255,.7) 100%);
+        box-shadow: 0 0 40px rgba(156,212,255,.2); }
+      .bar-lab { position: absolute; top: 222px; width: 150px; text-align: center; font-size: 26px; font-weight: 600;
+        letter-spacing: .06em; color: #DEEEFE; }
+
+      /* GFX-3 (review steps) */
+      .row { position: absolute; left: 0; right: 0; text-align: center; font-size: 36px; font-weight: 700; color: rgba(222,238,254,.55); }
+      .row b { color: rgba(156,212,255,.55); margin-right: 14px; }
+      #g3-r1 { top: 392px; }
+      #g3-r2 { top: 442px; }
+      .big { top: 500px; }
+      .big .n { font-size: 48px; font-weight: 800; color: #9CD4FF; margin-bottom: 12px; }
+      .big .h { font-size: 96px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+      #g3-wire { position: absolute; left: 330px; top: 770px; width: 420px; height: 290px; overflow: hidden; }
+      .wf { position: absolute; border: 2px solid rgba(222,238,254,.45); border-radius: 12px; }
+      #wf-hero::after { content: ""; position: absolute; inset: -2px; border-radius: 12px; border: 2px solid #9CD4FF; background: rgba(156,212,255,.30); opacity: var(--hl, 0); }
+      .card { position: absolute; left: 270px; width: 540px; display: flex; align-items: center; justify-content: center;
+        border: 2px solid #DEEEFE; border-radius: 16px; font-size: 34px; font-weight: 800; letter-spacing: .08em; }
+      #c-change { top: 775px; height: 90px; }
+      #c-impact { top: 935px; height: 90px; }
+      #c-impact::before { content: ""; position: absolute; inset: -2px; border-radius: 16px; border: 2px solid #9CD4FF;
+        background: rgba(156,212,255,.25); opacity: var(--fill, 0); }
+      #c-line { position: absolute; left: 539px; top: 867px; width: 2px; height: 60px; background: #9CD4FF; transform-origin: 50% 0; }
+      #c-arrow { position: absolute; left: 529px; top: 919px; width: 0; height: 0; border-left: 11px solid transparent;
+        border-right: 11px solid transparent; border-top: 14px solid #9CD4FF; }
+      .pc { position: absolute; left: 260px; width: 560px; height: 80px; border: 2px solid #DEEEFE; border-radius: 14px;
+        display: flex; align-items: center; justify-content: space-between; padding: 0 20px 0 32px;
+        font-size: 34px; font-weight: 800; letter-spacing: .06em; }
+      #pc-a { top: 795px; } #pc-b { top: 895px; } #pc-c { top: 995px; }
+      #pc-b::before { content: ""; position: absolute; inset: -2px; border: 2px solid #FF4C32; border-radius: 14px; opacity: var(--pri, 0); }
+      #pc-tag { background: #FF4C32; color: #FFFFFF; font-size: 24px; font-weight: 800; letter-spacing: .08em;
+        padding: 10px 18px; border-radius: 999px; }
+
+      /* GFX-4 (end card) */
+      #g4-free { top: 470px; font-size: 120px; color: #9CD4FF; }
+      #g4-name { top: 610px; font-size: 92px; }
+      #g4-cb { top: 840px; font-size: 34px; font-weight: 700; color: #DEEEFE; }
+
+      /* ---------- overlays on live action ---------- */
+      .ov { z-index: 5; }
+      .side-card { position: absolute; left: 690px; width: 320px; background: rgba(6,40,76,.88);
+        border: 1px solid rgba(222,238,254,.2); border-radius: 24px; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; text-align: center; }
+      #s1-card { top: 520px; height: 380px; gap: 10px; }
+      #s1-eb { max-width: 220px; font-size: 26px; font-weight: 700; letter-spacing: .1em; color: #DEEEFE; text-transform: uppercase; line-height: 1.2; margin-bottom: 6px; }
+      .rng { font-size: 96px; font-weight: 800; color: #9CD4FF; letter-spacing: -0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+      #s1-div { width: 150px; height: 2px; background: #DEEEFE; transform-origin: 0 50%; }
+      #s1-mo { font-size: 40px; font-weight: 700; color: #FFFFFF; margin-top: 4px; }
+      #s8-card { top: 840px; height: 180px; font-size: 54px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.08; }
+      #s5-label { position: absolute; right: 80px; top: 900px; text-align: right; }
+      #s5-rule { width: 60px; height: 3px; background: #9CD4FF; margin: 0 0 14px auto; }
+      #s5-text { font-size: 44px; font-weight: 800; letter-spacing: .04em; line-height: 1.08;
+        text-shadow: 0 2px 18px rgba(6,40,76,.85), 0 0 3px rgba(6,40,76,.6); }
+      #pill-wrap { position: absolute; left: 0; right: 0; top: 1000px; display: flex; justify-content: center; }
+      #pill { background: #FF4C32; color: #FFFFFF; font-size: 44px; font-weight: 800; letter-spacing: .02em;
+        height: 100px; padding: 0 56px; border-radius: 999px; display: flex; align-items: center; gap: 16px;
+        box-shadow: 0 16px 56px -12px rgba(255,76,50,.5); }
+
+      /* ---------- logo ---------- */
+      .logo-layer { z-index: 8; }
+      .logo-pos { position: absolute; left: 72px; top: 290px; width: 230px; }
+      .logo-pos img { display: block; width: 230px; height: auto; }
+
+      /* ---------- subtitles ---------- */
+      .sub { z-index: 9; }
+      .sub-box { position: absolute; left: 110px; right: 110px; bottom: 680px; display: flex; flex-direction: column; align-items: center; }
+      .sub-box span.l { display: block; font-size: 54px; font-weight: 600; line-height: 1.15; text-align: center;
+        text-shadow: 0 2px 14px rgba(6,40,76,.7), 0 0 3px rgba(6,40,76,.55); padding: 0 22px; }
+      .sub-box.boxed span.l { background: rgba(6,40,76,.7); text-shadow: none; }
+      .sub-box.boxed span.l:first-child { border-radius: 12px 12px 0 0; padding-top: 8px; }
+      .sub-box.boxed span.l:last-child { border-radius: 0 0 12px 12px; padding-bottom: 10px; }
+      .sub-box.boxed span.l:only-child { border-radius: 12px; }
+      .hl-b { color: #9CD4FF; }
+      .hl-o { color: #FF4C32; }
+      .it { font-style: italic; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="three-changes-ad" data-start="0" data-duration="31" data-width="1080" data-height="1920">
+
+      <!-- ===== A-ROLL (single continuous clip; graphics + B-roll cover it) ===== -->
+      <div id="aroll-wrap">
+        <video id="aroll" data-start="0" data-duration="31" data-track-index="0" src="assets/aroll.mp4" muted playsinline></video>
+      </div>
+
+      <!-- ===== B-ROLL ===== -->
+      <div class="broll-wrap" id="bw-stage">
+        <video id="br-stage" data-start="10.14" data-duration="1.02" data-media-start="0.2" data-track-index="1" src="assets/broll-stage.mp4" muted playsinline></video>
+      </div>
+      <div class="broll-wrap" id="bw-shoptalk">
+        <video id="br-shoptalk" data-start="11.16" data-duration="0.96" data-media-start="0.2" data-track-index="2" src="assets/broll-shoptalk.mp4" muted playsinline></video>
+      </div>
+      <div class="broll-wrap" id="bw-laptop">
+        <video id="br-laptop" data-start="17.68" data-duration="1.02" data-media-start="0.2" data-track-index="1" src="assets/broll-laptop.mp4" muted playsinline></video>
+      </div>
+
+      <!-- ===== GFX-1 · 3 CHANGES / store / 30 MINUTES / FREE ===== -->
+      <div id="gfx1" class="clip layer gfx" data-start="5" data-duration="5.14" data-track-index="3">
+        <div id="g1-nums" class="abs xb"><span id="n1">01</span><span id="n2">02</span><span id="n3">03</span></div>
+        <div id="g1-head" class="abs xb">3 CHANGES.</div>
+        <div id="g1-sub1" class="abs">TO MAKE YOUR STORE</div>
+        <div id="g1-sub2" class="abs xb">MORE MONEY.</div>
+        <div id="g1-card">
+          <svg width="130" height="120" viewBox="0 0 130 120" fill="none" stroke="#DEEEFE" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M12 44 L22 12 H108 L118 44" />
+            <path d="M12 44 Q25 58 38 44 Q51 58 65 44 Q78 58 92 44 Q105 58 118 44" />
+            <path d="M20 54 V110 H110 V54" />
+            <path d="M52 110 V78 H78 V110" />
+          </svg>
+          <svg width="290" height="120" viewBox="0 0 290 120" fill="none">
+            <path d="M0 110 H290" stroke="rgba(222,238,254,.35)" stroke-width="2" />
+            <path id="g1-line" d="M6 98 L70 84 L130 88 L190 56 L250 30" stroke="#9CD4FF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+            <path id="g1-chev" d="M240 26 L262 16 L258 40" stroke="#9CD4FF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div id="g1-l2" class="abs xb">30 MINUTES.</div>
+        <div id="g1-l3" class="abs xb">FREE.</div>
+      </div>
+
+      <!-- ===== GFX-2 · Furbish Studio +49% ===== -->
+      <div id="gfx2" class="clip layer gfx" data-start="11.92" data-duration="4.64" data-track-index="4">
+        <div id="g2-eb" class="abs eyebrow">Client result</div>
+        <div id="g2-name" class="abs xb">Furbish Studio</div>
+        <div id="g2-num" class="abs xb">+49%</div>
+        <div id="g2-hos" class="abs xb">HOLIDAY ONLINE SALES</div>
+        <div id="g2-yoy" class="abs">YEAR ON YEAR</div>
+        <div id="g2-chart">
+          <div id="g2-base"></div>
+          <div id="bar-a" class="bar"></div>
+          <div id="bar-b" class="bar"></div>
+          <div class="bar-lab" style="left:0">Q4 2021</div>
+          <div class="bar-lab" style="left:220px">Q4 2022</div>
+        </div>
+      </div>
+
+      <!-- ===== GFX-3 · 01 / 02 / 03 review steps ===== -->
+      <div id="gfx3" class="clip layer gfx" data-start="18.5" data-duration="6.12" data-track-index="3">
+        <div id="g3-r1" class="row"><b>01</b>WHAT WE'D CHANGE.</div>
+        <div id="g3-r2" class="row"><b>02</b>WHY IT MATTERS.</div>
+        <div id="g3-b1" class="abs big"><div class="n">01</div><div class="h">WHAT WE'D</div><div class="h">CHANGE.</div></div>
+        <div id="g3-b2" class="abs big"><div class="n">02</div><div class="h">WHY IT</div><div class="h">MATTERS.</div></div>
+        <div id="g3-b3" class="abs big"><div class="n">03</div><div class="h">WHAT TO DO</div><div class="h">FIRST.</div></div>
+        <div id="g3-wire">
+          <div class="wf" style="left:0;top:0;width:420px;height:420px;border-radius:28px"></div>
+          <div class="wf" style="left:24px;top:22px;width:372px;height:36px"></div>
+          <div id="wf-hero" class="wf" style="left:24px;top:74px;width:372px;height:110px"></div>
+          <div class="wf" style="left:24px;top:200px;width:176px;height:120px"></div>
+          <div class="wf" style="left:220px;top:200px;width:176px;height:120px"></div>
+        </div>
+        <div id="c-change" class="card">CHANGE</div>
+        <div id="c-line"></div>
+        <div id="c-arrow"></div>
+        <div id="c-impact" class="card">IMPACT</div>
+        <div id="pc-a" class="pc">CHANGE A</div>
+        <div id="pc-b" class="pc">CHANGE B<span id="pc-tag">DO THIS FIRST</span></div>
+        <div id="pc-c" class="pc">CHANGE C</div>
+      </div>
+
+      <!-- ===== GFX-4 · end card ===== -->
+      <div id="gfx4" class="clip layer gfx" data-start="26.66" data-duration="4.34" data-track-index="4">
+        <div id="g4-free" class="abs xb">FREE</div>
+        <div id="g4-name" class="abs xb"><div>ECOMIQ</div><div>STORE REVIEW</div></div>
+        <div id="g4-cb" class="abs">3 changes · 30 minutes</div>
+      </div>
+
+      <!-- ===== live-action overlays ===== -->
+      <div id="ov-s1" class="clip layer ov" data-start="0" data-duration="4.9" data-track-index="5">
+        <div id="s1-card" class="side-card">
+          <div id="s1-eb">Shopify founders</div>
+          <div id="s1-a" class="rng">$10K</div>
+          <div id="s1-div"></div>
+          <div id="s1-b" class="rng">$60K</div>
+          <div id="s1-mo">/ MONTH</div>
+        </div>
+      </div>
+      <div id="ov-s5" class="clip layer ov" data-start="10.2" data-duration="0.96" data-track-index="5">
+        <div id="s5-label"><div id="s5-rule"></div><div id="s5-text">ECOMMERCE<br />SPECIALISTS</div></div>
+      </div>
+      <div id="ov-s8" class="clip layer ov" data-start="17.32" data-duration="1.08" data-track-index="5">
+        <div id="s8-card" class="side-card"><div>YOUR STORE.</div><div>WITH YOU.</div></div>
+      </div>
+      <div id="ov-pill" class="clip layer ov" data-start="25.04" data-duration="5.96" data-track-index="6">
+        <div id="pill-wrap"><div id="pill">BOOK NOW <span>↓</span></div></div>
+      </div>
+
+      <!-- ===== logo (clip = full-frame layer; logo positioned inside a non-clip div) ===== -->
+      <div id="logo1" class="clip layer logo-layer" data-start="0" data-duration="10.14" data-track-index="7">
+        <div class="logo-pos"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+      </div>
+      <div id="logo2" class="clip layer logo-layer" data-start="11.92" data-duration="5.76" data-track-index="7">
+        <div class="logo-pos"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+      </div>
+      <div id="logo3" class="clip layer logo-layer" data-start="18.5" data-duration="12.5" data-track-index="7">
+        <div class="logo-pos"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+      </div>
+
+      <!-- ===== subtitles (EDIT-PLAN.md Part 5) ===== -->
+      <div id="sub1" class="clip layer sub" data-start="0" data-duration="1.88" data-track-index="8"><div class="sub-box boxed"><span class="l">Shopify founders doing</span></div></div>
+      <div id="sub2" class="clip layer sub" data-start="1.88" data-duration="2.04" data-track-index="8"><div class="sub-box boxed"><span class="l"><span class="hl-b">$10,000 to $60,000</span> a month</span></div></div>
+      <div id="sub3" class="clip layer sub" data-start="3.92" data-duration="2.06" data-track-index="8"><div class="sub-box boxed"><span class="l">We'll show you three changes</span></div></div>
+      <div id="sub4" class="clip layer sub" data-start="5.98" data-duration="1.74" data-track-index="8"><div class="sub-box boxed"><span class="l">to make your store more money</span></div></div>
+      <div id="sub5" class="clip layer sub" data-start="7.72" data-duration="2.42" data-track-index="8"><div class="sub-box boxed"><span class="l">on a free 30-minute call</span></div></div>
+      <div id="sub6" class="clip layer sub" data-start="10.14" data-duration="1.28" data-track-index="8"><div class="sub-box boxed"><span class="l">Specialists from the team</span><span class="l">that have helped</span></div></div>
+      <div id="sub7" class="clip layer sub" data-start="11.42" data-duration="1.16" data-track-index="8"><div class="sub-box boxed"><span class="l">brands like Furbish Studio</span></div></div>
+      <div id="sub8" class="clip layer sub" data-start="12.58" data-duration="1.9" data-track-index="8"><div class="sub-box boxed"><span class="l">grow holiday online sales</span></div></div>
+      <div id="sub9" class="clip layer sub" data-start="14.48" data-duration="1.88" data-track-index="8"><div class="sub-box boxed"><span class="l">by 49% year on year</span></div></div>
+      <div id="sub10" class="clip layer sub" data-start="16.36" data-duration="1.94" data-track-index="8"><div class="sub-box boxed"><span class="l">will go through</span><span class="l">your store <span class="it">with you</span></span></div></div>
+      <div id="sub11" class="clip layer sub" data-start="18.7" data-duration="1.48" data-track-index="8"><div class="sub-box boxed"><span class="l">We'll show you what we'd change</span></div></div>
+      <div id="sub12" class="clip layer sub" data-start="20.26" data-duration="1.92" data-track-index="8"><div class="sub-box boxed"><span class="l">explain why each of those</span><span class="l">changes matters</span></div></div>
+      <div id="sub13" class="clip layer sub" data-start="22.18" data-duration="2.04" data-track-index="8"><div class="sub-box boxed"><span class="l">and tell you which</span><span class="l">to do <span class="it">first</span></span></div></div>
+      <div id="sub14" class="clip layer sub" data-start="24.22" data-duration="1.32" data-track-index="8"><div class="sub-box boxed"><span class="l">Click <span class="hl-o">Book Now</span></span></div></div>
+      <div id="sub15" class="clip layer sub" data-start="25.54" data-duration="1.12" data-track-index="8"><div class="sub-box boxed"><span class="l">and choose a time</span></div></div>
+      <div id="sub16" class="clip layer sub" data-start="26.66" data-duration="2.28" data-track-index="8"><div class="sub-box boxed"><span class="l">for your free</span><span class="l">EcomIQ store review</span></div></div>
+
+      <!-- ===== audio ===== -->
+      <audio id="vo" data-start="0" data-duration="31" data-track-index="20" src="assets/vo.m4a" data-volume="1"></audio>
+      <audio id="music" data-start="0" data-duration="31" data-track-index="21" src="assets/music.wav" data-volume="0.1"></audio>
+      <audio id="sfx" data-start="0" data-duration="31" data-track-index="22" src="assets/sfx.wav" data-volume="0.5"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const IN = (sel, t, vars = {}) =>
+        tl.fromTo(sel, { opacity: 0, y: vars.dy ?? 12 }, { opacity: 1, y: 0, duration: vars.d ?? 0.3, ease: vars.ease ?? "power2.out" }, t);
+      const FADE_IN = (sel, t, d = 0.2) => tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: d, ease: "none" }, t);
+
+      // ---------- A-roll framing (face point in the 1366x1920 prep ≈ x625) ----------
+      // S1: face at ~36% width, punch 100% -> 106% anchored so the head clears the logo
+      tl.fromTo("#aroll-wrap", { x: -236, y: 0, scale: 1 }, { x: -273, y: -30, scale: 1.06, duration: 3.92, ease: "none" }, 0);
+      // S8 (hidden behind GFX-2 when set): same side framing at 104%
+      tl.set("#aroll-wrap", { x: -261, y: -20, scale: 1.04 }, 16.2);
+      // S12 (hidden behind GFX-3 when set): centred, 112%
+      tl.set("#aroll-wrap", { x: -160, y: -170, scale: 1.12 }, 24.5);
+
+      // ---------- S1 side card ----------
+      IN("#s1-card", 0.2, { d: 0.35 });
+      IN("#s1-a", 1.88, { ease: "power3.out" });
+      tl.fromTo("#s1-div", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power2.inOut" }, 2.1);
+      IN("#s1-b", 2.4, { ease: "power3.out" });
+      IN("#s1-mo", 3.62, { d: 0.25 });
+      tl.to("#s1-card", { opacity: 0, y: 12, duration: 0.3, ease: "power2.in" }, 4.5);
+
+      // ---------- GFX-1 ----------
+      FADE_IN("#gfx1", 5.0);
+      IN("#n1", 5.1, { d: 0.25 }); IN("#n2", 5.3, { d: 0.25 }); IN("#n3", 5.5, { d: 0.25 });
+      // compress 01 02 03 into a small label row
+      tl.to("#g1-nums", { scale: 0.26, y: -55, duration: 0.38, ease: "power3.inOut" }, 5.98);
+      tl.to("#g1-nums span", { color: "#DEEEFE", duration: 0.38, ease: "power3.inOut" }, 5.98);
+      IN("#g1-head", 6.12, { dy: 18, d: 0.35, ease: "power3.out" });
+      IN("#g1-sub1", 6.5, { d: 0.28 });
+      IN("#g1-sub2", 7.1, { d: 0.28, ease: "power3.out" });
+      IN("#g1-card", 6.7, { d: 0.3 });
+      tl.fromTo("#g1-line", { strokeDasharray: 300, strokeDashoffset: 300 }, { strokeDashoffset: 0, duration: 0.76, ease: "power1.inOut" }, 6.84);
+      tl.fromTo("#g1-chev", { opacity: 0 }, { opacity: 1, duration: 0.15 }, 7.5);
+      // beat C: clear supporting layer, headline to slot 1, build the lockup
+      tl.to(["#g1-nums", "#g1-sub1", "#g1-sub2", "#g1-card"], { opacity: 0, duration: 0.25, ease: "power1.in" }, 7.72);
+      tl.to("#g1-head", { y: -50, scale: 0.923, duration: 0.35, ease: "power3.inOut" }, 7.72);
+      IN("#g1-l2", 8.14, { dy: 14, d: 0.3, ease: "power3.out" });
+      IN("#g1-l3", 9.04, { dy: 16, d: 0.3, ease: "power4.out" });
+
+      // ---------- S5 label on B-roll ----------
+      IN("#s5-label", 10.2, { d: 0.25 });
+      tl.fromTo("#br-stage", { scale: 1 }, { scale: 1.04, duration: 1.02, ease: "none" }, 10.14);
+
+      // ---------- GFX-2 · Furbish +49% ----------
+      FADE_IN("#gfx2", 11.92);
+      IN("#g2-eb", 11.92, { d: 0.3 });
+      IN("#g2-name", 11.98, { d: 0.32, ease: "power3.out" });
+      IN("#g2-hos", 12.94, { d: 0.3 });
+      FADE_IN("#g2-chart", 12.94, 0.25);
+      tl.fromTo("#bar-a", { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: "power2.out" }, 13.0);
+      // Q4 2022 bar: grows to the Q4 2021 height (130px of 194px), then to full height (= +49%) with the count
+      tl.fromTo("#bar-b", { scaleY: 0 }, { scaleY: 130 / 194, duration: 0.6, ease: "power2.out" }, 13.34);
+      tl.to("#bar-b", { scaleY: 1, duration: 0.58, ease: "power2.out" }, 14.48);
+      const cnt = { v: 0 };
+      const numEl = document.getElementById("g2-num");
+      tl.set(numEl, { opacity: 0 }, 11.92);
+      tl.set(numEl, { opacity: 1 }, 14.48);
+      tl.fromTo(cnt, { v: 0 }, { v: 49, duration: 0.58, ease: "power1.out",
+        onUpdate: () => { numEl.textContent = "+" + Math.round(cnt.v) + "%"; } }, 14.48);
+      IN("#g2-yoy", 15.42, { d: 0.28 });
+      tl.to("#gfx2", { opacity: 0, duration: 0.2, ease: "none" }, 16.36);
+
+      // ---------- S8 side text (carries across the B-roll cut) ----------
+      IN("#s8-card", 17.32, { d: 0.3 });
+      tl.to("#s8-card", { opacity: 0, duration: 0.2 }, 18.2);
+
+      // ---------- GFX-3 · review steps ----------
+      FADE_IN("#gfx3", 18.5);
+      tl.set(["#g3-r1", "#g3-r2", "#g3-b2", "#g3-b3", "#c-change", "#c-line", "#c-arrow", "#c-impact", "#pc-a", "#pc-b", "#pc-c"], { opacity: 0 }, 18.5);
+      IN("#g3-b1", 18.62, { dy: 16, d: 0.35, ease: "power3.out" });
+      IN("#g3-wire", 18.8, { dy: 20, d: 0.35 });
+      tl.fromTo("#wf-hero", { "--hl": 0 }, { "--hl": 1, duration: 0.25, ease: "power2.out" }, 19.7);
+      tl.fromTo("#wf-hero", { scale: 1 }, { scale: 1.035, duration: 0.18, yoyo: true, repeat: 1, ease: "power1.inOut" }, 19.7);
+      // beat 02
+      tl.to("#g3-b1", { opacity: 0, y: -60, scale: 0.6, duration: 0.3, ease: "power3.in" }, 20.18);
+      tl.to("#g3-wire", { opacity: 0, duration: 0.25 }, 20.18);
+      IN("#g3-r1", 20.3, { d: 0.3 });
+      IN("#g3-b2", 20.34, { dy: 16, d: 0.35, ease: "power3.out" });
+      IN("#c-change", 20.6, { d: 0.3 });
+      tl.set(["#c-line", "#c-arrow"], { opacity: 1 }, 21.0);
+      tl.fromTo("#c-line", { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: "power1.inOut" }, 21.0);
+      tl.fromTo("#c-arrow", { opacity: 0 }, { opacity: 1, duration: 0.12 }, 21.5);
+      IN("#c-impact", 21.3, { d: 0.3 });
+      tl.fromTo("#c-impact", { "--fill": 0 }, { "--fill": 1, duration: 0.25 }, 21.78);
+      // beat 03
+      tl.to(["#g3-b2", "#c-change", "#c-line", "#c-arrow", "#c-impact"], { opacity: 0, duration: 0.25, ease: "power1.in" }, 22.18);
+      IN("#g3-r2", 22.3, { d: 0.3 });
+      IN("#g3-b3", 22.34, { dy: 16, d: 0.35, ease: "power3.out" });
+      IN("#pc-a", 22.5, { d: 0.28 }); IN("#pc-b", 22.58, { d: 0.28 }); IN("#pc-c", 22.66, { d: 0.28 });
+      tl.set("#pc-tag", { opacity: 0 }, 18.5);
+      tl.to("#pc-b", { y: -100, scale: 1.04, "--pri": 1, duration: 0.35, ease: "power3.inOut" }, 23.84);
+      tl.to("#pc-a", { y: 100, duration: 0.35, ease: "power3.inOut" }, 23.84);
+      tl.fromTo("#pc-tag", { opacity: 0, x: 12 }, { opacity: 1, x: 0, duration: 0.25, ease: "power2.out" }, 23.9);
+
+      // ---------- S12 BOOK NOW pill (stays locked through the end card) ----------
+      tl.fromTo("#pill", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.4)" }, 25.04);
+      tl.to("#pill", { scale: 1.04, duration: 0.25, yoyo: true, repeat: 1, ease: "power1.inOut" }, 28.84);
+
+      // ---------- GFX-4 end card ----------
+      FADE_IN("#gfx4", 26.66);
+      IN("#g4-free", 26.76, { dy: 16, d: 0.32, ease: "power3.out" });
+      IN("#g4-name", 27.16, { dy: 16, d: 0.35, ease: "power2.out" });
+      IN("#g4-cb", 27.9, { d: 0.3 });
+
+      // ---------- logo fades with the dissolves it rides on ----------
+      FADE_IN("#logo2 .logo-pos", 11.92);
+      FADE_IN("#logo3 .logo-pos", 18.5);
+
+      // ---------- subtitles: 2-frame fades ----------
+      for (let i = 1; i <= 16; i++) {
+        const el = document.querySelector("#sub" + i + " .sub-box");
+        const start = parseFloat(document.getElementById("sub" + i).dataset.start);
+        tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "none" }, start);
+      }
+
+      tl.to({}, { duration: 31 }, 0); // pad to data-duration
+      window.__timelines["three-changes-ad"] = tl;
+    </script>
+  </body>
+</html>
