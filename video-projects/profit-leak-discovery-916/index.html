@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Profit Leak | Discovery call (9:16)</title>
+    <!-- GSAP vendored locally: CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #06284C;
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #06284C; }
+
+      /* ---------- Sean (plate + navy cut-out composite, frame-identical) ---------- */
+      #sean-clip { position: absolute; inset: 0; clip-path: inset(0px 0px 0px 0px round 0px); z-index: 1; }
+      #sean-wrap { position: absolute; left: -300px; top: 0; width: 1778px; height: 1920px;
+        transform-origin: 840px 640px; }
+      .vwrap { position: absolute; inset: 0; }
+      .vwrap video { width: 100%; height: 100%; display: block; }
+      #cut-w { opacity: 0; }
+
+      /* ---------- texture: soft radial lift + vignette (over Sean, under graphics) ---------- */
+      #texture { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+        background:
+          radial-gradient(70% 45% at 50% 32%, rgba(156,212,255,0.07) 0%, rgba(156,212,255,0) 70%),
+          radial-gradient(120% 90% at 50% 45%, rgba(6,40,76,0) 55%, rgba(6,40,76,0.55) 100%); }
+
+      /* ---------- B-roll window / card ---------- */
+      #broll-clip { position: absolute; inset: 0; z-index: 3; opacity: 1;
+        clip-path: inset(300px 64px 810px 640px round 32px); }
+      .bw { position: absolute; opacity: 0; overflow: hidden; }
+      .bw video { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .bw.win { left: 64px; top: 270px; width: 952px; height: 850px; }
+      .bw.card { left: 64px; top: 300px; width: 536px; height: 810px; }
+      #win-grad { position: absolute; left: 64px; top: 760px; width: 952px; height: 360px; opacity: 0;
+        background: linear-gradient(180deg, rgba(6,40,76,0) 0%, rgba(6,40,76,0.88) 100%); }
+      .fb { position: absolute; z-index: 4; border: 2px solid rgba(222,238,254,0.3); opacity: 0; }
+      #fb-r { left: 640px; top: 300px; width: 376px; height: 810px; border-radius: 32px; }
+      #fb-w { left: 64px; top: 270px; width: 952px; height: 850px; border-radius: 28px; }
+      #fb-l { left: 64px; top: 300px; width: 536px; height: 810px; border-radius: 28px; }
+
+      /* ---------- bottom gradient so subtitles never sit on the cream vest ---------- */
+      #subgrad { position: absolute; left: 0; top: 900px; width: 1080px; height: 1020px; z-index: 5;
+        background: linear-gradient(180deg, rgba(6,40,76,0) 0%, rgba(6,40,76,0.45) 35%, rgba(6,40,76,0.68) 100%); }
+
+      /* ---------- logo (positioned, non-clip wrapper so it never drifts) ---------- */
+      #logo-box { position: absolute; left: 64px; top: 92px; z-index: 9; }
+      #logo-box img { height: 46px; width: auto; display: block; }
+
+      /* ---------- graphics layer ---------- */
+      #gfx { position: absolute; inset: 0; z-index: 6; }
+      .abs { position: absolute; }
+      .eyebrow { font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+      .h800 { font-weight: 800; letter-spacing: -0.02em; line-height: 0.96; }
+      .lbl { font-weight: 700; font-size: 30px; letter-spacing: 0.02em; line-height: 1; }
+      .tint { color: #9CD4FF; } .sky { color: #DEEEFE; } .flame { color: #FF4C32; } .white { color: #FFFFFF; }
+      .g { opacity: 0; }
+
+      /* S1 column (Sean left) */
+      #s1 { left: 580px; top: 330px; width: 436px; display: flex; flex-direction: column; gap: 6px; }
+      #s1-eyebrow { font-size: 32px; color: #DEEEFE; }
+      #s1-amt { font-size: 136px; color: #9CD4FF; margin-top: 10px; }
+      #s1-month { font-size: 40px; font-weight: 600; color: #FFFFFF; }
+      #s1-div { width: 436px; height: 2px; background: #DEEEFE; margin: 34px 0 26px; transform-origin: 0 50%; }
+      #s1-keep, #s1-little { font-size: 66px; }
+
+      /* S2/S3 waterfall (Sean right) */
+      #wf-head { left: 64px; top: 352px; display: flex; align-items: baseline; gap: 12px; }
+      #wf-head .amt { font-size: 46px; font-weight: 800; color: #9CD4FF; letter-spacing: -0.02em; }
+      #wf-head .txt { font-size: 30px; color: #9CD4FF; }
+      #rev-bar { left: 64px; top: 420px; width: 456px; height: 64px; background: #9CD4FF; border-radius: 6px;
+        transform-origin: 0 50%; }
+      .leak { height: 56px; border-radius: 6px; background: rgba(222,238,254,0.35); border: 2px solid #DEEEFE; }
+      #lk1 { left: 430px; width: 90px;  top: 520px; }
+      #lk2 { left: 280px; width: 150px; top: 610px; }
+      #lk3 { left: 210px; width: 70px;  top: 700px; }
+      .lk-l { left: 64px; }
+      #lk1-l { top: 533px; } #lk2-l { top: 623px; } #lk3-l { top: 713px; }
+      #pf-bar { left: 64px; top: 790px; width: 146px; height: 56px; background: #FFFFFF; border-radius: 6px;
+        transform-origin: 0 50%; }
+      #pf-l { left: 226px; top: 803px; }
+      #fix-line { left: 354px; top: 666px; width: 3px; height: 206px; background: #FF4C32; transform-origin: 50% 0; }
+      #fix-tag { left: 64px; top: 884px; font-size: 48px; }
+      #lk2-ring { left: 272px; top: 602px; width: 166px; height: 72px; border: 3px solid #FF4C32; border-radius: 10px; }
+
+      /* S4/S5 diagnostic (Sean in card right) */
+      #dx-head1 { left: 64px; top: 352px; font-size: 54px; }
+      #dx-head2 { left: 64px; top: 352px; font-size: 54px; }
+      #dx-head3 { left: 64px; top: 414px; font-size: 54px; }
+      .dx-l { left: 64px; font-size: 28px; }
+      #dx-l1 { top: 492px; } #dx-l2 { top: 632px; } #dx-l3 { top: 772px; }
+      .dx-bar { left: 64px; height: 56px; border-radius: 6px; transform-origin: 0 50%; }
+      #dx-cost { top: 666px; width: 380px; background: #DEEEFE; }
+      #dx-leak { left: 330px; top: 666px; width: 114px; height: 56px; background: #FF4C32; border-radius: 0 6px 6px 0; }
+      #dx-ring { left: 318px; top: 654px; width: 138px; height: 80px; border: 3px solid #FF4C32; border-radius: 12px; }
+      #scan { left: 54px; top: 470px; width: 560px; height: 2px; background: #9CD4FF;
+        box-shadow: 0 0 10px rgba(156,212,255,0.7); }
+      #scan::after { content: ""; position: absolute; right: -10px; top: -9px; width: 16px; height: 16px;
+        border: 2px solid #9CD4FF; border-radius: 50%; }
+
+      /* S6/S7 labels inside the proof window */
+      #sp-a { left: 104px; top: 942px; font-size: 64px; }
+      #sp-eyebrow { left: 104px; top: 846px; font-size: 30px; color: #DEEEFE; }
+      #sp-big1 { left: 104px; top: 892px; font-size: 92px; color: #9CD4FF; }
+      #sp-big2 { left: 104px; top: 990px; font-size: 92px; color: #FFFFFF; }
+
+      /* S8/S9 process column (B-roll card left) */
+      .st { left: 680px; font-size: 44px; }
+      #st1 { top: 380px; } #st2 { top: 612px; } #st3 { top: 844px; }
+      .dot { width: 18px; height: 18px; border-radius: 50%; left: 646px; }
+      #dot1 { top: 392px; background: #FF4C32; }
+      #dot2 { top: 624px; background: #DEEEFE; } #dot3 { top: 856px; background: #DEEEFE; }
+      .vline { left: 654px; width: 2px; height: 108px; background: #DEEEFE; transform-origin: 50% 0; }
+      #vl1 { top: 488px; } #vl2 { top: 720px; }
+      #pr-l { left: 680px; top: 962px; font-size: 26px; }
+      #pr-bar { left: 680px; top: 998px; width: 146px; height: 40px; background: #FFFFFF; border-radius: 6px;
+        transform-origin: 0 50%; }
+
+      /* S10 navy card */
+      #fdc { left: 150px; top: 896px; width: 780px; height: 128px; border-radius: 24px;
+        background: rgba(6,40,76,0.92); display: flex; align-items: center; justify-content: center; gap: 18px;
+        font-size: 60px; }
+
+      /* S11 column (Sean left, darkened room) */
+      #bz1 { left: 580px; top: 410px; font-size: 58px; }
+      #bz-line { left: 584px; top: 556px; width: 2px; height: 104px; background: #DEEEFE; transform-origin: 50% 0; }
+      #bz-chev { left: 573px; top: 650px; width: 24px; height: 24px; border-right: 2px solid #DEEEFE;
+        border-bottom: 2px solid #DEEEFE; transform: rotate(45deg); }
+      #bz2 { left: 580px; top: 700px; font-size: 58px; }
+
+      /* S14 CTA column (Sean left) */
+      #cta-eb { left: 580px; top: 430px; font-size: 42px; font-weight: 700; line-height: 1.08; }
+      #cta-pill { left: 580px; top: 580px; width: 420px; height: 112px; border-radius: 56px; background: #FF4C32;
+        display: flex; align-items: center; justify-content: center; font-size: 56px;
+        box-shadow: 0 18px 50px -14px rgba(255,76,50,0.55); }
+      #cta-arrow { left: 750px; top: 724px; width: 80px; height: 96px; }
+
+      /* ---------- subtitles ---------- */
+      #subs { position: absolute; inset: 0; z-index: 8; }
+      .sub { position: absolute; left: 90px; width: 900px; bottom: 670px; text-align: center;
+        font-weight: 600; font-size: 56px; line-height: 1.16; color: #FFFFFF; opacity: 0;
+        text-shadow: 0 0 2px #06284C, 1px 1px 0 #06284C, -1px -1px 0 #06284C, 1px -1px 0 #06284C,
+          -1px 1px 0 #06284C, 0 3px 12px rgba(6,40,76,0.85); }
+      .sub .hl-t { color: #9CD4FF; } .sub .hl-f { color: #FF4C32; } .sub em { font-style: italic; }
+      .sub .ln { display: block; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="profit-leak" data-start="0" data-duration="38" data-width="1080" data-height="1920">
+
+      <!-- Sean: plate (real room) under the navy cut-out composite. Wrapper is animated, never the video. -->
+      <div id="sean-clip">
+        <div id="sean-wrap">
+          <div class="vwrap" id="plate-w">
+            <video id="plate-v" data-start="0" data-duration="38" data-track-index="0" src="assets/media/sean-plate.mp4" muted playsinline></video>
+          </div>
+          <div class="vwrap" id="cut-w">
+            <video id="cut-v" data-start="0" data-duration="38" data-track-index="1" src="assets/media/sean-cut.mp4" muted playsinline></video>
+          </div>
+        </div>
+      </div>
+
+      <div id="texture"></div>
+
+      <!-- B-roll window (S6-S7) and card (S8-S9) -->
+      <div id="broll-clip">
+        <div class="bw win" id="b1w"><video id="b1" data-start="14.15" data-duration="2.2" data-track-index="2" src="assets/media/b1-specialists.mp4" muted playsinline></video></div>
+        <div class="bw win" id="b2w"><video id="b2" data-start="15.6" data-duration="2.8" data-track-index="3" src="assets/media/b2-stage.mp4" muted playsinline></video></div>
+        <div class="bw card" id="b3w"><video id="b3" data-start="17.75" data-duration="2.8" data-track-index="2" src="assets/media/b3-team.mp4" muted playsinline></video></div>
+        <div class="bw card" id="b4w"><video id="b4" data-start="19.9" data-duration="2.6" data-track-index="3" src="assets/media/b4-analysis.mp4" muted playsinline></video></div>
+        <div id="win-grad"></div>
+      </div>
+      <div id="fb-r" class="fb"></div><div id="fb-w" class="fb"></div><div id="fb-l" class="fb"></div>
+
+      <div id="subgrad"></div>
+
+      <!-- graphics: one long-lived clip so every child exists at load -->
+      <div id="gfx" class="clip" data-start="0" data-duration="38" data-track-index="5">
+        <!-- S1 -->
+        <div id="s1" class="abs">
+          <div id="s1-eyebrow" class="eyebrow g">Shopify founders</div>
+          <div id="s1-amt" class="h800 g">$20K+</div>
+          <div id="s1-month" class="g">/ MONTH</div>
+          <div id="s1-div" class="g"></div>
+          <div id="s1-keep" class="h800 white g">KEEPING</div>
+          <div id="s1-little" class="h800 flame g">TOO LITTLE</div>
+        </div>
+
+        <!-- S2 / S3 waterfall -->
+        <div id="wf-head" class="abs g"><span class="amt">$20K+</span><span class="txt lbl">REVENUE</span></div>
+        <div id="rev-bar" class="abs g"></div>
+        <div id="lk1" class="abs leak g"></div>
+        <div id="lk2" class="abs leak g"></div>
+        <div id="lk3" class="abs leak g"></div>
+        <div id="lk1-l" class="abs lbl lk-l g">LEAK 01</div>
+        <div id="lk2-l" class="abs lbl lk-l g">LEAK 02</div>
+        <div id="lk3-l" class="abs lbl lk-l g">LEAK 03</div>
+        <div id="pf-bar" class="abs g"></div>
+        <div id="pf-l" class="abs lbl white g">PROFIT</div>
+        <div id="lk2-ring" class="abs g"></div>
+        <div id="fix-line" class="abs g"></div>
+        <div id="fix-tag" class="abs h800 white g">FIX THIS FIRST</div>
+
+        <!-- S4 / S5 diagnostic -->
+        <div id="dx-head1" class="abs h800 white g">YOUR NUMBERS.</div>
+        <div id="dx-head2" class="abs h800 flame g">PROFIT LEAK</div>
+        <div id="dx-head3" class="abs h800 white g">FOUND.</div>
+        <div id="dx-l1" class="abs lbl dx-l tint g">REVENUE</div>
+        <div id="dx-l2" class="abs lbl dx-l sky g">COSTS</div>
+        <div id="dx-l3" class="abs lbl dx-l white g">PROFIT</div>
+        <div id="dx-cost" class="abs dx-bar g"></div>
+        <div id="dx-leak" class="abs g"></div>
+        <div id="dx-ring" class="abs g"></div>
+        <div id="scan" class="abs g"></div>
+
+        <!-- S6 / S7 proof labels -->
+        <div id="sp-a" class="abs h800 white g">ECOMMERCE<br />SPECIALISTS</div>
+        <div id="sp-eyebrow" class="abs eyebrow g">Specialists who work with</div>
+        <div id="sp-big1" class="abs h800 g">8- &amp; 9-FIGURE</div>
+        <div id="sp-big2" class="abs h800 g">BRANDS</div>
+
+        <!-- S8 / S9 process -->
+        <div id="dot1" class="abs dot g"></div>
+        <div id="st1" class="abs h800 white st g">LEAK<br />FOUND</div>
+        <div id="vl1" class="abs vline g"></div>
+        <div id="dot2" class="abs dot g"></div>
+        <div id="st2" class="abs h800 white st g">CHANGE<br />MADE</div>
+        <div id="vl2" class="abs vline g"></div>
+        <div id="dot3" class="abs dot g"></div>
+        <div id="st3" class="abs h800 white st g">RESULT<br />MEASURED</div>
+        <div id="pr-l" class="abs lbl white g">PROFIT</div>
+        <div id="pr-bar" class="abs g"></div>
+
+        <!-- S10 -->
+        <div id="fdc" class="abs h800 g"><span class="tint">FREE</span><span class="white">DISCOVERY CALL</span></div>
+
+        <!-- S11 -->
+        <div id="bz1" class="abs h800 white g">YOUR<br />BUSINESS</div>
+        <div id="bz-line" class="abs g"></div>
+        <div id="bz-chev" class="abs g"></div>
+        <div id="bz2" class="abs h800 white g">YOUR<br />PROFIT GOALS</div>
+
+        <!-- S14 -->
+        <div id="cta-eb" class="abs white g">FREE<br />DISCOVERY CALL</div>
+        <div id="cta-pill" class="abs h800 white g">BOOK NOW</div>
+        <svg id="cta-arrow" class="abs g" viewBox="0 0 80 96" fill="none">
+          <path d="M40 6 V82" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" />
+          <path d="M14 58 L40 86 L66 58" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <!-- subtitles (campaign preset: lowercase, no punctuation, white, navy outline) -->
+      <div id="subs" class="clip" data-start="0" data-duration="38" data-track-index="6">
+        <div class="sub" id="c1"><span class="ln">shopify founders doing</span><span class="ln"><span class="hl-t">$20,000</span> a month</span></div>
+        <div class="sub" id="c2"><span class="ln">and keeping</span><span class="ln">too little of it</span></div>
+        <div class="sub" id="c3"><span class="ln">we'll show you the two</span><span class="ln">or three things</span></div>
+        <div class="sub" id="c4"><span class="ln">eating your margin</span></div>
+        <div class="sub" id="c5"><span class="ln">and what to fix first</span></div>
+        <div class="sub" id="c6"><span class="ln">your strategist goes through</span><span class="ln">your numbers with you</span></div>
+        <div class="sub" id="c7"><span class="ln">and finds where the</span><span class="ln">profit is leaking</span></div>
+        <div class="sub" id="c8"><span class="ln">they then bring in</span><span class="ln">specialists</span></div>
+        <div class="sub" id="c9"><span class="ln">who work with eight- and</span><span class="ln">nine-figure brands</span></div>
+        <div class="sub" id="c10"><span class="ln">to help your team</span><span class="ln">make the changes</span></div>
+        <div class="sub" id="c11"><span class="ln">and measure the result</span></div>
+        <div class="sub" id="c12"><span class="ln">and it all starts with a</span><span class="ln">free discovery call</span></div>
+        <div class="sub" id="c13"><span class="ln">where we'll go through</span><span class="ln">your business</span></div>
+        <div class="sub" id="c14"><span class="ln">and your profit goals</span></div>
+        <div class="sub" id="c15"><span class="ln">and if we can't show you</span></div>
+        <div class="sub" id="c16"><span class="ln">or work out where the</span><span class="ln">profit is leaking</span></div>
+        <div class="sub" id="c17"><span class="ln"><em>we'll tell you</em> on this call</span></div>
+        <div class="sub" id="c18"><span class="ln">so tap <span class="hl-f">Book Now</span> and</span><span class="ln">choose a time below</span></div>
+        <div class="sub" id="c19"><span class="ln">for your free discovery call</span></div>
+      </div>
+
+      <div id="logo-box"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+
+      <!-- VO (head-trimmed at source 0:00.80) + subtle synthesised SFX, premixed -->
+      <audio id="mix" data-start="0" data-duration="38" data-track-index="9" src="assets/media/mix.m4a" data-volume="1"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const IO = "power2.inOut", OUT = "power3.out", EXP = "expo.out";
+
+      // Sean placement presets (face anchor at 840,640 in plate px)
+      const FULL110 = { x: 0, y: 0, scale: 1.10 };
+      const FULL100 = { x: 0, y: 0, scale: 1.0 };
+      const LEFT    = { x: -270, y: 120, scale: 1.0 };   // face at x 270
+      const LEFT_S  = { x: -240, y: 120, scale: 1.0 };   // S11, slightly less far
+      const RIGHT   = { x: 270, y: 120, scale: 1.0 };    // face at x 810
+      const CARD    = { x: 288, y: -80, scale: 1.25 };   // face centred in right card
+      const CLIP_FULL = "inset(0px 0px 0px 0px round 0px)";
+      const CLIP_CARD_R = "inset(300px 64px 810px 640px round 32px)";
+      const CLIP_WIN = "inset(270px 64px 800px 64px round 28px)";
+      const CLIP_CARD_L = "inset(300px 480px 810px 64px round 28px)";
+
+      const show = (sel, t, d = 0.4, from = { y: 20 }, ease = OUT) =>
+        tl.fromTo(sel, { opacity: 0, ...from }, { opacity: 1, x: 0, y: 0, duration: d, ease }, t);
+      const hide = (sel, t, d = 0.3) => tl.to(sel, { opacity: 0, duration: d, ease: "power1.in" }, t);
+
+      // ---------------- S1 0.0 - 4.5 ----------------
+      tl.set("#sean-wrap", FULL110, 0);
+      tl.to("#sean-wrap", { scale: 1.12, duration: 0.9, ease: "none" }, 0);
+      tl.to("#sean-wrap", { ...LEFT, duration: 0.6, ease: IO }, 0.9);
+      tl.to("#cut-w", { opacity: 1, duration: 0.6, ease: "power1.inOut" }, 0.9);
+      show("#s1-eyebrow", 1.0, 0.45, { y: 16 }, "power2.out");
+      tl.fromTo("#s1-amt", { opacity: 0, y: 60, clipPath: "inset(100% 0% 0% 0%)" },
+        { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)", duration: 0.55, ease: EXP }, 1.4);
+      show("#s1-month", 1.6, 0.4, { y: 12 }, "sine.out");
+      tl.fromTo("#s1-div", { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: IO }, 2.8);
+      show("#s1-keep", 2.95, 0.4, { y: 20 }, OUT);
+      show("#s1-little", 3.1, 0.45, { y: 20 }, "back.out(1.4)");
+
+      // ---------------- S2 4.5 - 7.3 ----------------
+      hide(["#s1-eyebrow", "#s1-month", "#s1-div", "#s1-keep", "#s1-little"], 4.45, 0.3);
+      // $20K+ lockup travels into the waterfall header
+      tl.to("#s1-amt", { x: -516, y: -38, scale: 0.34, transformOrigin: "0% 0%", duration: 0.6, ease: IO }, 4.5);
+      tl.to("#s1-amt", { opacity: 0, duration: 0.15 }, 5.05);
+      tl.fromTo("#wf-head", { opacity: 0 }, { opacity: 1, duration: 0.15 }, 5.0);
+      tl.to("#sean-wrap", { ...RIGHT, duration: 0.7, ease: IO }, 4.5);
+      tl.fromTo("#rev-bar", { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: OUT }, 5.0);
+      [["#lk1", "#lk1-l", 5.3, 100], ["#lk2", "#lk2-l", 5.7, 190], ["#lk3", "#lk3-l", 6.1, 280]].forEach(([b, l, t, dy]) => {
+        tl.fromTo(b, { opacity: 0, y: -dy }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, t);
+        tl.fromTo(l, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.35, ease: "sine.out" }, t + 0.1);
+      });
+      tl.fromTo("#pf-bar", { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: OUT }, 6.5);
+      show("#pf-l", 6.7, 0.35, { x: -12, y: 0 }, "sine.out");
+
+      // ---------------- S3 7.3 - 9.6 ----------------
+      tl.to(["#lk1", "#lk3", "#lk1-l", "#lk3-l"], { opacity: 0.4, duration: 0.3 }, 7.3);
+      tl.to("#lk2", { backgroundColor: "#FF4C32", borderColor: "#FF4C32", duration: 0.3 }, 7.3);
+      tl.to("#lk2-l", { color: "#FF4C32", duration: 0.3 }, 7.3);
+      tl.fromTo("#lk2-ring", { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 1.15, duration: 0.7, ease: "power2.out" }, 7.4);
+      tl.fromTo("#fix-line", { opacity: 1, scaleY: 0 }, { scaleY: 1, duration: 0.3, ease: IO }, 7.6);
+      show("#fix-tag", 7.75, 0.35, { y: 20 }, EXP);
+      tl.to("#sean-wrap", { scale: 1.02, duration: 2.3, ease: "none" }, 7.3);
+
+      // ---------------- S4 9.6 - 11.3 ----------------
+      hide(["#lk1", "#lk2", "#lk3", "#lk1-l", "#lk2-l", "#lk3-l", "#fix-line", "#fix-tag", "#wf-head", "#pf-l"], 9.6, 0.3);
+      tl.to("#sean-wrap", { ...CARD, duration: 0.6, ease: "power3.inOut" }, 9.6);
+      tl.to("#sean-clip", { clipPath: CLIP_CARD_R, duration: 0.6, ease: "power3.inOut" }, 9.6);
+      tl.to("#cut-w", { opacity: 0, duration: 0.5, ease: "power1.inOut" }, 9.7);
+      tl.fromTo("#fb-r", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 10.1);
+      // waterfall reflows into the 3-bar diagnostic
+      tl.to("#rev-bar", { y: 106, scaleX: 536 / 456, duration: 0.5, ease: IO }, 9.7);
+      tl.to("#pf-bar", { y: 16, scaleX: 156 / 146, duration: 0.5, ease: IO }, 9.7);
+      tl.fromTo("#dx-cost", { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: OUT }, 9.9);
+      show(["#dx-l1", "#dx-l2", "#dx-l3"], 9.95, 0.35, { x: -10, y: 0 }, "sine.out");
+      show("#dx-head1", 9.9, 0.4, { y: 18 }, OUT);
+      tl.fromTo("#scan", { opacity: 0, y: 0 }, { opacity: 1, duration: 0.15 }, 10.4);
+      tl.to("#scan", { y: 380, duration: 0.9, ease: "sine.inOut" }, 10.4);
+
+      // ---------------- S5 11.3 - 14.2 ----------------
+      tl.to("#scan", { y: 224, duration: 0.4, ease: "power2.out" }, 11.7);
+      tl.fromTo("#dx-leak", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 12.1);
+      tl.fromTo("#dx-ring", { opacity: 1, clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.4, ease: IO }, 12.1);
+      hide("#scan", 12.2, 0.25);
+      hide("#dx-head1", 12.05, 0.2);
+      show("#dx-head2", 12.15, 0.35, { y: 14 }, OUT);
+      show("#dx-head3", 12.6, 0.35, { y: 14 }, "back.out(1.6)");
+
+      // ---------------- S6 14.2 - 15.9 ----------------
+      hide(["#dx-head2", "#dx-head3", "#dx-l1", "#dx-l2", "#dx-l3", "#dx-cost", "#dx-leak", "#dx-ring", "#rev-bar", "#pf-bar"], 14.0, 0.25);
+      tl.to("#sean-clip", { clipPath: CLIP_WIN, duration: 0.5, ease: "power3.inOut" }, 14.2);
+      tl.to("#broll-clip", { clipPath: CLIP_WIN, duration: 0.5, ease: "power3.inOut" }, 14.2);
+      tl.to("#fb-r", { opacity: 0, duration: 0.15 }, 14.15);
+      tl.fromTo("#fb-w", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 14.65);
+      tl.to("#b1w", { opacity: 1, duration: 0.4, ease: "power1.inOut" }, 14.2);
+      tl.set("#sean-clip", { opacity: 0 }, 14.75);
+      tl.fromTo("#b1w video", { scale: 1 }, { scale: 1.04, duration: 2.2, ease: "none" }, 14.15);
+      tl.to("#win-grad", { opacity: 1, duration: 0.4 }, 14.3);
+      show("#sp-a", 14.4, 0.45, { y: 24 }, OUT);
+
+      // ---------------- S7 15.6 - 17.8 ----------------
+      tl.to("#b2w", { opacity: 1, duration: 0.4, ease: "power1.inOut" }, 15.7);
+      tl.fromTo("#b2w video", { scale: 1 }, { scale: 1.035, duration: 2.8, ease: "none" }, 15.6);
+      hide("#sp-a", 15.55, 0.2);
+      show("#sp-eyebrow", 15.6, 0.35, { y: 10 }, "power2.out");
+      tl.fromTo("#sp-big1", { opacity: 0, y: 40, clipPath: "inset(0% 0% 100% 0%)" }, { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: EXP }, 15.7);
+      tl.fromTo("#sp-big2", { opacity: 0, y: 40, clipPath: "inset(0% 0% 100% 0%)" }, { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: EXP }, 15.85);
+
+      // ---------------- S8 17.8 - 20.0 ----------------
+      hide(["#sp-eyebrow", "#sp-big1", "#sp-big2", "#win-grad"], 17.75, 0.3);
+      tl.to("#broll-clip", { clipPath: CLIP_CARD_L, duration: 0.5, ease: "power3.inOut" }, 17.8);
+      tl.to("#fb-w", { opacity: 0, duration: 0.15 }, 17.75);
+      tl.fromTo("#fb-l", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 18.25);
+      tl.to("#b3w", { opacity: 1, duration: 0.5, ease: "power1.inOut" }, 17.8);
+      tl.fromTo("#b3w video", { scale: 1 }, { scale: 1.03, duration: 2.8, ease: "none" }, 17.75);
+      show("#dot1", 18.1, 0.3, { scale: 0.4, y: 0 }, "back.out(2)");
+      show("#st1", 18.1, 0.4, { y: 20 }, OUT);
+      tl.fromTo("#vl1", { opacity: 1, scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: IO }, 18.5);
+      show("#dot2", 19.15, 0.3, { scale: 0.4, y: 0 }, "back.out(2)");
+      show("#st2", 19.2, 0.4, { y: 20 }, "power2.out");
+
+      // ---------------- S9 20.0 - 22.3 ----------------
+      tl.to("#b4w", { opacity: 1, duration: 0.4, ease: "power1.inOut" }, 19.95);
+      tl.fromTo("#b4w video", { scale: 1.02 }, { scale: 1.06, duration: 2.6, ease: "none" }, 19.9);
+      tl.fromTo("#vl2", { opacity: 1, scaleY: 0 }, { scaleY: 1, duration: 0.35, ease: IO }, 19.85);
+      show("#dot3", 20.0, 0.3, { scale: 0.4, y: 0 }, "back.out(2)");
+      show("#st3", 20.0, 0.4, { y: 20 }, EXP);
+      show("#pr-l", 20.25, 0.3, { y: 10 }, "sine.out");
+      tl.fromTo("#pr-bar", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 20.3);
+      tl.to("#pr-bar", { scaleX: 236 / 146, duration: 0.8, ease: OUT }, 20.4);
+
+      // ---------------- S10 22.3 - 24.4 (reset to full Sean) ----------------
+      tl.set("#sean-wrap", FULL100, 22.0);
+      tl.set("#sean-clip", { clipPath: CLIP_FULL }, 22.0);
+      tl.set("#cut-w", { opacity: 0 }, 22.0);
+      tl.to("#sean-clip", { opacity: 1, duration: 0.5, ease: "power1.inOut" }, 22.3);
+      tl.to(["#broll-clip", "#fb-l"], { opacity: 0, duration: 0.5, ease: "power1.inOut" }, 22.3);
+      hide(["#dot1", "#st1", "#vl1", "#dot2", "#st2", "#vl2", "#dot3", "#st3", "#pr-l", "#pr-bar"], 22.3, 0.4);
+      show("#fdc", 22.6, 0.45, { y: 24 }, OUT);
+
+      // ---------------- S11 24.4 - 27.2 ----------------
+      hide("#fdc", 24.3, 0.3);
+      tl.to("#sean-wrap", { ...LEFT_S, duration: 0.6, ease: IO }, 24.4);
+      tl.to("#cut-w", { opacity: 0.75, duration: 0.6, ease: "power1.inOut" }, 24.4);
+      show("#bz1", 24.6, 0.45, { y: 20 }, OUT);
+      tl.fromTo("#bz-line", { opacity: 1, scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: IO }, 25.2);
+      show("#bz-chev", 25.5, 0.25, { y: -8 }, "sine.out");
+      show("#bz2", 25.6, 0.45, { y: 20 }, "power2.out");
+
+      // ---------------- S12 / S13 27.2 - 31.9 ----------------
+      hide(["#bz1", "#bz-line", "#bz-chev", "#bz2"], 27.15, 0.35);
+      tl.to("#sean-wrap", { ...FULL100, duration: 0.6, ease: IO }, 27.2);
+      tl.to("#cut-w", { opacity: 0, duration: 0.6, ease: "power1.inOut" }, 27.2);
+      tl.to("#sean-wrap", { scale: 1.06, duration: 4.1, ease: "none" }, 27.8);
+
+      // ---------------- S14 31.9 - 38.0 ----------------
+      tl.to("#sean-wrap", { ...LEFT, duration: 0.6, ease: IO }, 31.9);
+      tl.to("#cut-w", { opacity: 1, duration: 0.6, ease: "power1.inOut" }, 31.9);
+      tl.fromTo("#cta-eb", { opacity: 0, y: 16 }, { opacity: 0.8, y: 0, duration: 0.45, ease: "power2.out" }, 32.2);
+      tl.fromTo("#cta-pill", { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 32.5);
+      show("#cta-arrow", 33.0, 0.35, { y: -10 }, "sine.out");
+      tl.to("#cta-arrow", { y: 8, duration: 0.35, ease: "sine.inOut", yoyo: true, repeat: 3 }, 33.4);
+      tl.to("#cta-eb", { opacity: 1, duration: 0.4 }, 34.8);
+
+      // ---------------- subtitles ----------------
+      [[1, 0.1, 2.5], [2, 2.5, 4.4], [3, 4.5, 6.2], [4, 6.2, 7.3], [5, 7.3, 8.7], [6, 9.0, 11.1],
+       [7, 11.1, 13.0], [8, 13.4, 14.7], [9, 14.7, 17.1], [10, 17.1, 19.6], [11, 19.6, 21.0],
+       [12, 21.4, 23.9], [13, 23.9, 25.6], [14, 25.6, 26.7], [15, 27.1, 28.7], [16, 28.7, 30.5],
+       [17, 30.7, 31.8], [18, 32.1, 34.2], [19, 34.4, 35.8]].forEach(([n, a, b]) => {
+        tl.fromTo("#c" + n, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, a);
+        tl.to("#c" + n, { opacity: 0, duration: 0.08, ease: "none" }, b - 0.08);
+      });
+
+      tl.to({}, { duration: 38 }, 0); // duration anchor: fill the 38 s slot
+      window.__timelines["profit-leak"] = tl;
+    </script>
+  </body>
+</html>
