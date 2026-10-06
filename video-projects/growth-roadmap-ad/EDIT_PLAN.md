@@ -1,6 +1,6 @@
 # Growth Roadmap Ad, Editing Plan (9:16 Meta)
 
-**Build:** `video-projects/growth-roadmap-ad/` · 1080x1920 · 30fps · 40.6s · VO normalised to -16 LUFS
+**Build:** `video-projects/growth-roadmap-ad/` · 1080x1920 · 30fps · 40.6s · VO normalised to -16 LUFS · **sound: Sean's voice only, no music, no SFX**
 **Ad timecode = A-roll source timecode** (the A-roll runs untrimmed underneath the whole ad).
 All timings below come from a word-level transcription of the supplied A-roll, not from the written script.
 
@@ -41,7 +41,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle colour:** #FFFFFF only (the card already owns the numbers)
 - **Italic:** no
 - **Edit / transition:** open on Sean; card rises in (y+50, fade, 0.45s)
-- **SFX:** light tick 1.86s · rising tone 2.95s · target marker 3.82s
+- **SFX:** none
 - **Why:** Sean anchors trust from frame one; the card states the whole thesis (current to target) for silent viewers. The hollow orange ring and the word TARGET frame $100K as a goal, not a promise.
 
 ### 2 · What's holding growth back · 0:04.70 to 0:07.00
@@ -54,7 +54,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle colour:** #FFFFFF only (the headline already emphasises growth, so no double emphasis)
 - **Italic:** no
 - **Edit / transition:** navy wipes up from the bottom with a blur rise (0.35s)
-- **SFX:** soft whoosh 4.60s · soft stop 6.60s
+- **SFX:** none
 - **Why:** the ceiling metaphor works literally in a vertical frame: growth rises, then hits a lid.
 
 ### 3 · What to fix first · 0:07.00 to 0:08.75
@@ -66,7 +66,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle colour:** #FFFFFF
 - **Italic:** yes, "first" only
 - **Edit / transition:** exit wipes off the top with blur (8.75s), straight into B-roll
-- **SFX:** click 7.05s · click 8.06s
+- **SFX:** none
 - **Why:** shows one main bottleneck being singled out. Deliberately not the 01/02/03 card system.
 
 ### 4 · Strategist goes through your numbers · 0:09.00 to 0:11.45
@@ -79,7 +79,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle:** "Your strategist goes through your numbers with you"
 - **Subtitle colour:** "strategist" #9CD4FF, rest #FFFFFF
 - **Italic:** no
-- **SFX:** whoosh 8.90s (out of the graphic)
+- **SFX:** none
 - **Why:** real Sean, real laptop, real thinking. Proves the analysis is hands-on, without a fake dashboard.
 
 ### 5 · Finds where the ceiling is · 0:11.45 to 0:13.00
@@ -91,7 +91,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle:** "and finds where the ceiling is."
 - **Subtitle colour:** "ceiling" #FF4C32, rest #FFFFFF
 - **Italic:** no
-- **SFX:** click 12.30s
+- **SFX:** none
 - **Why:** callback to the hook card; the blocker now has a location on the road.
 
 ### 6 · Specialists come in · 0:13.00 to 0:15.40
@@ -106,7 +106,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle colour:** #FFFFFF
 - **Italic:** no
 - **Edit / transition:** blur and scale settle on every cut
-- **SFX:** none, the cuts carry it
+- **SFX:** none
 - **Why:** stage authority, industry events, real team in the room.
 
 ### 7 · Mob Armor +500% · 0:15.40 to 0:20.45 (see Part 4)
@@ -117,7 +117,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle:** "that have helped brands like Mob Armor" / "grow total sales by over 500% in a year."
 - **Subtitle colour:** "500%" #FF4C32, rest #FFFFFF
 - **Italic:** no
-- **SFX:** whoosh 16.40s · count ticks 16.95s · marker 18.20s
+- **SFX:** none
 
 ### 8 · Guide your team through the changes · 0:20.45 to 0:22.60
 - **Dialogue:** "They guide your team through the changes"
@@ -129,7 +129,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle:** "They guide your team through the changes"
 - **Subtitle colour:** #FFFFFF
 - **Italic:** no
-- **SFX:** whoosh 20.35s
+- **SFX:** none
 - **Why:** collaboration and implementation with people, not a generic office montage.
 
 ### 9 · Track the result · 0:22.60 to 0:24.15
@@ -140,7 +140,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle:** "and track the result."
 - **Subtitle colour:** "result" #9CD4FF
 - **Italic:** no
-- **SFX:** movement swish 22.75s · tick 23.35s
+- **SFX:** none
 
 ### 10 · Free discovery call · 0:24.15 to 0:26.54
 - **Dialogue:** "And it all starts with a free discovery call."
@@ -160,7 +160,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle:** "We'll go through where you are,"
 - **Subtitle colour:** #FFFFFF
 - **Italic:** no
-- **SFX:** tick 27.92s
+- **SFX:** none
 
 ### 12 · Where you want to be · 0:28.86 to 0:29.94
 - **Dialogue:** "where you want to be"
@@ -169,7 +169,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle:** "where you want to be"
 - **Subtitle colour:** #FFFFFF
 - **Italic:** no
-- **SFX:** target marker 29.18s
+- **SFX:** none
 
 ### 13 · What it would take, the gap · 0:29.95 to 0:31.80
 - **Dialogue:** "and what it would take to get you there."
@@ -179,7 +179,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle:** "and what it would take to get you there."
 - **Subtitle colour:** #FFFFFF
 - **Italic:** no
-- **SFX:** whoosh 29.88s · click 30.45s (bracket)
+- **SFX:** none
 - **Edit / transition:** wipe off at 31.50s back to Sean
 
 ### 14 · If the gap isn't one we can close · 0:31.80 to 0:34.40
@@ -199,7 +199,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle:** "we'll tell you."
 - **Subtitle colour:** #FFFFFF, no colour
 - **Italic:** yes, "we'll tell you" (Hedvig serif)
-- **SFX:** none, silence lets it land
+- **SFX:** none
 
 ### 16 · CTA · 0:35.55 to 0:40.60 (end)
 - **Dialogue:** "So tap Book Now and choose a time for your free discovery call."
@@ -209,7 +209,7 @@ B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest
 - **Subtitle:** "So tap Book Now and choose a time" / "for your free discovery call."
 - **Subtitle colour:** "Book Now" #FF4C32, rest #FFFFFF
 - **Italic:** no
-- **SFX:** soft UI click 36.32s
+- **SFX:** none
 - **Edit / transition:** hold 2s past the last word
 
 ---
@@ -280,11 +280,11 @@ Transitions: full-screen scenes wipe up from the bottom with a 140px blur rise a
 |---|---|
 | 15.02 to 15.40 | Tail of the specialists montage (B5, team in the room) |
 | **15.40 to 16.50** | **Cut back to Sean** (de-blur, 115% to 119%) as he says "that have helped brands like **Mob Armor**". The name comes from his mouth, on his face. |
-| 16.50 | Navy wipes up from the bottom (blur rise) · whoosh |
+| 16.50 | Navy wipes up from the bottom (blur rise) |
 | 16.60 | **MOB ARMOR** eyebrow drops in, #FFFFFF, 34px, wide tracking |
-| 16.95 to 18.30 | **+0% → +500%** count-up, #FF4C32, 260px, with a Sky #DEEEFE progress rule filling beneath · soft count ticks |
+| 16.95 to 18.30 | **+0% → +500%** count-up, #FF4C32, 260px, with a Sky #DEEEFE progress rule filling beneath |
 | 17.20 | **TOTAL SALES**, #FFFFFF, 72px (on "total sales") |
-| 18.30 | +500% settles with a 6% pulse (on "percent") · marker chime |
+| 18.30 | +500% settles with a 6% pulse (on "percent") |
 | 19.66 | **IN 1 YEAR**, #9CD4FF (on "year") |
 | 20.20 to 20.45 | Exit wipe off the top, straight into B6 (Sean with laptop, guiding) |
 
@@ -394,7 +394,7 @@ Transitions: full-screen scenes wipe up from the bottom with a 140px blur rise a
 | 9 | Implementation collaborative? | **Yes.** Sean with a client, then a handshake with the team. |
 | 10 | Result tracking clear, no invented metrics? | **Yes.** CHANGE MADE → RESULT TRACKED, no numbers. |
 | 11 | Discovery call maps current → target → gap? | **Yes.** Card (current, then target), then the full-screen gap bracket. |
-| 12 | "We'll tell you" breathes? | **Yes.** Sean alone, no graphic, punch-in, italic subtitle, no SFX. |
+| 12 | "We'll tell you" breathes? | **Yes.** Sean alone, no graphic, punch-in, italic subtitle. |
 | 13 | BOOK NOW obvious? | **Yes.** The only Flame pill in the ad, pressed on the word, held 4.5s. |
 | 14 | Subtitles always bottom? | **Yes.** Bottom edge locked at y=1450 across Sean, B-roll and graphics. |
 | 15 | White dominant? | **Yes.** About 91% of words are plain white. |
@@ -408,7 +408,7 @@ Transitions: full-screen scenes wipe up from the bottom with a 140px blur rise a
 
 ## Open items for sign-off
 1. **Subtitle reference reel** was not attached. Subtitles follow the written spec. Send the reel if you want a closer match.
-2. **Music** is a synthesised placeholder bed (quiet, under Sean). Swap for the licensed brand track. SFX are synthesised and clean.
+2. **Sound:** music and SFX removed at review. The cut runs on Sean's voice alone. If a bed is wanted later, supply the licensed track and it goes under Sean at about -30 LUFS.
 3. **Logo:** none added. The workspace kit is EcomIQ while Sean's shirt reads PacificIQ, so confirm the end-card mark, if any.
 4. **Reels safe zone:** subtitles finish at 75% of frame height. If spend skews to Reels with long primary text, I can lift subtitles and cards by about 80px.
 5. **Mob Armor stat:** confirm substantiation and client approval before spend.

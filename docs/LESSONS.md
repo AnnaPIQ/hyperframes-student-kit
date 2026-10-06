@@ -92,6 +92,8 @@ efficient over time instead of relearning the same lessons.
   on the VO before mixing, then set the bed (~0.22) and SFX against it. Check with `ebur128` on the render.
 - **White subtitles disappear over light clothing.** **Fix:** `-webkit-text-stroke: 7px rgba(6,40,76,.9);
   paint-order: stroke fill; text-wrap: balance;` gives a thin navy edge with no caption box and no widow words.
+- **ffmpeg-synthesised SFX and a synthesised music bed were rejected outright at review.** **Fix:** default
+  EcomIQ talking-head ads to Sean's voice only. Add music or SFX only from a licensed track or library the client supplies.
 - **A line passing behind a small label reads as a strike-through.** **Fix:** give the label a navy background span.
 
 ---
