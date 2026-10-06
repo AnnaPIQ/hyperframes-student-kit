@@ -26,6 +26,22 @@ Differences from the written script: "helped **brands like** Mob Armor", "**we'l
 
 B-roll sits below the 30 to 40% guide on purpose. Three of the brief's strongest analysis clips have no Drive link in the sheet (see Part 2 notes), and the remaining footage is used only where it proves something. It can be raised to ~25% by extending the strategist beat if you want more cover.
 
+## Revision 2 (review feedback, supersedes the details below where they conflict)
+
+- **Head and tail trimmed:** the ad starts at A-roll 0:00.4 (Sean already facing camera) and Sean ends at 0:39.3 (before he turns back to his computer). **Ad time = A-roll source time minus 0.4s.** The timings below are in source seconds.
+- **End card added** (ad 38.6 to 41.4, total length 41.4s): navy with a soft centre glow and dot grid, EcomIQ logo, "Find the ceiling. / Map the gap." in white, "*Free.*" in Hedvig italic #9CD4FF, and a Flame BOOK NOW pill. It replaces the CTA text card over Sean.
+- **Transitions:** the scroll-up wipes are gone. Full-screen graphics now dissolve in over 0.4s and out over 0.3s, with no movement and no blur.
+- **Sound:** Sean's voice only, no music, no SFX.
+- **Subtitles restyled to the reference reel:** Rethink Sans 700, 64px, white, thin black outline, one line only, centred at y≈1550. Short 2 to 5 word phrases (36 in total).
+- **Highlights cut to three moments:** "ceiling" #FF4C32, "Book Now" #FF4C32, and "*we'll tell you*" in italic. There is no Blue Tint in the subtitles, and 500% stays white because the graphic carries it.
+- **Text graphics that repeated the subtitles were removed:**
+  - the B-roll labels (strategist, specialists, implement)
+  - the FREE / Discovery call card
+  - the "Where you are / Where you want to be" words, on the chest card and in the gap scene
+  - the headlines "What's holding growth back?", "Track what changes." and "What would it take?"
+
+  Kept, because they are graphics rather than repeated text: the roadmap card, the ceiling and blocker scene (with "Find the *blocker.*"), CEILING FOUND, the Mob Armor +500% proof, the progress-resumes road, and the gap bracket.
+
 ---
 
 ## PART 1, COMPLETE EDITING TIMELINE

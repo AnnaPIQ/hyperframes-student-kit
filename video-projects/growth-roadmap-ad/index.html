@@ -71,50 +71,52 @@
         padding: 26px 34px; background: rgba(6,40,76,.9); border-radius: 22px; border-left: 8px solid #9CD4FF; }
       .plabel .big { font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1.02; color: #FFFFFF; }
 
+      /* ---------- end card (matches the campaign end-card system) ---------- */
+      #endCard { position: absolute; inset: 0; z-index: 40; overflow: hidden;
+        background: radial-gradient(60% 38% at 50% 44%, rgba(156,212,255,.22) 0%, rgba(156,212,255,0) 100%), #06284C; }
+      #endCard .dots { position: absolute; inset: 0;
+        background-image: radial-gradient(rgba(222,238,254,.16) 1.6px, transparent 1.8px); background-size: 44px 44px; }
+      #endCard .stack { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+        justify-content: center; padding-bottom: 260px; text-align: center; }
+      #ecLogoWrap { position: relative; width: 520px; margin-bottom: 44px; }
+      #ecLogoWrap img { display: block; width: 100%; height: auto; }
+      .ecLine { font-weight: 800; font-size: 96px; line-height: 1.02; letter-spacing: -0.03em; color: #FFFFFF; }
+      #ecFree { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; font-size: 124px;
+        line-height: 1.1; color: #9CD4FF; margin-top: 22px; }
+      #ecBtn { margin-top: 56px; font-weight: 700; font-size: 46px; letter-spacing: .02em; text-transform: uppercase;
+        color: #FFFFFF; background: #FF4C32; padding: 30px 70px; border-radius: 999px;
+        box-shadow: 0 18px 60px -12px rgba(255,76,50,.65); }
+
       /* ---------- subtitles: fixed bottom line, one system for Sean, B-roll and graphics ---------- */
-      .sub { position: absolute; left: 70px; right: 70px; bottom: 470px; z-index: 30; text-align: center;
-        font-weight: 700; font-size: 56px; line-height: 1.14; letter-spacing: -0.01em; color: #FFFFFF;
-        text-shadow: 0 2px 3px rgba(0,0,0,.55), 0 4px 18px rgba(0,0,0,.45);
-        -webkit-text-stroke: 7px rgba(6,40,76,.9); paint-order: stroke fill; text-wrap: balance; }
+      .sub { position: absolute; left: 0; right: 0; top: 1500px; height: 96px; z-index: 30;
+        display: block; white-space: nowrap; text-align: center;
+        font-weight: 700; font-size: 64px; line-height: 96px; letter-spacing: -0.01em; color: #FFFFFF;
+        -webkit-text-stroke: 7px #000000; paint-order: stroke fill; text-shadow: 0 4px 14px rgba(0,0,0,.45); }
       .sub .o { color: #FF4C32; }
-      .sub .b { color: #9CD4FF; }
       .sub .i { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; font-size: 1.08em; }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="growth-roadmap-ad" data-start="0" data-duration="40.6" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="growth-roadmap-ad" data-start="0" data-duration="41.4" data-width="1080" data-height="1920">
 
       <!-- ===================== A-ROLL (Sean, the authority) ===================== -->
       <div id="aw" class="vwrap">
-        <video id="aroll" src="assets/aroll-916.mp4" data-start="0" data-duration="40.6" data-track-index="0" muted playsinline></video>
+        <video id="aroll" src="assets/aroll-916.mp4" data-start="0" data-media-start="0.4" data-duration="38.9" data-track-index="0" muted playsinline></video>
       </div>
 
       <!-- ===================== B-ROLL (proof) ===================== -->
-      <div id="bw1" class="vwrap bw"><video id="b1" src="assets/broll/b1-angle-laptop.mp4" data-start="9.0" data-duration="1.3" data-media-start="0.2" data-track-index="1" muted playsinline></video></div>
-      <div id="bw2" class="vwrap bw"><video id="b2" src="assets/broll/b2-hotel-laptop.mp4" data-start="10.3" data-duration="1.15" data-media-start="0.2" data-track-index="2" muted playsinline></video></div>
-      <div id="bw3" class="vwrap bw"><video id="b3" src="assets/broll/b3-shoptalk-stage.mp4" data-start="13.0" data-duration="0.8" data-media-start="0.1" data-track-index="1" muted playsinline></video></div>
-      <div id="bw4" class="vwrap bw"><video id="b4" src="assets/broll/b4-klaviyo-event.mp4" data-start="13.8" data-duration="0.8" data-media-start="0.2" data-track-index="2" muted playsinline></video></div>
-      <div id="bw5" class="vwrap bw"><video id="b5" src="assets/broll/b5-mason-team.mp4" data-start="14.6" data-duration="0.8" data-media-start="0.2" data-track-index="1" muted playsinline></video></div>
-      <div id="bw6" class="vwrap bw"><video id="b6" src="assets/broll/b6-laptop-man.mp4" data-start="20.45" data-duration="1.15" data-media-start="0.2" data-track-index="2" muted playsinline></video></div>
-      <div id="bw7" class="vwrap bw"><video id="b7" src="assets/broll/b7-handshake.mp4" data-start="21.6" data-duration="1.05" data-media-start="0.4" data-track-index="1" muted playsinline></video></div>
+      <div id="bw1" class="vwrap bw"><video id="b1" src="assets/broll/b1-angle-laptop.mp4" data-start="8.6" data-duration="1.3" data-media-start="0.2" data-track-index="1" muted playsinline></video></div>
+      <div id="bw2" class="vwrap bw"><video id="b2" src="assets/broll/b2-hotel-laptop.mp4" data-start="9.9" data-duration="1.15" data-media-start="0.2" data-track-index="2" muted playsinline></video></div>
+      <div id="bw3" class="vwrap bw"><video id="b3" src="assets/broll/b3-shoptalk-stage.mp4" data-start="12.6" data-duration="0.8" data-media-start="0.1" data-track-index="1" muted playsinline></video></div>
+      <div id="bw4" class="vwrap bw"><video id="b4" src="assets/broll/b4-klaviyo-event.mp4" data-start="13.4" data-duration="0.8" data-media-start="0.2" data-track-index="2" muted playsinline></video></div>
+      <div id="bw5" class="vwrap bw"><video id="b5" src="assets/broll/b5-mason-team.mp4" data-start="14.2" data-duration="0.8" data-media-start="0.2" data-track-index="1" muted playsinline></video></div>
+      <div id="bw6" class="vwrap bw"><video id="b6" src="assets/broll/b6-laptop-man.mp4" data-start="20.05" data-duration="1.15" data-media-start="0.2" data-track-index="2" muted playsinline></video></div>
+      <div id="bw7" class="vwrap bw"><video id="b7" src="assets/broll/b7-handshake.mp4" data-start="21.2" data-duration="1.05" data-media-start="0.4" data-track-index="1" muted playsinline></video></div>
 
-      <!-- B-roll proof labels -->
-      <div id="lblStrat" class="plabel clip" data-start="9.15" data-duration="2.3" data-track-index="3">
-        <div class="tag" style="color:#9CD4FF">Your strategist</div>
-        <div class="big">Built around your numbers.</div>
-      </div>
-      <div id="lblSpec" class="plabel clip" data-start="13.1" data-duration="2.3" data-track-index="3">
-        <div class="tag" style="color:#9CD4FF">The team</div>
-        <div class="big">Ecommerce specialists.</div>
-      </div>
-      <div id="lblImpl" class="plabel clip" data-start="20.55" data-duration="2.05" data-track-index="3">
-        <div class="tag" style="color:#9CD4FF">Hands-on</div>
-        <div class="big">Implement the fixes.</div>
-      </div>
 
       <!-- ===================== CHEST CARDS over Sean (horizontal roadmap) ===================== -->
       <!-- HOOK: $20K ●────○ $100K -->
-      <div id="cardHook" class="card clip" data-start="0.1" data-duration="4.65" data-track-index="4">
+      <div id="cardHook" class="card clip" data-start="0" data-duration="4.35" data-track-index="4">
         <div class="tag" id="hkHere" style="position:absolute; left:52px; top:34px; color:#9CD4FF">You are here</div>
         <div class="tag" id="hkTgt" style="position:absolute; right:52px; top:34px; color:#FF4C32">Target</div>
         <div class="htrack" id="hkTrack" style="left:100px; width:740px; top:120px"></div>
@@ -126,7 +128,7 @@
       </div>
 
       <!-- CEILING LOCATED: the path hits a wall, the wall gets a target marker -->
-      <div id="cardCeil" class="card clip" data-start="11.45" data-duration="1.6" data-track-index="4">
+      <div id="cardCeil" class="card clip" data-start="11.05" data-duration="1.6" data-track-index="4">
         <div class="htrack" style="left:100px; width:740px; top:150px"></div>
         <div class="hprog" id="ceProg" style="left:100px; width:380px; top:148px"></div>
         <div class="dot" style="left:100px; top:153px"></div>
@@ -138,42 +140,22 @@
         <div class="tag" style="position:absolute; right:52px; top:196px; color:#FF4C32">$100K</div>
       </div>
 
-      <!-- FREE DISCOVERY CALL (visual reset) -->
-      <div id="cardFree" class="card clip" data-start="24.2" data-duration="2.34" data-track-index="4"
-           style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px">
-        <div id="frFree" style="font-weight:800; font-size:64px; letter-spacing:.06em; color:#FF4C32; line-height:1">FREE</div>
-        <div id="frCall" style="font-weight:800; font-size:84px; letter-spacing:-0.02em; color:#FFFFFF; line-height:1">Discovery call</div>
-      </div>
 
       <!-- WHERE YOU ARE → WHERE YOU WANT TO BE -->
-      <div id="cardWhere" class="card clip" data-start="26.6" data-duration="3.38" data-track-index="4">
+      <div id="cardWhere" class="card clip" data-start="26.2" data-duration="3.38" data-track-index="4">
         <div class="htrack" id="whTrack" style="left:100px; width:740px; top:96px"></div>
         <div class="dot" id="whDot" style="left:100px; top:99px"></div>
         <div class="ring" id="whRing" style="left:840px; top:99px"></div>
         <div class="tag" id="whCurT" style="position:absolute; left:52px; top:30px; color:#9CD4FF">Current</div>
         <div class="tag" id="whTgtT" style="position:absolute; right:52px; top:30px; color:#FF4C32">Target</div>
-        <div id="whCurL" style="position:absolute; left:52px; top:142px; font-weight:800; font-size:40px; line-height:1.05; letter-spacing:-0.01em">Where<br>you are</div>
-        <div id="whTgtL" style="position:absolute; right:52px; top:142px; text-align:right; font-weight:800; font-size:40px; line-height:1.05; letter-spacing:-0.01em">Where you<br>want to be</div>
       </div>
 
-      <!-- CTA -->
-      <div id="cardCta" class="card clip" data-start="35.55" data-duration="5.05" data-track-index="4" style="height:250px">
-        <div class="htrack" style="left:100px; width:740px; top:38px; opacity:.8"></div>
-        <div class="dot" id="ctDot" style="left:100px; top:41px; width:24px; height:24px; margin:-12px 0 0 -12px; box-shadow:none"></div>
-        <div class="ring" id="ctRing" style="left:840px; top:41px; width:32px; height:32px; margin:-16px 0 0 -16px; border-width:6px"></div>
-        <div id="ctHead" style="position:absolute; left:0; right:0; top:72px; text-align:center; font-weight:800; font-size:54px; letter-spacing:-0.02em; line-height:1">Free discovery call</div>
-        <div style="position:absolute; left:0; right:0; top:150px; display:flex; justify-content:center; align-items:center; gap:30px">
-          <div id="ctBtn" style="font-weight:800; font-size:44px; color:#FFFFFF; background:#FF4C32; padding:14px 40px; border-radius:999px; line-height:1.1">Book Now &darr;</div>
-          <div id="ctSub" class="tag" style="color:#9CD4FF">Choose a time</div>
-        </div>
-      </div>
 
       <!-- ===================== FULL-SCREEN ROADMAP SCENES ===================== -->
       <!-- A · GROWTH CEILING → FIX THIS FIRST -->
-      <div id="mgA" class="mg clip" data-start="4.7" data-duration="4.35" data-track-index="5">
+      <div id="mgA" class="mg clip" data-start="4.3" data-duration="4.35" data-track-index="5">
         <div class="grid"></div>
         <div class="inner" id="mgAin">
-          <div class="head" id="aH1">What's holding <span class="em">growth</span> back?</div>
           <div class="head" id="aH2">Find the <span class="em">blocker.</span></div>
           <div class="vtrack" style="top:640px; height:590px"></div>
           <div class="vprog" id="aProg" style="top:938px; height:292px"></div>
@@ -191,7 +173,7 @@
       </div>
 
       <!-- C · MOB ARMOR +500% -->
-      <div id="mgC" class="mg clip" data-start="16.5" data-duration="4.0" data-track-index="6">
+      <div id="mgC" class="mg clip" data-start="16.1" data-duration="4" data-track-index="6">
         <div class="grid"></div>
         <div class="inner" id="mgCin" style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding-bottom:360px; gap:26px">
           <div class="tag" id="cBrand" style="font-size:34px; letter-spacing:.24em; color:#FFFFFF">Mob Armor</div>
@@ -205,10 +187,9 @@
       </div>
 
       <!-- D · PROGRESS RESUMES -->
-      <div id="mgD" class="mg clip" data-start="22.6" data-duration="1.6" data-track-index="5">
+      <div id="mgD" class="mg clip" data-start="22.2" data-duration="1.6" data-track-index="5">
         <div class="grid"></div>
         <div class="inner" id="mgDin">
-          <div class="head">Track what <span class="em">changes.</span></div>
           <div class="vtrack" style="top:640px; height:590px"></div>
           <div class="vprog" id="dProg" style="top:760px; height:470px"></div>
           <div class="ring" style="left:540px; top:640px"></div>
@@ -225,15 +206,14 @@
       </div>
 
       <!-- E · THE GAP -->
-      <div id="mgE" class="mg clip" data-start="29.95" data-duration="1.85" data-track-index="6">
+      <div id="mgE" class="mg clip" data-start="29.55" data-duration="1.85" data-track-index="6">
         <div class="grid"></div>
         <div class="inner" id="mgEin">
-          <div class="head">What would it <span class="em">take?</span></div>
           <div class="vtrack" id="eTrack" style="top:640px; height:590px"></div>
           <div class="ring" id="eRing" style="left:540px; top:640px"></div>
           <div class="dot" id="eDot" style="left:540px; top:1230px"></div>
-          <div class="lbl l" style="right:600px; top:606px"><div class="tag" style="color:#FF4C32">Target</div><div class="tag" style="color:#FFFFFF; letter-spacing:.04em; text-transform:none; font-size:32px">Where you want to be</div></div>
-          <div class="lbl l" style="right:600px; top:1196px"><div class="tag" style="color:#9CD4FF">Current</div><div class="tag" style="color:#FFFFFF; letter-spacing:.04em; text-transform:none; font-size:32px">Where you are</div></div>
+          <div class="lbl l" style="right:600px; top:606px"><div class="tag" style="color:#FF4C32">Target</div></div>
+          <div class="lbl l" style="right:600px; top:1196px"><div class="tag" style="color:#9CD4FF">Current</div></div>
           <div id="eM1" style="position:absolute; left:518px; top:1032px; width:44px; height:6px; background:#DEEEFE"></div>
           <div id="eM2" style="position:absolute; left:518px; top:834px; width:44px; height:6px; background:#DEEEFE"></div>
           <div class="tag" id="eM1t" style="position:absolute; right:600px; top:1020px; color:#DEEEFE">Blockers</div>
@@ -243,34 +223,63 @@
         </div>
       </div>
 
+      <!-- ===================== END CARD ===================== -->
+      <div id="endCard" class="clip" data-start="38.6" data-duration="2.8" data-track-index="7">
+        <div class="dots"></div>
+        <div class="stack" id="ecStack">
+          <div id="ecLogoWrap"><img id="ecLogo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+          <div class="ecLine" id="ecL1">Find the ceiling.</div>
+          <div class="ecLine" id="ecL2">Map the gap.</div>
+          <div id="ecFree">Free.</div>
+          <div id="ecBtn">Book now</div>
+        </div>
+      </div>
+
       <!-- ===================== SUBTITLES (one system, fixed bottom line) ===================== -->
-      <div id="s01" class="sub clip" data-start="0.55" data-duration="2.39" data-track-index="20">Shopify founders doing $20,000 a month</div>
-      <div id="s02" class="sub clip" data-start="2.94" data-duration="1.76" data-track-index="21">and aiming for $100,000.</div>
-      <div id="s03" class="sub clip" data-start="4.7" data-duration="2.3" data-track-index="20">We'll show you what's holding your growth back</div>
-      <div id="s04" class="sub clip" data-start="7.0" data-duration="1.9" data-track-index="21">and what to fix <span class="i">first.</span></div>
-      <div id="s05" class="sub clip" data-start="9.1" data-duration="2.28" data-track-index="20">Your <span class="b">strategist</span> goes through your numbers with you</div>
-      <div id="s06" class="sub clip" data-start="11.38" data-duration="1.67" data-track-index="21">and finds where the <span class="o">ceiling</span> is.</div>
-      <div id="s07" class="sub clip" data-start="13.1" data-duration="1.92" data-track-index="20">Then they bring in specialists from the team</div>
-      <div id="s08" class="sub clip" data-start="15.02" data-duration="1.84" data-track-index="21">that have helped brands like Mob Armor</div>
-      <div id="s09" class="sub clip" data-start="16.86" data-duration="3.44" data-track-index="20">grow total sales by over <span class="o">500%</span> in a year.</div>
-      <div id="s10" class="sub clip" data-start="20.5" data-duration="1.88" data-track-index="21">They guide your team through the changes</div>
-      <div id="s11" class="sub clip" data-start="22.38" data-duration="1.7" data-track-index="20">and track the <span class="b">result.</span></div>
-      <div id="s12" class="sub clip" data-start="24.14" data-duration="2.4" data-track-index="21">And it all starts with a free discovery call.</div>
-      <div id="s13" class="sub clip" data-start="26.54" data-duration="2.32" data-track-index="20">We'll go through where you are,</div>
-      <div id="s14" class="sub clip" data-start="28.86" data-duration="1.08" data-track-index="21">where you want to be</div>
-      <div id="s15" class="sub clip" data-start="29.94" data-duration="1.86" data-track-index="20">and what it would take to get you there.</div>
-      <div id="s16" class="sub clip" data-start="31.85" data-duration="2.5" data-track-index="21">And if that <span class="o">gap</span> isn't one that we think we can close,</div>
-      <div id="s17" class="sub clip" data-start="34.4" data-duration="1.15" data-track-index="20"><span class="i">we'll tell you.</span></div>
-      <div id="s18" class="sub clip" data-start="35.62" data-duration="1.78" data-track-index="21">So tap <span class="o">Book Now</span> and choose a time</div>
-      <div id="s19" class="sub clip" data-start="37.4" data-duration="1.5" data-track-index="20">for your free discovery call.</div>
+      <div id="s01" class="sub clip" data-start="0.22" data-duration="1.24" data-track-index="20">Shopify founders doing</div>
+      <div id="s02" class="sub clip" data-start="1.46" data-duration="1.08" data-track-index="21">$20,000 a month</div>
+      <div id="s03" class="sub clip" data-start="2.54" data-duration="1.76" data-track-index="20">and aiming for $100,000.</div>
+      <div id="s04" class="sub clip" data-start="4.3" data-duration="0.96" data-track-index="21">We'll show you</div>
+      <div id="s05" class="sub clip" data-start="5.26" data-duration="0.6" data-track-index="20">what's holding</div>
+      <div id="s06" class="sub clip" data-start="5.86" data-duration="0.74" data-track-index="21">your growth back</div>
+      <div id="s07" class="sub clip" data-start="6.6" data-duration="1.8" data-track-index="20">and what to fix first.</div>
+      <div id="s08" class="sub clip" data-start="8.72" data-duration="0.54" data-track-index="21">Your strategist</div>
+      <div id="s09" class="sub clip" data-start="9.26" data-duration="1.22" data-track-index="20">goes through your numbers</div>
+      <div id="s10" class="sub clip" data-start="10.48" data-duration="0.5" data-track-index="21">with you</div>
+      <div id="s11" class="sub clip" data-start="10.98" data-duration="0.54" data-track-index="20">and finds where</div>
+      <div id="s12" class="sub clip" data-start="11.52" data-duration="1.13" data-track-index="21">the <span class="o">ceiling</span> is.</div>
+      <div id="s13" class="sub clip" data-start="12.72" data-duration="0.68" data-track-index="20">Then they bring in</div>
+      <div id="s14" class="sub clip" data-start="13.4" data-duration="1.22" data-track-index="21">specialists from the team</div>
+      <div id="s15" class="sub clip" data-start="14.62" data-duration="0.68" data-track-index="20">that have helped brands</div>
+      <div id="s16" class="sub clip" data-start="15.3" data-duration="1.16" data-track-index="21">like Mob Armor</div>
+      <div id="s17" class="sub clip" data-start="16.46" data-duration="0.74" data-track-index="20">grow total sales</div>
+      <div id="s18" class="sub clip" data-start="17.2" data-duration="1.44" data-track-index="21">by over 500%</div>
+      <div id="s19" class="sub clip" data-start="18.64" data-duration="1.26" data-track-index="20">in a year.</div>
+      <div id="s20" class="sub clip" data-start="20.12" data-duration="1.12" data-track-index="21">They guide your team</div>
+      <div id="s21" class="sub clip" data-start="21.24" data-duration="0.74" data-track-index="20">through the changes</div>
+      <div id="s22" class="sub clip" data-start="21.98" data-duration="1.7" data-track-index="21">and track the result.</div>
+      <div id="s23" class="sub clip" data-start="23.76" data-duration="0.6" data-track-index="20">And it all starts</div>
+      <div id="s24" class="sub clip" data-start="24.36" data-duration="1.78" data-track-index="21">with a free discovery call.</div>
+      <div id="s25" class="sub clip" data-start="26.14" data-duration="1.38" data-track-index="20">We'll go through</div>
+      <div id="s26" class="sub clip" data-start="27.52" data-duration="1.04" data-track-index="21">where you are,</div>
+      <div id="s27" class="sub clip" data-start="28.56" data-duration="0.98" data-track-index="20">where you want to be</div>
+      <div id="s28" class="sub clip" data-start="29.54" data-duration="0.86" data-track-index="21">and what it would take</div>
+      <div id="s29" class="sub clip" data-start="30.4" data-duration="1.0" data-track-index="20">to get you there.</div>
+      <div id="s30" class="sub clip" data-start="31.5" data-duration="0.64" data-track-index="21">And if that gap</div>
+      <div id="s31" class="sub clip" data-start="32.14" data-duration="1.02" data-track-index="20">isn't one that we think</div>
+      <div id="s32" class="sub clip" data-start="33.16" data-duration="0.92" data-track-index="21">we can close,</div>
+      <div id="s33" class="sub clip" data-start="34.08" data-duration="1.07" data-track-index="20"><span class="i">we'll tell you.</span></div>
+      <div id="s34" class="sub clip" data-start="35.28" data-duration="0.84" data-track-index="21">So tap <span class="o">Book Now</span></div>
+      <div id="s35" class="sub clip" data-start="36.12" data-duration="0.88" data-track-index="20">and choose a time</div>
+      <div id="s36" class="sub clip" data-start="37.0" data-duration="1.5" data-track-index="21">for your free discovery call.</div>
 
       <!-- ===================== AUDIO ===================== -->
-      <audio id="vo" src="assets/vo.m4a" data-start="0" data-duration="40.6" data-track-index="40" data-volume="1"></audio>
+      <audio id="vo" src="assets/vo.m4a" data-start="0" data-media-start="0.4" data-duration="38.9" data-track-index="40" data-volume="1"></audio>
     </div>
 
     <script>
       window.__timelines = window.__timelines || {};
-      const tl = gsap.timeline({ paused: true });
+      const tl = gsap.timeline({ paused: true }); // authored in A-roll source seconds
 
       // ---- A-roll framing: origin at frame top, y keeps Sean's chin near y≈1030 at every scale ----
       const pose = (s) => ({ scale: s, y: 1030 - 1090 * s, transformOrigin: "50% 0%" });
@@ -298,12 +307,6 @@
       // slow drift while on screen
       [["#bw1", 9.3, 1.0], ["#bw2", 10.6, 0.85], ["#bw6", 20.75, 0.85]].forEach(([s, t, d]) => tl.to(s, { scale: 1.04, duration: d, ease: "none" }, t));
 
-      // ---- proof labels ----
-      const lblIn = (sel, t) => {
-        tl.fromTo(sel, { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "expo.out" }, t);
-        tl.fromTo(sel + " .big", { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power2.out" }, t + 0.12);
-      };
-      lblIn("#lblStrat", 9.15); lblIn("#lblSpec", 13.1); lblIn("#lblImpl", 20.55);
 
       // ---- generic card entrance ----
       const cardIn = (sel, t) => tl.fromTo(sel, { y: 50, opacity: 0, scale: 0.96 }, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "power3.out" }, t);
@@ -327,14 +330,12 @@
       tl.to("#hkRing", { scale: 1.45, duration: 0.16, ease: "power2.out", yoyo: true, repeat: 1 }, 3.82);
       tl.to("#hkTv", { scale: 1.1, transformOrigin: "100% 50%", duration: 0.16, ease: "power2.out", yoyo: true, repeat: 1 }, 3.82);
 
-      // ---- full-screen scene transitions: wipe up from the bottom, exit wipes off the top ----
+      // ---- full-screen scene transitions: calm dissolve in and out, no movement, no blur ----
       const mgIn = (sel, inner, t) => {
-        tl.fromTo(sel, { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.35, ease: "power3.out" }, t);
-        tl.fromTo(inner, { y: 140, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.6, ease: "power2.out" }, t);
+        tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "sine.inOut" }, t);
       };
       const mgOut = (sel, inner, t) => {
-        tl.to(inner, { y: -140, filter: "blur(18px)", duration: 0.3, ease: "power2.in" }, t);
-        tl.to(sel, { clipPath: "inset(0% 0% 100% 0%)", duration: 0.3, ease: "power2.in" }, t);
+        tl.to(sel, { opacity: 0, duration: 0.3, ease: "sine.inOut" }, t);
       };
 
       // A · growth ceiling → fix this first (4.70 – 9.05)
@@ -344,7 +345,6 @@
       tl.set(".bl", { opacity: 0 }, 4.7);
       tl.fromTo("#aProg", { scaleY: 0 }, { scaleY: 1, duration: 1.5, ease: "power1.in" }, 5.12);   // line climbs…
       tl.to(["#aC1", "#aC2", "#aC3"], { y: -8, duration: 0.08, ease: "power2.out", yoyo: true, repeat: 1 }, 6.62); // …and stops dead
-      tl.to("#aH1", { opacity: 0, y: -20, duration: 0.25, ease: "power2.in" }, 6.95);
       tl.fromTo("#aH2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 7.05);
       // ceiling resolves into three blockers
       tl.to("#aC1", { x: -18, backgroundColor: "rgba(6,40,76,1)", boxShadow: "inset 0 0 0 3px #FF4C32", duration: 0.35, ease: "power2.out" }, 7.0);
@@ -389,21 +389,15 @@
       tl.fromTo("#dRes", { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.3, ease: "expo.out" }, 23.35);
       mgOut("#mgD", "#mgDin", 23.88);
 
-      // FREE DISCOVERY CALL (24.20 – 26.54)
-      cardIn("#cardFree", 24.2);
-      tl.fromTo("#frFree", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.4, ease: "expo.out" }, 25.36);
-      tl.fromTo("#frCall", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 25.6);
-      tl.set("#frFree", { opacity: 0 }, 24.2);
-      tl.set("#frCall", { opacity: 0 }, 24.2);
 
       // WHERE YOU ARE → WHERE YOU WANT TO BE (26.60 – 29.98)
       cardIn("#cardWhere", 26.6);
-      tl.set(["#whDot", "#whRing", "#whCurT", "#whTgtT", "#whCurL", "#whTgtL", "#whTrack"], { opacity: 0 }, 26.6);
+      tl.set(["#whDot", "#whRing", "#whCurT", "#whTgtT", "#whTrack"], { opacity: 0 }, 26.6);
       tl.fromTo("#whDot", { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2.2)" }, 27.9);
-      tl.fromTo(["#whCurT", "#whCurL"], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out", stagger: 0.08 }, 27.95);
+      tl.fromTo("#whCurT", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out", stagger: 0.08 }, 27.95);
       tl.fromTo("#whTrack", { opacity: 1, clipPath: "inset(0 100% 0 0)" }, { opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "power2.inOut" }, 28.5);
       tl.fromTo("#whRing", { opacity: 0, scale: 0, rotation: -90 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.45, ease: "back.out(1.8)" }, 29.15);
-      tl.fromTo(["#whTgtT", "#whTgtL"], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "expo.out", stagger: 0.08 }, 29.2);
+      tl.fromTo("#whTgtT", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "expo.out", stagger: 0.08 }, 29.2);
 
       // E · THE GAP (29.95 – 31.80)
       mgIn("#mgE", "#mgEin", 29.95);
@@ -413,23 +407,28 @@
       tl.fromTo(["#eM2", "#eM2t"], { opacity: 0, x: 16 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, 30.8);
       mgOut("#mgE", "#mgEin", 31.5);
 
-      // CTA (35.55 – end): hold
-      cardIn("#cardCta", 35.55);
-      tl.fromTo("#ctHead", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 35.7);
-      tl.fromTo("#ctBtn", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2)" }, 35.85);
-      tl.to("#ctBtn", { scale: 0.94, duration: 0.07, ease: "power4.in" }, 36.32);                   // soft press on "Book Now"
-      tl.to("#ctBtn", { scale: 1, duration: 0.3, ease: "back.out(3)" }, 36.39);
-      tl.fromTo("#ctSub", { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out" }, 36.8);
-      tl.to("#ctBtn", { scale: 1.04, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 3 }, 37.9); // gentle CTA breathe through the hold
 
       // ---- subtitles: quick, consistent pop (same position for Sean, B-roll and graphics) ----
       document.querySelectorAll(".sub").forEach((el) => {
-        const t = parseFloat(el.dataset.start);
+        const t = parseFloat(el.dataset.start) + 0.4; // back to source seconds
         tl.fromTo(el, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.14, ease: "power2.out" }, t);
       });
 
-      tl.to({}, { duration: 40.6 }, 0); // pad to data-duration
-      window.__timelines["growth-roadmap-ad"] = tl;
+      tl.to({}, { duration: 40.6 }, 0); // pad to full source length
+      // Head and tail trim: skip Sean turning from his computer (source 0 to 0.4s) and turning back (after 39.3s)
+      const master = gsap.timeline({ paused: true });
+      master.add(tl.tweenFromTo(0.4, 39.3, { ease: "none" }), 0);
+      // END CARD (ad seconds): dissolves in over Sean's last beat, then holds
+      const E = 38.6;
+      master.fromTo("#endCard", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "sine.inOut" }, E);
+      master.fromTo("#ecLogoWrap", { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, E + 0.25);
+      master.fromTo("#ecL1", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.45, ease: "expo.out" }, E + 0.45);
+      master.fromTo("#ecL2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.45, ease: "expo.out" }, E + 0.6);
+      master.fromTo("#ecFree", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" }, E + 0.85);
+      master.fromTo("#ecBtn", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.8)" }, E + 1.1);
+      master.to("#ecBtn", { scale: 1.04, duration: 0.55, ease: "sine.inOut", yoyo: true, repeat: 1 }, E + 1.6);
+      master.to({}, { duration: 41.4 }, 0);
+      window.__timelines["growth-roadmap-ad"] = master;
     </script>
   </body>
 </html>
