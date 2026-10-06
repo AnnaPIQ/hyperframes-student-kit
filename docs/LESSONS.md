@@ -64,6 +64,11 @@ efficient over time instead of relearning the same lessons.
   (`curl -sI` shows `content-disposition`) and duration against the row label and timecode
   before trusting a pick, especially for client-proof footage.
 
+- **Landscape stage footage in a 9:16 crop loses the subject when they walk.** A 608x1080 crop
+  from 1080p is tight; use a time-based crop (`crop=608:1080:'min(1312,456+t*520)':0`) to pan
+  with the speaker, and check for the clip's own camera cuts with
+  `select='gt(scene,0.15)',showinfo` before choosing an in-point.
+
 ## Editing technique (talking-head cutdowns)
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +

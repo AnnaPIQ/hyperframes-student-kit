@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>get-the-second-sale</title>
+    <!-- GSAP vendored locally: CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #06284C;
+        font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
+      .abs { position: absolute; }
+      .hide { opacity: 0; }
+
+      /* ---------- picture ---------- */
+      #plateWrap { position: absolute; inset: 0; overflow: hidden; }
+      #plateInner { position: absolute; inset: 0; transform-origin: 34% 34%; }
+      #plate { width: 1080px; height: 1920px; object-fit: cover; }
+      #shade { position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(180deg, rgba(6,40,76,0) 50%, rgba(6,40,76,.45) 70%, rgba(6,40,76,.85) 100%); }
+      #topshade { position: absolute; left: 0; right: 0; top: 0; height: 360px; pointer-events: none;
+        background: linear-gradient(180deg, rgba(6,40,76,.55) 0%, rgba(6,40,76,0) 100%); }
+      #dim { position: absolute; inset: 0; background: rgba(6,40,76,.30); opacity: 0; }
+
+      /* full-screen stage: navy + campaign dot grid */
+      .navyStage { position: absolute; inset: 0; opacity: 0;
+        background:
+          radial-gradient(circle at 1.5px 1.5px, rgba(222,238,254,.14) 1.5px, transparent 2px) 0 0 / 54px 54px,
+          radial-gradient(70% 45% at 50% 34%, rgba(156,212,255,.13) 0%, rgba(6,40,76,0) 70%),
+          #06284C; }
+
+      /* ---------- logo ---------- */
+      #logoBox { position: absolute; top: 150px; left: 64px; width: 250px; height: 50px; z-index: 30; }
+      #logoBox img { width: 250px; height: auto; display: block; }
+
+      /* ---------- shared pieces ---------- */
+      .card { position: absolute; background: rgba(6,40,76,.92); border: 1px solid rgba(156,212,255,.35);
+        border-radius: 24px; box-shadow: 0 16px 44px rgba(0,0,0,.35); }
+      .cm { position: absolute; width: 18px; height: 18px; pointer-events: none; }
+      .cm::before, .cm::after { content: ''; position: absolute; background: rgba(156,212,255,.8); }
+      .cm::before { left: 8px; top: 0; width: 2px; height: 18px; }
+      .cm::after { top: 8px; left: 0; width: 18px; height: 2px; }
+      .eyebrow { font-weight: 700; font-size: 24px; letter-spacing: .16em; text-transform: uppercase;
+        display: flex; align-items: center; gap: 14px; }
+      .dash { width: 34px; height: 5px; border-radius: 3px; background: currentColor; opacity: .7; flex: none; }
+      .flamePill { background: #FF4C32; color: #FFFFFF; font-weight: 800; border-radius: 999px;
+        box-shadow: 0 18px 50px -14px rgba(255,76,50,.7); }
+      .h { font-weight: 800; letter-spacing: -.02em; line-height: 1.0; }
+      .h span { display: block; }
+      .serif { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; letter-spacing: 0; }
+      .blue { color: #9CD4FF; }
+      .flame { color: #FF4C32; }
+      .lab { font-weight: 800; font-size: 44px; letter-spacing: .02em; white-space: nowrap; }
+      .dot { position: absolute; border-radius: 50%; }
+
+      /* ---------- S1 qualifier ---------- */
+      #s1 { left: 620px; top: 500px; width: 400px; padding: 32px 32px 30px; }
+      #s1 .eyebrow { font-size: 22px; }
+      #s1 .big { margin-top: 18px; font-weight: 800; font-size: 118px; line-height: .95; letter-spacing: -.04em; color: #9CD4FF; }
+      #s1 .per { margin-top: 14px; font-weight: 800; font-size: 36px; letter-spacing: .14em; }
+
+      /* ---------- GFX-1 / GFX-3 horizontal journey ---------- */
+      .hHead { left: 90px; top: 470px; width: 900px; font-size: 116px; }
+      .row { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      .row .line { position: absolute; left: 180px; top: 917px; width: 720px; height: 6px; border-radius: 3px;
+        background: #DEEEFE; transform-origin: 0 50%; }
+      .row .d1 { left: 140px; top: 900px; width: 40px; height: 40px; background: #9CD4FF; }
+      .row .d2 { left: 900px; top: 900px; width: 40px; height: 40px; background: #FF4C32; }
+      .row .l1 { position: absolute; left: 100px; top: 966px; color: #9CD4FF; }
+      .row .l2 { position: absolute; right: 100px; top: 966px; color: #FF4C32; }
+      #g3row .d2 { left: 894px; top: 894px; width: 52px; height: 52px; }
+      #g3arrow { position: absolute; left: 890px; top: 760px; width: 60px; height: 110px; }
+
+      /* ---------- product tag ---------- */
+      #tag1 { left: 70px; top: 1150px; display: flex; align-items: center; gap: 16px; padding: 16px 26px 16px 20px;
+        border-radius: 999px; background: rgba(6,40,76,.9); }
+      #tag1 i { width: 24px; height: 24px; border-radius: 50%; background: #9CD4FF; display: block; }
+      #tag1 .lab { font-size: 40px; }
+
+      /* ---------- GFX-2 vertical journey ---------- */
+      #g2head { left: 90px; top: 330px; width: 900px; height: 180px; }
+      #g2head .h { position: absolute; left: 0; top: 0; font-size: 84px; }
+      #g2spine { position: absolute; left: 146px; top: 640px; width: 8px; height: 520px; }
+      #g2n1 { left: 128px; top: 582px; width: 44px; height: 44px; background: #9CD4FF; }
+      #g2n1l { left: 200px; top: 578px; color: #9CD4FF; }
+      #g2q { left: 122px; top: 1158px; width: 56px; height: 56px; border: 5px solid #FFFFFF;
+        font-weight: 800; font-size: 32px; display: flex; align-items: center; justify-content: center; }
+      #g2o2 { left: 122px; top: 1158px; width: 56px; height: 56px; border: 5px solid #FF4C32; }
+      #g2o2l { left: 200px; top: 1160px; color: #FF4C32; }
+      .step { position: absolute; left: 200px; width: 560px; height: 92px; border-radius: 20px; background: #DEEEFE;
+        color: #06284C; display: flex; align-items: center; gap: 22px; padding: 0 28px; }
+      .step svg { width: 46px; height: 46px; flex: none; }
+      .step .lab { font-size: 42px; }
+      .sdot { position: absolute; left: 140px; width: 20px; height: 20px; border-radius: 50%; background: #DEEEFE; }
+      #tf { left: 784px; top: 712px; background: #9CD4FF; color: #06284C; font-weight: 800; font-size: 26px;
+        letter-spacing: .12em; padding: 12px 18px; border-radius: 12px; white-space: nowrap; }
+
+      /* ---------- Sweet E's proof ---------- */
+      #clientTag { left: 64px; top: 236px; background: #FFFFFF; color: #06284C; border-radius: 14px; z-index: 25;
+        padding: 14px 20px; font-weight: 800; font-size: 22px; letter-spacing: .14em; display: flex; gap: 12px;
+        align-items: center; box-shadow: 0 12px 30px rgba(6,40,76,.35); white-space: nowrap; }
+      #clientTag .k { color: #6b87a6; }
+      #proof { left: 90px; top: 500px; width: 900px; height: 480px; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 6px; }
+      #proof .big { font-weight: 800; font-size: 236px; line-height: 1; letter-spacing: -.05em; color: #FF4C32;
+        font-variant-numeric: tabular-nums; }
+      #proof .sub { font-weight: 800; font-size: 52px; letter-spacing: .08em; }
+
+      /* ---------- side cards over Sean ---------- */
+      #s13 { left: 620px; top: 560px; width: 400px; padding: 32px; }
+      #s13 .free { font-weight: 800; font-size: 124px; line-height: .95; letter-spacing: -.04em; color: #9CD4FF; }
+      #s13 .dc { margin-top: 14px; font-weight: 800; font-size: 42px; line-height: 1.05; letter-spacing: -.01em; }
+      #s14 { left: 620px; top: 460px; width: 400px; padding: 32px; }
+      #s14 svg { width: 200px; height: 200px; display: block; margin: 0 auto 22px; }
+      #s14 .h { font-size: 62px; }
+      #s17 { left: 620px; top: 470px; width: 400px; padding: 32px; display: flex; flex-direction: column; gap: 22px; }
+      #s17 .mini { width: 150px; height: 30px; opacity: .7; }
+      #s17 .t { font-weight: 800; font-size: 30px; letter-spacing: .1em; line-height: 1.2; white-space: nowrap; }
+      #s17 .t span { display: block; }
+      #book { height: 100px; font-size: 46px; white-space: nowrap; display: flex; align-items: center; justify-content: center; gap: 14px; }
+      #book svg { width: 36px; height: 44px; }
+
+      /* ---------- captions: campaign treatment ---------- */
+      .cap { position: absolute; z-index: 20; left: 60px; width: 960px; bottom: 270px; text-align: center; font-weight: 500;
+        font-size: 50px; line-height: 1.18; color: #FFFFFF; opacity: 0;
+        text-shadow: 0 2px 12px rgba(0,0,0,.55), 0 0 2px rgba(0,0,0,.4); }
+      .cap span.l { display: block; }
+      .cap .hb { color: #9CD4FF; }
+      .cap .hf { color: #FF4C32; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="get-the-second-sale" data-start="0" data-duration="34.12" data-fps="25"
+         data-width="1080" data-height="1920">
+
+      <!-- picture edit: A-roll crops + B-roll, cut frame-accurately in FFmpeg (scripts/build-plate.sh) -->
+      <div id="plateWrap"><div id="plateInner">
+        <video id="plate" data-start="0" data-duration="34.12" data-track-index="0"
+               src="assets/media/plate.mp4" muted playsinline></video>
+      </div></div>
+      <audio id="vo" data-start="0" data-duration="34.12" data-track-index="1" src="assets/media/vo.wav" data-volume="1"></audio>
+      <audio id="sfx" data-start="0" data-duration="34.12" data-track-index="2" src="assets/media/sfx.wav" data-volume="1"></audio>
+
+      <div id="dim"></div>
+      <div id="shade"></div>
+      <div id="topshade"></div>
+
+      <!-- S1 qualifier -->
+      <div id="s1" class="card hide">
+        <div class="eyebrow"><span class="dash"></span>Shopify founders</div>
+        <div class="big">$20K+</div>
+        <div class="per">/ MONTH</div>
+      </div>
+
+      <!-- GFX-1 get the second sale -->
+      <div id="g1stage" class="navyStage"></div>
+      <div id="g1head" class="abs h hHead hide"><span>GET THE</span><span><span class="serif" style="display:inline">SECOND</span> SALE.</span></div>
+      <div id="g1row" class="row hide">
+        <div class="line" id="g1line"></div>
+        <div class="dot d1" id="g1d1"></div>
+        <div class="dot d2" id="g1d2"></div>
+        <div class="lab l1" id="g1l1">ORDER #1</div>
+        <div class="lab l2" id="g1l2">ORDER #2</div>
+      </div>
+
+      <!-- product tag -->
+      <div id="tag1" class="abs hide"><i></i><span class="lab">ORDER #1</span></div>
+
+      <!-- GFX-2 journey: order #1, the gap, email / offer / follow-up, order #2 -->
+      <div id="g2stage" class="navyStage"></div>
+      <div id="g2head" class="abs">
+        <div id="g2hA" class="h hide"><span>WHAT HAPPENS</span><span>AFTER <span class="blue" style="display:inline">ORDER #1</span>?</span></div>
+        <div id="g2hB" class="h hide"><span>WHAT'S WORTH</span><span>TESTING FIRST?</span></div>
+      </div>
+      <svg id="g2spine" class="abs hide" viewBox="0 0 8 520" preserveAspectRatio="none">
+        <line id="g2dash" x1="4" y1="0" x2="4" y2="520" stroke="#DEEEFE" stroke-width="6" stroke-linecap="round"
+          stroke-dasharray="14 16" />
+        <line id="g2solid" x1="4" y1="0" x2="4" y2="520" stroke="#DEEEFE" stroke-width="6" stroke-linecap="round"
+          stroke-dasharray="520" stroke-dashoffset="520" />
+      </svg>
+      <div id="g2n1" class="dot hide"></div>
+      <div id="g2n1l" class="abs lab hide">ORDER #1</div>
+      <div id="g2q" class="dot hide">?</div>
+      <div id="g2o2" class="dot hide"></div>
+      <div id="g2o2l" class="abs lab hide">ORDER #2</div>
+      <div id="sd1" class="sdot hide" style="top:726px"></div>
+      <div id="sd2" class="sdot hide" style="top:846px"></div>
+      <div id="sd3" class="sdot hide" style="top:966px"></div>
+      <div id="st1" class="step hide" style="top:690px">
+        <svg viewBox="0 0 46 46"><rect x="4" y="9" width="38" height="28" rx="5" fill="none" stroke="#06284C" stroke-width="4"/>
+          <path d="M6 12 L23 26 L40 12" fill="none" stroke="#06284C" stroke-width="4" stroke-linejoin="round"/></svg>
+        <span class="lab">EMAIL</span></div>
+      <div id="st2" class="step hide" style="top:810px">
+        <svg viewBox="0 0 46 46"><path d="M24 5 H41 V22 L22 41 L5 24 Z" fill="none" stroke="#06284C" stroke-width="4" stroke-linejoin="round"/>
+          <circle cx="33" cy="13" r="3.5" fill="#06284C"/></svg>
+        <span class="lab">OFFER</span></div>
+      <div id="st3" class="step hide" style="top:930px">
+        <svg viewBox="0 0 46 46"><path d="M6 8 H40 V30 H20 L11 38 V30 H6 Z" fill="none" stroke="#06284C" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M14 19 H32" stroke="#06284C" stroke-width="4" stroke-linecap="round"/></svg>
+        <span class="lab">FOLLOW-UP</span></div>
+      <div id="tf" class="abs hide">TEST FIRST</div>
+
+      <!-- Sweet E's proof -->
+      <div id="clientTag" class="abs hide"><span class="k">CLIENT</span><span>SWEET E'S BAKE SHOP</span></div>
+      <div id="proof" class="card hide">
+        <div class="big" id="pnum">+0%</div>
+        <div class="sub">REPEAT CUSTOMER RATE</div>
+      </div>
+
+      <!-- GFX-3 track repeat purchases (callback of GFX-1) -->
+      <div id="g3stage" class="navyStage"></div>
+      <div id="g3head" class="abs h hHead hide" style="font-size:104px"><span>TRACK</span><span>REPEAT PURCHASES.</span></div>
+      <div id="g3row" class="row hide">
+        <div class="line"></div>
+        <div class="dot d1"></div>
+        <div class="dot d2" id="g3d2"></div>
+        <div class="lab l1">ORDER #1</div>
+        <div class="lab l2">ORDER #2</div>
+        <svg id="g3arrow" viewBox="0 0 60 110"><path id="g3arrowP" d="M30 104 V10 M10 30 L30 8 L50 30" fill="none" stroke="#DEEEFE"
+          stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="160" stroke-dashoffset="160"/></svg>
+      </div>
+
+      <!-- S13 free discovery call -->
+      <div id="s13" class="card hide"><div class="free">FREE</div><div class="dc">DISCOVERY CALL</div></div>
+
+      <!-- S14 what could bring them back -->
+      <div id="s14" class="card hide">
+        <svg viewBox="0 0 200 200">
+          <path id="loopP" d="M30 100 A70 70 0 1 1 170 100" fill="none" stroke="#DEEEFE" stroke-width="7" stroke-linecap="round"
+            stroke-dasharray="230" stroke-dashoffset="230"/>
+          <path id="loopH" d="M156 84 L170 102 L186 86" fill="none" stroke="#DEEEFE" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>
+          <circle cx="30" cy="100" r="15" fill="#9CD4FF"/>
+          <circle id="loopO" cx="170" cy="130" r="15" fill="#FF4C32" opacity="0"/>
+        </svg>
+        <div class="h" id="s14h"><span>WHAT COULD</span><span>BRING THEM</span><span>BACK?</span></div>
+      </div>
+
+      <!-- S17 CTA -->
+      <div id="s17" class="card hide">
+        <svg class="mini" viewBox="0 0 150 30"><line x1="15" y1="15" x2="135" y2="15" stroke="#DEEEFE" stroke-width="4"/>
+          <circle cx="15" cy="15" r="11" fill="#9CD4FF"/><circle cx="135" cy="15" r="11" fill="#FF4C32"/></svg>
+        <div class="t"><span class="blue">FREE</span><span>DISCOVERY CALL</span></div>
+        <div id="book" class="flamePill">BOOK NOW
+          <svg viewBox="0 0 36 44"><path d="M18 3 V38 M5 26 L18 39 L31 26" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="t">CHOOSE A TIME</div>
+      </div>
+
+      <!-- captions (spoken words, campaign position) -->
+      <div class="cap" id="c1">Shopify founders doing</div>
+      <div class="cap" id="c2">$20,000 a month and up</div>
+      <div class="cap" id="c3">We'll show you how to get</div>
+      <div class="cap" id="c4">more of your customers buying again</div>
+      <div class="cap" id="c5">It starts with what they buy</div>
+      <div class="cap" id="c6"><span class="l">and what happens after</span><span class="l">their <span class="hb">first order</span></span></div>
+      <div class="cap" id="c7">From there, the emails,</div>
+      <div class="cap" id="c8">offers, and follow-ups worth testing</div>
+      <div class="cap" id="c9"><span class="l">Specialists from the team</span><span class="l">that helped Sweet E's</span></div>
+      <div class="cap" id="c10"><span class="l">lift repeat customer rate</span><span class="l">by <span class="hf">41%</span></span></div>
+      <div class="cap" id="c11">guide your team through the changes</div>
+      <div class="cap" id="c12">and track repeat purchases</div>
+      <div class="cap" id="c13"><span class="l">It starts with a</span><span class="l">free discovery call</span></div>
+      <div class="cap" id="c14">You'll come away knowing</div>
+      <div class="cap" id="c15"><span class="l">what could bring</span><span class="l">your customers back</span></div>
+      <div class="cap" id="c16">Tap <span class="hf">Book Now</span> to choose a time</div>
+
+      <!-- logo: positioned, non-clip wrapper so the engine never moves it -->
+      <div id="logoBox"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+    </div>
+
+    <script>
+      // crop-mark registration "+" at every card corner (campaign texture)
+      document.querySelectorAll('.card').forEach(function (c) {
+        [[-9, -9], [null, -9], [-9, null], [null, null]].forEach(function (p) {
+          var m = document.createElement('i'); m.className = 'cm';
+          if (p[0] === null) m.style.right = '-9px'; else m.style.left = p[0] + 'px';
+          if (p[1] === null) m.style.bottom = '-9px'; else m.style.top = p[1] + 'px';
+          c.appendChild(m);
+        });
+      });
+
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const show = (sel, t) => tl.set(sel, { opacity: 1 }, t);
+      const hide = (sel, t) => tl.set(sel, { opacity: 0 }, t);
+      const fadeIn = (sel, t, d = 0.3) => tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: d, ease: 'power1.out' }, t);
+      const fadeOut = (sel, t, d = 0.24) => tl.to(sel, { opacity: 0, duration: d, ease: 'power1.in' }, t - d);
+      const rise = (sel, t, d = 0.4, y = 30, ease = 'power3.out') => tl.fromTo(sel,
+        { opacity: 0, y: y }, { opacity: 1, y: 0, duration: d, ease: ease }, t);
+      const slideIn = (sel, t, d = 0.35) => tl.fromTo(sel,
+        { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: d, ease: 'power2.out' }, t);
+      const pop = (sel, t, d = 0.35) => tl.fromTo(sel,
+        { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: d, ease: 'back.out(1.4)' }, t);
+
+      // ---------- picture: slow push on every live shot ----------
+      // [start, end, transformOrigin, endScale]
+      [[0, 3.40, '34% 32%', 1.03], [3.40, 4.96, '34% 30%', 1.02], [7.56, 9.56, '45% 40%', 1.03],
+       [15.44, 16.96, '50% 35%', 1.025], [16.96, 18.32, '50% 35%', 1.025], [18.32, 21.20, '50% 60%', 1.035],
+       [21.20, 22.76, '60% 40%', 1.025], [24.72, 26.84, '34% 32%', 1.025], [26.84, 30.44, '34% 30%', 1.03],
+       [30.44, 34.12, '34% 32%', 1.04]].forEach(function (s) {
+        tl.set('#plateInner', { transformOrigin: s[2], scale: 1 }, s[0]);
+        tl.to('#plateInner', { scale: s[3], duration: s[1] - s[0], ease: 'none' }, s[0]);
+      });
+
+      // ---------- S1 qualifier 0.00-3.40 ----------
+      tl.fromTo('#s1', { opacity: 1, clipPath: 'inset(0% 100% 0% 0% round 24px)' },
+        { clipPath: 'inset(0% 0% 0% 0% round 24px)', duration: 0.4, ease: 'expo.out' }, 0.60);
+      tl.fromTo('#s1 .eyebrow', { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power3.out' }, 0.72);
+      rise('#s1 .big', 0.80, 0.4, 36);
+      rise('#s1 .per', 0.96, 0.35, 20, 'power2.out');
+      fadeOut('#s1', 3.40);
+
+      // ---------- GFX-1 get the second sale 4.96-7.56 ----------
+      tl.fromTo('#g1stage', { opacity: 0 }, { opacity: 1, duration: 0.2, ease: 'none' }, 4.96);
+      hide('#shade, #topshade', 5.16);
+      rise('#g1head', 5.00, 0.45, 26);
+      show('#g1row', 5.00);
+      tl.set('#g1line', { scaleX: 0 }, 4.96);
+      tl.set('#g1d2, #g1l1, #g1l2', { opacity: 0 }, 4.96);
+      pop('#g1d1', 5.20);
+      fadeIn('#g1l1', 5.30);
+      tl.to('#g1line', { scaleX: 1, duration: 0.6, ease: 'power2.inOut' }, 5.36);
+      pop('#g1d2', 5.92, 0.4);
+      fadeIn('#g1l2', 6.00);
+      tl.to('#g1head, #g1row', { scale: 1.02, duration: 2.4, ease: 'none', transformOrigin: '50% 45%' }, 5.16);
+      hide('#g1stage, #g1head, #g1row', 7.56);
+      show('#shade, #topshade', 7.56);
+
+      // ---------- product + ORDER #1 tag 7.56-9.16 ----------
+      tl.fromTo('#tag1', { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.3, ease: 'power2.out' }, 7.76);
+
+      // ---------- GFX-2 journey 9.16-15.44 ----------
+      tl.fromTo('#g2stage', { opacity: 0 }, { opacity: 1, duration: 0.36, ease: 'power1.inOut' }, 9.16);
+      hide('#shade, #topshade', 9.52);
+      // tag travels to become the ORDER #1 node
+      tl.to('#tag1', { x: 60, y: -586, backgroundColor: 'rgba(6,40,76,0)', duration: 0.4, ease: 'power2.inOut' }, 9.16);
+      hide('#tag1', 9.56); show('#g2n1, #g2n1l', 9.56);
+      rise('#g2hA', 9.36, 0.4, 24);
+      tl.fromTo('#g2spine', { opacity: 1, clipPath: 'inset(0% 0% 100% 0%)' },
+        { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.8, ease: 'power2.inOut' }, 9.60);
+      pop('#g2q', 10.40);
+      // state B: header swaps, ? becomes ghost ORDER #2
+      fadeOut('#g2hA', 11.92, 0.2);
+      rise('#g2hB', 12.00, 0.4, 20, 'power2.out');
+      tl.to('#g2q', { opacity: 0, duration: 0.25, ease: 'power1.in' }, 11.80);
+      tl.fromTo('#g2o2', { opacity: 0, scale: 0.6 }, { opacity: 0.85, scale: 1, duration: 0.35, ease: 'back.out(1.6)' }, 11.96);
+      tl.fromTo('#g2o2l', { opacity: 0 }, { opacity: 0.7, duration: 0.3, ease: 'power1.out' }, 12.06);
+      [['#st1', '#sd1', 12.24, 0.30], ['#st2', '#sd2', 12.92, 0.53], ['#st3', '#sd3', 13.48, 0.76]].forEach(function (s) {
+        slideIn(s[0], s[2]);
+        pop(s[1], s[2], 0.25);
+        tl.to('#g2solid', { strokeDashoffset: 520 * (1 - s[3]), duration: 0.4, ease: 'power2.out' }, s[2]);
+      });
+      tl.fromTo('#tf', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.2)' }, 14.00);
+      tl.to('#st1, #st2, #st3', { boxShadow: '0 0 0 6px rgba(156,212,255,.75)', duration: 0.25, ease: 'power1.out' }, 14.04);
+      tl.to('#st1, #st2, #st3', { boxShadow: '0 0 0 0px rgba(156,212,255,0)', duration: 0.5, ease: 'power1.in' }, 14.40);
+      hide('#g2stage, #g2hB, #g2spine, #g2n1, #g2n1l, #g2o2, #g2o2l, #sd1, #sd2, #sd3, #st1, #st2, #st3, #tf', 15.44);
+      show('#shade, #topshade', 15.44);
+
+      // ---------- Sweet E's proof 16.96-21.20 ----------
+      tl.fromTo('#clientTag', { opacity: 1, clipPath: 'inset(0% 100% 0% 0% round 14px)' },
+        { clipPath: 'inset(0% 0% 0% 0% round 14px)', duration: 0.4, ease: 'expo.out' }, 17.04);
+      show('#dim', 18.32);
+      rise('#proof', 18.40, 0.32, 20, 'power2.out');
+      const cnt = { v: 0 };
+      tl.fromTo(cnt, { v: 0 }, { v: 41, duration: 0.75, ease: 'power2.out',
+        onUpdate: function () { document.getElementById('pnum').textContent = '+' + Math.round(cnt.v) + '%'; } }, 18.70);
+      tl.fromTo('#pnum', { scale: 1.02 }, { scale: 1, duration: 0.25, ease: 'power2.out' }, 19.45);
+      hide('#proof, #dim, #clientTag', 21.20);
+
+      // ---------- GFX-3 track repeat purchases 22.76-24.72 ----------
+      show('#g3stage, #g3row', 22.76);
+      hide('#shade, #topshade', 22.76);
+      rise('#g3head', 22.80, 0.35, 22);
+      tl.to('#g3d2', { scale: 1.25, duration: 0.2, ease: 'power2.out', yoyo: true, repeat: 1 }, 23.16);
+      tl.to('#g3arrowP', { strokeDashoffset: 0, duration: 0.4, ease: 'power2.out' }, 23.20);
+      hide('#g3stage, #g3head, #g3row', 24.72);
+      show('#shade, #topshade', 24.72);
+
+      // ---------- S13 free discovery call 24.72-26.84 ----------
+      tl.fromTo('#s13', { opacity: 1, clipPath: 'inset(0% 0% 100% 0% round 24px)' },
+        { clipPath: 'inset(0% 0% 0% 0% round 24px)', duration: 0.4, ease: 'expo.out' }, 24.96);
+      rise('#s13 .free', 25.04, 0.4, 30);
+      tl.fromTo('#s13 .dc', { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.35, ease: 'power2.out' }, 25.20);
+      fadeOut('#s13', 26.76);
+
+      // ---------- S14 what could bring them back 26.84-30.44 ----------
+      tl.fromTo('#s14', { opacity: 1, clipPath: 'inset(0% 100% 0% 0% round 24px)' },
+        { clipPath: 'inset(0% 0% 0% 0% round 24px)', duration: 0.4, ease: 'expo.out' }, 27.48);
+      tl.to('#loopP', { strokeDashoffset: 0, duration: 0.8, ease: 'power2.inOut' }, 27.60);
+      tl.to('#loopH', { opacity: 1, duration: 0.15, ease: 'none' }, 28.30);
+      pop('#loopO', 28.36, 0.3);
+      rise('#s14h', 28.00, 0.4, 24, 'power2.out');
+      fadeOut('#s14', 30.36);
+
+      // ---------- S17 CTA 30.44-34.12 ----------
+      tl.fromTo('#s17', { opacity: 1, clipPath: 'inset(0% 0% 100% 0% round 24px)' },
+        { clipPath: 'inset(0% 0% 0% 0% round 24px)', duration: 0.45, ease: 'expo.out' }, 30.64);
+      tl.fromTo('#book', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.5)' }, 30.80);
+      tl.to('#book', { scale: 0.97, duration: 0.08, ease: 'power2.in', yoyo: true, repeat: 1 }, 31.24);
+
+      // ---------- captions ----------
+      [['#c1', 0.56, 1.82], ['#c2', 1.82, 3.40], ['#c3', 3.40, 4.96], ['#c4', 4.96, 7.20],
+       ['#c5', 7.56, 8.84], ['#c6', 8.84, 11.12], ['#c7', 11.56, 12.84], ['#c8', 12.84, 15.32],
+       ['#c9', 15.44, 17.68], ['#c10', 17.68, 20.48], ['#c11', 20.48, 22.52], ['#c12', 22.52, 24.12],
+       ['#c13', 24.80, 26.60], ['#c14', 26.92, 28.32], ['#c15', 28.32, 29.96], ['#c16', 30.48, 32.40]
+      ].forEach(function (c) {
+        tl.fromTo(c[0], { opacity: 0 }, { opacity: 1, duration: 0.12, ease: 'none' }, c[1]);
+        tl.to(c[0], { opacity: 0, duration: 0.12, ease: 'none' }, c[2] - 0.12);
+      });
+
+      tl.to({}, { duration: 34.12 }, 0); // fill the slot
+      window.__timelines['get-the-second-sale'] = tl;
+    </script>
+  </body>
+</html>
