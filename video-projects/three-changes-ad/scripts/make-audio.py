@@ -29,8 +29,8 @@ put(sfx,8.14,impact(0.8),0.8); put(sfx,9.04,impact(1.25),0.95)
 for k in range(9): put(sfx,14.48+k*0.0725,tick(3000+k*60),0.28)
 put(sfx,15.06,tone(),0.32)
 put(sfx,19.70,click(3000,0.03),0.35); put(sfx,21.78,tick(2600),0.35)
-put(sfx,23.84,click(1800,0.03),0.45); put(sfx,23.92,click(2700,0.03),0.45)
-put(sfx,25.04,click(1400,0.05)+np.pad(click(2800,0.04),(0,int(SR*0.01))) [:len(click(1400,0.05))],0.5)
+put(sfx,23.50,click(1800,0.03),0.45); put(sfx,23.58,click(2700,0.03),0.45)
+put(sfx,25.10,click(1400,0.05)+np.pad(click(2800,0.04),(0,int(SR*0.01))) [:len(click(1400,0.05))],0.5)
 save(sys.argv[1]+'/sfx.wav',sfx,0.7)
 # ---------- music bed (placeholder) ----------
 mus=np.zeros(N); T=np.arange(N)/SR
