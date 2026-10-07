@@ -1,4 +1,4 @@
-# Profit Leak | Discovery call (9:16) — Design
+# Profit Leak | Discovery call (4:5) — Design
 
 Source of truth for the build: `EDITING-PLAN.md` in this folder. This file is the short brand summary the composition traces back to.
 
@@ -19,7 +19,7 @@ Calm, premium EcomIQ performance ad. Sean is one element inside a designed navy 
 - No serif in this ad. One italic subtitle phrase only ("we'll tell you").
 
 ## Format
-1080 x 1920, 25 fps, 36.4 s (0.7 s hold after the last word). Graphic zone y 270 to 1120. Subtitles sit at the bottom, block ending at y 1660 (260 px above the edge).
+1080 x 1350 (4:5 feed), 25 fps, 36.4 s (0.7 s hold after the last word). Graphic zone y 270 to 1120. Subtitles sit at the bottom, block ending at y 1260 (90 px above the edge).
 
 ## What NOT to Do
 - No green for positive numbers, no invented dollar results.

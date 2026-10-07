@@ -2,21 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1080, height=1920" />
-    <title>Profit Leak | Discovery call (9:16)</title>
+    <meta name="viewport" content="width=1080, height=1350" />
+    <title>Profit Leak | Discovery call (4:5)</title>
     <!-- GSAP vendored locally: CDN cert-fails in the render env and freezes renders -->
     <script src="assets/vendor/gsap.min.js"></script>
     <style>
       @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
         font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #06284C;
+      html, body { width: 1080px; height: 1350px; overflow: hidden; background: #06284C;
         font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
-      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #06284C; }
+      #root { position: relative; width: 1080px; height: 1350px; overflow: hidden; background: #06284C; }
 
       /* ---------- Sean (plate + navy cut-out composite, frame-identical) ---------- */
       #sean-clip { position: absolute; inset: 0; clip-path: inset(0px 0px 0px 0px round 0px); z-index: 1; }
-      #sean-wrap { position: absolute; left: -300px; top: 0; width: 1778px; height: 1920px;
+      #sean-wrap { position: absolute; left: -300px; top: -170px; width: 1778px; height: 1920px;
         transform-origin: 840px 640px; }
       .vwrap { position: absolute; inset: 0; }
       .vwrap video { width: 100%; height: 100%; display: block; }
@@ -30,24 +30,24 @@
 
       /* ---------- B-roll window / card ---------- */
       #broll-clip { position: absolute; inset: 0; z-index: 3; opacity: 1;
-        clip-path: inset(300px 64px 1120px 64px round 28px); }
+        clip-path: inset(150px 64px 800px 64px round 28px); }
       .bw { position: absolute; opacity: 0; overflow: hidden; }
       .bw video { width: 100%; height: 100%; object-fit: cover; display: block; }
-      .bw.win { left: 64px; top: 270px; width: 952px; height: 850px; }
-      .bw.card { left: 64px; top: 300px; width: 536px; height: 810px; }
-      #win-grad { position: absolute; left: 64px; top: 760px; width: 952px; height: 360px; opacity: 0;
+      .bw.win { left: 64px; top: 140px; width: 952px; height: 760px; }
+      .bw.card { left: 64px; top: 160px; width: 536px; height: 780px; }
+      #win-grad { position: absolute; left: 64px; top: 600px; width: 952px; height: 300px; opacity: 0;
         background: linear-gradient(180deg, rgba(6,40,76,0) 0%, rgba(6,40,76,0.88) 100%); }
       .fb { position: absolute; z-index: 4; border: 2px solid rgba(222,238,254,0.3); opacity: 0; }
       #fb-r { left: 640px; top: 300px; width: 376px; height: 810px; border-radius: 32px; }
-      #fb-w { left: 64px; top: 270px; width: 952px; height: 850px; border-radius: 28px; }
-      #fb-l { left: 64px; top: 300px; width: 536px; height: 810px; border-radius: 28px; }
+      #fb-w { left: 64px; top: 140px; width: 952px; height: 760px; border-radius: 28px; }
+      #fb-l { left: 64px; top: 160px; width: 536px; height: 780px; border-radius: 28px; }
 
       /* ---------- bottom gradient so subtitles never sit on the cream vest ---------- */
-      #subgrad { position: absolute; left: 0; top: 900px; width: 1080px; height: 1020px; z-index: 5;
+      #subgrad { position: absolute; left: 0; top: 700px; width: 1080px; height: 650px; z-index: 5;
         background: linear-gradient(180deg, rgba(6,40,76,0) 0%, rgba(6,40,76,0.45) 35%, rgba(6,40,76,0.68) 100%); }
 
       /* ---------- logo (positioned, non-clip wrapper so it never drifts) ---------- */
-      #logo-box { position: absolute; left: 64px; top: 92px; z-index: 9; }
+      #logo-box { position: absolute; left: 64px; top: 56px; z-index: 9; }
       #logo-box img { height: 46px; width: auto; display: block; }
 
       /* ---------- graphics layer ---------- */
@@ -60,7 +60,7 @@
       .g { opacity: 0; }
 
       /* S1 column (Sean left) */
-      #s1 { left: 580px; top: 330px; width: 436px; display: flex; flex-direction: column; gap: 6px; }
+      #s1 { left: 580px; top: 170px; width: 436px; display: flex; flex-direction: column; gap: 6px; }
       #s1-eyebrow { font-size: 32px; color: #DEEEFE; }
       #s1-amt { font-size: 136px; color: #9CD4FF; margin-top: 10px; }
       #s1-month { font-size: 40px; font-weight: 600; color: #FFFFFF; }
@@ -68,79 +68,79 @@
       #s1-keep, #s1-little { font-size: 66px; }
 
       /* S2/S3 waterfall (Sean right) */
-      #wf-head { left: 64px; top: 352px; display: flex; align-items: baseline; gap: 12px; }
+      #wf-head { left: 64px; top: 192px; display: flex; align-items: baseline; gap: 12px; }
       #wf-head .amt { font-size: 46px; font-weight: 800; color: #9CD4FF; letter-spacing: -0.02em; }
       #wf-head .txt { font-size: 30px; color: #9CD4FF; }
-      #rev-bar { left: 64px; top: 420px; width: 456px; height: 64px; background: #9CD4FF; border-radius: 6px;
+      #rev-bar { left: 64px; top: 260px; width: 456px; height: 64px; background: #9CD4FF; border-radius: 6px;
         transform-origin: 0 50%; }
       .leak { height: 56px; border-radius: 6px; background: rgba(222,238,254,0.35); border: 2px solid #DEEEFE; }
-      #lk1 { left: 430px; width: 90px;  top: 520px; }
-      #lk2 { left: 280px; width: 150px; top: 610px; }
-      #lk3 { left: 210px; width: 70px;  top: 700px; }
+      #lk1 { left: 430px; width: 90px;  top: 360px; }
+      #lk2 { left: 280px; width: 150px; top: 450px; }
+      #lk3 { left: 210px; width: 70px;  top: 540px; }
       .lk-l { left: 64px; }
-      #lk1-l { top: 533px; } #lk2-l { top: 623px; } #lk3-l { top: 713px; }
-      #pf-bar { left: 64px; top: 790px; width: 146px; height: 56px; background: #FFFFFF; border-radius: 6px;
+      #lk1-l { top: 373px; } #lk2-l { top: 463px; } #lk3-l { top: 553px; }
+      #pf-bar { left: 64px; top: 630px; width: 146px; height: 56px; background: #FFFFFF; border-radius: 6px;
         transform-origin: 0 50%; }
-      #pf-l { left: 226px; top: 803px; }
-      #fix-line { left: 354px; top: 666px; width: 3px; height: 206px; background: #FF4C32; transform-origin: 50% 0; }
-      #fix-tag { left: 64px; top: 884px; font-size: 48px; }
-      #lk2-ring { left: 272px; top: 602px; width: 166px; height: 72px; border: 3px solid #FF4C32; border-radius: 10px; }
+      #pf-l { left: 226px; top: 643px; }
+      #fix-line { left: 354px; top: 506px; width: 3px; height: 206px; background: #FF4C32; transform-origin: 50% 0; }
+      #fix-tag { left: 64px; top: 724px; font-size: 48px; }
+      #lk2-ring { left: 272px; top: 442px; width: 166px; height: 72px; border: 3px solid #FF4C32; border-radius: 10px; }
 
       /* S4/S5 diagnostic (Sean in card right) */
-      #dx-head1 { left: 64px; top: 352px; font-size: 54px; }
-      #dx-head2 { left: 64px; top: 352px; font-size: 54px; }
-      #dx-head3 { left: 64px; top: 414px; font-size: 54px; }
+      #dx-head1 { left: 64px; top: 170px; font-size: 54px; }
+      #dx-head2 { left: 64px; top: 170px; font-size: 54px; }
+      #dx-head3 { left: 64px; top: 228px; font-size: 54px; }
       .dx-l { left: 64px; font-size: 28px; }
-      #dx-l1 { top: 494px; } #dx-l2 { top: 594px; } #dx-l3 { top: 694px; }
-      .dx-bar { left: 64px; height: 48px; border-radius: 6px; transform-origin: 0 50%; }
-      #dx-cost { top: 626px; width: 640px; background: #DEEEFE; }
-      #dx-leak { left: 512px; top: 626px; width: 192px; height: 48px; background: #FF4C32; border-radius: 0 6px 6px 0; }
-      #dx-ring { left: 498px; top: 612px; width: 220px; height: 76px; border: 3px solid #FF4C32; border-radius: 12px; }
-      #scan { left: 54px; top: 512px; width: 972px; height: 2px; background: #9CD4FF;
+      #dx-l1 { top: 296px; } #dx-l2 { top: 382px; } #dx-l3 { top: 468px; }
+      .dx-bar { left: 64px; height: 40px; border-radius: 6px; transform-origin: 0 50%; }
+      #dx-cost { top: 412px; width: 640px; background: #DEEEFE; }
+      #dx-leak { left: 512px; top: 412px; width: 192px; height: 40px; background: #FF4C32; border-radius: 0 6px 6px 0; }
+      #dx-ring { left: 498px; top: 398px; width: 220px; height: 68px; border: 3px solid #FF4C32; border-radius: 12px; }
+      #scan { left: 54px; top: 318px; width: 972px; height: 2px; background: #9CD4FF;
         box-shadow: 0 0 10px rgba(156,212,255,0.7); }
       #scan::after { content: ""; position: absolute; right: -10px; top: -9px; width: 16px; height: 16px;
         border: 2px solid #9CD4FF; border-radius: 50%; }
 
       /* S6/S7 labels inside the proof window */
-      #sp-a { left: 104px; top: 942px; font-size: 64px; }
-      #sp-eyebrow { left: 104px; top: 846px; font-size: 30px; color: #DEEEFE; }
-      #sp-big1 { left: 104px; top: 892px; font-size: 92px; color: #9CD4FF; }
-      #sp-big2 { left: 104px; top: 990px; font-size: 92px; color: #FFFFFF; }
+      #sp-a { left: 104px; top: 760px; font-size: 64px; }
+      #sp-eyebrow { left: 104px; top: 676px; font-size: 30px; color: #DEEEFE; }
+      #sp-big1 { left: 104px; top: 712px; font-size: 84px; color: #9CD4FF; }
+      #sp-big2 { left: 104px; top: 800px; font-size: 84px; color: #FFFFFF; }
 
       /* S8/S9 process column (B-roll card left) */
       .st { left: 680px; font-size: 52px; }
-      #st1 { top: 370px; } #st2 { top: 598px; } #st3 { top: 826px; }
+      #st1 { top: 210px; } #st2 { top: 422px; } #st3 { top: 634px; }
       .dot { width: 18px; height: 18px; border-radius: 50%; left: 646px; }
-      #dot1 { top: 386px; background: #FF4C32; }
-      #dot2 { top: 614px; background: #DEEEFE; } #dot3 { top: 842px; background: #DEEEFE; }
-      .vline { left: 654px; width: 2px; height: 96px; background: #DEEEFE; transform-origin: 50% 0; }
-      #vl1 { top: 486px; } #vl2 { top: 714px; }
-      #pr-l { left: 680px; top: 962px; font-size: 26px; }
-      #pr-bar { left: 680px; top: 998px; width: 146px; height: 40px; background: #FFFFFF; border-radius: 6px;
+      #dot1 { top: 226px; background: #FF4C32; }
+      #dot2 { top: 438px; background: #DEEEFE; } #dot3 { top: 650px; background: #DEEEFE; }
+      .vline { left: 654px; width: 2px; height: 80px; background: #DEEEFE; transform-origin: 50% 0; }
+      #vl1 { top: 326px; } #vl2 { top: 538px; }
+      #pr-l { left: 680px; top: 770px; font-size: 26px; }
+      #pr-bar { left: 680px; top: 806px; width: 146px; height: 40px; background: #FFFFFF; border-radius: 6px;
         transform-origin: 0 50%; }
 
       /* S10 navy card */
-      #fdc { left: 150px; top: 960px; width: 780px; height: 128px; border-radius: 24px;
+      #fdc { left: 150px; top: 900px; width: 780px; height: 128px; border-radius: 24px;
         background: rgba(6,40,76,0.92); display: flex; align-items: center; justify-content: center; gap: 18px;
         font-size: 60px; }
 
       /* S11 column (Sean left, darkened room) */
-      #bz1 { left: 580px; top: 410px; font-size: 58px; }
-      #bz-line { left: 584px; top: 556px; width: 2px; height: 104px; background: #DEEEFE; transform-origin: 50% 0; }
-      #bz-chev { left: 573px; top: 650px; width: 24px; height: 24px; border-right: 2px solid #DEEEFE;
+      #bz1 { left: 580px; top: 230px; font-size: 58px; }
+      #bz-line { left: 584px; top: 376px; width: 2px; height: 104px; background: #DEEEFE; transform-origin: 50% 0; }
+      #bz-chev { left: 573px; top: 470px; width: 24px; height: 24px; border-right: 2px solid #DEEEFE;
         border-bottom: 2px solid #DEEEFE; transform: rotate(45deg); }
-      #bz2 { left: 580px; top: 700px; font-size: 58px; }
+      #bz2 { left: 580px; top: 520px; font-size: 58px; }
 
       /* S14 CTA column (Sean left) */
-      #cta-eb { left: 580px; top: 430px; font-size: 42px; font-weight: 700; line-height: 1.08; }
-      #cta-pill { left: 580px; top: 580px; width: 420px; height: 112px; border-radius: 56px; background: #FF4C32;
+      #cta-eb { left: 580px; top: 240px; font-size: 42px; font-weight: 700; line-height: 1.08; }
+      #cta-pill { left: 580px; top: 380px; width: 420px; height: 112px; border-radius: 56px; background: #FF4C32;
         display: flex; align-items: center; justify-content: center; font-size: 56px;
         box-shadow: 0 18px 50px -14px rgba(255,76,50,0.55); }
-      #cta-arrow { left: 750px; top: 724px; width: 80px; height: 96px; }
+      #cta-arrow { left: 750px; top: 524px; width: 80px; height: 96px; }
 
       /* ---------- subtitles ---------- */
       #subs { position: absolute; inset: 0; z-index: 8; }
-      .sub { position: absolute; left: 90px; width: 900px; bottom: 260px; text-align: center;
+      .sub { position: absolute; left: 90px; width: 900px; bottom: 90px; text-align: center;
         font-weight: 600; font-size: 56px; line-height: 1.16; color: #FFFFFF; opacity: 0;
         text-shadow: 0 0 2px #06284C, 1px 1px 0 #06284C, -1px -1px 0 #06284C, 1px -1px 0 #06284C,
           -1px 1px 0 #06284C, 0 3px 12px rgba(6,40,76,0.85); }
@@ -149,7 +149,7 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="profit-leak" data-start="0" data-duration="36.4" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="profit-leak-45" data-start="0" data-duration="36.4" data-width="1080" data-height="1350">
 
       <!-- Sean: plate (real room) under the navy cut-out composite. Wrapper is animated, never the video. -->
       <div id="sean-clip">
@@ -287,16 +287,16 @@
       const IO = "power2.inOut", OUT = "power3.out", EXP = "expo.out";
 
       // Sean placement presets (face anchor at 840,640 in plate px)
-      const FULL110 = { x: 0, y: -110, scale: 1.10 };
-      const FULL100 = { x: 0, y: -110, scale: 1.10 };   // "100%" framing, lifted so the face sits at y ~600
+      const FULL110 = { x: 0, y: 0, scale: 1.10 };
+      const FULL100 = { x: 0, y: 0, scale: 1.10 };   // "100%" framing, lifted so the face sits at y ~600
       const LEFT    = { x: -270, y: 0, scale: 1.0 };     // face at x 270
       const LEFT_S  = { x: -240, y: 0, scale: 1.0 };     // S11, slightly less far
       const RIGHT   = { x: 270, y: 0, scale: 1.0 };      // face at x 810
-      const BELOW   = { x: 0, y: 470, scale: 0.8 };      // whole cut-out low in frame, numbers panel above
+      const BELOW   = { x: 0, y: 350, scale: 0.8 };      // whole cut-out low in frame, numbers panel above
       const CLIP_FULL = "inset(0px 0px 0px 0px round 0px)";
       const CLIP_CARD_R = "inset(300px 64px 810px 640px round 32px)";
-      const CLIP_WIN = "inset(270px 64px 800px 64px round 28px)";
-      const CLIP_CARD_L = "inset(300px 480px 810px 64px round 28px)";
+      const CLIP_WIN = "inset(140px 64px 450px 64px round 28px)";
+      const CLIP_CARD_L = "inset(160px 480px 410px 64px round 28px)";
 
       const show = (sel, t, d = 0.4, from = { y: 20 }, ease = OUT) =>
         tl.fromTo(sel, { opacity: 0, ...from }, { opacity: 1, x: 0, y: 0, duration: d, ease }, t);
@@ -343,16 +343,16 @@
       hide(["#lk1", "#lk2", "#lk3", "#lk1-l", "#lk2-l", "#lk3-l", "#fix-line", "#fix-tag", "#wf-head", "#pf-l"], 9.6, 0.3);
       tl.to("#sean-wrap", { ...BELOW, duration: 0.7, ease: "power3.inOut" }, 9.6);
       // waterfall reflows into the 3-bar diagnostic
-      tl.to("#rev-bar", { y: 106, scaleY: 0.75, scaleX: 900 / 456, duration: 0.5, ease: IO }, 9.7);
-      tl.to("#pf-bar", { y: -64, scaleY: 48 / 56, scaleX: 260 / 146, duration: 0.5, ease: IO }, 9.7);
+      tl.to("#rev-bar", { y: 54, scaleY: 40 / 64, scaleX: 900 / 456, duration: 0.5, ease: IO }, 9.7);
+      tl.to("#pf-bar", { y: -140, scaleY: 40 / 56, scaleX: 260 / 146, duration: 0.5, ease: IO }, 9.7);
       tl.fromTo("#dx-cost", { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: OUT }, 9.9);
       show(["#dx-l1", "#dx-l2", "#dx-l3"], 9.95, 0.35, { x: -10, y: 0 }, "sine.out");
       show("#dx-head1", 9.9, 0.4, { y: 18 }, OUT);
       tl.fromTo("#scan", { opacity: 0, y: 0 }, { opacity: 1, duration: 0.15 }, 10.4);
-      tl.to("#scan", { y: 270, duration: 0.9, ease: "sine.inOut" }, 10.4);
+      tl.to("#scan", { y: 230, duration: 0.9, ease: "sine.inOut" }, 10.4);
 
       // ---------------- S5 11.3 - 14.2 ----------------
-      tl.to("#scan", { y: 138, duration: 0.4, ease: "power2.out" }, 11.7);
+      tl.to("#scan", { y: 114, duration: 0.4, ease: "power2.out" }, 11.7);
       tl.fromTo("#dx-leak", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 12.1);
       tl.fromTo("#dx-ring", { opacity: 1, clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.4, ease: IO }, 12.1);
       hide("#scan", 12.2, 0.25);
@@ -444,7 +444,7 @@
       });
 
       tl.to({}, { duration: 36.4 }, 0); // duration anchor: fill the 36.4 s slot
-      window.__timelines["profit-leak"] = tl;
+      window.__timelines["profit-leak-45"] = tl;
     </script>
   </body>
 </html>
