@@ -71,6 +71,16 @@ efficient over time instead of relearning the same lessons.
 
 ## Delivery & resolution
 
+- **Live footage rendered through the browser comes out ~25% softer** (measured on a
+  4K talking head: H.264 proxy → JPEG q94 frame cache → software-GPU bilinear CSS
+  scaling for crops/push-ins → final encode). Fine for previews, not for a client
+  master. **Fix:** build the footage layer in ffmpeg straight from the camera original
+  (Lanczos, `scale=...:eval=frame` for push-ins, lossless FFV1 intermediates), render
+  only graphics/captions as a transparent `--format mov` (ProRes 4444) overlay, then
+  overlay + one 2-pass x264 encode. See `video-projects/profit-plan-90day/scripts/master.py`.
+- **Big masters over GitHub:** files must stay under 100 MB; 2-pass x264 at ~18 Mbps
+  keeps a 40 s 1080x1920 ad around 86 MB.
+
 - **There is no 4:5 render "preset."** Ship the final via `--quality high` at the
   project's native size (e.g. 1080×1350). For Meta hi-res deliverables, also export 2×
   (2160×2700).
