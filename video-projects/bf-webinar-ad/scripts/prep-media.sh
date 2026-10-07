@@ -39,7 +39,7 @@ G="if(gt(b(X,Y)-g(X,Y),22)*gt(r(X,Y)-g(X,Y),22)+lt(Y,720)*gt(min(min(r(X,Y),g(X,
 ffmpeg -v error -i "$WORK/stage916-fg.mov" -vf "format=rgba,geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='$G',format=yuva444p,alphaextract,format=gray" \
   -f rawvideo - | python3 -I scripts/clean-matte.py 1080 1920 > "$WORK/stage916-alpha.raw"
 ffmpeg -v error -y -i "$WORK/stage916.mp4" -i "$WORK/stage916-fg.mov" -f rawvideo -pix_fmt gray -s 1080x1920 -r 30 -i "$WORK/stage916-alpha.raw" \
-  -filter_complex "[0:v]scale=135:240,gblur=sigma=4,scale=1080:1920:flags=bicubic,curves=all='0/0 0.2/0.14 1/0.24',huesaturation=saturation=-0.5[bn];[2:v]erosion,gblur=sigma=4[m];[1:v]format=yuva444p[c];[c][m]alphamerge[f];[bn][f]overlay=format=auto,format=yuv420p" \
+  -filter_complex "[0:v]scale=27:48,gblur=sigma=1.5,scale=1080:1920:flags=bicubic,curves=all='0/0 0.2/0.11 1/0.15',huesaturation=saturation=-0.4[bn];[2:v]erosion,gblur=sigma=4[m];[1:v]format=yuva444p[c];[c][m]alphamerge[f];[bn][f]overlay=format=auto,format=yuv420p" \
   -c:v libx264 -crf 15 -g 30 -keyint_min 30 -pix_fmt yuv420p -an assets/broll-stage.mp4
 
 # --- Event conversation + bundles product shot (portrait footage stored sideways: rotate 90° CW) ---

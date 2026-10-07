@@ -50,31 +50,22 @@
 
       /* hook lockup, right panel (x 600-1080) */
       /* restrained opening overlays, over the original shot (top wall area) */
-      #scrim { position: absolute; left: 0; right: 0; top: 0; height: 720px; z-index: 25;
-        background: linear-gradient(to bottom, rgba(6,40,76,.72) 0%, rgba(6,40,76,.5) 45%, rgba(6,40,76,0) 100%); }
       .ovl { position: absolute; left: 60px; right: 60px; text-align: center; z-index: 30; font-weight: 800;
-        letter-spacing: -.01em; line-height: 1.04; text-transform: uppercase; text-shadow: 0 4px 24px rgba(6,40,76,.6); }
+        letter-spacing: -.01em; line-height: 1.04; text-transform: uppercase; }
       .ovl .ln { display: block; }
+      .lbox { display: inline-block; background: rgba(6,40,76,.92); border-radius: 20px; padding: 16px 30px;
+        box-shadow: 0 12px 40px rgba(3,20,40,.35); }
       #ov1 { top: 300px; font-size: 66px; }
       #ov2, #ov3 { top: 300px; font-size: 56px; }
 
-      /* performance tag on the close-up */
-      #perf { position: absolute; left: 72px; top: 300px; z-index: 30; display: flex; align-items: center; gap: 18px;
-        background: rgba(6,40,76,.88); border: 2px solid rgba(156,212,255,.4); border-radius: 18px; padding: 18px 28px; }
-      #perf .w { font-size: 54px; font-weight: 800; letter-spacing: -.01em; }
-      #perf svg { display: block; }
 
       /* ---------- social proof (full-screen B-roll) ---------- */
       #proof { position: absolute; inset: 0; z-index: 45; overflow: hidden; background: #06284C; }
       #proof video { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
-      #proof-top { position: absolute; left: 0; right: 0; top: 0; height: 820px; z-index: 5;
-        background: linear-gradient(to bottom, rgba(6,40,76,.96) 0%, rgba(6,40,76,.9) 52%, rgba(6,40,76,0) 100%); }
-      #proof-bot { position: absolute; left: 0; right: 0; bottom: 0; height: 900px; z-index: 5;
-        background: linear-gradient(to bottom, rgba(6,40,76,0), rgba(6,40,76,.55)); }
       #proof-text { left: 72px; right: 72px; top: 300px; text-align: center; z-index: 46; }
       #proof-text .a { font-size: 40px; font-weight: 700; letter-spacing: .06em; color: #9CD4FF; }
-      #proof-text .b { font-size: 108px; margin-top: 10px; }
-      #proof-text .c { font-size: 58px; margin-top: 6px; }
+      #proof-text .b { font-size: 92px; margin-top: 10px; }
+      #proof-text .c { font-size: 50px; margin-top: 6px; }
 
       /* ---------- discount reset ---------- */
       #disc { z-index: 50; }
@@ -116,13 +107,11 @@
       /* ---------- bundles full-bleed, grows out of row 03 ---------- */
       #bundle { position: absolute; inset: 0; z-index: 60; overflow: hidden; background: #06284C;
         clip-path: inset(562px 54px 1290px 494px round 16px); }
-      #bundle-vid-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform: translateY(-240px) scale(1.1); transform-origin: 50% 40%; }
+      #bundle-vid-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform: translateY(-160px) scale(1.16); transform-origin: 50% 40%; }
       #bundle-vid-wrap video { width: 1080px; height: 1920px; }
-      #bundle-shade-top { position: absolute; left: 0; right: 0; top: 0; height: 640px; background: linear-gradient(to bottom, rgba(6,40,76,.85), rgba(6,40,76,0)); }
-      #bundle-shade-bot { position: absolute; left: 0; right: 0; bottom: 0; height: 900px; background: linear-gradient(to bottom, rgba(6,40,76,0), rgba(6,40,76,.6)); }
       #bundle-text { position: absolute; left: 72px; top: 300px; }
       #bundle-text .n { font-size: 44px; font-weight: 700; color: #9CD4FF; }
-      #bundle-text .w { font-size: 120px; font-weight: 800; letter-spacing: -.02em; line-height: 1; margin-top: 6px; text-shadow: 0 8px 40px rgba(3,20,40,.5); }
+      #bundle-text .w { font-size: 120px; font-weight: 800; letter-spacing: -.02em; line-height: 1; margin-top: 6px; }
 
       /* ---------- October 14 event card ---------- */
       #ev-bg { z-index: 70; }
@@ -152,7 +141,7 @@
       .arrow { display: inline-block; }
 
       /* ---------- subtitles ---------- */
-      #subs { position: absolute; left: 0; right: 0; top: 0; height: 1540px; z-index: 95; pointer-events: none; }
+      #subs { position: absolute; left: 0; right: 0; top: 0; height: 1720px; z-index: 95; pointer-events: none; }
       .sub { position: absolute; left: 110px; right: 110px; bottom: 0; text-align: center; text-wrap: balance;
         font-size: 56px; font-weight: 700; line-height: 1.28; color: #FFFFFF; opacity: 0; }
       .sub .bx { background: rgba(6,40,76,.62); border-radius: 14px; padding: 2px 16px;
@@ -180,30 +169,22 @@
       <div id="panel-edge" class="clip" data-start="0" data-duration="37" data-track-index="5"></div>
 
       <!-- S1-S3 opening: original A-roll + restrained overlays -->
-      <div id="scrim" class="clip" data-start="0" data-duration="37" data-track-index="6"></div>
       <div id="ov1" class="ovl clip" data-start="0" data-duration="37" data-track-index="7">
-        <span class="ln"><span class="flame">Double</span> your</span><span class="ln">Black Friday revenue?</span>
+        <span class="lbox"><span class="ln"><span class="flame">Double</span> your</span><span class="ln">Black Friday revenue?</span></span>
       </div>
-      <div id="ov2" class="ovl clip" data-start="0" data-duration="37" data-track-index="8"><span class="ln">Free live webinar</span></div>
-      <div id="ov3" class="ovl clip" data-start="0" data-duration="37" data-track-index="28"><span class="ln">The Black Friday Playbook</span></div>
-
-      <!-- S5 performance tag on the close-up -->
-      <div id="perf" class="clip" data-start="0" data-duration="37" data-track-index="9">
-        <span class="w">PERFORMANCE</span>
-        <svg width="40" height="56" viewBox="0 0 40 56" fill="none"><path id="perf-arrow" d="M20 52 L20 6 M6 20 L20 6 L34 20" stroke="#9CD4FF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
+      <div id="ov2" class="ovl clip" data-start="0" data-duration="37" data-track-index="8"><span class="lbox"><span class="ln">Free live webinar</span></span></div>
+      <div id="ov3" class="ovl clip" data-start="0" data-duration="37" data-track-index="28"><span class="lbox"><span class="ln">The Black Friday Playbook</span></span></div>
 
       <!-- S4 social proof: full-screen B-roll -->
       <div id="proof">
         <video id="pv1" src="assets/broll-stage.mp4" muted playsinline data-start="8.45" data-duration="2.2" data-track-index="10"></video>
         <video id="pv2" src="assets/broll-laptop-convo.mp4" muted playsinline data-start="10.15" data-duration="2.2" data-track-index="11"></video>
-        <div id="proof-top"></div><div id="proof-bot"></div>
       </div>
-      <div id="proof-text" class="hero clip" data-start="0" data-duration="37" data-track-index="12">
+      <div id="proof-text" class="hero clip" data-start="0" data-duration="37" data-track-index="12"><span class="lbox">
         <span class="ln a">STRATEGIES USED WITH</span>
         <span class="ln b">8- &amp; 9-figure</span>
         <span class="ln c">ecommerce brands</span>
-      </div>
+      </span></div>
 
       <!-- S6 discount reset -->
       <div id="disc" class="navy-bg clip" data-start="0" data-duration="37" data-track-index="13">
@@ -280,8 +261,7 @@
         <div id="bundle-vid-wrap">
           <video id="bv" src="assets/broll-bundle.mp4" muted playsinline data-start="19.2" data-duration="2.3" data-track-index="15"></video>
         </div>
-        <div id="bundle-shade-top"></div><div id="bundle-shade-bot"></div>
-        <div id="bundle-text"><div class="n">03</div><div class="w">BUNDLES?</div></div>
+        <div id="bundle-text"><div class="lbox"><div class="n">03</div><div class="w">BUNDLES?</div></div></div>
       </div>
 
       <!-- S14 October 14 event card -->
@@ -381,14 +361,13 @@
 
       gsap.set("#sean-wrap", shot("OPEN"));
       gsap.set(["#panel", "#panel-edge"], { opacity: 0 });
-      gsap.set(["#scrim", "#ov1", "#ov2", "#ov3", "#perf", "#proof", "#proof-text", "#proof-text .ln", "#pv2",
+      gsap.set(["#ov1", "#ov2", "#ov3", "#proof", "#proof-text", "#proof-text .ln", "#pv2",
         "#disc", "#card", "#win-border", "#bundle", "#ev-bg", "#ev-text .ln", "#ev-tile", "#ev-time", "#ev-pill-wrap", "#ev-logo",
         "#cta-h1", "#cta-h2", "#cta-date", "#cta-pill-wrap", "#pill-b", "#end-logo", ".panel", "#bundle-text"], { opacity: 0 });
       tl.fromTo("#grid-main", { backgroundPosition: "0px 0px" }, { backgroundPosition: "0px 1200px", duration: 37, ease: "none" }, 0);
 
       // ---------- S1 HOOK 0.00-3.55: original A-roll, one restrained overlay ----------
       push("OPEN", 0, 3.55, 1.02);
-      tl.fromTo("#scrim", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power1.out" }, 0.40);
       tl.fromTo("#ov1", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.55);
       tl.to("#ov1", { opacity: 0, duration: 0.25, ease: "power1.in" }, 3.30);
 
@@ -407,18 +386,15 @@
       tl.fromTo("#proof-text .b", { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "expo.out" }, 8.85);
       tl.fromTo("#proof-text .c", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 8.97);
       tl.fromTo("#pv2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 10.15);
-      tl.set(["#scrim", "#ov3"], { opacity: 0 }, 9.0);
+      tl.set("#ov3", { opacity: 0 }, 9.0);
 
       // ---------- S5 PERFORMANCE 12.00-13.45: 130% close-up, full frame ----------
       cut("CLOSE", "FULL", 11.80); tl.set(["#panel", "#panel-edge"], { opacity: 0 }, 11.80);
       push("CLOSE", 11.80, 1.7, 1.02);
       tl.to(["#proof", "#proof-text"], { opacity: 0, duration: 0.35, ease: "power2.inOut" }, 11.85);
-      tl.fromTo("#perf", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.35, ease: "power3.out" }, 12.20);
-      tl.fromTo("#perf-arrow", { strokeDasharray: 120, strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.5, ease: "power2.out" }, 12.35);
 
       // ---------- S6 NOT JUST DISCOUNTS 13.45-16.00: full-screen interrupt ----------
       tl.fromTo("#disc", { opacity: 0, scale: 1.08, filter: "blur(14px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 13.45);
-      tl.set("#perf", { opacity: 0 }, 13.90);
       tl.fromTo("#disc-tag", { opacity: 0, rotation: -28, y: -40 }, { opacity: 1, rotation: 0, y: 0, duration: 0.6, ease: "back.out(1.4)" }, 13.55);
       tl.fromTo("#d1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 13.75);
       tl.fromTo("#d2", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.45, ease: "expo.out" }, 14.20);
