@@ -19,7 +19,7 @@ him. Calm pacing: every shot holds 1.35s or more, every graphic is readable befo
 
 ## Typography
 Rethink Sans throughout (800 headlines at -2% tracking, 500 captions, 700-800 tracked labels).
-Hedvig Letters Serif italic exactly once: *SECOND* in "GET THE SECOND SALE."
+Hedvig Letters Serif italic once per graphic: *SECOND* in "GET THE SECOND SALE." and *Free.* on the end card (campaign end-card pattern).
 
 ## Layout
 - Graphics live between y 270 and y 1250 (Meta safe band).
@@ -38,10 +38,9 @@ Hedvig Letters Serif italic exactly once: *SECOND* in "GET THE SECOND SALE."
 ## Rebuild
 ```bash
 bash scripts/build-plate.sh <dir-with-drive-masters>   # assets/media/plate.mp4 + vo.wav
-python3 scripts/make-sfx.py assets/media              # assets/media/sfx.wav
 npx hyperframes lint && npx hyperframes render --quality standard --output renders/final.mp4
 ```
-No music bed is included: add a licensed bed in the edit, at least 20 dB under Sean.
+No sound effects (removed at review) and no music bed: Sean's voice only. Add a licensed bed in the edit if wanted, at least 20 dB under Sean.
 
 ## Build notes (where the build differs from EDIT-PLAN.md)
 - Captions follow the campaign (white, 50px, bottom edge 270px from the frame bottom), not the plan's y 1250 band.
@@ -51,3 +50,6 @@ No music bed is included: add a licensed bed in the edit, at least 20 dB under S
 - Authority shot is the Shoptalk stage close-up after the clip's own camera cut (source 14.56s),
   with a crop that pans with Sean. No Rebuy stats in frame.
 - All B-roll is now frame-checked: Dryft hold, Shoptalk stage, Sean holding laptop, Erica x2.
+- Opens at A-roll 0.56s with Sean already facing camera (his glance at the computer is trimmed);
+  Sean is cut at 32.64s before he looks back down, then a 3s Navy end card holds BOOK NOW.
+- Lip sync: A-roll picture runs 2 frames (0.08s) behind its audio timecode to line lips up with the voice.

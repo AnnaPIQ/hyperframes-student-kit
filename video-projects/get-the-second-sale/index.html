@@ -126,6 +126,21 @@
       #book { height: 100px; font-size: 46px; white-space: nowrap; display: flex; align-items: center; justify-content: center; gap: 14px; }
       #book svg { width: 36px; height: 44px; }
 
+      /* ---------- end card (campaign style) ---------- */
+      #endStage { position: absolute; inset: 0; opacity: 0;
+        background:
+          radial-gradient(circle at 1.5px 1.5px, rgba(222,238,254,.12) 1.5px, transparent 2px) 0 0 / 54px 54px,
+          radial-gradient(60% 40% at 50% 42%, rgba(156,212,255,.22) 0%, rgba(6,40,76,0) 70%),
+          #06284C; }
+      #end { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; padding: 600px 90px 0;
+        display: flex; flex-direction: column; align-items: center; gap: 30px; text-align: center; opacity: 0; }
+      #end img { width: 460px; height: auto; }
+      #end .eh { font-weight: 800; font-size: 78px; line-height: 1.02; letter-spacing: -.03em; margin-top: 18px; }
+      #end .eh span { display: block; }
+      #end .em { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; font-size: 100px;
+        color: #9CD4FF; line-height: 1; }
+      #end .pill { margin-top: 18px; font-size: 48px; padding: 28px 70px; white-space: nowrap; }
+
       /* ---------- captions: campaign treatment ---------- */
       .cap { position: absolute; z-index: 20; left: 60px; width: 960px; bottom: 270px; text-align: center; font-weight: 500;
         font-size: 50px; line-height: 1.18; color: #FFFFFF; opacity: 0;
@@ -136,16 +151,15 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="get-the-second-sale" data-start="0" data-duration="34.12" data-fps="25"
+    <div id="root" data-composition-id="get-the-second-sale" data-start="0" data-duration="35.08" data-fps="25"
          data-width="1080" data-height="1920">
 
       <!-- picture edit: A-roll crops + B-roll, cut frame-accurately in FFmpeg (scripts/build-plate.sh) -->
       <div id="plateWrap"><div id="plateInner">
-        <video id="plate" data-start="0" data-duration="34.12" data-track-index="0"
+        <video id="plate" data-start="0" data-duration="35.08" data-track-index="0"
                src="assets/media/plate.mp4" muted playsinline></video>
       </div></div>
-      <audio id="vo" data-start="0" data-duration="34.12" data-track-index="1" src="assets/media/vo.wav" data-volume="1"></audio>
-      <audio id="sfx" data-start="0" data-duration="34.12" data-track-index="2" src="assets/media/sfx.wav" data-volume="1"></audio>
+      <audio id="vo" data-start="0" data-duration="35.08" data-track-index="1" src="assets/media/vo.wav" data-volume="1"></audio>
 
       <div id="dim"></div>
       <div id="shade"></div>
@@ -269,6 +283,15 @@
       <div class="cap" id="c15"><span class="l">what could bring</span><span class="l">your customers back</span></div>
       <div class="cap" id="c16">Tap <span class="hf">Book Now</span> to choose a time</div>
 
+      <!-- end card -->
+      <div id="endStage"></div>
+      <div id="end">
+        <img id="endLogo" src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+        <div class="eh" id="endH"><span>Get the</span><span>second sale.</span></div>
+        <div class="em" id="endEm">Free.</div>
+        <div class="pill flamePill" id="endPill">BOOK NOW</div>
+      </div>
+
       <!-- logo: positioned, non-clip wrapper so the engine never moves it -->
       <div id="logoBox"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
     </div>
@@ -299,10 +322,10 @@
 
       // ---------- picture: slow push on every live shot ----------
       // [start, end, transformOrigin, endScale]
-      [[0, 3.40, '34% 32%', 1.03], [3.40, 4.96, '34% 30%', 1.02], [7.56, 9.56, '45% 40%', 1.03],
+      [[0.56, 3.40, '34% 32%', 1.03], [3.40, 4.96, '34% 30%', 1.02], [7.56, 9.56, '45% 40%', 1.03],
        [15.44, 16.96, '50% 35%', 1.025], [16.96, 18.32, '50% 35%', 1.025], [18.32, 21.20, '50% 60%', 1.035],
        [21.20, 22.76, '60% 40%', 1.025], [24.72, 26.84, '34% 32%', 1.025], [26.84, 30.44, '34% 30%', 1.03],
-       [30.44, 34.12, '34% 32%', 1.04]].forEach(function (s) {
+       [30.44, 32.64, '34% 32%', 1.025]].forEach(function (s) {
         tl.set('#plateInner', { transformOrigin: s[2], scale: 1 }, s[0]);
         tl.to('#plateInner', { scale: s[3], duration: s[1] - s[0], ease: 'none' }, s[0]);
       });
@@ -413,7 +436,18 @@
         tl.to(c[0], { opacity: 0, duration: 0.12, ease: 'none' }, c[2] - 0.12);
       });
 
-      tl.to({}, { duration: 34.12 }, 0); // fill the slot
+      // ---------- end card 32.64-35.64 (Sean is cut before he looks back to his computer) ----------
+      const E = 32.64;
+      show('#endStage, #end', E);
+      hide('#s17, #logoBox, #shade, #topshade', E);
+      rise('#endLogo', E + 0.04, 0.35, 20, 'power3.out');
+      rise('#endH', E + 0.14, 0.4, 30, 'expo.out');
+      rise('#endEm', E + 0.28, 0.4, 26, 'power2.out');
+      tl.fromTo('#endPill', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.5)' }, E + 0.42);
+
+      // the A-roll opens at 0.56 (glance at the computer trimmed): move every tween to the edit's own clock
+      tl.shiftChildren(-0.56);
+      tl.to({}, { duration: 35.08 }, 0); // fill the slot
       window.__timelines['get-the-second-sale'] = tl;
     </script>
   </body>

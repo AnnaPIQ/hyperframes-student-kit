@@ -10,7 +10,11 @@
 #     shoptalk-stage.mp4  Sean talking on stage at Shoptalk   1XuPAArGjpESm3JUhjU7Q3gVmz4L_y72Z
 #     erica.mp4        Copy of Sweet E's Owner Erica - Packing cake.MP4  1cF3UR7rqtK27rx9HUh5H7Wt_yipf8fhp
 #     holdlap.mp4      Sean holding laptop talking to man     1HVH9tFgvcAfS-YczxU_aiLOmUxm18Ofu
-# Edit timecode == A-roll timecode (the VO is never cut). 853 frames = 34.12s.
+# Times below are A-roll audio timecodes. The edit opens at T0=0.56 (Sean already facing camera,
+# the glance at his computer is trimmed) and Sean is cut at 32.64 (before he looks back down),
+# followed by a 3.00s end card. 877 frames = 35.08s.
+# Lip sync: the camera file's audio starts 0.076s after its picture and the lips lead the voice by
+# ~2 frames once extracted, so every A-roll picture segment is taken VS=0.08s earlier than its audio.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 W="${1:?workdir with masters}"; O="$W/plate-build"; mkdir -p "$O" assets/media
@@ -20,12 +24,13 @@ V="fps=25,format=yuv420p"; X="-c:v libx264 -preset medium -crf 14 -r 25 -an"
 # A-roll: ProRes 3840x2160 25fps, Sean's face centred at source x~1920.
 # WIDE-L puts Sean left of centre (face ~x 370 of 1080) and leaves the right column for cards.
 WIDE="crop=1215:2160:1518:0"; P112="crop=1085:1929:1583:60"; P106="crop=1146:2038:1552:40"
-a(){ ffmpeg -v error -y -ss "$2" -i "$A" -frames:v "$3" -vf "$4,scale=1080:1920:flags=lanczos,$V" $X "$O/$1.mp4"; }
-a a1 0.00  85 "$WIDE"   # 0.00-3.40  qualifier
+VS=0.08
+a(){ ffmpeg -v error -y -ss "$(python3 -c "print(round($2-$VS,2))")" -i "$A" -frames:v "$3" -vf "$4,scale=1080:1920:flags=lanczos,$V" $X "$O/$1.mp4"; }
+a a1 0.56  71 "$WIDE"   # 0.56-3.40  qualifier (opens facing camera)
 a a2 3.40  39 "$P112"   # 3.40-4.96  hook punch-in
 a a3 24.72 53 "$WIDE"   # 24.72-26.84 free discovery call
 a a4 26.84 90 "$P106"   # 26.84-30.44 bring them back (cut-in on silence)
-a a5 30.44 92 "$WIDE"   # 30.44-34.12 CTA
+a a5 30.44 55 "$WIDE"   # 30.44-32.64 CTA (cut before he looks back to the computer)
 
 # B-roll. Canon client/event masters are vertical footage stored sideways: rotate 90 deg CW.
 R="transpose=1"
@@ -42,11 +47,15 @@ n(){ ffmpeg -v error -y -f lavfi -i "color=c=0x06284C:s=1080x1920:r=25" -frames:
 n n1 65    # 4.96-7.56   GFX-1 get the second sale
 n n2 147   # 9.56-15.44  GFX-2 journey
 n n3 49    # 22.76-24.72 GFX-3 track repeat purchases
+n n4 75    # 32.64-35.64 end card
 
-printf "file '%s.mp4'\n" a1 a2 n1 b1 n2 c1 d1 e1 f1 n3 a3 a4 a5 > "$O/list.txt"
+printf "file '%s.mp4'\n" a1 a2 n1 b1 n2 c1 d1 e1 f1 n3 a3 a4 a5 n4 > "$O/list.txt"
 ffmpeg -v error -y -f concat -safe 0 -i "$O/list.txt" -c copy assets/media/plate.mp4
 
-# VO: the whole A-roll read, untouched in time, cleaned and normalised for Meta.
-ffmpeg -v error -y -i "$A" -t 34.12 -vn -af "highpass=f=70,loudnorm=I=-14:TP=-1.5:LRA=7,aresample=48000" \
+# VO: the A-roll read, untouched in time, cleaned and normalised for Meta. Extracted whole first
+# (stream offset dropped, which is the timebase all timings here use), then trimmed to the edit.
+ffmpeg -v error -y -i "$A" -vn -ac 2 -c:a pcm_s16le "$O/vo_full.wav"
+ffmpeg -v error -y -i "$O/vo_full.wav" -af "atrim=start=0.56:end=32.64,asetpts=PTS-STARTPTS,afade=t=out:st=31.88:d=0.20,\
+afade=t=in:d=0.01,highpass=f=70,loudnorm=I=-14:TP=-1.5:LRA=7,aresample=48000,apad=whole_dur=35.08" \
   -ac 2 -c:a pcm_s16le assets/media/vo.wav
-echo "plate: $(ffprobe -v error -count_frames -show_entries stream=nb_read_frames -of csv=p=0 assets/media/plate.mp4) frames (expect 853)"
+echo "plate: $(ffprobe -v error -count_frames -show_entries stream=nb_read_frames -of csv=p=0 assets/media/plate.mp4) frames (expect 877)"
