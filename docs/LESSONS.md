@@ -41,9 +41,12 @@ efficient over time instead of relearning the same lessons.
 
 ## Footage & A/V sync
 
-- **Talking-head lips out of sync.** Source recordings often have a ~0.2s audio start
-  offset that the engine drops. **Fix:** advance the video ~0.16s relative to audio so
-  lips match (tune per clip).
+- **Talking-head lips out of sync.** Source recordings often have the voice ~0.2s AHEAD of the lips
+  (camera audio stream offset that gets dropped on extract). **Fix:** take the picture LATER than the
+  audio timecode (advance the video ~0.16-0.20s; tune per clip). **Measure, don't eyeball:** single-frame
+  "mouth opens here" checks gave the wrong sign once. Use face-landmark mouth opening vs voice envelope
+  cross-correlation (`video-projects/get-the-second-sale/scripts/measure-lipsync.py`, MediaPipe face
+  landmarker; needs `apt-get install libegl1 libgles2`). Target: best lag within +/-40ms on the RENDER.
 - **Phone / vertical b-roll imports rotated.** **Fix:** rotate 90° CW during prep
   (`ffmpeg -vf "transpose=1"`).
 - **Offline transcriber can't run (model download egress-blocked).** Some environments

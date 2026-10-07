@@ -57,6 +57,8 @@ No sound effects (removed at review) and no music bed: Sean's voice only. Add a 
   with a crop that pans with Sean. No Rebuy stats in frame.
 - All B-roll is now frame-checked: Dryft hold, Shoptalk stage, Sean holding laptop, Erica x2.
 - Opens at A-roll 0.56s with Sean already facing camera (his glance at the computer is trimmed);
-  Sean is cut at 32.64s before he looks back down, then a 3s Navy end card holds BOOK NOW.
+  Sean is cut at 32.40s before he looks back down, then a 3s Navy end card holds BOOK NOW.
 - Hook graphic (4.40-7.00) is a customer record: Order #1, then Order #2 "CAME BACK" lands on "buying again" and the count rolls 1 to 2.
-- Lip sync: A-roll picture runs 2 frames (0.08s) behind its audio timecode to line lips up with the voice.
+- Lip sync: A-roll picture is taken 0.20s (5 frames) later than its audio timecode, because the voice in the camera
+  file runs ~0.20s ahead of the lips. Measured on the render with `scripts/measure-lipsync.py` (face-landmark mouth
+  opening vs voice envelope): +10ms, correlation 0.28 (was 0.01 before the fix).

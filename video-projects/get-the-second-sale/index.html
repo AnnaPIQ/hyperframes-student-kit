@@ -298,7 +298,7 @@
       [[0.56, 3.40, '34% 32%', 1.03], [3.40, 4.96, '34% 30%', 1.02], [7.56, 9.56, '45% 40%', 1.03],
        [15.44, 16.96, '50% 35%', 1.025], [16.96, 18.32, '50% 35%', 1.025], [18.32, 21.20, '50% 60%', 1.035],
        [21.20, 24.72, '60% 40%', 1.04], [24.72, 26.84, '34% 32%', 1.025], [26.84, 30.44, '34% 30%', 1.03],
-       [30.44, 32.64, '34% 32%', 1.025]].forEach(function (s) {
+       [30.44, 32.40, '34% 32%', 1.025]].forEach(function (s) {
         tl.set('#plateInner', { transformOrigin: s[2], scale: 1 }, s[0]);
         tl.to('#plateInner', { scale: s[3], duration: s[1] - s[0], ease: 'none' }, s[0]);
       });
@@ -399,8 +399,8 @@
         tl.to(c[0], { opacity: 0, duration: 0.12, ease: 'none' }, c[2] - 0.12);
       });
 
-      // ---------- end card 32.64-35.64 (Sean is cut before he looks back to his computer) ----------
-      const E = 32.64;
+      // ---------- end card 32.40-35.64 (Sean is cut before he looks back to his computer) ----------
+      const E = 32.40;
       show('#endStage, #end', E);
       hide('#s17, #logoBox, #shade, #topshade', E);
       rise('#endLogo', E + 0.04, 0.35, 20, 'power3.out');

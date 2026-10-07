@@ -11,10 +11,11 @@
 #     erica.mp4        Copy of Sweet E's Owner Erica - Packing cake.MP4  1cF3UR7rqtK27rx9HUh5H7Wt_yipf8fhp
 #     holdlap.mp4      Sean holding laptop talking to man     1HVH9tFgvcAfS-YczxU_aiLOmUxm18Ofu
 # Times below are A-roll audio timecodes. The edit opens at T0=0.56 (Sean already facing camera,
-# the glance at his computer is trimmed) and Sean is cut at 32.64 (before he looks back down),
+# the glance at his computer is trimmed) and Sean is cut at 32.40 (before he looks back down),
 # followed by a 3.00s end card. 877 frames = 35.08s.
-# Lip sync: the camera file's audio starts 0.076s after its picture and the lips lead the voice by
-# ~2 frames once extracted, so every A-roll picture segment is taken VS=0.08s earlier than its audio.
+# Lip sync (measured with face-landmark mouth tracking against the voice envelope): in the camera
+# file the voice runs ~0.20s AHEAD of the lips once extracted, so every A-roll picture segment is
+# taken VS=0.20s LATER than its audio timecode (VS=-0.20 below).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 W="${1:?workdir with masters}"; O="$W/plate-build"; mkdir -p "$O" assets/media
@@ -24,13 +25,13 @@ V="fps=25,format=yuv420p"; X="-c:v libx264 -preset medium -crf 14 -r 25 -an"
 # A-roll: ProRes 3840x2160 25fps, Sean's face centred at source x~1920.
 # WIDE-L puts Sean left of centre (face ~x 370 of 1080) and leaves the right column for cards.
 WIDE="crop=1215:2160:1518:0"; P112="crop=1085:1929:1583:60"; P106="crop=1146:2038:1552:40"
-VS=0.08
+VS=-0.20
 a(){ ffmpeg -v error -y -ss "$(python3 -c "print(round($2-$VS,2))")" -i "$A" -frames:v "$3" -vf "$4,scale=1080:1920:flags=lanczos,$V" $X "$O/$1.mp4"; }
 a a1 0.56  71 "$WIDE"   # 0.56-3.40  qualifier (opens facing camera)
 a a2 3.40  39 "$P112"   # 3.40-4.96  hook punch-in
 a a3 24.72 53 "$WIDE"   # 24.72-26.84 free discovery call
 a a4 26.84 90 "$P106"   # 26.84-30.44 bring them back (cut-in on silence)
-a a5 30.44 55 "$WIDE"   # 30.44-32.64 CTA (cut before he looks back to the computer)
+a a5 30.44 49 "$WIDE"   # 30.44-32.40 CTA (cut before he looks back to the computer)
 
 # B-roll. Canon client/event masters are vertical footage stored sideways: rotate 90 deg CW.
 R="transpose=1"
@@ -46,7 +47,7 @@ b f1 holdlap.mp4        3.50  88 "$R"                    # 21.20-24.72 guide you
 n(){ ffmpeg -v error -y -f lavfi -i "color=c=0x06284C:s=1080x1920:r=25" -frames:v "$2" $X "$O/$1.mp4"; }
 n n1 65    # 4.96-7.56   GFX-1 get the second sale
 n n2 147   # 9.56-15.44  GFX-2 journey
-n n4 75    # 32.64-35.64 end card
+n n4 81    # 32.40-35.64 end card
 
 printf "file '%s.mp4'\n" a1 a2 n1 b1 n2 c1 d1 e1 f1 a3 a4 a5 n4 > "$O/list.txt"
 ffmpeg -v error -y -f concat -safe 0 -i "$O/list.txt" -c copy assets/media/plate.mp4
