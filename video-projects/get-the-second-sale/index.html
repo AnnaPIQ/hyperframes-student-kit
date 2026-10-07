@@ -62,15 +62,27 @@
       #s1 .big { margin-top: 18px; font-weight: 800; font-size: 118px; line-height: .95; letter-spacing: -.04em; }
       #s1 .per { margin-top: 14px; font-weight: 800; font-size: 36px; letter-spacing: .14em; }
 
-      /* ---------- GFX-1 / GFX-3 horizontal journey ---------- */
-      .hHead { left: 90px; top: 470px; width: 900px; font-size: 116px; }
-      .row { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
-      .row .line { position: absolute; left: 180px; top: 917px; width: 720px; height: 6px; border-radius: 3px;
-        background: #DEEEFE; transform-origin: 0 50%; }
-      .row .d1 { left: 140px; top: 900px; width: 40px; height: 40px; background: #9CD4FF; }
-      .row .d2 { left: 900px; top: 900px; width: 40px; height: 40px; background: #FF4C32; }
-      .row .l1 { position: absolute; left: 100px; top: 966px; color: #9CD4FF; }
-      .row .l2 { position: absolute; right: 100px; top: 966px; color: #FF4C32; }
+      /* ---------- GFX-1 customer record: order #1, then the same customer comes back ---------- */
+      #g1head { left: 90px; top: 300px; width: 900px; font-size: 104px; }
+      #g1panel { left: 90px; top: 580px; width: 900px; padding: 40px; background: #FFFFFF; color: #06284C;
+        border-radius: 32px; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+      #g1panel .cust { display: flex; align-items: center; gap: 24px; }
+      #g1panel .av { width: 96px; height: 96px; border-radius: 50%; background: #DEEEFE; flex: none;
+        display: flex; align-items: center; justify-content: center; }
+      #g1panel .av svg { width: 56px; height: 56px; }
+      #g1panel .nm { font-weight: 800; font-size: 44px; }
+      #g1panel .sb { font-weight: 600; font-size: 26px; color: #46607E; margin-top: 6px; }
+      #g1panel .cnt { margin-left: auto; text-align: right; }
+      #g1panel .num { position: relative; height: 92px; width: 70px; margin-left: auto; overflow: hidden; }
+      #g1panel .num b { position: absolute; right: 0; top: 0; font-size: 96px; line-height: .96; letter-spacing: -.04em;
+        font-variant-numeric: tabular-nums; }
+      #g1panel .cnt span { font-weight: 700; font-size: 24px; letter-spacing: .14em; color: #46607E; }
+      #g1panel .lbl { font-weight: 700; font-size: 24px; letter-spacing: .16em; color: #46607E; margin-top: 34px; }
+      #g1panel .orow { display: flex; align-items: center; gap: 22px; margin-top: 22px; padding: 24px; border-radius: 20px;
+        background: #F3F8FE; }
+      #g1panel .orow .d { width: 28px; height: 28px; border-radius: 50%; flex: none; }
+      #g1panel .orow .t { font-weight: 800; font-size: 40px; }
+      #g1panel .orow .s { margin-left: auto; font-weight: 700; font-size: 26px; letter-spacing: .1em; color: #46607E; }
 
 
       /* ---------- GFX-2 vertical journey ---------- */
@@ -162,13 +174,16 @@
 
       <!-- GFX-1 get the second sale -->
       <div id="g1stage" class="navyStage"></div>
-      <div id="g1head" class="abs h hHead hide"><span>GET THE</span><span>SECOND SALE.</span></div>
-      <div id="g1row" class="row hide">
-        <div class="line" id="g1line"></div>
-        <div class="dot d1" id="g1d1"></div>
-        <div class="dot d2" id="g1d2"></div>
-        <div class="lab l1" id="g1l1">ORDER #1</div>
-        <div class="lab l2" id="g1l2">ORDER #2</div>
+      <div id="g1head" class="abs h hide"><span>GET THE</span><span>SECOND SALE.</span></div>
+      <div id="g1panel" class="abs hide">
+        <div class="cust">
+          <div class="av"><svg viewBox="0 0 56 56"><circle cx="28" cy="20" r="11" fill="#06284C"/><path d="M8 52c2-12 10-18 20-18s18 6 20 18" fill="#06284C"/></svg></div>
+          <div><div class="nm">Customer</div><div class="sb">Order history</div></div>
+          <div class="cnt"><div class="num"><b id="g1n1">1</b><b id="g1n2">2</b></div><span>ORDERS</span></div>
+        </div>
+        <div class="lbl">ORDERS</div>
+        <div class="orow" id="g1r1"><div class="d" style="background:#9CD4FF"></div><div class="t">Order #1</div><div class="s">FIRST ORDER</div></div>
+        <div class="orow" id="g1r2"><div class="d" style="background:#FF4C32"></div><div class="t">Order #2</div><div class="s">CAME BACK</div></div>
       </div>
 
 
@@ -300,16 +315,17 @@
       tl.fromTo('#g1stage', { opacity: 0 }, { opacity: 1, duration: 0.2, ease: 'none' }, 4.96);
       hide('#shade, #topshade', 5.16);
       rise('#g1head', 5.00, 0.45, 26);
-      show('#g1row', 5.00);
-      tl.set('#g1line', { scaleX: 0 }, 4.96);
-      tl.set('#g1d2, #g1l1, #g1l2', { opacity: 0 }, 4.96);
-      pop('#g1d1', 5.20);
-      fadeIn('#g1l1', 5.30);
-      tl.to('#g1line', { scaleX: 1, duration: 0.6, ease: 'power2.inOut' }, 5.36);
-      pop('#g1d2', 5.92, 0.4);
-      fadeIn('#g1l2', 6.00);
-      tl.to('#g1head, #g1row', { scale: 1.02, duration: 2.4, ease: 'none', transformOrigin: '50% 45%' }, 5.16);
-      hide('#g1stage, #g1head, #g1row', 7.56);
+      rise('#g1panel', 5.20, 0.45, 50, 'power2.out');
+      tl.set('#g1n2', { yPercent: 100 }, 4.96);
+      tl.set('#g1r2', { opacity: 0 }, 4.96);
+      // "buying again": the same customer comes back
+      tl.fromTo('#g1r2', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' }, 5.92);
+      tl.to('#g1r2', { boxShadow: '0 0 0 4px #DEEEFE', duration: 0.3, ease: 'power1.out' }, 6.10);
+      tl.to('#g1n1', { yPercent: -100, duration: 0.35, ease: 'power2.inOut' }, 6.04);
+      tl.to('#g1n2', { yPercent: 0, duration: 0.35, ease: 'power2.inOut' }, 6.04);
+      tl.to('#g1r1', { opacity: 0.6, duration: 0.3, ease: 'power1.out' }, 6.10);
+      tl.to('#g1head, #g1panel', { scale: 1.02, duration: 2.4, ease: 'none', transformOrigin: '50% 45%' }, 5.16);
+      hide('#g1stage, #g1head, #g1panel', 7.56);
       show('#shade, #topshade', 7.56);
 
       // ---------- product + ORDER #1 tag 7.56-9.16 ----------
