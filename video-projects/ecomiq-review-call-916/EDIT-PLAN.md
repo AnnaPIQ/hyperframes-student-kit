@@ -1,6 +1,6 @@
 # EcomIQ · "Your ads are spending. Are they selling?" · Review Call · 9:16 Meta
 
-**Complete editing plan, v8.** A-roll with designed interruptions, not a cut-up social ad.
+**Complete editing plan, v9.** A-roll with designed interruptions, not a cut-up social ad.
 
 | | |
 |---|---|
@@ -16,6 +16,9 @@
 - **Head trim applied.** The first 0.30s of silence is removed. Sean's first word ("Shopify") now lands at **0.32s**. Every timestamp in this document is on the trimmed timeline. Source timecodes for B-roll are unchanged. (The A-roll only has 0.62s of silence before the first word, so 0.30s is the most that can be removed without clipping "Shopify".)
 - **Mob Armor sign-off confirmed.** Use of the Mob Armor name, logo, product footage and the +500% claim is approved.
 - **Style reference = DESIGN.md.** The type, colour, motion and layout rules are re-aligned to the EcomIQ design spec and recipe. Details are in the next section.
+
+### v9 changes
+- **Shot 3 pop-out callout removed.** The #1 flag stays inside the phone.
 
 ### v8 changes
 - **Opening move:** Sean starts centred, then the frame glides so he settles left (1.20 to 1.90) as the $20K+ column arrives. The eyebrow now enters at 1.50.
@@ -189,14 +192,14 @@ All times are timeline seconds on the trimmed edit (source time minus 0.30s). At
 
 **SHOT 3 · 6.96 to 11.20 (4.24s)**
 - **Dialogue:** "We'll show you what we'd change first, live on a free call."
-- **Visual type:** Sean on the right, a phone showing a store product page on the left, then a callout on his jacket. **No words**
+- **Visual type:** Sean on the right, a phone showing a store product page on the left. **No words**
 - **A-roll treatment:** live, slow push 100 to 103%
 - **Crop:** MED-R2 (1080 × 1920 @ 1260, 120 in the 4K source) · **Sean position:** right, face clear of the phone
 - **Motion graphic:**
   - 7.10: phone (320 × 604, x 108, y 500) slides in from the left. Simple Shopify-style product page: image, title, price, stars, Add to cart button
   - 7.76 (on "what"): a Blue Tint scan line sweeps down the page (0.9s). Three ring markers pop as it passes: image (7.98), price (8.30), Add to cart (8.46)
   - 8.70 (on "first"): the other markers dim. The Add to cart button gets a **Flame** ring and a small "1" badge
-  - 8.90: **callout**. An enlarged Add to cart button (Blue Tint, Flame ring, big Flame "1" badge) flies out of the phone and lands on Sean's jacket at y 1230 (back.out). Gentle pulse at 9.90. Holds to 11.20
+  - Holds to 11.20 with the Add to cart button flagged #1 inside the phone (the v8 pop-out callout was removed in v9)
 - **Subtitles:** rows 5 to 6 (white)
 - **Transition:** straight cut in from the cartoon (6.96). Out T-RISE (11.20)
 - **SFX:** soft sweep under the scan, three light ticks on the markers, one firmer click on the "1"

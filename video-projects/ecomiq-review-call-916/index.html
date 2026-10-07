@@ -48,7 +48,6 @@
       #s3 { z-index: 10; }
       /* Shot 3 card: ranked fixes (01 gets the tick), held to the end of the shot. Solid navy, no fade. Sits on the jacket, clear of the face */
       /* Shot 3: phone with a store page. Scan marks three spots, the Add to cart button becomes the #1 fix */
-      #callout { position: absolute; left: 300px; top: 1230px; width: 600px; height: 150px; }
       #phone { position: absolute; left: 108px; top: 500px; width: 320px; height: 604px; filter: drop-shadow(0 24px 50px rgba(6,40,76,.55)); }
 
       /* Journey spine (column coordinates; Card B offsets the group by +120px) */
@@ -201,13 +200,6 @@
           <rect id="fixring" x="20" y="506" width="320" height="86" rx="43" fill="none" stroke="#FF4C32" stroke-width="7"/>
           <g id="badge"><circle cx="334" cy="506" r="30" fill="#FF4C32"/><text x="334" y="518" text-anchor="middle" font-family="Rethink Sans" font-weight="800" font-size="34" fill="#FFFFFF">1</text></g>
         </svg>
-        <!-- callout: the #1 fix, enlarged out of the phone -->
-        <svg id="callout" viewBox="0 0 600 150">
-          <rect x="70" y="22" width="500" height="112" rx="56" fill="#9CD4FF" stroke="#FF4C32" stroke-width="9"/>
-          <g fill="none" stroke="#06284C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M284 58 h14 l13 40 h34 l10 -27 h-50"/><circle cx="317" cy="111" r="5"/><circle cx="343" cy="111" r="5"/></g>
-          <circle cx="72" cy="76" r="62" fill="#FF4C32"/>
-          <text x="72" y="100" text-anchor="middle" font-family="Rethink Sans" font-weight="800" font-size="70" fill="#FFFFFF">1</text>
-        </svg>
       </div>
 
       <!-- CARD B + SPLITS A/B · 11.20 to 21.30 (one evolving composition) -->
@@ -359,9 +351,6 @@
       tl.to("#mk3", { opacity: 0, duration: 0.2 }, 8.70);
       tl.fromTo("#fixring", { opacity: 0, scale: 1.12, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, 8.70);
       tl.fromTo("#badge", { opacity: 0, scale: 0, transformOrigin: "334px 506px" }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)", immediateRender: false }, 8.82);
-      tl.fromTo("#callout", { opacity: 0, x: -300, y: -260, scale: 0.35, transformOrigin: "50% 50%" },
-        { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.4)" }, 8.90);
-      tl.to("#callout", { scale: 1.04, transformOrigin: "50% 50%", duration: 0.4, ease: "sine.inOut", yoyo: true, repeat: 1 }, 9.90);
 
       // ---------- CARD B → SPLIT A → SPLIT B ----------
       tl.fromTo("#jour", { opacity: 0, y: 115 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 11.20);
