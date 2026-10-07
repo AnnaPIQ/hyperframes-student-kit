@@ -1,6 +1,6 @@
 # EcomIQ · "Your ads are spending. Are they selling?" · Review Call · 9:16 Meta
 
-**Complete editing plan, v6.** A-roll with designed interruptions, not a cut-up social ad.
+**Complete editing plan, v7.** A-roll with designed interruptions, not a cut-up social ad.
 
 | | |
 |---|---|
@@ -16,6 +16,9 @@
 - **Head trim applied.** The first 0.30s of silence is removed. Sean's first word ("Shopify") now lands at **0.32s**. Every timestamp in this document is on the trimmed timeline. Source timecodes for B-roll are unchanged. (The A-roll only has 0.62s of silence before the first word, so 0.30s is the most that can be removed without clipping "Shopify".)
 - **Mob Armor sign-off confirmed.** Use of the Mob Armor name, logo, product footage and the +500% claim is approved.
 - **Style reference = DESIGN.md.** The type, colour, motion and layout rules are re-aligned to the EcomIQ design spec and recipe. Details are in the next section.
+
+### v7 changes
+- **Video-call window removed from Shot 3.** The ranked 01/02/03 card holds to the end of the shot.
 
 ### v6 changes
 - **Rule: no graphic repeats Sean's words.** A graphic either adds something (a visual, a number, a structure) or it's removed.
@@ -181,16 +184,16 @@ All times are timeline seconds on the trimmed edit (source time minus 0.30s). At
 
 **SHOT 3 · 6.96 to 11.20 (4.24s)**
 - **Dialogue:** "We'll show you what we'd change first, live on a free call."
-- **Visual type:** Sean with a small navy card on his jacket, two beats in one card. **No words on the card** (the v4 text "What we'd change first." and its blue fade were removed: they only repeated Sean)
+- **Visual type:** Sean with a small navy card on his jacket, one beat. **No words on the card** (the v4 text "What we'd change first." and its blue fade were removed: they only repeated Sean)
 - **A-roll treatment:** live, slow push 100 to 103%
 - **Crop:** TIGHT · **Sean position:** centre, face clear of the card
 - **Motion graphic:** solid navy card, 760 × 330, at x 160, y 1180 (on the jacket, above the subtitles), 28 px radius, hairline border. No fade or scrim:
   - Beat 1 at 7.76: three ranked rows "01 / 02 / 03" with blank bars. At 8.50 row 01 lights Blue Tint with a check, 02 and 03 dim. It shows a prioritised list where one thing is fixed first
-  - Beat 2 at 9.60: the rows lift away and the card becomes a video-call window: two person tiles, a camera icon and a pulsing Blue Tint dot. It shows a live call without saying it
+  - Holds to the end of the shot (11.20), so 01 stays ticked for 2.7s. The v6 video-call window was removed in v7
 - **Subtitles:** rows 5 to 6 (white)
 - **Transition:** in straight cut from the cartoon (6.96). Out T-RISE (11.20)
 - **SFX:** 8.50 soft click on the check
-- **Why:** it adds what the words can't: a ranked fix list and a live call, in a glance.
+- **Why:** it adds what the words can't: a ranked fix list with one thing fixed first, in a glance.
 
 ### SECTION 3 · Cost to win a customer · 11.20 to 14.14
 

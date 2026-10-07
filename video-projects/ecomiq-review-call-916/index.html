@@ -46,15 +46,13 @@
 
       /* Shot 3 */
       #s3 { z-index: 10; }
-      /* Shot 3 card: ranked fixes, then a live call. Solid navy, no fade. Sits on the jacket, clear of the face */
+      /* Shot 3 card: ranked fixes (01 gets the tick), held to the end of the shot. Solid navy, no fade. Sits on the jacket, clear of the face */
       #s3card { position: absolute; left: 160px; top: 1180px; width: 760px; height: 330px; background: #06284C;
         border: 1px solid rgba(222,238,254,.22); border-radius: 28px; box-shadow: 0 24px 60px rgba(6,40,76,.45); overflow: hidden; }
       .prow { position: absolute; left: 48px; right: 48px; height: 60px; display: flex; align-items: center; gap: 28px; }
       .pnum { font-weight: 800; font-size: 36px; color: rgba(222,238,254,.55); width: 56px; font-variant-numeric: tabular-nums; }
       .pbar { height: 18px; border-radius: 9px; background: rgba(222,238,254,.22); }
       .pchk { position: absolute; right: 0; width: 44px; height: 44px; }
-      #callv { position: absolute; inset: 0; }
-      .tile { position: absolute; top: 40px; width: 320px; height: 250px; border-radius: 20px; background: rgba(222,238,254,.10); overflow: hidden; }
 
       /* Journey spine (column coordinates; Card B offsets the group by +120px) */
       #panel { position: absolute; inset: 0; background: #06284C; }
@@ -190,12 +188,6 @@
               <svg class="pchk" viewBox="0 0 44 44"><circle cx="22" cy="22" r="22" fill="#9CD4FF"/><path d="M13 23 L20 30 L32 16" fill="none" stroke="#06284C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div id="pr2" class="prow" style="top:135px"><div class="pnum">02</div><div class="pbar" style="width:340px"></div></div>
             <div id="pr3" class="prow" style="top:225px"><div class="pnum">03</div><div class="pbar" style="width:390px"></div></div>
-          </div>
-          <div id="callv">
-            <div class="tile" style="left:40px"><svg viewBox="0 0 320 250" width="320" height="250"><circle cx="160" cy="105" r="44" fill="#DEEEFE"/><rect x="85" y="165" width="150" height="110" rx="55" fill="#DEEEFE"/></svg></div>
-            <div class="tile" style="left:400px"><svg viewBox="0 0 320 250" width="320" height="250"><circle cx="160" cy="105" r="44" fill="#9CD4FF"/><rect x="85" y="165" width="150" height="110" rx="55" fill="#9CD4FF"/></svg></div>
-            <div id="livedot" class="abs" style="left:62px;top:62px;width:18px;height:18px;border-radius:50%;background:#9CD4FF;box-shadow:0 0 0 6px rgba(156,212,255,.25)"></div>
-            <svg class="abs" style="left:640px;top:58px" width="48" height="30" viewBox="0 0 48 30"><rect x="0" y="2" width="32" height="26" rx="6" fill="#DEEEFE"/><path d="M34 15 L48 5 V25 Z" fill="#DEEEFE"/></svg>
           </div>
         </div>
       </div>
@@ -340,15 +332,11 @@
 
       // ---------- SHOT 3 (two beats) ----------
       tl.fromTo("#s3card", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.40, ease: "power3.out" }, 7.66);
-      tl.set("#callv", { opacity: 0 }, 6.96);
       tl.fromTo(["#pr1", "#pr2", "#pr3"], { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out", stagger: 0.1 }, 7.76);
       tl.fromTo("#pr1 .pchk", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, 8.50);
       tl.to("#pr1 .pnum", { color: "#9CD4FF", duration: 0.3 }, 8.50);
       tl.to("#pr1 .pbar", { backgroundColor: "#9CD4FF", duration: 0.3 }, 8.50);
       tl.to(["#pr2", "#pr3"], { opacity: 0.35, duration: 0.3 }, 8.50);
-      tl.to("#prows", { opacity: 0, y: -40, duration: 0.30, ease: "power2.in" }, 9.45);
-      tl.fromTo("#callv", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.40, ease: "power3.out", immediateRender: false }, 9.60);
-      tl.to("#livedot", { scale: 1.35, duration: 0.4, ease: "sine.inOut", yoyo: true, repeat: 1 }, 10.10);
 
       // ---------- CARD B → SPLIT A → SPLIT B ----------
       tl.fromTo("#jour", { opacity: 0, y: 115 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 11.20);
