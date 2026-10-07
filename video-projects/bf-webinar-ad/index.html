@@ -105,8 +105,8 @@
         border: 2px solid rgba(156,212,255,.7); position: relative; }
       #p1 .tile::after { content: ''; position: absolute; left: 30px; top: 37px; border-left: 18px solid #DEEEFE;
         border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
-      #p1 .q { position: absolute; left: 232px; top: 82px; font-size: 46px; font-weight: 800; color: #9CD4FF; letter-spacing: -.01em; white-space: nowrap; }
-      #p3 .q { position: absolute; left: 0; right: 0; top: 166px; text-align: center; font-size: 40px; font-weight: 800; color: #9CD4FF; }
+      #p1 .q { position: absolute; left: 232px; top: 82px; font-size: 46px; font-weight: 800; color: #FFFFFF; letter-spacing: -.01em; white-space: nowrap; }
+      #p3 .q { position: absolute; left: 0; right: 0; top: 166px; text-align: center; font-size: 40px; font-weight: 800; color: #FFFFFF; }
       #p4 .q { position: absolute; left: 0; right: 0; top: 6px; text-align: center; font-size: 42px; font-weight: 800; }
       #p4 .chips { position: absolute; left: 0; right: 0; top: 80px; display: flex; justify-content: center; gap: 14px; }
       #p4 .dchip { width: 160px; height: 136px; border-radius: 16px; background: rgba(255,255,255,.08); border: 2px solid rgba(156,212,255,.4); position: relative; }
@@ -152,7 +152,7 @@
       .arrow { display: inline-block; }
 
       /* ---------- subtitles ---------- */
-      #subs { position: absolute; left: 0; right: 0; top: 0; height: 1240px; z-index: 95; pointer-events: none; }
+      #subs { position: absolute; left: 0; right: 0; top: 0; height: 1540px; z-index: 95; pointer-events: none; }
       .sub { position: absolute; left: 110px; right: 110px; bottom: 0; text-align: center; text-wrap: balance;
         font-size: 56px; font-weight: 700; line-height: 1.28; color: #FFFFFF; opacity: 0; }
       .sub .bx { background: rgba(6,40,76,.62); border-radius: 14px; padding: 2px 16px;
@@ -184,8 +184,8 @@
       <div id="ov1" class="ovl clip" data-start="0" data-duration="37" data-track-index="7">
         <span class="ln"><span class="flame">Double</span> your</span><span class="ln">Black Friday revenue?</span>
       </div>
-      <div id="ov2" class="ovl clip" data-start="0" data-duration="37" data-track-index="8"><span class="ln"><span class="flame">Free</span> live webinar</span></div>
-      <div id="ov3" class="ovl clip" data-start="0" data-duration="37" data-track-index="28"><span class="ln">The Black Friday <span class="tint">Playbook</span></span></div>
+      <div id="ov2" class="ovl clip" data-start="0" data-duration="37" data-track-index="8"><span class="ln">Free live webinar</span></div>
+      <div id="ov3" class="ovl clip" data-start="0" data-duration="37" data-track-index="28"><span class="ln">The Black Friday Playbook</span></div>
 
       <!-- S5 performance tag on the close-up -->
       <div id="perf" class="clip" data-start="0" data-duration="37" data-track-index="9">
@@ -221,7 +221,7 @@
 
       <!-- S7-S13 Black Friday Playbook card -->
       <div id="card" class="clip" data-start="0" data-duration="37" data-track-index="14">
-        <div id="card-head">BLACK FRIDAY <span class="tint">PLAYBOOK</span></div>
+        <div id="card-head">BLACK FRIDAY PLAYBOOK</div>
         <div class="row" id="r0"><div class="rbg"></div><div class="rbar"></div><span class="num">01</span><span class="lbl">AD ACCOUNT</span>
           <svg class="tick" viewBox="0 0 36 36"><path d="M7 19 L15 27 L29 10" stroke="#DEEEFE" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="row" id="r1"><div class="rbg"></div><div class="rbar"></div><span class="num">02</span><span class="lbl">CREATIVES</span>
@@ -318,7 +318,7 @@
         [2.92, 4.72, "I'm hosting a completely free webinar"],
         [4.76, 6.85, "where we are going to give you the exact secrets"],
         [6.88, 8.80, "that we use at Pacific IQ"],
-        [8.85, 10.35, 'with <span class="hl-t it">eight and nine figure</span> brands'],
+        [8.85, 10.35, "with eight and nine figure brands"],
         [10.39, 12.25, "year on year to get"],
         [12.28, 13.60, "incredible performance."],
         [13.65, 15.00, "Now, it's not just going to be"],
@@ -332,12 +332,12 @@
         [24.02, 25.70, "once Black Friday is live."],
         [25.78, 27.55, "I'm going to walk through all of this"],
         [27.58, 28.80, "on our free live webinar"],
-        [28.83, 30.18, 'on <span class="hl-f">October 14th.</span>'],
+        [28.83, 30.18, "on October 14th."],
         [30.20, 31.38, "If that's something that you think"],
         [31.40, 32.38, "might be helpful for you,"],
         [32.40, 33.28, "just click the link below"],
         [33.30, 34.38, "and register for the webinar."],
-        [34.40, 36.90, 'It\'s completely <span class="hl-f">free.</span>'],
+        [34.40, 36.90, "It's completely free."],
       ];
       const subsEl = document.getElementById("subs");
       SUBS.forEach((s, i) => {
