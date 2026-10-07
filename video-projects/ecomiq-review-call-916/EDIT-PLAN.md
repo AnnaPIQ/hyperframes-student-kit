@@ -494,6 +494,17 @@ Keep the A-roll at 4K through the build. The crops need the 4K pixels.
 
 Each row stays up until the next row starts (gaps under 0.7s are bridged), so the subtitles never blink.
 
+**Locked spellings (proper nouns and brand names, never auto-cased).** Subtitles are typed from this table, not auto-generated. Turn off any lowercase or title-case text transform in the subtitle style. After the build, check every row against these spellings:
+
+| Always | Never |
+|---|---|
+| **Shopify** | shopify, SHOPIFY (in subtitles) |
+| **Mob Armor** | mob armor, Mob armor, MobArmor |
+| **Book Now** | book now, Book now |
+| **EcomIQ** | Ecomiq, ecomIQ, Ecom IQ |
+| **$20,000** | $20k, 20,000, $20 000 |
+| **500%** | 500 percent, 500 % |
+
 | # | In | Out | Exact subtitle (line break = /) | Default | Highlight | Hex | Italic |
 |---|---|---|---|---|---|---|---|
 | 1 | 0.32 | 1.60 | Shopify founders doing | White | none | | no |
@@ -561,6 +572,7 @@ Each row stays up until the next row starts (gaps under 0.7s are bridged), so th
 | 14 | BOOK NOW obvious? | **Yes.** Flame button with glow beside Sean, then centred on the end card, 4.2s total |
 | 15 | Normal bottom subtitles? | **Yes.** Fixed position, bottom edge y 1240 |
 | 16 | White dominant? | **Yes.** 16 of 18 rows fully White |
+| 16b | Brand names spelled correctly in subtitles? | **Yes.** Shopify, Mob Armor, Book Now and EcomIQ are locked spellings (Part 7). Subtitles are typed from the plan, never auto-cased |
 | 17 | Blue Tint, Flame and italics sparing? | **Yes.** Fixed budget: 2 serif words, 2 Blue Tint words, 3 Flame moments, 2 subtitle highlights. 12.8s of plain White before the first Flame |
 | 18 | No graphics too fast to read? | **Yes.** Every text element gets at least 1.4s, and most get 2 to 5s |
 | 19 | No flash cuts? | **Yes.** Shortest shot is 1.54s, every change lands on a pause, and B-roll changes are blur dissolves |
