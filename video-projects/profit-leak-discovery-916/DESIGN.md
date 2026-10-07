@@ -23,6 +23,7 @@ Calm, premium EcomIQ performance ad. Sean is one element inside a designed navy 
 
 ## What NOT to Do
 - No green for positive numbers, no invented dollar results.
+- Subtitles are lowercase except brand and product names (Shopify) and the button name (Book Now).
 - Word highlights are rationed so they land: in subtitles, ONE colour highlight (`Book Now`, orange) and ONE italic (`we'll tell you`) for the whole ad. Never highlight a word that a graphic is already showing in colour at the same moment.
 - Orange only marks the leak itself (LEAK 02, the leak segment and ring, the leak dot) and the BOOK NOW button. Headlines like TOO LITTLE and PROFIT LEAK stay white.
 - Blue Tint as a word highlight only on `8- & 9-FIGURE`; otherwise it is data colour (revenue, $20K+).
