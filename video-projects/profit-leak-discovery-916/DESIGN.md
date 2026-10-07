@@ -19,7 +19,7 @@ Calm, premium EcomIQ performance ad. Sean is one element inside a designed navy 
 - No serif in this ad. One italic subtitle phrase only ("we'll tell you").
 
 ## Format
-1080 x 1920, 25 fps, 38.0 s. Graphic zone y 270 to 1120. Subtitle band y 1130 to 1250. Nothing important below y 1250 (Reels UI).
+1080 x 1920, 25 fps, 38.0 s. Graphic zone y 270 to 1120. Subtitles sit at the bottom, block ending at y 1660 (260 px above the edge).
 
 ## What NOT to Do
 - No green for positive numbers, no invented dollar results.
