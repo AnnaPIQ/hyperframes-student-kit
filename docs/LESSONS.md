@@ -74,6 +74,23 @@ efficient over time instead of relearning the same lessons.
 
 ## Delivery & resolution
 
+- **Masters looked soft and washed out (client noticed).** Causes found by measuring against the camera file:
+  (1) talking-head plate re-encoded 3 times (prep, freeze-frame pad, cut-out composite), (2) plate prepared
+  *below* display size then scaled up 10% in CSS, (3) cut-out composite written without colour tags, so it
+  decoded with the wrong matrix (skin saturation 87 vs 100), (4) a "light lift" radial overlay sitting on the
+  face. **Fix:** build plate and cut-out once each, straight from the camera original, at native resolution
+  (let the browser downscale), CRF 8, explicit bt709 tags (`scale=out_color_matrix=bt709` for RGB composites),
+  no haze overlays over faces, then `render --quality high --crf 10`. Verify with a face crop + PSNR/SSIM and a
+  skin-patch saturation check against the camera original, not just against the previous render.
+- **The engine's JPEG frame extraction (q94) is not the bottleneck**: ~48 dB vs lossless. `--video-frame-format png`
+  with 2000x2160 sources stalled the single capture worker at frame ~538/910 (memory); stick with the default.
+- **First frame(s) can render blank** (navy, no logo) when sources are large: varied 0 to 4 frames between runs.
+  Always check `signalstats` YAVG on the first frames; patch with
+  `trim=start_frame=N,setpts=PTS-STARTPTS,tpad=start=N:start_mode=clone` (keeps A/V sync).
+- **Files over 30 MB can't go through chat.** Deliver via a private Artifact: split the master into ~14.5 MB
+  parts published as `files` (64 MB per publish, several publishes to the same URL), and a page that fetches,
+  joins, SHA-256-verifies and saves via the `downloads` capability. Byte-identical to the master.
+
 - **Drive "quota exceeded" on direct downloads** comes back as a 2 KB HTML page saved as `.mp4`. Retry a
   couple of hours later, one file at a time. ffmpeg cannot read these Drive URLs directly; download with curl.
 - **Never commit client footage/B-roll/VO pulled from Drive.** Gitignore the project's `assets/media/`
