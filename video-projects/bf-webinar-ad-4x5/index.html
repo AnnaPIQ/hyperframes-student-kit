@@ -30,8 +30,8 @@
       /* ---------- Sean: real footage, framed by crop (wrapper transform) + window (clip-path) ---------- */
       #sean-frame { position: absolute; inset: 0; z-index: 10; overflow: hidden;
         clip-path: inset(0px 0px 0px 0px round 0px); }
-      #sean-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 533px 1067px; }
-      #sean-wrap video, #sean-wrap img { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      #sean-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1350px; transform-origin: 533px 1067px; }
+      #sean-wrap video, #sean-wrap img { position: absolute; left: 0; top: 0; width: 1080px; height: 1350px; }
       #win-border { position: absolute; left: 36px; top: 150px; width: 420px; height: 750px; z-index: 12;
         border-radius: 28px; border: 2px solid rgba(156,212,255,.45); box-shadow: 0 30px 80px rgba(3,20,40,.55); }
 
@@ -109,8 +109,8 @@
       /* ---------- bundles full-bleed, grows out of row 03 ---------- */
       #bundle { position: absolute; inset: 0; z-index: 60; overflow: hidden; background: #06284C;
         clip-path: inset(422px 54px 860px 494px round 16px); }
-      #bundle-vid-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform: translateY(-420px) scale(1.16); transform-origin: 50% 40%; }
-      #bundle-vid-wrap video { width: 1080px; height: 1920px; }
+      #bundle-vid-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1350px; transform: none; }
+      #bundle-vid-wrap video { width: 1080px; height: 1350px; }
       #bundle-text { position: absolute; left: 72px; top: 140px; }
       #bundle-text .n { font-size: 44px; font-weight: 700; color: #9CD4FF; }
       #bundle-text .w { font-size: 120px; font-weight: 800; letter-spacing: -.02em; line-height: 1; margin-top: 6px; }
@@ -165,7 +165,7 @@
       <!-- Sean, real footage (non-timed frame + wrapper; video + end hold inside) -->
       <div id="sean-frame">
         <div id="sean-wrap">
-          <video id="sean" src="assets/sean-aroll.mp4" muted playsinline data-start="0" data-duration="37" data-track-index="1"></video>
+          <video id="sean" src="assets/sean-program.mp4" muted playsinline data-start="0" data-duration="37" data-track-index="1"></video>
         </div>
       </div>
       <div id="win-border" class="clip" data-start="0" data-duration="37" data-track-index="3"></div>
@@ -264,7 +264,7 @@
       <!-- S10 bundles full-bleed -->
       <div id="bundle">
         <div id="bundle-vid-wrap">
-          <video id="bv" src="assets/broll-bundle.mp4" muted playsinline data-start="19.2" data-duration="2.3" data-track-index="15"></video>
+          <video id="bv" src="assets/broll-bundle-baked.mp4" muted playsinline data-start="19.2" data-duration="2.3" data-track-index="15"></video>
         </div>
         <div id="bundle-text"><div class="lbox"><div class="n">03</div><div class="w">BUNDLES?</div></div></div>
       </div>
@@ -356,9 +356,11 @@
         FULL:     "inset(0px 0px 0px 0px round 0px)",
         PB:       "inset(150px 624px 450px 36px round 28px)",
       };
-      const shot = (k) => ({ x: SHOT[k][0] - FX, y: SHOT[k][1] - FY, scale: SHOT[k][2] });
+      // Framing is baked into assets/sean-program.mp4 (scripts/bake-sean.py) at 1:1 from the 4K source, so the
+      // browser never rescales Sean (CSS scaling softened him). SHOT documents the baked framings; cuts only clip.
+      const shot = (k) => ({ x: 0, y: 0, scale: 1 });
       const cut = (k, win, t) => { tl.set("#sean-wrap", shot(k), t); tl.set("#sean-frame", { clipPath: WIN[win] }, t); };
-      const push = (k, t, d, by) => tl.to("#sean-wrap", { scale: SHOT[k][2] * by, duration: d, ease: "none" }, t);
+      const push = () => {}; // slow push-ins dropped: static baked crops stay pixel-sharp
       const panelSide = (side, t) => {
         const left = side === "right" ? 660 : 0, edge = side === "right" ? 660 : 417;
         tl.set("#panel", { left }, t); tl.set("#panel-edge", { left: edge }, t);

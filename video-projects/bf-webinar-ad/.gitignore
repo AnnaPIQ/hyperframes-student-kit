@@ -5,3 +5,5 @@ snapshots/
 # 196MB A-roll master: regenerate with scripts/prep-media.sh
 assets/sean-aroll.mp4
 snapshots-*/
+# baked 1:1 Sean shots (scripts/bake-sean.py), large
+assets/sean-program.mp4
