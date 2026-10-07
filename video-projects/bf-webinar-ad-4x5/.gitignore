@@ -1,0 +1,3 @@
+# shares media with ../bf-webinar-ad (hard links); regenerate there with scripts/prep-media.sh
+assets/sean-aroll.mp4
+snapshots*/
