@@ -55,6 +55,13 @@ efficient over time instead of relearning the same lessons.
   block the Whisper model download. **Fix:** caption from the known script text and
   anchor timing via silence analysis instead of word-level timestamps.
 
+- **Footage looked soft in the final even though the final encode was high quality.** Cause: the A-roll
+  intermediate had been re-encoded at CRF 23 (~4.8 Mbps for a 4K-height crop) to keep the repo small, which smears
+  skin and beard texture before the render starts (SSIM 0.937 vs the ProRes). **Fix:** intermediates at CRF 14
+  `-tune film`, at the source's native fps, with 1s keyframes (`-g 25`; the compiler warns "sparse keyframes" and
+  can freeze frames otherwise). Render at the source fps (`--fps 25` for 25p cameras; 30 duplicates every 5th
+  frame) with `--video-bitrate 16M`. Big intermediates stay out of git; commit a `prep-media.sh` that rebuilds them.
+
 ## Editing technique (talking-head cutdowns)
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +
