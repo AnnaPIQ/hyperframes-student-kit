@@ -41,15 +41,14 @@ b b1 dryfthold.mp4      10.00 50 "$R"                    # 7.56-9.56 product (na
 b c1 shoptalk-stage.mp4 14.56 38 "crop=608:1080:'min(1312,456+t*520)':0"   # 15.44-16.96 authority
 b d1 erica.mp4          3.00  34 "$R"                    # 16.96-18.32 Erica, owner, to camera
 b e1 erica.mp4          29.00 72 "$R"                    # 18.32-21.20 heart cake in Sweet E's box (+41%)
-b f1 holdlap.mp4        3.50  39 "$R"                    # 21.20-22.76 guide your team
+b f1 holdlap.mp4        3.50  88 "$R"                    # 21.20-24.72 guide your team + track repeat purchases (one held shot)
 
 n(){ ffmpeg -v error -y -f lavfi -i "color=c=0x06284C:s=1080x1920:r=25" -frames:v "$2" $X "$O/$1.mp4"; }
 n n1 65    # 4.96-7.56   GFX-1 get the second sale
 n n2 147   # 9.56-15.44  GFX-2 journey
-n n3 49    # 22.76-24.72 GFX-3 track repeat purchases
 n n4 75    # 32.64-35.64 end card
 
-printf "file '%s.mp4'\n" a1 a2 n1 b1 n2 c1 d1 e1 f1 n3 a3 a4 a5 n4 > "$O/list.txt"
+printf "file '%s.mp4'\n" a1 a2 n1 b1 n2 c1 d1 e1 f1 a3 a4 a5 n4 > "$O/list.txt"
 ffmpeg -v error -y -f concat -safe 0 -i "$O/list.txt" -c copy assets/media/plate.mp4
 
 # VO: the A-roll read, untouched in time, cleaned and normalised for Meta. Extracted whole first
