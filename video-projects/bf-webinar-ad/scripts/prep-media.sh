@@ -48,6 +48,23 @@ ffmpeg -v error -y -ss 2.8 -t 2.2 -i "$SRC/laptopman.vid" -an -vf "transpose=1,s
 ffmpeg -v error -y -ss 9.8 -t 2.3 -i "$SRC/dryfthold.vid" -an -vf "transpose=1,scale=1080:1920:flags=lanczos,fps=30" \
   -c:v libx264 -crf 16 -g 30 -keyint_min 30 -pix_fmt yuv420p assets/broll-bundle.mp4
 
+# --- Sean's shots baked at 1:1 from the 4K source (no browser scaling = no softness) ---
+python3 -I scripts/bake-sean.py "$SRC/aroll.mov" assets/sean-program.mp4 916
+python3 -I scripts/bake-sean.py "$SRC/aroll.mov" ../bf-webinar-ad-4x5/assets/sean-program.mp4 45
+# bundles shot baked at its on-screen framing (9:16 and 4:5)
+for spec in "assets/broll-bundle-baked.mp4 1920 -283" "../bf-webinar-ad-4x5/assets/broll-bundle-baked.mp4 1350 -543"; do
+  set -- $spec
+  ffmpeg -v error -y -ss 9.8 -t 2.3 -i "$SRC/dryfthold.vid" -f lavfi -i "color=c=0x06284C:s=1080x$2:r=30:d=2.3" \
+    -filter_complex "[0:v]transpose=1,fps=30,scale=1253:2227:flags=lanczos[z];[1][z]overlay=x=-86:y=$3:shortest=1,format=yuv420p" \
+    -c:v libx264 -crf 12 -g 30 -keyint_min 30 -pix_fmt yuv420p -an -movflags +faststart "$1"
+done
+
+# --- Final delivery: render lossless ProRes (PNG frame capture), then encode the MP4 ourselves.
+#     A direct MP4 render captures frames as JPEG q80, which visibly degrades the A-roll.
+#   npx hyperframes render --format mov --output renders/master-9x16.mov
+#   ffmpeg -i renders/master-9x16.mov -c:v libx264 -preset slow -crf 14 -pix_fmt yuv420p \
+#     -color_primaries bt709 -color_trc bt709 -colorspace bt709 -c:a aac -b:a 256k -movflags +faststart BF-Webinar-Ad-9x16-final.mp4
+
 # --- Sound design ---
 python3 -I scripts/make-sfx.py assets/sfx.wav
 echo "media ready"

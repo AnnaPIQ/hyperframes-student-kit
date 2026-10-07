@@ -81,6 +81,13 @@ efficient over time instead of relearning the same lessons.
   **Fix:** convert to SDR BT.709 at prep: HLG is SDR-compatible, so convert gamut only (no tone
   map, which looks muddy): `zscale=min=bt2020nc:pin=bt2020:tin=bt709:rin=tv:m=bt709:p=bt709:t=bt709:r=tv`
   and tag the output `-color_primaries bt709 -color_trc bt709 -colorspace bt709`.
+- **Talking-head looks soft / "degraded" in the final.** Two compounding causes, measured
+  (~22% less detail than an ideal crop): (1) CSS `scale()` punch-ins on an animated video layer
+  make Chrome rasterise at layout size and upsample; (2) the MP4 path captures every frame as
+  **JPEG quality 80** (no setting to change it). **Fix:** bake crops/punch-ins at 1:1 from the
+  4K source with ffmpeg Lanczos (`bf-webinar-ad/scripts/bake-sean.py`) so the comp only clips,
+  never scales; then render `--format mov` (ProRes, PNG capture) and encode the delivery MP4
+  yourself (`libx264 -preset slow -crf 14`). Never ship the chat-attachment copies as masters.
 - **Taste note: floating-head cut-outs read as a "cheap social edit"** for premium brands
   (EcomIQ/Pacific IQ feedback). Default to real A-roll in its environment; get variety from
   crop punch-ins (100/115/130%), split layouts with a solid brand panel, and PiP windows.
