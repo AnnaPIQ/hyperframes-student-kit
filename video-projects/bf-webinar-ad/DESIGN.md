@@ -4,10 +4,12 @@ Format: 9:16 Reels/Stories · 1080x1920 @ 30fps · 37.0s
 Full shot-by-shot plan: `EDIT_PLAN.md` (this build implements it).
 
 ## Style Prompt
-A Black Friday Playbook presented by Sean. Navy canvas, Sean as a floating-head
-cutout that moves between a few planned positions, information evolving around
-him. One persistent playbook card that activates topic by topic. Practical,
-premium, calm pacing: no flash cuts, every state on screen at least 1.2s.
+A Black Friday Playbook presented by Sean, shot as real A-roll in his own office. No cut-outs.
+Variety comes from framing and layout: pseudo multi-cam punch-ins (100% / ~110% / 130% crops of
+the same take), reframing Sean left or right inside a split with a solid navy brand panel that holds
+the typography, a framed window of his real shot beside the playbook card, and full-screen
+interrupts (proof B-roll, the discount reset, bundles, October 14). Practical, premium, calm pacing:
+no flash cuts, every state on screen at least 1.2s.
 
 ## Colors (exact, nothing else)
 - Navy `#06284C`: every background, cards (as White 6-10% over Navy)
@@ -31,15 +33,11 @@ premium, calm pacing: no flash cuts, every state on screen at least 1.2s.
 - No brand names on product B-roll; the Rebuy stats behind Sean on stage must stay illegible
 - Never more than one Flame element competing on the same frame (CTA pill stays white)
 
-## Build notes (v1 draft)
-- Implements EDIT_PLAN.md section by section in a single `index.html` timeline (37.0s).
-- Media is derived from the Drive sources by `scripts/prep-media.sh` (cutout, B-roll, voice loudness).
-  `assets/sean-cutout.webm` (54MB) is gitignored; run the script to regenerate it.
-- Deviations from the plan:
-  - Subtitles sit on a soft Navy 62% backing so they stay readable over B-roll (white shirt on stage).
-  - No music bed: no licence-cleared track in the workspace. SFX are synthesised (`scripts/make-sfx.py`).
-    Add a licensed bed at about -26 LUFS under the voice if wanted.
-  - End-frame EcomIQ logo sits at y 200 (the CTA stack starts at y 330).
-  - The Shoptalk wall is blurred and tinted, and the matte is cleaned so no Rebuy stat or letter remains.
-- Known minor: faint colour spill on Sean's outer hair edge (from the monitors behind him at the shoot).
-  Only visible up close. A manual roto pass would remove it.
+## Build notes (v2 draft)
+- v2 replaces the v1 floating-head cut-out with real footage, at Anna's direction.
+- One `index.html` timeline (37.0s). Sean = `#sean-frame` (clip-path window) + `#sean-wrap` (crop transform).
+  Shot presets live in `SHOT` / `WIN` in the script: SPLIT_L, SPLIT_R, SPLIT_RT (punch-in), CLOSE (130%), WIDE, WINDOW.
+- Every framing keeps Sean's mouth above the subtitle line (y 1110).
+- Media is derived from the Drive sources by `scripts/prep-media.sh`. `assets/sean-aroll.mp4` (196MB) is gitignored.
+- The Shoptalk stage stays real but defocused, with highlights crushed so Rebuy's LED stats are illegible.
+- No music bed (no licence-cleared track in the workspace). SFX are synthesised (`scripts/make-sfx.py`).

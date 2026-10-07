@@ -15,69 +15,72 @@
       html, body { width: 1080px; height: 1920px; overflow: hidden; background: #06284C;
         font-family: 'Rethink Sans', system-ui, sans-serif; color: #FFFFFF; }
 
-      /* ---------- background texture ---------- */
+      /* ---------- brand surfaces ---------- */
       .navy-bg { position: absolute; inset: 0; overflow: hidden;
-        background: radial-gradient(70% 45% at 50% 32%, rgba(156,212,255,.13) 0%, rgba(6,40,76,0) 70%), #06284C; }
+        background: radial-gradient(80% 50% at 50% 30%, rgba(156,212,255,.12) 0%, rgba(6,40,76,0) 70%), #06284C; }
       .grid { position: absolute; left: -660px; top: 1020px; width: 2400px; height: 1400px;
         background-image:
-          linear-gradient(rgba(222,238,254,.10) 2px, transparent 2px),
-          linear-gradient(90deg, rgba(222,238,254,.10) 2px, transparent 2px);
+          linear-gradient(rgba(222,238,254,.09) 2px, transparent 2px),
+          linear-gradient(90deg, rgba(222,238,254,.09) 2px, transparent 2px);
         background-size: 120px 120px;
         transform: perspective(900px) rotateX(64deg); transform-origin: 50% 0%;
         -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 30%, #000 60%, rgba(0,0,0,0) 100%);
         mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 30%, #000 60%, rgba(0,0,0,0) 100%); }
-      .grid-top { position: absolute; left: -660px; top: -500px; width: 2400px; height: 800px;
-        background-image:
-          linear-gradient(rgba(222,238,254,.06) 2px, transparent 2px),
-          linear-gradient(90deg, rgba(222,238,254,.06) 2px, transparent 2px);
-        background-size: 120px 120px;
-        transform: perspective(900px) rotateX(-64deg); transform-origin: 50% 100%;
-        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, #000 40%, rgba(0,0,0,0) 100%);
-        mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, #000 40%, rgba(0,0,0,0) 100%); }
-      #vignette { position: absolute; inset: 0; pointer-events: none; z-index: 90;
-        background: radial-gradient(120% 80% at 50% 45%, rgba(6,40,76,0) 55%, rgba(3,20,40,.55) 100%); }
 
-      /* ---------- Sean floating head ---------- */
-      #sean-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 20;
-        transform-origin: 533px 1067px;
-        -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 1640px, rgba(0,0,0,0) 1900px);
-        mask-image: linear-gradient(to bottom, #000 0, #000 1640px, rgba(0,0,0,0) 1900px);
-        filter: drop-shadow(0 0 26px rgba(156,212,255,.20)) drop-shadow(0 24px 40px rgba(3,20,40,.55)); }
+      /* ---------- Sean: real footage, framed by crop (wrapper transform) + window (clip-path) ---------- */
+      #sean-frame { position: absolute; inset: 0; z-index: 10; overflow: hidden;
+        clip-path: inset(0px 420px 0px 0px round 0px); }
+      #sean-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 533px 1067px; }
       #sean-wrap video, #sean-wrap img { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      #win-border { position: absolute; left: 36px; top: 290px; width: 420px; height: 750px; z-index: 12;
+        border-radius: 28px; border: 2px solid rgba(156,212,255,.45); box-shadow: 0 30px 80px rgba(3,20,40,.55); }
 
-      /* ---------- hero type ---------- */
-      .hero { position: absolute; font-weight: 800; letter-spacing: -.02em; line-height: 1.0;
-        text-transform: uppercase; z-index: 30; text-shadow: 0 8px 40px rgba(3,20,40,.45); }
+      /* ---------- side panel (solid brand panel beside the real footage) ---------- */
+      #panel { position: absolute; top: 0; left: 660px; width: 420px; height: 1920px; z-index: 20; overflow: hidden; }
+      #panel .navy-bg { background: radial-gradient(90% 40% at 50% 28%, rgba(156,212,255,.14) 0%, rgba(6,40,76,0) 70%), #06284C; }
+      #panel-edge { position: absolute; top: 0; bottom: 0; width: 3px; background: rgba(156,212,255,.55); z-index: 21; left: 660px; }
+
+      /* ---------- type ---------- */
+      .hero { position: absolute; font-weight: 800; letter-spacing: -.02em; line-height: 1.0; text-transform: uppercase; z-index: 30; }
       .hero .ln { display: block; }
       .flame { color: #FF4C32; }
       .tint { color: #9CD4FF; }
-      .chip { display: inline-block; font-weight: 700; font-size: 34px; letter-spacing: .08em;
-        color: #9CD4FF; border: 2px solid rgba(156,212,255,.8); border-radius: 999px; padding: 12px 26px; }
+      .chip { display: inline-block; font-weight: 700; font-size: 30px; letter-spacing: .08em;
+        color: #9CD4FF; border: 2px solid rgba(156,212,255,.8); border-radius: 999px; padding: 10px 22px; }
 
-      #hook { right: 72px; top: 292px; text-align: right; font-size: 104px; }
-      #hook-chip { position: absolute; right: 72px; top: 640px; z-index: 30; }
+      /* hook lockup, right panel (x 600-1080) */
+      #hook { left: 700px; top: 318px; }
+      #hook .a { font-size: 96px; }
+      #hook .b { font-size: 46px; letter-spacing: .06em; margin: 10px 0 8px; }
+      #hook .c { font-size: 96px; }
+      #hook .d { font-size: 64px; margin-top: 10px; }
+      #hook-chip { position: absolute; left: 700px; top: 812px; z-index: 30; }
 
-      #web { left: 72px; top: 300px; font-size: 100px; }
-      #web .slot { position: relative; display: block; height: 100px; }
+      /* webinar / playbook lockup, left panel (x 0-480) */
+      #web { left: 44px; top: 318px; }
+      #web .slot { position: relative; display: block; }
       #web .slot > span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+      #web .s1 { height: 68px; font-size: 58px; }
+      #web .s2 { height: 196px; font-size: 96px; margin-top: 14px; }
+      #web .s3 { height: 80px; font-size: 72px; margin-top: 14px; }
 
-      #perf { right: 72px; top: 330px; text-align: right; font-size: 92px; }
-      #perf-arrow { position: absolute; right: 150px; top: 450px; width: 8px; height: 230px; z-index: 30;
-        background: #9CD4FF; border-radius: 4px; transform-origin: 50% 100%; }
-      #perf-head { position: absolute; right: 126px; top: 432px; width: 56px; height: 56px; z-index: 30;
-        border-left: 8px solid #9CD4FF; border-top: 8px solid #9CD4FF; border-radius: 3px; transform: rotate(45deg); }
+      /* performance tag on the close-up */
+      #perf { position: absolute; left: 72px; top: 300px; z-index: 30; display: flex; align-items: center; gap: 18px;
+        background: rgba(6,40,76,.88); border: 2px solid rgba(156,212,255,.4); border-radius: 18px; padding: 18px 28px; }
+      #perf .w { font-size: 54px; font-weight: 800; letter-spacing: -.01em; }
+      #perf svg { display: block; }
 
-      /* ---------- social proof ---------- */
-      #proof-text { left: 72px; right: 72px; top: 300px; text-align: center; z-index: 40; }
+      /* ---------- social proof (full-screen B-roll) ---------- */
+      #proof { position: absolute; inset: 0; z-index: 45; overflow: hidden; background: #06284C; }
+      #proof video { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      #proof-top { position: absolute; left: 0; right: 0; top: 0; height: 820px; z-index: 5;
+        background: linear-gradient(to bottom, rgba(6,40,76,.96) 0%, rgba(6,40,76,.9) 52%, rgba(6,40,76,0) 100%); }
+      #proof-bot { position: absolute; left: 0; right: 0; bottom: 0; height: 900px; z-index: 5;
+        background: linear-gradient(to bottom, rgba(6,40,76,0), rgba(6,40,76,.55)); }
+      #proof-text { left: 72px; right: 72px; top: 300px; text-align: center; z-index: 46; }
       #proof-text .a { font-size: 40px; font-weight: 700; letter-spacing: .06em; color: #9CD4FF; }
-      #proof-text .b { font-size: 100px; margin-top: 10px; }
-      #proof-text .c { font-size: 56px; margin-top: 6px; }
-      #proof-card { position: absolute; left: 120px; top: 610px; width: 840px; height: 1120px; z-index: 35;
-        border-radius: 28px; overflow: hidden; border: 2px solid rgba(156,212,255,.35);
-        box-shadow: 0 30px 80px rgba(3,20,40,.6); background: #06284C; }
-      #proof-card video { position: absolute; left: 0; top: 0; width: 840px; height: 1120px; }
-      #proof-shade { position: absolute; left: 0; right: 0; bottom: 0; height: 600px; z-index: 5;
-        background: linear-gradient(to bottom, rgba(6,40,76,0), rgba(6,40,76,.6)); }
+      #proof-text .b { font-size: 108px; margin-top: 10px; }
+      #proof-text .c { font-size: 58px; margin-top: 6px; }
 
       /* ---------- discount reset ---------- */
       #disc { z-index: 50; }
@@ -87,92 +90,79 @@
       #disc .t1 { font-size: 92px; font-weight: 800; letter-spacing: -.02em; color: #9CD4FF; line-height: 1; }
       #disc .t2 { font-size: 128px; font-weight: 800; letter-spacing: -.02em; line-height: 1; margin-top: 30px; }
 
-      /* ---------- playbook card ---------- */
-      #card { position: absolute; left: 430px; top: 290px; width: 590px; height: 780px; z-index: 40;
-        border-radius: 28px; background: rgba(255,255,255,.07);
-        border: 2px solid rgba(156,212,255,.35);
-        box-shadow: 0 0 60px rgba(156,212,255,.10), 0 30px 80px rgba(3,20,40,.55);
-        transform-origin: 100% 10%; }
-      #card-head { position: absolute; left: 36px; top: 40px; font-size: 40px; font-weight: 800;
-        letter-spacing: -.01em; white-space: nowrap; }
+      /* ---------- playbook card (beside Sean's window) ---------- */
+      #card { position: absolute; left: 476px; top: 290px; width: 568px; height: 750px; z-index: 40;
+        border-radius: 28px; background: rgba(255,255,255,.07); border: 2px solid rgba(156,212,255,.35);
+        box-shadow: 0 0 60px rgba(156,212,255,.10), 0 30px 80px rgba(3,20,40,.55); }
+      #card-head { position: absolute; left: 34px; top: 40px; font-size: 38px; font-weight: 800; letter-spacing: -.01em; white-space: nowrap; }
       .row { position: absolute; left: 18px; right: 18px; top: 0; height: 68px; }
       .row .rbg { position: absolute; inset: 0; border-radius: 16px; background: rgba(255,255,255,.10); opacity: 0; }
       .row .rbar { position: absolute; left: 0; top: 12px; bottom: 12px; width: 6px; border-radius: 3px; background: #9CD4FF; opacity: 0; }
-      .row .num { position: absolute; left: 22px; top: 14px; font-size: 34px; font-weight: 700; color: #9CD4FF;
-        font-variant-numeric: tabular-nums; }
-      .row .lbl { position: absolute; left: 92px; top: 10px; font-size: 42px; font-weight: 800; white-space: nowrap; }
-      .row .tick { position: absolute; right: 18px; top: 16px; width: 36px; height: 36px; opacity: 0; }
-      .row .live { position: absolute; left: 395px; top: 26px; width: 16px; height: 16px; border-radius: 50%;
+      .row .num { position: absolute; left: 20px; top: 15px; font-size: 32px; font-weight: 700; color: #9CD4FF; font-variant-numeric: tabular-nums; }
+      .row .lbl { position: absolute; left: 84px; top: 11px; font-size: 40px; font-weight: 800; white-space: nowrap; }
+      .row .tick { position: absolute; right: 16px; top: 16px; width: 36px; height: 36px; opacity: 0; }
+      .row .live { position: absolute; left: 375px; top: 26px; width: 16px; height: 16px; border-radius: 50%;
         background: #FF4C32; opacity: 0; box-shadow: 0 0 14px rgba(255,76,50,.6); }
       .panel { position: absolute; left: 18px; right: 18px; height: 240px; opacity: 0; }
+      .panel svg.fit { width: 532px; height: auto; }
       #p0 { top: 196px; } #p1 { top: 272px; } #p3 { top: 424px; } #p4 { top: 500px; }
-      #p1 .tiles { position: absolute; left: 40px; top: 18px; width: 170px; display: grid;
-        grid-template-columns: 76px 76px; gap: 14px; }
+      #p1 .tiles { position: absolute; left: 36px; top: 18px; width: 170px; display: grid; grid-template-columns: 76px 76px; gap: 14px; }
       #p1 .tile { width: 76px; height: 98px; border-radius: 10px; background: rgba(255,255,255,.10);
         border: 2px solid rgba(156,212,255,.7); position: relative; }
       #p1 .tile::after { content: ''; position: absolute; left: 30px; top: 37px; border-left: 18px solid #DEEEFE;
         border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
-      #p1 .q { position: absolute; left: 236px; top: 82px; font-size: 48px; font-weight: 800; color: #9CD4FF;
-        letter-spacing: -.01em; white-space: nowrap; }
-      #p3 .q { position: absolute; left: 0; right: 0; top: 170px; text-align: center; font-size: 40px;
-        font-weight: 800; color: #9CD4FF; }
-      #p4 .q { position: absolute; left: 0; right: 0; top: 6px; text-align: center; font-size: 44px; font-weight: 800; }
-      #p4 .chips { position: absolute; left: 0; right: 0; top: 84px; display: flex; justify-content: center; gap: 16px; }
-      #p4 .dchip { width: 166px; height: 136px; border-radius: 16px; background: rgba(255,255,255,.08);
-        border: 2px solid rgba(156,212,255,.4); position: relative; }
-      #p4 .dchip span { position: absolute; left: 0; right: 0; top: 16px; text-align: center; font-size: 30px;
-        font-weight: 800; color: #9CD4FF; letter-spacing: .03em; }
-      #p4 .dchip svg { position: absolute; left: 23px; top: 66px; }
+      #p1 .q { position: absolute; left: 232px; top: 82px; font-size: 46px; font-weight: 800; color: #9CD4FF; letter-spacing: -.01em; white-space: nowrap; }
+      #p3 .q { position: absolute; left: 0; right: 0; top: 166px; text-align: center; font-size: 40px; font-weight: 800; color: #9CD4FF; }
+      #p4 .q { position: absolute; left: 0; right: 0; top: 6px; text-align: center; font-size: 42px; font-weight: 800; }
+      #p4 .chips { position: absolute; left: 0; right: 0; top: 80px; display: flex; justify-content: center; gap: 14px; }
+      #p4 .dchip { width: 160px; height: 136px; border-radius: 16px; background: rgba(255,255,255,.08); border: 2px solid rgba(156,212,255,.4); position: relative; }
+      #p4 .dchip span { position: absolute; left: 0; right: 0; top: 16px; text-align: center; font-size: 29px; font-weight: 800; color: #9CD4FF; letter-spacing: .03em; }
+      #p4 .dchip svg { position: absolute; left: 20px; top: 66px; }
 
-      /* ---------- bundles full-bleed ---------- */
+      /* ---------- bundles full-bleed, grows out of row 03 ---------- */
       #bundle { position: absolute; inset: 0; z-index: 60; overflow: hidden; background: #06284C;
-        clip-path: inset(562px 60px 1282px 430px round 16px); }
-      #bundle-vid-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px;
-        transform: translateY(-240px) scale(1.1); transform-origin: 50% 40%; }
+        clip-path: inset(562px 54px 1290px 494px round 16px); }
+      #bundle-vid-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform: translateY(-240px) scale(1.1); transform-origin: 50% 40%; }
       #bundle-vid-wrap video { width: 1080px; height: 1920px; }
-      #bundle-shade-top { position: absolute; left: 0; right: 0; top: 0; height: 640px;
-        background: linear-gradient(to bottom, rgba(6,40,76,.85), rgba(6,40,76,0)); }
-      #bundle-shade-bot { position: absolute; left: 0; right: 0; bottom: 0; height: 900px;
-        background: linear-gradient(to bottom, rgba(6,40,76,0), rgba(6,40,76,.6)); }
+      #bundle-shade-top { position: absolute; left: 0; right: 0; top: 0; height: 640px; background: linear-gradient(to bottom, rgba(6,40,76,.85), rgba(6,40,76,0)); }
+      #bundle-shade-bot { position: absolute; left: 0; right: 0; bottom: 0; height: 900px; background: linear-gradient(to bottom, rgba(6,40,76,0), rgba(6,40,76,.6)); }
       #bundle-text { position: absolute; left: 72px; top: 300px; }
       #bundle-text .n { font-size: 44px; font-weight: 700; color: #9CD4FF; }
-      #bundle-text .w { font-size: 120px; font-weight: 800; letter-spacing: -.02em; line-height: 1; margin-top: 6px;
-        text-shadow: 0 8px 40px rgba(3,20,40,.5); }
+      #bundle-text .w { font-size: 120px; font-weight: 800; letter-spacing: -.02em; line-height: 1; margin-top: 6px; text-shadow: 0 8px 40px rgba(3,20,40,.5); }
 
       /* ---------- October 14 event card ---------- */
       #ev-bg { z-index: 70; }
       #ev-text { left: 72px; right: 72px; top: 380px; text-align: center; font-size: 66px; z-index: 72; }
       #ev-tile { position: absolute; left: 360px; top: 570px; width: 360px; height: 370px; z-index: 74;
-        border-radius: 32px; overflow: hidden; background: #06284C;
-        border: 2px solid rgba(156,212,255,.45); box-shadow: 0 0 80px rgba(255,76,50,.16), 0 30px 80px rgba(3,20,40,.6); }
-      #ev-tile .strip { position: absolute; left: 0; right: 0; top: 0; height: 96px; background: #DEEEFE;
-        color: #06284C; font-size: 54px; font-weight: 800; letter-spacing: .04em; text-align: center; line-height: 96px; }
-      #ev-tile .day { position: absolute; left: 0; right: 0; top: 96px; height: 274px; background: rgba(255,255,255,.07);
-        color: #FF4C32; font-size: 236px; font-weight: 800; letter-spacing: -.04em; text-align: center; line-height: 274px; }
-      #ev-time { position: absolute; left: 72px; right: 72px; top: 968px; text-align: center; font-size: 34px;
-        font-weight: 700; color: #9CD4FF; letter-spacing: .04em; z-index: 72; }
-      .pill { display: inline-block; font-weight: 800; font-size: 38px; letter-spacing: .02em; color: #FFFFFF;
-        border: 3px solid #FFFFFF; border-radius: 999px; padding: 16px 38px; white-space: nowrap; }
+        border-radius: 32px; overflow: hidden; background: #06284C; border: 2px solid rgba(156,212,255,.45);
+        box-shadow: 0 0 80px rgba(255,76,50,.16), 0 30px 80px rgba(3,20,40,.6); }
+      #ev-tile .strip { position: absolute; left: 0; right: 0; top: 0; height: 96px; background: #DEEEFE; color: #06284C;
+        font-size: 54px; font-weight: 800; letter-spacing: .04em; text-align: center; line-height: 96px; }
+      #ev-tile .day { position: absolute; left: 0; right: 0; top: 96px; height: 274px; background: rgba(255,255,255,.07); color: #FF4C32;
+        font-size: 236px; font-weight: 800; letter-spacing: -.04em; text-align: center; line-height: 274px; }
+      #ev-time { position: absolute; left: 72px; right: 72px; top: 968px; text-align: center; font-size: 34px; font-weight: 700; color: #9CD4FF; letter-spacing: .04em; z-index: 72; }
+      .pill { display: inline-block; font-weight: 800; font-size: 36px; letter-spacing: .02em; color: #FFFFFF;
+        border: 3px solid #FFFFFF; border-radius: 999px; padding: 14px 32px; white-space: nowrap; }
       #ev-pill-wrap { position: absolute; left: 0; right: 0; top: 1030px; text-align: center; z-index: 72; }
       #ev-pill { font-size: 32px; padding: 10px 30px; }
-      .logo-wrap { position: absolute; left: 0; right: 0; text-align: center; z-index: 75; }
-      .logo-wrap img { height: 50px; width: auto; }
+      .logo-wrap { position: absolute; z-index: 75; }
+      .logo-wrap img { height: 50px; width: auto; display: block; }
 
-      /* ---------- CTA ---------- */
-      #cta-h1, #cta-h2 { left: 72px; top: 330px; font-size: 118px; }
-      #cta-h1 .big, #cta-h2 .big { font-size: 170px; }
-      #cta-date { left: 72px; top: 640px; font-size: 66px; }
-      #cta-pill-wrap { position: absolute; left: 72px; top: 750px; z-index: 30; }
+      /* ---------- CTA, left panel (x 0-480) ---------- */
+      #cta-h1, #cta-h2 { left: 44px; top: 318px; }
+      #cta-h1 .s, #cta-h2 .s { font-size: 74px; }
+      #cta-h1 .big, #cta-h2 .big { font-size: 140px; margin-top: 4px; }
+      #cta-date { left: 44px; top: 580px; font-size: 56px; }
+      #cta-pill-wrap { position: absolute; left: 44px; top: 680px; z-index: 30; }
       #cta-pill-wrap .pill { position: absolute; left: 0; top: 0; }
       .arrow { display: inline-block; }
 
       /* ---------- subtitles ---------- */
       #subs { position: absolute; left: 0; right: 0; top: 0; height: 1240px; z-index: 95; pointer-events: none; }
-      .sub { position: absolute; left: 110px; right: 110px; bottom: 0; text-align: center;
-        font-size: 56px; font-weight: 700; line-height: 1.28; color: #FFFFFF; opacity: 0; text-wrap: balance; }
+      .sub { position: absolute; left: 110px; right: 110px; bottom: 0; text-align: center; text-wrap: balance;
+        font-size: 56px; font-weight: 700; line-height: 1.28; color: #FFFFFF; opacity: 0; }
       .sub .bx { background: rgba(6,40,76,.62); border-radius: 14px; padding: 2px 16px;
-        -webkit-box-decoration-break: clone; box-decoration-break: clone;
-        text-shadow: 0 2px 10px rgba(6,40,76,.7); }
+        -webkit-box-decoration-break: clone; box-decoration-break: clone; text-shadow: 0 2px 10px rgba(6,40,76,.7); }
       .sub .hl-t { color: #9CD4FF; }
       .sub .hl-f { color: #FF4C32; }
       .sub .it { font-family: 'Hedvig Letters Serif', Georgia, serif; font-style: italic; font-weight: 400; }
@@ -181,49 +171,53 @@
   <body>
     <div id="root" data-composition-id="bf-webinar-ad" data-start="0" data-duration="37" data-width="1080" data-height="1920">
 
-      <!-- background -->
-      <div id="bg" class="navy-bg clip" data-start="0" data-duration="37" data-track-index="0">
-        <div class="grid-top"></div><div class="grid" id="grid-main"></div>
+      <div id="bg" class="navy-bg clip" data-start="0" data-duration="37" data-track-index="0"><div class="grid" id="grid-main"></div></div>
+
+      <!-- Sean, real footage (non-timed frame + wrapper; video + end hold inside) -->
+      <div id="sean-frame">
+        <div id="sean-wrap">
+          <video id="sean" src="assets/sean-aroll.mp4" muted playsinline data-start="0" data-duration="37" data-track-index="1"></video>
+        </div>
+      </div>
+      <div id="win-border" class="clip" data-start="0" data-duration="37" data-track-index="3"></div>
+
+      <!-- brand side panel -->
+      <div id="panel" class="clip" data-start="0" data-duration="37" data-track-index="4"><div class="navy-bg"><div class="grid"></div></div></div>
+      <div id="panel-edge" class="clip" data-start="0" data-duration="37" data-track-index="5"></div>
+
+      <!-- S1 hook (right panel) -->
+      <div id="hook" class="hero clip" data-start="0" data-duration="37" data-track-index="6">
+        <span class="ln a flame" id="hk1">Double</span>
+        <span class="ln b" id="hk2">your</span>
+        <span class="ln c" id="hk3">Black</span>
+        <span class="ln c" id="hk4">Friday</span>
+        <span class="ln d" id="hk5">Revenue?</span>
+      </div>
+      <div id="hook-chip" class="clip" data-start="0" data-duration="37" data-track-index="7"><span class="chip">VS LAST YEAR</span></div>
+
+      <!-- S2/S3 webinar → playbook (left panel; BLACK FRIDAY stays locked) -->
+      <div id="web" class="hero clip" data-start="0" data-duration="37" data-track-index="8">
+        <span class="slot s1"><span id="w1a"><span class="flame">Free</span> live</span><span id="w1b">The actual</span></span>
+        <span class="slot s2"><span id="w2">Black<br />Friday</span></span>
+        <span class="slot s3"><span id="w3a">Webinar</span><span id="w3b" class="tint">Playbook</span></span>
       </div>
 
-      <!-- S1 hook -->
-      <div id="hook" class="hero clip" data-start="0" data-duration="37" data-track-index="1">
-        <span class="ln" id="hk1"><span class="flame">Double</span> your</span>
-        <span class="ln" id="hk2">Black Friday</span>
-        <span class="ln" id="hk3">Revenue?</span>
-      </div>
-      <div id="hook-chip" class="clip" data-start="0" data-duration="37" data-track-index="2"><span class="chip">VS LAST YEAR</span></div>
-
-      <!-- S2 / S3 webinar → playbook (BLACK FRIDAY line stays locked) -->
-      <div id="web" class="hero clip" data-start="0" data-duration="37" data-track-index="3">
-        <span class="slot"><span id="w1a"><span class="flame">Free</span> live</span><span id="w1b">The actual</span></span>
-        <span class="slot"><span id="w2">Black Friday</span></span>
-        <span class="slot"><span id="w3a">Webinar</span><span id="w3b" class="tint">Playbook</span></span>
+      <!-- S5 performance tag on the close-up -->
+      <div id="perf" class="clip" data-start="0" data-duration="37" data-track-index="9">
+        <span class="w">PERFORMANCE</span>
+        <svg width="40" height="56" viewBox="0 0 40 56" fill="none"><path id="perf-arrow" d="M20 52 L20 6 M6 20 L20 6 L34 20" stroke="#9CD4FF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
 
-      <!-- S5 performance -->
-      <div id="perf" class="hero clip" data-start="0" data-duration="37" data-track-index="4"><span class="ln">Performance</span></div>
-      <div id="perf-arrow" class="clip" data-start="0" data-duration="37" data-track-index="5"></div>
-      <div id="perf-head" class="clip" data-start="0" data-duration="37" data-track-index="6"></div>
-
-      <!-- Sean floating head (non-timed wrapper; video + end freeze inside) -->
-      <div id="sean-wrap">
-        <video id="sean" src="assets/sean-cutout.webm" muted playsinline
-          data-start="0" data-duration="36.36" data-track-index="7"></video>
-        <img id="sean-freeze" class="clip" src="assets/sean-last-frame.png" alt=""
-          data-start="36.33" data-duration="0.67" data-track-index="8" />
+      <!-- S4 social proof: full-screen B-roll -->
+      <div id="proof">
+        <video id="pv1" src="assets/broll-stage.mp4" muted playsinline data-start="8.45" data-duration="2.2" data-track-index="10"></video>
+        <video id="pv2" src="assets/broll-laptop-convo.mp4" muted playsinline data-start="10.15" data-duration="2.2" data-track-index="11"></video>
+        <div id="proof-top"></div><div id="proof-bot"></div>
       </div>
-
-      <!-- S4 social proof -->
-      <div id="proof-text" class="hero clip" data-start="0" data-duration="37" data-track-index="9">
+      <div id="proof-text" class="hero clip" data-start="0" data-duration="37" data-track-index="12">
         <span class="ln a">STRATEGIES USED WITH</span>
         <span class="ln b">8- &amp; 9-figure</span>
         <span class="ln c">ecommerce brands</span>
-      </div>
-      <div id="proof-card">
-        <video id="pv1" src="assets/broll-stage.mp4" muted playsinline data-start="8.45" data-duration="2.2" data-track-index="11"></video>
-        <video id="pv2" src="assets/broll-laptop-convo.mp4" muted playsinline data-start="10.15" data-duration="2.2" data-track-index="12"></video>
-        <div id="proof-shade"></div>
       </div>
 
       <!-- S6 discount reset -->
@@ -254,9 +248,8 @@
         <div class="row" id="r4"><div class="rbg"></div><div class="rbar"></div><span class="num">05</span><span class="lbl">LIVE NUMBERS</span><span class="live"></span>
           <svg class="tick" viewBox="0 0 36 36"><path d="M7 19 L15 27 L29 10" stroke="#DEEEFE" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
-        <!-- 01 structure glyph (no text) -->
         <div class="panel" id="p0">
-          <svg width="554" height="240" viewBox="0 0 554 240" fill="none">
+          <svg class="fit" viewBox="0 0 554 240" fill="none">
             <g stroke="#DEEEFE" stroke-width="3" opacity=".8">
               <path class="gl" d="M277 58 L277 82 L157 82 L157 106"/><path class="gl" d="M277 82 L397 82 L397 106"/>
               <path class="gl" d="M157 144 L157 166 L97 166 L97 186"/><path class="gl" d="M157 166 L217 166 L217 186"/>
@@ -270,14 +263,12 @@
             </g>
           </svg>
         </div>
-        <!-- 02 creatives grid -->
         <div class="panel" id="p1">
           <div class="tiles"><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div></div>
           <div class="q">HOW MANY?</div>
         </div>
-        <!-- 04 email sequence -->
         <div class="panel" id="p3">
-          <svg width="554" height="160" viewBox="0 0 554 160" fill="none">
+          <svg class="fit" viewBox="0 0 554 160" fill="none">
             <g class="env"><rect x="42" y="34" width="120" height="86" rx="12" stroke="#9CD4FF" stroke-width="4" fill="rgba(156,212,255,.14)"/>
               <path d="M46 40 L102 84 L158 40" stroke="#9CD4FF" stroke-width="4"/><text x="102" y="150" text-anchor="middle" font-family="Rethink Sans" font-weight="800" font-size="30" fill="#FFFFFF">1</text></g>
             <path class="arr" d="M176 77 L206 77 M198 69 L208 77 L198 85" stroke="#DEEEFE" stroke-width="4" stroke-linecap="round"/>
@@ -289,7 +280,6 @@
           </svg>
           <div class="q">WHAT + WHEN</div>
         </div>
-        <!-- 05 live numbers -->
         <div class="panel" id="p4">
           <div class="q">WHAT DO YOU WATCH?</div>
           <div class="chips">
@@ -300,49 +290,39 @@
         </div>
       </div>
 
-      <!-- S10 bundles full-bleed, grows out of row 03 -->
+      <!-- S10 bundles full-bleed -->
       <div id="bundle">
         <div id="bundle-vid-wrap">
-          <video id="bv" src="assets/broll-bundle.mp4" muted playsinline data-start="19.2" data-duration="2.3" data-track-index="16"></video>
+          <video id="bv" src="assets/broll-bundle.mp4" muted playsinline data-start="19.2" data-duration="2.3" data-track-index="15"></video>
         </div>
         <div id="bundle-shade-top"></div><div id="bundle-shade-bot"></div>
         <div id="bundle-text"><div class="n">03</div><div class="w">BUNDLES?</div></div>
       </div>
 
       <!-- S14 October 14 event card -->
-      <div id="ev-bg" class="navy-bg clip" data-start="0" data-duration="37" data-track-index="17"><div class="grid"></div></div>
-      <div id="ev-text" class="hero clip" data-start="0" data-duration="37" data-track-index="18">
+      <div id="ev-bg" class="navy-bg clip" data-start="0" data-duration="37" data-track-index="16"><div class="grid"></div></div>
+      <div id="ev-text" class="hero clip" data-start="0" data-duration="37" data-track-index="17">
         <span class="ln" id="ev1">Free live</span><span class="ln" id="ev2">Black Friday webinar</span>
       </div>
-      <div id="ev-tile" class="clip" data-start="0" data-duration="37" data-track-index="19">
-        <div class="strip">OCTOBER</div><div class="day">14</div>
-      </div>
-      <div id="ev-time" class="clip" data-start="0" data-duration="37" data-track-index="20">WED · 1:30 PM PT · 4:30 PM ET</div>
-      <div id="ev-pill-wrap" class="clip" data-start="0" data-duration="37" data-track-index="21"><span class="pill" id="ev-pill">REGISTER FREE</span></div>
-      <div id="ev-logo" class="logo-wrap" style="top:290px"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+      <div id="ev-tile" class="clip" data-start="0" data-duration="37" data-track-index="18"><div class="strip">OCTOBER</div><div class="day">14</div></div>
+      <div id="ev-time" class="clip" data-start="0" data-duration="37" data-track-index="19">WED · 1:30 PM PT · 4:30 PM ET</div>
+      <div id="ev-pill-wrap" class="clip" data-start="0" data-duration="37" data-track-index="20"><span class="pill" id="ev-pill">REGISTER FREE</span></div>
+      <div id="ev-logo" class="logo-wrap" style="left:0;right:0;top:290px"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" style="margin:0 auto" /></div>
 
-      <!-- S15 / S16 CTA -->
-      <div id="cta-h1" class="hero clip" data-start="0" data-duration="37" data-track-index="22">
-        <span class="ln">Register</span><span class="ln big flame">Free</span>
-      </div>
-      <div id="cta-h2" class="hero clip" data-start="0" data-duration="37" data-track-index="23">
-        <span class="ln">100%</span><span class="ln big flame">Free</span>
-      </div>
-      <div id="cta-date" class="hero clip" data-start="0" data-duration="37" data-track-index="24"><span class="ln">October 14</span></div>
-      <div id="cta-pill-wrap" class="clip" data-start="0" data-duration="37" data-track-index="25">
+      <!-- S15 / S16 CTA (left panel) -->
+      <div id="cta-h1" class="hero clip" data-start="0" data-duration="37" data-track-index="21"><span class="ln s">Register</span><span class="ln big flame">Free</span></div>
+      <div id="cta-h2" class="hero clip" data-start="0" data-duration="37" data-track-index="22"><span class="ln s">100%</span><span class="ln big flame">Free</span></div>
+      <div id="cta-date" class="hero clip" data-start="0" data-duration="37" data-track-index="23"><span class="ln">October 14</span></div>
+      <div id="cta-pill-wrap" class="clip" data-start="0" data-duration="37" data-track-index="24">
         <span class="pill" id="pill-a">LINK BELOW <span class="arrow">↓</span></span>
         <span class="pill" id="pill-b">REGISTER NOW <span class="arrow">↓</span></span>
       </div>
-      <div id="end-logo" class="logo-wrap" style="top:200px"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+      <div id="end-logo" class="logo-wrap" style="left:44px;top:830px"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
 
-      <div id="vignette"></div>
+      <div id="subs" class="clip" data-start="0" data-duration="37" data-track-index="25"></div>
 
-      <!-- subtitles (built below) -->
-      <div id="subs" class="clip" data-start="0" data-duration="37" data-track-index="26"></div>
-
-      <!-- audio: Sean's voice is the spine, SFX pre-mixed under it -->
-      <audio id="vo" src="assets/sean-vo.wav" data-start="0" data-duration="36.39" data-track-index="27" data-volume="1"></audio>
-      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="37" data-track-index="28" data-volume="1"></audio>
+      <audio id="vo" src="assets/sean-vo.wav" data-start="0" data-duration="36.39" data-track-index="26" data-volume="1"></audio>
+      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="37" data-track-index="27" data-volume="1"></audio>
     </div>
 
     <script>
@@ -383,94 +363,101 @@
 
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
-
       SUBS.forEach((s, i) => {
-        const el = "#sub" + i;
-        tl.fromTo(el, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out" }, s[0]);
-        tl.set(el, { opacity: 0 }, s[1]);
+        tl.fromTo("#sub" + i, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: i === 0 }, s[0]);
+        tl.set("#sub" + i, { opacity: 0 }, s[1]);
       });
 
-      // ---------- Sean presets: face centre (x, y) + scale ----------
+      // ---------- Sean framing: crop presets (face centre x, y + scale) and windows ----------
+      // Pseudo multi-cam: 100% = s1.15, ~110% = s1.26, 130% = s1.59 (mouth always above the subtitle line)
       const FX = 533, FY = 1067;
-      const P = {
-        M_L:  [330, 850, 0.73], M_R:  [750, 840, 0.73],
-        MT_L: [330, 800, 0.86], MT_R: [750, 812, 0.79],
-        PB_L: [225, 845, 0.64], S_L:  [175, 905, 0.46],
-        L_C:  [540, 770, 1.00], END_R: [750, 806, 0.80],
+      const SHOT = {
+        SPLIT_L:  [330, 940, 1.15],  // Sean left column, panel right
+        SPLIT_R:  [750, 940, 1.15],  // Sean right column, panel left
+        SPLIT_RT: [755, 900, 1.26],  // 115% punch-in, right column
+        CLOSE:    [540, 840, 1.59],  // 130% close-up, full frame
+        WIDE:     [540, 880, 1.22],  // full-frame trust shot
+        WINDOW:   [246, 650, 0.72],  // inside the playbook window
       };
-      const pos = (k) => ({ x: P[k][0] - FX, y: P[k][1] - FY, scale: P[k][2] });
-      const seanTo = (k, t, d, ease) => tl.to("#sean-wrap", { ...pos(k), duration: d, ease: ease || "power2.inOut" }, t);
+      const WIN = {
+        LEFTCOL:  "inset(0px 420px 0px 0px round 0px)",
+        RIGHTCOL: "inset(0px 0px 0px 420px round 0px)",
+        FULL:     "inset(0px 0px 0px 0px round 0px)",
+        PB:       "inset(290px 624px 880px 36px round 28px)",
+      };
+      const shot = (k) => ({ x: SHOT[k][0] - FX, y: SHOT[k][1] - FY, scale: SHOT[k][2] });
+      const cut = (k, win, t) => { tl.set("#sean-wrap", shot(k), t); tl.set("#sean-frame", { clipPath: WIN[win] }, t); };
+      const push = (k, t, d, by) => tl.to("#sean-wrap", { scale: SHOT[k][2] * by, duration: d, ease: "none" }, t);
+      const panelSide = (side, t) => {
+        const left = side === "right" ? 660 : 0, edge = side === "right" ? 660 : 417;
+        tl.set("#panel", { left }, t); tl.set("#panel-edge", { left: edge }, t);
+      };
 
-      // initial state of everything that starts hidden
-      gsap.set("#sean-wrap", { ...pos("M_L"), opacity: 1 });
-      gsap.set(["#hook .ln", "#hook-chip", "#web", "#w1b", "#w3b", "#perf", "#perf-arrow", "#perf-head",
-        "#proof-text", "#proof-text .ln", "#proof-card", "#pv2", "#disc", "#card", "#bundle", "#ev-bg", "#ev-text .ln",
-        "#ev-tile", "#ev-time", "#ev-pill-wrap", "#ev-logo", "#cta-h1", "#cta-h2", "#cta-date", "#cta-pill-wrap",
-        "#pill-b", "#end-logo", ".panel", "#bundle-text"], { opacity: 0 });
-
-      // ---------- S1 HOOK 0.00-3.55 ----------
-      tl.fromTo("#sean-wrap", { scale: P.M_L[2] * 1.03 }, { scale: P.M_L[2], duration: 0.9, ease: "power2.out" }, 0);
+      gsap.set("#sean-wrap", shot("SPLIT_L"));
+      gsap.set(["#hook .ln", "#hook-chip", "#web", "#w1b", "#w3b", "#perf", "#proof", "#proof-text", "#proof-text .ln", "#pv2",
+        "#disc", "#card", "#win-border", "#bundle", "#ev-bg", "#ev-text .ln", "#ev-tile", "#ev-time", "#ev-pill-wrap", "#ev-logo",
+        "#cta-h1", "#cta-h2", "#cta-date", "#cta-pill-wrap", "#pill-b", "#end-logo", ".panel", "#bundle-text"], { opacity: 0 });
       tl.fromTo("#grid-main", { backgroundPosition: "0px 0px" }, { backgroundPosition: "0px 1200px", duration: 37, ease: "none" }, 0);
+
+      // ---------- S1 HOOK 0.00-3.55: Sean left (100%), lockup in the right panel ----------
+      push("SPLIT_L", 0, 3.55, 1.03);
       tl.fromTo("#hk1", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.50);
-      tl.fromTo("#hk2", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 1.00);
-      tl.fromTo("#hk3", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 1.10);
-      tl.fromTo("#hook-chip", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 2.00);
-      // blur-push: hook out left, Sean glides to the right
-      tl.to(["#hook", "#hook-chip"], { x: -160, opacity: 0, filter: "blur(10px)", duration: 0.4, ease: "power2.in" }, 3.40);
-      seanTo("M_R", 3.42, 0.55);
+      tl.fromTo("#hk2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.80);
+      tl.fromTo(["#hk3", "#hk4"], { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out", stagger: 0.1 }, 1.00);
+      tl.fromTo("#hk5", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 1.10);
+      tl.fromTo("#hook-chip", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 2.00);
 
-      // ---------- S2 FREE WEBINAR 3.55-6.10 ----------
+      // ---------- S2 FREE WEBINAR 3.55: cut to 115% right, panel swaps to the left ----------
+      tl.set(["#hook", "#hook-chip"], { opacity: 0 }, 3.55);
+      cut("SPLIT_RT", "RIGHTCOL", 3.55); panelSide("left", 3.55);
+      tl.fromTo(["#panel", "#panel-edge"], { x: -420 }, { x: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, 3.55);
+      push("SPLIT_RT", 3.55, 4.9, 1.04);
       tl.set("#web", { opacity: 1 }, 3.70);
-      tl.fromTo("#w1a", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 3.95);
-      tl.fromTo("#w2",  { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 4.07);
-      tl.fromTo("#w3a", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 4.19);
-      tl.to("#sean-wrap", { x: P.MT_R[0] - FX, y: P.MT_R[1] - FY, scale: P.MT_R[2], duration: 4.4, ease: "none" }, 4.0);
+      tl.fromTo("#w1a", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 3.95);
+      tl.fromTo("#w2",  { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 4.07);
+      tl.fromTo("#w3a", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 4.19);
 
-      // ---------- S3 EXACT SECRETS 6.10-8.50: lines 1 + 3 roll, BLACK FRIDAY locked ----------
-      tl.to(["#w1a", "#w3a"], { opacity: 0, y: -50, duration: 0.3, ease: "power2.in" }, 5.90);
-      tl.fromTo(["#w1b", "#w3b"], { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out", stagger: 0.06 }, 6.10);
+      // ---------- S3 EXACT SECRETS 6.10: lines 1 + 3 roll, BLACK FRIDAY locked ----------
+      tl.to(["#w1a", "#w3a"], { opacity: 0, y: -40, duration: 0.3, ease: "power2.in" }, 5.90);
+      tl.fromTo(["#w1b", "#w3b"], { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out", stagger: 0.06 }, 6.10);
 
-      // ---------- S4 SOCIAL PROOF 8.50-12.00 ----------
-      tl.to("#web", { opacity: 0, y: -40, duration: 0.3, ease: "power2.in" }, 8.30);
-      tl.to("#sean-wrap", { opacity: 0, scale: P.MT_R[2] * 0.94, duration: 0.35, ease: "power2.in" }, 8.40);
-      tl.fromTo("#proof-card", { opacity: 0, y: 220 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 8.45);
+      // ---------- S4 SOCIAL PROOF 8.45-12.00: full-screen B-roll ----------
+      tl.fromTo("#proof", { opacity: 0, y: 140 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 8.45);
       tl.set("#proof-text", { opacity: 1 }, 8.70);
       tl.fromTo("#proof-text .a", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 8.75);
       tl.fromTo("#proof-text .b", { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "expo.out" }, 8.85);
       tl.fromTo("#proof-text .c", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 8.97);
       tl.fromTo("#pv2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 10.15);
-      tl.to("#proof-card", { opacity: 0, y: 260, duration: 0.4, ease: "power2.in" }, 11.85);
-      tl.to("#proof-text", { opacity: 0, y: -30, duration: 0.3, ease: "power2.in" }, 11.85);
+      tl.set("#web", { opacity: 0 }, 9.0);
 
-      // ---------- S5 PERFORMANCE 12.00-13.50 ----------
-      tl.set("#sean-wrap", { ...pos("MT_L"), scale: P.MT_L[2] * 0.92 }, 11.95);
-      tl.to("#sean-wrap", { opacity: 1, scale: P.MT_L[2], duration: 0.45, ease: "power2.out" }, 12.0);
-      tl.fromTo("#perf", { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 12.15);
-      tl.fromTo("#perf-arrow", { opacity: 1, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.5, ease: "power2.out" }, 12.30);
-      tl.fromTo("#perf-head", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }, 12.65);
+      // ---------- S5 PERFORMANCE 12.00-13.45: 130% close-up, full frame ----------
+      cut("CLOSE", "FULL", 11.80); tl.set(["#panel", "#panel-edge"], { opacity: 0 }, 11.80);
+      push("CLOSE", 11.80, 1.7, 1.02);
+      tl.to(["#proof", "#proof-text"], { opacity: 0, duration: 0.35, ease: "power2.inOut" }, 11.85);
+      tl.fromTo("#perf", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.35, ease: "power3.out" }, 12.20);
+      tl.fromTo("#perf-arrow", { strokeDasharray: 120, strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.5, ease: "power2.out" }, 12.35);
 
-      // ---------- S6 NOT JUST DISCOUNTS 13.50-16.00 (blur-zoom) ----------
-      tl.to("#sean-wrap", { scale: P.MT_L[2] * 1.15, opacity: 0, duration: 0.4, ease: "power2.in" }, 13.40);
-      tl.to(["#perf", "#perf-arrow", "#perf-head"], { opacity: 0, scale: 1.1, duration: 0.35, ease: "power2.in" }, 13.40);
-      tl.fromTo("#disc", { opacity: 0, scale: 1.12, filter: "blur(16px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 13.45);
+      // ---------- S6 NOT JUST DISCOUNTS 13.45-16.00: full-screen interrupt ----------
+      tl.fromTo("#disc", { opacity: 0, scale: 1.08, filter: "blur(14px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.45, ease: "power3.out" }, 13.45);
+      tl.set("#perf", { opacity: 0 }, 13.90);
       tl.fromTo("#disc-tag", { opacity: 0, rotation: -28, y: -40 }, { opacity: 1, rotation: 0, y: 0, duration: 0.6, ease: "back.out(1.4)" }, 13.55);
       tl.fromTo("#d1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 13.75);
       tl.fromTo("#d2", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.45, ease: "expo.out" }, 14.20);
 
-      // ---------- S7 PLAYBOOK IN 16.00-16.70 ----------
+      // ---------- S7 PLAYBOOK 16.00: Sean window (real footage) + playbook card ----------
       const ROW_Y0 = 120, ROW_H = 76, EXP = 250;
       const rowY = (a) => [0, 1, 2, 3, 4].map((i) => ROW_Y0 + i * ROW_H + (a >= 0 && i > a ? EXP : 0));
-      const setRows = (a, t, d) => rowY(a).forEach((y, i) =>
-        d ? tl.to("#r" + i, { y, duration: d, ease: "power2.inOut" }, t) : tl.set("#r" + i, { y }, t));
+      const setRows = (a, t, d) => rowY(a).forEach((y, i) => tl.to("#r" + i, { y, duration: d, ease: "power2.inOut" }, t));
       gsap.set([".row .lbl", ".row .num"], { opacity: 0.45 });
       rowY(-1).forEach((y, i) => gsap.set("#r" + i, { y, opacity: 0 }));
 
+      cut("WINDOW", "PB", 15.90);
       tl.to("#disc", { x: -1080, filter: "blur(10px)", duration: 0.45, ease: "power2.inOut" }, 15.95);
-      tl.set("#sean-wrap", { ...pos("PB_L"), x: P.PB_L[0] - FX - 320, scale: P.PB_L[2] }, 15.90);
-      tl.to("#sean-wrap", { x: P.PB_L[0] - FX, opacity: 1, duration: 0.5, ease: "power3.out" }, 16.00);
-      tl.fromTo("#card", { opacity: 0, x: 320 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 16.00);
-      tl.fromTo("#card-head", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 16.15);
-      [0, 1, 2, 3, 4].forEach((i) => tl.fromTo("#r" + i, { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, 16.25 + i * 0.06));
+      tl.fromTo("#sean-frame", { x: -120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out", immediateRender: false }, 16.00);
+      tl.fromTo("#win-border", { x: -120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 16.00);
+      tl.fromTo("#card", { opacity: 0, x: 200 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 16.05);
+      tl.fromTo("#card-head", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 16.20);
+      [0, 1, 2, 3, 4].forEach((i) => tl.fromTo("#r" + i, { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" }, 16.30 + i * 0.06));
 
       const activate = (i, t) => {
         tl.to(`#r${i} .rbg, #r${i} .rbar`, { opacity: 1, duration: 0.3, ease: "power2.out" }, t);
@@ -482,7 +469,7 @@
         tl.fromTo(`#r${i} .tick`, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.6)" }, t + 0.05);
       };
 
-      // ---------- S8 01 AD ACCOUNT 16.70-18.05 ----------
+      // 01 AD ACCOUNT 16.70-18.05
       setRows(0, 16.70, 0.35); activate(0, 16.70);
       tl.fromTo("#p0", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "none" }, 16.85);
       tl.fromTo("#p0 .nd", { opacity: 0, scale: 0.6, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(1.6)" }, 16.88);
@@ -490,35 +477,33 @@
       tl.fromTo("#p0 .nd2", { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out", stagger: 0.06 }, 17.05);
       tl.fromTo("#p0 .nd3", { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out", stagger: 0.05 }, 17.20);
 
-      // ---------- S9 02 CREATIVES 18.05-19.25 ----------
+      // 02 CREATIVES 18.05-19.25
       tl.to("#p0", { opacity: 0, duration: 0.2, ease: "power2.in" }, 17.95);
       setRows(1, 18.05, 0.35); complete(0, 18.05); activate(1, 18.05);
       tl.set("#p1", { opacity: 1 }, 18.15);
       tl.fromTo("#p1 .tile", { opacity: 0, y: 26, rotation: -6 }, { opacity: 1, y: 0, rotation: 0, duration: 0.3, ease: "back.out(1.5)", stagger: 0.06 }, 18.15);
       tl.fromTo("#p1 .q", { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" }, 18.45);
 
-      // ---------- S10 03 BUNDLES 19.25-21.00 (row 03 opens into full-bleed B-roll) ----------
+      // 03 BUNDLES 19.25-21.00: row 03 opens into full-bleed product B-roll
       tl.to("#p1", { opacity: 0, duration: 0.2, ease: "power2.in" }, 19.10);
       setRows(2, 19.15, 0.3); complete(1, 19.15); activate(2, 19.15);
-      tl.set("#bundle", { opacity: 1, clipPath: "inset(562px 60px 1282px 430px round 16px)" }, 19.30);
+      tl.set("#bundle", { opacity: 1, clipPath: "inset(562px 54px 1290px 494px round 16px)" }, 19.30);
       tl.to("#bundle", { clipPath: "inset(0px 0px 0px 0px round 0px)", duration: 0.45, ease: "power2.inOut" }, 19.30);
       tl.fromTo("#bundle-text", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 19.55);
       tl.to("#bundle-text", { opacity: 0, duration: 0.2, ease: "power2.in" }, 20.55);
-      tl.to("#bundle", { clipPath: "inset(562px 60px 1282px 430px round 16px)", duration: 0.4, ease: "power2.inOut" }, 20.60);
+      tl.to("#bundle", { clipPath: "inset(562px 54px 1290px 494px round 16px)", duration: 0.4, ease: "power2.inOut" }, 20.60);
       tl.set("#bundle", { opacity: 0 }, 21.00);
 
-      // ---------- S11 04 EMAILS 21.00-22.40 ----------
+      // 04 EMAILS 21.00-22.40
       setRows(3, 20.95, 0.35); complete(2, 20.95); activate(3, 20.95);
       tl.set("#p3", { opacity: 1 }, 21.05);
       tl.fromTo("#p3 .env", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.28, ease: "power2.out", stagger: 0.12 }, 21.05);
       tl.fromTo("#p3 .arr", { opacity: 0 }, { opacity: 1, duration: 0.2, stagger: 0.12 }, 21.17);
       tl.fromTo("#p3 .q", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 21.45);
 
-      // ---------- S12 05 LIVE NUMBERS 22.40-25.00 (graphic dominant, Sean small) ----------
+      // 05 LIVE NUMBERS 22.40-25.00
       tl.to("#p3", { opacity: 0, duration: 0.2, ease: "power2.in" }, 22.25);
       setRows(4, 22.40, 0.35); complete(3, 22.40); activate(4, 22.40);
-      seanTo("S_L", 22.40, 0.5);
-      tl.to("#card", { scale: 1.05, duration: 0.5, ease: "power2.inOut" }, 22.40);
       tl.fromTo("#r4 .live", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 22.55);
       tl.fromTo("#r4 .live", { scale: 1 }, { scale: 1.35, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 4, immediateRender: false }, 22.75);
       tl.set("#p4", { opacity: 1 }, 22.55);
@@ -526,22 +511,19 @@
       tl.fromTo("#p4 .dchip", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.3, ease: "back.out(1.4)", stagger: 0.15 }, 22.70);
       tl.fromTo("#p4 .spark", { strokeDasharray: 160, strokeDashoffset: 160 }, { strokeDashoffset: 0, duration: 0.5, ease: "power2.out", stagger: 0.15 }, 22.85);
 
-      // ---------- S13 RECAP 25.00-27.55 ----------
+      // RECAP 25.00-27.55
       tl.to("#p4", { opacity: 0, duration: 0.25, ease: "power2.in" }, 24.85);
-      [0, 1, 2, 3, 4].forEach((i) => tl.to("#r" + i, { y: 150 + i * 118, duration: 0.45, ease: "power2.inOut" }, 25.00));
-      tl.to(".row .lbl", { scale: 1.07, transformOrigin: "0% 50%", duration: 0.45, ease: "power2.inOut" }, 25.00);
-      tl.to("#card", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 25.00);
+      [0, 1, 2, 3, 4].forEach((i) => tl.to("#r" + i, { y: 150 + i * 116, duration: 0.45, ease: "power2.inOut" }, 25.00));
       tl.to("#r4 .live", { opacity: 0, duration: 0.2 }, 25.00);
-      seanTo("PB_L", 25.00, 0.5);
-      tl.to(`#r4 .rbg, #r4 .rbar`, { opacity: 0, duration: 0.3 }, 25.00);
+      tl.to("#r4 .rbg, #r4 .rbar", { opacity: 0, duration: 0.3 }, 25.00);
       tl.to(".row .lbl, .row .num", { opacity: 1, duration: 0.3 }, 25.20);
       [0, 1, 2, 3, 4].forEach((i) => tl.fromTo(`#r${i} .tick`, { opacity: i < 4 ? 1 : 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.8)", immediateRender: false }, 25.25 + i * 0.12));
       tl.to("#card", { boxShadow: "0 0 90px rgba(156,212,255,.30), 0 30px 80px rgba(3,20,40,.55)", duration: 0.6, ease: "power2.out" }, 25.40);
 
-      // ---------- S14 OCTOBER 14 27.55-31.00 (push up) ----------
+      // ---------- S14 OCTOBER 14 27.45-31.00 (push up) ----------
       tl.fromTo("#ev-bg", { opacity: 1, y: 1920 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.inOut" }, 27.45);
-      tl.set("#sean-wrap", { opacity: 0 }, 27.95);
-      tl.set("#card", { opacity: 0 }, 27.95);
+      tl.set(["#card", "#win-border"], { opacity: 0 }, 27.95);
+      tl.set("#sean-frame", { opacity: 0 }, 27.95);
       tl.fromTo("#ev-logo", { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 27.95);
       tl.set("#ev-text", { opacity: 1 }, 27.90);
       tl.fromTo("#ev1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 27.95);
@@ -551,28 +533,30 @@
       tl.fromTo("#ev-time", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 29.40);
       tl.fromTo("#ev-pill-wrap", { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" }, 29.70);
 
-      // ---------- S15 REGISTER 31.00-34.35 ----------
-      // date tile shrinks into a persistent OCT 14 chip; Sean full-screen trust beat
-      tl.set("#sean-wrap", { ...pos("L_C"), opacity: 0 }, 30.90);
+      // ---------- S15 31.00-32.40: full-frame trust shot, date shrinks to a chip ----------
+      cut("WIDE", "FULL", 30.90);
+      tl.set("#sean-frame", { opacity: 1 }, 30.90);
+      push("WIDE", 30.90, 1.5, 1.03);
       tl.to(["#ev-text", "#ev-time", "#ev-pill-wrap", "#ev-logo"], { opacity: 0, duration: 0.3, ease: "power2.in" }, 30.95);
       tl.to("#ev-bg", { opacity: 0, duration: 0.45, ease: "power2.inOut" }, 31.00);
-      tl.to("#sean-wrap", { opacity: 1, duration: 0.45, ease: "power2.out" }, 31.00);
-      tl.to("#ev-tile", { x: 374, y: -385, scale: 0.36, duration: 0.55, ease: "power3.inOut" }, 31.00);
+      tl.to("#ev-tile", { x: 380, y: -390, scale: 0.36, duration: 0.55, ease: "power3.inOut" }, 31.00);
 
-      seanTo("M_R", 32.35, 0.55);
-      tl.fromTo("#cta-h1", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 32.45);
-      tl.to("#ev-tile", { opacity: 0, scale: 0.3, duration: 0.3, ease: "power2.in" }, 32.50);
-      tl.fromTo("#cta-date", { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 32.60);
-      tl.fromTo("#cta-pill-wrap", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 32.75);
+      // ---------- 32.40-37.00 CTA: Sean right column, CTA in the left panel ----------
+      cut("SPLIT_R", "RIGHTCOL", 32.40); panelSide("left", 32.40);
+      tl.set(["#panel", "#panel-edge"], { opacity: 1 }, 32.40);
+      tl.fromTo(["#panel", "#panel-edge"], { x: -420 }, { x: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, 32.40);
+      tl.to("#ev-tile", { opacity: 0, duration: 0.25, ease: "power2.in" }, 32.40);
+      tl.fromTo("#cta-h1", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 32.55);
+      tl.fromTo("#cta-date", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 32.68);
+      tl.fromTo("#cta-pill-wrap", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 32.80);
       tl.fromTo("#pill-a .arrow", { y: 0 }, { y: 7, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 2 }, 33.00);
+      push("SPLIT_R", 32.40, 4.6, 1.05);
 
-      // ---------- S16 COMPLETELY FREE 34.35-37.00 ----------
-      tl.to("#cta-h1", { opacity: 0, y: -50, duration: 0.3, ease: "power2.in" }, 34.30);
-      tl.fromTo("#cta-h2", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 34.45);
+      tl.to("#cta-h1", { opacity: 0, y: -40, duration: 0.3, ease: "power2.in" }, 34.30);
+      tl.fromTo("#cta-h2", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 34.45);
       tl.to("#pill-a", { opacity: 0, duration: 0.25 }, 34.40);
       tl.fromTo("#pill-b", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 34.50);
       tl.fromTo("#pill-b .arrow", { y: 0 }, { y: 7, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 3 }, 34.80);
-      tl.to("#sean-wrap", { x: P.END_R[0] - FX, y: P.END_R[1] - FY, scale: P.END_R[2], duration: 2.6, ease: "none" }, 34.40);
       tl.fromTo("#end-logo", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 35.30);
 
       tl.to({}, { duration: 37 }, 0); // fill the slot (no black-frame tail)

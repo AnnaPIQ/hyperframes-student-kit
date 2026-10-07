@@ -2,5 +2,5 @@
 .media-src/
 .media-work/
 snapshots/
-# 54MB alpha cutout: regenerate with scripts/prep-media.sh
-assets/sean-cutout.webm
+# 196MB A-roll master: regenerate with scripts/prep-media.sh
+assets/sean-aroll.mp4

@@ -72,6 +72,12 @@ efficient over time instead of relearning the same lessons.
 - **Hair-edge colour spill from monitors behind the speaker** (purple/green fringes) is
   inside the opaque hair region, so an edge-band despill does nothing. Fix at the shoot:
   plain wall behind the speaker. Otherwise it needs a manual roto pass.
+- **Render stalls / frozen frames with large or re-encoded video.** The compiler warns
+  "sparse keyframes" (default x264 GOP is up to 250 frames). **Fix:** encode every video asset
+  with `-g 30 -keyint_min 30` (one keyframe per second at 30fps).
+- **Taste note: floating-head cut-outs read as a "cheap social edit"** for premium brands
+  (EcomIQ/Pacific IQ feedback). Default to real A-roll in its environment; get variety from
+  crop punch-ins (100/115/130%), split layouts with a solid brand panel, and PiP windows.
 - **Phone lav A-roll can arrive at -37 LUFS.** Two-pass `loudnorm` to -14 LUFS / -1.5 dBTP
   (with a gentle `highpass` + `acompressor` first) before it goes in the comp.
 - **Google Drive "anyone with link" files download directly** with
