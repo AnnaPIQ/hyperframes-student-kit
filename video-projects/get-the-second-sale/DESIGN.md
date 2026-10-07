@@ -13,18 +13,24 @@ him. Calm pacing: every shot holds 1.35s or more, every graphic is readable befo
 ## Colors (each has one job)
 - Navy `#06284C`: full-screen stages (with the campaign dot grid), side cards, proof card
 - White `#FFFFFF`: headlines, captions
-- Blue Tint `#9CD4FF`: first order / current customer, $20K+, FREE, TEST FIRST tag
+- Blue Tint `#9CD4FF`: the ORDER #1 marker (dot + label) and the single italic word on the end card
 - Sky `#DEEEFE`: journey connectors, email / offer / follow-up cards, loop arrow
-- Flame `#FF4C32`: second order, +41%, BOOK NOW. Nothing else
+- Flame `#FF4C32`: the ORDER #2 marker, +41%, BOOK NOW. Nothing else
 
 ## Typography
 Rethink Sans throughout (800 headlines at -2% tracking, 500 captions, 700-800 tracked labels).
-Hedvig Letters Serif italic once per graphic: *SECOND* in "GET THE SECOND SALE." and *Free.* on the end card (campaign end-card pattern).
+Hedvig Letters Serif italic exactly once in the whole ad: *Free.* on the end card.
 
 ## Layout
 - Graphics live between y 270 and y 1250 (Meta safe band).
 - Captions: campaign treatment, white Rethink Sans 500 at 50px, bottom edge 270px above the frame
-  bottom, soft dark shadow, never moved. Highlights only on: first order, 41%, Book Now.
+  bottom, soft dark shadow, never moved. All white: no coloured or italic caption words.
+
+## Emphasis budget (land harder by using less)
+Only three emphasis moments in the whole ad: **+41%** (Flame), the **BOOK NOW** button (Flame),
+and *Free.* (the one italic, Blue Tint) on the end card. Everything else is white. The ORDER #1
+(Blue Tint) / ORDER #2 (Flame) dots are the journey's colour code, not word highlights.
+Never repeat in a caption a colour the graphic on screen already carries.
 - Logo: white wordmark top-left (64, 150) in a non-clip wrapper, on every frame.
 - Sean framed WIDE-L (face at x~370), side cards in the right column (x 620-1020).
 
