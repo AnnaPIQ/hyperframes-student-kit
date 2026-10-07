@@ -75,6 +75,12 @@ efficient over time instead of relearning the same lessons.
 - **Render stalls / frozen frames with large or re-encoded video.** The compiler warns
   "sparse keyframes" (default x264 GOP is up to 250 frames). **Fix:** encode every video asset
   with `-g 30 -keyint_min 30` (one keyframe per second at 30fps).
+- **iPhone footage is HDR (HLG / BT.2020) → the renderer silently auto-promotes the whole ad
+  to HDR HEVC 10-bit** (~13 GB of raw frames, 3x slower, wrong for Meta, colour shifts between
+  video and stills). Check with `ffprobe -show_entries stream=color_transfer` (`arib-std-b67` = HLG).
+  **Fix:** convert to SDR BT.709 at prep: HLG is SDR-compatible, so convert gamut only (no tone
+  map, which looks muddy): `zscale=min=bt2020nc:pin=bt2020:tin=bt709:rin=tv:m=bt709:p=bt709:t=bt709:r=tv`
+  and tag the output `-color_primaries bt709 -color_trc bt709 -colorspace bt709`.
 - **Taste note: floating-head cut-outs read as a "cheap social edit"** for premium brands
   (EcomIQ/Pacific IQ feedback). Default to real A-roll in its environment; get variety from
   crop punch-ins (100/115/130%), split layouts with a solid brand panel, and PiP windows.

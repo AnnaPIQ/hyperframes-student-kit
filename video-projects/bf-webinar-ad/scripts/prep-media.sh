@@ -15,11 +15,12 @@ dl stage.vid      1XuPAArGjpESm3JUhjU7Q3gVmz4L_y72Z   # Sean talking on stage at
 dl laptopman.vid  1HVH9tFgvcAfS-YczxU_aiLOmUxm18Ofu   # Sean holding laptop talking to man
 dl dryfthold.vid  1RapxMHiEtRmM6ig2GKFSSeCSHU4PA_U1   # Dryft Hold product
 
-# --- A-roll: real footage at 1620x2880 (headroom for the 130% punch-in), last frame held 0.7s;
+# --- A-roll: iPhone HLG (BT.2020) converted to SDR BT.709 (HLG is SDR-compatible, so gamut only, no tone map;
+#     leaving HDR tags makes the renderer auto-promote the whole ad to HDR HEVC). Real footage at 1620x2880 (headroom for the 130% punch-in), last frame held 0.7s;
 #     normalised voice (-14 LUFS, -1.5 dBTP) ---
 ffmpeg -v error -y -i "$SRC/aroll.mov" -map 0:v:0 \
-  -vf "scale=1620:2880:flags=lanczos,fps=30,tpad=stop_mode=clone:stop_duration=0.7" \
-  -c:v libx264 -crf 17 -g 30 -keyint_min 30 -pix_fmt yuv420p -an -movflags +faststart assets/sean-aroll.mp4
+  -vf "zscale=min=bt2020nc:pin=bt2020:tin=bt709:rin=tv:m=bt709:p=bt709:t=bt709:r=tv,format=yuv420p,scale=1620:2880:flags=lanczos,fps=30,tpad=stop_mode=clone:stop_duration=0.7" \
+  -c:v libx264 -crf 18 -g 30 -keyint_min 30 -pix_fmt yuv420p -color_primaries bt709 -color_trc bt709 -colorspace bt709 -an -movflags +faststart assets/sean-aroll.mp4
 PRE="highpass=f=80,acompressor=threshold=-30dB:ratio=2.5:attack=8:release=120:makeup=1"
 M=$(ffmpeg -hide_banner -i "$SRC/aroll.mov" -map 0:a:0 -af "$PRE,loudnorm=I=-14:TP=-1.5:LRA=9:print_format=json" -f null - 2>&1 \
   | sed -n '/{/,/}/p' | python3 -I -c "import json,sys;d=json.load(sys.stdin);print(f\"measured_I={d['input_i']}:measured_TP={d['input_tp']}:measured_LRA={d['input_lra']}:measured_thresh={d['input_thresh']}:offset={d['target_offset']}\")")
