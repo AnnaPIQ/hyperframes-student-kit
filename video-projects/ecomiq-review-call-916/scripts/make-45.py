@@ -53,6 +53,7 @@ R = [
     ('tl.fromTo("#c-panel", { x: -540 }', 'tl.fromTo("#c-panel", { x: -440 }'),
     # Mob Armor proof
     ("#mob-mark { position: absolute; left: 0; right: 0; top: 380px;", "#mob-mark { position: absolute; left: 0; right: 0; top: 250px;"),
+    ("#mob-mark img { width: 620px;", "#mob-mark img { width: 540px;"),
     ("#mob-num { position: absolute; left: 0; right: 0; top: 500px; text-align: center; font-size: 200px;",
      "#mob-num { position: absolute; left: 0; right: 0; top: 340px; text-align: center; font-size: 180px;"),
     ("#mob-ts { position: absolute; left: 0; right: 0; top: 760px;", "#mob-ts { position: absolute; left: 0; right: 0; top: 560px;"),
@@ -82,7 +83,7 @@ os.makedirs(os.path.join(DEST, "assets"), exist_ok=True)
 for d in ("fonts", "vendor"):
     shutil.copytree(os.path.join(ROOT, "assets", d), os.path.join(DEST, "assets", d), dirs_exist_ok=True)
 for f in os.listdir(os.path.join(ROOT, "assets")):
-    if f.startswith("ecomiq-") or f in ("base-45.mp4", "vo.m4a", "brand-tokens.css"):
+    if f.startswith("ecomiq-") or f.startswith("mob-armor-") or f in ("base-45.mp4", "vo.m4a", "brand-tokens.css"):
         shutil.copy2(os.path.join(ROOT, "assets", f), os.path.join(DEST, "assets", f))
 shutil.copy2(os.path.join(ROOT, "hyperframes.json"), DEST)
 meta = json.load(open(os.path.join(ROOT, "meta.json")))
