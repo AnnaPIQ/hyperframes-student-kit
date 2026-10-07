@@ -30,7 +30,7 @@
 
       /* ---------- B-roll window / card ---------- */
       #broll-clip { position: absolute; inset: 0; z-index: 3; opacity: 1;
-        clip-path: inset(300px 64px 810px 640px round 32px); }
+        clip-path: inset(300px 64px 1120px 64px round 28px); }
       .bw { position: absolute; opacity: 0; overflow: hidden; }
       .bw video { width: 100%; height: 100%; object-fit: cover; display: block; }
       .bw.win { left: 64px; top: 270px; width: 952px; height: 850px; }
@@ -91,12 +91,12 @@
       #dx-head2 { left: 64px; top: 352px; font-size: 54px; }
       #dx-head3 { left: 64px; top: 414px; font-size: 54px; }
       .dx-l { left: 64px; font-size: 28px; }
-      #dx-l1 { top: 492px; } #dx-l2 { top: 632px; } #dx-l3 { top: 772px; }
-      .dx-bar { left: 64px; height: 56px; border-radius: 6px; transform-origin: 0 50%; }
-      #dx-cost { top: 666px; width: 380px; background: #DEEEFE; }
-      #dx-leak { left: 330px; top: 666px; width: 114px; height: 56px; background: #FF4C32; border-radius: 0 6px 6px 0; }
-      #dx-ring { left: 318px; top: 654px; width: 138px; height: 80px; border: 3px solid #FF4C32; border-radius: 12px; }
-      #scan { left: 54px; top: 470px; width: 560px; height: 2px; background: #9CD4FF;
+      #dx-l1 { top: 494px; } #dx-l2 { top: 594px; } #dx-l3 { top: 694px; }
+      .dx-bar { left: 64px; height: 48px; border-radius: 6px; transform-origin: 0 50%; }
+      #dx-cost { top: 626px; width: 640px; background: #DEEEFE; }
+      #dx-leak { left: 512px; top: 626px; width: 192px; height: 48px; background: #FF4C32; border-radius: 0 6px 6px 0; }
+      #dx-ring { left: 498px; top: 612px; width: 220px; height: 76px; border: 3px solid #FF4C32; border-radius: 12px; }
+      #scan { left: 54px; top: 512px; width: 972px; height: 2px; background: #9CD4FF;
         box-shadow: 0 0 10px rgba(156,212,255,0.7); }
       #scan::after { content: ""; position: absolute; right: -10px; top: -9px; width: 16px; height: 16px;
         border: 2px solid #9CD4FF; border-radius: 50%; }
@@ -140,7 +140,7 @@
 
       /* ---------- subtitles ---------- */
       #subs { position: absolute; inset: 0; z-index: 8; }
-      .sub { position: absolute; left: 90px; width: 900px; bottom: 670px; text-align: center;
+      .sub { position: absolute; left: 90px; width: 900px; bottom: 260px; text-align: center;
         font-weight: 600; font-size: 56px; line-height: 1.16; color: #FFFFFF; opacity: 0;
         text-shadow: 0 0 2px #06284C, 1px 1px 0 #06284C, -1px -1px 0 #06284C, 1px -1px 0 #06284C,
           -1px 1px 0 #06284C, 0 3px 12px rgba(6,40,76,0.85); }
@@ -292,7 +292,7 @@
       const LEFT    = { x: -270, y: 0, scale: 1.0 };     // face at x 270
       const LEFT_S  = { x: -240, y: 0, scale: 1.0 };     // S11, slightly less far
       const RIGHT   = { x: 270, y: 0, scale: 1.0 };      // face at x 810
-      const CARD    = { x: 288, y: -80, scale: 1.25 };   // face centred in right card
+      const BELOW   = { x: 0, y: 470, scale: 0.8 };      // whole cut-out low in frame, numbers panel above
       const CLIP_FULL = "inset(0px 0px 0px 0px round 0px)";
       const CLIP_CARD_R = "inset(300px 64px 810px 640px round 32px)";
       const CLIP_WIN = "inset(270px 64px 800px 64px round 28px)";
@@ -341,21 +341,18 @@
 
       // ---------------- S4 9.6 - 11.3 ----------------
       hide(["#lk1", "#lk2", "#lk3", "#lk1-l", "#lk2-l", "#lk3-l", "#fix-line", "#fix-tag", "#wf-head", "#pf-l"], 9.6, 0.3);
-      tl.to("#sean-wrap", { ...CARD, duration: 0.6, ease: "power3.inOut" }, 9.6);
-      tl.to("#sean-clip", { clipPath: CLIP_CARD_R, duration: 0.6, ease: "power3.inOut" }, 9.6);
-      tl.to("#cut-w", { opacity: 0, duration: 0.5, ease: "power1.inOut" }, 9.7);
-      tl.fromTo("#fb-r", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 10.1);
+      tl.to("#sean-wrap", { ...BELOW, duration: 0.7, ease: "power3.inOut" }, 9.6);
       // waterfall reflows into the 3-bar diagnostic
-      tl.to("#rev-bar", { y: 106, scaleX: 536 / 456, duration: 0.5, ease: IO }, 9.7);
-      tl.to("#pf-bar", { y: 16, scaleX: 156 / 146, duration: 0.5, ease: IO }, 9.7);
+      tl.to("#rev-bar", { y: 106, scaleY: 0.75, scaleX: 900 / 456, duration: 0.5, ease: IO }, 9.7);
+      tl.to("#pf-bar", { y: -64, scaleY: 48 / 56, scaleX: 260 / 146, duration: 0.5, ease: IO }, 9.7);
       tl.fromTo("#dx-cost", { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: OUT }, 9.9);
       show(["#dx-l1", "#dx-l2", "#dx-l3"], 9.95, 0.35, { x: -10, y: 0 }, "sine.out");
       show("#dx-head1", 9.9, 0.4, { y: 18 }, OUT);
       tl.fromTo("#scan", { opacity: 0, y: 0 }, { opacity: 1, duration: 0.15 }, 10.4);
-      tl.to("#scan", { y: 380, duration: 0.9, ease: "sine.inOut" }, 10.4);
+      tl.to("#scan", { y: 270, duration: 0.9, ease: "sine.inOut" }, 10.4);
 
       // ---------------- S5 11.3 - 14.2 ----------------
-      tl.to("#scan", { y: 224, duration: 0.4, ease: "power2.out" }, 11.7);
+      tl.to("#scan", { y: 138, duration: 0.4, ease: "power2.out" }, 11.7);
       tl.fromTo("#dx-leak", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 12.1);
       tl.fromTo("#dx-ring", { opacity: 1, clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.4, ease: IO }, 12.1);
       hide("#scan", 12.2, 0.25);
@@ -365,12 +362,10 @@
 
       // ---------------- S6 14.2 - 15.9 ----------------
       hide(["#dx-head2", "#dx-head3", "#dx-l1", "#dx-l2", "#dx-l3", "#dx-cost", "#dx-leak", "#dx-ring", "#rev-bar", "#pf-bar"], 14.0, 0.25);
-      tl.to("#sean-clip", { clipPath: CLIP_WIN, duration: 0.5, ease: "power3.inOut" }, 14.2);
-      tl.to("#broll-clip", { clipPath: CLIP_WIN, duration: 0.5, ease: "power3.inOut" }, 14.2);
-      tl.to("#fb-r", { opacity: 0, duration: 0.15 }, 14.15);
+      tl.to("#broll-clip", { clipPath: CLIP_WIN, duration: 0.55, ease: "power3.inOut" }, 14.2);
+      tl.to("#sean-clip", { opacity: 0, duration: 0.45, ease: "power1.inOut" }, 14.25);
       tl.fromTo("#fb-w", { opacity: 0 }, { opacity: 1, duration: 0.25 }, 14.65);
       tl.to("#b1w", { opacity: 1, duration: 0.4, ease: "power1.inOut" }, 14.2);
-      tl.set("#sean-clip", { opacity: 0 }, 14.75);
       tl.fromTo("#b1w video", { scale: 1 }, { scale: 1.04, duration: 2.2, ease: "none" }, 14.15);
       tl.to("#win-grad", { opacity: 1, duration: 0.4 }, 14.3);
       show("#sp-a", 14.4, 0.45, { y: 24 }, OUT);
