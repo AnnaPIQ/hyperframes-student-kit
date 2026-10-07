@@ -367,20 +367,9 @@
       const cursorTo = (x, y, t, d = 0.4) => tl.to('#cursor', { x: x, y: y, duration: d, ease: 'power2.inOut' }, t);
       const click = (t) => tl.to('#cursor', { scale: 0.86, duration: 0.07, ease: 'power4.in', yoyo: true, repeat: 1 }, t);
 
-      // ---------- picture: slow push on every shot (camera never sleeps) ----------
-      // [start, end, transformOrigin]
-      const shots = [
-        [0, 3.04, '34% 34%'], [3.04, 4.72, '36% 30%'], [6.24, 7.88, '66% 34%'],
-        [7.88, 9.16, '55% 40%'], [9.16, 10.44, '50% 40%'],
-        [10.44, 11.56, '45% 45%'], [11.56, 12.52, '60% 35%'], [12.52, 14.72, '50% 35%'],
-        [14.72, 17.88, '34% 34%'], [17.88, 19.08, '34% 34%'], [19.08, 20.40, '34% 34%']
-      ];
-      shots.forEach(function (s) {
-        const len = s[1] - s[0];
-        tl.set('#plateInner', { transformOrigin: s[2], scale: 1 }, s[0]);
-        tl.to('#plateInner', { scale: 1 + Math.min(0.045, 0.016 * len), duration: len, ease: 'none' }, s[0]);
-      });
-      tl.set('#plateInner', { scale: 1 }, 20.40);
+      // ---------- picture: no browser-side scaling of the plate ----------
+      // Pushes were removed for sharpness: any CSS scale resamples every video frame.
+      // Framing changes come from the lossless crops in scripts/build-plate.sh.
 
       // shades: off on full-graphic beats
       hide('#shade', 4.72); show('#shade', 6.24); hide('#shade', 20.40);
@@ -482,7 +471,6 @@
       show('#ctaStage', 20.40);
       tl.fromTo('#ctaTile', { opacity: 1, clipPath: 'inset(0% 0% 100% 0% round 30px)' },
         { clipPath: 'inset(0% 0% 0% 0% round 30px)', duration: 0.36, ease: 'expo.out' }, 20.40);
-      tl.fromTo('#ctaTile video', { scale: 1.06 }, { scale: 1.0, duration: 0.88, ease: 'none' }, 20.40);
       tl.fromTo('#ctaChip', { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.24, ease: 'power2.out' }, 20.56);
       ['#cr1', '#cr2', '#cr3'].forEach(function (s, i) { rise(s, 20.48 + i * 0.08, 0.28, 24, 'power3.out'); });
       tl.fromTo('#book', { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.34, ease: 'back.out(1.6)' }, 20.66);

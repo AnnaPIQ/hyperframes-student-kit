@@ -86,6 +86,16 @@ efficient over time instead of relearning the same lessons.
 
 ## Delivery & resolution
 
+- **Masters looked soft vs the source (client noticed).** Causes: (1) intermediates
+  re-encoded 2-3 times (8-bit CRF14 copies of 10-bit 4:2:2 camera files), (2) Hyperframes'
+  default JPEG frame extraction, (3) CSS `scale` pushes resampling every video frame,
+  (4) ~11 Mbps final, (5) a re-compressed "fits in chat" copy. **Fix:** fetch B-roll as
+  `-c copy`, cut every intermediate LOSSLESS (`libx264 -qp 0`), no CSS scaling on video,
+  render `--quality high --crf 10 --video-frame-format png`. Measured SSIM vs the 4K source
+  on a mid-shot frame went 0.70 -> 0.96. Never hand over a re-compressed copy as the
+  master; ship big files via a repo/Drive link instead. Check with
+  `ffmpeg -i out.png -i ref.png -lavfi ssim -f null -` against a crop of the original.
+
 - **There is no 4:5 render "preset."** Ship the final via `--quality high` at the
   project's native size (e.g. 1080×1350). For Meta hi-res deliverables, also export 2×
   (2160×2700).

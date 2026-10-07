@@ -5,7 +5,8 @@
 #     the stage shot keeps y 100-1450 so Sean's talk-title screen stays in frame)
 #   - graphics: the whole overlay layer is shifted up 200px as one unit
 #   - logo and subtitles get their own 4:5 positions; client tag clears the logo
-# Re-run after any edit to index.html, then render from ../review-call-ad-4x5.
+# Re-run after any edit to index.html, then render from ../review-call-ad-4x5 with:
+#   npx hyperframes render --quality high --crf 10 --video-frame-format png --fps 25
 set -euo pipefail
 cd "$(dirname "$0")/.."
 OUT=../review-call-ad-4x5
@@ -26,7 +27,7 @@ J
 # picture: per-shot vertical crop of the 9:16 plate
 ffmpeg -v error -y -i assets/media/plate.mp4 -an \
   -vf "crop=1080:1350:0:'if(between(t,7.88,9.159),100,200)',format=yuv420p" \
-  -c:v libx264 -preset medium -crf 14 -r 25 "$OUT/assets/media/plate45.mp4"
+  -c:v libx264 -preset veryfast -qp 0 -r 25 "$OUT/assets/media/plate45.mp4"   # lossless; only the final render is lossy
 
 python3 -I - "$OUT/index.html" <<'PY'
 import sys
