@@ -4,3 +4,4 @@
 snapshots/
 # 196MB A-roll master: regenerate with scripts/prep-media.sh
 assets/sean-aroll.mp4
+snapshots-*/

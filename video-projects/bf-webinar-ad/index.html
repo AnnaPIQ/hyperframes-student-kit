@@ -29,7 +29,7 @@
 
       /* ---------- Sean: real footage, framed by crop (wrapper transform) + window (clip-path) ---------- */
       #sean-frame { position: absolute; inset: 0; z-index: 10; overflow: hidden;
-        clip-path: inset(0px 420px 0px 0px round 0px); }
+        clip-path: inset(0px 0px 0px 0px round 0px); }
       #sean-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 533px 1067px; }
       #sean-wrap video, #sean-wrap img { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
       #win-border { position: absolute; left: 36px; top: 290px; width: 420px; height: 750px; z-index: 12;
@@ -49,20 +49,14 @@
         color: #9CD4FF; border: 2px solid rgba(156,212,255,.8); border-radius: 999px; padding: 10px 22px; }
 
       /* hook lockup, right panel (x 600-1080) */
-      #hook { left: 700px; top: 318px; }
-      #hook .a { font-size: 96px; }
-      #hook .b { font-size: 46px; letter-spacing: .06em; margin: 10px 0 8px; }
-      #hook .c { font-size: 96px; }
-      #hook .d { font-size: 64px; margin-top: 10px; }
-      #hook-chip { position: absolute; left: 700px; top: 812px; z-index: 30; }
-
-      /* webinar / playbook lockup, left panel (x 0-480) */
-      #web { left: 44px; top: 318px; }
-      #web .slot { position: relative; display: block; }
-      #web .slot > span { position: absolute; left: 0; top: 0; white-space: nowrap; }
-      #web .s1 { height: 68px; font-size: 58px; }
-      #web .s2 { height: 196px; font-size: 96px; margin-top: 14px; }
-      #web .s3 { height: 80px; font-size: 72px; margin-top: 14px; }
+      /* restrained opening overlays, over the original shot (top wall area) */
+      #scrim { position: absolute; left: 0; right: 0; top: 0; height: 720px; z-index: 25;
+        background: linear-gradient(to bottom, rgba(6,40,76,.72) 0%, rgba(6,40,76,.5) 45%, rgba(6,40,76,0) 100%); }
+      .ovl { position: absolute; left: 60px; right: 60px; text-align: center; z-index: 30; font-weight: 800;
+        letter-spacing: -.01em; line-height: 1.04; text-transform: uppercase; text-shadow: 0 4px 24px rgba(6,40,76,.6); }
+      .ovl .ln { display: block; }
+      #ov1 { top: 300px; font-size: 66px; }
+      #ov2, #ov3 { top: 300px; font-size: 56px; }
 
       /* performance tag on the close-up */
       #perf { position: absolute; left: 72px; top: 300px; z-index: 30; display: flex; align-items: center; gap: 18px;
@@ -185,22 +179,13 @@
       <div id="panel" class="clip" data-start="0" data-duration="37" data-track-index="4"><div class="navy-bg"><div class="grid"></div></div></div>
       <div id="panel-edge" class="clip" data-start="0" data-duration="37" data-track-index="5"></div>
 
-      <!-- S1 hook (right panel) -->
-      <div id="hook" class="hero clip" data-start="0" data-duration="37" data-track-index="6">
-        <span class="ln a flame" id="hk1">Double</span>
-        <span class="ln b" id="hk2">your</span>
-        <span class="ln c" id="hk3">Black</span>
-        <span class="ln c" id="hk4">Friday</span>
-        <span class="ln d" id="hk5">Revenue?</span>
+      <!-- S1-S3 opening: original A-roll + restrained overlays -->
+      <div id="scrim" class="clip" data-start="0" data-duration="37" data-track-index="6"></div>
+      <div id="ov1" class="ovl clip" data-start="0" data-duration="37" data-track-index="7">
+        <span class="ln"><span class="flame">Double</span> your</span><span class="ln">Black Friday revenue?</span>
       </div>
-      <div id="hook-chip" class="clip" data-start="0" data-duration="37" data-track-index="7"><span class="chip">VS LAST YEAR</span></div>
-
-      <!-- S2/S3 webinar → playbook (left panel; BLACK FRIDAY stays locked) -->
-      <div id="web" class="hero clip" data-start="0" data-duration="37" data-track-index="8">
-        <span class="slot s1"><span id="w1a"><span class="flame">Free</span> live</span><span id="w1b">The actual</span></span>
-        <span class="slot s2"><span id="w2">Black<br />Friday</span></span>
-        <span class="slot s3"><span id="w3a">Webinar</span><span id="w3b" class="tint">Playbook</span></span>
-      </div>
+      <div id="ov2" class="ovl clip" data-start="0" data-duration="37" data-track-index="8"><span class="ln"><span class="flame">Free</span> live webinar</span></div>
+      <div id="ov3" class="ovl clip" data-start="0" data-duration="37" data-track-index="28"><span class="ln">The Black Friday <span class="tint">Playbook</span></span></div>
 
       <!-- S5 performance tag on the close-up -->
       <div id="perf" class="clip" data-start="0" data-duration="37" data-track-index="9">
@@ -369,10 +354,11 @@
       });
 
       // ---------- Sean framing: crop presets (face centre x, y + scale) and windows ----------
-      // Pseudo multi-cam: 100% = s1.15, ~110% = s1.26, 130% = s1.59 (mouth always above the subtitle line)
+      // Pseudo multi-cam: open s1.12, punch-in s1.30, close-up s1.59 (mouth always above the subtitle line)
       const FX = 533, FY = 1067;
       const SHOT = {
-        SPLIT_L:  [330, 940, 1.15],  // Sean left column, panel right
+        OPEN:     [540, 966, 1.12],  // original framing (just enough crop to keep the mouth above the subtitles)
+        PUNCH:    [540, 900, 1.30],  // slight punch-in (~115%)
         SPLIT_R:  [750, 940, 1.15],  // Sean right column, panel left
         SPLIT_RT: [755, 900, 1.26],  // 115% punch-in, right column
         CLOSE:    [540, 840, 1.59],  // 130% close-up, full frame
@@ -393,33 +379,26 @@
         tl.set("#panel", { left }, t); tl.set("#panel-edge", { left: edge }, t);
       };
 
-      gsap.set("#sean-wrap", shot("SPLIT_L"));
-      gsap.set(["#hook .ln", "#hook-chip", "#web", "#w1b", "#w3b", "#perf", "#proof", "#proof-text", "#proof-text .ln", "#pv2",
+      gsap.set("#sean-wrap", shot("OPEN"));
+      gsap.set(["#panel", "#panel-edge"], { opacity: 0 });
+      gsap.set(["#scrim", "#ov1", "#ov2", "#ov3", "#perf", "#proof", "#proof-text", "#proof-text .ln", "#pv2",
         "#disc", "#card", "#win-border", "#bundle", "#ev-bg", "#ev-text .ln", "#ev-tile", "#ev-time", "#ev-pill-wrap", "#ev-logo",
         "#cta-h1", "#cta-h2", "#cta-date", "#cta-pill-wrap", "#pill-b", "#end-logo", ".panel", "#bundle-text"], { opacity: 0 });
       tl.fromTo("#grid-main", { backgroundPosition: "0px 0px" }, { backgroundPosition: "0px 1200px", duration: 37, ease: "none" }, 0);
 
-      // ---------- S1 HOOK 0.00-3.55: Sean left (100%), lockup in the right panel ----------
-      push("SPLIT_L", 0, 3.55, 1.03);
-      tl.fromTo("#hk1", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.50);
-      tl.fromTo("#hk2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0.80);
-      tl.fromTo(["#hk3", "#hk4"], { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out", stagger: 0.1 }, 1.00);
-      tl.fromTo("#hk5", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 1.10);
-      tl.fromTo("#hook-chip", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 2.00);
+      // ---------- S1 HOOK 0.00-3.55: original A-roll, one restrained overlay ----------
+      push("OPEN", 0, 3.55, 1.02);
+      tl.fromTo("#scrim", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power1.out" }, 0.40);
+      tl.fromTo("#ov1", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.55);
+      tl.to("#ov1", { opacity: 0, duration: 0.25, ease: "power1.in" }, 3.30);
 
-      // ---------- S2 FREE WEBINAR 3.55: cut to 115% right, panel swaps to the left ----------
-      tl.set(["#hook", "#hook-chip"], { opacity: 0 }, 3.55);
-      cut("SPLIT_RT", "RIGHTCOL", 3.55); panelSide("left", 3.55);
-      tl.fromTo(["#panel", "#panel-edge"], { x: -420 }, { x: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, 3.55);
-      push("SPLIT_RT", 3.55, 4.9, 1.04);
-      tl.set("#web", { opacity: 1 }, 3.70);
-      tl.fromTo("#w1a", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.4, ease: "power3.out" }, 3.95);
-      tl.fromTo("#w2",  { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 4.07);
-      tl.fromTo("#w3a", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" }, 4.19);
-
-      // ---------- S3 EXACT SECRETS 6.10: lines 1 + 3 roll, BLACK FRIDAY locked ----------
-      tl.to(["#w1a", "#w3a"], { opacity: 0, y: -40, duration: 0.3, ease: "power2.in" }, 5.90);
-      tl.fromTo(["#w1b", "#w3b"], { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out", stagger: 0.06 }, 6.10);
+      // ---------- S2 3.55: slight punch-in; FREE LIVE WEBINAR ----------
+      cut("PUNCH", "FULL", 3.55);
+      push("PUNCH", 3.55, 4.9, 1.03);
+      tl.fromTo("#ov2", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 3.95);
+      // ---------- S3 6.10: THE BLACK FRIDAY PLAYBOOK ----------
+      tl.to("#ov2", { opacity: 0, duration: 0.25, ease: "power1.in" }, 5.85);
+      tl.fromTo("#ov3", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 6.10);
 
       // ---------- S4 SOCIAL PROOF 8.45-12.00: full-screen B-roll ----------
       tl.fromTo("#proof", { opacity: 0, y: 140 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 8.45);
@@ -428,7 +407,7 @@
       tl.fromTo("#proof-text .b", { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "expo.out" }, 8.85);
       tl.fromTo("#proof-text .c", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 8.97);
       tl.fromTo("#pv2", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 10.15);
-      tl.set("#web", { opacity: 0 }, 9.0);
+      tl.set(["#scrim", "#ov3"], { opacity: 0 }, 9.0);
 
       // ---------- S5 PERFORMANCE 12.00-13.45: 130% close-up, full frame ----------
       cut("CLOSE", "FULL", 11.80); tl.set(["#panel", "#panel-edge"], { opacity: 0 }, 11.80);

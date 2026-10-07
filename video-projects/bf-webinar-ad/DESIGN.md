@@ -35,8 +35,11 @@ no flash cuts, every state on screen at least 1.2s.
 
 ## Build notes (v2 draft)
 - v2 replaces the v1 floating-head cut-out with real footage, at Anna's direction.
+- v3 opening (Anna): plain A-roll first, design later. 0-3.5s original framing + one restrained overlay
+  (DOUBLE YOUR / BLACK FRIDAY REVENUE?) on a soft top fade; 3.5s slight punch-in with single-line overlays
+  (FREE LIVE WEBINAR, then THE BLACK FRIDAY PLAYBOOK). Split panels only return at the CTA.
 - One `index.html` timeline (37.0s). Sean = `#sean-frame` (clip-path window) + `#sean-wrap` (crop transform).
-  Shot presets live in `SHOT` / `WIN` in the script: SPLIT_L, SPLIT_R, SPLIT_RT (punch-in), CLOSE (130%), WIDE, WINDOW.
+  Shot presets live in `SHOT` / `WIN` in the script: OPEN, PUNCH, CLOSE (130%), WIDE, WINDOW, SPLIT_R (CTA).
 - Every framing keeps Sean's mouth above the subtitle line (y 1110).
 - Media is derived from the Drive sources by `scripts/prep-media.sh`. `assets/sean-aroll.mp4` (196MB) is gitignored.
 - The Shoptalk stage stays real but defocused, with highlights crushed so Rebuy's LED stats are illegible.
