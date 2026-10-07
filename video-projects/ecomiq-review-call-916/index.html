@@ -91,8 +91,7 @@
       #endc { z-index: 30; display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: 420px; }
       #end-logo { width: 460px; }
       #end-h { font-size: 72px; margin-top: 90px; }
-      #end-free { font-size: 84px; margin-top: 18px; }
-      #end-cb { position: absolute; left: 0; right: 0; top: 1040px; font-size: 30px; color: #DEEEFE; }
+      #end-free { font-size: 84px; margin-top: 18px; color: #FFFFFF; }
 
       /* soft navy gradient behind the subtitle line: legibility on bright footage (no box) */
       #subscrim { position: absolute; left: 0; right: 0; top: 1440px; height: 480px; z-index: 35; pointer-events: none;
@@ -200,8 +199,7 @@
       <div id="endc" class="clip card" data-start="38.90" data-duration="1.82" data-track-index="3">
         <img id="end-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
         <div id="end-h" class="hero">Find what to fix first.</div>
-        <div id="end-free" class="serif">Free.</div>
-        <div id="end-cb">Spend → Click → Store → Fix</div>
+        <div id="end-free" class="hero">Free.</div>
       </div>
 
       <!-- BOOK NOW button: carried from Shot 12 into the end card -->
@@ -336,7 +334,6 @@
       tl.to("#btn-b", { scale: 1.03, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 1 }, 37.20);
       tl.fromTo("#endc", { opacity: 0, y: 115 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 38.90);
       tl.to("#btn-b", { x: -264, y: 160, scale: 1, duration: 0.5, ease: "power2.inOut" }, 38.90);
-      tl.fromTo("#end-cb", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 39.10);
       tl.to("#btn-b", { scale: 1.03, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 1 }, 39.50);
 
       // ---------- subtitles: soft 0.12s fade-in each ----------

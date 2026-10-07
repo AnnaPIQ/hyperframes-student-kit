@@ -1,6 +1,6 @@
 # EcomIQ · "Your ads are spending. Are they selling?" · Review Call · 9:16 Meta
 
-**Complete editing plan, v3.** A-roll with designed interruptions, not a cut-up social ad.
+**Complete editing plan, v4.** A-roll with designed interruptions, not a cut-up social ad.
 
 | | |
 |---|---|
@@ -17,6 +17,10 @@
 - **Mob Armor sign-off confirmed.** Use of the Mob Armor name, logo, product footage and the +500% claim is approved.
 - **Style reference = DESIGN.md.** The type, colour, motion and layout rules are re-aligned to the EcomIQ design spec and recipe. Details are in the next section.
 
+### v4 changes
+- **End card simplified.** The "Spend → Click → Store → Fix" line is removed. "Free." is plain White sans, not italic. The ad now has a single serif italic word ("*return.*").
+- **Placement.** Subtitles sit at the bottom of the frame. The EcomIQ logo sits higher, at y 150.
+
 ### v3 changes
 - **Highlights cut back hard, so the ones that remain land.** Serif italic goes from 4 words to 2. Blue Tint word highlights go from about 12 to 2. Flame goes from 8 uses to 3 story moments. Subtitle highlights go from 4 rows to 2. The three decorative Flame accent lines are removed. Full rules in "Highlight budget" below.
 
@@ -26,7 +30,7 @@
 
 | DESIGN.md / recipe rule | How this plan applies it |
 |---|---|
-| **Headline signature:** one italic-serif emphasis word (Hedvig Letters Serif) over bold Rethink Sans. The emphasis word is **Blue Tint** | Used **twice in the whole ad**, at the two moments that matter most: "with the ***return.***" (Card A, the pain) and "***Free.***" (end card, the offer). Every other headline is plain White sans |
+| **Headline signature:** one italic-serif emphasis word (Hedvig Letters Serif) over bold Rethink Sans. The emphasis word is **Blue Tint** | Used **once in the whole ad**, on the pain point: "with the ***return.***" (Card A). Every other headline, including "Free." on the end card, is plain White sans |
 | Blue Tint = "secondary accent, highlights, **italic emphasis**" | Serif words are Blue Tint, not Flame. Beyond those, Blue Tint marks only two words in the graphics ("$20K+" and "IN 1 YEAR") plus the lit state of journey nodes |
 | **Flame Orange = the only hot accent** (CTAs, emphasis) | Flame appears at exactly **three story moments**: the problem thread (LOST, which becomes FIX THIS FIRST), the proof (+500%) and the CTA (BOOK NOW). Never two at once |
 | **Flame accent rule** that wipes in (scaleX 0 to 1) | **Not used in this ad.** A decorative Flame line would spend the colour on nothing. The three Flame moments above are the accents |
@@ -51,13 +55,13 @@ Highlights only land if most of the ad has none. **Default is White, plain sans,
 
 | Treatment | Allowed uses | Where | Why there |
 |---|---|---|---|
-| **Serif italic** (Hedvig, Blue Tint) | **2** | "with the ***return.***" (Card A, 4.75) · "***Free.***" (end card, 38.90) | The pain and the offer. Bookends the ad |
+| **Serif italic** (Hedvig, Blue Tint) | **1** | "with the ***return.***" (Card A, 4.75) | The pain point. The only serif word in the ad, so it lands |
 | **Flame** | **3 moments** | ① LOST (19.78), which carries over as FIX THIS FIRST (30.08), one thread · ② +500% (24.18) · ③ BOOK NOW (36.70 to end) | Problem, proof, action. The only three things a viewer must remember |
 | **Blue Tint words** | **2** | "$20K+" (1.60) · "IN 1 YEAR" (26.18) | The qualifier and the claim's timeframe |
 | **Subtitle highlights** | **2 rows** | "*missing.*" italic (row 17) · "Book Now" Flame (row 18) | The trust line has no graphic, so the subtitle carries it. The CTA is the payoff |
 | Blue Tint as a graphic state | lit journey nodes only | spine dots, never words | It's structure, not emphasis |
 
-**Never highlighted:** headlines other than the two serif words, eyebrows, node sub-labels, "free call" in the graphics, "fix first" in subtitles, column headlines, the footnote, the callback line.
+**Never highlighted:** headlines other than the one serif word, "Free." on the end card (plain White), eyebrows, node sub-labels, "free call" in the graphics, "fix first" in subtitles, column headlines, the footnote.
 
 **Gaps between highlights.** There is no serif, Flame or Blue Tint word on screen during 6.96 to 19.78 (12.8s of plain White), and none during 32.02 to 34.54. That quiet is what makes LOST, +500% and BOOK NOW hit.
 
@@ -105,7 +109,7 @@ Highlights only land if most of the ad has none. **Default is White, plain sans,
 |---|---|---|---|
 | Navy | #06284C | the EcomIQ space | card backgrounds, column panels, scrims |
 | White | #FFFFFF | the message | all primary type and subtitles |
-| Blue Tint | #9CD4FF | emphasis (rare) | the 2 serif words, "$20K+", "IN 1 YEAR", lit journey nodes. Nothing else |
+| Blue Tint | #9CD4FF | emphasis (rare) | the 1 serif word, "$20K+", "IN 1 YEAR", lit journey nodes. Nothing else |
 | Sky Blue | #DEEEFE | structure | eyebrows, node sub-labels (at 80%), spine line, unlit nodes (at 35%), dividers, top radial on cards |
 | Flame Orange | #FF4C32 | **the one thing that matters** | three moments only: LOST → FIX THIS FIRST, "+500%", BOOK NOW. Never two Flame items on screen at once |
 | Black | #000000 | not used | |
@@ -330,12 +334,11 @@ All times are timeline seconds on the trimmed edit (source time minus 0.30s). At
 - **Motion graphic:** Navy card (top radial plus low Gradient 2 bloom), centred stack at y 420 to 1100:
   - EcomIQ logo (white, 460 px wide), y 420
   - "Find what to fix first." (White, 72 px Bold, -2%), y 620
-  - "***Free.***" (Hedvig Letters Serif italic, Blue Tint, 84 px), y 720
+  - "Free." (Rethink Sans ExtraBold, White, 84 px, not italic), y 720
   - **BOOK NOW ↓** (the same Flame button, carried over and still pulsing), y 860
-  - Callback line at y 1040: "Spend → Click → Store → Fix" (Sky Blue, 30 px), fades in at 39.10
 - **Subtitle:** none
 - **SFX:** music resolves. No extra hit
-- **Why:** This covers Sean breaking character and gives the CTA a clean 1.8s still frame in the campaign's end-card format ("Three changes. Thirty minutes. *Free.*"). The CTA is on screen for 4.2s in total (36.50 to 40.70).
+- **Why:** This covers Sean breaking character and gives the CTA a clean 1.8s still frame in the campaign's end-card format ("Three changes. Thirty minutes. Free."). The CTA is on screen for 4.2s in total (36.50 to 40.70).
 
 ---
 
@@ -397,7 +400,6 @@ All times are timeline seconds on the trimmed edit (source time minus 0.30s). At
 | 3 · STORE | "STORE" / "After the click" | 18.22 (Split B) | Blue Tint | the White dot travels CLICK → STORE (0.92s, power1.inOut), node lights on arrival | 3.08s until 21.30 | dot continues to LOST |
 | 4 · LOST | "LOST" / "Where sales leak" | 19.78 (Split B) | **Flame** | the dot slides 60 px right off the line and fades (0.5s). Node fills Flame | 1.52s, of which 1.0s is a static hold | blur to proof. On return (Split C) LOST cools to 35% |
 | 5 · FIX FIRST | Pill: "FIX THIS FIRST" on STORE · headline "What to fix first." | 30.08 (Split C) | **Flame** pill, White text | the Flame ring draws round STORE (0.3s), the pill slides out 40 px (0.40s, power3.out) | 1.94s, static from 30.50 | T-SHIFT to Sean wide |
-| Callback | "Spend → Click → Store → Fix" | 39.10 (End card) | Sky Blue | fade in | 1.60s | end |
 
 **Rules.** There is only ever one Flame element on screen. The spine is never shown with more than one new change at a time. Every change holds at least 1.4s before the next.
 
@@ -535,7 +537,7 @@ Each row stays up until the next row starts (gaps under 0.7s are bridged), so th
 | # | TIMESTAMP | DIALOGUE | VISUAL | DUR | B-ROLL | GRAPHIC | HERO TEXT | SUB HIGHLIGHT | EDIT |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | 0.00 to 4.64 | Shopify founders doing $20,000 a month and up, spending on paid ads and | Sean MED-L, push 100 to 104% | 4.64 | none | right-column text build | SHOPIFY FOUNDERS · $20K+ / MONTH · PAID ADS | none | A-roll in at source 0:00.30. Text at 0.40 / 1.60 / 3.50 |
-| 2 | 4.64 to 6.96 | not happy with what comes back. | Card A, navy | 2.32 | none | headline | NOT HAPPY WITH THE *RETURN.* (serif #1 of 2) | none | T-RISE in, T-DROP out |
+| 2 | 4.64 to 6.96 | not happy with what comes back. | Card A, navy | 2.32 | none | headline | NOT HAPPY WITH THE *RETURN.* (the only serif word) | none | T-RISE in, T-DROP out |
 | 3 | 6.96 to 11.20 | We'll show you what we'd change first, live on a free call. | Sean TIGHT, push 100 to 103% | 4.24 | none | lower-band phrase, two beats | WHAT WE'D CHANGE FIRST. → LIVE, ON A FREE CALL. | none | beat 2 at 9.60 |
 | 4 | 11.20 to 14.14 | First, what it costs you to win a customer, | Card B, navy | 2.94 | none | spine born, SPEND lit | WHAT IT COSTS TO WIN A CUSTOMER. · SPEND · CAC | none | T-RISE in, T-MORPH out |
 | 5 | 14.14 to 16.44 | then your ads and your offers. | Split: spine column + Sean WIDE-R | 2.30 | none | CLICK lights | CLICK · Ads + offers | none | T-MORPH in |
@@ -546,7 +548,7 @@ Each row stays up until the next row starts (gaps under 0.7s are bridged), so th
 | 10 | 29.14 to 32.02 | You'll come away knowing what to fix first. | Split: spine column + Sean MED-R, push | 2.88 | none | FIX THIS FIRST pill on STORE | WHAT TO FIX FIRST. · FIX THIS FIRST | none | T-SHIFT out |
 | 11 | 32.02 to 36.44 | And if your data can't give us a clear answer, we'll tell you what's missing. | Sean WIDE, slow push | 4.42 | none | none | none | "missing." italic | quiet, music -2 dB |
 | 12 | 36.44 to 38.90 | Tap Book Now and choose a time. | Sean MED-L | 2.46 | none | right-column CTA, Flame pill with glow + breathing pulse | FREE CALL. · BOOK NOW ↓ | "Book Now" Flame | button at 36.70, back.out(1.7) |
-| 13 | 38.90 to 40.70 | (none) | End card, navy | 1.80 | none | logo, CTA, callback | FIND WHAT TO FIX FIRST. · *FREE.* (serif #2 of 2) · BOOK NOW ↓ | (no subtitle) | T-RISE, Sean audio out 38.90 to 39.30 |
+| 13 | 38.90 to 40.70 | (none) | End card, navy | 1.80 | none | logo, CTA | FIND WHAT TO FIX FIRST. · FREE. (White, not italic) · BOOK NOW ↓ | (no subtitle) | T-RISE, Sean audio out 38.90 to 39.30 |
 
 **Sound design summary:** all SFX between -32 and -22 dB under VO peaking around -6 dBFS. The palette is text ticks, soft clicks, one light travel whoosh, a muted drop tone, count-up ticks with one soft land, and a CTA click. **No** cash registers, coins, alarms, risers or booms. Optional music bed: calm, minimal, around -24 LUFS integrated under VO, -2 dB in Section 9, resolving on the end card.
 
@@ -556,7 +558,7 @@ Each row stays up until the next row starts (gaps under 0.7s are bridged), so th
 
 | # | Question | Answer |
 |---|---|---|
-| 1 | Matches the style reference? | **Yes.** It is aligned to `my-meta-ad/DESIGN.md` and the EcomIQ recipe: the italic-serif Blue Tint signature (used twice), Flame as the only hot accent, navy cards with a top radial and a low Gradient 2 bloom, -2% tracking, 108 px margins, power3.out type, a back.out CTA with glow and pulse, and blur dissolves instead of hard cuts between scenes. It also keeps the brief's grammar: long A-roll holds, crop changes and purposeful full-screen interruptions |
+| 1 | Matches the style reference? | **Yes.** It is aligned to `my-meta-ad/DESIGN.md` and the EcomIQ recipe: the italic-serif Blue Tint signature (used once), Flame as the only hot accent, navy cards with a top radial and a low Gradient 2 bloom, -2% tracking, 108 px margins, power3.out type, a back.out CTA with glow and pulse, and blur dissolves instead of hard cuts between scenes. It also keeps the brief's grammar: long A-roll holds, crop changes and purposeful full-screen interruptions |
 | 2 | Sean stays on screen longer? | **Yes.** 72% of runtime, and the longest gap without his face is the 4.46s Mob Armor proof |
 | 3 | Frame evolving rather than cutting? | **Yes.** 6 crops from one take, one graphic that morphs, two splits that punch in |
 | 4 | Clearly for Shopify founders on paid ads? | **Yes.** SHOPIFY FOUNDERS · $20K+ / MONTH · PAID ADS appears within 3.5s |
@@ -573,7 +575,7 @@ Each row stays up until the next row starts (gaps under 0.7s are bridged), so th
 | 15 | Normal bottom subtitles? | **Yes.** Bottom of frame, fixed position, bottom edge y 1670 |
 | 16 | White dominant? | **Yes.** 16 of 18 rows fully White |
 | 16b | Brand names spelled correctly in subtitles? | **Yes.** Shopify, Mob Armor, Book Now and EcomIQ are locked spellings (Part 7). Subtitles are typed from the plan, never auto-cased |
-| 17 | Blue Tint, Flame and italics sparing? | **Yes.** Fixed budget: 2 serif words, 2 Blue Tint words, 3 Flame moments, 2 subtitle highlights. 12.8s of plain White before the first Flame |
+| 17 | Blue Tint, Flame and italics sparing? | **Yes.** Fixed budget: 1 serif word, 2 Blue Tint words, 3 Flame moments, 2 subtitle highlights. 12.8s of plain White before the first Flame |
 | 18 | No graphics too fast to read? | **Yes.** Every text element gets at least 1.4s, and most get 2 to 5s |
 | 19 | No flash cuts? | **Yes.** Shortest shot is 1.54s, every change lands on a pause, and B-roll changes are blur dissolves |
 | 20 | Every shot earns its place? | **Yes.** 13 shots, 3 B-roll, each with a stated job |
