@@ -47,12 +47,9 @@
       /* Shot 3 */
       #s3 { z-index: 10; }
       /* Shot 3 card: ranked fixes (01 gets the tick), held to the end of the shot. Solid navy, no fade. Sits on the jacket, clear of the face */
-      #s3card { position: absolute; left: 160px; top: 1180px; width: 760px; height: 330px; background: #06284C;
-        border: 1px solid rgba(222,238,254,.22); border-radius: 28px; box-shadow: 0 24px 60px rgba(6,40,76,.45); overflow: hidden; }
-      .prow { position: absolute; left: 48px; right: 48px; height: 60px; display: flex; align-items: center; gap: 28px; }
-      .pnum { font-weight: 800; font-size: 36px; color: rgba(222,238,254,.55); width: 56px; font-variant-numeric: tabular-nums; }
-      .pbar { height: 18px; border-radius: 9px; background: rgba(222,238,254,.22); }
-      .pchk { position: absolute; right: 0; width: 44px; height: 44px; }
+      /* Shot 3: phone with a store page. Scan marks three spots, the Add to cart button becomes the #1 fix */
+      #callout { position: absolute; left: 300px; top: 1230px; width: 600px; height: 150px; }
+      #phone { position: absolute; left: 108px; top: 500px; width: 320px; height: 604px; filter: drop-shadow(0 24px 50px rgba(6,40,76,.55)); }
 
       /* Journey spine (column coordinates; Card B offsets the group by +120px) */
       #panel { position: absolute; inset: 0; background: #06284C; }
@@ -182,14 +179,35 @@
 
       <!-- SHOT 3 · 6.96 to 11.20 -->
       <div id="s3" class="clip abs" style="inset:0" data-start="6.96" data-duration="4.30" data-track-index="2">
-        <div id="s3card">
-          <div id="prows">
-            <div id="pr1" class="prow" style="top:45px"><div class="pnum">01</div><div class="pbar" style="width:430px"></div>
-              <svg class="pchk" viewBox="0 0 44 44"><circle cx="22" cy="22" r="22" fill="#9CD4FF"/><path d="M13 23 L20 30 L32 16" fill="none" stroke="#06284C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div id="pr2" class="prow" style="top:135px"><div class="pnum">02</div><div class="pbar" style="width:340px"></div></div>
-            <div id="pr3" class="prow" style="top:225px"><div class="pnum">03</div><div class="pbar" style="width:390px"></div></div>
-          </div>
-        </div>
+        <svg id="phone" viewBox="0 0 360 680">
+          <rect x="3" y="3" width="354" height="674" rx="46" fill="#06284C" stroke="#DEEEFE" stroke-width="6"/>
+          <rect x="140" y="22" width="80" height="12" rx="6" fill="#DEEEFE" opacity=".5"/>
+          <rect x="30" y="58" width="90" height="10" rx="5" fill="#DEEEFE" opacity=".35"/>
+          <rect x="30" y="86" width="300" height="250" rx="18" fill="#DEEEFE" opacity=".16"/>
+          <circle cx="180" cy="211" r="62" fill="#9CD4FF" opacity=".35"/>
+          <rect x="30" y="360" width="220" height="16" rx="8" fill="#DEEEFE" opacity=".45"/>
+          <rect x="30" y="388" width="150" height="16" rx="8" fill="#DEEEFE" opacity=".3"/>
+          <rect x="30" y="426" width="96" height="26" rx="8" fill="#FFFFFF" opacity=".8"/>
+          <g opacity=".5" fill="#DEEEFE"><circle cx="40" cy="482" r="8"/><circle cx="62" cy="482" r="8"/><circle cx="84" cy="482" r="8"/><circle cx="106" cy="482" r="8"/><circle cx="128" cy="482" r="8"/></g>
+          <rect x="30" y="516" width="300" height="66" rx="33" fill="#9CD4FF"/>
+          <g fill="none" stroke="#06284C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M158 536 h8 l8 24 h20 l6 -16 h-30"/><circle cx="178" cy="568" r="3"/><circle cx="194" cy="568" r="3"/></g>
+          <rect x="30" y="606" width="260" height="12" rx="6" fill="#DEEEFE" opacity=".25"/>
+          <rect x="30" y="628" width="200" height="12" rx="6" fill="#DEEEFE" opacity=".18"/>
+          <!-- scan + markers -->
+          <rect id="scan" x="14" y="0" width="332" height="4" rx="2" fill="#9CD4FF" style="filter: drop-shadow(0 0 10px #9CD4FF)"/>
+          <circle id="mk1" class="mk" cx="300" cy="112" r="20" fill="none" stroke="#9CD4FF" stroke-width="5"/>
+          <circle id="mk2" class="mk" cx="146" cy="439" r="20" fill="none" stroke="#9CD4FF" stroke-width="5"/>
+          <circle id="mk3" class="mk" cx="318" cy="530" r="20" fill="none" stroke="#9CD4FF" stroke-width="5"/>
+          <rect id="fixring" x="20" y="506" width="320" height="86" rx="43" fill="none" stroke="#FF4C32" stroke-width="7"/>
+          <g id="badge"><circle cx="334" cy="506" r="30" fill="#FF4C32"/><text x="334" y="518" text-anchor="middle" font-family="Rethink Sans" font-weight="800" font-size="34" fill="#FFFFFF">1</text></g>
+        </svg>
+        <!-- callout: the #1 fix, enlarged out of the phone -->
+        <svg id="callout" viewBox="0 0 600 150">
+          <rect x="70" y="22" width="500" height="112" rx="56" fill="#9CD4FF" stroke="#FF4C32" stroke-width="9"/>
+          <g fill="none" stroke="#06284C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M284 58 h14 l13 40 h34 l10 -27 h-50"/><circle cx="317" cy="111" r="5"/><circle cx="343" cy="111" r="5"/></g>
+          <circle cx="72" cy="76" r="62" fill="#FF4C32"/>
+          <text x="72" y="100" text-anchor="middle" font-family="Rethink Sans" font-weight="800" font-size="70" fill="#FFFFFF">1</text>
+        </svg>
       </div>
 
       <!-- CARD B + SPLITS A/B · 11.20 to 21.30 (one evolving composition) -->
@@ -309,7 +327,7 @@
       tl.set("#logo-wrap", { opacity: 0 }, 21.30).set("#logo-wrap", { opacity: 1 }, 29.16).set("#logo-wrap", { opacity: 0 }, 38.90);
 
       // ---------- SHOT 1 ----------
-      rise("#s1-eye", 0.40);
+      rise("#s1-eye", 1.50);
       rise("#s1-big", 1.60, 30); rise("#s1-mo", 1.72);
       tl.fromTo("#s1-rule", { scaleX: 0, transformOrigin: "0 50%" }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, 3.40);
       rise("#s1-paid", 3.50, 30);
@@ -331,12 +349,19 @@
       tl.to("#head", { rotation: -4, transformOrigin: "50% 80%", duration: 0.35, ease: "sine.inOut", yoyo: true, repeat: 1 }, 6.20);
 
       // ---------- SHOT 3 (two beats) ----------
-      tl.fromTo("#s3card", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.40, ease: "power3.out" }, 7.66);
-      tl.fromTo(["#pr1", "#pr2", "#pr3"], { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out", stagger: 0.1 }, 7.76);
-      tl.fromTo("#pr1 .pchk", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, 8.50);
-      tl.to("#pr1 .pnum", { color: "#9CD4FF", duration: 0.3 }, 8.50);
-      tl.to("#pr1 .pbar", { backgroundColor: "#9CD4FF", duration: 0.3 }, 8.50);
-      tl.to(["#pr2", "#pr3"], { opacity: 0.35, duration: 0.3 }, 8.50);
+      tl.fromTo("#phone", { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.45, ease: "power3.out" }, 7.10);
+      tl.set(["#scan", "#mk1", "#mk2", "#mk3", "#fixring", "#badge"], { opacity: 0 }, 6.96);
+      tl.fromTo("#scan", { attr: { y: 80 }, opacity: 1 }, { attr: { y: 640 }, duration: 0.9, ease: "power1.inOut", immediateRender: false }, 7.76);
+      tl.to("#scan", { opacity: 0, duration: 0.15 }, 8.66);
+      [["#mk1", 7.98], ["#mk2", 8.30], ["#mk3", 8.46]].forEach(([m, t]) =>
+        tl.fromTo(m, { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)", immediateRender: false }, t));
+      tl.to(["#mk1", "#mk2", "#mk3"], { opacity: 0.25, duration: 0.3 }, 8.70);
+      tl.to("#mk3", { opacity: 0, duration: 0.2 }, 8.70);
+      tl.fromTo("#fixring", { opacity: 0, scale: 1.12, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, 8.70);
+      tl.fromTo("#badge", { opacity: 0, scale: 0, transformOrigin: "334px 506px" }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)", immediateRender: false }, 8.82);
+      tl.fromTo("#callout", { opacity: 0, x: -300, y: -260, scale: 0.35, transformOrigin: "50% 50%" },
+        { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.55, ease: "back.out(1.4)" }, 8.90);
+      tl.to("#callout", { scale: 1.04, transformOrigin: "50% 50%", duration: 0.4, ease: "sine.inOut", yoyo: true, repeat: 1 }, 9.90);
 
       // ---------- CARD B → SPLIT A → SPLIT B ----------
       tl.fromTo("#jour", { opacity: 0, y: 115 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 11.20);

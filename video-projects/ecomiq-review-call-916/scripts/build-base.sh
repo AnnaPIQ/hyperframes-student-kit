@@ -16,7 +16,12 @@ TRIM=0.30
 declare -A CROP=(
   [WIDE]="1215:2160:1450:0"   [MED]="1080:1920:1460:120" [TIGHT]="864:1536:1570:250"
   [MEDL]="1080:1920:1720:60"  [WIDER]="1215:2160:1180:0" [MEDR]="1080:1920:1300:120"
+  [MEDR2]="1080:1920:1260:120"
 )
+# Opening move: Sean starts centred (MED) and glides to Sean-left (MED-L) between 1.20s and 1.90s,
+# eased (smoothstep), as the first graphics arrive.
+P="clip((t-1.2)/0.7\\,0\\,1)"
+CROP[PANL]="1080:1920:'1460+260*$P*$P*(3-2*$P)':'120-60*$P*$P*(3-2*$P)'"
 n=0
 fr() { awk "BEGIN{printf \"%d\", ($1)*25+0.5}"; }   # seconds -> frame index (25 fps)
 aroll() { # start end crop  (cut on exact frame counts so segments never drift)
@@ -30,8 +35,8 @@ clip() { # file src_in start end vf
   n=$((n+1)); ffmpeg -v error -y -ss "$2" -i "$RAW/$1" -vf "$5,fps=25,setsar=1" -frames:v $((f1-f0)) "${ENC[@]}" "$W/$(printf %02d $n).mp4"
 }
 
-aroll 0.00  6.96  MEDL    # Shot 1 + under Card A
-aroll 6.96  11.20 TIGHT   # Shot 3
+aroll 0.00  6.96  PANL    # Shot 1 (centred, then glides to Sean-left) + under the cartoon card
+aroll 6.96  11.20 MEDR2   # Shot 3 (Sean right, phone mock on the left)
 aroll 11.20 16.44 WIDER   # under Card B, then Split A
 aroll 16.44 21.30 MEDR    # Split B
 clip br_shoptalk_stage.bin 14.60 21.30 22.84 "crop=608:1080:796:0,scale=1080:1920:flags=lanczos"            # Shot 7
