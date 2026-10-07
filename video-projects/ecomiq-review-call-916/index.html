@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>ecomiq-review-call-916</title>
+    <!-- Built from EDIT-PLAN.md v3. Picture base (A-roll crops + B-roll) is pre-cut by scripts/build-base.sh -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #06284C;
+        font-family: 'Rethink Sans', sans-serif; color: #FFFFFF; }
+      .abs { position: absolute; }
+      .serif { font-family: 'Hedvig Letters Serif', serif; font-style: italic; font-weight: 400; color: #9CD4FF; letter-spacing: 0; }
+      .eyebrow { font-weight: 700; font-size: 30px; letter-spacing: .12em; text-transform: uppercase; color: #DEEEFE; }
+      .hero { font-weight: 800; letter-spacing: -.02em; line-height: 1.0; }
+
+      /* picture base: non-timed wrapper so we can push / blur it */
+      #vwrap { position: absolute; inset: 0; overflow: hidden; z-index: 0; transform-origin: 50% 40%; }
+      #base { width: 1080px; height: 1920px; object-fit: cover; }
+
+      /* logo: positioned non-clip wrapper (LESSONS.md) */
+      #logo-wrap { position: absolute; left: 108px; top: 296px; width: 260px; z-index: 40; }
+      #logo-wrap img { width: 100%; display: block; }
+
+      /* navy cards */
+      .card { position: absolute; inset: 0; background: #06284C; overflow: hidden; }
+      .card::before { content: ""; position: absolute; inset: 0;
+        background: radial-gradient(70% 22% at 50% 0%, rgba(222,238,254,.08), rgba(222,238,254,0) 70%); }
+      .card::after { content: ""; position: absolute; left: -10%; right: -10%; top: 1300px; height: 900px; filter: blur(120px);
+        background: radial-gradient(50% 50% at 35% 50%, rgba(156,212,255,.32), rgba(156,212,255,0) 70%),
+                    radial-gradient(45% 45% at 70% 60%, rgba(255,76,50,.26), rgba(255,76,50,0) 70%); }
+      .card > * { position: relative; z-index: 1; }
+
+      /* Shot 1 column */
+      #s1 { z-index: 10; }
+      #s1 .col { position: absolute; left: 600px; top: 420px; width: 372px; display: flex; flex-direction: column; gap: 14px; }
+      #s1-big { font-size: 120px; color: #9CD4FF; }
+      #s1-mo { font-size: 44px; font-weight: 700; margin-top: -6px; }
+      #s1-rule { height: 2px; background: rgba(222,238,254,.5); margin-top: 26px; width: 300px; }
+      #s1-paid { font-size: 72px; }
+
+      /* Card A */
+      #cardA { z-index: 20; display: flex; flex-direction: column; align-items: center; padding: 420px 108px 0; gap: 40px; text-align: center; }
+      #cardA .hero { font-size: 130px; }
+
+      /* Shot 3 lower band */
+      #s3 { z-index: 10; }
+      #s3-scrim { position: absolute; left: 0; right: 0; top: 780px; height: 520px;
+        background: linear-gradient(to bottom, rgba(6,40,76,0), rgba(6,40,76,.72) 45%, rgba(6,40,76,.72)); }
+      .band { position: absolute; left: 108px; right: 108px; top: 870px; text-align: center; font-size: 96px; }
+
+      /* Journey spine (column coordinates; Card B offsets the group by +120px) */
+      #panel { position: absolute; inset: 0; background: #06284C; }
+      #panel-edge { position: absolute; top: 0; bottom: 0; left: 539px; width: 1px; background: rgba(222,238,254,.2); }
+      .phead { position: absolute; left: 108px; top: 330px; width: 400px; font-size: 56px; }
+      #b-head { width: 864px; font-size: 84px; }
+      .spine { position: absolute; left: 0; top: 0; width: 540px; height: 1920px; }
+      .line { position: absolute; left: 148px; top: 480px; width: 4px; height: 480px; background: rgba(222,238,254,.6); transform-origin: 50% 0; }
+      .node { position: absolute; left: 133px; width: 34px; height: 34px; border-radius: 50%;
+        border: 4px solid rgba(222,238,254,.35); background: #06284C; }
+      .lab { position: absolute; left: 200px; font-weight: 700; font-size: 40px; letter-spacing: .06em; line-height: 1; }
+      .sub { position: absolute; left: 200px; font-weight: 500; font-size: 28px; color: rgba(222,238,254,.8); white-space: nowrap; }
+      .dot { position: absolute; left: 139px; width: 22px; height: 22px; border-radius: 50%; background: #FFFFFF; }
+      .pill { position: absolute; left: 200px; background: #FF4C32; color: #FFFFFF; font-weight: 700; font-size: 30px;
+        letter-spacing: .06em; padding: 12px 22px; border-radius: 999px; box-shadow: 0 8px 30px rgba(255,76,50,.45); white-space: nowrap; }
+
+      /* Mob Armor proof */
+      #mob { z-index: 20; }
+      #mob-wash { position: absolute; inset: 0; background: #06284C; }
+      #mob-mark { position: absolute; left: 0; right: 0; top: 380px; text-align: center; font-weight: 800; font-size: 54px; letter-spacing: .22em; }
+      #mob-mark small { display: block; font-size: 18px; letter-spacing: .2em; font-weight: 600; opacity: .6; margin-top: 8px; }
+      #mob-num { position: absolute; left: 0; right: 0; top: 500px; text-align: center; font-size: 200px; color: #FF4C32; font-variant-numeric: tabular-nums; }
+      #mob-ts { position: absolute; left: 0; right: 0; top: 760px; text-align: center; font-weight: 700; font-size: 52px; letter-spacing: .06em; }
+      #mob-yr { position: absolute; left: 0; right: 0; top: 840px; text-align: center; font-weight: 700; font-size: 40px; letter-spacing: .08em; color: #9CD4FF; }
+      #mob-fn { position: absolute; left: 0; right: 0; top: 1110px; text-align: center; font-size: 22px; color: rgba(222,238,254,.7); }
+
+      /* CTA */
+      #cta-txt { z-index: 10; }
+      #cta-txt .t { position: absolute; left: 600px; top: 570px; width: 372px; font-size: 64px; }
+      #btn { z-index: 45; }
+      #btn .b { position: absolute; left: 600px; top: 700px; width: 372px; text-align: center; background: #FF4C32; color: #FFFFFF;
+        font-weight: 700; font-size: 48px; letter-spacing: .02em; padding: 26px 0; border-radius: 999px;
+        box-shadow: 0 10px 40px rgba(255,76,50,.45); }
+
+      /* End card */
+      #endc { z-index: 30; display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: 420px; }
+      #end-logo { width: 460px; }
+      #end-h { font-size: 72px; margin-top: 90px; }
+      #end-free { font-size: 84px; margin-top: 18px; }
+      #end-cb { position: absolute; left: 0; right: 0; top: 1040px; font-size: 30px; color: #DEEEFE; }
+
+      /* Subtitles: bottom edge locked at y 1240, 108px margins */
+      .subt { position: absolute; left: 108px; right: 108px; bottom: 680px; z-index: 50; text-align: center;
+        font-weight: 500; font-size: 50px; line-height: 1.15; text-shadow: 0 2px 12px rgba(6,40,76,.55); }
+      .subt .fl { color: #FF4C32; }
+      .subt i { font-style: italic; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="ecomiq-review-call-916" data-start="0" data-duration="40.72" data-width="1080" data-height="1920">
+
+      <div id="vwrap"><video id="base" data-start="0" data-duration="40.72" data-track-index="0" src="assets/base.mp4" muted playsinline></video></div>
+      <audio id="vo" data-start="0" data-duration="40.72" data-track-index="1" src="assets/vo.m4a" data-volume="1"></audio>
+
+      <div id="logo-wrap"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
+
+      <!-- SHOT 1 · 0.00 to 4.64 -->
+      <div id="s1" class="clip abs" style="inset:0" data-start="0" data-duration="4.76" data-track-index="2">
+        <div class="col">
+          <div id="s1-eye" class="eyebrow">Shopify founders</div>
+          <div id="s1-big" class="hero">$20K+</div>
+          <div id="s1-mo">/ MONTH</div>
+          <div id="s1-rule"></div>
+          <div id="s1-paid" class="hero">PAID ADS</div>
+        </div>
+      </div>
+
+      <!-- CARD A · 4.64 to 6.96 -->
+      <div id="cardA" class="clip card" data-start="4.64" data-duration="2.32" data-track-index="3">
+        <div id="a-eye" class="eyebrow">$20K+/MO · PAID ADS</div>
+        <div class="hero"><div id="a-l1">Not happy</div><div id="a-l2">with the <span class="serif">return.</span></div></div>
+      </div>
+
+      <!-- SHOT 3 · 6.96 to 11.20 -->
+      <div id="s3" class="clip abs" style="inset:0" data-start="6.96" data-duration="4.30" data-track-index="2">
+        <div id="s3-scrim"></div>
+        <div id="s3-b1" class="band hero">What we'd change first.</div>
+        <div id="s3-b2" class="band hero">Live, on a free call.</div>
+      </div>
+
+      <!-- CARD B + SPLITS A/B · 11.20 to 21.30 (one evolving composition) -->
+      <div id="jour" class="clip abs" style="inset:0; z-index:15" data-start="11.20" data-duration="10.12" data-track-index="4">
+        <div id="panel"></div><div id="panel-edge"></div>
+        <div id="b-head" class="phead hero">What it costs to win a customer.</div>
+        <div id="f-head" class="phead hero">Follow the click.</div>
+        <div id="sp" class="spine">
+          <div id="ln" class="line"></div>
+          <div id="n1" class="node" style="top:463px"></div>
+          <div id="n2" class="node" style="top:623px"></div>
+          <div id="n3" class="node" style="top:783px"></div>
+          <div id="n4" class="node" style="top:943px"></div>
+          <div id="l1" class="lab" style="top:464px">SPEND</div>
+          <div id="u1a" class="sub" style="top:514px">Cost per customer · CAC</div>
+          <div id="u1b" class="sub" style="top:514px">CAC</div>
+          <div id="l2" class="lab" style="top:624px">CLICK</div>
+          <div id="u2" class="sub" style="top:674px">Ads + offers</div>
+          <div id="l3" class="lab" style="top:784px">STORE</div>
+          <div id="u3" class="sub" style="top:834px">After the click</div>
+          <div id="l4" class="lab" style="top:944px">LOST</div>
+          <div id="u4" class="sub" style="top:994px">Where sales leak</div>
+          <div id="dot" class="dot" style="top:629px"></div>
+        </div>
+      </div>
+
+      <!-- MOB ARMOR PROOF · 22.84 to 27.30 -->
+      <div id="mob" class="clip abs" style="inset:0" data-start="22.84" data-duration="4.48" data-track-index="3">
+        <div id="mob-wash"></div>
+        <!-- PREVIEW PLACEHOLDER: replace with the official Mob Armor white wordmark file -->
+        <div id="mob-mark">MOB ARMOR<small>PLACEHOLDER · USE OFFICIAL WORDMARK</small></div>
+        <div id="mob-num" class="hero">+0%</div>
+        <div id="mob-ts">TOTAL SALES</div>
+        <div id="mob-yr">IN 1 YEAR</div>
+        <div id="mob-fn">Mob Armor Shopify sales data, Aug 2025 to Aug 2026</div>
+      </div>
+
+      <!-- SPLIT C · 29.14 to 32.02 -->
+      <div id="jc" class="clip abs" style="inset:0; z-index:15" data-start="29.16" data-duration="2.88" data-track-index="4">
+        <div id="c-panel" class="abs" style="left:0;top:0;width:540px;height:1920px;background:#06284C;border-right:1px solid rgba(222,238,254,.2)">
+          <div id="c-head" class="phead hero">What to fix first.</div>
+          <div class="spine">
+            <div class="line"></div>
+            <div class="node" style="top:463px;background:#9CD4FF;border-color:#9CD4FF"></div>
+            <div class="node" style="top:623px;background:#9CD4FF;border-color:#9CD4FF"></div>
+            <div id="c-n3" class="node" style="top:783px;background:#9CD4FF;border-color:#9CD4FF"></div>
+            <div id="c-n4" class="node" style="top:943px;background:#FF4C32;border-color:#FF4C32"></div>
+            <div class="lab" style="top:464px;opacity:.7">SPEND</div>
+            <div class="lab" style="top:624px;opacity:.7">CLICK</div>
+            <div class="lab" style="top:784px">STORE</div>
+            <div id="c-l4" class="lab" style="top:944px;color:#FF4C32">LOST</div>
+            <div id="c-pill" class="pill" style="top:828px">FIX THIS FIRST</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA · 36.44 to 38.90 -->
+      <div id="cta-txt" class="clip abs" style="inset:0" data-start="36.44" data-duration="2.50" data-track-index="2">
+        <div id="cta-t" class="t hero">Free call.</div>
+      </div>
+
+      <!-- END CARD · 38.90 to 40.72 -->
+      <div id="endc" class="clip card" data-start="38.90" data-duration="1.82" data-track-index="3">
+        <img id="end-logo" src="assets/ecomiq-logo-white.svg" alt="EcomIQ" />
+        <div id="end-h" class="hero">Find what to fix first.</div>
+        <div id="end-free" class="serif">Free.</div>
+        <div id="end-cb">Spend → Click → Store → Fix</div>
+      </div>
+
+      <!-- BOOK NOW button: carried from Shot 12 into the end card -->
+      <div id="btn" class="clip abs" style="inset:0" data-start="36.70" data-duration="4.02" data-track-index="5">
+        <div id="btn-b" class="b">BOOK NOW ↓</div>
+      </div>
+
+      <!-- SUBTITLES (EDIT-PLAN Part 7; locked spellings) -->
+      <div id="u01" class="clip subt" data-start="0.32"  data-duration="1.28" data-track-index="7">Shopify founders doing</div>
+      <div id="u02" class="clip subt" data-start="1.60"  data-duration="1.90" data-track-index="7">$20,000 a month and up,</div>
+      <div id="u03" class="clip subt" data-start="3.50"  data-duration="1.14" data-track-index="7">spending on paid ads</div>
+      <div id="u04" class="clip subt" data-start="4.64"  data-duration="2.32" data-track-index="7">and not happy<br>with what comes back.</div>
+      <div id="u05" class="clip subt" data-start="6.96"  data-duration="2.64" data-track-index="7">We'll show you<br>what we'd change first,</div>
+      <div id="u06" class="clip subt" data-start="9.60"  data-duration="1.88" data-track-index="7">live on a free call.</div>
+      <div id="u07" class="clip subt" data-start="11.48" data-duration="2.66" data-track-index="7">First, what it costs you<br>to win a customer,</div>
+      <div id="u08" class="clip subt" data-start="14.14" data-duration="2.30" data-track-index="7">then your ads and your offers.</div>
+      <div id="u09" class="clip subt" data-start="16.44" data-duration="2.08" data-track-index="7">Then we follow the click<br>through your store</div>
+      <div id="u10" class="clip subt" data-start="18.52" data-duration="2.78" data-track-index="7">and see where it's getting lost.</div>
+      <div id="u11" class="clip subt" data-start="21.30" data-duration="1.54" data-track-index="7">Specialists from the team<br>that have helped brands</div>
+      <div id="u12" class="clip subt" data-start="22.84" data-duration="1.34" data-track-index="7">like Mob Armor</div>
+      <div id="u13" class="clip subt" data-start="24.18" data-duration="2.68" data-track-index="7">grow total sales by over 500%<br>in a year</div>
+      <div id="u14" class="clip subt" data-start="26.86" data-duration="1.80" data-track-index="7">are gonna go through it with you.</div>
+      <div id="u15" class="clip subt" data-start="28.66" data-duration="3.36" data-track-index="7">You'll come away knowing<br>what to fix first.</div>
+      <div id="u16" class="clip subt" data-start="32.02" data-duration="2.52" data-track-index="7">And if your data can't give us<br>a clear answer,</div>
+      <div id="u17" class="clip subt" data-start="34.54" data-duration="1.90" data-track-index="7">we'll tell you what's <i>missing.</i></div>
+      <div id="u18" class="clip subt" data-start="36.44" data-duration="2.46" data-track-index="7">Tap <span class="fl">Book Now</span> and choose a time.</div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const IN = { opacity: 1, y: 0, duration: 0.40, ease: "power3.out" };
+      const rise = (sel, t, from = 24) => tl.fromTo(sel, { opacity: 0, y: from }, { ...IN }, t);
+
+      // ---------- picture base: pushes + blur dissolves ----------
+      const V = "#vwrap";
+      tl.fromTo(V, { scale: 1 }, { scale: 1.04, duration: 4.64, ease: "sine.inOut" }, 0);       // Shot 1 push
+      tl.set(V, { scale: 1 }, 6.96);
+      tl.fromTo(V, { scale: 1 }, { scale: 1.03, duration: 4.24, ease: "sine.inOut" }, 6.96);    // Shot 3 push
+      tl.set(V, { scale: 1 }, 11.20);
+      tl.fromTo(V, { scale: 1 }, { scale: 1.03, duration: 1.54, ease: "sine.inOut" }, 21.30);   // Shoptalk push
+      tl.set(V, { scale: 1 }, 22.84);
+      tl.fromTo(V, { scale: 1 }, { scale: 1.03, duration: 2.88, ease: "sine.inOut" }, 29.16);   // Split C push
+      tl.set(V, { scale: 1 }, 32.04);
+      tl.fromTo(V, { scale: 1 }, { scale: 1.03, duration: 4.40, ease: "sine.inOut" }, 32.04);   // Shot 11 push
+      tl.set(V, { scale: 1 }, 36.44);
+      [21.32, 22.84, 27.32, 29.16].forEach((c) => {                                             // T-BLUR
+        tl.to(V, { filter: "blur(6px)", duration: 0.12, ease: "power1.in" }, c - 0.12);
+        tl.fromTo(V, { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.24, ease: "power2.out" }, c);
+      });
+
+      // ---------- logo: hidden over B-roll and on the end card ----------
+      tl.set("#logo-wrap", { opacity: 0 }, 21.30).set("#logo-wrap", { opacity: 1 }, 29.16).set("#logo-wrap", { opacity: 0 }, 38.90);
+
+      // ---------- SHOT 1 ----------
+      rise("#s1-eye", 0.40);
+      rise("#s1-big", 1.60, 30); rise("#s1-mo", 1.72);
+      tl.fromTo("#s1-rule", { scaleX: 0, transformOrigin: "0 50%" }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, 3.40);
+      rise("#s1-paid", 3.50, 30);
+
+      // ---------- CARD A (T-RISE in, T-DROP out) ----------
+      tl.fromTo("#cardA", { opacity: 0, y: 115 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 4.64);
+      rise("#a-eye", 4.70, 16);
+      rise("#a-l1", 4.75, 40); rise("#a-l2", 4.95, 40);
+      tl.to("#cardA", { opacity: 0, y: 77, duration: 0.30, ease: "power2.in" }, 6.66);
+
+      // ---------- SHOT 3 (two beats) ----------
+      tl.fromTo("#s3-scrim", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "sine.out" }, 7.56);
+      rise("#s3-b1", 7.76, 30);
+      tl.to("#s3-b1", { opacity: 0, y: -60, duration: 0.40, ease: "power2.inOut" }, 9.50);
+      rise("#s3-b2", 9.60, 40);
+
+      // ---------- CARD B → SPLIT A → SPLIT B ----------
+      tl.fromTo("#jour", { opacity: 0, y: 115 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 11.20);
+      tl.set("#sp", { y: 120 }, 11.20);
+      rise("#b-head", 11.30, 30);
+      tl.fromTo("#ln", { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: "power2.inOut" }, 11.50);
+      tl.fromTo(["#n1", "#n2", "#n3", "#n4"], { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(1.6)", stagger: 0.12 }, 11.60);
+      tl.set(["#l1","#u1a","#u1b","#l2","#u2","#l3","#u3","#l4","#u4","#dot","#f-head"], { opacity: 0 }, 11.20);
+      // SPEND lights
+      tl.to("#n1", { backgroundColor: "#9CD4FF", borderColor: "#FFFFFF", duration: 0.25 }, 12.26);
+      rise("#l1", 12.26, 16); rise("#u1a", 12.38, 16);
+      // T-MORPH to column (14.14)
+      tl.fromTo("#panel", { clipPath: "inset(0px 0px 0px 0px)" }, { clipPath: "inset(0px 540px 0px 0px)", duration: 0.5, ease: "power2.inOut" }, 14.14);
+      tl.fromTo("#panel-edge", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 14.44);
+      tl.to("#b-head", { opacity: 0, duration: 0.25 }, 14.14);
+      tl.to("#sp", { y: 0, duration: 0.5, ease: "power2.inOut" }, 14.14);
+      tl.to("#u1a", { opacity: 0, duration: 0.2 }, 14.14); tl.to("#u1b", { opacity: 1, duration: 0.3 }, 14.40);
+      tl.to("#n1", { backgroundColor: "#06284C", borderColor: "#9CD4FF", duration: 0.3 }, 14.40);
+      tl.to("#l1", { opacity: 0.7, duration: 0.3 }, 14.40);
+      // CLICK lights
+      tl.to("#n2", { backgroundColor: "#9CD4FF", borderColor: "#FFFFFF", duration: 0.25 }, 14.52);
+      rise("#l2", 14.52, 16); rise("#u2", 14.64, 16);
+      // SPLIT B: follow the click
+      rise("#f-head", 16.84, 24);
+      tl.fromTo("#dot", { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(2)" }, 17.30);
+      tl.to("#dot", { y: 160, duration: 0.92, ease: "power1.inOut" }, 17.30);
+      tl.to("#n3", { backgroundColor: "#9CD4FF", borderColor: "#FFFFFF", duration: 0.25 }, 18.22);
+      rise("#l3", 18.22, 16); rise("#u3", 18.34, 16);
+      tl.to("#n2", { backgroundColor: "#06284C", borderColor: "#9CD4FF", duration: 0.3 }, 18.22);
+      tl.to("#l2", { opacity: 0.7, duration: 0.3 }, 18.22);
+      tl.to("#dot", { y: 300, duration: 0.60, ease: "power1.in" }, 19.18);
+      tl.to("#dot", { x: 60, opacity: 0, duration: 0.5, ease: "power2.in" }, 19.78);
+      tl.to("#n4", { backgroundColor: "#FF4C32", borderColor: "#FF4C32", duration: 0.25 }, 19.78);
+      tl.fromTo("#l4", { opacity: 0, y: 16, color: "#FF4C32" }, { ...IN, color: "#FF4C32" }, 19.78);
+      rise("#u4", 19.90, 16);
+      tl.to("#jour", { opacity: 0, duration: 0.12 }, 21.18);
+
+      // ---------- MOB ARMOR PROOF ----------
+      tl.fromTo("#mob-wash", { opacity: 0 }, { opacity: 0.85, duration: 0.40, ease: "sine.inOut" }, 24.10);
+      tl.fromTo("#mob-mark", { opacity: 0, y: 16 }, { ...IN }, 23.10);
+      const num = document.querySelector("#mob-num"); const cnt = { v: 0 };
+      tl.fromTo("#mob-num", { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power3.out" }, 24.18);
+      tl.fromTo(cnt, { v: 0 }, { v: 500, duration: 1.52, ease: "power2.out",
+        onUpdate: () => { num.textContent = "+" + Math.round(cnt.v) + "%"; } }, 24.18);
+      rise("#mob-ts", 24.52, 20);
+      rise("#mob-yr", 26.18, 16);
+      tl.fromTo("#mob-fn", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 26.40);
+
+      // ---------- SPLIT C ----------
+      tl.fromTo("#c-panel", { x: -540 }, { x: 0, duration: 0.40, ease: "power3.out" }, 29.16);
+      rise("#c-head", 29.30, 20);
+      tl.to("#c-n4", { backgroundColor: "#06284C", borderColor: "rgba(222,238,254,.35)", duration: 0.3 }, 30.08);
+      tl.to("#c-l4", { color: "rgba(255,255,255,.35)", duration: 0.3 }, 30.08);
+      tl.to("#c-n3", { borderColor: "#FF4C32", backgroundColor: "#06284C", duration: 0.3 }, 30.08);
+      tl.fromTo("#c-pill", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.40, ease: "power3.out" }, 30.16);
+
+      // ---------- CTA + END CARD ----------
+      rise("#cta-t", 36.50, 24);
+      tl.fromTo("#btn-b", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.7)" }, 36.70);
+      tl.to("#btn-b", { scale: 1.03, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 1 }, 37.20);
+      tl.fromTo("#endc", { opacity: 0, y: 115 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 38.90);
+      tl.to("#btn-b", { x: -264, y: 160, scale: 1, duration: 0.5, ease: "power2.inOut" }, 38.90);
+      tl.fromTo("#end-cb", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 39.10);
+      tl.to("#btn-b", { scale: 1.03, duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: 1 }, 39.50);
+
+      // ---------- subtitles: soft 0.12s fade-in each ----------
+      for (const [id, t] of [["u01",0.32],["u02",1.60],["u03",3.50],["u04",4.64],["u05",6.96],["u06",9.60],["u07",11.48],["u08",14.14],
+        ["u09",16.44],["u10",18.52],["u11",21.30],["u12",22.84],["u13",24.18],["u14",26.86],["u15",28.66],["u16",32.02],["u17",34.54],["u18",36.44]]) {
+        tl.fromTo("#" + id, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, t);
+      }
+
+      tl.to({}, { duration: 40.72 }, 0); // pad to data-duration
+      window.__timelines["ecomiq-review-call-916"] = tl;
+    </script>
+  </body>
+</html>
