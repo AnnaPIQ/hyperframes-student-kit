@@ -40,3 +40,8 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Framed A-roll masters (>100 MB) — rebuild with video-projects/three-changes-ad/scripts/prep-aroll-framed.sh
+video-projects/three-changes-ad/assets/aroll-916.mp4
+video-projects/three-changes-ad-4x5/assets/aroll-45.mp4
+video-projects/three-changes-ad*/assets/aroll-native.mp4

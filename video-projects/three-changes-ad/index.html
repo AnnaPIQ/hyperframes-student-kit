@@ -20,7 +20,7 @@
       .layer { position: absolute; inset: 0; }
 
       /* ---------- A-roll: one continuous clip, reframed by moving the wrapper ---------- */
-      #aroll-wrap { position: absolute; left: 0; top: 0; width: 1366px; height: 1920px; transform-origin: 0 0; z-index: 1; }
+      #aroll-wrap { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; z-index: 1; }
       #aroll { display: block; width: 100%; height: 100%; }
 
       /* ---------- B-roll ---------- */
@@ -132,7 +132,7 @@
 
       <!-- ===== A-ROLL (single continuous clip; graphics + B-roll cover it) ===== -->
       <div id="aroll-wrap">
-        <video id="aroll" data-media-start="0.48" data-start="0" data-duration="30.52" data-track-index="0" src="assets/aroll.mp4" muted playsinline></video>
+        <video id="aroll" data-media-start="0.48" data-start="0" data-duration="30.52" data-track-index="0" src="assets/aroll-916.mp4" muted playsinline></video>
       </div>
 
       <!-- ===== B-ROLL ===== -->
@@ -269,13 +269,7 @@
         tl.fromTo(sel, { opacity: 0, y: vars.dy ?? 12 }, { opacity: 1, y: 0, duration: vars.d ?? 0.3, ease: vars.ease ?? "power2.out" }, t);
       const FADE_IN = (sel, t, d = 0.2) => tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: d, ease: "none" }, t);
 
-      // ---------- A-roll framing (face point in the 1366x1920 prep ≈ x625) ----------
-      // S1: face at ~36% width, punch 100% -> 106% anchored so the head clears the logo
-      tl.fromTo("#aroll-wrap", { x: -236, y: 0, scale: 1 }, { x: -273, y: -30, scale: 1.06, duration: 3.44, ease: "none" }, 0);
-      // S8 (hidden behind GFX-2 when set): same side framing at 104%
-      tl.set("#aroll-wrap", { x: -261, y: -20, scale: 1.04 }, 15.72);
-      // S12 (hidden behind GFX-3 when set): centred, 112%
-      tl.set("#aroll-wrap", { x: -160, y: -170, scale: 1.12 }, 24.42);
+      // ---------- A-roll framing is baked into assets/aroll-916.mp4 by scripts/prep-aroll-framed.sh (Lanczos, shown 1:1; no browser scaling) ----------
 
       // ---------- S1 side card ----------
       IN("#s1-card", 0.3, { d: 0.35 });
@@ -302,7 +296,6 @@
       IN("#g1-l3", 8.56, { dy: 16, d: 0.3, ease: "power4.out" });
 
       // ---------- S5 label on B-roll ----------
-      tl.fromTo("#br-stage", { scale: 1 }, { scale: 1.04, duration: 1.02, ease: "none" }, 9.66);
 
       // ---------- GFX-2 · Furbish +49% ----------
       FADE_IN("#gfx2", 11.44);

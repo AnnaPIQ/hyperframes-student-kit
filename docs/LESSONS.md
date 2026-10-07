@@ -38,6 +38,18 @@ efficient over time instead of relearning the same lessons.
   the logo inside it.
 - **Never animate `width/height/top/left` on a `<video>`** — the browser freezes the
   frame. Wrap it in a `<div>` and animate the wrapper. (Render contract rule 9.)
+- **Scaling a `<video>` (or its wrapper) in the browser softens footage badly.** Chrome
+  resamples with a soft filter: even a 0.996x scale threw away ~45% of fine face detail,
+  and the shipped three-changes master kept only 36% of the camera's detail. Final
+  encode (CRF 15) and an H.264 CRF 14 prep cost almost nothing by comparison. **Fix:**
+  bake every crop, reframe and punch-in into the footage with FFmpeg Lanczos
+  (`scale=...:eval=frame` + `crop` with time expressions) at the exact output size, and
+  show `<video>` 1:1 with no transform. Render with `--video-frame-format png`. Example:
+  `video-projects/three-changes-ad/scripts/prep-aroll-framed.sh`.
+- **How to check a master for softness:** grab the same frame from the source, crop and
+  Lanczos-scale it to the identical framing, then compare Laplacian variance (fine-detail
+  energy) of a face crop. SSIM is unreliable here because sub-pixel misregistration of the
+  reference drags it down most on the *sharper* image.
 
 ## Footage & A/V sync
 
