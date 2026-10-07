@@ -57,7 +57,7 @@
       /* Journey spine (column coordinates; Card B offsets the group by +120px) */
       #panel { position: absolute; inset: 0; background: #06284C; }
       #panel-edge { position: absolute; top: 0; bottom: 0; left: 539px; width: 1px; background: rgba(222,238,254,.2); }
-      .phead { position: absolute; left: 108px; top: 330px; width: 400px; font-size: 56px; }
+      .phead { position: absolute; left: 108px; top: 400px; width: 400px; font-size: 52px; }
       #b-head { width: 864px; font-size: 84px; }
       .spine { position: absolute; left: 0; top: 0; width: 540px; height: 1920px; }
       .line { position: absolute; left: 148px; top: 480px; width: 4px; height: 480px; background: rgba(222,238,254,.6); transform-origin: 50% 0; }
@@ -94,9 +94,12 @@
       #end-free { font-size: 84px; margin-top: 18px; }
       #end-cb { position: absolute; left: 0; right: 0; top: 1040px; font-size: 30px; color: #DEEEFE; }
 
+      /* soft navy gradient behind the subtitle line: legibility on bright footage (no box) */
+      #subscrim { position: absolute; left: 0; right: 0; top: 1020px; height: 340px; z-index: 35; pointer-events: none;
+        background: linear-gradient(to bottom, rgba(6,40,76,0), rgba(6,40,76,.55) 45%, rgba(6,40,76,.55) 70%, rgba(6,40,76,0)); }
       /* Subtitles: bottom edge locked at y 1240, 108px margins */
       .subt { position: absolute; left: 108px; right: 108px; bottom: 680px; z-index: 50; text-align: center;
-        font-weight: 500; font-size: 50px; line-height: 1.15; text-shadow: 0 2px 12px rgba(6,40,76,.55); }
+        font-weight: 500; font-size: 50px; line-height: 1.15; text-shadow: 0 0 3px rgba(6,40,76,.9), 0 2px 18px rgba(6,40,76,.85), 0 0 40px rgba(6,40,76,.5); }
       .subt .fl { color: #FF4C32; }
       .subt i { font-style: italic; }
     </style>
@@ -107,6 +110,7 @@
       <div id="vwrap"><video id="base" data-start="0" data-duration="40.72" data-track-index="0" src="assets/base.mp4" muted playsinline></video></div>
       <audio id="vo" data-start="0" data-duration="40.72" data-track-index="1" src="assets/vo.m4a" data-volume="1"></audio>
 
+      <div id="subscrim"></div>
       <div id="logo-wrap"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
 
       <!-- SHOT 1 · 0.00 to 4.64 -->
@@ -136,7 +140,7 @@
       <!-- CARD B + SPLITS A/B · 11.20 to 21.30 (one evolving composition) -->
       <div id="jour" class="clip abs" style="inset:0; z-index:15" data-start="11.20" data-duration="10.12" data-track-index="4">
         <div id="panel"></div><div id="panel-edge"></div>
-        <div id="b-head" class="phead hero">What it costs to win a customer.</div>
+        <div id="b-head" class="phead hero">What it costs<br>to win a customer.</div>
         <div id="f-head" class="phead hero">Follow the click.</div>
         <div id="sp" class="spine">
           <div id="ln" class="line"></div>
@@ -172,7 +176,7 @@
       <div id="jc" class="clip abs" style="inset:0; z-index:15" data-start="29.16" data-duration="2.88" data-track-index="4">
         <div id="c-panel" class="abs" style="left:0;top:0;width:540px;height:1920px;background:#06284C;border-right:1px solid rgba(222,238,254,.2)">
           <div id="c-head" class="phead hero">What to fix first.</div>
-          <div class="spine">
+          <div class="spine" style="transform: translateY(60px)">
             <div class="line"></div>
             <div class="node" style="top:463px;background:#9CD4FF;border-color:#9CD4FF"></div>
             <div class="node" style="top:623px;background:#9CD4FF;border-color:#9CD4FF"></div>
@@ -234,6 +238,7 @@
 
       // ---------- picture base: pushes + blur dissolves ----------
       const V = "#vwrap";
+      tl.set(V, { filter: "blur(0px)" }, 0);
       tl.fromTo(V, { scale: 1 }, { scale: 1.04, duration: 4.64, ease: "sine.inOut" }, 0);       // Shot 1 push
       tl.set(V, { scale: 1 }, 6.96);
       tl.fromTo(V, { scale: 1 }, { scale: 1.03, duration: 4.24, ease: "sine.inOut" }, 6.96);    // Shot 3 push
@@ -246,7 +251,7 @@
       tl.set(V, { scale: 1 }, 36.44);
       [21.32, 22.84, 27.32, 29.16].forEach((c) => {                                             // T-BLUR
         tl.to(V, { filter: "blur(6px)", duration: 0.12, ease: "power1.in" }, c - 0.12);
-        tl.fromTo(V, { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.24, ease: "power2.out" }, c);
+        tl.fromTo(V, { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.24, ease: "power2.out", immediateRender: false }, c);
       });
 
       // ---------- logo: hidden over B-roll and on the end card ----------
@@ -272,7 +277,7 @@
 
       // ---------- CARD B → SPLIT A → SPLIT B ----------
       tl.fromTo("#jour", { opacity: 0, y: 115 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 11.20);
-      tl.set("#sp", { y: 120 }, 11.20);
+      tl.set("#sp", { y: 170 }, 11.20);
       rise("#b-head", 11.30, 30);
       tl.fromTo("#ln", { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: "power2.inOut" }, 11.50);
       tl.fromTo(["#n1", "#n2", "#n3", "#n4"], { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(1.6)", stagger: 0.12 }, 11.60);
@@ -284,7 +289,7 @@
       tl.fromTo("#panel", { clipPath: "inset(0px 0px 0px 0px)" }, { clipPath: "inset(0px 540px 0px 0px)", duration: 0.5, ease: "power2.inOut" }, 14.14);
       tl.fromTo("#panel-edge", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 14.44);
       tl.to("#b-head", { opacity: 0, duration: 0.25 }, 14.14);
-      tl.to("#sp", { y: 0, duration: 0.5, ease: "power2.inOut" }, 14.14);
+      tl.to("#sp", { y: 60, duration: 0.5, ease: "power2.inOut" }, 14.14);
       tl.to("#u1a", { opacity: 0, duration: 0.2 }, 14.14); tl.to("#u1b", { opacity: 1, duration: 0.3 }, 14.40);
       tl.to("#n1", { backgroundColor: "#06284C", borderColor: "#9CD4FF", duration: 0.3 }, 14.40);
       tl.to("#l1", { opacity: 0.7, duration: 0.3 }, 14.40);
