@@ -32,7 +32,7 @@
 | **Flame accent rule** that wipes in (scaleX 0 to 1) | **Not used in this ad.** A decorative Flame line would spend the colour on nothing. The three Flame moments above are the accents |
 | Eyebrow: tracked caps in **Blue Tint** | Eyebrows here are **Sky Blue**, not Blue Tint, so they read as quiet labels rather than highlights. Rethink Sans Bold 30 px caps, +12% tracking |
 | Big headlines at **-2% tracking**, about 100% leading. Never reset tracking to 0 | All hero type -2%, line-height 1.0 |
-| Canvas: navy + faint Sky radial at the top (separates the logo) + **Gradient 2 (blue to flame) bloom** in the lower third at about 0.38 opacity. **Never put body copy over a bloom** | Cards use navy + a faint Sky radial at the top + a Gradient 2 bloom at 0.32 opacity, positioned **below y 1300**, under the subtitle line and clear of all text |
+| Canvas: navy + faint Sky radial at the top (separates the logo) + **Gradient 2 (blue to flame) bloom** in the lower third at about 0.38 opacity. **Never put body copy over a bloom** | Cards use navy + a faint Sky radial at the top + a Gradient 2 bloom at 0.32 opacity, positioned **below y 1720**, under the subtitle line and clear of all text |
 | Logo: `ecomiq-logo-white.svg` on navy. Never stretched or recoloured | White lockup top-left on every Sean shot and card (not over B-roll). Centred and large on the end card |
 | Safe area: **about 10% margins (108 px sides)** | Side margin raised from 64 px to **108 px** for all text |
 | Easing: **power3.out** for type, **back.out(1.7)** for the CTA, **sine.inOut** breathing pulse on the CTA | Adopted as the motion defaults below |
@@ -41,7 +41,7 @@
 | Art direction: vibrant product imagery on navy | The Mob Armor product macro sits under a navy wash with the stat on top |
 | Voice: precise, trustworthy, clarifying | On-screen copy stays plain and specific ("Find what to fix first.", "Where sales leak"). No hype words |
 
-Where DESIGN.md and Meta's safe zones disagree, **the safe zone wins**, because the brief requires all important text inside Meta safe zones. The recipe's 9:16 note puts the logo at about 160 px from the top and the CTA about 220 px from the bottom. Both of those fall inside Reels UI areas, so the logo sits at y 296 and the CTA is placed in the hero zone.
+Placement decisions: the **logo sits at y 150** and the **subtitles sit at the bottom of the frame (bottom edge y 1670)**, both matching the live campaign and the recipe's 9:16 note. The CTA stays in the hero zone beside Sean so the BOOK NOW button is never under Meta's UI.
 
 ---
 
@@ -88,12 +88,12 @@ Highlights only land if most of the ad has none. **Default is White, plain sans,
 **Canvas** 1080 × 1920.
 
 **Meta safe zones (Reels is the strictest, so design to it):**
-- Top 270 px: no critical text (account bar). The logo sits just below this band.
+- Top 270 px: no critical text (account bar). The logo sits in this band at y 150 (campaign position, recipe value). It is branding, not critical text.
 - Bottom 670 px (35%): no critical text (caption, CTA button, icons).
 - Sides: **108 px** text margin (DESIGN.md). The right-hand 120 px from y 900 to 1650 is the Reels icon rail, so keep it clear.
-- **Hero text zone: y 300 to 1120, x 108 to 972. Subtitle zone: bottom edge locked at y 1240.**
+- **Hero text zone: y 300 to 1120, x 108 to 972. Subtitle zone: bottom of frame, bottom edge locked at y 1670** (campaign position, inside the Stories safe zone; on Reels the bottom UI can overlap the lowest line, accepted by decision).
 
-**Logo.** `ecomiq-logo-white.svg`, top-left, x 108, y 296, 260 px wide. Present on every Sean shot and card. Hidden over B-roll. Centred at 460 px wide on the end card. Wrap it in a non-clip positioned div (see LESSONS.md).
+**Logo.** `ecomiq-logo-white.svg`, top-left, x 108, y 150, 260 px wide. Present on every Sean shot and card. Hidden over B-roll. Centred at 460 px wide on the end card. Wrap it in a non-clip positioned div (see LESSONS.md).
 
 **Type.**
 - **Rethink Sans:** hero 96 to 160 px Bold or ExtraBold, -2% tracking, 1.0 leading. Labels 40 to 44 px Bold caps, +6% tracking. Supporting text 28 to 32 px Medium. Eyebrows 30 px Bold caps, +12% tracking, Sky Blue.
@@ -110,7 +110,7 @@ Highlights only land if most of the ad has none. **Default is White, plain sans,
 | Flame Orange | #FF4C32 | **the one thing that matters** | three moments only: LOST → FIX THIS FIRST, "+500%", BOOK NOW. Never two Flame items on screen at once |
 | Black | #000000 | not used | |
 
-**Card background.** Navy #06284C, a faint Sky Blue radial at the top (behind the logo, 8% opacity), and a Gradient 2 bloom (Blue Tint to Flame, blurred 160 px, 0.32 opacity) sitting below y 1300 so no text ever sits on it. No grids, no grain on type, no glitch.
+**Card background.** Navy #06284C, a faint Sky Blue radial at the top (behind the logo, 8% opacity), and a Gradient 2 bloom (Blue Tint to Flame, blurred 160 px, 0.32 opacity) sitting below y 1720 so no text, including subtitles, ever sits on it. No grids, no grain on type, no glitch.
 
 **Motion grammar (calm, premium, per the recipe):**
 
@@ -488,9 +488,9 @@ Keep the A-roll at 4K through the build. The crops need the 4K pixels.
 
 ## PART 7 · Subtitle plan
 
-**System:** Rethink Sans Medium 50 px, White #FFFFFF, sentence case (as in the live campaign), centred. **Bottom edge locked at y 1240.** Two lines max, 864 px max width (inside the 108 px margins), 1.15 line height, soft shadow `0 2px 12px rgba(6,40,76,0.55)`, no box. On navy cards the shadow is unnecessary but harmless.
+**System:** Rethink Sans Medium 50 px, White #FFFFFF, sentence case (as in the live campaign), centred. **Bottom of frame, bottom edge locked at y 1670.** Two lines max, 864 px max width (inside the 108 px margins), 1.15 line height, soft shadow `0 2px 12px rgba(6,40,76,0.55)`, no box. On navy cards the shadow is unnecessary but harmless.
 
-> **Placement change vs the live campaign:** the Oct ads sit subtitles at about y 1690. That's inside the Reels UI band (caption and CTA). Same look, raised to clear Meta's safe zone. If this ad is restricted to Feed and Stories, y 1520 is also safe.
+> **Placement:** matches the live campaign (bottom of frame). A soft navy gradient (no box) sits behind the subtitle line from y 1440 down, so white text stays readable over Sean's cream jacket and bright B-roll. The card glow is kept below y 1720 so subtitles never sit on it.
 
 Each row stays up until the next row starts (gaps under 0.7s are bridged), so the subtitles never blink.
 
@@ -570,7 +570,7 @@ Each row stays up until the next row starts (gaps under 0.7s are bridged), so th
 | 12 | "What to fix first" outcome clear? | **Yes.** FIX THIS FIRST lands on the stage where the click was lost |
 | 13 | Trust line has room? | **Yes.** 4.42s, widest frame, no graphics |
 | 14 | BOOK NOW obvious? | **Yes.** Flame button with glow beside Sean, then centred on the end card, 4.2s total |
-| 15 | Normal bottom subtitles? | **Yes.** Fixed position, bottom edge y 1240 |
+| 15 | Normal bottom subtitles? | **Yes.** Bottom of frame, fixed position, bottom edge y 1670 |
 | 16 | White dominant? | **Yes.** 16 of 18 rows fully White |
 | 16b | Brand names spelled correctly in subtitles? | **Yes.** Shopify, Mob Armor, Book Now and EcomIQ are locked spellings (Part 7). Subtitles are typed from the plan, never auto-cased |
 | 17 | Blue Tint, Flame and italics sparing? | **Yes.** Fixed budget: 2 serif words, 2 Blue Tint words, 3 Flame moments, 2 subtitle highlights. 12.8s of plain White before the first Flame |

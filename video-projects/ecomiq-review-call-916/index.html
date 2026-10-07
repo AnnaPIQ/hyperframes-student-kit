@@ -24,14 +24,14 @@
       #base { width: 1080px; height: 1920px; object-fit: cover; }
 
       /* logo: positioned non-clip wrapper (LESSONS.md) */
-      #logo-wrap { position: absolute; left: 108px; top: 296px; width: 260px; z-index: 40; }
+      #logo-wrap { position: absolute; left: 108px; top: 150px; width: 260px; z-index: 40; }
       #logo-wrap img { width: 100%; display: block; }
 
       /* navy cards */
       .card { position: absolute; inset: 0; background: #06284C; overflow: hidden; }
       .card::before { content: ""; position: absolute; inset: 0;
         background: radial-gradient(70% 22% at 50% 0%, rgba(222,238,254,.08), rgba(222,238,254,0) 70%); }
-      .card::after { content: ""; position: absolute; left: -10%; right: -10%; top: 1300px; height: 900px; filter: blur(120px);
+      .card::after { content: ""; position: absolute; left: -10%; right: -10%; top: 1720px; height: 700px; filter: blur(120px);
         background: radial-gradient(50% 50% at 35% 50%, rgba(156,212,255,.32), rgba(156,212,255,0) 70%),
                     radial-gradient(45% 45% at 70% 60%, rgba(255,76,50,.26), rgba(255,76,50,0) 70%); }
       .card > * { position: relative; z-index: 1; }
@@ -95,10 +95,10 @@
       #end-cb { position: absolute; left: 0; right: 0; top: 1040px; font-size: 30px; color: #DEEEFE; }
 
       /* soft navy gradient behind the subtitle line: legibility on bright footage (no box) */
-      #subscrim { position: absolute; left: 0; right: 0; top: 1020px; height: 340px; z-index: 35; pointer-events: none;
-        background: linear-gradient(to bottom, rgba(6,40,76,0), rgba(6,40,76,.55) 45%, rgba(6,40,76,.55) 70%, rgba(6,40,76,0)); }
-      /* Subtitles: bottom edge locked at y 1240, 108px margins */
-      .subt { position: absolute; left: 108px; right: 108px; bottom: 680px; z-index: 50; text-align: center;
+      #subscrim { position: absolute; left: 0; right: 0; top: 1440px; height: 480px; z-index: 35; pointer-events: none;
+        background: linear-gradient(to bottom, rgba(6,40,76,0), rgba(6,40,76,.55) 40%, rgba(6,40,76,.6)); }
+      /* Subtitles: bottom of frame, bottom edge locked at y 1670 (campaign position, inside Stories safe zone), 108px margins */
+      .subt { position: absolute; left: 108px; right: 108px; bottom: 250px; z-index: 50; text-align: center;
         font-weight: 500; font-size: 50px; line-height: 1.15; text-shadow: 0 0 3px rgba(6,40,76,.9), 0 2px 18px rgba(6,40,76,.85), 0 0 40px rgba(6,40,76,.5); }
       .subt .fl { color: #FF4C32; }
       .subt i { font-style: italic; }
