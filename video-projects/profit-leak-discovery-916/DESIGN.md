@@ -23,7 +23,9 @@ Calm, premium EcomIQ performance ad. Sean is one element inside a designed navy 
 
 ## What NOT to Do
 - No green for positive numbers, no invented dollar results.
-- No orange anywhere except the leak, FIX THIS FIRST, PROFIT LEAK, TOO LITTLE, the leak dot and BOOK NOW.
+- Word highlights are rationed so they land: in subtitles, ONE colour highlight (`Book Now`, orange) and ONE italic (`we'll tell you`) for the whole ad. Never highlight a word that a graphic is already showing in colour at the same moment.
+- Orange only marks the leak itself (LEAK 02, the leak segment and ring, the leak dot) and the BOOK NOW button. Headlines like TOO LITTLE and PROFIT LEAK stay white.
+- Blue Tint as a word highlight only on `8- & 9-FIGURE`; otherwise it is data colour (revenue, $20K+).
 - No text over Sean's cream vest without navy behind it.
 - No flash cuts, no graphic on screen under 1.5 s.
 - No third-party stats (e.g. sponsor slides) visible behind the 8- & 9-figure claim.
