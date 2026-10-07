@@ -44,21 +44,21 @@
       #s1-rule { height: 2px; background: rgba(222,238,254,.5); margin-top: 26px; width: 300px; }
       #s1-paid { font-size: 72px; }
 
-      /* Card A */
-      #cardA { z-index: 20; display: flex; flex-direction: column; align-items: center; padding: 420px 108px 0; gap: 40px; text-align: center; }
-      #cardA .hero { font-size: 130px; }
-
-      /* Shot 3 lower band */
+      /* Shot 3 */
       #s3 { z-index: 10; }
-      #s3-scrim { position: absolute; left: 0; right: 0; top: 780px; height: 520px;
-        background: linear-gradient(to bottom, rgba(6,40,76,0), rgba(6,40,76,.72) 45%, rgba(6,40,76,.72)); }
-      .band { position: absolute; left: 108px; right: 108px; top: 870px; text-align: center; font-size: 96px; }
+      /* Shot 3 card: ranked fixes, then a live call. Solid navy, no fade. Sits on the jacket, clear of the face */
+      #s3card { position: absolute; left: 160px; top: 1180px; width: 760px; height: 330px; background: #06284C;
+        border: 1px solid rgba(222,238,254,.22); border-radius: 28px; box-shadow: 0 24px 60px rgba(6,40,76,.45); overflow: hidden; }
+      .prow { position: absolute; left: 48px; right: 48px; height: 60px; display: flex; align-items: center; gap: 28px; }
+      .pnum { font-weight: 800; font-size: 36px; color: rgba(222,238,254,.55); width: 56px; font-variant-numeric: tabular-nums; }
+      .pbar { height: 18px; border-radius: 9px; background: rgba(222,238,254,.22); }
+      .pchk { position: absolute; right: 0; width: 44px; height: 44px; }
+      #callv { position: absolute; inset: 0; }
+      .tile { position: absolute; top: 40px; width: 320px; height: 250px; border-radius: 20px; background: rgba(222,238,254,.10); overflow: hidden; }
 
       /* Journey spine (column coordinates; Card B offsets the group by +120px) */
       #panel { position: absolute; inset: 0; background: #06284C; }
       #panel-edge { position: absolute; top: 0; bottom: 0; left: 539px; width: 1px; background: rgba(222,238,254,.2); }
-      .phead { position: absolute; left: 108px; top: 400px; width: 400px; font-size: 52px; }
-      #b-head { width: 864px; font-size: 84px; }
       .spine { position: absolute; left: 0; top: 0; width: 540px; height: 1920px; }
       .line { position: absolute; left: 148px; top: 480px; width: 4px; height: 480px; background: rgba(222,238,254,.6); transform-origin: 50% 0; }
       .node { position: absolute; left: 133px; width: 34px; height: 34px; border-radius: 50%;
@@ -112,8 +112,8 @@
       <div id="subscrim"></div>
       <div id="logo-wrap"><img src="assets/ecomiq-logo-white.svg" alt="EcomIQ" /></div>
 
-      <!-- SHOT 1 · 0.00 to 4.64 -->
-      <div id="s1" class="clip abs" style="inset:0" data-start="0" data-duration="4.76" data-track-index="2">
+      <!-- SHOT 1 · 0.00 to 5.18 (v5: type card replaced by the cartoon at 5.18) -->
+      <div id="s1" class="clip abs" style="inset:0" data-start="0" data-duration="5.30" data-track-index="2">
         <div class="col">
           <div id="s1-eye" class="eyebrow">Shopify founders</div>
           <div id="s1-big" class="hero">$20K+</div>
@@ -123,24 +123,86 @@
         </div>
       </div>
 
-      <!-- CARD A · 4.64 to 6.96 -->
-      <div id="cardA" class="clip card" data-start="4.64" data-duration="2.32" data-track-index="3">
-        <div id="a-eye" class="eyebrow">$20K+/MO · PAID ADS</div>
-        <div class="hero"><div id="a-l1">Not happy</div><div id="a-l2">with the <span class="serif">return.</span></div></div>
+      <!-- SHOT 2 · CARTOON · 5.18 to 6.96: founder feeding money into a laptop, frowning -->
+      <div id="cardC" class="clip card" data-start="5.18" data-duration="1.78" data-track-index="3">
+        <svg id="toon" viewBox="0 0 900 760" width="960" height="811" style="position:absolute;left:60px;top:470px">
+          <!-- laptop -->
+          <g id="lap">
+            <rect x="540" y="300" width="320" height="250" rx="16" fill="#06284C" stroke="#DEEEFE" stroke-width="8"/>
+            <polyline id="chart" points="580,400 640,412 700,440 760,478 820,500" fill="none" stroke="#9CD4FF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M500 556 H900 L872 600 H528 Z" fill="#DEEEFE"/>
+          </g>
+          <!-- founder -->
+          <g id="guy">
+            <rect x="110" y="575" width="230" height="200" rx="70" fill="#9CD4FF"/>
+            <rect x="200" y="520" width="44" height="70" fill="#DEEEFE"/>
+            <path id="arm" d="M305 615 Q380 560 445 520" fill="none" stroke="#9CD4FF" stroke-width="46" stroke-linecap="round"/>
+            <circle cx="452" cy="512" r="27" fill="#DEEEFE"/>
+            <g id="head">
+              <circle cx="222" cy="440" r="98" fill="#DEEEFE"/>
+              <path d="M128 420 Q140 330 222 336 Q300 334 318 410 Q290 372 222 374 Q160 372 128 420 Z" fill="#9CD4FF"/>
+              <circle cx="190" cy="448" r="9" fill="#06284C"/><circle cx="254" cy="448" r="9" fill="#06284C"/>
+              <path id="browL" d="M168 426 L205 414" stroke="#06284C" stroke-width="7" stroke-linecap="round"/>
+              <path id="browR" d="M239 414 L276 426" stroke="#06284C" stroke-width="7" stroke-linecap="round"/>
+              <path id="mouth" d="M192 508 Q222 488 252 508" fill="none" stroke="#06284C" stroke-width="8" stroke-linecap="round"/>
+            </g>
+          </g>
+          <g id="bills">
+            <g class="bill" id="bill0"><g transform="translate(-55,-29)">
+              <rect width="110" height="58" rx="8" fill="#FFFFFF" stroke="#9CD4FF" stroke-width="3"/>
+              <circle cx="55" cy="29" r="17" fill="none" stroke="#06284C" stroke-width="3"/>
+              <text x="55" y="40" text-anchor="middle" font-family="Rethink Sans" font-weight="800" font-size="30" fill="#06284C">$</text>
+            </g></g>
+            <g class="bill" id="bill1"><g transform="translate(-55,-29)">
+              <rect width="110" height="58" rx="8" fill="#FFFFFF" stroke="#9CD4FF" stroke-width="3"/>
+              <circle cx="55" cy="29" r="17" fill="none" stroke="#06284C" stroke-width="3"/>
+              <text x="55" y="40" text-anchor="middle" font-family="Rethink Sans" font-weight="800" font-size="30" fill="#06284C">$</text>
+            </g></g>
+            <g class="bill" id="bill2"><g transform="translate(-55,-29)">
+              <rect width="110" height="58" rx="8" fill="#FFFFFF" stroke="#9CD4FF" stroke-width="3"/>
+              <circle cx="55" cy="29" r="17" fill="none" stroke="#06284C" stroke-width="3"/>
+              <text x="55" y="40" text-anchor="middle" font-family="Rethink Sans" font-weight="800" font-size="30" fill="#06284C">$</text>
+            </g></g>
+            <g class="bill" id="bill3"><g transform="translate(-55,-29)">
+              <rect width="110" height="58" rx="8" fill="#FFFFFF" stroke="#9CD4FF" stroke-width="3"/>
+              <circle cx="55" cy="29" r="17" fill="none" stroke="#06284C" stroke-width="3"/>
+              <text x="55" y="40" text-anchor="middle" font-family="Rethink Sans" font-weight="800" font-size="30" fill="#06284C">$</text>
+            </g></g>
+            <g class="bill" id="bill4"><g transform="translate(-55,-29)">
+              <rect width="110" height="58" rx="8" fill="#FFFFFF" stroke="#9CD4FF" stroke-width="3"/>
+              <circle cx="55" cy="29" r="17" fill="none" stroke="#06284C" stroke-width="3"/>
+              <text x="55" y="40" text-anchor="middle" font-family="Rethink Sans" font-weight="800" font-size="30" fill="#06284C">$</text>
+            </g></g>
+            <g class="bill" id="bill5"><g transform="translate(-55,-29)">
+              <rect width="110" height="58" rx="8" fill="#FFFFFF" stroke="#9CD4FF" stroke-width="3"/>
+              <circle cx="55" cy="29" r="17" fill="none" stroke="#06284C" stroke-width="3"/>
+              <text x="55" y="40" text-anchor="middle" font-family="Rethink Sans" font-weight="800" font-size="30" fill="#06284C">$</text>
+            </g></g>
+          </g>
+        </svg>
       </div>
 
       <!-- SHOT 3 · 6.96 to 11.20 -->
       <div id="s3" class="clip abs" style="inset:0" data-start="6.96" data-duration="4.30" data-track-index="2">
-        <div id="s3-scrim"></div>
-        <div id="s3-b1" class="band hero">What we'd change first.</div>
-        <div id="s3-b2" class="band hero">Live, on a free call.</div>
+        <div id="s3card">
+          <div id="prows">
+            <div id="pr1" class="prow" style="top:45px"><div class="pnum">01</div><div class="pbar" style="width:430px"></div>
+              <svg class="pchk" viewBox="0 0 44 44"><circle cx="22" cy="22" r="22" fill="#9CD4FF"/><path d="M13 23 L20 30 L32 16" fill="none" stroke="#06284C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div id="pr2" class="prow" style="top:135px"><div class="pnum">02</div><div class="pbar" style="width:340px"></div></div>
+            <div id="pr3" class="prow" style="top:225px"><div class="pnum">03</div><div class="pbar" style="width:390px"></div></div>
+          </div>
+          <div id="callv">
+            <div class="tile" style="left:40px"><svg viewBox="0 0 320 250" width="320" height="250"><circle cx="160" cy="105" r="44" fill="#DEEEFE"/><rect x="85" y="165" width="150" height="110" rx="55" fill="#DEEEFE"/></svg></div>
+            <div class="tile" style="left:400px"><svg viewBox="0 0 320 250" width="320" height="250"><circle cx="160" cy="105" r="44" fill="#9CD4FF"/><rect x="85" y="165" width="150" height="110" rx="55" fill="#9CD4FF"/></svg></div>
+            <div id="livedot" class="abs" style="left:62px;top:62px;width:18px;height:18px;border-radius:50%;background:#9CD4FF;box-shadow:0 0 0 6px rgba(156,212,255,.25)"></div>
+            <svg class="abs" style="left:640px;top:58px" width="48" height="30" viewBox="0 0 48 30"><rect x="0" y="2" width="32" height="26" rx="6" fill="#DEEEFE"/><path d="M34 15 L48 5 V25 Z" fill="#DEEEFE"/></svg>
+          </div>
+        </div>
       </div>
 
       <!-- CARD B + SPLITS A/B · 11.20 to 21.30 (one evolving composition) -->
       <div id="jour" class="clip abs" style="inset:0; z-index:15" data-start="11.20" data-duration="10.12" data-track-index="4">
         <div id="panel"></div><div id="panel-edge"></div>
-        <div id="b-head" class="phead hero">What it costs<br>to win a customer.</div>
-        <div id="f-head" class="phead hero">Follow the click.</div>
         <div id="sp" class="spine">
           <div id="ln" class="line"></div>
           <div id="n1" class="node" style="top:463px"></div>
@@ -174,7 +236,6 @@
       <!-- SPLIT C · 29.14 to 32.02 -->
       <div id="jc" class="clip abs" style="inset:0; z-index:15" data-start="29.16" data-duration="2.88" data-track-index="4">
         <div id="c-panel" class="abs" style="left:0;top:0;width:540px;height:1920px;background:#06284C;border-right:1px solid rgba(222,238,254,.2)">
-          <div id="c-head" class="phead hero">What to fix first.</div>
           <div class="spine" style="transform: translateY(60px)">
             <div class="line"></div>
             <div class="node" style="top:463px;background:#9CD4FF;border-color:#9CD4FF"></div>
@@ -237,7 +298,7 @@
       // ---------- picture base: pushes + blur dissolves ----------
       const V = "#vwrap";
       tl.set(V, { filter: "blur(0px)" }, 0);
-      tl.fromTo(V, { scale: 1 }, { scale: 1.04, duration: 4.64, ease: "sine.inOut" }, 0);       // Shot 1 push
+      tl.fromTo(V, { scale: 1 }, { scale: 1.04, duration: 5.18, ease: "sine.inOut" }, 0);       // Shot 1 push
       tl.set(V, { scale: 1 }, 6.96);
       tl.fromTo(V, { scale: 1 }, { scale: 1.03, duration: 4.24, ease: "sine.inOut" }, 6.96);    // Shot 3 push
       tl.set(V, { scale: 1 }, 11.20);
@@ -261,32 +322,46 @@
       tl.fromTo("#s1-rule", { scaleX: 0, transformOrigin: "0 50%" }, { scaleX: 1, duration: 0.4, ease: "power2.out" }, 3.40);
       rise("#s1-paid", 3.50, 30);
 
-      // ---------- CARD A (T-RISE in, T-DROP out) ----------
-      tl.fromTo("#cardA", { opacity: 0, y: 115 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 4.64);
-      rise("#a-eye", 4.70, 16);
-      rise("#a-l1", 4.75, 40); rise("#a-l2", 4.95, 40);
-      tl.to("#cardA", { opacity: 0, y: 77, duration: 0.30, ease: "power2.in" }, 6.66);
+      // ---------- SHOT 2 · CARTOON (money in, frown, return sinks) ----------
+      tl.fromTo("#cardC", { opacity: 0, y: 115 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 5.18);
+      tl.fromTo("#guy", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.40, ease: "power3.out" }, 5.24);
+      tl.fromTo("#lap", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.40, ease: "power2.out" }, 5.30);
+      gsap.utils.toArray("#cardC .bill").forEach((b, i) => {
+        const t = 5.45 + i * 0.2;
+        tl.fromTo(b, { x: 452, y: 500, rotation: -18, scale: 0.9, opacity: 0 },
+          { keyframes: [{ opacity: 1, duration: 0.08 }, { x: 700, y: 420, rotation: 12, scale: 0.35, duration: 0.55, ease: "power1.in" }, { opacity: 0, duration: 0.08 }] }, t);
+      });
+      tl.fromTo("#chart", { attr: { points: "580,420 640,418 700,420 760,418 820,420" } },
+        { attr: { points: "580,400 640,412 700,440 760,478 820,505" }, duration: 1.2, ease: "power1.inOut" }, 5.50);
+      tl.fromTo("#mouth", { attr: { d: "M192 500 Q222 500 252 500" } }, { attr: { d: "M192 510 Q222 484 252 510" }, duration: 0.5, ease: "power2.out" }, 5.60);
+      tl.fromTo("#browL", { attr: { d: "M168 420 L205 420" } }, { attr: { d: "M168 428 L205 412" }, duration: 0.4, ease: "power2.out" }, 5.65);
+      tl.fromTo("#browR", { attr: { d: "M239 420 L276 420" } }, { attr: { d: "M239 412 L276 428" }, duration: 0.4, ease: "power2.out" }, 5.65);
+      tl.to("#head", { rotation: -4, transformOrigin: "50% 80%", duration: 0.35, ease: "sine.inOut", yoyo: true, repeat: 1 }, 6.20);
 
       // ---------- SHOT 3 (two beats) ----------
-      tl.fromTo("#s3-scrim", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "sine.out" }, 7.56);
-      rise("#s3-b1", 7.76, 30);
-      tl.to("#s3-b1", { opacity: 0, y: -60, duration: 0.40, ease: "power2.inOut" }, 9.50);
-      rise("#s3-b2", 9.60, 40);
+      tl.fromTo("#s3card", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.40, ease: "power3.out" }, 7.66);
+      tl.set("#callv", { opacity: 0 }, 6.96);
+      tl.fromTo(["#pr1", "#pr2", "#pr3"], { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out", stagger: 0.1 }, 7.76);
+      tl.fromTo("#pr1 .pchk", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, 8.50);
+      tl.to("#pr1 .pnum", { color: "#9CD4FF", duration: 0.3 }, 8.50);
+      tl.to("#pr1 .pbar", { backgroundColor: "#9CD4FF", duration: 0.3 }, 8.50);
+      tl.to(["#pr2", "#pr3"], { opacity: 0.35, duration: 0.3 }, 8.50);
+      tl.to("#prows", { opacity: 0, y: -40, duration: 0.30, ease: "power2.in" }, 9.45);
+      tl.fromTo("#callv", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.40, ease: "power3.out", immediateRender: false }, 9.60);
+      tl.to("#livedot", { scale: 1.35, duration: 0.4, ease: "sine.inOut", yoyo: true, repeat: 1 }, 10.10);
 
       // ---------- CARD B → SPLIT A → SPLIT B ----------
       tl.fromTo("#jour", { opacity: 0, y: 115 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 11.20);
-      tl.set("#sp", { y: 170 }, 11.20);
-      rise("#b-head", 11.30, 30);
+      tl.set("#sp", { y: 80 }, 11.20);
       tl.fromTo("#ln", { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: "power2.inOut" }, 11.50);
       tl.fromTo(["#n1", "#n2", "#n3", "#n4"], { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(1.6)", stagger: 0.12 }, 11.60);
-      tl.set(["#l1","#u1a","#u1b","#l2","#u2","#l3","#u3","#l4","#u4","#dot","#f-head"], { opacity: 0 }, 11.20);
+      tl.set(["#l1","#u1a","#u1b","#l2","#u2","#l3","#u3","#l4","#u4","#dot"], { opacity: 0 }, 11.20);
       // SPEND lights
       tl.to("#n1", { backgroundColor: "#9CD4FF", borderColor: "#FFFFFF", duration: 0.25 }, 12.26);
       rise("#l1", 12.26, 16); rise("#u1a", 12.38, 16);
       // T-MORPH to column (14.14)
       tl.fromTo("#panel", { clipPath: "inset(0px 0px 0px 0px)" }, { clipPath: "inset(0px 540px 0px 0px)", duration: 0.5, ease: "power2.inOut" }, 14.14);
       tl.fromTo("#panel-edge", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 14.44);
-      tl.to("#b-head", { opacity: 0, duration: 0.25 }, 14.14);
       tl.to("#sp", { y: 60, duration: 0.5, ease: "power2.inOut" }, 14.14);
       tl.to("#u1a", { opacity: 0, duration: 0.2 }, 14.14); tl.to("#u1b", { opacity: 1, duration: 0.3 }, 14.40);
       tl.to("#n1", { backgroundColor: "#06284C", borderColor: "#9CD4FF", duration: 0.3 }, 14.40);
@@ -295,7 +370,6 @@
       tl.to("#n2", { backgroundColor: "#9CD4FF", borderColor: "#FFFFFF", duration: 0.25 }, 14.52);
       rise("#l2", 14.52, 16); rise("#u2", 14.64, 16);
       // SPLIT B: follow the click
-      rise("#f-head", 16.84, 24);
       tl.fromTo("#dot", { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.25, ease: "back.out(2)" }, 17.30);
       tl.to("#dot", { y: 160, duration: 0.92, ease: "power1.inOut" }, 17.30);
       tl.to("#n3", { backgroundColor: "#9CD4FF", borderColor: "#FFFFFF", duration: 0.25 }, 18.22);
@@ -322,7 +396,6 @@
 
       // ---------- SPLIT C ----------
       tl.fromTo("#c-panel", { x: -540 }, { x: 0, duration: 0.40, ease: "power3.out" }, 29.16);
-      rise("#c-head", 29.30, 20);
       tl.to("#c-n4", { backgroundColor: "#06284C", borderColor: "rgba(222,238,254,.35)", duration: 0.3 }, 30.08);
       tl.to("#c-l4", { color: "rgba(255,255,255,.35)", duration: 0.3 }, 30.08);
       tl.to("#c-n3", { borderColor: "#FF4C32", backgroundColor: "#06284C", duration: 0.3 }, 30.08);

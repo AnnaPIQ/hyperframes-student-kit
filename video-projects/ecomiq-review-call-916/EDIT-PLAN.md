@@ -1,6 +1,6 @@
 # EcomIQ · "Your ads are spending. Are they selling?" · Review Call · 9:16 Meta
 
-**Complete editing plan, v4.** A-roll with designed interruptions, not a cut-up social ad.
+**Complete editing plan, v6.** A-roll with designed interruptions, not a cut-up social ad.
 
 | | |
 |---|---|
@@ -17,6 +17,13 @@
 - **Mob Armor sign-off confirmed.** Use of the Mob Armor name, logo, product footage and the +500% claim is approved.
 - **Style reference = DESIGN.md.** The type, colour, motion and layout rules are re-aligned to the EcomIQ design spec and recipe. Details are in the next section.
 
+### v6 changes
+- **Rule: no graphic repeats Sean's words.** A graphic either adds something (a visual, a number, a structure) or it's removed.
+- **"Not happy with the return." card replaced** by an animated cartoon: a frowning founder feeding money into a laptop while the return line sinks (5.18 to 6.96).
+- **Shot 3 text and blue fade removed.** Replaced with a small navy card on Sean's jacket: a ranked 01/02/03 list where 01 gets the tick, then a live video-call window.
+- **Journey headlines removed** ("What it costs to win a customer.", "Follow the click.", "What to fix first."). The journey line carries the meaning on its own.
+- The ad now uses **no serif italic words**.
+
 ### v4 changes
 - **End card simplified.** The "Spend → Click → Store → Fix" line is removed. "Free." is plain White sans, not italic. The ad now has a single serif italic word ("*return.*").
 - **Placement.** Subtitles sit at the bottom of the frame. The EcomIQ logo sits higher, at y 150.
@@ -30,7 +37,7 @@
 
 | DESIGN.md / recipe rule | How this plan applies it |
 |---|---|
-| **Headline signature:** one italic-serif emphasis word (Hedvig Letters Serif) over bold Rethink Sans. The emphasis word is **Blue Tint** | Used **once in the whole ad**, on the pain point: "with the ***return.***" (Card A). Every other headline, including "Free." on the end card, is plain White sans |
+| **Headline signature:** one italic-serif emphasis word (Hedvig Letters Serif) over bold Rethink Sans. The emphasis word is **Blue Tint** | **Not used in this ad (v5).** Every headline, including "Free." on the end card, is plain White sans |
 | Blue Tint = "secondary accent, highlights, **italic emphasis**" | Serif words are Blue Tint, not Flame. Beyond those, Blue Tint marks only two words in the graphics ("$20K+" and "IN 1 YEAR") plus the lit state of journey nodes |
 | **Flame Orange = the only hot accent** (CTAs, emphasis) | Flame appears at exactly **three story moments**: the problem thread (LOST, which becomes FIX THIS FIRST), the proof (+500%) and the CTA (BOOK NOW). Never two at once |
 | **Flame accent rule** that wipes in (scaleX 0 to 1) | **Not used in this ad.** A decorative Flame line would spend the colour on nothing. The three Flame moments above are the accents |
@@ -55,13 +62,13 @@ Highlights only land if most of the ad has none. **Default is White, plain sans,
 
 | Treatment | Allowed uses | Where | Why there |
 |---|---|---|---|
-| **Serif italic** (Hedvig, Blue Tint) | **1** | "with the ***return.***" (Card A, 4.75) | The pain point. The only serif word in the ad, so it lands |
+| **Serif italic** (Hedvig, Blue Tint) | **0** | none (the card that carried it was removed in v5) | |
 | **Flame** | **3 moments** | ① LOST (19.78), which carries over as FIX THIS FIRST (30.08), one thread · ② +500% (24.18) · ③ BOOK NOW (36.70 to end) | Problem, proof, action. The only three things a viewer must remember |
 | **Blue Tint words** | **2** | "$20K+" (1.60) · "IN 1 YEAR" (26.18) | The qualifier and the claim's timeframe |
 | **Subtitle highlights** | **2 rows** | "*missing.*" italic (row 17) · "Book Now" Flame (row 18) | The trust line has no graphic, so the subtitle carries it. The CTA is the payoff |
 | Blue Tint as a graphic state | lit journey nodes only | spine dots, never words | It's structure, not emphasis |
 
-**Never highlighted:** headlines other than the one serif word, "Free." on the end card (plain White), eyebrows, node sub-labels, "free call" in the graphics, "fix first" in subtitles, column headlines, the footnote.
+**Never highlighted:** all headlines, "Free." on the end card (plain White), eyebrows, node sub-labels, "free call" in the graphics, "fix first" in subtitles, column headlines, the footnote.
 
 **Gaps between highlights.** There is no serif, Flame or Blue Tint word on screen during 6.96 to 19.78 (12.8s of plain White), and none during 32.02 to 34.54. That quiet is what makes LOST, +500% and BOOK NOW hit.
 
@@ -109,7 +116,7 @@ Highlights only land if most of the ad has none. **Default is White, plain sans,
 |---|---|---|---|
 | Navy | #06284C | the EcomIQ space | card backgrounds, column panels, scrims |
 | White | #FFFFFF | the message | all primary type and subtitles |
-| Blue Tint | #9CD4FF | emphasis (rare) | the 1 serif word, "$20K+", "IN 1 YEAR", lit journey nodes. Nothing else |
+| Blue Tint | #9CD4FF | emphasis (rare) | "$20K+", "IN 1 YEAR", lit journey nodes. Nothing else |
 | Sky Blue | #DEEEFE | structure | eyebrows, node sub-labels (at 80%), spine line, unlit nodes (at 35%), dividers, top radial on cards |
 | Flame Orange | #FF4C32 | **the one thing that matters** | three moments only: LOST → FIX THIS FIRST, "+500%", BOOK NOW. Never two Flame items on screen at once |
 | Black | #000000 | not used | |
@@ -150,51 +157,40 @@ All times are timeline seconds on the trimmed edit (source time minus 0.30s). At
 
 ### SECTION 1 · Audience + problem · 0.00 to 6.96
 
-**SHOT 1 · 0.00 to 4.64 (4.64s)**
+**SHOT 1 · 0.00 to 5.18 (5.18s)**
 - **Dialogue:** "Shopify founders doing $20,000 a month and up, spending on paid ads and…"
 - **Visual type:** Sean with in-frame text build
 - **A-roll treatment:** live, slow push 100 to 104%
 - **Crop:** MED-L · **Sean position:** left third
-- **B-roll:** none
-- **Motion graphic:** right-hand text column, x 600 to 972, builds in three stages:
-  - 0.40: eyebrow "SHOPIFY FOUNDERS" (Sky Blue, 30 px caps, +12%), y 420
-  - 1.60 (on "$20"): **"$20K+ / MONTH"** (Blue Tint, 120 px Bold, -2%; "/ MONTH" at 44 px White), y 470
-  - 3.50 (on "spending"): **"PAID ADS"** (White, 72 px Bold), y 640, with a Sky Blue hairline divider above it
-- **Hero text:** SHOPIFY FOUNDERS · $20K+ / MONTH · PAID ADS
+- **Motion graphic:** right-hand text column, x 600 to 972: 0.40 eyebrow "SHOPIFY FOUNDERS" (Sky Blue, 30 px caps) · 1.60 **"$20K+ / MONTH"** (Blue Tint 120 px, "/ MONTH" White 44 px) · 3.50 **"PAID ADS"** (White 72 px), holds to 5.18 (1.68s)
 - **Subtitles:** rows 1 to 3 (white)
-- **Transition out:** T-RISE into Card A. The eyebrow and $20K+ line morph up into Card A's eyebrow
-- **SFX:** 1.60 soft text tick (-28 dB). 3.50 soft text tick
-- **Why:** Sean opens the ad within 0.32s. The frame then evolves around him, so the viewer self-qualifies ($20K+, paid ads) before the problem lands.
+- **Transition out:** T-RISE into the cartoon card (5.18, on "not")
+- **SFX:** 1.60 and 3.50 soft text ticks (-28 dB)
+- **Why:** Sean opens within 0.32s and the column qualifies the viewer. This column is kept by brief instruction even though it echoes his words.
 
-**SHOT 2 · CARD A · 4.64 to 6.96 (2.32s)**
+**SHOT 2 · CARTOON CARD · 5.18 to 6.96 (1.78s)**
 - **Dialogue:** "…not happy with what comes back."
-- **Visual type:** full-screen branded graphic (first design interruption)
-- **A-roll treatment:** hidden (audio continues)
-- **Motion graphic:** Navy card (top radial plus low Gradient 2 bloom). Eyebrow at y 420: "$20K+/MO · PAID ADS" (Sky Blue, 30 px caps), carried over from Shot 1. Hero at y 520 to 820, centred:
-  - "Not happy" (White, 150 px ExtraBold, -2%)
-  - "with the ***return.***" (White 150 px, with "***return.***" in Hedvig Letters Serif italic, **Blue Tint**)
-  - Lines enter at 4.75 and 4.95 (power3.out). No accent line, no Flame. The serif word is the only emphasis
-- **Hero text:** NOT HAPPY WITH THE *RETURN.*
+- **Visual type:** full-screen navy card with an animated flat illustration. **No words.**
+- **Illustration:** a frowning founder (Sky Blue / Blue Tint, navy features) holding out a stack of bills to a laptop. Six bills fly from his hand into the screen and vanish (staggered 0.2s from 5.45). The line on the laptop sinks as the money goes in (5.50 to 6.70). His brows tilt and mouth turns down at 5.60, with a small head shake at 6.20. Palette: navy, Sky Blue, Blue Tint, White only. No green money, no Flame
 - **Subtitle:** row 4 (white)
-- **Transition:** in T-RISE (4.64). Out T-DROP (6.96, in the pause after "back.")
-- **SFX:** 4.64 soft low "thup" on the card (-24 dB)
-- **Why:** The pain point gets its own full-screen beat and the first of only two serif words in the ad. Four words, 2.3s, one emphasis: readable at a glance.
+- **Transition:** in T-RISE (5.18). Out straight cut to Shot 3 (6.96, in the pause after "back.")
+- **SFX:** soft paper flicks on the bills (-32 dB), no cash-register sounds
+- **Why:** it shows the problem instead of repeating it: money goes in, the return goes down. Replaced the v4 type card "Not happy with the return.", which only repeated Sean.
 
 ### SECTION 2 · What we'd change first · 6.96 to 11.20
 
 **SHOT 3 · 6.96 to 11.20 (4.24s)**
 - **Dialogue:** "We'll show you what we'd change first, live on a free call."
-- **Visual type:** Sean with in-frame phrase, two beats in one composition
+- **Visual type:** Sean with a small navy card on his jacket, two beats in one card. **No words on the card** (the v4 text "What we'd change first." and its blue fade were removed: they only repeated Sean)
 - **A-roll treatment:** live, slow push 100 to 103%
-- **Crop:** TIGHT (tighter than Shot 1, as briefed) · **Sean position:** centre
-- **Motion graphic:** lower hero band, y 880 to 1120, x 108 to 972, centred, over a navy gradient scrim rising from y 820 (0% to 70%) so the type sits cleanly on his jacket:
-  - Beat 1 at 7.76 (on "what"): **"What we'd / change first."** White, 96 px Bold, -2%, two lines. No highlight
-  - Beat 2 at 9.60 (on "live"): beat 1 lifts 90 px and dims to 35% (a 0.4s tween). **"Live, on a / free call."** enters below, White 96 px. No highlight. Size and position do the work
-- **Hero text:** WHAT WE'D CHANGE FIRST. → LIVE, ON A FREE CALL.
+- **Crop:** TIGHT · **Sean position:** centre, face clear of the card
+- **Motion graphic:** solid navy card, 760 × 330, at x 160, y 1180 (on the jacket, above the subtitles), 28 px radius, hairline border. No fade or scrim:
+  - Beat 1 at 7.76: three ranked rows "01 / 02 / 03" with blank bars. At 8.50 row 01 lights Blue Tint with a check, 02 and 03 dim. It shows a prioritised list where one thing is fixed first
+  - Beat 2 at 9.60: the rows lift away and the card becomes a video-call window: two person tiles, a camera icon and a pulsing Blue Tint dot. It shows a live call without saying it
 - **Subtitles:** rows 5 to 6 (white)
-- **Transition:** in T-DROP from Card A. Out T-RISE (11.20, in the pause after "call.")
-- **SFX:** 7.76 text tick. 9.60 soft tick
-- **Why:** This is the promise, so Sean stays on screen and delivers it, closer than before (pseudo multi-cam). The two beats get 1.84s and 1.60s, and the first stays visible at 35%.
+- **Transition:** in straight cut from the cartoon (6.96). Out T-RISE (11.20)
+- **SFX:** 8.50 soft click on the check
+- **Why:** it adds what the words can't: a ranked fix list and a live call, in a glance.
 
 ### SECTION 3 · Cost to win a customer · 11.20 to 14.14
 
@@ -202,10 +198,10 @@ All times are timeline seconds on the trimmed edit (source time minus 0.30s). At
 - **Dialogue:** "First, what it costs you to win a customer,"
 - **Visual type:** full-screen explainer (first appearance of the journey spine)
 - **Motion graphic:** Navy card.
-  - Headline at y 330 to 560: **"What it costs / to win a customer."** (White, 84 px Bold, -2%, no highlight), entering at 11.30
+  - No headline (v6). The spine sits at y 560 to 1040 with SPEND lit
   - Journey spine below at y 640 to 1110: 4 nodes on a vertical Sky Blue line (see Part 3). The line draws top to bottom from 11.50 to 12.10. Nodes appear as unlabelled Sky Blue 35% dots
   - At 12.26 (on "costs"): node 1 lights Blue Tint. Label **"SPEND"** (White, 44 px caps) and sub-label **"Cost per customer · CAC"** (Sky Blue 80%, 30 px)
-- **Hero text:** WHAT IT COSTS TO WIN A CUSTOMER. · SPEND · Cost per customer · CAC
+- **Hero text:** SPEND · Cost per customer · CAC
 - **Subtitle:** row 7 (white)
 - **Transition:** in T-RISE. Out T-MORPH (14.14): the card shrinks into the left column as Sean slides in
 - **SFX:** 12.26 soft click as SPEND lights. Gentle 0.6s rising "line" tone as the spine draws (-30 dB)
@@ -233,13 +229,13 @@ All times are timeline seconds on the trimmed edit (source time minus 0.30s). At
 - **Visual type:** split composition, punched in. The spine animates inside the frame
 - **A-roll treatment:** live, no push (the crop change is the move)
 - **Crop:** MED-R (punch-in from WIDE-R, which reads as a second camera) · **Sean position:** right
-- **Motion graphic:** same left column. Column headline at y 330: **"Follow the click."** (White, 56 px Bold, -2%), entering at 16.84.
+- **Motion graphic:** same left column. No column headline (v6).
   - 17.30 (on "click"): a 22 px White **dot** appears on CLICK and travels down the line
   - 18.22 (on "store"): the dot reaches node 3, which lights Blue Tint. Label **"STORE"** and sub-label **"After the click"**
   - 19.18 to 19.78: the dot continues toward node 4
   - 19.78 (on "lost"): the dot slips sideways off the line and fades (0.5s). Node 4 turns **Flame**. Label **"LOST"** (Flame) and sub-label **"Where sales leak"**
   - Static hold from 20.30 to 21.30
-- **Hero text:** FOLLOW THE CLICK. · STORE · LOST
+- **Hero text:** STORE · LOST
 - **Subtitles:** rows 9 to 10 (white)
 - **Transition:** in T-SHIFT (16.44). Out T-BLUR (21.30, in the 0.98s pause before "Specialists")
 - **SFX:** 17.30 to 18.22 a very light "travel" whoosh under the dot (-32 dB). 18.22 soft click. 19.78 a short, low, muted drop tone (not an alarm, -26 dB)
@@ -289,10 +285,10 @@ All times are timeline seconds on the trimmed edit (source time minus 0.30s). At
 - **Visual type:** split composition, spine callback
 - **A-roll treatment:** live, slow push 100 to 103%
 - **Crop:** MED-R · **Sean position:** right
-- **Motion graphic:** the left column returns with the full spine already in its Section 5 end state (SPEND, CLICK, STORE lit). Column headline **"What to fix first."** (White, 56 px Bold, -2%, no highlight. The Flame pill is the emphasis), entering at 29.30.
+- **Motion graphic:** the left column returns with the full spine already in its Section 5 end state (SPEND, CLICK, STORE lit). No column headline (v6).
   - 30.08 (on "what"): node 4 (LOST) cools to Sky Blue 35% (the Flame moves). Node 3 (STORE) gains a Flame ring, and a **Flame pill "FIX THIS FIRST"** (White text, 34 px Bold caps, soft Flame glow) slides out from STORE toward the column's right edge
   - Static hold from 30.50 to 32.02
-- **Hero text:** WHAT TO FIX FIRST. · FIX THIS FIRST
+- **Hero text:** FIX THIS FIRST
 - **Subtitle:** row 15 (white. The graphic already carries "fix first" in Flame, so the subtitle stays plain)
 - **Transition:** in T-BLUR. Out T-SHIFT (32.02, in the pause after "first.")
 - **SFX:** 30.08 soft decisive click (the "identified" sound)
@@ -346,7 +342,6 @@ All times are timeline seconds on the trimmed edit (source time minus 0.30s). At
 
 ```
  0.00 ┃ SEAN · MED-L ─────────── text builds beside him ($20K+ / PAID ADS)
- 4.64 ┃   ▲ CARD A · navy · "Not happy with the return."           ← design interruption
  6.96 ┃ SEAN · TIGHT ─────────── lower-band phrase, two beats         ← crop change (closer)
 11.20 ┃   ▲ CARD B · navy · spine is born · SPEND                    ← full-screen explainer
 14.14 ┃ SPLIT · spine left │ SEAN WIDE-R ── CLICK                    ← card morphs into column
@@ -362,7 +357,7 @@ All times are timeline seconds on the trimmed edit (source time minus 0.30s). At
 ```
 
 **Why this is not a talking-head-plus-B-roll cut:**
-- **Sean is on screen for 29.2s of 40.7s (72%)**: 25.8s of A-roll plus 3.4s of him in B-roll. The longest stretch without his face is the 4.46s Mob Armor proof, and his voice carries it.
+- **Sean is on screen for 31.5s of 40.7s (77%)**: 28.1s of A-roll plus 3.4s of him in B-roll. The longest stretch without his face is the 4.46s Mob Armor proof, and his voice carries it.
 - **The same take produces six "cameras"** (WIDE, MED, TIGHT, MED-L, WIDE-R, MED-R). Every change lands on a breath, so it reads as multi-cam, not jump cuts.
 - **One graphic system evolves across four appearances** (Card B, Split A, Split B, Split C) instead of four separate cards. It morphs between full screen and the column. It is never cut away and redrawn.
 - **Only 2 general B-roll shots, plus 1 client proof shot.** Each one has a specific job.
@@ -399,7 +394,7 @@ All times are timeline seconds on the trimmed edit (source time minus 0.30s). At
 | 2 · CLICK | "CLICK" / "Ads + offers" | 14.52 (Split A) | Blue Tint | node lights, labels rise in | 1.92s in Split A, persists through Split B | Crop punch-in on Sean (T-SHIFT). The column stays identical, so the eye stays anchored |
 | 3 · STORE | "STORE" / "After the click" | 18.22 (Split B) | Blue Tint | the White dot travels CLICK → STORE (0.92s, power1.inOut), node lights on arrival | 3.08s until 21.30 | dot continues to LOST |
 | 4 · LOST | "LOST" / "Where sales leak" | 19.78 (Split B) | **Flame** | the dot slides 60 px right off the line and fades (0.5s). Node fills Flame | 1.52s, of which 1.0s is a static hold | blur to proof. On return (Split C) LOST cools to 35% |
-| 5 · FIX FIRST | Pill: "FIX THIS FIRST" on STORE · headline "What to fix first." | 30.08 (Split C) | **Flame** pill, White text | the Flame ring draws round STORE (0.3s), the pill slides out 40 px (0.40s, power3.out) | 1.94s, static from 30.50 | T-SHIFT to Sean wide |
+| 5 · FIX FIRST | Pill: "FIX THIS FIRST" on STORE | 30.08 (Split C) | **Flame** pill, White text | the Flame ring draws round STORE (0.3s), the pill slides out 40 px (0.40s, power3.out) | 1.94s, static from 30.50 | T-SHIFT to Sean wide |
 
 **Rules.** There is only ever one Flame element on screen. The spine is never shown with more than one new change at a time. Every change holds at least 1.4s before the next.
 
@@ -469,15 +464,15 @@ Keep the A-roll at 4K through the build. The crops need the 4K pixels.
 | Check | Result |
 |---|---|
 | Any shot under 1.0s | **None.** Shortest: Shot 7 at 1.54s |
-| Any text or graphic visible under 1.5s | **None below 1.4s.** Two short labels sit at the edge and are accepted, because they are single words carried by a persistent graphic: "LOST" at 1.52s (it lives on as a dimmed node in Split C) and "PAID ADS" at 1.14s in Shot 1, which **is carried into Card A's eyebrow for another 2.32s, so 3.46s total** |
+| Any text or graphic visible under 1.5s | **None below 1.4s.** Two short labels sit at the edge and are accepted, because they are single words carried by a persistent graphic: "LOST" at 1.52s (it lives on as a dimmed node in Split C) and "PAID ADS", which now holds for 3.46s in Shot 1 (no longer an edge case) |
 | Too many cuts in a short window | The busiest window is 21.30 to 29.14 (3 shots in 7.84s, an average of 2.6s each). This is within the 2 to 4s guideline. Every change lands on a word ("like", "gonna") and is softened by a blur dissolve |
 | Text that may be hard to read | Smallest critical text: 28 px sub-labels in the column (about 9 pt on a phone). All are 3 words or fewer, high contrast on navy, and now shortened to fit 320 px ("CAC", "After the click", "Where sales leak"). The footnote (22 px) is deliberately non-critical |
 | Anything that may feel like a flash | None. No card is under 2.3s and no graphic change is closer than 0.9s to the previous one |
 | Head trim effect | The trim shortens only Shot 1 (4.94s to 4.64s). Its three text stages still get 4.24s, 3.04s and 1.14s (+2.32s carried). Nothing else changes length |
 
 **Revisions made during the audit (v1 → v2):**
-1. **Card A was 4.88 to 6.96 (2.08s).** Start moved to 4.64 (on "and") for **2.32s**. Four words now get a comfortable read.
-2. **"PAID ADS" originally entered 0.58s before the card.** Moved it to 3.50 ("spending") and carried it into Card A's eyebrow, for 3.46s total.
+1. **v5: Card A removed.** It repeated Sean's line. Shot 1 now holds Sean for 6.96s.
+2. **"PAID ADS" enters at 3.50 ("spending")** and holds to 6.96, for 3.46s.
 3. **The Section 5 journey was a separate full-screen card** that took Sean off screen for 12.7s in a row. It is now a split beside Sean, which keeps the spine readable and brings back the A-roll anchor.
 4. **Section 7 split screen (Sean plus laptop B-roll) dropped.** At 1.84s, two half-frames would have been a flash. It is now one full-bleed shot.
 5. **The +500% stat originally cut away at 26.86** ("year" ends there, 0.3s after the full build). Extended to **27.30**, giving a 1.12s still hold and 3.12s with the number on screen.
@@ -536,8 +531,8 @@ Each row stays up until the next row starts (gaps under 0.7s are bridged), so th
 
 | # | TIMESTAMP | DIALOGUE | VISUAL | DUR | B-ROLL | GRAPHIC | HERO TEXT | SUB HIGHLIGHT | EDIT |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | 0.00 to 4.64 | Shopify founders doing $20,000 a month and up, spending on paid ads and | Sean MED-L, push 100 to 104% | 4.64 | none | right-column text build | SHOPIFY FOUNDERS · $20K+ / MONTH · PAID ADS | none | A-roll in at source 0:00.30. Text at 0.40 / 1.60 / 3.50 |
-| 2 | 4.64 to 6.96 | not happy with what comes back. | Card A, navy | 2.32 | none | headline | NOT HAPPY WITH THE *RETURN.* (the only serif word) | none | T-RISE in, T-DROP out |
+| 1 | 0.00 to 6.96 | Shopify founders doing $20,000 a month and up, spending on paid ads and not happy with what comes back. | Sean MED-L, push 100 to 104% | 6.96 | none | right-column text build | SHOPIFY FOUNDERS · $20K+ / MONTH · PAID ADS | none | A-roll in at source 0:00.30. Text at 0.40 / 1.60 / 3.50 |
+| 2 | (removed v5) | | | | | | | | |
 | 3 | 6.96 to 11.20 | We'll show you what we'd change first, live on a free call. | Sean TIGHT, push 100 to 103% | 4.24 | none | lower-band phrase, two beats | WHAT WE'D CHANGE FIRST. → LIVE, ON A FREE CALL. | none | beat 2 at 9.60 |
 | 4 | 11.20 to 14.14 | First, what it costs you to win a customer, | Card B, navy | 2.94 | none | spine born, SPEND lit | WHAT IT COSTS TO WIN A CUSTOMER. · SPEND · CAC | none | T-RISE in, T-MORPH out |
 | 5 | 14.14 to 16.44 | then your ads and your offers. | Split: spine column + Sean WIDE-R | 2.30 | none | CLICK lights | CLICK · Ads + offers | none | T-MORPH in |
@@ -558,11 +553,11 @@ Each row stays up until the next row starts (gaps under 0.7s are bridged), so th
 
 | # | Question | Answer |
 |---|---|---|
-| 1 | Matches the style reference? | **Yes.** It is aligned to `my-meta-ad/DESIGN.md` and the EcomIQ recipe: the italic-serif Blue Tint signature (used once), Flame as the only hot accent, navy cards with a top radial and a low Gradient 2 bloom, -2% tracking, 108 px margins, power3.out type, a back.out CTA with glow and pulse, and blur dissolves instead of hard cuts between scenes. It also keeps the brief's grammar: long A-roll holds, crop changes and purposeful full-screen interruptions |
+| 1 | Matches the style reference? | **Yes.** It is aligned to `my-meta-ad/DESIGN.md` and the EcomIQ recipe: Flame as the only hot accent, navy cards with a top radial and a low Gradient 2 bloom, -2% tracking, 108 px margins, power3.out type, a back.out CTA with glow and pulse, and blur dissolves instead of hard cuts between scenes. It also keeps the brief's grammar: long A-roll holds, crop changes and purposeful full-screen interruptions |
 | 2 | Sean stays on screen longer? | **Yes.** 72% of runtime, and the longest gap without his face is the 4.46s Mob Armor proof |
 | 3 | Frame evolving rather than cutting? | **Yes.** 6 crops from one take, one graphic that morphs, two splits that punch in |
 | 4 | Clearly for Shopify founders on paid ads? | **Yes.** SHOPIFY FOUNDERS · $20K+ / MONTH · PAID ADS appears within 3.5s |
-| 5 | "Not happy with what comes back" clear? | **Yes.** It gets its own full-screen card |
+| 5 | "Not happy with what comes back" clear? | **Yes.** Sean says it on screen, with the subtitle, while the $20K+ / PAID ADS column frames who it is for |
 | 6 | "What we'd change first" strong? | **Yes.** In-frame hero on a tighter crop, then the free call |
 | 7 | CAC understandable? | **Yes.** "What it *costs* to win a customer" with "Cost per customer · CAC" |
 | 8 | Ads / offers / click-through-store clear? | **Yes.** CLICK = ads + offers, then the dot visibly travels into STORE |
@@ -575,7 +570,7 @@ Each row stays up until the next row starts (gaps under 0.7s are bridged), so th
 | 15 | Normal bottom subtitles? | **Yes.** Bottom of frame, fixed position, bottom edge y 1670 |
 | 16 | White dominant? | **Yes.** 16 of 18 rows fully White |
 | 16b | Brand names spelled correctly in subtitles? | **Yes.** Shopify, Mob Armor, Book Now and EcomIQ are locked spellings (Part 7). Subtitles are typed from the plan, never auto-cased |
-| 17 | Blue Tint, Flame and italics sparing? | **Yes.** Fixed budget: 1 serif word, 2 Blue Tint words, 3 Flame moments, 2 subtitle highlights. 12.8s of plain White before the first Flame |
+| 17 | Blue Tint, Flame and italics sparing? | **Yes.** Fixed budget: no serif words, 2 Blue Tint words, 3 Flame moments, 2 subtitle highlights. 12.8s of plain White before the first Flame |
 | 18 | No graphics too fast to read? | **Yes.** Every text element gets at least 1.4s, and most get 2 to 5s |
 | 19 | No flash cuts? | **Yes.** Shortest shot is 1.54s, every change lands on a pause, and B-roll changes are blur dissolves |
 | 20 | Every shot earns its place? | **Yes.** 13 shots, 3 B-roll, each with a stated job |
