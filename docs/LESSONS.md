@@ -72,6 +72,15 @@ efficient over time instead of relearning the same lessons.
   with the speaker, and check for the clip's own camera cuts with
   `select='gt(scene,0.15)',showinfo` before choosing an in-point.
 
+- **"The video looks degraded."** Draft renders are CRF 28 and visibly soft; never hand one over as
+  the deliverable. Masters: near-lossless intermediate plate (`-crf 8 -preset slow`), then
+  `hyperframes render --quality delivery --crf 12 --video-frame-format png` (the default `auto`
+  can pull video frames as JPEG). Result for a 35s 1080x1920 ad: ~19 Mbps H.264 High, ~80MB.
+- **Removing markup with a non-greedy regex deleted the wrong elements.** A pattern ending in
+  `</div>\n      </div>\n\n` ran past the target block and silently removed two later cards; their
+  tweens kept running against nothing (no lint error). **Fix:** after any bulk removal, diff element
+  ids against the last good commit and assert every `'#id'` the timeline targets still exists.
+
 ## Editing technique (talking-head cutdowns)
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +

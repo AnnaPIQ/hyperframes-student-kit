@@ -20,7 +20,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 W="${1:?workdir with masters}"; O="$W/plate-build"; mkdir -p "$O" assets/media
 A="$W/aroll.mov"
-V="fps=25,format=yuv420p"; X="-c:v libx264 -preset medium -crf 14 -r 25 -an"
+V="fps=25,format=yuv420p"; X="-c:v libx264 -preset slow -crf 8 -r 25 -an"   # near-lossless intermediate: the master is encoded once more by the renderer
 
 # A-roll: ProRes 3840x2160 25fps, Sean's face centred at source x~1920.
 # WIDE-L puts Sean left of centre (face ~x 370 of 1080) and leaves the right column for cards.
