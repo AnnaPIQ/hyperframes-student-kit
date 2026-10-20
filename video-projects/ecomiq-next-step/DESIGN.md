@@ -28,7 +28,8 @@ data but no one who understands the whole business to help them pick the next st
 
 - End card: navy radial glow (grain-dithered against banding), white logo, headline
   "Turn good information into" (Rethink 700), accent "the right plan" (Hedvig serif
-  italic, Blue Tint), flame pill "Link Below".
+  upright, Blue Tint), flame pill "Link Below". Extra air above the headline and
+  above the pill.
 
 ## Sources
 - A-roll: `Untitled 2.mov` (4K ProRes 25fps), 9:16 crop x=1352, src 0:00.48-0:57.10.
