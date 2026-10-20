@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "historyId": "d4746fca-19ee-414d-87e4-8afc8082c5ae",
+  "currentRevision": "a553b573-df4d-4192-a390-3c6837c14321",
+  "pendingChanges": false,
+  "files": {
+    "DESIGN.md": {
+      "hash": "24b8f10fea6b6947f4a7b019b8d637386836365ca468a89273d7db79ada718ef",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/24/24b8f10fea6b6947f4a7b019b8d637386836365ca468a89273d7db79ada718ef"
+    },
+    "assets/brand-tokens.css": {
+      "hash": "79bd8d7d622c7809d10eae134c9f3af30c3936ff3484eb7177940879cff36fda",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/79/79bd8d7d622c7809d10eae134c9f3af30c3936ff3484eb7177940879cff36fda"
+    },
+    "assets/ecomiq-icon-navy.png": {
+      "hash": "a7c4673292c2f653909dfbdb4233f0a8d4ad9c314e229bc0ac423ab229e942cc",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/a7/a7c4673292c2f653909dfbdb4233f0a8d4ad9c314e229bc0ac423ab229e942cc"
+    },
+    "assets/ecomiq-icon-white.svg": {
+      "hash": "9dd51463e0702a75d480ee5669788a17cf7de2fe1f3834385a3bc67fb59ad84f",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/9d/9dd51463e0702a75d480ee5669788a17cf7de2fe1f3834385a3bc67fb59ad84f"
+    },
+    "assets/ecomiq-logo-navy.png": {
+      "hash": "b7c875d149514e7f115f486e30639c938f7413ef6529897d16e4d39d9496dc70",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/b7/b7c875d149514e7f115f486e30639c938f7413ef6529897d16e4d39d9496dc70"
+    },
+    "assets/ecomiq-logo-navy.svg": {
+      "hash": "4e3bd0d2c60bb6b0985cd775b9bc44a1c3c3d9d48891a2187d528148a3b72795",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/4e/4e3bd0d2c60bb6b0985cd775b9bc44a1c3c3d9d48891a2187d528148a3b72795"
+    },
+    "assets/ecomiq-logo-white.png": {
+      "hash": "b9ab91985c10f1c02862a85ecc279912de5ca7c0afc1626602c9f69b3311b8a4",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/b9/b9ab91985c10f1c02862a85ecc279912de5ca7c0afc1626602c9f69b3311b8a4"
+    },
+    "assets/ecomiq-logo-white.svg": {
+      "hash": "492c6982bd226cac1264dceba89ee16232ed852807743cfc49c4d723e4314433",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/49/492c6982bd226cac1264dceba89ee16232ed852807743cfc49c4d723e4314433"
+    },
+    "assets/fonts/HedvigLettersSerif.woff2": {
+      "hash": "cfe23998d5e9b1c9924e3154c7f96d5f72570be05e3528a0133e375390643475",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/cf/cfe23998d5e9b1c9924e3154c7f96d5f72570be05e3528a0133e375390643475"
+    },
+    "assets/fonts/RethinkSans.woff2": {
+      "hash": "c09b45b96be12831873317869fce88361278ba47a9bfc18d5c14bfe6f8a85f01",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/c0/c09b45b96be12831873317869fce88361278ba47a9bfc18d5c14bfe6f8a85f01"
+    },
+    "assets/vendor/gsap.min.js": {
+      "hash": "c174bfce53a729418d57a8ad8625e7247c793a22fef8e2851e3cfa3de9cd8280",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/c1/c174bfce53a729418d57a8ad8625e7247c793a22fef8e2851e3cfa3de9cd8280"
+    },
+    "hyperframes.json": {
+      "hash": "e228c682ac2556ff697095ff857295543ca3a54caa8086d6ee3703f2f1ac2120",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/e2/e228c682ac2556ff697095ff857295543ca3a54caa8086d6ee3703f2f1ac2120"
+    },
+    "index.html": {
+      "hash": "4551a773b47c34e05bcd81cfff59ea60922cc768ae98eaf62fcd9a2c5bbabb4a",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/45/4551a773b47c34e05bcd81cfff59ea60922cc768ae98eaf62fcd9a2c5bbabb4a"
+    },
+    "meta.json": {
+      "hash": "d884f6b3b70037ccde017a2c7f3d6fec75cfafd338e4b51079573f3baccc1a3a",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/d8/d884f6b3b70037ccde017a2c7f3d6fec75cfafd338e4b51079573f3baccc1a3a"
+    },
+    "assets/aroll-916.mp4": {
+      "hash": "8318a7cb86ecbb9678fbaf1dbf3dcf665ebbaa65179869c4a36e2d9f6ab83802",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/83/8318a7cb86ecbb9678fbaf1dbf3dcf665ebbaa65179869c4a36e2d9f6ab83802"
+    },
+    "assets/broll-founders-conversation.mp4": {
+      "hash": "c3ef102fed3c75cf43262286eec68511718c0322dbc1b1f2afc052acf60be70d",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/c3/c3ef102fed3c75cf43262286eec68511718c0322dbc1b1f2afc052acf60be70d"
+    },
+    "assets/broll-shoptalk-stage.mp4": {
+      "hash": "032e8da0545afc7437f05cf0108bdcb9385fa7d72593e0286b0b4f6d29677c40",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/03/032e8da0545afc7437f05cf0108bdcb9385fa7d72593e0286b0b4f6d29677c40"
+    },
+    "assets/broll-strategist-laptop.mp4": {
+      "hash": "036394c51ad3cc99a2724581f1a2a0d7bf9ca5e41320ed06a19fc19ad0a102d2",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/03/036394c51ad3cc99a2724581f1a2a0d7bf9ca5e41320ed06a19fc19ad0a102d2"
+    },
+    "assets/dialogue.m4a": {
+      "hash": "cb3960c2bf3ff953d6ecebadc5eb403603648ddd614ce92a653a6dca9887123d",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/cb/cb3960c2bf3ff953d6ecebadc5eb403603648ddd614ce92a653a6dca9887123d"
+    }
+  },
+  "revisions": {
+    "634b0034-c799-4f75-9658-ce4dbbf6d731": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792535765686,
+      "endedAt": 1792535765687,
+      "files": {
+        "index.html": {
+          "before": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/ed/edb4cf8c91638996f62a18391eca497f53f23d964747e49279106a015fafd989",
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/c7/c73ac95537a66542814e4d7d35afe534dfd9f4a7d224b9f405f20b7bbf988f70"
+        }
+      }
+    },
+    "f0008791-7626-4bd8-bfe7-f3f55da8e48d": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792535967052,
+      "endedAt": 1792535967053,
+      "files": {
+        "index.html": {
+          "before": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/c7/c73ac95537a66542814e4d7d35afe534dfd9f4a7d224b9f405f20b7bbf988f70",
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/85/85ea8404ae1eac3d16825a73629eb17e181bdaac46e086948339c41aa70ef0f2"
+        }
+      }
+    },
+    "a553b573-df4d-4192-a390-3c6837c14321": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792536193083,
+      "endedAt": 1792536193084,
+      "files": {
+        "index.html": {
+          "before": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/85/85ea8404ae1eac3d16825a73629eb17e181bdaac46e086948339c41aa70ef0f2",
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/45/4551a773b47c34e05bcd81cfff59ea60922cc768ae98eaf62fcd9a2c5bbabb4a"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "1f687921-3338-4702-9822-40acd498a0ce",
+      "completedAt": 1792536467644,
+      "output": "/home/user/hyperframes-student-kit/video-projects/ecomiq-next-step/renders/final.mp4",
+      "status": "completed",
+      "revision": "a553b573-df4d-4192-a390-3c6837c14321"
+    },
+    "retainedRevisions": [
+      "a553b573-df4d-4192-a390-3c6837c14321",
+      "f0008791-7626-4bd8-bfe7-f3f55da8e48d"
+    ]
+  },
+  "pendingArtifactCleanup": []
+}
