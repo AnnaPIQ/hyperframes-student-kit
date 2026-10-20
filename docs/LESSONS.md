@@ -54,6 +54,16 @@ efficient over time instead of relearning the same lessons.
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +
   placing motion-graphic overlays over the join make cutdowns feel seamless.
+- **4K 16:9 talking head → 9:16: the full-height window is already a medium close-up.**
+  120 %+ crops push hair into a top-left logo and chin into subtitles. Top-anchor the
+  crop window (y = 0) and cap at ~114 %; cropping in then removes foreground clutter
+  (mic) from the bottom instead of eating headroom. Face-track first (OpenCV Haar at
+  1 fps) to find one fixed x-anchor.
+- **Drive "Quota exceeded" on anonymous `drive.usercontent` downloads** → that file can't
+  be fetched until the quota resets (~24 h); the Drive connector still gives metadata
+  (real filename, size). Check filenames: sheet labels can point at the wrong clip.
+- **faster-whisper `av.open(... metadata_errors)` TypeError** → `av` version clash; pass a
+  float32 numpy array (read the 16 kHz WAV with `wave`) instead of a file path.
 
 ## Delivery & resolution
 
