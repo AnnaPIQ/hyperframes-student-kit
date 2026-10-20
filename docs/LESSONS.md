@@ -65,6 +65,16 @@ efficient over time instead of relearning the same lessons.
 - **faster-whisper `av.open(... metadata_errors)` TypeError** → `av` version clash; pass a
   float32 numpy array (read the 16 kHz WAV with `wave`) instead of a file path.
 
+- **Phone/cinema B-roll stored sideways with no rotation flag** → frames come out rotated
+  even with autorotate. Check one frame first; `transpose=1` (90° CW) makes it native 9:16.
+- **Drive quota exceeded on a file you still need** → `copy_file` it via the Drive connector
+  into the same (link-shared) folder; the copy has a fresh quota and inherits the share.
+  Download, then `trash_file` the copy. ffmpeg can `-ss` straight into a Drive URL to pull
+  one window of a huge file (`-c copy`).
+- **Playwright fonts from `file://` fail on `setContent` (about:blank)** → write the HTML to
+  disk and `page.goto('file://…')`. In this container pass
+  `executablePath: '/opt/pw-browsers/chromium'` (bundled headless-shell build is missing).
+
 ## Delivery & resolution
 
 - **There is no 4:5 render "preset."** Ship the final via `--quality high` at the

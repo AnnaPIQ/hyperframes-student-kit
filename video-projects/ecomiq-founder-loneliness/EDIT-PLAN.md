@@ -2,6 +2,7 @@
 
 **Format:** 1080 × 1920, 25 fps (A-roll native), organic Reels / TikTok / Shorts
 **Runtime:** 58.90 s (A-roll source 00:00.40 → 00:59.30)
+**Built:** `final.mp4` (61.88 s = 58.88 s cut + 3.0 s end card), rebuild with `python3 scripts/build.py --aroll <heatmap-3.mov> --src <broll-dir>`. See **§9 As built** for what changed from this plan.
 **Companion files:** `subtitles-en-US.srt` (US spelling, timed to program TC), `reference/` (logo + subtitle placement frames)
 
 ---
@@ -151,3 +152,17 @@ Measured clearances at y = 1410: ~60 px below his chin at 114 %, ~50 px above th
 - [ ] Subtitles: US spelling, no animation, legible over the white shirt and every B-roll
 - [ ] No end card, CTA, motion graphic, animated text, cut-out or background change
 - [ ] Ends on Sean, eye contact, clean cut at 0:58.90 (prog)
+
+---
+
+## 9. As built (v1): changes from the plan above
+
+| Change | Why |
+| --- | --- |
+| **End card added** (3.0 s, static, hard cut in after Sean's 0.9 s hold): navy radial background, white EcomIQ lockup, "You don't have to decide alone", *Talk to us* (Hedvig serif, light blue), flame "Link Below" pill. Source: `end-card.html` → `assets/end-card.png`. Corner logo is off on the card (the card carries the logo). | Requested after the plan, modelled on the reference card from another EcomIQ video. |
+| **Shot 7 Shoptalk:** uses the close-up at **0:14.45 → 0:17.27**, not 6:02. Crop follows Sean as the camera tracks him. | At 6:02 (and in every wide) Rebuy's stats ("59x average ROI…") fill the screen behind him. That would read as an EcomIQ claim. The close-up shows his own title slide and Shoptalk lanyard instead. |
+| **Shot 8:** *Walking around Klaviyo booths* **0:04.40 → 0:07.48**, not *Klaviyo Event space*. | The event-space file is only 7.9 s long (the 0:07 to 0:11 window doesn't exist) and is mostly an empty bar. The booths window is a busy event crowd. 0:00 to 0:04 shows Triple Whale and TikTok booths, so I avoided it. |
+| **B-roll rotation:** Angle-over-laptop, Holding-laptop, Mason-and-2-women and Laughing clips are stored sideways (no rotation flag). They're rotated 90° clockwise, which makes them native 9:16 4K with no crop. | Footage fact. |
+| **Logo variant per shot:** navy on A-roll, angle, women, laugh. White on holding-laptop and booths. White with a soft navy shadow on Shoptalk (its top-left goes dark → white screen → on-screen text). | Kept legible on every background at identical size and position. |
+| **Known compromise:** ~1.2 s in shot 7 where the corner logo sits beside the projected "Sean Clarke / PacificIQ" title. | A tighter crop to clear it cuts off the top of Sean's head. Swap option: extend shot 6 (holding laptop) to cover 0:29.6 to 0:35.4 if this bothers you. |
+| **Audio:** two-pass loudnorm to −14 LUFS integrated (measured −14.4, peak −1.0 dBFS), 30 to 40 ms fades at the head and tail, silence under the end card. | Delivery spec. |
