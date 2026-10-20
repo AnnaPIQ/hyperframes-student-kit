@@ -11,6 +11,8 @@
       /* LOCAL font — no network dependency at render time */
       @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
         font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      @font-face { font-family: 'Hedvig Letters Serif'; font-style: normal; font-weight: 400;
+        font-display: block; src: url(assets/fonts/HedvigLettersSerif.woff2) format('woff2'); }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000;
         font-family: 'Rethink Sans', system-ui, sans-serif; }
@@ -33,22 +35,41 @@
       #logo-white { position: absolute; top: 0; left: 0; opacity: 0;
         filter: drop-shadow(0 1px 4px rgba(6,40,76,.6)); }
 
-      /* Subtitles: bottom-centre, white, navy stroke for the white T-shirt behind */
-      #caps { position: absolute; left: 0; right: 0; top: 1180px; height: 270px; z-index: 4; }
+      /* Subtitles: standard bottom position (last line ends ~190px above frame edge), white, navy stroke */
+      #caps { position: absolute; left: 0; right: 0; top: 1460px; height: 270px; z-index: 4; }
       .cap { position: absolute; inset: 0; display: flex; align-items: flex-end;
         justify-content: center; }
       .cap span.t { display: block; max-width: 880px; text-align: center; text-wrap: balance;
-        font-weight: 650; font-size: 62px; line-height: 1.18; letter-spacing: -0.005em;
+        font-weight: 620; font-size: 62px; line-height: 1.2; letter-spacing: 0;
         color: #FFFFFF;
-        text-shadow:
-          0 0 2px rgba(6,40,76,.95), 0 0 4px rgba(6,40,76,.9), 0 2px 5px rgba(6,40,76,.85),
-          0 0 14px rgba(6,40,76,.6), 0 6px 18px rgba(0,0,0,.35); }
+        /* crisp outline (no blurred glow): stroke painted under the fill */
+        -webkit-text-stroke: 6px #06284C; paint-order: stroke fill;
+        text-shadow: 0 2px 2px rgba(6,40,76,.7); }
       .hl-flame { color: #FF4C32; }
       .hl-blue { color: #9CD4FF; }
+
+      /* End card: matches the EcomIQ end-card template (navy glow, logo, headline,
+         serif-italic accent line, flame pill). Static; dissolves in after the last word. */
+      #endcard { position: absolute; inset: 0; z-index: 10; opacity: 0; overflow: hidden;
+        background: radial-gradient(70% 45% at 50% 46%, #0f4275 0%, #0a3561 38%, #06284C 75%); }
+      /* fine static grain dithers the gradient so H.264 doesn't band it */
+      #endcard .ec-grain { position: absolute; inset: 0; opacity: .07; mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='7'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+      #endcard .ec-content { position: relative; width: 100%; height: 100%; display: flex;
+        flex-direction: column; align-items: center; justify-content: center;
+        padding: 0 110px 120px; box-sizing: border-box; text-align: center; color: #FFFFFF; }
+      #endcard img { width: 430px; height: auto; display: block; margin-bottom: 44px; }
+      #endcard .ec-line { font-weight: 700; font-size: 64px; line-height: 1.12;
+        letter-spacing: -0.02em; max-width: 640px; text-wrap: balance; }
+      #endcard .ec-accent { font-family: 'Hedvig Letters Serif', serif; font-style: italic;
+        font-weight: 400; font-size: 82px; line-height: 1.1; color: #9CD4FF; margin-top: 14px; }
+      #endcard .ec-cta { margin-top: 64px; font-weight: 700; font-size: 40px; color: #FFFFFF;
+        background: #FF4C32; padding: 28px 60px; border-radius: 999px;
+        box-shadow: 0 18px 60px -12px rgba(255,76,50,.65); }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="ecomiq-next-step" data-start="0" data-duration="56.62"
+    <div id="root" data-composition-id="ecomiq-next-step" data-start="0" data-duration="59.6"
       data-width="1080" data-height="1920">
 
       <!-- A-ROLL (source 0:00.48–0:57.10, 9:16 crop from 4K) -->
@@ -100,7 +121,18 @@
         <div id="c21" class="clip cap" data-start="47.68" data-duration="1.89" data-track-index="3"><span class="t">who are part of our community.</span></div>
         <div id="c22" class="clip cap" data-start="50.38" data-duration="1.52" data-track-index="3"><span class="t">Talk to us to find out</span></div>
         <div id="c23" class="clip cap" data-start="51.90" data-duration="2.14" data-track-index="3"><span class="t">how EcomIQ could help you turn</span></div>
-        <div id="c24" class="clip cap" data-start="54.04" data-duration="2.58" data-track-index="3"><span class="t">good information into the <span class="hl-flame">right plan.</span></span></div>
+        <div id="c24" class="clip cap" data-start="54.04" data-duration="2.40" data-track-index="3"><span class="t">good information into the <span class="hl-flame">right plan.</span></span></div>
+      </div>
+
+      <!-- END CARD -->
+      <div id="endcard">
+        <div class="ec-grain"></div>
+        <div class="ec-content">
+          <img src="assets/ecomiq-logo-white.png" alt="EcomIQ" />
+          <div class="ec-line">Turn good information into</div>
+          <div class="ec-accent">the right plan</div>
+          <div class="ec-cta">Link Below</div>
+        </div>
       </div>
 
       <!-- AUDIO: dialogue, loudness-normalised to -14 LUFS -->
@@ -108,7 +140,7 @@
         data-track-index="10" data-volume="1"></audio>
       <!-- MUSIC: drop a licensed, understated bed at assets/music.mp3 and uncomment.
            ~0.12 volume sits roughly 22-26 dB under the dialogue.
-      <audio id="music" src="assets/music.mp3" data-start="0" data-duration="56.62"
+      <audio id="music" src="assets/music.mp3" data-start="0" data-duration="59.6"
         data-track-index="11" data-volume="0.12"></audio>
       -->
     </div>
@@ -138,7 +170,10 @@
       tl.set("#logo-navy", { opacity: 0 }, 32.97).set("#logo-white", { opacity: 1 }, 32.97);
       tl.set("#logo-navy", { opacity: 1 }, 36.14).set("#logo-white", { opacity: 0 }, 36.14);
 
-      tl.set({}, {}, 56.62);
+      // End card: 0.3s dissolve after the last word (56.26), hold to 59.6
+      tl.fromTo("#endcard", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "sine.inOut", immediateRender: false }, 56.32);
+
+      tl.set({}, {}, 59.6);
       window.__timelines["ecomiq-next-step"] = tl;
     </script>
   </body>
