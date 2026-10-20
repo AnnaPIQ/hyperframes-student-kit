@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>ecomiq-next-step</title>
+    <!-- GSAP vendored locally — CDN cert-fails in the render env and freezes renders -->
+    <script src="assets/vendor/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand-tokens.css" />
+    <style>
+      /* LOCAL font — no network dependency at render time */
+      @font-face { font-family: 'Rethink Sans'; font-style: normal; font-weight: 400 800;
+        font-display: block; src: url(assets/fonts/RethinkSans.woff2) format('woff2'); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000;
+        font-family: 'Rethink Sans', system-ui, sans-serif; }
+
+      /* A-roll: one continuous take. Crop changes are scale steps on the wrapper,
+         pivoting on Sean's eye line so his chin stays clear of the subtitle zone. */
+      #aroll-wrap { position: absolute; inset: 0; overflow: hidden; z-index: 1;
+        transform-origin: 50% 40%; }
+      #aroll { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+      /* B-roll inserts: full-bleed, hard cuts, no motion */
+      .broll { position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; z-index: 2; }
+
+      /* Logo: static, top-left, non-clip wrapper so the engine never repositions it.
+         Navy reads on every backdrop in this edit (lavender wall, bright walls, white slide). */
+      #logo-wrap { position: absolute; top: 104px; left: 64px; width: 250px; z-index: 5; }
+      #logo-wrap img { display: block; width: 100%; height: auto; }
+      #logo-navy { filter: drop-shadow(0 1px 3px rgba(255,255,255,.35)); }
+      #logo-white { position: absolute; top: 0; left: 0; opacity: 0;
+        filter: drop-shadow(0 1px 4px rgba(6,40,76,.6)); }
+
+      /* Subtitles: bottom-centre, white, navy stroke for the white T-shirt behind */
+      #caps { position: absolute; left: 0; right: 0; top: 1180px; height: 270px; z-index: 4; }
+      .cap { position: absolute; inset: 0; display: flex; align-items: flex-end;
+        justify-content: center; }
+      .cap span.t { display: block; max-width: 880px; text-align: center; text-wrap: balance;
+        font-weight: 650; font-size: 62px; line-height: 1.18; letter-spacing: -0.005em;
+        color: #FFFFFF;
+        text-shadow:
+          0 0 2px rgba(6,40,76,.95), 0 0 4px rgba(6,40,76,.9), 0 2px 5px rgba(6,40,76,.85),
+          0 0 14px rgba(6,40,76,.6), 0 6px 18px rgba(0,0,0,.35); }
+      .hl-flame { color: #FF4C32; }
+      .hl-blue { color: #9CD4FF; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="ecomiq-next-step" data-start="0" data-duration="56.62"
+      data-width="1080" data-height="1920">
+
+      <!-- A-ROLL (source 0:00.48–0:57.10, 9:16 crop from 4K) -->
+      <div id="aroll-wrap">
+        <video id="aroll" src="assets/aroll-916.mp4" muted playsinline data-media-start="0.08"
+          data-start="0" data-duration="56.62" data-track-index="0"></video>
+      </div>
+
+      <!-- B-ROLL: social proof only -->
+      <!-- S8 Personal Strategist: Sean holding laptop talking to man, src 0:03.20 -->
+      <video id="b-strategist" class="broll" src="assets/broll-strategist-laptop.mp4" muted playsinline
+        data-start="32.97" data-duration="3.17" data-track-index="1"></video>
+      <!-- S9 Specialists: Sean on stage at Shoptalk -->
+      <video id="b-shoptalk" class="broll" src="assets/broll-shoptalk-stage.mp4" muted playsinline
+        data-start="36.14" data-duration="2.26" data-track-index="1"></video>
+      <!-- S11 Founders: Sean and Mason in conversation with operators, src 0:04.00 -->
+      <video id="b-founders" class="broll" src="assets/broll-founders-conversation.mp4" muted playsinline
+        data-start="41.92" data-duration="2.9" data-track-index="1"></video>
+
+      <!-- LOGO -->
+      <div id="logo-wrap">
+        <img id="logo-navy" src="assets/ecomiq-logo-navy.svg" alt="EcomIQ" />
+        <!-- white variant only over the dark-wood laptop shot (33.05-36.22) -->
+        <img id="logo-white" src="assets/ecomiq-logo-white.svg" alt="" />
+      </div>
+
+      <!-- SUBTITLES (match Sean's actual delivery, US spelling) -->
+      <div id="caps">
+        <div id="c01" class="clip cap" data-start="0.04" data-duration="2.72" data-track-index="3"><span class="t">Heatmap shows you where your store is losing money</span></div>
+        <div id="c02" class="clip cap" data-start="2.76" data-duration="1.40" data-track-index="3"><span class="t">and what to fix first.</span></div>
+        <div id="c03" class="clip cap" data-start="4.16" data-duration="2.36" data-track-index="3"><span class="t">But it still leaves you with a decision.</span></div>
+        <div id="c04" class="clip cap" data-start="6.52" data-duration="1.84" data-track-index="3"><span class="t">Is this the most important change</span></div>
+        <div id="c05" class="clip cap" data-start="8.36" data-duration="2.06" data-track-index="3"><span class="t">for your business right now?</span></div>
+        <div id="c06" class="clip cap" data-start="10.66" data-duration="2.10" data-track-index="3"><span class="t">And should your team work on the product page,</span></div>
+        <div id="c07" class="clip cap" data-start="12.76" data-duration="1.78" data-track-index="3"><span class="t">your offer, your email flows,</span></div>
+        <div id="c08" class="clip cap" data-start="14.54" data-duration="3.03" data-track-index="3"><span class="t">or the ads bringing people there in the first place?</span></div>
+        <div id="c09" class="clip cap" data-start="18.02" data-duration="1.72" data-track-index="3"><span class="t">And this is where being an ecommerce founder</span></div>
+        <div id="c10" class="clip cap" data-start="19.74" data-duration="2.28" data-track-index="3"><span class="t">can feel really <span class="hl-blue">lonely.</span></span></div>
+        <div id="c11" class="clip cap" data-start="22.32" data-duration="2.62" data-track-index="3"><span class="t">You've got all these tools and information,</span></div>
+        <div id="c12" class="clip cap" data-start="24.94" data-duration="2.56" data-track-index="3"><span class="t">but no one who understands the whole business</span></div>
+        <div id="c13" class="clip cap" data-start="27.50" data-duration="3.32" data-track-index="3"><span class="t">to help you decide what the next step is.</span></div>
+        <div id="c14" class="clip cap" data-start="31.26" data-duration="1.54" data-track-index="3"><span class="t">With EcomIQ, you get</span></div>
+        <div id="c15" class="clip cap" data-start="32.80" data-duration="1.28" data-track-index="3"><span class="t">a <span class="hl-flame">Personal Strategist</span></span></div>
+        <div id="c16" class="clip cap" data-start="34.08" data-duration="1.74" data-track-index="3"><span class="t">who understands your brand,</span></div>
+        <div id="c17" class="clip cap" data-start="35.82" data-duration="2.58" data-track-index="3"><span class="t">backed by specialists currently doing this work</span></div>
+        <div id="c18" class="clip cap" data-start="38.40" data-duration="2.97" data-track-index="3"><span class="t">with some of the biggest ecommerce brands in the US.</span></div>
+        <div id="c19" class="clip cap" data-start="41.94" data-duration="2.86" data-track-index="3"><span class="t">And you can also talk to founders at a similar stage</span></div>
+        <div id="c20" class="clip cap" data-start="44.80" data-duration="2.88" data-track-index="3"><span class="t">who understand the decisions you're carrying,</span></div>
+        <div id="c21" class="clip cap" data-start="47.68" data-duration="1.89" data-track-index="3"><span class="t">who are part of our community.</span></div>
+        <div id="c22" class="clip cap" data-start="50.38" data-duration="1.52" data-track-index="3"><span class="t">Talk to us to find out</span></div>
+        <div id="c23" class="clip cap" data-start="51.90" data-duration="2.14" data-track-index="3"><span class="t">how EcomIQ could help you turn</span></div>
+        <div id="c24" class="clip cap" data-start="54.04" data-duration="2.58" data-track-index="3"><span class="t">good information into the <span class="hl-flame">right plan.</span></span></div>
+      </div>
+
+      <!-- AUDIO: dialogue, loudness-normalised to -14 LUFS -->
+      <audio id="vo" src="assets/dialogue.m4a" data-media-start="0.08" data-start="0" data-duration="56.62"
+        data-track-index="10" data-volume="1"></audio>
+      <!-- MUSIC: drop a licensed, understated bed at assets/music.mp3 and uncomment.
+           ~0.12 volume sits roughly 22-26 dB under the dialogue.
+      <audio id="music" src="assets/music.mp3" data-start="0" data-duration="56.62"
+        data-track-index="11" data-volume="0.12"></audio>
+      -->
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const crop = (scale, at) => tl.set("#aroll-wrap", { scale }, at);
+      const push = (from, to, at, dur) =>
+        tl.fromTo("#aroll-wrap", { scale: from }, { scale: to, duration: dur, ease: "sine.inOut", immediateRender: false }, at);
+
+      // Crop plan (timeline seconds = A-roll source - 0.48). Every change sits on a cut or a pause.
+      crop(1.00, 0);              // S1  standard
+      crop(1.12, 4.12);           // S2  "But" — argument turns
+      push(1.12, 1.18, 6.42, 3.80); // S3  slow push over the key question
+      crop(1.00, 10.47);          // S4  competing decisions, hands visible
+      crop(1.20, 17.92);          // S5  loneliness, tightest frame
+      crop(1.00, 22.12);          // S6  release
+      push(1.10, 1.15, 24.92, 5.68); // S7  central idea, slow drift
+      crop(1.00, 31.17);          // S8  brand name on Sean (cut after his blink)
+      crop(1.12, 38.40);          // S10 "biggest brands" claim on Sean (under b-roll 32.97-38.40)
+      crop(1.18, 44.82);          // S12 decisions you're carrying
+      push(1.00, 1.06, 50.22, 6.40); // S13 natural close
+
+      // Logo colour swap rides the hard cuts in and out of the dark laptop shot
+      tl.set("#logo-navy", { opacity: 1 }, 0).set("#logo-white", { opacity: 0 }, 0);
+      tl.set("#logo-navy", { opacity: 0 }, 32.97).set("#logo-white", { opacity: 1 }, 32.97);
+      tl.set("#logo-navy", { opacity: 1 }, 36.14).set("#logo-white", { opacity: 0 }, 36.14);
+
+      tl.set({}, {}, 56.62);
+      window.__timelines["ecomiq-next-step"] = tl;
+    </script>
+  </body>
+</html>

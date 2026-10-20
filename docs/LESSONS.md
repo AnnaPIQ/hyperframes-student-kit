@@ -50,7 +50,26 @@ efficient over time instead of relearning the same lessons.
   block the Whisper model download. **Fix:** caption from the known script text and
   anchor timing via silence analysis instead of word-level timestamps.
 
+- **Google Drive returns an HTML "Quota exceeded" page instead of the video.** Parallel
+  or repeated anonymous downloads of one file trip a per-file quota. **Fix:** download
+  each file once, sequentially, to disk. If already blocked, a Drive `copy_file` gets a
+  fresh ID and quota; trash the copy after downloading.
+- **Landscape 1080p event footage won't hold a 9:16 crop when the speaker walks.** A
+  608px-wide crop loses him within a second. **Fix:** scan the whole talk with a
+  timestamped contact sheet (`fps=1/4` + `drawtext`) and pick a front-on, static window
+  rather than the timecode someone noted.
+- **`-ss` before *and* after `-i` on a partial/long H.264 file gives inconsistent
+  frames.** **Fix:** cut a short intermediate with output-seek only, then trim that.
+
 ## Editing technique (talking-head cutdowns)
+
+- **Crop changes as GSAP scale steps on a wrapper:** `tl.set(wrap,{scale},t)` for cuts,
+  `fromTo` for slow pushes, and give the `fromTo` **`immediateRender: false`** or it
+  overrides earlier `set`s when seeking back to 0.
+- **Check blinks at every crop cut and at frame 0.** A cut or opening frame on closed
+  eyes reads as a mistake (and frame 0 is often the thumbnail). Trim 1-2 frames.
+- **White logo vanishes on light walls.** Test the logo on every backdrop in the edit;
+  swap navy/white on a hard cut where needed (invisible to viewers).
 
 - **Hide every splice under a graphic, and cut on silence.** Silence-aligned cuts +
   placing motion-graphic overlays over the join make cutdowns feel seamless.
