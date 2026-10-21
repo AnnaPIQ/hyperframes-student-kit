@@ -173,3 +173,19 @@ Measured clearances at y = 1410: ~60 px below his chin at 114 %, ~50 px above th
 - **Subtitles:** box top moved from 1410 px to **1490 px**, sitting on the chest well clear of the chin. Two-line cues overlap the top of the dark mic slightly, which reads cleanly through the navy box.
 - This supersedes the crop ladder in §2 and the crop column in §3.
 - **Corner logo:** enlarged from 170 px to 220 px wide and moved into the corner (x 48, y 96). Supersedes §4 size and position.
+
+### Delivery masters (Meta upload)
+
+Build: `python3 scripts/build.py --aroll <heatmap-3.mov> --src <broll-dir> --format 916|45 --qa`
+
+| Master | Size | Video | Audio |
+| --- | --- | --- | --- |
+| 9:16, 1080×1920 | 325 MB | H.264 High, CRF 12, ~42 Mbps, 25 fps, BT.709 | AAC 320 kbps, 48 kHz, −14.4 LUFS |
+| 4:5, 1080×1350 | 170 MB | H.264 High, CRF 12, ~22 Mbps, 25 fps, BT.709 | AAC 320 kbps, 48 kHz, −14.4 LUFS |
+
+- **One lossy generation only.** Every intermediate (each shot, end card) is lossless FFV1 10-bit 4:2:2, matching the sources' native depth and chroma. The single H.264 encode is the only lossy step.
+- **Verified against a lossless reference of the finished composite:** 9:16 PSNR 49.4 dB average (47.4 dB worst frame), SSIM 0.992. 4:5 PSNR 49.3 dB average (46.8 dB worst frame), SSIM 0.992. Above ~45 dB is visually lossless. Frame counts match exactly (1,547).
+- **Colour:** logo, subtitles and end card are converted with the BT.709 matrix, so brand navy and flame hold their exact values.
+- **Source limit, not a processing loss:** the Shoptalk shot comes from a 1080p landscape file, so it is upscaled (1.78× in 9:16, 1.25× in 4:5). Everything else is downscaled from 4K.
+- **4:5 framing:** A-roll uses a 1728-wide full-height window, about 40 % wider than 9:16, showing more of the room. Vertical B-roll is cropped to 4:5 with faces placed in the upper third. Logo is 200 px at (48, 56), subtitles start at 1012 px, and the end card is re-laid out at 1080×1350.
+- `final.mp4` in the repo is a smaller 8 Mbps preview of the 9:16 master, not the upload file.

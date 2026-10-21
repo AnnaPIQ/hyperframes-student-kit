@@ -40,3 +40,6 @@ assets/incoming/*
 **/render-work-*/
 **/work-*/
 
+
+# Full-quality delivery masters (too large for git; delivered directly)
+deliverables/

@@ -75,6 +75,16 @@ efficient over time instead of relearning the same lessons.
   disk and `page.goto('file://…')`. In this container pass
   `executablePath: '/opt/pw-browsers/chromium'` (bundled headless-shell build is missing).
 
+- **Concat demuxer can silently drop a frame at a segment join** (ms timestamps in .mkv
+  collide). With `-r` on output it gets masked by a duplicate, so A/V shifts 1 frame.
+  Fix: `setpts=N/FPS/TB` right after the concat input. Catch it by comparing packet
+  counts of master vs reference.
+- **RGBA overlays (logo, subtitles, PNG end cards) convert with BT.601 by default** →
+  brand colours shift. Use `scale=out_color_matrix=bt709:out_range=tv` before the overlay.
+- **"Is the master degraded?"** Keep intermediates lossless (FFV1), encode once, then
+  render a lossless reference of the same composite and measure PSNR/SSIM. Avg ≥ 45 dB
+  with no frame far below it means visually lossless.
+
 ## Delivery & resolution
 
 - **There is no 4:5 render "preset."** Ship the final via `--quality high` at the
