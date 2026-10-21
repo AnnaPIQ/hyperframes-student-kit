@@ -27,8 +27,8 @@ data but no one who understands the whole business to help them pick the next st
   laptop shot (swap rides the hard cuts).
 
 - End card: navy radial glow (grain-dithered against banding), white logo, headline
-  "Turn good information into" (Rethink 700), accent "the right plan" (Hedvig serif
-  upright, Blue Tint), flame pill "Link Below". Extra air above the headline and
+  "Turn good information into the right plan" (Rethink 700, 64px, white, one block),
+  flame pill "Link Below". Extra air above the headline and
   above the pill.
 
 ## Sources
