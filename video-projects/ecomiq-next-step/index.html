@@ -49,7 +49,7 @@
       .hl-blue { color: #9CD4FF; }
 
       /* End card: matches the EcomIQ end-card template (navy glow, logo, headline,
-         serif-italic accent line, flame pill). Static; dissolves in after the last word. */
+         flame pill). Static; dissolves in after the last word. */
       #endcard { position: absolute; inset: 0; z-index: 10; opacity: 0; overflow: hidden;
         background: radial-gradient(70% 45% at 50% 46%, #0f4275 0%, #0a3561 38%, #06284C 75%); }
       /* fine static grain dithers the gradient so H.264 doesn't band it */
@@ -74,25 +74,25 @@
 
       <!-- A-ROLL (source 0:00.48–0:57.10, 9:16 crop from 4K) -->
       <div id="aroll-wrap">
-        <video id="aroll" src="assets/aroll-916.mp4" muted playsinline data-media-start="0.08"
+        <video id="aroll" src="assets/master/aroll-916.mp4" muted playsinline data-media-start="0.08"
           data-start="0" data-duration="56.62" data-track-index="0"></video>
       </div>
 
       <!-- B-ROLL: social proof only -->
       <!-- S8 Personal Strategist: Sean holding laptop talking to man, src 0:03.20 -->
-      <video id="b-strategist" class="broll" src="assets/broll-strategist-laptop.mp4" muted playsinline
+      <video id="b-strategist" class="broll" src="assets/master/broll-strategist-laptop.mp4" muted playsinline
         data-start="32.97" data-duration="3.17" data-track-index="1"></video>
       <!-- S9 Specialists: Sean on stage at Shoptalk -->
-      <video id="b-shoptalk" class="broll" src="assets/broll-shoptalk-stage.mp4" muted playsinline
+      <video id="b-shoptalk" class="broll" src="assets/master/broll-shoptalk-stage.mp4" muted playsinline
         data-start="36.14" data-duration="2.26" data-track-index="1"></video>
       <!-- S11 Founders: Sean and Mason in conversation with operators, src 0:04.00 -->
-      <video id="b-founders" class="broll" src="assets/broll-founders-conversation.mp4" muted playsinline
+      <video id="b-founders" class="broll" src="assets/master/broll-founders-conversation.mp4" muted playsinline
         data-start="41.92" data-duration="2.9" data-track-index="1"></video>
 
       <!-- LOGO -->
       <div id="logo-wrap">
         <img id="logo-navy" src="assets/ecomiq-logo-navy.svg" alt="EcomIQ" />
-        <!-- white variant only over the dark-wood laptop shot (33.05-36.22) -->
+        <!-- white variant only over the dark-wood laptop shot (32.97-36.14) -->
         <img id="logo-white" src="assets/ecomiq-logo-white.svg" alt="" />
       </div>
 
@@ -135,8 +135,8 @@
         </div>
       </div>
 
-      <!-- AUDIO: dialogue, loudness-normalised to -14 LUFS -->
-      <audio id="vo" src="assets/dialogue.m4a" data-media-start="0.08" data-start="0" data-duration="56.62"
+      <!-- AUDIO: dialogue, PCM master, loudness-normalised to -14 LUFS -->
+      <audio id="vo" src="assets/master/dialogue.wav" data-media-start="0.08" data-start="0" data-duration="56.62"
         data-track-index="10" data-volume="1"></audio>
       <!-- MUSIC: drop a licensed, understated bed at assets/music.mp3 and uncomment.
            ~0.12 volume sits roughly 22-26 dB under the dialogue.
