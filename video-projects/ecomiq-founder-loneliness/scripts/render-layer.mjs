@@ -10,7 +10,7 @@ const A = join(spec.proj, 'assets');
 const html = `<!doctype html><html><head><meta charset="utf-8"><style>
 @font-face{font-family:"Rethink Sans";src:url(file://${A}/RethinkSans.woff2) format("woff2");font-weight:400 800}
 html,body{margin:0;width:1080px;height:1920px;background:transparent}
-#logo{position:absolute;left:56px;top:200px;width:170px}
+#logo{position:absolute;left:48px;top:96px;width:220px}
 #logo.shadow{filter:drop-shadow(0 0 3px rgba(6,40,76,.9)) drop-shadow(0 2px 10px rgba(6,40,76,.7))}
 #sub{position:absolute;left:0;right:0;top:1490px;display:flex;justify-content:center}
 #sub span{display:none;max-width:840px;padding:14px 28px 16px;border-radius:16px;background:rgba(6,40,76,.6);
