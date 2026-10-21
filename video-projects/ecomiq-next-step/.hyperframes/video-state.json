@@ -1,12 +1,12 @@
 {
   "version": 1,
   "historyId": "d4746fca-19ee-414d-87e4-8afc8082c5ae",
-  "currentRevision": "e6b838c5-c1aa-4837-8eab-34c2a0327cae",
+  "currentRevision": "a122e9d6-8530-445f-a354-413b28f0a2aa",
   "pendingChanges": false,
   "files": {
     "DESIGN.md": {
-      "hash": "989f19bec0a392a1bd63b2de80bc4b4c89b09b5ace72202442ad4ba5fa40236c",
-      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/98/989f19bec0a392a1bd63b2de80bc4b4c89b09b5ace72202442ad4ba5fa40236c"
+      "hash": "3c120f3188f8c9ae27ca155e13ecbdd15f2536037ac59dfb44d7193d96a4a774",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/3c/3c120f3188f8c9ae27ca155e13ecbdd15f2536037ac59dfb44d7193d96a4a774"
     },
     "assets/brand-tokens.css": {
       "hash": "79bd8d7d622c7809d10eae134c9f3af30c3936ff3484eb7177940879cff36fda",
@@ -53,8 +53,8 @@
       "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/e2/e228c682ac2556ff697095ff857295543ca3a54caa8086d6ee3703f2f1ac2120"
     },
     "index.html": {
-      "hash": "3119990a90d44bcc480d23660f96757974ba1718234e985fe82ec20d0a0c7a16",
-      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/31/3119990a90d44bcc480d23660f96757974ba1718234e985fe82ec20d0a0c7a16"
+      "hash": "c725a72b426ef7b2062d9da15131346274f448c3696f40f6455d1d059ad0e872",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/c7/c725a72b426ef7b2062d9da15131346274f448c3696f40f6455d1d059ad0e872"
     },
     "meta.json": {
       "hash": "d884f6b3b70037ccde017a2c7f3d6fec75cfafd338e4b51079573f3baccc1a3a",
@@ -81,8 +81,40 @@
       "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/cb/cb3960c2bf3ff953d6ecebadc5eb403603648ddd614ce92a653a6dca9887123d"
     },
     "final.mp4": {
-      "hash": "87631a492c0fbced6009108ab7614357a51b84bd3e49bc1b9709f3caff1adc97",
-      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/87/87631a492c0fbced6009108ab7614357a51b84bd3e49bc1b9709f3caff1adc97"
+      "hash": "0bd21768794c4a9683b87d2521b3561c28d9b2916de437213d84872b82132c8d",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/0b/0bd21768794c4a9683b87d2521b3561c28d9b2916de437213d84872b82132c8d"
+    },
+    "assets/master/aroll-4x5.mp4": {
+      "hash": "e3a04621bd92ecda5e7119163fd87399c2cf0283b09a6666b10febe03e285c69",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/e3/e3a04621bd92ecda5e7119163fd87399c2cf0283b09a6666b10febe03e285c69"
+    },
+    "assets/master/aroll-916.mp4": {
+      "hash": "85b6cf88d4173c396e06d1be50a3335ed55f24b180d14d39fe9fd9ccfda0b1a9",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/85/85b6cf88d4173c396e06d1be50a3335ed55f24b180d14d39fe9fd9ccfda0b1a9"
+    },
+    "assets/master/broll-founders-conversation.mp4": {
+      "hash": "c8ac7d0cecff821f439993af7addbf84435fc201b25273cf193bf59b5458b5ef",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/c8/c8ac7d0cecff821f439993af7addbf84435fc201b25273cf193bf59b5458b5ef"
+    },
+    "assets/master/broll-shoptalk-stage.mp4": {
+      "hash": "2726d27896a749052e30dd031f1967f72823136624a8f559c8ac103b20649ff8",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/27/2726d27896a749052e30dd031f1967f72823136624a8f559c8ac103b20649ff8"
+    },
+    "assets/master/broll-strategist-laptop.mp4": {
+      "hash": "c624d1db8237098f6b4aeb6cdf79829680272626722da8d3ed7bc60701ffa6a3",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/c6/c624d1db8237098f6b4aeb6cdf79829680272626722da8d3ed7bc60701ffa6a3"
+    },
+    "assets/master/dialogue.wav": {
+      "hash": "8848a3eadbe0990760f4c19bb079f7066ecb4b7d664dbcb90fef46bca7ab78a4",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/88/8848a3eadbe0990760f4c19bb079f7066ecb4b7d664dbcb90fef46bca7ab78a4"
+    },
+    "index-4x5.html": {
+      "hash": "bdd6ade9dcec3e8ba8ef5cb216363f00f425b50abf52ed1ceb69e4262be91167",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/bd/bdd6ade9dcec3e8ba8ef5cb216363f00f425b50abf52ed1ceb69e4262be91167"
+    },
+    "scripts/prep-masters.sh": {
+      "hash": "81b129ed0c042db5a247a3f5da5930c74e74461855022069242138bb803163d8",
+      "content": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/81/81b129ed0c042db5a247a3f5da5930c74e74461855022069242138bb803163d8"
     }
   },
   "revisions": {
@@ -244,6 +276,61 @@
           "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/31/3119990a90d44bcc480d23660f96757974ba1718234e985fe82ec20d0a0c7a16"
         }
       }
+    },
+    "a122e9d6-8530-445f-a354-413b28f0a2aa": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792617658119,
+      "endedAt": 1792617673900,
+      "files": {
+        "assets/master/aroll-4x5.mp4": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/e3/e3a04621bd92ecda5e7119163fd87399c2cf0283b09a6666b10febe03e285c69"
+        },
+        "assets/master/aroll-916.mp4": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/85/85b6cf88d4173c396e06d1be50a3335ed55f24b180d14d39fe9fd9ccfda0b1a9"
+        },
+        "assets/master/broll-founders-conversation.mp4": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/c8/c8ac7d0cecff821f439993af7addbf84435fc201b25273cf193bf59b5458b5ef"
+        },
+        "assets/master/broll-shoptalk-stage.mp4": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/27/2726d27896a749052e30dd031f1967f72823136624a8f559c8ac103b20649ff8"
+        },
+        "assets/master/broll-strategist-laptop.mp4": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/c6/c624d1db8237098f6b4aeb6cdf79829680272626722da8d3ed7bc60701ffa6a3"
+        },
+        "assets/master/dialogue.wav": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/88/8848a3eadbe0990760f4c19bb079f7066ecb4b7d664dbcb90fef46bca7ab78a4"
+        },
+        "DESIGN.md": {
+          "before": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/98/989f19bec0a392a1bd63b2de80bc4b4c89b09b5ace72202442ad4ba5fa40236c",
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/3c/3c120f3188f8c9ae27ca155e13ecbdd15f2536037ac59dfb44d7193d96a4a774"
+        },
+        "final.mp4": {
+          "before": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/87/87631a492c0fbced6009108ab7614357a51b84bd3e49bc1b9709f3caff1adc97",
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/0b/0bd21768794c4a9683b87d2521b3561c28d9b2916de437213d84872b82132c8d"
+        },
+        "index-4x5.html": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/bd/bdd6ade9dcec3e8ba8ef5cb216363f00f425b50abf52ed1ceb69e4262be91167"
+        },
+        "index.html": {
+          "before": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/31/3119990a90d44bcc480d23660f96757974ba1718234e985fe82ec20d0a0c7a16",
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/c7/c725a72b426ef7b2062d9da15131346274f448c3696f40f6455d1d059ad0e872"
+        },
+        "scripts/prep-masters.sh": {
+          "before": null,
+          "after": "/root/.cache/hyperframes/history/d4746fca-19ee-414d-87e4-8afc8082c5ae/blobs/81/81b129ed0c042db5a247a3f5da5930c74e74461855022069242138bb803163d8"
+        }
+      }
     }
   },
   "checks": {
@@ -258,15 +345,15 @@
   },
   "renders": {
     "latest": {
-      "id": "5aabfc91-69c0-435f-89f6-49398e90f751",
-      "completedAt": 1792616210760,
-      "output": "/home/user/hyperframes-student-kit/video-projects/ecomiq-next-step/renders/final.mp4",
+      "id": "d8c6a757-1db1-4e49-9aa0-cf16da1951ee",
+      "completedAt": 1792618803182,
+      "output": "/home/user/hyperframes-student-kit/video-projects/ecomiq-next-step/renders/EcomIQ-NextStep-4x5-master.mp4",
       "status": "completed",
-      "revision": "e6b838c5-c1aa-4837-8eab-34c2a0327cae"
+      "revision": "a122e9d6-8530-445f-a354-413b28f0a2aa"
     },
     "retainedRevisions": [
-      "e6b838c5-c1aa-4837-8eab-34c2a0327cae",
-      "f723a851-335d-4aa5-a018-3a1b539e480a"
+      "a122e9d6-8530-445f-a354-413b28f0a2aa",
+      "e6b838c5-c1aa-4837-8eab-34c2a0327cae"
     ]
   },
   "pendingArtifactCleanup": []

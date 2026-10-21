@@ -42,3 +42,15 @@ data but no one who understands the whole business to help them pick the next st
 - No whooshes, zoom/whip transitions, kinetic type or dashboards.
 - No Rebuy stats slides, Klaviyo/TikTok signage, or client footage behind claims.
 - Music: only a licensed, understated bed (slot is commented out in index.html).
+
+## Masters (Meta upload)
+- Build inputs: `bash scripts/prep-masters.sh` (near-lossless CRF 10 intermediates + PCM
+  dialogue into `assets/master/`, gitignored).
+- 9:16: `npx hyperframes render --fps 25 --crf 12 --video-frame-format png -o renders/EcomIQ-NextStep-9x16-master.mp4`
+- 4:5:  same flags plus `-c index-4x5.html`, output `renders/EcomIQ-NextStep-4x5-master.mp4`
+- 25fps matches the A-roll (no 25 to 30 judder). Verified: H.264 High 4:2:0, ~39/27 Mbps,
+  AAC 48k stereo, -13.4 LUFS / -1.3 dBFS peak, moov at front, SSIM 0.98 / PSNR 42.5 dB
+  against the original 4K ProRes.
+- Lint flags `multiple_root_compositions` because both index files sit at the root.
+  Renders were checked for doubled audio (loudness unchanged); always render each with
+  its own file.

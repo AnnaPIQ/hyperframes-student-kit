@@ -76,6 +76,12 @@ efficient over time instead of relearning the same lessons.
 
 ## Delivery & resolution
 
+- **"Master" renders built from CRF-20 proxies are already a generation down.** Prep
+  near-lossless intermediates (x264 CRF 10, PCM audio) from the original sources, render
+  with `--crf 12 --video-frame-format png` (default frame extraction can be lossy), and
+  render at the A-roll's native fps (25fps talking head into a 30fps render duplicates
+  every 5th frame). Prove it: SSIM/PSNR of a text-free region vs the original source.
+
 - **There is no 4:5 render "preset."** Ship the final via `--quality high` at the
   project's native size (e.g. 1080×1350). For Meta hi-res deliverables, also export 2×
   (2160×2700).
