@@ -18,22 +18,23 @@ END_CARD = 3.0                       # seconds
 # ---- A-roll crop: full-height 9:16 window, x-centred on Sean, top-anchored ----
 AR_X, AR_W, AR_H = 1350, 1216, 2160
 
-# Shots (EDIT-PLAN.md section 3). A = (src_in, src_out, z0, push) where push is
+# Shots (EDIT-PLAN.md section 3, v2 framing: widest crop, slow continuous pushes
+# only, max 6%, so consecutive Sean shots join without a zoom jump). A = (src_in, src_out, z0, push) where push is
 # (src_t0, src_t1, z1) or None. B = (file, clip_in, clip_out, kind, logo).
 SHOTS = [
-    ("A", 0.40, 6.82, 1.00, (3.90, 6.76, 1.04)),
-    ("A", 6.82, 17.58, 1.08, (11.80, 15.70, 1.14)),
+    ("A", 0.40, 6.82, 1.00, (3.90, 6.76, 1.03)),
+    ("A", 6.82, 17.58, 1.03, (11.80, 15.70, 1.06)),
     ("B", "angle.mp4", 4.00, 7.34, "rot", "navy"),
-    ("A", 20.92, 27.10, 1.08, (21.00, 26.48, 1.12)),
-    ("A", 27.10, 30.05, 1.00, None),
+    ("A", 20.92, 27.10, 1.00, (21.00, 26.48, 1.05)),
+    ("A", 27.10, 30.05, 1.05, None),
     ("B", "holdlaptop.mp4", 3.00, 5.91, "rot", "white"),
     ("B", "shoptalk_0_60.mp4", 14.45, 17.27, "shoptalk", "white-shadow"),
     ("B", "booths.mov", 4.40, 7.52, "vert", "white"),
-    ("A", 38.90, 41.30, 1.08, None),
+    ("A", 38.90, 41.30, 1.00, None),
     ("B", "women.mp4", 4.60, 7.35, "rot", "navy"),
     ("B", "laugh.mp4", 2.00, 4.65, "rot", "navy"),
-    ("A", 46.70, 55.05, 1.10, (49.30, 54.48, 1.14)),
-    ("A", 55.05, 59.30, 1.00, None),
+    ("A", 46.70, 55.05, 1.00, (49.30, 54.48, 1.04)),
+    ("A", 55.05, 59.30, 1.04, (55.20, 58.40, 1.00)),
 ]
 
 

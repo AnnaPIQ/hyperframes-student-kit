@@ -12,7 +12,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
 html,body{margin:0;width:1080px;height:1920px;background:transparent}
 #logo{position:absolute;left:56px;top:200px;width:170px}
 #logo.shadow{filter:drop-shadow(0 0 3px rgba(6,40,76,.9)) drop-shadow(0 2px 10px rgba(6,40,76,.7))}
-#sub{position:absolute;left:0;right:0;top:1410px;display:flex;justify-content:center}
+#sub{position:absolute;left:0;right:0;top:1490px;display:flex;justify-content:center}
 #sub span{display:none;max-width:840px;padding:14px 28px 16px;border-radius:16px;background:rgba(6,40,76,.6);
   color:#fff;font:600 54px/1.22 "Rethink Sans",sans-serif;text-align:center;white-space:pre-line}
 </style></head><body><img id="logo"><div id="sub"><span></span></div></body></html>`;

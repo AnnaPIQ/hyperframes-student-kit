@@ -166,3 +166,9 @@ Measured clearances at y = 1410: ~60 px below his chin at 114 %, ~50 px above th
 | **Logo variant per shot:** navy on A-roll, angle, women, laugh. White on holding-laptop and booths. White with a soft navy shadow on Shoptalk (its top-left goes dark → white screen → on-screen text). | Kept legible on every background at identical size and position. |
 | **Known compromise:** ~1.2 s in shot 7 where the corner logo sits beside the projected "Sean Clarke / PacificIQ" title. | A tighter crop to clear it cuts off the top of Sean's head. Swap option: extend shot 6 (holding laptop) to cover 0:29.6 to 0:35.4 if this bothers you. |
 | **Audio:** two-pass loudnorm to −14 LUFS integrated (measured −14.4, peak −1.0 dBFS), 30 to 40 ms fades at the head and tail, silence under the end card. | Delivery spec. |
+
+### v2 revision (feedback: subtitles hanging off the chin, framing too tight)
+
+- **Framing:** every Sean shot now uses the widest full-height 9:16 crop. This is the widest the 16:9 source allows full-screen, and a 4:5-in-navy-bands option was declined. Crop changes are now slow continuous push-ins only (max 6%: 1.00→1.03→1.06 in the opening, 1.00→1.05 over the three questions, 1.00→1.04 on "We just help you…", easing back to 1.00 on the final line). No hard crop cuts between Sean shots, so nothing jumps.
+- **Subtitles:** box top moved from 1410 px to **1490 px**, sitting on the chest well clear of the chin. Two-line cues overlap the top of the dark mic slightly, which reads cleanly through the navy box.
+- This supersedes the crop ladder in §2 and the crop column in §3.
